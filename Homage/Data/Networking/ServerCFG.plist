@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>host</key>
+	<string>54.204.34.168</string>
+	<key>protocol</key>
+	<string>http</string>
+	<key>port</key>
+	<string>4567</string>
+	<key>urls</key>
+	<dict>
+		<key>stories</key>
+		<string>stories</string>
+		<key>remake</key>
+		<string>remake</string>
+		<key>remakes/user</key>
+		<string>remakes/user/%@</string>
+		<key>footage</key>
+		<string>footage</string>
+		<key>text</key>
+		<string>text</string>
+		<key>render</key>
+		<string>render</string>
+	</dict>
+</dict>
+</plist>
