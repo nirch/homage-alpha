@@ -14,8 +14,9 @@
 typedef NS_ENUM(NSInteger, HMRecorderState) {
     HMRecorderStateJustStarted,
     HMRecorderStateGeneralMessage,
-    HMRecorderStateRemakeContext,
+    HMRecorderStateSceneContext,
     HMRecorderStateRemakingScenes,
+    HMRecorderStateNextScene,
     HMRecorderStateFinishedAllScenesMessage
 };
 
@@ -81,14 +82,19 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 -(void)checkState
 {
     if (self.recorderState == HMRecorderStateJustStarted) {
-        // Show general message
+        
+        // Just started. Show general message
         _recorderState = HMRecorderStateGeneralMessage;
         [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral];
         return;
+        
+        
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
-        // Dismissed general message. Show first
-        _recorderState = HMRecorderStateRemakeContext;
-        [self showRemakeContextMessage];
+        
+        // Show context for next scene.
+//        _recorderState = HMRecorderStateSceneContext;
+//        Scene *currentScene = 
+//        [self showSceneContextMessage:currentScene];
     }
 }
 
@@ -188,6 +194,7 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
         self.guiDetailedOptionsBarContainer.hidden = YES;
         self.guiOptionsBarContainer.hidden = NO;
         self.guiDetailedOptionsBarContainer.transform = CGAffineTransformMakeTranslation(0, 167);
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSED object:nil];
         return;
     }
 
@@ -198,6 +205,8 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
     // Animation start state.
     self.guiDetailedOptionsBarContainer.hidden = NO;
     self.guiOptionsBarContainer.hidden = NO;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSING object:nil];
     
     // Translate animation
     [UIView animateWithDuration:0.3 animations:^{
@@ -211,6 +220,7 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
             // Animation end state
             self.guiDetailedOptionsBarContainer.hidden = YES;
             self.guiOptionsBarContainer.hidden = NO;
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSED object:nil];
         }];
         
     }];
@@ -223,6 +233,7 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
         self.guiDetailedOptionsBarContainer.hidden = NO;
         self.guiOptionsBarContainer.hidden = YES;
         self.guiDetailedOptionsBarContainer.transform = CGAffineTransformIdentity;
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil];
         return;
     }
     
@@ -236,6 +247,8 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
         self.guiOptionsBarContainer.alpha = 0;
     }];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENING object:nil];
+    
     // Translate animation
     [UIView animateWithDuration:0.4 animations:^{
         self.guiDetailedOptionsBarContainer.transform = CGAffineTransformIdentity;
@@ -243,6 +256,7 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
         // Animation end state
         self.guiDetailedOptionsBarContainer.hidden = NO;
         self.guiOptionsBarContainer.hidden = YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil];
     }];
     
 }

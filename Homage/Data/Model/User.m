@@ -2,7 +2,7 @@
 //  User.m
 //  Homage
 //
-//  Created by Aviv Wolf on 1/15/14.
+//  Created by Aviv Wolf on 1/16/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -17,7 +17,7 @@
 @dynamic isFirstUse;
 @dynamic isLoggedIn;
 @dynamic isPublic;
-@dynamic sID;
+@dynamic userID;
 @dynamic remakes;
 
 @end

@@ -11,9 +11,9 @@
 @interface HMServer (Remakes)
 
 // Creates a new remake for the given story and user.
--(void)remakeStoryWithID:(NSString *)storyID forUserID:(NSNumber *)userID;
+-(void)remakeStoryWithID:(NSString *)storyID forUserID:(NSString *)userID;
 
 // Refetch all remakes for the provided user id.
--(void)refetchRemakesForUserID:(NSNumber *)userID;
+-(void)refetchRemakesForUserID:(NSString *)userID;
 
 @end

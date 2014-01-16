@@ -2,7 +2,7 @@
 //  User.h
 //  Homage
 //
-//  Created by Aviv Wolf on 1/15/14.
+//  Created by Aviv Wolf on 1/16/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSNumber * isFirstUse;
 @property (nonatomic, retain) NSNumber * isLoggedIn;
 @property (nonatomic, retain) NSNumber * isPublic;
-@property (nonatomic, retain) NSNumber * sID;
+@property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSSet *remakes;
 @end
 

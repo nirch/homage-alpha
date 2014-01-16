@@ -203,6 +203,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":error}];
         return;
     }
+    [self postRelativeURL:(NSString *)relativeURL
+               parameters:(NSDictionary *)parameters
+         notificationName:(NSString *)notificationName
+                   parser:(HMParser *)parser];
 }
 
 // The most basic POST request

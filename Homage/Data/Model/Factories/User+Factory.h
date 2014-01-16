@@ -11,7 +11,7 @@
 @interface User (Factory)
 
 // Fetches (or creates if missing), in local storage, a user with the provided ID.
-+(User *)userWithID:(NSNumber *)sID inContext:(NSManagedObjectContext *)context;
++(User *)userWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - Same or another user
 -(BOOL)isThisUser:(User *)otherUser;

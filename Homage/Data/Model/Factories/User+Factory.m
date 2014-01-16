@@ -12,18 +12,18 @@
 @implementation User (Factory)
 
 // Fetches (or creates if missing), in local storage, a user with the provided ID.
-+(User *)userWithID:(NSNumber *)sID inContext:(NSManagedObjectContext *)context
++(User *)userWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sID=%@",sID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%@",userID];
     User *user = [DB.sh fetchOrCreateEntityNamed:HM_USER withPredicate:predicate inContext:context];
-    user.sID = sID;
+    user.userID = userID;
     return user;
 }
 
 #pragma mark - Same or another user
 -(BOOL)isThisUser:(User *)otherUser
 {
-    return [self.sID isEqualToNumber:otherUser.sID];
+    return [self.userID isEqualToString:otherUser.userID];
 }
 
 -(BOOL)isNotThisUser:(User *)otherUser

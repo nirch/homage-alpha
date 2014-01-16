@@ -34,7 +34,7 @@
     [self.guiActivity startAnimating];
     self.guiLabel.text = @"Loading remakes...";
     self.guiRefreshButton.hidden = YES;
-    [HMServer.sh refetchRemakesForUserID:User.current.sID];
+    [HMServer.sh refetchRemakesForUserID:User.current.userID];
 }
 
 #pragma mark - Observers

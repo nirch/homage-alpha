@@ -22,7 +22,7 @@
 {
     NSString *remakeID = info[@"_id"][@"$oid"];
     NSString *storyID = info[@"story_id"][@"$oid"];
-    NSNumber *userID = [info numberForKey:@"user_id"];
+    NSString *userID = [info stringForKey:@"user_id"];
     Story *story = [Story storyWithID:storyID inContext:self.ctx];
     User *user = [User userWithID:userID inContext:self.ctx];
     

@@ -37,7 +37,7 @@
 
 -(void)remakeStory
 {
-    [HMServer.sh remakeStoryWithID:self.story.sID forUserID:User.current.sID];
+    [HMServer.sh remakeStoryWithID:self.story.sID forUserID:User.current.userID];
 }
 
 #pragma mark - Navigation

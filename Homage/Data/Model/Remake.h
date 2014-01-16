@@ -2,7 +2,7 @@
 //  Remake.h
 //  Homage
 //
-//  Created by Aviv Wolf on 1/15/14.
+//  Created by Aviv Wolf on 1/16/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -17,8 +17,8 @@
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) id texts;
 @property (nonatomic, retain) id thumbnail;
-@property (nonatomic, retain) NSString * videoURL;
 @property (nonatomic, retain) NSString * thumbnailURL;
+@property (nonatomic, retain) NSString * videoURL;
 @property (nonatomic, retain) NSSet *footages;
 @property (nonatomic, retain) Story *story;
 @property (nonatomic, retain) User *user;

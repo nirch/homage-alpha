@@ -9,10 +9,12 @@
 #import "HMRecorderDetailedOptionsBarViewController.h"
 #import "DB.h"
 #import "HMSceneCell.h"
+#import "HMNotificationCenter.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *guiTableView;
+@property (weak, nonatomic) IBOutlet UIView *guiRoundViewCoveringButton;
 @property (nonatomic) NSArray *scenes;
 
 @end
@@ -24,8 +26,73 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self initObservers];
+    
     Remake *remake = [self.remakerDelegate remake];
     self.scenes = [remake.story.scenes allObjects];
+}
+
+#pragma mark - Obesrvers
+-(void)initObservers
+{
+    // Observe application start
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderDetailedOptionsClosing:)
+                                                       name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSING
+                                                     object:nil];
+    
+    // Observe application start
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderDetailedOptionsClosed:)
+                                                       name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSED
+                                                     object:nil];
+    
+    // Observe application start
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderDetailedOptionsOpening:)
+                                                       name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENING
+                                                     object:nil];
+    
+    // Observe application start
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderDetailedOptionsOpened:)
+                                                       name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED
+                                                     object:nil];
+}
+
+#pragma mark - Observers handlers
+-(void)onRecorderDetailedOptionsClosed:(NSNotification *)notification
+{
+    self.guiRoundViewCoveringButton.hidden = NO;
+    self.guiRoundViewCoveringButton.alpha = 0;
+    self.guiRoundViewCoveringButton.transform = CGAffineTransformMakeScale(0.0, 0.0);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiRoundViewCoveringButton.transform = CGAffineTransformIdentity;
+        self.guiRoundViewCoveringButton.alpha = 1;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+-(void)onRecorderDetailedOptionsClosing:(NSNotification *)notification
+{
+
+}
+
+-(void)onRecorderDetailedOptionsOpened:(NSNotification *)notification
+{
+    self.guiRoundViewCoveringButton.alpha = 1;
+    [UIView animateWithDuration:0.4 animations:^{
+        self.guiRoundViewCoveringButton.alpha = 0;
+        self.guiRoundViewCoveringButton.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    } completion:^(BOOL finished) {
+        self.guiRoundViewCoveringButton.hidden = YES;
+    }];
+}
+-(void)onRecorderDetailedOptionsOpening:(NSNotification *)notification
+{
+
 }
 
 #pragma mark - Table Data Source

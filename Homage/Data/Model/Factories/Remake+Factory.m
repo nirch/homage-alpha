@@ -19,7 +19,7 @@
     
     // Should never be owned by another user! This is a critical error!
     if (remake.user && [remake.user isNotThisUser:user]) {
-        HMGLogError(@"Critical model/parsing error: remake already owned by user (%@). Why %@?", remake.user.sID, user.sID);
+        HMGLogError(@"Critical model/parsing error: remake already owned by user (%@). Why %@?", remake.user.userID, user.userID);
         return nil;
     }
     remake.sID = sID;

@@ -16,5 +16,6 @@
 
 -(BOOL)hasSceneWithID:(NSNumber *)sID;
 -(Scene *)findSceneWithID:(NSNumber *)sID;
+//-(NSArray *)scenesOrdered;
 
 @end
