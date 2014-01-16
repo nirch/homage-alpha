@@ -58,7 +58,7 @@
                                 </connections>
                             </containerView>
                             <containerView contentMode="scaleToFill" id="aFe-rO-lqD" userLabel="Detailed Options Bar Container View">
-                                <rect key="frame" x="0.0" y="101" width="568" height="219"/>
+                                <rect key="frame" x="0.0" y="68" width="568" height="252"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -165,7 +165,7 @@
         <!--Bottom Bar View Controller-->
         <scene sceneID="g9a-QK-G3J">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="R3d-UO-SwR" userLabel="Bottom Bar View Controller" customClass="HMRecorderBottomBarViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="R3d-UO-SwR" userLabel="Bottom Bar View Controller" customClass="HMRecorderOptionsBarViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="89B-r6-z4L">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="85"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -258,38 +258,73 @@
                     </view>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="guiBottomBarContainer" destination="r7a-96-NXu" id="uRw-h3-jyA"/>
+                        <outlet property="guiOptionsBarContainer" destination="r7a-96-NXu" id="u5C-iR-nob"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yda-5X-tG3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="RsF-8Y-Hm2" userLabel="Tapped Bottom Bar Gesture Recognizer">
                     <connections>
-                        <action selector="onTappedClosedBottomBar:" destination="R3d-UO-SwR" id="Pht-7S-xKA"/>
+                        <action selector="onTappedClosedOptionsBar:" destination="R3d-UO-SwR" id="tIh-lI-Ag7"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1018" y="577"/>
         </scene>
-        <!--View Controller-->
+        <!--Recorder Detailed Options Bar View Controller-->
         <scene sceneID="zJO-QR-fkz">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="m2k-fx-mZd" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="m2k-fx-mZd" customClass="HMRecorderDetailedOptionsBarViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="5z9-wR-a27">
-                        <rect key="frame" x="0.0" y="0.0" width="568" height="219"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="252"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="NcZ-Uk-buY" userLabel="Bottom Bar">
-                                <rect key="frame" x="0.0" y="31" width="568" height="188"/>
+                                <rect key="frame" x="0.0" y="31" width="568" height="221"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="kMr-zz-dYM" userLabel="Right">
-                                        <rect key="frame" x="284" y="0.0" width="284" height="188"/>
+                                        <rect key="frame" x="284" y="0.0" width="284" height="221"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="8jV-2t-UMX" userLabel="Left">
-                                        <rect key="frame" x="0.0" y="0.0" width="284" height="188"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="284" height="221"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="xOz-N7-qhj">
+                                                <rect key="frame" x="0.0" y="0.0" width="284" height="221"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <prototypes>
+                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="scene cell" rowHeight="55" id="ba2-Im-jfx" customClass="HMSceneCell">
+                                                        <rect key="frame" x="0.0" y="22" width="284" height="55"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ba2-Im-jfx" id="gym-o5-69K">
+                                                            <rect key="frame" x="0.0" y="0.0" width="284" height="55"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SCENE 01" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zAR-us-pSI" customClass="HMFontLabel">
+                                                                    <rect key="frame" x="83" y="10" width="105" height="35"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </tableViewCellContentView>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <connections>
+                                                            <outlet property="guiSceneLabel" destination="zAR-us-pSI" id="CGU-SA-OtV"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="m2k-fx-mZd" id="hHH-cX-aPt"/>
+                                                    <outlet property="delegate" destination="m2k-fx-mZd" id="jcM-R8-eYy"/>
+                                                </connections>
+                                            </tableView>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -309,6 +344,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onPressedCloseButton:" destination="m2k-fx-mZd" eventType="touchUpInside" id="Tuo-4W-j4N"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -318,6 +356,9 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <connections>
+                        <outlet property="guiTableView" destination="xOz-N7-qhj" id="gqV-L7-Bas"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h0v-PR-Ybz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

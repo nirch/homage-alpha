@@ -94,8 +94,10 @@
 		086D94A9188702130086C565 /* HMServer+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94A7188702130086C565 /* HMServer+LazyLoading.m */; };
 		086D94B1188713460086C565 /* Footage+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94B0188713460086C565 /* Footage+Factory.m */; };
 		086D94B2188713460086C565 /* Footage+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94B0188713460086C565 /* Footage+Factory.m */; };
-		086D94B918873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94B818873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m */; };
-		086D94BA18873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94B818873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m */; };
+		086D94B918873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94B818873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m */; };
+		086D94BA18873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94B818873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m */; };
+		086D94BD188754020086C565 /* HMSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94BC188754020086C565 /* HMSceneCell.m */; };
+		086D94BE188754020086C565 /* HMSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94BC188754020086C565 /* HMSceneCell.m */; };
 		0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */; };
 		0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */; };
 		08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
@@ -118,8 +120,8 @@
 		08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECE1886994A001A8B75 /* HMRoundButton.m */; };
 		08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
-		08E50ED718869C57001A8B75 /* HMRecorderBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderBottomBarViewController.m */; };
-		08E50ED818869C57001A8B75 /* HMRecorderBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderBottomBarViewController.m */; };
+		08E50ED718869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
+		08E50ED818869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -226,8 +228,10 @@
 		086D94B0188713460086C565 /* Footage+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Footage+Factory.m"; sourceTree = "<group>"; };
 		086D94B4188720B40086C565 /* HMRemakerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRemakerProtocol.h; path = Recorder/HMRemakerProtocol.h; sourceTree = "<group>"; };
 		086D94B51887278C0086C565 /* HMRecorderChildInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderChildInterface.h; path = Recorder/HMRecorderChildInterface.h; sourceTree = "<group>"; };
-		086D94B718873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderDetailedBottomBarViewController.h; path = Recorder/HMRecorderDetailedBottomBarViewController.h; sourceTree = "<group>"; };
-		086D94B818873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderDetailedBottomBarViewController.m; path = Recorder/HMRecorderDetailedBottomBarViewController.m; sourceTree = "<group>"; };
+		086D94B718873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderDetailedOptionsBarViewController.h; path = Recorder/HMRecorderDetailedOptionsBarViewController.h; sourceTree = "<group>"; };
+		086D94B818873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderDetailedOptionsBarViewController.m; path = Recorder/HMRecorderDetailedOptionsBarViewController.m; sourceTree = "<group>"; };
+		086D94BB188754020086C565 /* HMSceneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMSceneCell.h; path = Recorder/HMSceneCell.h; sourceTree = "<group>"; };
+		086D94BC188754020086C565 /* HMSceneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMSceneCell.m; path = Recorder/HMSceneCell.m; sourceTree = "<group>"; };
 		0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ExperimentalStoryboard.storyboard; sourceTree = "<group>"; };
 		08845671188494D300B94267 /* HMTestSliceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTestSliceViewController.h; sourceTree = "<group>"; };
 		08845672188494D300B94267 /* HMTestSliceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTestSliceViewController.m; sourceTree = "<group>"; };
@@ -246,8 +250,8 @@
 		08E50ECE1886994A001A8B75 /* HMRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRoundButton.m; sourceTree = "<group>"; };
 		08E50ED118869ADD001A8B75 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
-		08E50ED518869C57001A8B75 /* HMRecorderBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderBottomBarViewController.h; path = Recorder/HMRecorderBottomBarViewController.h; sourceTree = "<group>"; };
-		08E50ED618869C57001A8B75 /* HMRecorderBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderBottomBarViewController.m; path = Recorder/HMRecorderBottomBarViewController.m; sourceTree = "<group>"; };
+		08E50ED518869C57001A8B75 /* HMRecorderOptionsBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderOptionsBarViewController.h; path = Recorder/HMRecorderOptionsBarViewController.h; sourceTree = "<group>"; };
+		08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderOptionsBarViewController.m; path = Recorder/HMRecorderOptionsBarViewController.m; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -625,10 +629,12 @@
 				086D94B51887278C0086C565 /* HMRecorderChildInterface.h */,
 				08E50EB118866A25001A8B75 /* HMVideoCameraViewController.h */,
 				08E50EB218866A25001A8B75 /* HMVideoCameraViewController.m */,
-				08E50ED518869C57001A8B75 /* HMRecorderBottomBarViewController.h */,
-				08E50ED618869C57001A8B75 /* HMRecorderBottomBarViewController.m */,
-				086D94B718873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.h */,
-				086D94B818873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m */,
+				08E50ED518869C57001A8B75 /* HMRecorderOptionsBarViewController.h */,
+				08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */,
+				086D94B718873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.h */,
+				086D94B818873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m */,
+				086D94BB188754020086C565 /* HMSceneCell.h */,
+				086D94BC188754020086C565 /* HMSceneCell.m */,
 			);
 			name = "Child interfaces";
 			sourceTree = "<group>";
@@ -864,12 +870,13 @@
 				08E50EB318866A25001A8B75 /* HMVideoCameraViewController.m in Sources */,
 				08E50EC618868AEF001A8B75 /* HMFontLabel.m in Sources */,
 				086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */,
-				08E50ED718869C57001A8B75 /* HMRecorderBottomBarViewController.m in Sources */,
-				086D94B918873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m in Sources */,
+				08E50ED718869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */,
+				086D94B918873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				0840FFC91885935400A6EF5E /* HMStoryCell.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				086D948D1886FF4E0086C565 /* Text.m in Sources */,
+				086D94BD188754020086C565 /* HMSceneCell.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				086D93E41886CFAC0086C565 /* Scene+Factory.m in Sources */,
 				086D93E81886CFAC0086C565 /* User+Factory.m in Sources */,
@@ -889,7 +896,7 @@
 				086D93E51886CFAC0086C565 /* Scene+Factory.m in Sources */,
 				08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */,
 				086D93D01886C8BB0086C565 /* HMParser.m in Sources */,
-				086D94BA18873BBF0086C565 /* HMRecorderDetailedBottomBarViewController.m in Sources */,
+				086D94BA18873BBF0086C565 /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				0840FF9618854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				0840FF65188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
 				08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */,
@@ -906,9 +913,10 @@
 				086D94961886FF4E0086C565 /* Footage.m in Sources */,
 				0840FF8F18854E6200A6EF5E /* HMStoriesViewController.m in Sources */,
 				0840FF7B1885351800A6EF5E /* MyManagedDocument.m in Sources */,
+				086D94BE188754020086C565 /* HMSceneCell.m in Sources */,
 				086D94461886E2CD0086C565 /* HMRemakesParser.m in Sources */,
 				086D948E1886FF4E0086C565 /* Text.m in Sources */,
-				08E50ED818869C57001A8B75 /* HMRecorderBottomBarViewController.m in Sources */,
+				08E50ED818869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */,
 				086D94111886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
 				086D940D1886D6FA0086C565 /* Text+Factory.m in Sources */,
 				086D93E31886CFAC0086C565 /* Remake+Factory.m in Sources */,

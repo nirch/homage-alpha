@@ -14,8 +14,6 @@
 
 @implementation HMRecorderDetailedBottomBarViewController
 
-@synthesize remakerDelegate = _remakerDelegate;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

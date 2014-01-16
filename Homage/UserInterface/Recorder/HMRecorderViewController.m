@@ -90,7 +90,7 @@
 
 -(void)toggleOptions
 {
-    [self toggleOptionsAnimated:NO];
+    [self toggleOptionsAnimated:YES];
 }
 
 -(void)toggleOptionsAnimated:(BOOL)animated
@@ -104,22 +104,68 @@
 
 -(void)closeDetailedOptionsAnimated:(BOOL)animated
 {
+    self.detailedOptionsShown = NO;
     if (!animated) {
         self.guiDetailedOptionsBarContainer.hidden = YES;
         self.guiOptionsBarContainer.hidden = NO;
-        self.detailedOptionsShown = NO;
+        self.guiDetailedOptionsBarContainer.transform = CGAffineTransformMakeTranslation(0, 167);
         return;
     }
+
+    // Animation start state.
+    self.guiDetailedOptionsBarContainer.hidden = NO;
+    self.guiOptionsBarContainer.hidden = NO;
+
+    // Animation start state.
+    self.guiDetailedOptionsBarContainer.hidden = NO;
+    self.guiOptionsBarContainer.hidden = NO;
+    
+    // Translate animation
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiDetailedOptionsBarContainer.transform = CGAffineTransformMakeTranslation(0, 167);
+    } completion:^(BOOL finished) {
+        // Alpha animation
+        [UIView animateWithDuration:0.15 animations:^{
+            self.guiDetailedOptionsBarContainer.alpha = 0;
+            self.guiOptionsBarContainer.alpha = 1;
+        } completion:^(BOOL finished) {
+            // Animation end state
+            self.guiDetailedOptionsBarContainer.hidden = YES;
+            self.guiOptionsBarContainer.hidden = NO;
+        }];
+        
+    }];
 }
 
 -(void)openDetailedOptionsAnimated:(BOOL)animated
 {
+    self.detailedOptionsShown = YES;
     if (!animated) {
         self.guiDetailedOptionsBarContainer.hidden = NO;
         self.guiOptionsBarContainer.hidden = YES;
-        self.detailedOptionsShown = YES;
+        self.guiDetailedOptionsBarContainer.transform = CGAffineTransformIdentity;
         return;
     }
+    
+    // Animation start state.
+    self.guiDetailedOptionsBarContainer.hidden = NO;
+    self.guiOptionsBarContainer.hidden = NO;
+    
+    // Alpha animation
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiDetailedOptionsBarContainer.alpha = 1;
+        self.guiOptionsBarContainer.alpha = 0;
+    }];
+    
+    // Translate animation
+    [UIView animateWithDuration:0.4 animations:^{
+        self.guiDetailedOptionsBarContainer.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        // Animation end state
+        self.guiDetailedOptionsBarContainer.hidden = NO;
+        self.guiOptionsBarContainer.hidden = YES;
+    }];
+    
 }
 
 #pragma mark - IB Actions
