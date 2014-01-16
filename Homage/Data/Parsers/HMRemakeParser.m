@@ -13,14 +13,19 @@
 
 -(void)parse
 {
-    
     NSDictionary *info = self.objectToParse;
+    [self parseRemake:info];
+    [DB.sh save];
+}
+
+-(void)parseRemake:(NSDictionary *)info
+{
     NSString *remakeID = info[@"_id"][@"$oid"];
     NSString *storyID = info[@"story_id"][@"$oid"];
     NSNumber *userID = [info numberForKey:@"user_id"];
     Story *story = [Story storyWithID:storyID inContext:self.ctx];
     User *user = [User userWithID:userID inContext:self.ctx];
-
+    
     Remake *remake = [Remake remakeWithID:remakeID story:story user:user inContext:self.ctx];
     remake.status = [info numberForKey:@"status"];
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
@@ -30,8 +35,6 @@
     }
     
     NSLog(@"Created new remake %@", remakeID);
-    
-    [DB.sh save];
 }
 
 -(void)parseFootage:(NSDictionary *)info forRemake:(Remake *)remake

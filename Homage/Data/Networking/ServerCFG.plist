@@ -15,7 +15,7 @@
 		<key>remake</key>
 		<string>remake</string>
 		<key>remakes/user</key>
-		<string>remakes/user/%@</string>
+		<string>remakes/user</string>
 		<key>footage</key>
 		<string>footage</string>
 		<key>text</key>

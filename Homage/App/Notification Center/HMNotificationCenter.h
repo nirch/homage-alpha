@@ -15,6 +15,9 @@
 #define HM_NOTIFICATION_SERVER_FETCHED_STORIES              @"Fetched Stories"
 #define HM_NOTIFICATION_SERVER_FETCHED_STORY_THUMBNAIL      @"Story Thumbnail Fetched"
 
+#define HM_NOTIFICATION_SERVER_FETCHED_USER_REMAKES         @"Fetched User Remakes"
+#define HM_NOTIFICATION_SERVER_DELETED_REMAKE               @"Deleted Remake"
+
 @interface HMNotificationCenter : NSObject
 
 @end

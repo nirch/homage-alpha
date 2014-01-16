@@ -111,18 +111,18 @@
     [user loginInContext:DB.sh.context];
     [DB.sh save];
 
-    // XXXXXXXX
-    // Go right to the recorder with a hard coded remake
-    // XXXXXXXX
-    NSString *remakeID = @"52d6e6e9db254509d000000a";
-    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    
-    if (remake) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"RecorderStoryboard" bundle:nil];
-        UIViewController<HMRemakerProtocol> *vc = [storyboard instantiateViewControllerWithIdentifier:@"Recorder"];
-        vc.remake = remake;
-        [self presentViewController:vc animated:YES completion:nil];
-    }
+//    // XXXXXXXX
+//    // Go right to the recorder with a hard coded remake
+//    // XXXXXXXX
+//    NSString *remakeID = @"52d7a02edb25451630000002";
+//    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+//    
+//    if (remake) {
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"RecorderStoryboard" bundle:nil];
+//        UIViewController<HMRemakerProtocol> *vc = [storyboard instantiateViewControllerWithIdentifier:@"Recorder"];
+//        vc.remake = remake;
+//        [self presentViewController:vc animated:YES completion:nil];
+//    }
 
 }
 

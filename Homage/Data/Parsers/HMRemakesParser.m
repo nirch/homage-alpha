@@ -10,4 +10,12 @@
 
 @implementation HMRemakesParser
 
+-(void)parse
+{
+    NSArray *remakesInfo = self.objectToParse;
+    for (NSDictionary *remakeInfo in remakesInfo) {
+        [self parseRemake:remakeInfo];
+    }
+}
+
 @end

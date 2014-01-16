@@ -110,35 +110,6 @@
             </objects>
             <point key="canvasLocation" x="1590" y="-104"/>
         </scene>
-        <!--Table View Controller - My Remakes-->
-        <scene sceneID="pEw-BG-lDJ">
-            <objects>
-                <tableViewController id="HU4-4e-hEz" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lxe-Gx-AlM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="DPi-O4-Tqp">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DPi-O4-Tqp" id="uAb-Yv-y6e">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="HU4-4e-hEz" id="GNR-Yy-RAU"/>
-                            <outlet property="delegate" destination="HU4-4e-hEz" id="IbY-BZ-AqY"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="My Remakes" id="c3K-mR-95b"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="znS-6J-hk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2107" y="559"/>
-        </scene>
         <!--Stories View Controller - Stories-->
         <scene sceneID="epo-Yb-jM8">
             <objects>
@@ -288,12 +259,55 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="HU4-4e-hEz" kind="relationship" relationship="rootViewController" id="Jwi-DE-Uy2"/>
+                        <segue destination="ajN-FZ-TFJ" kind="relationship" relationship="rootViewController" id="K6K-fG-TbG"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9gD-Vl-qFD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1590" y="559"/>
+            <point key="canvasLocation" x="1590" y="569"/>
+        </scene>
+        <!--User Remakes View Controller - Me-->
+        <scene sceneID="acv-6Q-23F">
+            <objects>
+                <viewController id="ajN-FZ-TFJ" customClass="HMUserRemakesViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BYX-WC-ImY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="s3s-qs-tgh">
+                                <rect key="frame" x="150" y="241" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading remakes..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nxd-Lr-oGe">
+                                <rect key="frame" x="72" y="212" width="177" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SJx-L7-7Hw">
+                                <rect key="frame" x="120" y="269" width="80" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Refresh">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedRefreshButton:" destination="ajN-FZ-TFJ" eventType="touchUpInside" id="tvB-Fv-nPO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Me" id="agk-co-LhZ"/>
+                    <connections>
+                        <outlet property="guiActivity" destination="s3s-qs-tgh" id="tzr-sn-Feb"/>
+                        <outlet property="guiLabel" destination="nxd-Lr-oGe" id="Q47-1T-3Z3"/>
+                        <outlet property="guiRefreshButton" destination="SJx-L7-7Hw" id="opI-1Y-Xre"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VnK-gz-fBb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2163" y="569"/>
         </scene>
     </scenes>
     <resources>

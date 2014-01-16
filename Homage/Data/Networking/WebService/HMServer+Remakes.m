@@ -9,6 +9,7 @@
 #import "HMServer+Remakes.h"
 #import "HMNotificationCenter.h"
 #import "HMRemakeParser.h"
+#import "HMRemakesParser.h"
 
 @implementation HMServer (Remakes)
 
@@ -29,15 +30,16 @@
 // Refetch all remakes for the provided user id.
 -(void)refetchRemakesForUserID:(NSNumber *)userID
 {
-    // TODO: finish implementation
+    // A simple get request to the server
+    // Example URL: http://54.204.34.168:4567/remakes/user/<user id>
+    // Returns (JSON) list and info of the remakes for user.
     
-//    // A simple get request to the server
-//    // Example URL: http://54.204.34.168:4567/remakes/
-//    // Returns (JSON) list and info of the available stories.
-//    [self getRelativeURLNamed:@"stories"
-//             notificationName:HM_NOTIFICATION_SERVER_FETCHED_STORIES
-//                       parser:[[HMStoriesParser alloc] init]
-//     ];
+    NSString *relativeURL = [self relativeURLNamed:@"remakes/user" withSuffix:userID.stringValue];
+    [self getRelativeURL:relativeURL
+              parameters:nil
+             notificationName:HM_NOTIFICATION_SERVER_FETCHED_USER_REMAKES
+                       parser:[[HMRemakesParser alloc] init]
+     ];
 }
 
 

@@ -54,7 +54,8 @@
     story.level =               [info numberForKey:@"level"];
     story.videoURL =            [info stringForKey:@"video"];
     story.thumbnailURL =        [info stringForKey:@"thumbnail"];
-
+    
+    
     // Parse the scenes of this story.
     for (NSDictionary *sceneInfo in info[@"scenes"])
         [self parseSceneWithInfo:sceneInfo forStory:story];

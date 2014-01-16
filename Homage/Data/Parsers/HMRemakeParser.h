@@ -10,4 +10,6 @@
 
 @interface HMRemakeParser : HMParser
 
+-(void)parseRemake:(NSDictionary *)info;
+
 @end

@@ -57,6 +57,20 @@
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
 }
 
+#pragma mark - URL named
+-(NSString *)relativeURLNamed:(NSString *)relativeURLName
+{
+    NSString *relativeURL = self.cfg[@"urls"][relativeURLName];
+    return relativeURL;
+}
+
+-(NSString *)relativeURLNamed:(NSString *)relativeURLName withSuffix:(NSString *)suffix
+{
+    NSString *relativeURL = self.cfg[@"urls"][relativeURLName];
+    relativeURL = [NSString stringWithFormat:@"%@/%@", relativeURL, suffix];
+    return relativeURL;
+}
+
 #pragma mark - Server CFG
 -(void)loadCFG
 {
@@ -80,17 +94,17 @@
 #pragma mark - GET requests
 // The most basic GET request
 -(void)getRelativeURLNamed:(NSString *)relativeURLName
+                parameters:(NSDictionary *)parameters
           notificationName:(NSString *)notificationName
                     parser:(HMParser *)parser
 {
     NSError *error;
-    
+    NSString *relativeURL = self.cfg[@"urls"][relativeURLName];
     //
     // Check if relative url with given name exists in ServerCFG.
     //
-    NSString *relativeURL = self.cfg[@"urls"][relativeURLName];
     if (!relativeURL) {
-
+        
         //
         // URL missing error.
         //
@@ -102,6 +116,20 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":error}];
         return;
     }
+    [self getRelativeURL:(NSString *)relativeURL
+              parameters:(NSDictionary *)parameters
+        notificationName:(NSString *)notificationName
+                  parser:(HMParser *)parser];
+}
+
+
+
+// The most basic GET request
+-(void)getRelativeURL:(NSString *)relativeURL
+           parameters:(NSDictionary *)parameters
+     notificationName:(NSString *)notificationName
+               parser:(HMParser *)parser
+{
 
     //
     // send GET Request to server
@@ -114,7 +142,7 @@
         //
         // Successful response from server.
         //
-        HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURLName, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
+        HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURL, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
     
         //
         // Parse response.
@@ -126,7 +154,7 @@
             //
             // Parser error.
             //
-            HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURLName, [parser.error localizedDescription]);
+            HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":parser.error}];
             return;
             
@@ -143,8 +171,8 @@
         //
         // Failed request.
         //
-        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURLName, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":error}];
         
     }];
 }
@@ -175,7 +203,14 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":error}];
         return;
     }
-    
+}
+
+// The most basic POST request
+-(void)postRelativeURL:(NSString *)relativeURL
+            parameters:(NSDictionary *)parameters
+      notificationName:(NSString *)notificationName
+                parser:(HMParser *)parser
+{
     //
     // send POST Request to server
     //
@@ -187,7 +222,7 @@
         //
         // Successful response from server.
         //
-        HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURLName, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
+        HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURL, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
         
         //
         // Parse response.
@@ -199,7 +234,7 @@
             //
             // Parser error.
             //
-            HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURLName, [parser.error localizedDescription]);
+            HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":parser.error}];
             return;
             
@@ -215,7 +250,7 @@
         //
         // Failed request.
         //
-        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURLName, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
         
     }];
