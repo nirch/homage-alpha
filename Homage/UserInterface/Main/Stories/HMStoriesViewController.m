@@ -67,6 +67,7 @@
 #pragma mark - Observers handlers
 -(void)onApplicationStartedNotification:(NSNotification *)notification
 {
+    HMGLogDebug(@"onApplicationStartedNotification recieved");
     //
     // Application notifies that local storage is ready and the app can start.
     //

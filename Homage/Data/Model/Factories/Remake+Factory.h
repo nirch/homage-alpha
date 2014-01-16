@@ -10,6 +10,13 @@
 
 @interface Remake (Factory)
 
+typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
+    HMGRemakeStatusNew,
+    HMGRemakeStatusInProgress,
+    HMGRemakeStatusRendering,
+    HMGRemakeStatusDone
+};
+
 // Creates or fetches a remake with given id, related to given story and user.
 +(Remake *)remakeWithID:(NSString *)sID story:(Story *)story user:(User *)user inContext:(NSManagedObjectContext *)context;
 

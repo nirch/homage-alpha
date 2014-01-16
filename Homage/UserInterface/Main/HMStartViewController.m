@@ -107,9 +107,11 @@
 -(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
-    User *user = [User userWithID:@"aviv@test.com" inContext:DB.sh.context];
+    User *user = [User userWithID:@"yoav@homage.it" inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
+    
+    HMGLogDebug(@"user is: %@" , user.email);
 
     // XXXXXXXX
     // Go right to the recorder with a hard coded remake

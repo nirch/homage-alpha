@@ -126,6 +126,8 @@
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED718869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
 		08E50ED818869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
+		26DC8F2A1888423F00F4DFB6 /* HMGMeTabVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DC8F271888423F00F4DFB6 /* HMGMeTabVC.m */; };
+		26DC8F2B1888423F00F4DFB6 /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DC8F291888423F00F4DFB6 /* HMGUserRemakeCVCell.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -260,6 +262,10 @@
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
 		08E50ED518869C57001A8B75 /* HMRecorderOptionsBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderOptionsBarViewController.h; path = Recorder/HMRecorderOptionsBarViewController.h; sourceTree = "<group>"; };
 		08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderOptionsBarViewController.m; path = Recorder/HMRecorderOptionsBarViewController.m; sourceTree = "<group>"; };
+		26DC8F261888423F00F4DFB6 /* HMGMeTabVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGMeTabVC.h; sourceTree = "<group>"; };
+		26DC8F271888423F00F4DFB6 /* HMGMeTabVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGMeTabVC.m; sourceTree = "<group>"; };
+		26DC8F281888423F00F4DFB6 /* HMGUserRemakeCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGUserRemakeCVCell.h; sourceTree = "<group>"; };
+		26DC8F291888423F00F4DFB6 /* HMGUserRemakeCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGUserRemakeCVCell.m; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -667,6 +673,10 @@
 		08BDB3231887EEF300AF1D73 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				26DC8F261888423F00F4DFB6 /* HMGMeTabVC.h */,
+				26DC8F271888423F00F4DFB6 /* HMGMeTabVC.m */,
+				26DC8F281888423F00F4DFB6 /* HMGUserRemakeCVCell.h */,
+				26DC8F291888423F00F4DFB6 /* HMGUserRemakeCVCell.m */,
 				08BDB3241887EF1700AF1D73 /* HMUserRemakesViewController.h */,
 				08BDB3251887EF1700AF1D73 /* HMUserRemakesViewController.m */,
 			);
@@ -847,8 +857,10 @@
 			files = (
 				08BDB34218882D0E00AF1D73 /* User.m in Sources */,
 				08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */,
+				26DC8F2A1888423F00F4DFB6 /* HMGMeTabVC.m in Sources */,
 				0831C7D91885DA1A0024406B /* HMStoryDetailsViewController.m in Sources */,
 				08BDB33E18882D0E00AF1D73 /* Story.m in Sources */,
+				26DC8F2B1888423F00F4DFB6 /* HMGUserRemakeCVCell.m in Sources */,
 				08BDB33618882D0D00AF1D73 /* Scene.m in Sources */,
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
 				081237931882BED400DA5D23 /* HMRecorderViewController.m in Sources */,

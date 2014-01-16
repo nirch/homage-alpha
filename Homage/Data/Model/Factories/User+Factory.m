@@ -17,6 +17,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%@",userID];
     User *user = [DB.sh fetchOrCreateEntityNamed:HM_USER withPredicate:predicate inContext:context];
     user.userID = userID;
+    user.email = userID;
     return user;
 }
 
