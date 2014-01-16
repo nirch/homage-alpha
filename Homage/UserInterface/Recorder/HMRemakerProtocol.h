@@ -14,5 +14,6 @@
 @property (nonatomic, readonly) NSNumber *currentSceneID;
 
 -(void)toggleOptions;
+-(void)dismissMessagesOverlay;
 
 @end

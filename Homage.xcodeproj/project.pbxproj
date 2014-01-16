@@ -102,6 +102,8 @@
 		0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */; };
 		08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
 		08845674188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
+		08BDB30F18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */; };
+		08BDB31018876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */; };
 		08E50EB318866A25001A8B75 /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EB218866A25001A8B75 /* HMVideoCameraViewController.m */; };
 		08E50EB418866A25001A8B75 /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EB218866A25001A8B75 /* HMVideoCameraViewController.m */; };
 		08E50EB718866B16001A8B75 /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EB618866B16001A8B75 /* AVCamPreviewView.m */; };
@@ -235,6 +237,8 @@
 		0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ExperimentalStoryboard.storyboard; sourceTree = "<group>"; };
 		08845671188494D300B94267 /* HMTestSliceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTestSliceViewController.h; sourceTree = "<group>"; };
 		08845672188494D300B94267 /* HMTestSliceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTestSliceViewController.m; sourceTree = "<group>"; };
+		08BDB30D18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderMessagesOverlayViewController.h; path = Recorder/HMRecorderMessagesOverlayViewController.h; sourceTree = "<group>"; };
+		08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderMessagesOverlayViewController.m; path = Recorder/HMRecorderMessagesOverlayViewController.m; sourceTree = "<group>"; };
 		08E50EB118866A25001A8B75 /* HMVideoCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMVideoCameraViewController.h; path = Recorder/HMVideoCameraViewController.h; sourceTree = "<group>"; };
 		08E50EB218866A25001A8B75 /* HMVideoCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMVideoCameraViewController.m; path = Recorder/HMVideoCameraViewController.m; sourceTree = "<group>"; };
 		08E50EB518866B16001A8B75 /* AVCamPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVCamPreviewView.h; path = Recorder/AVCamPreviewView.h; sourceTree = "<group>"; };
@@ -411,6 +415,7 @@
 				08E50EB518866B16001A8B75 /* AVCamPreviewView.h */,
 				08E50EB618866B16001A8B75 /* AVCamPreviewView.m */,
 				086D94B6188728210086C565 /* Child interfaces */,
+				08BDB30C18876EBB00AF1D73 /* Messages Overlays */,
 			);
 			name = Recorder;
 			sourceTree = "<group>";
@@ -661,6 +666,15 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
+		08BDB30C18876EBB00AF1D73 /* Messages Overlays */ = {
+			isa = PBXGroup;
+			children = (
+				08BDB30D18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.h */,
+				08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */,
+			);
+			name = "Messages Overlays";
+			sourceTree = "<group>";
+		};
 		08E50EB9188683DD001A8B75 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -864,6 +878,7 @@
 				0806FB2B1882944D00F0EF50 /* HMAppDelegate.m in Sources */,
 				086D94891886FF4E0086C565 /* Remake.m in Sources */,
 				086D94911886FF4E0086C565 /* Story.m in Sources */,
+				08BDB30F18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				086D940C1886D6FA0086C565 /* Text+Factory.m in Sources */,
 				086D94B1188713460086C565 /* Footage+Factory.m in Sources */,
 				086D93E21886CFAC0086C565 /* Remake+Factory.m in Sources */,
@@ -907,6 +922,7 @@
 				086D93D21886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				086D94A2188701EA0086C565 /* HMServer+Remakes.m in Sources */,
 				086D94861886FF4E0086C565 /* Scene.m in Sources */,
+				08BDB31018876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF831885356A00A6EF5E /* DB.m in Sources */,
 				0831C7E51885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				0840FFCA1885935400A6EF5E /* HMStoryCell.m in Sources */,

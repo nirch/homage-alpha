@@ -8,10 +8,20 @@
 
 #import "HMRecorderViewController.h"
 #import "HMRecorderChildInterface.h"
+#import "HMRecorderMessagesOverlayViewController.h"
+#import "DB.h"
+
+typedef NS_ENUM(NSInteger, HMRecorderState) {
+    HMRecorderStateJustStarted,
+    HMRecorderStateGeneralMessage,
+    HMRecorderStateRemakeContext,
+    HMRecorderStateRemakingScenes,
+    HMRecorderStateFinishedAllScenesMessage
+};
 
 @interface HMRecorderViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *guiGeneralInstructionsOverlayContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiMessagesOverlayContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiCameraContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiDismissButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiCameraSwitchingButton;
@@ -19,6 +29,9 @@
 @property (weak, nonatomic) IBOutlet UIView *guiDetailedOptionsBarContainer;
 
 @property (nonatomic) BOOL detailedOptionsShown;
+@property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
+
+@property (nonatomic, readonly) HMRecorderState recorderState;
 
 @end
 
@@ -49,6 +62,9 @@
     
     // Currently edited scene
     _currentSceneID = @(1);
+    _recorderState = HMRecorderStateJustStarted;
+
+    [self checkState];
 }
 
 -(void)initGUI
@@ -59,6 +75,21 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+#pragma mark - Recorder state flow
+-(void)checkState
+{
+    if (self.recorderState == HMRecorderStateJustStarted) {
+        // Show general message
+        _recorderState = HMRecorderStateGeneralMessage;
+        [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral];
+        return;
+    } else if (self.recorderState == HMRecorderStateGeneralMessage) {
+        // Dismissed general message. Show first
+        _recorderState = HMRecorderStateRemakeContext;
+        [self showRemakeContextMessage];
+    }
 }
 
 #pragma mark - Orientations
@@ -75,11 +106,59 @@
 #pragma mark - containment segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // Pass self as delegate to those who conform to the HMRecorderChildInterface protocol.
     id<HMRecorderChildInterface> vc = segue.destinationViewController;
-
     if ([vc conformsToProtocol:@protocol(HMRecorderChildInterface)]) {
         [vc setRemakerDelegate:self];
     }
+    
+    // Specific destination view controllers
+    if ([segue.identifier isEqualToString:@"messages overlay containment segue"]) {
+        _messagesOverlayVC = segue.destinationViewController;
+    }
+}
+
+#pragma mark - Messages overlay
+-(void)showMessagesOverlayWithMessageType:(NSInteger)messageType
+{
+    [self showMessagesOverlayWithMessageType:messageType info:nil];
+}
+
+-(void)showMessagesOverlayWithMessageType:(NSInteger)messageType info:(NSDictionary *)info
+{
+    [self.messagesOverlayVC showMessageOfType:messageType info:info];
+
+    // Show animated
+    self.guiMessagesOverlayContainer.hidden = NO;
+    self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiMessagesOverlayContainer.alpha = 1;
+        self.guiMessagesOverlayContainer.transform = CGAffineTransformIdentity;
+    }];
+}
+
+-(void)dismissMessagesOverlay
+{
+    // hide animted
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiMessagesOverlayContainer.alpha = 0;
+        self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    } completion:^(BOOL finished) {
+        self.guiMessagesOverlayContainer.hidden = YES;
+
+        // Check the recorder state and advance it if needed.
+        [self checkState];
+    }];
+}
+
+-(void)showRemakeContextMessage
+{
+    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeRemakeContext
+                                        info:@{
+                                               @"title":self.remake.story.name,
+                                               @"text":self.remake.story.descriptionText
+                                               }
+     ];
 }
 
 #pragma mark - toggle options bar
