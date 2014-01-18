@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "HMServer.h"
 #import "HMParser.h"
+#import "HMUploadManager.h"
 
 @interface HMServer()
 
@@ -45,6 +46,7 @@
     if (self) {
         [self loadCFG];
         [self initSessionManager];
+        //[self testUploadManager];
     }
     return self;
 }
@@ -55,6 +57,11 @@
     _session = [[AFHTTPSessionManager alloc] initWithBaseURL:self.serverURL sessionConfiguration:configuration];
     self.session.responseSerializer = [[AFJSONResponseSerializer alloc] init];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
+}
+
+-(void)testUploadManager
+{
+    [HMUploadManager sh];
 }
 
 #pragma mark - URL named

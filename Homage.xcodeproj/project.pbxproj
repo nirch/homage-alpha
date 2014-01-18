@@ -104,6 +104,12 @@
 		08BB3BD7188AECE4007FFB5E /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BB3BD5188AECE4007FFB5E /* Footage.m */; };
 		08BB3BDA188AECE4007FFB5E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BB3BD9188AECE4007FFB5E /* User.m */; };
 		08BB3BDB188AECE4007FFB5E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BB3BD9188AECE4007FFB5E /* User.m */; };
+		08BB3BDE188B042E007FFB5E /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BB3BDD188B042E007FFB5E /* HMUploadManager.m */; };
+		08BB3BDF188B042E007FFB5E /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BB3BDD188B042E007FFB5E /* HMUploadManager.m */; };
+		08BB3BE1188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */; };
+		08BB3BE2188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */; };
+		08BB3BE4188B0CAD007FFB5E /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */; };
+		08BB3BE5188B0CAD007FFB5E /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */; };
 		08BDB30F18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */; };
 		08BDB31018876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */; };
 		08BDB3261887EF1700AF1D73 /* HMUserRemakesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB3251887EF1700AF1D73 /* HMUserRemakesViewController.m */; };
@@ -242,6 +248,10 @@
 		08BB3BD5188AECE4007FFB5E /* Footage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Footage.m; sourceTree = "<group>"; };
 		08BB3BD8188AECE4007FFB5E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		08BB3BD9188AECE4007FFB5E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		08BB3BDC188B042E007FFB5E /* HMUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManager.h; sourceTree = "<group>"; };
+		08BB3BDD188B042E007FFB5E /* HMUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadManager.m; sourceTree = "<group>"; };
+		08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = "Libs/aws-ios-sdk-1.7.1/AWSRuntime.framework"; sourceTree = "<group>"; };
+		08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSS3.framework; path = "Libs/aws-ios-sdk-1.7.1/AWSS3.framework"; sourceTree = "<group>"; };
 		08BDB30D18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderMessagesOverlayViewController.h; path = Recorder/HMRecorderMessagesOverlayViewController.h; sourceTree = "<group>"; };
 		08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderMessagesOverlayViewController.m; path = Recorder/HMRecorderMessagesOverlayViewController.m; sourceTree = "<group>"; };
 		08BDB3241887EF1700AF1D73 /* HMUserRemakesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserRemakesViewController.h; sourceTree = "<group>"; };
@@ -274,7 +284,9 @@
 			files = (
 				0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */,
 				0806FA1418828AEB007514BE /* UIKit.framework in Frameworks */,
+				08BB3BE4188B0CAD007FFB5E /* AWSS3.framework in Frameworks */,
 				0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */,
+				08BB3BE1188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */,
 				8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +297,9 @@
 			files = (
 				0806FA2918828AEB007514BE /* XCTest.framework in Frameworks */,
 				08CD317E188A959F00B0CBF7 /* libPods.a in Frameworks */,
+				08BB3BE5188B0CAD007FFB5E /* AWSS3.framework in Frameworks */,
 				0806FA2B18828AEB007514BE /* UIKit.framework in Frameworks */,
+				08BB3BE2188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */,
 				0806FA2A18828AEB007514BE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +330,8 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */,
+				08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */,
 				0806FA0F18828AEB007514BE /* Foundation.framework */,
 				0806FA1118828AEB007514BE /* CoreGraphics.framework */,
 				0806FA1318828AEB007514BE /* UIKit.framework */,
@@ -550,6 +566,8 @@
 		0863D0AA1889CE2900B551FC /* S3 */ = {
 			isa = PBXGroup;
 			children = (
+				08BB3BDC188B042E007FFB5E /* HMUploadManager.h */,
+				08BB3BDD188B042E007FFB5E /* HMUploadManager.m */,
 			);
 			name = S3;
 			path = Networking/S3;
@@ -871,6 +889,7 @@
 				0840FF8E18854E6200A6EF5E /* HMStoriesViewController.m in Sources */,
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
+				08BB3BDE188B042E007FFB5E /* HMUploadManager.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
@@ -949,6 +968,7 @@
 				08E50ED818869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */,
 				086D94111886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
 				086D940D1886D6FA0086C565 /* Text+Factory.m in Sources */,
+				08BB3BDF188B042E007FFB5E /* HMUploadManager.m in Sources */,
 				08BB3BD7188AECE4007FFB5E /* Footage.m in Sources */,
 				08BB3BCF188AECE4007FFB5E /* Scene.m in Sources */,
 				086D93E31886CFAC0086C565 /* Remake+Factory.m in Sources */,
@@ -1068,6 +1088,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/aviv/DEV/workspaces/xcode/homage-alpha/Libs/aws-ios-sdk-1.7.1",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
@@ -1082,6 +1106,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/aviv/DEV/workspaces/xcode/homage-alpha/Libs/aws-ios-sdk-1.7.1",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
@@ -1100,6 +1128,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/aviv/DEV/workspaces/xcode/homage-alpha/Libs/aws-ios-sdk-1.7.1",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
@@ -1124,6 +1153,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/aviv/DEV/workspaces/xcode/homage-alpha/Libs/aws-ios-sdk-1.7.1",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
