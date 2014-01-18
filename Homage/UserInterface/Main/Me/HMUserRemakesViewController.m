@@ -43,7 +43,7 @@
     // Observe application start
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onFetchedUserRemakes:)
-                                                       name:HM_NOTIFICATION_SERVER_FETCHED_USER_REMAKES
+                                                       name:HM_NOTIFICATION_SERVER_USER_REMAKES
                                                      object:nil];
 }
 
@@ -54,6 +54,18 @@
     [self.guiActivity stopAnimating];
     self.guiRefreshButton.hidden = NO;
     self.guiLabel.text = @"Fetched.";
+    
+    // Example of iterating all user's remakes
+    User *user = User.current;
+    for (Remake *remake in user.remakes) {
+        NSLog(@"Remake ID:%@", remake.sID);
+    }
+    
+    // Example of deleting one of the remakes
+    Remake *remake = user.remakes.allObjects.lastObject;
+    if (remake) {
+        [HMServer.sh deleteRemakeWithID:remake.sID];
+    }
 }
 
 #pragma mark - IB Actions

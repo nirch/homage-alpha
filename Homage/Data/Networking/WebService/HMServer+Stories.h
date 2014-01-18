@@ -10,6 +10,15 @@
 
 @interface HMServer (Stories)
 
+///
+/**
+ *  A GET request to the server requesting info about the available stories.
+ *  Notification name when done: HM_NOTIFICATION_SERVER_STORIES.
+ *  Parser used: HMStoriesParser.
+ *  @code
+[HMServer.sh refetchStories];
+ *  @endcode
+ */
 -(void)refetchStories;
 
 @end

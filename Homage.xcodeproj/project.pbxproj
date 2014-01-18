@@ -54,6 +54,8 @@
 		0840FF9A188553BF00A6EF5E /* HMNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */; };
 		0840FFC91885935400A6EF5E /* HMStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FFC81885935400A6EF5E /* HMStoryCell.m */; };
 		0840FFCA1885935400A6EF5E /* HMStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FFC81885935400A6EF5E /* HMStoryCell.m */; };
+		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
+		0863D0A91889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		086D93CF1886C8BB0086C565 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
 		086D93D01886C8BB0086C565 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
 		086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CC1886C8BB0086C565 /* HMRemakeParser.m */; };
@@ -106,6 +108,7 @@
 		08BDB33F18882D0E00AF1D73 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB33D18882D0E00AF1D73 /* Story.m */; };
 		08BDB34218882D0E00AF1D73 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB34118882D0E00AF1D73 /* User.m */; };
 		08BDB34318882D0E00AF1D73 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB34118882D0E00AF1D73 /* User.m */; };
+		08CD317E188A959F00B0CBF7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		08E50EB318866A25001A8B75 /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EB218866A25001A8B75 /* HMVideoCameraViewController.m */; };
 		08E50EB418866A25001A8B75 /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EB218866A25001A8B75 /* HMVideoCameraViewController.m */; };
 		08E50EB718866B16001A8B75 /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EB618866B16001A8B75 /* AVCamPreviewView.m */; };
@@ -114,8 +117,6 @@
 		08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */; };
 		08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */; };
 		08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */; };
-		08E50EC1188685E1001A8B75 /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EC0188685E1001A8B75 /* Readme.txt */; };
-		08E50EC2188685E2001A8B75 /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EC0188685E1001A8B75 /* Readme.txt */; };
 		08E50EC618868AEF001A8B75 /* HMFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EC518868AEF001A8B75 /* HMFontLabel.m */; };
 		08E50EC718868AEF001A8B75 /* HMFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EC518868AEF001A8B75 /* HMFontLabel.m */; };
 		08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECA188697CE001A8B75 /* HMRoundView.m */; };
@@ -190,6 +191,8 @@
 		0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMNotificationCenter.m; sourceTree = "<group>"; };
 		0840FFC71885935400A6EF5E /* HMStoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryCell.h; sourceTree = "<group>"; };
 		0840FFC81885935400A6EF5E /* HMStoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryCell.m; sourceTree = "<group>"; };
+		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
+		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		086D93C91886C8BB0086C565 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
 		086D93CA1886C8BB0086C565 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
 		086D93CB1886C8BB0086C565 /* HMRemakeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeParser.h; sourceTree = "<group>"; };
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0806FA2918828AEB007514BE /* XCTest.framework in Frameworks */,
+				08CD317E188A959F00B0CBF7 /* libPods.a in Frameworks */,
 				0806FA2B18828AEB007514BE /* UIKit.framework in Frameworks */,
 				0806FA2A18828AEB007514BE /* Foundation.framework in Frameworks */,
 			);
@@ -430,6 +434,7 @@
 				081237941882CB6100DA5D23 /* ServerCFG.plist */,
 				081237D11882DA3D00DA5D23 /* HMServer.h */,
 				081237D21882DA3D00DA5D23 /* HMServer.m */,
+				0863D0AA1889CE2900B551FC /* S3 */,
 				086D94A5188702130086C565 /* LazyLoading */,
 				086D9498188701EA0086C565 /* WebService */,
 			);
@@ -536,8 +541,18 @@
 				0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */,
 				0840FF9218854F6C00A6EF5E /* NSNotificationCenter+Utils.h */,
 				0840FF9318854F6C00A6EF5E /* NSNotificationCenter+Utils.m */,
+				0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */,
+				0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */,
 			);
 			path = "Notification Center";
+			sourceTree = "<group>";
+		};
+		0863D0AA1889CE2900B551FC /* S3 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = S3;
+			path = Networking/S3;
 			sourceTree = "<group>";
 		};
 		086D93C81886C8BB0086C565 /* Parsers */ = {
@@ -786,7 +801,6 @@
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				0840FF7118852C6300A6EF5E /* Storyboard.storyboard in Resources */,
-				08E50EC1188685E1001A8B75 /* Readme.txt in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -801,7 +815,6 @@
 				0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				0806FA3318828AEB007514BE /* InfoPlist.strings in Resources */,
-				08E50EC2188685E2001A8B75 /* Readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +871,7 @@
 				08BDB33A18882D0E00AF1D73 /* Text.m in Sources */,
 				08E50ECF1886994A001A8B75 /* HMRoundButton.m in Sources */,
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
+				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
 				086D94A1188701EA0086C565 /* HMServer+Remakes.m in Sources */,
 				0840FF8E18854E6200A6EF5E /* HMStoriesViewController.m in Sources */,
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
@@ -924,6 +938,7 @@
 				08BDB31018876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF831885356A00A6EF5E /* DB.m in Sources */,
 				0831C7E51885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
+				0863D0A91889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
 				0840FFCA1885935400A6EF5E /* HMStoryCell.m in Sources */,
 				0840FF8F18854E6200A6EF5E /* HMStoriesViewController.m in Sources */,
 				0840FF7B1885351800A6EF5E /* MyManagedDocument.m in Sources */,
@@ -1077,6 +1092,7 @@
 		};
 		0806FA3C18828AEB007514BE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Homage.app/Homage";
@@ -1086,7 +1102,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Homage/Homage-Prefix.pch";
+				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1100,6 +1116,7 @@
 		};
 		0806FA3D18828AEB007514BE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Homage.app/Homage";
@@ -1109,7 +1126,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Homage/Homage-Prefix.pch";
+				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
 				INFOPLIST_FILE = "HomageTests/HomageTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";

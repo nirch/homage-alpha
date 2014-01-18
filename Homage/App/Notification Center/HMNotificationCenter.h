@@ -7,17 +7,28 @@
 //
 
 #import "NSNotificationCenter+Utils.h"
+#import "NSNotification+Utils.h"
 
 // General application states.
 #define HM_NOTIFICATION_APPLICATION_STARTED @"Application Started"
 
-// Fetches from the network.
-#define HM_NOTIFICATION_SERVER_FETCHED_STORIES              @"Fetched Stories"
-#define HM_NOTIFICATION_SERVER_FETCHED_STORY_THUMBNAIL      @"Story Thumbnail Fetched"
+// Fetches from the REST API.
+#define HM_NOTIFICATION_SERVER_STORIES              @"Server Stories"
 
-#define HM_NOTIFICATION_SERVER_FETCHED_USER_REMAKES         @"Fetched User Remakes"
-#define HM_NOTIFICATION_SERVER_FETCHED_REMAKE_THUMBNAIL     @"Remake Thumbnail Fetched"
-#define HM_NOTIFICATION_SERVER_DELETED_REMAKE               @"Deleted Remake"
+#define HM_NOTIFICATION_SERVER_REMAKE_CREATION      @"Server New Remake"
+#define HM_NOTIFICATION_SERVER_REMAKE               @"Server Remake"
+#define HM_NOTIFICATION_SERVER_USER_REMAKES         @"Server User Remakes"
+#define HM_NOTIFICATION_SERVER_REMAKE_DELETION      @"Server Remake Deletion"
+
+#define HM_NOTIFICATION_SERVER_FOOTAGE              @"Server Footage"
+#define HM_NOTIFICATION_SERVER_TEXT                 @"Server Text"
+#define HM_NOTIFICATION_SERVER_RENDER               @"Server Render"
+
+
+// Lazy loading notifications
+#define HM_NOTIFICATION_SERVER_STORY_THUMBNAIL      @"Server Story Thumbnail"
+#define HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL     @"Server Remake Thumbnail"
+
 
 @interface HMNotificationCenter : NSObject
 

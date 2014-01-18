@@ -7,10 +7,14 @@
 //
 
 #import "HMStoryDetailsViewController.h"
+
+#import "DB.h"
+#import "HMNotificationCenter.h"
+#import "HMServer+Remakes.h"
+
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
-#import "DB.h"
-#import "HMServer+Remakes.h"
+#import "HMRecorderViewController.h"
 
 @interface HMStoryDetailsViewController ()
 
@@ -23,9 +27,9 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initObservers];
 	[self initGUI];
 }
-
 
 -(void)initGUI
 {
@@ -35,17 +39,45 @@
     [self.guiBGImageView addMotionEffectWithAmount:-30];
 }
 
--(void)remakeStory
+#pragma mark - Observers
+-(void)initObservers
 {
-    [HMServer.sh remakeStoryWithID:self.story.sID forUserID:User.current.userID];
+    // Observe application start
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRemakeCreation:)
+                                                       name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
+                                                     object:nil];
 }
 
-#pragma mark - Navigation
--(void)navigateToRecorderForRemake:(Remake *)remake
+#pragma mark - Observers handlers
+-(void)onRemakeCreation:(NSNotification *)notification
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"RecorderStoryboard" bundle:nil];
-    UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Recorder"];
-    [self presentViewController:vc animated:YES completion:nil];
+    // Update UI
+    self.guiRemakeButton.enabled = YES;
+    [self.guiRemakeActivity stopAnimating];
+    
+    // Get the new remake object.
+    NSString *remakeID = notification.userInfo[@"remakeID"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    if (notification.isReportingError || !remake) {
+        [self remakeCreationFailMessage];
+        return;
+    }
+    
+    // Present the recorder for the newly created remake.
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+}
+
+#pragma mark - Alerts
+-(void)remakeCreationFailMessage
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                    message:@"Failed creating remake.\n\nTry again later."
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 #pragma mark - IB Actions
@@ -56,7 +88,7 @@
 {
     self.guiRemakeButton.enabled = NO;
     [self.guiRemakeActivity startAnimating];
-    [self remakeStory];
+    [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
 }
 
 

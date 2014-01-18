@@ -54,13 +54,13 @@
     // Observe refetching of stories
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onStoriesRefetched:)
-                                                       name:HM_NOTIFICATION_SERVER_FETCHED_STORIES
+                                                       name:HM_NOTIFICATION_SERVER_STORIES
                                                      object:nil];
 
     // Observe lazy loading thumbnails
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onStoryThumbnailLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_FETCHED_STORY_THUMBNAIL
+                                                       name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                                      object:nil];
 }
 
@@ -82,31 +82,42 @@
     //
     [self.refreshControl endRefreshing];
     [self refreshFromLocalStorage];
+
+    // A simple example:
+    // in case you want to update the UI when the notification is reporting that something went wrong (with a request to the server, for example).
+    if (notification.isReportingError) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                        message:@"Something went wrong :-(\n\nTry to reload the stories later."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        [alert show];
+        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
+    }
 }
 
 -(void)onStoryThumbnailLoaded:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
-    NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
     
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (error || !image) {
+    if (notification.isReportingError || !image) {
         story.thumbnail = nil;
     } else {
         story.thumbnail = image;
     }
     
-    // If row not visible, no need to show the image
+    // If row not visible, no need to update ui for this image.
     if (![self.tableView.indexPathsForVisibleRows containsObject:indexPath]) return;
     
-    // Reveal the image
+    // Reveal the image animation
     HMStoryCell *cell = (HMStoryCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     cell.guiThumbImage.alpha = 0;
     cell.guiThumbImage.image = story.thumbnail;
     cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
-    
     [UIView animateWithDuration:0.7 animations:^{
         cell.guiThumbImage.alpha = 1;
         cell.guiThumbImage.transform = CGAffineTransformIdentity;
@@ -196,19 +207,20 @@
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.guiStoryNameLabel.text = story.name;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
+    cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
+    cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
+}
 
-    if (story.thumbnail) {
-        cell.guiThumbImage.image = story.thumbnail;
-        cell.guiThumbImage.alpha = 1;
-    } else {
-        cell.guiThumbImage.alpha = 0;
-        cell.guiThumbImage.image = nil;
-        [HMServer.sh lazyLoadImageFromURL:story.thumbnailURL
-                         placeHolderImage:nil
-                         notificationName:HM_NOTIFICATION_SERVER_FETCHED_STORY_THUMBNAIL
-                                     info:@{@"indexPath":indexPath}
-         ];
-    }
+#pragma mark - Lazy loading
+-(UIImage *)thumbForStory:(Story *)story forIndexPath:(NSIndexPath *)indexPath
+{
+    if (story.thumbnail) return story.thumbnail;
+    [HMServer.sh lazyLoadImageFromURL:story.thumbnailURL
+                     placeHolderImage:nil
+                     notificationName:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
+                                 info:@{@"indexPath":indexPath}
+    ];
+    return nil;
 }
 
 #pragma mark - Table delegate

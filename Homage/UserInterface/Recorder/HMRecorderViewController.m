@@ -41,6 +41,15 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 @synthesize remake = _remake;
 @synthesize currentSceneID = _currentSceneID;
 
++(HMRecorderViewController *)recorderForRemake:(Remake *)remake
+{
+    if (![remake isKindOfClass:[Remake class]]) return nil;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"RecorderStoryboard" bundle:nil];
+    HMRecorderViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Recorder"];
+    vc.remake = remake;
+    return vc;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

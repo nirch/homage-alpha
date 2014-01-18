@@ -112,7 +112,7 @@
 -(void)configureCell:(HMSceneCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger sceneNumber = self.scenes.count - indexPath.row;
-    cell.guiSceneLabel.text = [NSString stringWithFormat:@"SCENE %02d", sceneNumber];
+    cell.guiSceneLabel.text = [NSString stringWithFormat:@"SCENE %02ld", (long)sceneNumber];
 }
 
 #pragma mark - IB Actions

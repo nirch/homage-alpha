@@ -10,10 +10,71 @@
 
 @interface HMServer (Remakes)
 
-// Creates a new remake for the given story and user.
--(void)remakeStoryWithID:(NSString *)storyID forUserID:(NSString *)userID;
+///
+/**
+ *  A POST request to the server requesting to create a new remake of a story by a user.
 
-// Refetch all remakes for the provided user id.
+ *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKE_CREATION.
+
+ *  Parser used: HMRemakeParser.
+
+ *  @code
+ 
+[HMServer.sh remakeStoryWithID:self.story.sID forUserID:User.current.userID];
+ 
+ *  @endcode
+ *  @param storyID The id of the story
+ *  @param userID  The id of the user
+ */
+-(void)createRemakeForStoryWithID:(NSString *)storyID forUserID:(NSString *)userID;
+
+///
+/**
+ *  A GET request to the server requesting info about a remake with given ID.
+ 
+ *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKE_CREATION.
+ 
+ *  Parser used: HMRemakeParser.
+ 
+ *  @code
+ 
+ [HMServer.sh remakeStoryWithID:self.story.sID forUserID:User.current.userID];
+ 
+ *  @endcode
+ *  @param storyID The id of the story
+ *  @param userID  The id of the user
+ */
+-(void)refetchRemakeWithID:(NSString *)remakeID;
+
+
+///
+/**
+ *  A GET request to the server requesting info about remakes related to a user.
+
+ *  Notification name when done: HM_NOTIFICATION_SERVER_USER_REMAKES.
+
+ *  Parser used: HMRemakesParser.
+
+ *  @code
+[HMServer.sh refetchRemakesForUserID:User.current.userID];
+ *  @endcode
+ *  @param userID  The id of the user
+ */
 -(void)refetchRemakesForUserID:(NSString *)userID;
+
+///
+/**
+ *  A DELETE request to the server requesting deletion of the remake with the given id.
+ 
+ *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKE_DELETION.
+ 
+ *  Parser used: HMRemakeParser.
+ 
+ *  @code
+[HMServer.sh deleteRemakeWithID:remakeID];
+ *  @endcode
+ *  @param remakeID  The id of the remake to delete.
+ */
+-(void)deleteRemakeWithID:(NSString *)remakeID;
 
 @end

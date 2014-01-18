@@ -137,6 +137,11 @@
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"GET request:%@/%@", self.session.baseURL, relativeURL);
 
+    // TODO: remove this when DELETE ops are fixed to also return JSON
+    self.session.responseSerializer = [[AFJSONResponseSerializer alloc] init];
+    self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
+    // -------------
+
     [self.session GET:relativeURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
         //
@@ -163,7 +168,7 @@
         //
         // Successful request and parsing.
         //
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:parser.parseInfo];
 
     
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -220,6 +225,11 @@
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"POST request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
+
+    // TODO: remove this when DELETE ops are fixed to also return JSON
+    self.session.responseSerializer = [[AFJSONResponseSerializer alloc] init];
+    self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
+    // -------------
     
     [self.session POST:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
@@ -247,10 +257,98 @@
         //
         // Successful request and parsing.
         //
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:parser.parseInfo];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
+        //
+        // Failed request.
+        //
+        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        
+    }];
+}
+
+#pragma mark - POST requests
+// The most basic DELETE request
+-(void)deleteRelativeURLNamed:(NSString *)relativeURLName
+                   parameters:(NSDictionary *)parameters
+             notificationName:(NSString *)notificationName
+                       parser:(HMParser *)parser
+{
+    NSError *error;
+    
+    //
+    // Check if relative url with given name exists in ServerCFG.
+    //
+    NSString *relativeURL = self.cfg[@"urls"][relativeURLName];
+    if (!relativeURL) {
+        
+        //
+        // URL missing error.
+        //
+        NSString *errorMessage = [NSString stringWithFormat:@"Missing url named:%@ . Check ServerCFG.plist.", relativeURLName];
+        HMGLogWarning(errorMessage);
+        error = [NSError errorWithDomain:ERROR_DOMAIN_NETWORK
+                                    code:HMNetworkErrorMissingURL
+                                userInfo:@{NSLocalizedDescriptionKey:errorMessage}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":error}];
+        return;
+    }
+    [self deleteRelativeURL:(NSString *)relativeURL
+                 parameters:(NSDictionary *)parameters
+           notificationName:(NSString *)notificationName
+                     parser:(HMParser *)parser];
+}
+
+// The most basic DELETE request
+-(void)deleteRelativeURL:(NSString *)relativeURL
+              parameters:(NSDictionary *)parameters
+        notificationName:(NSString *)notificationName
+                  parser:(HMParser *)parser
+{
+    //
+    // send DELETE Request to server
+    //
+    NSDate *requestDateTime = [NSDate date];
+    HMGLogDebug(@"DELETE request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
+
+    self.session.responseSerializer = [AFHTTPResponseSerializer new]; // Todo: remove this when they fix the DELETE response to be JSON
+    
+    [self.session DELETE:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        //
+        // Successful response from server.
+        //
+        HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURL, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
+        
+        NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"Delete response:%@", string);
+        
+//        //
+//        // Parse response.
+//        //
+//        parser.objectToParse = responseObject;
+//        [parser parse];
+//        if (parser.error) {
+//            
+//            //
+//            // Parser error.
+//            //
+//            HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
+//            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":parser.error}];
+//            return;
+//            
+//        }
+        
+        //
+        // Successful request and parsing.
+        //
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:parser.parseInfo];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         //
         // Failed request.
         //
