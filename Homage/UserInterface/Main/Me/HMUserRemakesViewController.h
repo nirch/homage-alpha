@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HMUserRemakesViewController : UIViewController
+@interface HMUserRemakesViewController : UIViewController<
+    UIPickerViewDataSource,
+    UIPickerViewDelegate
+>
 
 @end
