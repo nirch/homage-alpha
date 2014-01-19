@@ -20,8 +20,8 @@
     // Returns (JSON) list and info of the available stories.
     [self getRelativeURLNamed:@"stories"
                    parameters:nil
-             notificationName:HM_NOTIFICATION_SERVER_FETCHED_STORIES
-                       parser:[[HMStoriesParser alloc] init]
+             notificationName:HM_NOTIFICATION_SERVER_STORIES
+                       parser:[HMStoriesParser new]
      ];
 }
 

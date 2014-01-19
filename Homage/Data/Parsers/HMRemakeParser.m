@@ -34,8 +34,6 @@
     for (NSDictionary *footageInfo in info[@"footages"]) {
         [self parseFootage:footageInfo forRemake:remake];
     }
-    
-    NSLog(@"Created new remake %@", remakeID);
 }
 
 -(void)parseFootage:(NSDictionary *)info forRemake:(Remake *)remake
@@ -87,7 +85,7 @@
         "$oid" = 52cddaf80fad07c3290001aa;
     };
     thumbnail = "https://s3.amazonaws.com/homageapp/Stories/StarWars/Star_Wars_Thumbnail.png";
-    "user_id" = 666;
+    "user_id" = @'test@gmail.com';
 }
 */
 

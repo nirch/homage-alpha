@@ -29,6 +29,9 @@ typedef NS_ENUM(NSInteger, HMParserErrorCode) {
 // The last error
 @property (nonatomic, readonly) NSError *error;
 
+// Extra information the parser stores while parsing.
+@property (nonatomic, readonly) NSMutableDictionary *parseInfo;
+
 -(void)parse;
 
 @end

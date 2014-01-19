@@ -12,9 +12,13 @@
 	<dict>
 		<key>stories</key>
 		<string>stories</string>
-		<key>remake</key>
+		<key>new remake</key>
 		<string>remake</string>
-		<key>remakes/user</key>
+		<key>existing remake</key>
+		<string>remake</string>
+		<key>delete remake</key>
+		<string>remake</string>
+		<key>user&apos;s remakes</key>
 		<string>remakes/user</string>
 		<key>footage</key>
 		<string>footage</string>

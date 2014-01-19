@@ -14,7 +14,7 @@
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="videoURL" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="footages" toMany="YES" deletionRule="Nullify" destinationEntity="Footage" inverseName="remake" inverseEntity="Footage" syncable="YES"/>
+        <relationship name="footages" toMany="YES" deletionRule="Cascade" destinationEntity="Footage" inverseName="remake" inverseEntity="Footage" syncable="YES"/>
         <relationship name="story" maxCount="1" deletionRule="Nullify" destinationEntity="Story" inverseName="remakes" inverseEntity="Story" syncable="YES"/>
         <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="remakes" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -42,9 +42,9 @@
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="videoURL" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="remakes" toMany="YES" deletionRule="Nullify" destinationEntity="Remake" inverseName="story" inverseEntity="Remake" syncable="YES"/>
-        <relationship name="scenes" toMany="YES" deletionRule="Nullify" destinationEntity="Scene" inverseName="story" inverseEntity="Scene" syncable="YES"/>
-        <relationship name="texts" toMany="YES" deletionRule="Nullify" destinationEntity="Text" inverseName="story" inverseEntity="Text" syncable="YES"/>
+        <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="story" inverseEntity="Remake" syncable="YES"/>
+        <relationship name="scenes" toMany="YES" deletionRule="Cascade" destinationEntity="Scene" inverseName="story" inverseEntity="Scene" syncable="YES"/>
+        <relationship name="texts" toMany="YES" deletionRule="Cascade" destinationEntity="Text" inverseName="story" inverseEntity="Text" syncable="YES"/>
     </entity>
     <entity name="Text" representedClassName="Text" syncable="YES">
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
@@ -60,14 +60,14 @@
         <attribute name="isLoggedIn" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="isPublic" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="remakes" toMany="YES" deletionRule="Nullify" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
+        <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <elements>
         <element name="Footage" positionX="106" positionY="135" width="128" height="118"/>
         <element name="Remake" positionX="295" positionY="180" width="128" height="178"/>
         <element name="Scene" positionX="648" positionY="36" width="128" height="208"/>
         <element name="Story" positionX="475" positionY="135" width="128" height="238"/>
-        <element name="Text" positionX="648" positionY="260" width="128" height="118"/>
+        <element name="Text" positionX="648" positionY="332" width="128" height="118"/>
         <element name="User" positionX="108" positionY="297" width="128" height="148"/>
     </elements>
 </model>

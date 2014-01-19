@@ -29,13 +29,16 @@
 @property (readonly, nonatomic) MyManagedDocument *dbDocument;
 @property (readonly, nonatomic) NSManagedObjectContext *context;
 
+// Singleton
 +(DB *)sharedInstance;
 +(DB *)sh;
 
+// Managed document create/open/save.
 -(void)useDocument;
 -(void)useDocumentWithSuccessHandler:(void (^)())successHandler failHandler:(void (^)())failHandler;
 -(void)save;
 
+// Helper methods
 -(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 -(id)fetchOrCreateEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 

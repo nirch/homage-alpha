@@ -16,6 +16,7 @@
     self = [super init];
     if (self) {
         _ctx = DB.sh.context;
+        _parseInfo = [NSMutableDictionary new];
     }
     return self;
 }
