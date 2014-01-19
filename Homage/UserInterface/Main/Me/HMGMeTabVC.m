@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     User *user = [User current];
     HMGLogDebug(@"current user is: %@" , user.email);
     [super viewDidLoad];
@@ -47,6 +48,7 @@
     
     self.playingMovieIndex = -1;
     self.headLine.text = NSLocalizedString(@"ME_TAB_HEADLINE_TITLE", nil);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
 
@@ -55,6 +57,8 @@
     UIRefreshControl *tempRefreshControl = [[UIRefreshControl alloc] init];
     [self.userRemakesCV addSubview:tempRefreshControl];
     self.refreshControl = tempRefreshControl;
+    [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
+    self.view.backgroundColor = [UIColor clearColor];
     self.userRemakesCV.alwaysBounceVertical = YES;
 }
 
@@ -81,19 +85,22 @@
     // Observe lazy loading thumbnails
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeThumbnailLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_FETCHED_STORY_THUMBNAIL
+                                                       name:HM_NOTIFICATION_SERVER_FETCHED_REMAKE_THUMBNAIL
                                                      object:nil];
 }
 
 #pragma mark - Observers handlers
 -(void)onApplicationStartedNotification:(NSNotification *)notification
 {
+    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGLogDebug(@"onApplicationStartedNotification recieved");
     //
     // Application notifies that local storage is ready and the app can start.
     //
     [self.refreshControl beginRefreshing];
     [self refetchRemakesFromServer];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onRemakesRefetched:(NSNotification *)notification
@@ -101,13 +108,16 @@
     //
     // Backend notifies that local storage was updated with stories.
     //
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGLogDebug(@"onRemakesRefetched recieved");
     [self.refreshControl endRefreshing];
     [self refreshFromLocalStorage];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGLogDebug(@"onRemakeThumbnailLoaded recieved");
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
@@ -134,18 +144,29 @@
         cell.guiThumbImage.alpha = 1;
         cell.guiThumbImage.transform = CGAffineTransformIdentity;
     }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)onPulledToRefetch
+{
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    [self refetchRemakesFromServer];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 #pragma mark - Refresh stories
 -(void)refetchRemakesFromServer
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Refetch stories from the server
     [HMServer.sh refetchRemakesForUserID:[[User current] email]];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)refreshFromLocalStorage
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
@@ -153,6 +174,7 @@
         return;
     }
     [self.userRemakesCV reloadData];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - NSFetchedResultsController
@@ -165,7 +187,6 @@
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
-    HMGLogDebug(@"current user is: %@" , [User current].email);
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]];
     fetchRequest.fetchBatchSize = 20;
     
@@ -183,7 +204,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.userRemakesCV reloadData];
+    //[self.userRemakesCV reloadData];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -234,6 +255,7 @@
     
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    //cell border design
     [cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
     [cell.layer setBorderWidth:1.0f];
     [cell.layer setCornerRadius:7.5f];
@@ -241,10 +263,13 @@
     [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
     [cell.layer setShadowRadius:8.0];
     [cell.layer setShadowOpacity:0.8];
+    //
 
+    //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
     cell.shareButton.tag = indexPath.item;
     cell.actionButton.tag = indexPath.item;
     cell.closeMovieButton.tag = indexPath.item;
+    //
         
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     
@@ -256,7 +281,7 @@
         cell.guiThumbImage.image = nil;
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
-                         notificationName:HM_NOTIFICATION_SERVER_FETCHED_STORY_THUMBNAIL
+                         notificationName:HM_NOTIFICATION_SERVER_FETCHED_REMAKE_THUMBNAIL
                                      info:@{@"indexPath":indexPath}
          ];
     }
@@ -268,6 +293,7 @@
 
 -(void)updateUIOfRemakeCell:(HMGUserRemakeCVCell *)cell withStatus:(NSNumber *)status
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *imagePath;
     UIImage *bgimage;
     
@@ -275,7 +301,7 @@
     {
         case HMGRemakeStatusInProgress:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"underconsruction" ofType:@"png"];
+            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"underconsruction.png" ofType:nil];
             bgimage = [UIImage imageWithContentsOfFile:imagePath];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:YES];
@@ -285,7 +311,7 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"pb_play_icon" ofType:@"png"];
+            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"pb_play_icon.png" ofType:nil];
             bgimage = [UIImage imageWithContentsOfFile:imagePath];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:NO];
@@ -314,6 +340,7 @@
             break;
             
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
 
@@ -325,6 +352,7 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    HMGLogDebug(@"remake details: status: %d , URL: %@" , remake.status.integerValue , remake.videoURL);
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     

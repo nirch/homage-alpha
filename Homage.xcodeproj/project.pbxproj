@@ -126,6 +126,11 @@
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED718869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
 		08E50ED818869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
+		2679638A188ACE4F00D19047 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26796389188ACE4F00D19047 /* Settings.bundle */; };
+		2679638F188ACF2600D19047 /* CustomSubviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2679638D188ACF2600D19047 /* CustomSubviewController.m */; };
+		26796390188ACF2600D19047 /* CustomSubviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2679638E188ACF2600D19047 /* CustomSubviewController.xib */; };
+		26796393188AD08100D19047 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26796391188AD08100D19047 /* InfoPlist.strings */; };
+		26796394188AD08100D19047 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26796392188AD08100D19047 /* Localizable.strings */; };
 		26DC8F2A1888423F00F4DFB6 /* HMGMeTabVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DC8F271888423F00F4DFB6 /* HMGMeTabVC.m */; };
 		26DC8F2B1888423F00F4DFB6 /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DC8F291888423F00F4DFB6 /* HMGUserRemakeCVCell.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
@@ -262,6 +267,12 @@
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
 		08E50ED518869C57001A8B75 /* HMRecorderOptionsBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderOptionsBarViewController.h; path = Recorder/HMRecorderOptionsBarViewController.h; sourceTree = "<group>"; };
 		08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderOptionsBarViewController.m; path = Recorder/HMRecorderOptionsBarViewController.m; sourceTree = "<group>"; };
+		26796389188ACE4F00D19047 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = settings/Settings.bundle; sourceTree = "<group>"; };
+		2679638C188ACF2600D19047 /* CustomSubviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomSubviewController.h; path = "settings views/CustomSubviewController.h"; sourceTree = "<group>"; };
+		2679638D188ACF2600D19047 /* CustomSubviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSubviewController.m; path = "settings views/CustomSubviewController.m"; sourceTree = "<group>"; };
+		2679638E188ACF2600D19047 /* CustomSubviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomSubviewController.xib; path = "settings views/CustomSubviewController.xib"; sourceTree = "<group>"; };
+		26796391188AD08100D19047 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
+		26796392188AD08100D19047 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
 		26DC8F261888423F00F4DFB6 /* HMGMeTabVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGMeTabVC.h; sourceTree = "<group>"; };
 		26DC8F271888423F00F4DFB6 /* HMGMeTabVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGMeTabVC.m; sourceTree = "<group>"; };
 		26DC8F281888423F00F4DFB6 /* HMGUserRemakeCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGUserRemakeCVCell.h; sourceTree = "<group>"; };
@@ -330,6 +341,7 @@
 		0806FA1518828AEB007514BE /* Homage */ = {
 			isa = PBXGroup;
 			children = (
+				26796389188ACE4F00D19047 /* Settings.bundle */,
 				08E50EC0188685E1001A8B75 /* Readme.txt */,
 				0806FB281882944D00F0EF50 /* App */,
 				0806FB2F188294CE00F0EF50 /* UserInterface */,
@@ -341,6 +353,8 @@
 		0806FA1618828AEB007514BE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				26796391188AD08100D19047 /* InfoPlist.strings */,
+				26796392188AD08100D19047 /* Localizable.strings */,
 				0806FA1718828AEB007514BE /* Homage-Info.plist */,
 				0806FA1B18828AEB007514BE /* main.m */,
 				0806FA1D18828AEB007514BE /* Homage-Prefix.pch */,
@@ -673,6 +687,7 @@
 		08BDB3231887EEF300AF1D73 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				2679638B188ACF1400D19047 /* settings views */,
 				26DC8F261888423F00F4DFB6 /* HMGMeTabVC.h */,
 				26DC8F271888423F00F4DFB6 /* HMGMeTabVC.m */,
 				26DC8F281888423F00F4DFB6 /* HMGUserRemakeCVCell.h */,
@@ -710,6 +725,16 @@
 				08E50ECE1886994A001A8B75 /* HMRoundButton.m */,
 			);
 			path = Round;
+			sourceTree = "<group>";
+		};
+		2679638B188ACF1400D19047 /* settings views */ = {
+			isa = PBXGroup;
+			children = (
+				2679638C188ACF2600D19047 /* CustomSubviewController.h */,
+				2679638D188ACF2600D19047 /* CustomSubviewController.m */,
+				2679638E188ACF2600D19047 /* CustomSubviewController.xib */,
+			);
+			name = "settings views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -791,12 +816,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
+				26796394188AD08100D19047 /* Localizable.strings in Resources */,
 				0806FB371882A58F00F0EF50 /* RecorderStoryboard.storyboard in Resources */,
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				0840FF7118852C6300A6EF5E /* Storyboard.storyboard in Resources */,
 				08E50EC1188685E1001A8B75 /* Readme.txt in Resources */,
+				2679638A188ACE4F00D19047 /* Settings.bundle in Resources */,
+				26796390188ACF2600D19047 /* CustomSubviewController.xib in Resources */,
+				26796393188AD08100D19047 /* InfoPlist.strings in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -878,6 +907,7 @@
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
 				08E50EB718866B16001A8B75 /* AVCamPreviewView.m in Sources */,
+				2679638F188ACF2600D19047 /* CustomSubviewController.m in Sources */,
 				086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */,
 				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
