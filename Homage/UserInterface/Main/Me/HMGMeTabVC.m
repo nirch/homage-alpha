@@ -26,6 +26,8 @@
 @property (strong,nonatomic) NSArray *userRemakes;
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
+@property (weak,nonatomic) Remake *remakeToDelete;
+@property (weak, nonatomic) IBOutlet UILabel *noRemakesLabel;
 
 @end
 
@@ -59,7 +61,10 @@
     self.refreshControl = tempRefreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
     self.view.backgroundColor = [UIColor clearColor];
+    [self.userRemakesCV setBackgroundColor:[UIColor clearColor]];
     self.userRemakesCV.alwaysBounceVertical = YES;
+    self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
+    [self.noRemakesLabel setHidden:YES];
 }
 
 -(void)initContent
@@ -79,13 +84,18 @@
     // Observe refetching of stories
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakesRefetched:)
-                                                       name:HM_NOTIFICATION_SERVER_FETCHED_USER_REMAKES
+                                                       name:HM_NOTIFICATION_SERVER_USER_REMAKES
                                                      object:nil];
     
     // Observe lazy loading thumbnails
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeThumbnailLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_FETCHED_REMAKE_THUMBNAIL
+                                                       name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
+                                                     object:nil];
+    // Observe deletion of remake
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRemakeDeletion:)
+                                                       name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
                                                      object:nil];
 }
 
@@ -147,6 +157,24 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
+-(void)onRemakeDeletion:(NSNotification *)notification
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"onRemakeDeletion recieved");
+    [self refetchRemakesFromServer];
+    
+    if (notification.isReportingError) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                        message:@"Something went wrong :-(\n\nTry to delete the remake later."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        [alert show];
+        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
+    }
+}
+
 -(void)onPulledToRefetch
 {
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -174,6 +202,7 @@
         return;
     }
     [self.userRemakesCV reloadData];
+    [self handleNoRemakes];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -275,6 +304,7 @@
     cell.shareButton.tag = indexPath.item;
     cell.actionButton.tag = indexPath.item;
     cell.closeMovieButton.tag = indexPath.item;
+    cell.deleteButton.tag = indexPath.item;
     //
         
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
@@ -287,11 +317,12 @@
         cell.guiThumbImage.image = nil;
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
-                         notificationName:HM_NOTIFICATION_SERVER_FETCHED_REMAKE_THUMBNAIL
+                         notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                      info:@{@"indexPath":indexPath}
          ];
     }
     
+    cell.storyNameLabel.text = remake.story.name;
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -300,7 +331,6 @@
 -(void)updateUIOfRemakeCell:(HMGUserRemakeCVCell *)cell withStatus:(NSNumber *)status
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSString *imagePath;
     UIImage *bgimage;
     
     switch (status.integerValue)
@@ -345,6 +375,15 @@
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
+}
+
+-(void)handleNoRemakes
+{
+    if ([self.userRemakesCV numberOfItemsInSection:0] == 0) {
+        [self.noRemakesLabel setHidden:NO];
+    } else {
+        [self.noRemakesLabel setHidden:YES];
+    }
 }
 
 #pragma mark cell action button
@@ -398,7 +437,7 @@
     [cell.guiThumbImage setHidden:YES];
     [cell.buttonsView setHidden:YES];
     [cell.moviePlaceHolder setHidden:NO];
-    [self.movieplayer setFullscreen:YES animated:YES];
+    [self.movieplayer setFullscreen:NO animated:YES];
 }
 
 - (IBAction)closeMovieButtonPushed:(UIButton *)sender
@@ -415,6 +454,38 @@
     [remakeCell.guiThumbImage setHidden:NO];
     [remakeCell.buttonsView setHidden:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
+}
+
+
+- (IBAction)deleteRemake:(UIButton *)sender
+{
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    self.remakeToDelete = remake;
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"DELETE_REMAKE", nil) message:NSLocalizedString(@"APPROVE_DELETION", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
+    [alertView show];
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    //NO?
+    if (buttonIndex == 0) {
+        self.remakeToDelete = nil;
+    }
+    //YES?
+    if (buttonIndex == 1) {
+        NSString *remakeID = self.remakeToDelete.sID;
+        HMGLogDebug(@"user chose to delete remake with id: %@" , remakeID);
+        [HMServer.sh deleteRemakeWithID:remakeID];
+        [DB.sh.context deleteObject:self.remakeToDelete];
+        self.remakeToDelete = nil;
+    }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark settings
@@ -454,7 +525,7 @@
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.videoURL , nil];
    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     [activityViewController setValue:shareString forKey:@"subject"];
-    activityViewController.excludedActivityTypes = @[UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     //activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:activityViewController animated:YES completion:^{}];
     

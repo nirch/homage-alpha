@@ -37,4 +37,14 @@
 /*this is the headline title of "me" tab*/
 "ME_TAB_HEADLINE_TITLE" = "My Stories";
 
+/*these are the strings appearing to the user when he wants to delete a remake from his personal area*/
+"DELETE_REMAKE" = "Delete remake";
+"APPROVE_DELETION" = "Would you like to delete this remake?";
+"YES" = "Yes";
+"NO" = "No";
+
+/*in me screen, when you have no remakes, this label will show*/
+"NO_REMAKES" = "(no remakes)";
+
+
 

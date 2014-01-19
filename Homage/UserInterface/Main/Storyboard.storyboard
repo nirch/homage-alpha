@@ -328,8 +328,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nBO-G7-mhb" userLabel="Label - no remakes label">
+                                <rect key="frame" x="13" y="213" width="291" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="70" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="zSo-Xw-45U">
-                                <rect key="frame" x="0.0" y="49" width="320" height="444"/>
+                                <rect key="frame" x="0.0" y="49" width="320" height="383"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bs7-l7-LoP">
                                     <size key="itemSize" width="319" height="180"/>
@@ -371,15 +378,32 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="319" height="180"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
+                                                        <view contentMode="scaleToFill" id="HcE-Tm-cwT" userLabel="labelBG">
+                                                            <rect key="frame" x="5" y="144" width="160" height="32"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PBd-7c-2kj">
+                                                                    <rect key="frame" x="7" y="0.0" width="153" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
+                                                        </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xnf-kT-Sf2">
                                                             <rect key="frame" x="0.0" y="6" width="40" height="33"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal" backgroundImage="trash_recyclebin_empty_closed">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="deleteRemake:" destination="k3P-hU-fx4" eventType="touchUpInside" id="fin-Bb-XCH"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="M0A-XO-3Ed">
-                                                            <rect key="frame" x="3" y="147" width="35" height="33"/>
+                                                            <rect key="frame" x="276" y="73" width="35" height="33"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal" backgroundImage="share_orange">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -425,6 +449,7 @@
                                             <outlet property="moviePlaceHolder" destination="la2-3O-w2A" id="Kv8-Hg-gDg"/>
                                             <outlet property="remakeButton" destination="zVP-Pe-Sxq" id="3EJ-ei-Kxt"/>
                                             <outlet property="shareButton" destination="M0A-XO-3Ed" id="Xvy-86-MlX"/>
+                                            <outlet property="storyNameLabel" destination="PBd-7c-2kj" id="K1c-MX-zit"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -457,12 +482,26 @@
                     <tabBarItem key="tabBarItem" title="Me" image="tp_pause_button.png" id="hwr-Ao-2ZT"/>
                     <connections>
                         <outlet property="headLine" destination="ZWW-oB-3aY" id="FMQ-LI-8K8"/>
+                        <outlet property="noRemakesLabel" destination="nBO-G7-mhb" id="anI-pC-TjJ"/>
                         <outlet property="userRemakesCV" destination="zSo-Xw-45U" id="OGs-Ur-uwW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mWY-33-g8n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1596" y="653"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ZwD-13-MrU">
+            <objects>
+                <viewController id="G3D-o2-by7" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QjP-xh-L3b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KQJ-uC-IbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>

@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *remakeButton;
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeMovieButton;
+@property (weak, nonatomic) IBOutlet UILabel *storyNameLabel;
 
 @end

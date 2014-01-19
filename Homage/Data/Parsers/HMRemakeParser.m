@@ -30,6 +30,7 @@
     remake.status = [info numberForKey:@"status"];
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
     remake.videoURL = [info stringForKey:@"video"];
+    self.parseInfo[@"remakeID"] = remakeID;
     
     for (NSDictionary *footageInfo in info[@"footages"]) {
         [self parseFootage:footageInfo forRemake:remake];
