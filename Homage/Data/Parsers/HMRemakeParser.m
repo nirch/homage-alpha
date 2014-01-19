@@ -29,6 +29,7 @@
     Remake *remake = [Remake remakeWithID:remakeID story:story user:user inContext:self.ctx];
     remake.status = [info numberForKey:@"status"];
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
+    remake.videoURL = [info stringForKey:@"video"];
     
     for (NSDictionary *footageInfo in info[@"footages"]) {
         [self parseFootage:footageInfo forRemake:remake];

@@ -187,7 +187,7 @@
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
     // Create the fetched results controller and return it.
@@ -210,9 +210,15 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     
+    //movie is playing in full screen, nothing should happen
+    if (self.movieplayer.isFullscreen == YES) return;
+    
+    //no movie is playing. nothing should happen
     if (self.playingMovieIndex == -1) return;
+    
     HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:otherRemakeCell];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -301,8 +307,7 @@
     {
         case HMGRemakeStatusInProgress:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"underconsruction.png" ofType:nil];
-            bgimage = [UIImage imageWithContentsOfFile:imagePath];
+            bgimage = [UIImage imageNamed:@"underconsruction"];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
@@ -311,8 +316,7 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"pb_play_icon.png" ofType:nil];
-            bgimage = [UIImage imageWithContentsOfFile:imagePath];
+            bgimage = [UIImage imageNamed:@"pb_play_icon"];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:NO];
             cell.shareButton.enabled = YES;
@@ -322,8 +326,7 @@
         
         case HMGRemakeStatusNew:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            imagePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"underconsruction.png" ofType:nil];
-            bgimage = [UIImage imageWithContentsOfFile:imagePath];
+            bgimage = [UIImage imageNamed:@"underconsruction"];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
@@ -395,7 +398,7 @@
     [cell.guiThumbImage setHidden:YES];
     [cell.buttonsView setHidden:YES];
     [cell.moviePlaceHolder setHidden:NO];
-    [self.movieplayer setFullscreen:NO animated:YES];
+    [self.movieplayer setFullscreen:YES animated:YES];
 }
 
 - (IBAction)closeMovieButtonPushed:(UIButton *)sender
