@@ -8,7 +8,7 @@
 
 #import "DB.h"
 
-@interface HMStoriesViewController : UITableViewController<
+@interface HMStoriesViewController : UIViewController<
     NSFetchedResultsControllerDelegate
 >
 

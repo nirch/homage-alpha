@@ -10,9 +10,30 @@
 
 @implementation HMStoryCell
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (id)initWithFrame:(CGRect)frame
 {
-    [super setSelected:selected animated:animated];
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+    }
+    return self;
 }
+
+/*- (void)awakeFromNib {
+ [self.expandedView setHidden:YES];
+ CGRect frame = self.bounds;
+ frame.size.width = 121;
+ self.bounds = frame;
+ }*/
+
+/*
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
+
 
 @end

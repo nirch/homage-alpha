@@ -7,27 +7,27 @@
 //
 
 #import "HMGMeTabVC.h"
-#import <MediaPlayer/MediaPlayer.h>
-#import <UIKit/UIKit.h>
+//#import <MediaPlayer/MediaPlayer.h>
+//#import <UIKit/UIKit.h>
 #import "HMGLog.h"
 #import "HMGUserRemakeCVCell.h"
 #import "HMServer+Remakes.h"
 #import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
+#import <ALMoviePlayerController/ALMoviePlayerController.h>
+#import "HMFontLabel.h"
 
 
+@interface HMGMeTabVC () <UICollectionViewDataSource,UICollectionViewDelegate,ALMoviePlayerControllerDelegate>
 
-@interface HMGMeTabVC () <UICollectionViewDataSource,UICollectionViewDelegate>
-
-@property (strong,nonatomic) MPMoviePlayerController *movieplayer;
+@property (strong,nonatomic) ALMoviePlayerController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UILabel *headLine;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
-@property (strong,nonatomic) NSArray *userRemakes;
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak,nonatomic) Remake *remakeToDelete;
-@property (weak, nonatomic) IBOutlet UILabel *noRemakesLabel;
+@property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
 
 @end
 
@@ -38,10 +38,8 @@
 - (void)viewDidLoad
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    User *user = [User current];
-    HMGLogDebug(@"current user is: %@" , user.email);
     [super viewDidLoad];
-    [self.refreshControl beginRefreshing];
+    //[self.refreshControl beginRefreshing];
     [self refetchRemakesFromServer];
 
     [self initGUI];
@@ -49,39 +47,48 @@
     [self initContent];
     
     self.playingMovieIndex = -1;
-    self.headLine.text = NSLocalizedString(@"ME_TAB_HEADLINE_TITLE", nil);
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
 
 -(void)initGUI
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    //init refresh control
     UIRefreshControl *tempRefreshControl = [[UIRefreshControl alloc] init];
     [self.userRemakesCV addSubview:tempRefreshControl];
     self.refreshControl = tempRefreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
-    self.view.backgroundColor = [UIColor clearColor];
+    
+    //self.view.backgroundColor = [UIColor clearColor];
     [self.userRemakesCV setBackgroundColor:[UIColor clearColor]];
     self.userRemakesCV.alwaysBounceVertical = YES;
+    
     self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
     [self.noRemakesLabel setHidden:YES];
+    
+    UIColor *homageColor = [UIColor colorWithRed:255 green:125 blue:95 alpha:1];
+    self.headLine.text = NSLocalizedString(@"ME_TAB_HEADLINE_TITLE", nil);
+    [self.headLine setTextColor:homageColor];
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initContent
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refreshFromLocalStorage];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
-    // Observe application start
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onApplicationStartedNotification:)
-                                                       name:HM_NOTIFICATION_APPLICATION_STARTED
-                                                     object:nil];
-    
-    // Observe refetching of stories
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
+    // Observe refetching of remakes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakesRefetched:)
                                                        name:HM_NOTIFICATION_SERVER_USER_REMAKES
@@ -97,29 +104,17 @@
                                                    selector:@selector(onRemakeDeletion:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
                                                      object:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+
 }
 
 #pragma mark - Observers handlers
--(void)onApplicationStartedNotification:(NSNotification *)notification
-{
-    
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"onApplicationStartedNotification recieved");
-    //
-    // Application notifies that local storage is ready and the app can start.
-    //
-    [self.refreshControl beginRefreshing];
-    [self refetchRemakesFromServer];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
-
 -(void)onRemakesRefetched:(NSNotification *)notification
 {
     //
     // Backend notifies that local storage was updated with stories.
     //
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"onRemakesRefetched recieved");
     [self.refreshControl endRefreshing];
     [self refreshFromLocalStorage];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -128,7 +123,6 @@
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"onRemakeThumbnailLoaded recieved");
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
     NSError *error = info[@"error"];
@@ -160,7 +154,6 @@
 -(void)onRemakeDeletion:(NSNotification *)notification
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"onRemakeDeletion recieved");
     [self refetchRemakesFromServer];
     
     if (notification.isReportingError) {
@@ -173,11 +166,12 @@
         [alert show];
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onPulledToRefetch
 {
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refetchRemakesFromServer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -210,6 +204,7 @@
 // Lazy instantiation of the fetched results controller.
 -(NSFetchedResultsController *)fetchedResultsController
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // If already exists, just return it.
     if (_fetchedResultsController) return _fetchedResultsController;
     
@@ -222,6 +217,8 @@
     // Create the fetched results controller and return it.
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return _fetchedResultsController;
 }
 
@@ -233,14 +230,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    //[self.userRemakesCV reloadData];
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     
     //movie is playing in full screen, nothing should happen
-    if (self.movieplayer.isFullscreen == YES) return;
+    if (self.moviePlayer.isFullscreen == YES) return;
     
     //no movie is playing. nothing should happen
     if (self.playingMovieIndex == -1) return;
@@ -249,13 +246,6 @@
     [self closeMovieInCell:otherRemakeCell];
     
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 #pragma mark user remakes collection view
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -324,6 +314,14 @@
     
     cell.storyNameLabel.text = remake.story.name;
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
+    
+    if (self.playingMovieIndex == indexPath.item)
+    {
+        [self configureCellForMoviePlaying:cell active:YES];
+    } else {
+        [self configureCellForMoviePlaying:cell active:NO];
+    }
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -337,7 +335,7 @@
     {
         case HMGRemakeStatusInProgress:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            bgimage = [UIImage imageNamed:@"underconsruction"];
+            bgimage = [UIImage imageNamed:@"complete"];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
@@ -346,7 +344,7 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            bgimage = [UIImage imageNamed:@"pb_play_icon"];
+            bgimage = [UIImage imageNamed:@"play"];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             [cell.shareButton setHidden:NO];
             cell.shareButton.enabled = YES;
@@ -394,7 +392,6 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    HMGLogDebug(@"remake details: status: %d , URL: %@" , remake.status.integerValue , remake.videoURL);
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     
@@ -425,9 +422,29 @@
         [self closeMovieInCell:otherRemakeCell];
     }
     
+    //self.currentMovieContainerCell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+    self.playingMovieIndex = indexPath.item;
+    
     NSURL *URL = [NSURL URLWithString:videoURL];
     
-    self.movieplayer = [[MPMoviePlayerController alloc] initWithContentURL:URL];
+    //init moviePlayer
+    self.moviePlayer = [[ALMoviePlayerController alloc] initWithFrame:cell.bounds];
+    self.moviePlayer.view.alpha = 1.f;
+    self.moviePlayer.delegate = self; //IMPORTANT!
+    
+    //create the controls
+    ALMoviePlayerControls *movieControls = [[ALMoviePlayerControls alloc] initWithMoviePlayer:self.moviePlayer style:ALMoviePlayerControlsStyleEmbedded];
+    [movieControls setBarHeight:50.f];
+    [movieControls setTimeRemainingDecrements:YES];
+    [self.moviePlayer setControls:movieControls];
+    
+    //set videoURL for playing
+    [self.moviePlayer setContentURL:URL];
+    [self configureCellForMoviePlaying:cell active:YES];
+    [self.moviePlayer play];
+    
+    //old code for MPMoviePlayerController
+    /*self.movieplayer = [[MPMoviePlayerController alloc] initWithContentURL:URL];
     self.movieplayer.controlStyle = MPMovieControlStyleEmbedded;
     self.movieplayer.scalingMode = MPMovieScalingModeAspectFit;
     [self.movieplayer.view setFrame: cell.bounds];
@@ -437,8 +454,39 @@
     [cell.guiThumbImage setHidden:YES];
     [cell.buttonsView setHidden:YES];
     [cell.moviePlaceHolder setHidden:NO];
-    [self.movieplayer setFullscreen:NO animated:YES];
+    [self.movieplayer setFullscreen:NO animated:YES];*/
 }
+
+-(void)configureCellForMoviePlaying:(HMGUserRemakeCVCell *)cell active:(BOOL)active
+{
+    if (active)
+    {
+        [cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
+        [cell.guiThumbImage setHidden:YES];
+        [cell.buttonsView setHidden:YES];
+        [cell.moviePlaceHolder setHidden:NO];
+    } else
+    {
+        [cell.moviePlaceHolder setHidden:YES];
+        [cell.guiThumbImage setHidden:NO];
+        [cell.buttonsView setHidden:NO];
+    }
+}
+
+- (void)moviePlayerWillMoveFromWindow
+{
+    //movie player must be readded to this view upon exiting fullscreen mode.
+    //if (![self.view.subviews containsObject:self.moviePlayer.view])
+        //[self.view addSubview:self.moviePlayer.view];
+    
+    //you MUST use [ALMoviePlayerController setFrame:] to adjust frame, NOT [ALMoviePlayerController.view setFrame:]
+    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
+    
+    [cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
+    //[self.currentMovieContainerCell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:self.currentMovieContainerCell.closeMovieButton];
+    [self.moviePlayer setFrame:cell.bounds];
+}
+
 
 - (IBAction)closeMovieButtonPushed:(UIButton *)sender
 {
@@ -448,12 +496,11 @@
 
 -(void)closeMovieInCell:(HMGUserRemakeCVCell *)remakeCell
 {
-    [self.movieplayer stop];
-    self.movieplayer = nil;
-    [remakeCell.moviePlaceHolder setHidden:YES];
-    [remakeCell.guiThumbImage setHidden:NO];
-    [remakeCell.buttonsView setHidden:NO];
+    [self.moviePlayer stop];
+    self.moviePlayer = nil;
+    [self configureCellForMoviePlaying:remakeCell active:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
+    //self.currentMovieContainerCell = nil;
 }
 
 
@@ -531,7 +578,6 @@
     
 }
 
-
 #pragma mark helper functions
 -(void)displayViewBounds:(UIView *)view
 {
@@ -552,5 +598,10 @@
     return cell;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 @end

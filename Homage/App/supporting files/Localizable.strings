@@ -34,8 +34,9 @@
 /*this message will show the users what the missing takes that he needs to shoot in order to render the final movie*/
 "MISSING_SEGMENTS_ERROR" = "why you no film segments: %@";
 
-/*this is the headline title of "me" tab*/
+/*this is the headline title of "me" and "stories" tab*/
 "ME_TAB_HEADLINE_TITLE" = "My Stories";
+"STORIES_TAB_HEADLINE_TITLE" = "Stories";
 
 /*these are the strings appearing to the user when he wants to delete a remake from his personal area*/
 "DELETE_REMAKE" = "Delete remake";
@@ -46,5 +47,7 @@
 /*in me screen, when you have no remakes, this label will show*/
 "NO_REMAKES" = "(no remakes)";
 
+/*in stories tab ,when you have no stories, this label will show*/
+"NO_STORIES" = "(no stories)";
 
 

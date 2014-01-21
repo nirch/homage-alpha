@@ -107,7 +107,8 @@
 -(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
-    User *user = [User userWithID:@"yoav@homage.it" inContext:DB.sh.context];
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
+    User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
     
@@ -146,7 +147,7 @@
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
 @end

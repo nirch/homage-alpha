@@ -6,9 +6,12 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-@interface HMStoryCell : UITableViewCell
+#import "HMFontLabel.h"
 
-@property (weak, nonatomic) IBOutlet UILabel *guiStoryNameLabel;
+@interface HMStoryCell : UICollectionViewCell
+
+@property (weak, nonatomic) IBOutlet  HMFontLabel *guiStoryNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
+
 
 @end
