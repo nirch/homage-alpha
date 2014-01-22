@@ -14,6 +14,4 @@
     @import UIKit;
     @import Foundation;
     #import "HMGLog.h"
-//    #import "HMNotificationCenter.h"
-//    #import "DB.h"
 #endif

@@ -10,6 +10,7 @@
 #import "DB.h"
 #import "HMNotificationCenter.h"
 #import "HMRemakerProtocol.h"
+#import "HMRecorderViewController.h"
 
 @interface HMStartViewController ()
 
@@ -43,7 +44,7 @@
 
 -(void)initGUI
 {
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2"]];
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2"]];
 }
 
 #pragma mark - Splash View
@@ -111,19 +112,11 @@
     [user loginInContext:DB.sh.context];
     [DB.sh save];
 
-//    // XXXXXXXX
-//    // Go right to the recorder with a hard coded remake
-//    // XXXXXXXX
-//    NSString *remakeID = @"52d7a02edb25451630000002";
-//    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-//    
-//    if (remake) {
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"RecorderStoryboard" bundle:nil];
-//        UIViewController<HMRemakerProtocol> *vc = [storyboard instantiateViewControllerWithIdentifier:@"Recorder"];
-//        vc.remake = remake;
-//        [self presentViewController:vc animated:YES completion:nil];
-//    }
-
+    Remake *remake = user.remakes.allObjects.lastObject;
+    if (remake) {
+        HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 -(void)failedStartingApplication

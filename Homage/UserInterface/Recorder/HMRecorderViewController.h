@@ -13,6 +13,7 @@
 @interface HMRecorderViewController : UIViewController<
     HMRemakerProtocol
 >
+
 /** Creates a new recorder view controller for the related remake.
 
  Example usage:

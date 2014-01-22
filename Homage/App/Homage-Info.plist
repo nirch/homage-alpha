@@ -29,6 +29,8 @@
 		<string>DINOT-CondBold.otf</string>
 		<string>DINOT-Regular.otf</string>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UIMainStoryboardFile</key>
 	<string>Storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>

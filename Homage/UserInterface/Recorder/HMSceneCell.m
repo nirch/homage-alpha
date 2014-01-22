@@ -22,8 +22,40 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    
+    if (selected) {
+        self.guiSceneLabel.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        [UIView animateWithDuration:1.0 animations:^{
+            self.guiSceneLabel.transform = CGAffineTransformIdentity;
+        }];
+    }
+}
 
-    // Configure the view for the selected state
+-(void)setReadyState:(HMFootageReadyState)readyState
+{
+    if (readyState == HMFootageReadyStateReadyForFirstRetake) {
+        // Ready for first retake
+        self.guiSceneLabel.highlighted = YES;
+        self.guiSceneLabel.enabled = YES;
+        self.guiSceneLockedIcon.hidden = YES;
+        self.guiSceneTimeLabel.hidden = NO;
+        self.guiSceneRetakeIcon.hidden = YES;
+    } else if (readyState == HMFootageReadyStateReadyForSecondRetake) {
+        // Ready for second retake.
+        self.guiSceneLabel.highlighted = NO;
+        self.guiSceneLabel.enabled = YES;
+        self.guiSceneLockedIcon.hidden = YES;
+        self.guiSceneTimeLabel.hidden = YES;
+        self.guiSceneRetakeIcon.hidden = NO;
+    } else {
+        // Locked
+        self.guiSceneLabel.highlighted = NO;
+        self.guiSceneLabel.enabled = NO;
+        self.guiSceneLockedIcon.hidden = NO;
+        self.guiSceneTimeLabel.hidden = YES;
+        self.guiSceneRetakeIcon.hidden = YES;
+    }
+    
 }
 
 @end
