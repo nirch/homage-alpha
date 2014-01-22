@@ -57,6 +57,7 @@
     CGRect bounds = view.bounds;
     self.frame = bounds;
     self.toolbar.barStyle = UIBarStyleBlack;
+    self.tintColor = [UIColor greenColor];
     view.backgroundColor = [UIColor clearColor]; // Makes the containing view clear colored
     [view insertSubview:self atIndex:0];
 }

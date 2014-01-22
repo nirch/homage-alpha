@@ -6,9 +6,14 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#import "DB.h"
 #import "NSDictionary+TypeSafeValues.h"
 
 #define ERROR_DOMAIN_PARSERS @"Parser error"
+
+// If object with url_property is different than the new url parsed to info[key] then clear then clear the OBJECT.CACHE_PROPERTY
+#define CLEAR_CACHE_CHECK(OBJECT, URL_PROPERTY, CACHE_PROPERTY, KEY) if (![OBJECT.URL_PROPERTY isEqualToString:[info stringForKey:KEY]]) OBJECT.CACHE_PROPERTY = nil
+
 
 typedef NS_ENUM(NSInteger, HMParserErrorCode) {
     HMParserErrorUnimplemented,

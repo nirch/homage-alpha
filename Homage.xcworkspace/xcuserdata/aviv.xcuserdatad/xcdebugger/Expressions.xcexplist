@@ -3,6 +3,36 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[HMVideoCameraViewController configureCameraForFrameRate:]:HMVideoCameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "device.">
+            </PersistentString>
+            <PersistentString
+               value = "x[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[HMRecorderDetailedOptionsBarViewController onMoviePlayerLoadStateDidChange:]:HMRecorderDetailedOptionsBarViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.moviePlayer.loadState">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ALMoviePlayerController movieTimedOut]:ALMoviePlayerController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[HMStoriesViewController refreshFromLocalStorage]:HMStoriesViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.fetchedResultsController.allobjects">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Story(Factory) findSceneWithID:]:Story+Factory.m">
          <PersistentStrings>
             <PersistentString

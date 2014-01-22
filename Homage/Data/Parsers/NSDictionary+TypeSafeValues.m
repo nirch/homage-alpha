@@ -33,6 +33,7 @@
 {
     id value = self[key];
     if ([value isKindOfClass:[NSDecimalNumber class]]) return value;
+    if ([value isKindOfClass:[NSNumber class]]) return [NSDecimalNumber decimalNumberWithString:[value stringValue]];
     return nil;
 }
 

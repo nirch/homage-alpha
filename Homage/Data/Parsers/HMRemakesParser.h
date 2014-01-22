@@ -10,4 +10,6 @@
 
 @interface HMRemakesParser : HMRemakeParser
 
+@property (nonatomic) BOOL shouldRemoveOlderRemakes;
+
 @end

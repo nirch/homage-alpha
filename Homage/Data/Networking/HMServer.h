@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
     HMNetworkErrorMissingURL,
     HMNetworkErrorGetRequestFailed,
     HMNetworkErrorPostRequestFailed,
-    HMNetworkErrorDeleteRequestFailed
+    HMNetworkErrorDeleteRequestFailed,
+    HMNetworkErrorImageLoadingFailed
 };
 
 
@@ -46,6 +47,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)getRelativeURLNamed:(NSString *)relativeURLName
                 parameters:(NSDictionary *)parameters
           notificationName:(NSString *)notificationName
+                      info:(NSDictionary *)info
                     parser:(HMParser *)parser;
 
 
@@ -67,6 +69,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)getRelativeURL:(NSString *)relativeURL
            parameters:(NSDictionary *)parameters
      notificationName:(NSString *)notificationName
+                 info:(NSDictionary *)info
                parser:(HMParser *)parser;
 
 #pragma mark - POST requests
@@ -88,6 +91,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)postRelativeURLNamed:(NSString *)relativeURLName
                  parameters:(NSDictionary *)parameters
            notificationName:(NSString *)notificationName
+                       info:(NSDictionary *)info
                      parser:(HMParser *)parser;
 
 ///
@@ -108,6 +112,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)postRelativeURL:(NSString *)relativeURL
             parameters:(NSDictionary *)parameters
       notificationName:(NSString *)notificationName
+                  info:(NSDictionary *)info
                 parser:(HMParser *)parser;
 
 
@@ -130,6 +135,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)deleteRelativeURLNamed:(NSString *)relativeURLName
                    parameters:(NSDictionary *)parameters
              notificationName:(NSString *)notificationName
+                         info:(NSDictionary *)info
                        parser:(HMParser *)parser;
 
 
@@ -151,6 +157,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)deleteRelativeURL:(NSString *)relativeURL
               parameters:(NSDictionary *)parameters
         notificationName:(NSString *)notificationName
+                    info:(NSDictionary *)info
                   parser:(HMParser *)parser;
 
 @end

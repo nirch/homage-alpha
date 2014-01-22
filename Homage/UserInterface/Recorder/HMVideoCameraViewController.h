@@ -10,8 +10,8 @@
 
 #import "HMRecorderChildInterface.h"
 
-@interface HMVideoCameraViewController : UIViewController<
-    HMRecorderChildInterface
->
+@interface HMVideoCameraViewController : UIViewController
+
+
 
 @end

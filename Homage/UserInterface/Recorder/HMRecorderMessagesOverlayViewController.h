@@ -10,8 +10,9 @@
 
 typedef NS_ENUM(NSInteger, HMRecorderMessagesType) {
     HMRecorderMessagesTypeGeneral,
-    HMRecorderMessagesTypeRemakeContext,
-    HMRecorderMessagesTypeSceneContext
+    HMRecorderMessagesTypeSceneContext,
+    HMRecorderMessagesTypeFinishedScene,
+    HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene
 };
 
 @interface HMRecorderMessagesOverlayViewController : UIViewController<

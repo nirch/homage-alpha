@@ -20,5 +20,25 @@
     return scene;
 }
 
++(NSString *)titleForSceneBySceneID:(NSNumber *)sceneID
+{
+    return [NSString stringWithFormat:@"SCENE %ld", (long)sceneID.integerValue];
+}
+
+-(NSString *)titleForSceneID
+{
+    return [Scene titleForSceneBySceneID:self.sID];
+}
+
+-(NSString *)titleForTime
+{
+    double seconds = self.duration.doubleValue / 1000.0f;
+    return [NSString stringWithFormat:@"%3.1f", seconds];
+}
+
+-(NSTimeInterval)durationInSeconds
+{
+    return self.duration.doubleValue / 1000.f;
+}
 
 @end

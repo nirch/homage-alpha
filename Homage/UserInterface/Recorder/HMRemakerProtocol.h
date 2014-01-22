@@ -8,6 +8,13 @@
 
 @class Remake;
 
+#define HM_INFO_KEY_RECORDING_STOP_REASON    @"Recording Stop Reason"
+
+typedef NS_ENUM(NSInteger, HMRecordingStopReason) {
+    HMRecordingStopReasonUserCanceled,
+    HMRecordingStopReasonEndedSuccessfully
+};
+
 @protocol HMRemakerProtocol <NSObject>
 
 @property (nonatomic) Remake *remake;
@@ -15,5 +22,9 @@
 
 -(void)toggleOptions;
 -(void)dismissMessagesOverlay;
+
+@optional
+-(void)selectSceneID:(NSNumber *)sceneID;
+-(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID;
 
 @end

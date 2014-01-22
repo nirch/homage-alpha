@@ -11,8 +11,11 @@
 #import "HMTestSliceViewController.h"
 #import "AWPieSliceView.h"
 #import "UIView+MotionEffect.h"
+#import "HMRoundCountdownLabel.h"
 
 @interface HMTestSliceViewController ()
+
+@property (weak, nonatomic) IBOutlet HMRoundCountdownLabel *guiCountDownLabel;
 
 @end
 
@@ -44,5 +47,11 @@
     self.guiSlider.value = ((double)arc4random() / ARC4RANDOM_MAX);
     [self updateSliceWithCurrentValue];
 }
+
+- (IBAction)onPressedStartCountdownButton:(id)sender
+{
+    [self.guiCountDownLabel startTicking];
+}
+
 
 @end

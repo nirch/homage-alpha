@@ -7,11 +7,14 @@
 //
 
 #import "HMRecorderChildInterface.h"
+#import "HMCountDownDelegate.h"
 
 @interface HMRecorderDetailedOptionsBarViewController : UIViewController<
     HMRecorderChildInterface,
     UITableViewDataSource,
-    UITableViewDelegate
+    UITableViewDelegate,
+    UIScrollViewDelegate,
+    HMCountDownDelegate
 >
 
 

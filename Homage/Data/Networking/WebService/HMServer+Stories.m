@@ -21,6 +21,7 @@
     [self getRelativeURLNamed:@"stories"
                    parameters:nil
              notificationName:HM_NOTIFICATION_SERVER_STORIES
+                         info:nil
                        parser:[HMStoriesParser new]
      ];
 }
