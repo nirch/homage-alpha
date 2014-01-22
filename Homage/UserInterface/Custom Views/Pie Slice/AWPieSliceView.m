@@ -23,6 +23,7 @@
 -(void)doInitialSetup
 {
     _containerLayer = [CALayer layer];
+    _value = 1.0;
     self.layer.mask = self.containerLayer;
 }
 
@@ -43,14 +44,14 @@
     return self;
 }
 
--(id)initWithSliceValue:(float)value
-{
-    if (self) {
-        [self doInitialSetup];
-        self.value = value;
-    }
-    return self;
-}
+//-(id)initWithSliceValue:(float)value
+//{
+//    if (self) {
+//        [self doInitialSetup];
+//        self.value = value;
+//    }
+//    return self;
+//}
 
 #pragma mark - Value change
 -(void)setValue:(float)value

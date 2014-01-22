@@ -1,14 +1,14 @@
 //
-//  HMFontLabel.m
+//  HMFontButton.m
 //  Homage
 //
-//  Created by Aviv Wolf on 1/15/14.
+//  Created by Aviv Wolf on 1/19/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import "HMFontLabel.h"
+#import "HMFontButton.h"
 
-@implementation HMFontLabel
+@implementation HMFontButton
 
 -(id)initWithCoder:(NSCoder *)decoder
 {
@@ -21,7 +21,8 @@
 
 -(void)initCustomFont
 {
-    [self setFont:[UIFont fontWithName:@"DINOT-Regular" size:self.font.pointSize]];
+    self.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.titleLabel.font.pointSize];
 }
+
 
 @end

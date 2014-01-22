@@ -61,6 +61,9 @@
 
 -(void)drawInContext:(CGContextRef)ctx
 {
+    double startAngle = self.startAngle - M_PI_2;
+    double endAngle = self.endAngle - M_PI_2;
+    
     // Create the path
     CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     CGFloat radius = MIN(center.x, center.y);
@@ -68,11 +71,11 @@
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, center.x, center.y);
     
-    CGPoint p1 = CGPointMake(center.x + radius * cosf(self.startAngle), center.y + radius * sinf(self.startAngle));
+    CGPoint p1 = CGPointMake(center.x + radius * cosf(startAngle), center.y + radius * sinf(startAngle));
     CGContextAddLineToPoint(ctx, p1.x, p1.y);
     
-    int clockwise = self.startAngle > self.endAngle;
-    CGContextAddArc(ctx, center.x, center.y, radius, self.startAngle, self.endAngle, clockwise);
+    int clockwise = startAngle > endAngle;
+    CGContextAddArc(ctx, center.x, center.y, radius, startAngle, endAngle, clockwise);
     
     // Close the path
     CGContextClosePath(ctx);

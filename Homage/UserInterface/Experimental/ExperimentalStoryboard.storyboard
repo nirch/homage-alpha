@@ -12,12 +12,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" id="Nla-ah-dG9">
-                                <rect key="frame" x="-20" y="-21" width="361" height="609"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" id="jge-Ad-RrV">
-                                <rect key="frame" x="18" y="173" width="284" height="34"/>
+                                <rect key="frame" x="18" y="100" width="284" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" red="1" green="0.023573720190000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -25,17 +21,15 @@
                                 </connections>
                             </slider>
                             <view alpha="0.74999999999999978" contentMode="scaleToFill" id="uaX-VS-nXI" userLabel="Slice View" customClass="AWPieSliceView">
-                                <rect key="frame" x="60" y="252" width="200" height="200"/>
+                                <rect key="frame" x="209" y="141" width="91" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lez-6x-GXQ">
-                                <rect key="frame" x="110" y="214" width="100" height="30"/>
+                                <rect key="frame" x="20" y="141" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
-                                <state key="normal" title="Random Value">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Random Value"/>
                                 <connections>
                                     <action selector="onPressedRandomValueButton:" destination="OjE-Jj-DyB" eventType="touchUpInside" id="Vxx-MC-sDe"/>
                                 </connections>
@@ -44,11 +38,28 @@
                                 <rect key="frame" x="69" y="20" width="182" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Ld-eH-r4b">
+                                <rect key="frame" x="117" y="348" width="86" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Count Down">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedStartCountdownButton:" destination="OjE-Jj-DyB" eventType="touchUpInside" id="IUd-C5-OMy"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bhe-mB-TD3" customClass="HMRoundCountdownLabel">
+                                <rect key="frame" x="110" y="240" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="78"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="guiBGImage" destination="Nla-ah-dG9" id="BQd-d1-FCr"/>
+                        <outlet property="guiCountDownLabel" destination="Bhe-mB-TD3" id="iEb-vq-Idn"/>
                         <outlet property="guiSlice" destination="uaX-VS-nXI" id="XHI-B6-Z2T"/>
                         <outlet property="guiSlider" destination="jge-Ad-RrV" id="ghS-Fv-7Qc"/>
                     </connections>
@@ -59,7 +70,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background" width="452" height="447"/>
         <image name="logo" width="118" height="48"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

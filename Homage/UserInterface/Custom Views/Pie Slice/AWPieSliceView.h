@@ -10,6 +10,6 @@
 
 @property (atomic) float value;
 
--(id)initWithSliceValue:(float)value;
+//-(id)initWithSliceValue:(float)value;
 
 @end
