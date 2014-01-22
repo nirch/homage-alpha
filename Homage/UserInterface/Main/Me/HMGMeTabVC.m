@@ -16,10 +16,12 @@
 #import "HMNotificationCenter.h"
 #import <ALMoviePlayerController/ALMoviePlayerController.h>
 #import "HMFontLabel.h"
+#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 
 
-@interface HMGMeTabVC () <UICollectionViewDataSource,UICollectionViewDelegate,ALMoviePlayerControllerDelegate>
+@interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,ALMoviePlayerControllerDelegate>
 
+@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 @property (strong,nonatomic) ALMoviePlayerController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UILabel *headLine;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
@@ -33,7 +35,9 @@
 
 @implementation HMGMeTabVC
 
+//ask aviv
 @synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize appSettingsViewController = _appSettingsViewController;
 
 - (void)viewDidLoad
 {
@@ -104,6 +108,12 @@
                                                    selector:@selector(onRemakeDeletion:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
                                                      object:nil];
+    
+    //observe when movie player finish playing
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onMovieFinishPlaying:)
+                                                       name:MPMoviePlayerPlaybackDidFinishNotification
+                                                     object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
@@ -115,8 +125,19 @@
     // Backend notifies that local storage was updated with stories.
     //
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    if (notification.isReportingError) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                        message:@"Something went wrong :-(\n\nTry to refresh later."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        [alert show];
+        HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
+    } else {
+        [self refreshFromLocalStorage];
+    }
     [self.refreshControl endRefreshing];
-    [self refreshFromLocalStorage];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -125,12 +146,14 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
-    NSError *error = info[@"error"];
+    //NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
     
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (error || !image) {
-        remake.thumbnail = nil;
+    
+    if (notification.isReportingError ) {
+        HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
+        remake.thumbnail = [UIImage imageNamed:@"errorThumbnail"];
     } else {
         remake.thumbnail = image;
     }
@@ -154,7 +177,8 @@
 -(void)onRemakeDeletion:(NSNotification *)notification
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self refetchRemakesFromServer];
+    NSDictionary *info = notification.userInfo;
+    NSString *remakeID = info[@"remakeID"];
     
     if (notification.isReportingError) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
@@ -165,7 +189,13 @@
                               ];
         [alert show];
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
+    } else {
+        [self refetchRemakesFromServer];
+        Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+        [DB.sh.context deleteObject:remake];
     }
+    
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -490,19 +520,25 @@
 
 - (IBAction)closeMovieButtonPushed:(UIButton *)sender
 {
-    HMGUserRemakeCVCell *remakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:sender.tag atSection:0];
-    [self closeMovieInCell:remakeCell];
+    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:sender.tag atSection:0];
+    [self closeMovieInCell:cell];
+}
+
+-(void)onMovieFinishPlaying:(NSNotification *)notification
+{
+    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
+    [self closeMovieInCell:cell];
 }
 
 -(void)closeMovieInCell:(HMGUserRemakeCVCell *)remakeCell
 {
     [self.moviePlayer stop];
+    
     self.moviePlayer = nil;
     [self configureCellForMoviePlaying:remakeCell active:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
     //self.currentMovieContainerCell = nil;
 }
-
 
 - (IBAction)deleteRemake:(UIButton *)sender
 {
@@ -529,7 +565,7 @@
         NSString *remakeID = self.remakeToDelete.sID;
         HMGLogDebug(@"user chose to delete remake with id: %@" , remakeID);
         [HMServer.sh deleteRemakeWithID:remakeID];
-        [DB.sh.context deleteObject:self.remakeToDelete];
+        //[DB.sh.context deleteObject:self.remakeToDelete];
         self.remakeToDelete = nil;
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -538,13 +574,13 @@
 #pragma mark settings
 
 - (IASKAppSettingsViewController*)appSettingsViewController {
-	if (!appSettingsViewController) {
-		appSettingsViewController = [[IASKAppSettingsViewController alloc] init];
-		appSettingsViewController.delegate = self;
+	if (!_appSettingsViewController) {
+		_appSettingsViewController = [[IASKAppSettingsViewController alloc] init];
+		_appSettingsViewController.delegate = self;
 		BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"AutoConnect"];
-		appSettingsViewController.hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"AutoConnectLogin", @"AutoConnectPassword", nil];
+		_appSettingsViewController.hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"AutoConnectLogin", @"AutoConnectPassword", nil];
 	}
-	return appSettingsViewController;
+	return _appSettingsViewController;
 }
 
 

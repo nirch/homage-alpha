@@ -40,6 +40,20 @@
      ];
 }
 
+-(void)refetchRemakesWithStoryID:(NSString *)storyID
+{
+    // A simple GET request to the server
+    // Example URL: http://54.204.34.168:4567/remake/52d7a02edb25451630000002
+    // Fetches info of a remake with the given id.
+    // Returns (JSON) with the info about the given remake.
+    NSString *relativeURL = [self relativeURLNamed:@"remakes" withSuffix:storyID];
+    [self getRelativeURL:relativeURL
+              parameters:nil
+        notificationName:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY
+                  parser:[HMRemakeParser new]
+     ];
+}
+
 -(void)refetchRemakesForUserID:(NSString *)userID
 {
     // A simple get request to the server

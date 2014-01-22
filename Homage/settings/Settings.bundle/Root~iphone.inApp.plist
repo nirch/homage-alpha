@@ -46,7 +46,7 @@
 			<key>IASKMailComposeBccRecipents</key>
 			<array/>
 			<key>IASKMailComposeBody</key>
-			<string>InAppSettingsKit is a great way to get custom settings into your iOS app. Check it out at http://www.inappsettingskit.com/ today.</string>
+			<string></string>
 			<key>IASKMailComposeBodyIsHTML</key>
 			<string>NO</string>
 			<key>IASKMailComposeCcRecipents</key>
@@ -54,7 +54,9 @@
 			<key>IASKMailComposeSubject</key>
 			<string>feedback please!</string>
 			<key>IASKMailComposeToRecipents</key>
-			<array/>
+			<array>
+				<string>feedback@homage.it</string>
+			</array>
 			<key>Title</key>
 			<string>FEEDBACK</string>
 			<key>Type</key>

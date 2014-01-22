@@ -7,10 +7,7 @@
 //
 
 #import "DB.h"
-#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 
-@interface HMGMeTabVC : UIViewController <IASKSettingsDelegate, UITextViewDelegate,NSFetchedResultsControllerDelegate> {
-    IASKAppSettingsViewController *appSettingsViewController;
-}
 
+@interface HMGMeTabVC : UIViewController <UITextViewDelegate,NSFetchedResultsControllerDelegate> 
 @end

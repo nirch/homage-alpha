@@ -20,6 +20,8 @@
 		<string>remake</string>
 		<key>user&apos;s remakes</key>
 		<string>remakes/user</string>
+		<key>story&apos;s remakes</key>
+		<string>remakes/story</string>
 		<key>footage</key>
 		<string>footage</string>
 		<key>text</key>
