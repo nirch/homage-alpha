@@ -5,6 +5,8 @@
 //  Modification of the AVCam example by apple.
 //
 
+#define MIN_FRAME_RATE 3000
+#define MAX_FRAME_RATE 3000
 
 @import AVFoundation;
 @import AssetsLibrary;
@@ -229,10 +231,14 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
         AVCaptureDevice *videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
         
+        // Configure frame rate
+        //[self configureCameraForFrameRate:videoDevice];
+        
         if (error)
         {
             HMGLogError(@"%@", error);
         }
+        
         
         if ([session canAddInput:videoDeviceInput])
         {
@@ -258,9 +264,15 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
         {
             [session addOutput:movieFileOutput];
             AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-            if ([connection isVideoStabilizationSupported])
-                [connection setEnablesVideoStabilizationWhenAvailable:YES];
-            [self setMovieFileOutput:movieFileOutput];
+            
+            // Video stabilization
+            if (connection.isVideoStabilizationSupported) connection.enablesVideoStabilizationWhenAvailable = YES;
+            
+            
+            // Set the output
+            self.movieFileOutput = movieFileOutput;
+            
+            
         }
         
         AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
@@ -488,6 +500,18 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
     
     return captureDevice;
 }
+
+//- (void)configureCameraForFrameRate:(AVCaptureDevice *)device
+//{
+//    if ( [device lockForConfiguration:NULL] == YES ) {
+//        // device.activeFormat = bestFormat;
+//        device.activeVideoMinFrameDuration = CMTimeMake(1, 1);
+//        device.activeVideoMaxFrameDuration = CMTimeMake(1, 1);
+//        //id x = device.activeFormat.videoSupportedFrameRateRanges;
+//        [device unlockForConfiguration];
+//    }
+//}
+
 
 #pragma mark UI
 

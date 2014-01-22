@@ -111,11 +111,13 @@
 -(void)getRelativeURLNamed:(NSString *)relativeURLName
                 parameters:(NSDictionary *)parameters
           notificationName:(NSString *)notificationName
+                      info:(NSDictionary *)info
                     parser:(HMParser *)parser
 {
     [self getRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
               parameters:(NSDictionary *)parameters
         notificationName:(NSString *)notificationName
+                    info:(NSDictionary *)info
                   parser:(HMParser *)parser];
 }
 
@@ -125,9 +127,11 @@
 -(void)getRelativeURL:(NSString *)relativeURL
            parameters:(NSDictionary *)parameters
      notificationName:(NSString *)notificationName
+                 info:(NSDictionary *)info
                parser:(HMParser *)parser
 {
-
+    NSMutableDictionary *moreInfo = [info mutableCopy];
+    
     //
     // send GET Request to server
     //
@@ -154,7 +158,8 @@
                 // Parser error.
                 //
                 HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
-                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":parser.error}];
+                [moreInfo addEntriesFromDictionary:@{@"error":parser.error}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                 return;
                 
             }
@@ -163,7 +168,8 @@
         //
         // Successful request and parsing.
         //
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:parser.parseInfo];
+        [moreInfo addEntriesFromDictionary:parser.parseInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
 
     
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -172,7 +178,8 @@
         // Failed request.
         //
         HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":error}];
+        [moreInfo addEntriesFromDictionary:@{@"error":error}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
     }];
 }
@@ -182,11 +189,13 @@
 -(void)postRelativeURLNamed:(NSString *)relativeURLName
                  parameters:(NSDictionary *)parameters
            notificationName:(NSString *)notificationName
+                       info:(NSDictionary *)info
                      parser:(HMParser *)parser
 {
     [self postRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
                parameters:(NSDictionary *)parameters
          notificationName:(NSString *)notificationName
+                     info:(NSDictionary *)info
                    parser:(HMParser *)parser];
 }
 
@@ -194,8 +203,11 @@
 -(void)postRelativeURL:(NSString *)relativeURL
             parameters:(NSDictionary *)parameters
       notificationName:(NSString *)notificationName
+                  info:(NSDictionary *)info
                 parser:(HMParser *)parser
 {
+    NSMutableDictionary *moreInfo = [info mutableCopy];
+    
     //
     // send POST Request to server
     //
@@ -221,7 +233,8 @@
                 // Parser error.
                 //
                 HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
-                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":parser.error}];
+                [moreInfo addEntriesFromDictionary:@{@"error":parser.error}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                 return;
                 
             }
@@ -238,7 +251,8 @@
         // Failed request.
         //
         HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        [moreInfo addEntriesFromDictionary:@{@"error":error}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:moreInfo];
         
     }];
 }
@@ -248,11 +262,13 @@
 -(void)deleteRelativeURLNamed:(NSString *)relativeURLName
                    parameters:(NSDictionary *)parameters
              notificationName:(NSString *)notificationName
+                         info:(NSDictionary *)info
                        parser:(HMParser *)parser
 {
     [self deleteRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
                  parameters:(NSDictionary *)parameters
            notificationName:(NSString *)notificationName
+                       info:(NSDictionary *)info
                      parser:(HMParser *)parser];
 }
 
@@ -260,8 +276,11 @@
 -(void)deleteRelativeURL:(NSString *)relativeURL
               parameters:(NSDictionary *)parameters
         notificationName:(NSString *)notificationName
+                    info:(NSDictionary *)info
                   parser:(HMParser *)parser
 {
+    NSMutableDictionary *moreInfo = [info mutableCopy];
+    
     //
     // send DELETE Request to server
     //
@@ -290,7 +309,8 @@
                 // Parser error.
                 //
                 HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
-                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"error":parser.error}];
+                [moreInfo addEntriesFromDictionary:@{@"error":parser.error}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                 return;
                 
             }
@@ -299,7 +319,8 @@
         //
         // Successful request and parsing.
         //
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:parser.parseInfo];
+        [moreInfo addEntriesFromDictionary:parser.parseInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -307,7 +328,8 @@
         // Failed request.
         //
         HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        [moreInfo addEntriesFromDictionary:@{@"error":error}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:moreInfo];
         
     }];
 }

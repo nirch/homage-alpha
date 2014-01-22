@@ -8,6 +8,7 @@
 
 #import "HMRemakeParser.h"
 
+
 @implementation HMRemakeParser
 
 -(void)parse
@@ -33,7 +34,10 @@
     
     Remake *remake = [Remake remakeWithID:remakeID story:story user:user inContext:self.ctx];
     remake.status = [info numberForKey:@"status"];
+    
+    CLEAR_CACHE_CHECK(remake,thumbnailURL,thumbnail,@"thumbnail"); // clear remake.thumbnail if url changed
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
+    
     remake.lastLocalUpdate = lastLocalUpdate;
     self.parseInfo[@"remakeID"] = remakeID;
     

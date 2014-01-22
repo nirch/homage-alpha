@@ -90,8 +90,13 @@
     scene.script =                  [info stringForKey:@"script"];
     scene.duration =                [info decimalNumberForKey:@"duration"];
     scene.videoURL =                [info stringForKey:@"video"];
+    
+    CLEAR_CACHE_CHECK(scene,thumbnailURL,thumbnail,@"thumbnail"); // clear scene.thumbnail if url changed
     scene.thumbnailURL =            [info stringForKey:@"thumbnail"];
+    
+    CLEAR_CACHE_CHECK(scene,silhouetteURL,silhouette,@"silhouette"); // clear scene.thumbnail if url changed
     scene.silhouetteURL =           [info stringForKey:@"silhouette"];
+    
     scene.isSelfie =                [info boolNumberForKey:@"selfie"];
 }
 

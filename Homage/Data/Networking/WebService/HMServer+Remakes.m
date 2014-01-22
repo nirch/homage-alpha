@@ -22,6 +22,7 @@
     [self postRelativeURLNamed:@"new remake"
                     parameters:@{@"story_id":storyID, @"user_id":userID}
              notificationName:HM_NOTIFICATION_SERVER_REMAKE_CREATION
+                          info:@{@"userID":userID}
                        parser:[HMRemakeParser new]
      ];
 }
@@ -36,6 +37,7 @@
     [self getRelativeURL:relativeURL
               parameters:nil
         notificationName:HM_NOTIFICATION_SERVER_REMAKE
+                    info:@{@"remakeID":remakeID}
                   parser:[HMRemakeParser new]
      ];
 }
@@ -53,6 +55,7 @@
     [self getRelativeURL:relativeURL
               parameters:nil
              notificationName:HM_NOTIFICATION_SERVER_USER_REMAKES
+                    info:@{@"userID":userID}
                        parser:[HMRemakesParser new]
      ];
 }
@@ -67,6 +70,7 @@
     [self deleteRelativeURL:relativeURL
                  parameters:nil
            notificationName:HM_NOTIFICATION_SERVER_REMAKE_DELETION
+                       info:@{@"remakeID":remakeID}
                      parser:nil
      ];
 }

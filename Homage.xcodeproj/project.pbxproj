@@ -92,6 +92,8 @@
 		0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */; };
 		08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
 		08845674188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
+		089BDEAB188FD5D900AEEC1E /* HMColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 089BDEAA188FD5D900AEEC1E /* HMColor.m */; };
+		089BDEAC188FD5D900AEEC1E /* HMColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 089BDEAA188FD5D900AEEC1E /* HMColor.m */; };
 		08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7AF188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7B2188C6B9500C0EE27 /* HMFontButton.m */; };
@@ -246,6 +248,8 @@
 		0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ExperimentalStoryboard.storyboard; sourceTree = "<group>"; };
 		08845671188494D300B94267 /* HMTestSliceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTestSliceViewController.h; sourceTree = "<group>"; };
 		08845672188494D300B94267 /* HMTestSliceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTestSliceViewController.m; sourceTree = "<group>"; };
+		089BDEA9188FD5D900AEEC1E /* HMColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMColor.h; sourceTree = "<group>"; };
+		089BDEAA188FD5D900AEEC1E /* HMColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMColor.m; sourceTree = "<group>"; };
 		08ACB7AC188C631C00C0EE27 /* HMAnimationsFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnimationsFX.h; sourceTree = "<group>"; };
 		08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnimationsFX.m; sourceTree = "<group>"; };
 		08ACB7B1188C6B9500C0EE27 /* HMFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFontButton.h; sourceTree = "<group>"; };
@@ -526,6 +530,7 @@
 		0840FF6F18852BD900A6EF5E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				089BDEA0188FD33700AEEC1E /* GUI Resources */,
 				0840FF7018852C6300A6EF5E /* Storyboard.storyboard */,
 				0840FF7318852E1B00A6EF5E /* HMStartViewController.h */,
 				0840FF7418852E1B00A6EF5E /* HMStartViewController.m */,
@@ -706,6 +711,15 @@
 			);
 			name = "Custom Views & Controls";
 			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		089BDEA0188FD33700AEEC1E /* GUI Resources */ = {
+			isa = PBXGroup;
+			children = (
+				089BDEA9188FD5D900AEEC1E /* HMColor.h */,
+				089BDEAA188FD5D900AEEC1E /* HMColor.m */,
+			);
+			path = "GUI Resources";
 			sourceTree = "<group>";
 		};
 		08ACB7AB188C62ED00C0EE27 /* Animations FX */ = {
@@ -956,6 +970,7 @@
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08ACB7B7188C99D400C0EE27 /* Remake.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
+				089BDEAB188FD5D900AEEC1E /* HMColor.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
 				08E50EB718866B16001A8B75 /* AVCamPreviewView.m in Sources */,
 				086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */,
@@ -1003,6 +1018,7 @@
 				08ACB7D0188CAAE900C0EE27 /* User.m in Sources */,
 				08E50ECC188697CE001A8B75 /* HMRoundView.m in Sources */,
 				086D93E71886CFAC0086C565 /* Story+Factory.m in Sources */,
+				089BDEAC188FD5D900AEEC1E /* HMColor.m in Sources */,
 				08ACB84A188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				086D93E91886CFAC0086C565 /* User+Factory.m in Sources */,
 				08ACB802188E18DE00C0EE27 /* HMVideoCameraViewController.m in Sources */,

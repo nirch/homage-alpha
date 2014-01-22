@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[HMVideoCameraViewController configureCameraForFrameRate:]:HMVideoCameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "device.">
+            </PersistentString>
+            <PersistentString
+               value = "x[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[HMRecorderDetailedOptionsBarViewController onMoviePlayerLoadStateDidChange:]:HMRecorderDetailedOptionsBarViewController.m">
          <PersistentStrings>
             <PersistentString
