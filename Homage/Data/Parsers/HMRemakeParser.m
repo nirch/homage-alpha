@@ -7,7 +7,6 @@
 //
 
 #import "HMRemakeParser.h"
-#import "DB.h"
 
 @implementation HMRemakeParser
 
@@ -20,21 +19,29 @@
 
 -(void)parseRemake:(NSDictionary *)info
 {
+    [self parseRemake:info updateTime:nil];
+}
+
+-(void)parseRemake:(NSDictionary *)info updateTime:(NSDate *)updateTime
+{
     NSString *remakeID = info[@"_id"][@"$oid"];
     NSString *storyID = info[@"story_id"][@"$oid"];
     NSString *userID = [info stringForKey:@"user_id"];
+    NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     Story *story = [Story storyWithID:storyID inContext:self.ctx];
     User *user = [User userWithID:userID inContext:self.ctx];
     
     Remake *remake = [Remake remakeWithID:remakeID story:story user:user inContext:self.ctx];
     remake.status = [info numberForKey:@"status"];
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
+    remake.lastLocalUpdate = lastLocalUpdate;
     self.parseInfo[@"remakeID"] = remakeID;
     
     for (NSDictionary *footageInfo in info[@"footages"]) {
         [self parseFootage:footageInfo forRemake:remake];
     }
 }
+
 
 -(void)parseFootage:(NSDictionary *)info forRemake:(Remake *)remake
 {

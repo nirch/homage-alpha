@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
     HMNetworkErrorMissingURL,
     HMNetworkErrorGetRequestFailed,
     HMNetworkErrorPostRequestFailed,
-    HMNetworkErrorDeleteRequestFailed
+    HMNetworkErrorDeleteRequestFailed,
+    HMNetworkErrorImageLoadingFailed
 };
 
 

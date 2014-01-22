@@ -11,5 +11,6 @@
 @interface HMRemakeParser : HMParser
 
 -(void)parseRemake:(NSDictionary *)info;
+-(void)parseRemake:(NSDictionary *)info updateTime:(NSDate *)updateTime;
 
 @end

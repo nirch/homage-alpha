@@ -26,7 +26,16 @@
                                   //
                                   // Successfully loaded image
                                   //
-                                  [moreInfo addEntriesFromDictionary:@{@"image":image}];
+                                  if (image) {
+                                      HMGLogDebug(@"Lazy loaded image from URL:%@", request.URL);
+                                      [moreInfo addEntriesFromDictionary:@{@"image":image}];
+                                  } else {
+                                      // For some reason success in response, but no image object returned?
+                                      NSString *errorDescription = [NSString stringWithFormat:@"Lazy Loading returned nil image from URL:%@", request.URL];
+                                      NSError *error = [NSError errorWithDomain:ERROR_DOMAIN_NETWORK code:HMNetworkErrorImageLoadingFailed userInfo:@{NSLocalizedDescriptionKey:errorDescription}];
+                                      [moreInfo addEntriesFromDictionary:@{@"error":error}];
+                                      HMGLogDebug(errorDescription);
+                                  }
                                   [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                               }
      
@@ -34,6 +43,7 @@
                                   //
                                   // Failed loading image from server
                                   //
+                                  HMGLogDebug(@"Failed lazy Loading image from URL:%@ %@", request.URL, error.localizedDescription);
                                   [moreInfo addEntriesFromDictionary:@{@"error":error}];
                                   [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                               }

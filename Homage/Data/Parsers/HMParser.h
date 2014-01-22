@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#import "DB.h"
 #import "NSDictionary+TypeSafeValues.h"
 
 #define ERROR_DOMAIN_PARSERS @"Parser error"

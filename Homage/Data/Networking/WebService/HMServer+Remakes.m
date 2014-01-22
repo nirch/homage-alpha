@@ -46,6 +46,10 @@
     // Example URL: http://54.204.34.168:4567/remakes/user/<user id>
     // Returns (JSON) list and info of the remakes for user.
     NSString *relativeURL = [self relativeURLNamed:@"user's remakes" withSuffix:userID];
+    
+    HMRemakesParser *remakesParser = [HMRemakesParser new];
+    remakesParser.shouldRemoveOlderRemakes = YES;
+    
     [self getRelativeURL:relativeURL
               parameters:nil
              notificationName:HM_NOTIFICATION_SERVER_USER_REMAKES
@@ -63,7 +67,7 @@
     [self deleteRelativeURL:relativeURL
                  parameters:nil
            notificationName:HM_NOTIFICATION_SERVER_REMAKE_DELETION
-                     parser:[HMRemakeParser new]
+                     parser:nil
      ];
 }
 

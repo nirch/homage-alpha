@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface NSDictionary (TypeSafeValues)
 
 -(NSString *)stringForKey:(id)key;

@@ -12,10 +12,11 @@
 
 @interface Story (Factory)
 
+@property (nonatomic, readonly) NSArray *scenesOrdered;
+
 +(Story *)storyWithID:(NSString *)sID inContext:(NSManagedObjectContext *)context;
 
 -(BOOL)hasSceneWithID:(NSNumber *)sID;
 -(Scene *)findSceneWithID:(NSNumber *)sID;
-//-(NSArray *)scenesOrdered;
 
 @end

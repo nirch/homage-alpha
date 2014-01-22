@@ -124,10 +124,6 @@
 		08ACB841188EA57A00C0EE27 /* HMWhileRecordingOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB83F188EA57A00C0EE27 /* HMWhileRecordingOverlayViewController.m */; };
 		08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB848188EEC8100C0EE27 /* AWTimeProgressView.m */; };
 		08ACB84A188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB848188EEC8100C0EE27 /* AWTimeProgressView.m */; };
-		08BB3BE1188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */; };
-		08BB3BE2188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */; };
-		08BB3BE4188B0CAD007FFB5E /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */; };
-		08BB3BE5188B0CAD007FFB5E /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */; };
 		08BDB30F18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */; };
 		08BDB31018876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */; };
 		08BDB3261887EF1700AF1D73 /* HMUserRemakesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BDB3251887EF1700AF1D73 /* HMUserRemakesViewController.m */; };
@@ -283,10 +279,6 @@
 		08ACB848188EEC8100C0EE27 /* AWTimeProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWTimeProgressView.m; sourceTree = "<group>"; };
 		08ACB84B188EEFE500C0EE27 /* HMWhileRecordingOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMWhileRecordingOverlayViewController.h; path = Recorder/HMWhileRecordingOverlayViewController.h; sourceTree = "<group>"; };
 		08ACB84D188F131C00C0EE27 /* AWTimeProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWTimeProgressDelegate.h; sourceTree = "<group>"; };
-		08BB3BDC188B042E007FFB5E /* HMUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManager.h; sourceTree = "<group>"; };
-		08BB3BDD188B042E007FFB5E /* HMUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadManager.m; sourceTree = "<group>"; };
-		08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = "Libs/aws-ios-sdk-1.7.1/AWSRuntime.framework"; sourceTree = "<group>"; };
-		08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSS3.framework; path = "Libs/aws-ios-sdk-1.7.1/AWSS3.framework"; sourceTree = "<group>"; };
 		08BDB30D18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderMessagesOverlayViewController.h; path = Recorder/HMRecorderMessagesOverlayViewController.h; sourceTree = "<group>"; };
 		08BDB30E18876EF300AF1D73 /* HMRecorderMessagesOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderMessagesOverlayViewController.m; path = Recorder/HMRecorderMessagesOverlayViewController.m; sourceTree = "<group>"; };
 		08BDB3241887EF1700AF1D73 /* HMUserRemakesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserRemakesViewController.h; sourceTree = "<group>"; };
@@ -315,9 +307,7 @@
 			files = (
 				0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */,
 				0806FA1418828AEB007514BE /* UIKit.framework in Frameworks */,
-				08BB3BE4188B0CAD007FFB5E /* AWSS3.framework in Frameworks */,
 				0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */,
-				08BB3BE1188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */,
 				8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,9 +318,7 @@
 			files = (
 				0806FA2918828AEB007514BE /* XCTest.framework in Frameworks */,
 				08CD317E188A959F00B0CBF7 /* libPods.a in Frameworks */,
-				08BB3BE5188B0CAD007FFB5E /* AWSS3.framework in Frameworks */,
 				0806FA2B18828AEB007514BE /* UIKit.framework in Frameworks */,
-				08BB3BE2188B0C9E007FFB5E /* AWSRuntime.framework in Frameworks */,
 				0806FA2A18828AEB007514BE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,8 +349,6 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08BB3BE3188B0CAD007FFB5E /* AWSS3.framework */,
-				08BB3BE0188B0C9E007FFB5E /* AWSRuntime.framework */,
 				0806FA0F18828AEB007514BE /* Foundation.framework */,
 				0806FA1118828AEB007514BE /* CoreGraphics.framework */,
 				0806FA1318828AEB007514BE /* UIKit.framework */,
@@ -599,8 +585,6 @@
 		0863D0AA1889CE2900B551FC /* S3 */ = {
 			isa = PBXGroup;
 			children = (
-				08BB3BDC188B042E007FFB5E /* HMUploadManager.h */,
-				08BB3BDD188B042E007FFB5E /* HMUploadManager.m */,
 			);
 			name = S3;
 			path = Networking/S3;
@@ -1175,10 +1159,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/aviv/DEV/workspaces/xcode/homage-alpha/Libs/aws-ios-sdk-1.7.1",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
@@ -1193,10 +1174,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/aviv/DEV/workspaces/xcode/homage-alpha/Libs/aws-ios-sdk-1.7.1",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";

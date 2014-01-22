@@ -34,12 +34,13 @@
 }
 
 // Returns an array of scenes related to the story ordered by sceneID
-//-(NSArray *)scenesOrdered
-//{
-////    NSArray *scenes = self.scenes.allObjects;
-////    [scenes sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-////        
-////    }];
-//}
+-(NSArray *)scenesOrdered
+{
+    NSArray *scenes = self.scenes.allObjects;
+    scenes = [scenes sortedArrayUsingComparator:^NSComparisonResult(Scene *scene1, Scene *scene2) {
+        return [scene1.sID compare:scene2.sID];
+    }];
+    return scenes;
+}
 
 @end

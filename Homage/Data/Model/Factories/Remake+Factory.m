@@ -11,7 +11,6 @@
 
 @implementation Remake (Factory)
 
-// Fetches existing or creates a new remake (with id, story and user).
 +(Remake *)remakeWithID:(NSString *)sID story:(Story *)story user:(User *)user inContext:(NSManagedObjectContext *)context
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sID=%@ AND story=%@",sID, story];
@@ -28,16 +27,12 @@
     return remake;
 }
 
-// Finds and returns existing remake with given id. returns nil if not found.
 +(Remake *)findWithID:(NSString *)sID inContext:(NSManagedObjectContext *)context
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sID=%@",sID];
     return (Remake *)[DB.sh fetchSingleEntityNamed:HM_REMAKE withPredicate:predicate inContext:context];
 }
 
-// Returns a footage related to the instance of this remake, related to the given scene ID.
-// If scene ID is illegal (doesn't exists in related story) returns nil.
-// If scene ID is legal, but footage doesn't exist, will create a footage with no info and return it.
 -(Footage *)footageWithSceneID:(NSNumber *)sID
 {
     // Ensure related story has the related sceneID
@@ -60,6 +55,49 @@
         if ([footage.sceneID isEqualToNumber:sID]) return footage;
     }
     return nil;
+}
+
+-(NSArray *)footagesOrdered
+{
+    NSArray *footages = self.footages.allObjects;
+    footages = [footages sortedArrayUsingComparator:^NSComparisonResult(Footage *footage1, Footage *footage2) {
+        return [footage1.relatedScene.sID compare:footage2.relatedScene.sID];
+    }];
+    return footages;
+}
+
+-(NSArray *)footagesReadyStates
+{
+    NSMutableArray *states = [NSMutableArray new];
+    HMFootageReadyState readyState = HMFootageReadyStateReadyForFirstRetake;
+    for (Footage *footage in self.footagesOrdered) {
+        if (!footage.rawLocalFile) {
+            [states addObject:@(readyState)];
+            readyState = HMFootageReadyStateStillLocked;
+        } else {
+            [states addObject:@(HMFootageReadyStateReadyForSecondRetake)];
+        }
+    }
+    return states;
+}
+
+-(NSNumber *)nextReadyForFirstRetakeSceneID
+{
+    NSArray *readyStates = self.footagesReadyStates;
+    for (int i=0;i<readyStates.count;i++) {
+        HMFootageReadyState state = [readyStates[i] integerValue];
+        if (state == HMFootageReadyStateReadyForFirstRetake) {
+            Scene *scene = self.story.scenesOrdered[i];
+            return scene.sID;
+        }
+    }
+    return nil;
+}
+
+-(NSNumber *)lastSceneID
+{
+    Scene *lastScene = [self.story.scenesOrdered lastObject];
+    return lastScene.sID;
 }
 
 @end

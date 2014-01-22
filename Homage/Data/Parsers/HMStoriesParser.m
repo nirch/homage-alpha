@@ -7,7 +7,6 @@
 //
 
 #import "HMStoriesParser.h"
-#import "DB.h"
 
 @implementation HMStoriesParser
 
