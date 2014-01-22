@@ -90,7 +90,7 @@
     
     // Add the label above it.
     _label = [[UILabel alloc] initWithFrame:self.bounds];
-    self.label.text = [NSString stringWithFormat:@"%d", self.countDown];
+    self.label.text = [NSString stringWithFormat:@"%ld", (long)self.countDown];
     self.label.font = self.font;
     self.label.textAlignment = self.textAlignment;
     self.label.textColor = self.textColor;

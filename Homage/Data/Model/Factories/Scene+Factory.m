@@ -22,7 +22,7 @@
 
 +(NSString *)titleForSceneBySceneID:(NSNumber *)sceneID
 {
-    return [NSString stringWithFormat:@"SCENE %d", sceneID.integerValue];
+    return [NSString stringWithFormat:@"SCENE %ld", (long)sceneID.integerValue];
 }
 
 -(NSString *)titleForSceneID
