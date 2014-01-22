@@ -451,7 +451,7 @@
 
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
-    [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID];
+    [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID checkNextStateOnDismiss:NO];
 }
 
 - (IBAction)onPressedShowScriptButton:(id)sender

@@ -275,13 +275,13 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
             
         }
         
-        AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-        if ([session canAddOutput:stillImageOutput])
-        {
-            [stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
-            [session addOutput:stillImageOutput];
-            [self setStillImageOutput:stillImageOutput];
-        }
+//        AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+//        if ([session canAddOutput:stillImageOutput])
+//        {
+//            [stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
+//            [session addOutput:stillImageOutput];
+//            [self setStillImageOutput:stillImageOutput];
+//        }
     });
 }
 
@@ -365,11 +365,11 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
     });
 }
 
-//- (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
-//{
-//    CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
-//    [self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
-//}
+- (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
+    [self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+}
 
 -(void)subjectAreaDidChange:(NSNotification *)notification
 {

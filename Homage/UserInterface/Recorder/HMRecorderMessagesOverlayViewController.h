@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, HMRecorderMessagesType) {
     HMRecorderMessagesTypeGeneral,
     HMRecorderMessagesTypeSceneContext,
     HMRecorderMessagesTypeFinishedScene,
+    HMRecorderMessagesTypeFinishedAllScenes,
     HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene
 };
 
@@ -19,6 +20,16 @@ typedef NS_ENUM(NSInteger, HMRecorderMessagesType) {
     HMRecorderChildInterface
 >
 
--(void)showMessageOfType:(HMRecorderMessagesType)messageType info:(NSDictionary *)info;
+///
+/**
+*   Shows an overlay of a specic type on top of the recorder. Used for different overlay UI on top of the recorder.
+*
+*  @param messageType             The type of the message. SeeH MRecorderMessagesType enum for options.
+*  @param checkNextStateOnDismiss If yes, the delegate remaker will check it's next state on dismissal of this overlay.
+*  @param info                    Some more details specific to each type of message type.
+*/
+-(void)showMessageOfType:(HMRecorderMessagesType)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info;
+
+
 
 @end
