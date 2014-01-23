@@ -18,15 +18,6 @@
 #import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
 
-typedef NS_ENUM(NSInteger, HMRecorderState) {
-    HMRecorderStateJustStarted,
-    HMRecorderStateGeneralMessage,
-    HMRecorderStateSceneContextMessage,
-    HMRecorderStateMakingAScene,
-    HMRecorderStateFinishedASceneMessage,
-    HMRecorderStateFinishedAllScenesMessage
-};
-
 @interface HMRecorderViewController ()
 
 // IB outlets
@@ -112,84 +103,135 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
     [self checkState];
 }
 
+
+
+
+
+
+
+
+
 -(void)checkState
 {
     //
     // The flow state machine.
     // Moves to next stage according to current state.
     //
-    
+    NSLog(@"%d", self.recorderState);
     if (self.recorderState == HMRecorderStateJustStarted) {
         
-        //
-        // Show first scene requiring a first retake.
-        // If none found, will show the last scene.
-        //
-        _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
-        if (!self.currentSceneID) _currentSceneID = [self.remake lastSceneID];
-        [self updateUIForSceneID:self.currentSceneID];
-        
-        // Just started. Show general message.
-        // But if user chosen not to show that message, skip it.
-        _recorderState = HMRecorderStateGeneralMessage;
-        if ([User.current.skipRecorderTutorial isEqualToNumber:@(YES)]) {
-            [self checkState]; // Don't show and skip state.
-        } else {
-            [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral];
-        }
+        // 0 - HMRecorderStateJustStarted --> HMRecorderStateGeneralMessage
+        [self stateShowGeneralIntroStateIfNeeded];
         
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
-        //
-        // Showing context for the next scene needing a first retake.
-        //
-        _recorderState = HMRecorderStateSceneContextMessage;
-        [self showSceneContextMessageForSceneID:self.currentSceneID];
+        // 1 - HMRecorderStateGeneralMessage --> HMRecorderStateSceneContextMessage
+        [self stateShowContextForNextScene];
         
     } else if (self.recorderState == HMRecorderStateSceneContextMessage) {
         
-        //
-        // Making a scene :-)
-        //
-        _recorderState = HMRecorderStateMakingAScene;
-        [self closeDetailedOptionsAnimated:YES];
-
+        // 2 - HMRecorderStateSceneContextMessage --> HMRecorderStateMakingAScene
+        [self stateMakingAScene];
         
     } else if (self.recorderState == HMRecorderStateMakingAScene) {
         
-        //
-        // Check if we can continue to the next scene.
-        //
-        NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
+        // 3- HMRecorderStateMakingAScene --> HMRecorderStateFinishedASceneMessage  or  ?
+        [self stateFinishedMakingASceneAndCheckingWhatsNext];
         
-        if (!nextSceneID) {
-            // All scenes retaken by the user.
-            _recorderState = HMRecorderStateFinishedAllScenesMessage;
-            // TODO: Finished all congrats message!
-            return;
-        }
+    } else if (self.recorderState == HMRecorderStateFinishedASceneMessage) {
         
-        if (nextSceneID.integerValue <= self.currentSceneID.integerValue) {
-            // Epic fail.
-            // This shouldn't have happen.
-            // The user retaken a scene, but something went wrong.
-            // - Problems storing the file?
-            // - An old scene is suddenly missing?
-            return;
-        }
+        // 4 - HMRecorderStateFinishedASceneMessage --> going to next scene --> HMRecorderStateMakingAScene
+        [self stateMakingNextScene];
         
-        //
-        // Showing "finished a scene" message.
-        //
-        [self showFinishedSceneMessageForSceneID:self.currentSceneID];
-        _recorderState = HMRecorderStateFinishedASceneMessage;
     }
-    
-//    _currentSceneID = nextSceneID;
-//    [self updateUIForSceneID:self.currentSceneID];
-
 }
 
+-(void)stateShowGeneralIntroStateIfNeeded
+{
+    // HMRecorderStateJustStarted --> HMRecorderStateGeneralMessage
+    
+    //
+    // Select the first scene requiring a first retake.
+    // If none found (all footages already taken by the user),
+    // will select the last scene for this remake instead.
+    //
+    _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
+    if (!self.currentSceneID) _currentSceneID = [self.remake lastSceneID];
+    [self updateUIForSceneID:self.currentSceneID];
+    
+    // Just started. Show general message.
+    // But if user chosen not to show that message, skip it.
+    _recorderState = HMRecorderStateGeneralMessage;
+    if ([User.current.skipRecorderTutorial isEqualToNumber:@(YES)]) {
+        [self checkState]; // Don't show and skip state.
+    } else {
+        [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral checkNextStateOnDismiss:YES info:nil];
+    }
+    
+}
+
+-(void)stateShowContextForNextScene
+{
+    // HMRecorderStateGeneralMessage --> HMRecorderStateSceneContextMessage
+    
+    //
+    // Showing context for the next scene needing a first retake.
+    //
+    _recorderState = HMRecorderStateSceneContextMessage;
+    [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES];
+}
+
+-(void)stateMakingAScene
+{
+    // HMRecorderStateSceneContextMessage || HMRecorderStateFinishedASceneMessage --> HMRecorderStateMakingAScene
+    
+    //
+    // Making a scene :-)
+    //
+    _recorderState = HMRecorderStateMakingAScene;
+    [self closeDetailedOptionsAnimated:YES];
+    
+    // Now the user has control of the flow...
+}
+
+-(void)stateFinishedMakingASceneAndCheckingWhatsNext
+{
+    // HMRecorderStateMakingAScene --> ?
+    
+    //
+    // Check if we can continue to the next scene.
+    //
+    NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
+    
+    if (!nextSceneID) {
+        // HMRecorderStateMakingAScene --> HMRecorderStateFinishedAllScenesMessage
+        
+        // All scenes retaken by the user.
+        _recorderState = HMRecorderStateFinishedAllScenesMessage;
+        [self showFinishedSceneMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES];
+        
+        return;
+    }
+    
+    if (nextSceneID.integerValue <= self.currentSceneID.integerValue) {
+        // ?
+        return;
+    }
+    
+    //
+    // Showing "finished a scene" message.
+    // And change to the next scene.
+    //
+    [self showFinishedSceneMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES];
+    _recorderState = HMRecorderStateFinishedASceneMessage;
+}
+
+-(void)stateMakingNextScene
+{
+    _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
+    [self updateUIForCurrentScene];
+    [self stateMakingAScene];
+}
 
 #pragma mark - Observers
 -(void)initObservers
@@ -373,6 +415,11 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
     [self updateUIForSceneID:sceneID];
 }
 
+-(void)updateUIForCurrentScene
+{
+    [self updateUIForSceneID:self.currentSceneID];
+}
+
 #pragma mark - Lazy loading
 -(UIImage *)silhouetteForScene:(Scene *)scene
 {
@@ -414,6 +461,11 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 #pragma mark - Messages overlay
 -(void)dismissMessagesOverlay
 {
+    [self dismissMessagesOverlayAndCheckNextState:NO];
+}
+
+-(void)dismissMessagesOverlayAndCheckNextState:(BOOL)checkNextState
+{
     // hide animted
     [UIView animateWithDuration:0.3 animations:^{
         //self.guiMessagesOverlayContainer.alpha = 0;
@@ -422,21 +474,22 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
         self.guiMessagesOverlayContainer.hidden = YES;
         
         // Check the recorder state and advance it if needed.
-        [self checkState];
+        if (checkNextState) [self checkState];
     }];
 }
 
--(void)showMessagesOverlayWithMessageType:(NSInteger)messageType
+-(void)dismissMessagesOverlayWithRecorderState:(HMRecorderState)recorderState checkNextState:(BOOL)checkNextState
 {
-    [self showMessagesOverlayWithMessageType:messageType info:nil];
+    _recorderState = recorderState;
+    [self dismissMessagesOverlayAndCheckNextState:checkNextState];
 }
 
 //
 //  Show message with message type.
 //
--(void)showMessagesOverlayWithMessageType:(NSInteger)messageType info:(NSDictionary *)info
+-(void)showMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
-    [self.messagesOverlayVC showMessageOfType:messageType info:info];
+    [self.messagesOverlayVC showMessageOfType:messageType checkNextStateOnDismiss:checkNextStateOnDismiss info:info];
     
     // Show animated
     self.guiMessagesOverlayContainer.hidden = NO;
@@ -450,10 +503,11 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 //
 //  Scene context message.
 //
--(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID
+-(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
     [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
+                     checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                         info:@{
                                                @"icon name":@"iconSceneDescription",
                                                @"title":scene.story.name.uppercaseString,
@@ -463,22 +517,27 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
      ];
 }
 
--(void)showFinishedSceneMessageForSceneID:(NSNumber *)sceneID
+-(void)showFinishedSceneMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
 {
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
-    if (!nextSceneID) {
-        // No next scene. we shouldn't see this message
-        return;
-    }
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
-    
     [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
+                     checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                         info:@{@"text":nextScene.context,
                                                @"sceneID":sceneID,
                                                @"nextSceneID":nextSceneID
                                                }
      ];
 }
+
+-(void)showFinishedAllScenesMessage
+{
+    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedAllScenes
+                     checkNextStateOnDismiss:YES
+                                        info:nil
+     ];
+}
+
 
 //
 //  Finished all scenes message!
@@ -498,7 +557,7 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 #pragma mark - toggle options bar
 -(void)initOptions
 {
-    [self hideDetailsOptionsAnimated:NO];
+    [self closeDetailedOptionsAnimated:NO];
 }
 
 -(void)toggleOptions

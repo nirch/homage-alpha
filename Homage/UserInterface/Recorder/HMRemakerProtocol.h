@@ -15,6 +15,15 @@ typedef NS_ENUM(NSInteger, HMRecordingStopReason) {
     HMRecordingStopReasonEndedSuccessfully
 };
 
+typedef NS_ENUM(NSInteger, HMRecorderState) {
+    HMRecorderStateJustStarted,
+    HMRecorderStateGeneralMessage,
+    HMRecorderStateSceneContextMessage,
+    HMRecorderStateMakingAScene,
+    HMRecorderStateFinishedASceneMessage,
+    HMRecorderStateFinishedAllScenesMessage
+};
+
 @protocol HMRemakerProtocol <NSObject>
 
 @property (nonatomic) Remake *remake;
@@ -22,9 +31,12 @@ typedef NS_ENUM(NSInteger, HMRecordingStopReason) {
 
 -(void)toggleOptions;
 -(void)dismissMessagesOverlay;
+-(void)dismissMessagesOverlayAndCheckNextState:(BOOL)checkNextState;
+-(void)dismissMessagesOverlayWithRecorderState:(HMRecorderState)recorderState checkNextState:(BOOL)checkNextState;
 
 @optional
+-(void)updateUIForCurrentScene;
 -(void)selectSceneID:(NSNumber *)sceneID;
--(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID;
+-(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss;
 
 @end

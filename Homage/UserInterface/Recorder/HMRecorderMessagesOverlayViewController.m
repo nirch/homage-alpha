@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiAreYouSureToRetakeIcon;
 
 @property (nonatomic, readonly) HMRecorderMessagesType messageType;
+@property (nonatomic, readonly) BOOL shouldCheckNextStateOnDismiss;
 
 @end
 
@@ -54,14 +55,16 @@
 }
 
 #pragma mark - Selecting and showing messages
--(void)showMessageOfType:(HMRecorderMessagesType)messageType info:(NSDictionary *)info
+-(void)showMessageOfType:(HMRecorderMessagesType)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     _messageType = messageType;
+    _shouldCheckNextStateOnDismiss = checkNextStateOnDismiss;
     self.guiGeneralMessageContainer.hidden = messageType != HMRecorderMessagesTypeGeneral;
     self.guiGeneralMessageSwipeUpIcon.hidden = messageType != HMRecorderMessagesTypeGeneral;
 
     self.guiTextMessageContainer.hidden = messageType == HMRecorderMessagesTypeGeneral;
-    self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene;
+    self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene && messageType != HMRecorderMessagesTypeFinishedAllScenes ;
+    self.guiAreYouSureToRetakeContainer.hidden = YES;
     
     if (self.messageType == HMRecorderMessagesTypeGeneral) {
 
@@ -97,9 +100,11 @@
         
         self.guiTextMessageTitleLabel.text = @"GREAT JOB!";
         self.guiTextMessageIcon.image = [UIImage imageNamed:@"iconTrophy"];
-        self.guiTextMessageLabel.text = [NSString stringWithFormat:@"At the next scene %@", info[@"text"]];
-        [self.guiDismissButton setTitle:@"NEXT SCENE" forState:UIControlStateNormal];
+        self.guiTextMessageLabel.text = @"You nailed all scenes and ready to launch a movie";
+        [self.guiDismissButton setTitle:@"CREATE MOVIE" forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconNextScene"] forState:UIControlStateNormal];
+        
+    } else if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes ) {
         
     }
 }
@@ -111,12 +116,12 @@
 // ===========
 - (IBAction)onPressedDismissButton:(UIButton *)sender
 {
-    [self.remakerDelegate dismissMessagesOverlay];
+    [self.remakerDelegate dismissMessagesOverlayAndCheckNextState:self.shouldCheckNextStateOnDismiss];
 }
 
 - (IBAction)onPressedDismissAndDontShowIntroMessageAgainButton:(UIButton *)sender
 {
-    [self.remakerDelegate dismissMessagesOverlay];
+    [self.remakerDelegate dismissMessagesOverlayAndCheckNextState:self.shouldCheckNextStateOnDismiss];
     User.current.skipRecorderTutorial = @(YES);
     [DB.sh save];
 }
@@ -128,6 +133,7 @@
 {
     self.guiTextMessageContainer.hidden = YES;
     self.guiAreYouSureToRetakeContainer.hidden = NO;
+    [self.guiAreYouSureToRetakeContainer.layer removeAllAnimations];
     [UIView animateWithDuration:1.3 delay:0 options:HM_ANIMATION_OPTION_PING_PONG animations:^{
         self.guiAreYouSureToRetakeIcon.transform = CGAffineTransformMakeRotation(0.5);
     } completion:nil];
@@ -149,7 +155,11 @@
 
 - (IBAction)onPressedYeahRetakeThisScene:(UIButton *)sender
 {
-    [self.remakerDelegate dismissMessagesOverlay];
+    //
+    // Just stay in the same scene and allow to retake.
+    //
+    [self.remakerDelegate updateUIForCurrentScene];
+    [self.remakerDelegate dismissMessagesOverlayWithRecorderState:HMRecorderStateMakingAScene checkNextState:NO];
 }
 
 @end
