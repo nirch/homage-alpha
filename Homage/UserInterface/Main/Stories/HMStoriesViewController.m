@@ -176,18 +176,18 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
-    /*if ([segue.identifier isEqualToString:@"story details segue"]) {
+    if ([segue.identifier isEqualToString:@"story details segue"]) {
         //
         // Segue to story details.
         //
-        NSIndexPath *indexPath = self.storiesCV.indexPathForSelectedItem;
+        NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
         Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
         id<HMStoryPresenterProtocol>vc = (id<HMStoryPresenterProtocol>)segue.destinationViewController;
         vc.story = story;
         
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
-    }*/
+    }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

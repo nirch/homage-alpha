@@ -108,18 +108,20 @@
 -(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
+    
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
+    if (!userName) userName = @"rafi@homage.it";
     User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
     
     HMGLogDebug(@"user is: %@" , user.email);
 
-    Remake *remake = user.remakes.allObjects.lastObject;
+    /*Remake *remake = user.remakes.allObjects.lastObject;
     if (remake) {
         HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
         [self presentViewController:vc animated:YES completion:nil];
-    }
+    }*/
 }
 
 -(void)failedStartingApplication

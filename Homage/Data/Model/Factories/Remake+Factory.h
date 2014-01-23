@@ -16,8 +16,30 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
     HMGRemakeStatusRendering,
     HMGRemakeStatusDone
 };
+///
+/**
+*  An array of footages of this remake, ordered by the related sceneID.
+*/
+@property (nonatomic, readonly) NSArray *footagesOrdered;
 
-// Creates or fetches a remake with given id, related to given story and user.
+
+///
+/**
+*  A footage can be: Already taken and ready for a retake, Ready for recording or Locked (see HMFootageReadyState)
+*/
+@property (nonatomic, readonly) NSArray *footagesReadyStates;
+
+///
+/**
+*  Creates or fetches a remake with given id, related to given story and user.
+*
+*  @param sID     id of existing/new remake.
+*  @param story   a story object the remake is related to.
+*  @param user    the user related to the remake.
+*  @param context The managed object context.
+*
+*  @return an existing remake (or a new one, if not found).
+*/
 +(Remake *)remakeWithID:(NSString *)sID story:(Story *)story user:(User *)user inContext:(NSManagedObjectContext *)context;
 
 ///

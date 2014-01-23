@@ -12,9 +12,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" id="cJv-hE-5uF">
+                            <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cJv-hE-5uF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="4NA-z5-ECn" kind="embed" id="vLf-mZ-Wrr"/>
@@ -84,15 +84,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="8zG-cl-qtn" kind="relationship" relationship="viewControllers" id="09I-tj-TFR"/>
                         <segue destination="k3P-hU-fx4" kind="relationship" relationship="viewControllers" id="H8j-m6-SNl"/>
-                        <segue destination="S0E-NA-ZBh" kind="relationship" relationship="viewControllers" id="09I-tj-TFR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMl-dk-YOl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="766" y="122"/>
         </scene>
-        <!--Stories View Controller - stories-->
+        <!--Stories View Controller-->
         <scene sceneID="qxC-BO-70l">
             <objects>
                 <viewController id="S0E-NA-ZBh" customClass="HMStoriesViewController" sceneMemberID="viewController">
@@ -167,6 +167,7 @@
                                         <connections>
                                             <outlet property="guiStoryNameLabel" destination="mTY-Gz-YqK" id="pwe-t6-oew"/>
                                             <outlet property="guiThumbImage" destination="L7Z-UX-rZf" id="9j1-Wl-66U"/>
+                                            <segue destination="ZiT-ur-2sF" kind="push" identifier="story details segue" id="CrG-yp-mJg"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -178,7 +179,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="stories" id="WoR-uH-QWh"/>
+                    <navigationItem key="navigationItem" id="Cxz-90-Kf7"/>
                     <connections>
                         <outlet property="headLine" destination="5eV-CE-cFD" id="P7p-7W-FU7"/>
                         <outlet property="noStoriesLabel" destination="C7L-Hb-oGt" id="6FN-NC-M4Z"/>
@@ -187,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oP2-ed-tvA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1595" y="-93"/>
+            <point key="canvasLocation" x="2121" y="-93"/>
         </scene>
         <!--Table View Controller - Stories-->
         <scene sceneID="epo-Yb-jM8">
@@ -267,7 +268,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xla-FU-DLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2478" y="-99"/>
+            <point key="canvasLocation" x="3004" y="-99"/>
         </scene>
         <!--Story Details View Controller - Story-->
         <scene sceneID="xPY-3F-Ud8">
@@ -281,6 +282,13 @@
                                 <rect key="frame" x="-21" y="-48" width="363" height="663"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="Label - no remakes label" customClass="HMFontLabel">
+                                <rect key="frame" x="14" y="258" width="291" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Qrl-po-lWg">
                                 <rect key="frame" x="10" y="28" width="300" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -313,16 +321,45 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="8a9-hu-Nw7">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RemakeCell" id="8a9-hu-Nw7" customClass="HMRemakeCell">
                                         <rect key="frame" x="0.0" y="0.0" width="145" height="123"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="145" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Vaa-IJ-F0q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="145" height="123"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" id="yq0-5A-pdt" userLabel="labelBG">
+                                                    <rect key="frame" x="6" y="6" width="119" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8zk-Pr-2hS" customClass="HMFontLabel">
+                                                            <rect key="frame" x="6" y="-4" width="153" height="32"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <outlet property="guiThumbImage" destination="Vaa-IJ-F0q" id="9Qq-Qx-a7z"/>
+                                            <outlet property="guiUserName" destination="8zk-Pr-2hS" id="Bhs-TJ-rfE"/>
+                                            <outlet property="userName" destination="8zk-Pr-2hS" id="Yjd-aE-10n"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZiT-ur-2sF" id="8QZ-4L-AOn"/>
+                                    <outlet property="delegate" destination="ZiT-ur-2sF" id="6zZ-FG-ckl"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -333,11 +370,13 @@
                         <outlet property="guiRemakeActivity" destination="cAO-7C-bdV" id="2pC-wS-QlP"/>
                         <outlet property="guiRemakeButton" destination="tiZ-kN-hcG" id="tU8-Od-e1R"/>
                         <outlet property="guiThumbnailImage" destination="Qrl-po-lWg" id="e2C-Gr-nbE"/>
+                        <outlet property="noRemakesLabel" destination="xrO-tV-a3k" id="MJo-jH-TxL"/>
+                        <outlet property="remakesCV" destination="n4c-ID-VSQ" id="LNh-x3-q49"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MGp-s6-51Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2015" y="-93"/>
+            <point key="canvasLocation" x="2541" y="-93"/>
         </scene>
         <!--Me TabVC - Me-->
         <scene sceneID="Zq7-Ez-DMl">
@@ -372,20 +411,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="la2-3O-w2A">
-                                                    <rect key="frame" x="0.0" y="0.0" width="319" height="180"/>
+                                                    <rect key="frame" x="-1" y="0.0" width="320" height="180"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Efv-RJ-HJ1">
-                                                            <rect key="frame" x="275" y="3" width="41" height="32"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal" backgroundImage="close">
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="closeMovieButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="jYe-ID-0tC"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="VI8-bD-3VH">
@@ -445,6 +472,9 @@
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="actionButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="lvq-oh-poJ"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -456,7 +486,6 @@
                                         <connections>
                                             <outlet property="actionButton" destination="K1r-AP-wTJ" id="Hdh-dP-a5D"/>
                                             <outlet property="buttonsView" destination="LUz-op-R46" id="Fm6-xe-pTj"/>
-                                            <outlet property="closeMovieButton" destination="Efv-RJ-HJ1" id="OiN-6M-NHo"/>
                                             <outlet property="deleteButton" destination="xnf-kT-Sf2" id="3qw-9S-vem"/>
                                             <outlet property="guiThumbImage" destination="VI8-bD-3VH" id="2rZ-sH-TeS"/>
                                             <outlet property="moviePlaceHolder" destination="la2-3O-w2A" id="Kv8-Hg-gDg"/>
@@ -472,7 +501,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="I73-OC-8QP">
-                                <rect key="frame" x="2" y="15" width="48" height="31"/>
+                                <rect key="frame" x="4" y="13" width="38" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="settings">
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -501,10 +530,29 @@
             </objects>
             <point key="canvasLocation" x="1596" y="653"/>
         </scene>
+        <!--Navigation Controller - stories-->
+        <scene sceneID="cAa-tY-Av8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8zG-cl-qtn" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="stories" id="WoR-uH-QWh"/>
+                    <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nDR-uD-1zT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="S0E-NA-ZBh" kind="relationship" relationship="rootViewController" id="gQM-gD-kgv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V52-Ar-BP2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1595" y="-93"/>
+        </scene>
     </scenes>
     <resources>
         <image name="background" width="452" height="447"/>
-        <image name="close" width="46" height="45"/>
         <image name="emptyFilmCell" width="145" height="65"/>
         <image name="logo" width="118" height="48"/>
         <image name="reamke" width="26" height="22"/>

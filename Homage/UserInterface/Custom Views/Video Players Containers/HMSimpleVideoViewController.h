@@ -7,6 +7,7 @@
 //
 
 #import "HMSimpleVideoView.h"
+#import "HMSimpleVideoPlayerProtocol.h"
 
 @interface HMSimpleVideoViewController : UIViewController
 
@@ -36,6 +37,12 @@
 
 ///
 /**
+ *  delegate of HMSimpleVideoViewController
+ */
+@property id<HMSimpleVideoPlayerProtocol> delegate;
+
+///
+/**
 *  Initializes a HMSimpleVideoViewController with a given nib name (a nib of a HMSimpleVideoView).
 *
 *  @param nibName       The name of the nib the HMSimpleVideoView layout is loaded from.
@@ -62,5 +69,12 @@
 *  Stop playing video. Exit full screen. Reset UI to first state.
 */
 -(void)done;
+
+///
+/**
+* start playing video, including prepareToPlay
+ */
+-(void)play;
+
 
 @end

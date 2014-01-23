@@ -92,7 +92,6 @@
 		0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */; };
 		08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
 		08845674188494D300B94267 /* HMTestSliceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08845672188494D300B94267 /* HMTestSliceViewController.m */; };
-		089BDEAB188FD5D900AEEC1E /* HMColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 089BDEAA188FD5D900AEEC1E /* HMColor.m */; };
 		089BDEAC188FD5D900AEEC1E /* HMColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 089BDEAA188FD5D900AEEC1E /* HMColor.m */; };
 		08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7AF188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
@@ -145,8 +144,8 @@
 		08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECE1886994A001A8B75 /* HMRoundButton.m */; };
 		08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
-		08E50ED718869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
-		08E50ED818869C57001A8B75 /* HMRecorderOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */; };
+		260478A1188FF3C300517DCA /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260478A0188FF3C300517DCA /* HMMeVideoPlayer.xib */; };
+		260478A518906BAE00517DCA /* HMRemakeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 260478A418906BAE00517DCA /* HMRemakeCell.m */; };
 		2679638A188ACE4F00D19047 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26796389188ACE4F00D19047 /* Settings.bundle */; };
 		2679638F188ACF2600D19047 /* CustomSubviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2679638D188ACF2600D19047 /* CustomSubviewController.m */; };
 		26796390188ACF2600D19047 /* CustomSubviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2679638E188ACF2600D19047 /* CustomSubviewController.xib */; };
@@ -309,8 +308,10 @@
 		08E50ECE1886994A001A8B75 /* HMRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRoundButton.m; sourceTree = "<group>"; };
 		08E50ED118869ADD001A8B75 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
-		08E50ED518869C57001A8B75 /* HMRecorderOptionsBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRecorderOptionsBarViewController.h; path = Recorder/HMRecorderOptionsBarViewController.h; sourceTree = "<group>"; };
-		08E50ED618869C57001A8B75 /* HMRecorderOptionsBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRecorderOptionsBarViewController.m; path = Recorder/HMRecorderOptionsBarViewController.m; sourceTree = "<group>"; };
+		260478A0188FF3C300517DCA /* HMMeVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMMeVideoPlayer.xib; sourceTree = "<group>"; };
+		260478A21890233400517DCA /* HMSimpleVideoPlayerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerProtocol.h; sourceTree = "<group>"; };
+		260478A318906BAE00517DCA /* HMRemakeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeCell.h; sourceTree = "<group>"; };
+		260478A418906BAE00517DCA /* HMRemakeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakeCell.m; sourceTree = "<group>"; };
 		26796389188ACE4F00D19047 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = settings/Settings.bundle; sourceTree = "<group>"; };
 		2679638C188ACF2600D19047 /* CustomSubviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomSubviewController.h; path = "settings views/CustomSubviewController.h"; sourceTree = "<group>"; };
 		2679638D188ACF2600D19047 /* CustomSubviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSubviewController.m; path = "settings views/CustomSubviewController.m"; sourceTree = "<group>"; };
@@ -594,6 +595,8 @@
 				0840FFC81885935400A6EF5E /* HMStoryCell.m */,
 				0831C7D71885DA1A0024406B /* HMStoryDetailsViewController.h */,
 				0831C7D81885DA1A0024406B /* HMStoryDetailsViewController.m */,
+				260478A318906BAE00517DCA /* HMRemakeCell.h */,
+				260478A418906BAE00517DCA /* HMRemakeCell.m */,
 			);
 			path = Stories;
 			sourceTree = "<group>";
@@ -759,10 +762,12 @@
 			isa = PBXGroup;
 			children = (
 				08ACB7F0188DB8DB00C0EE27 /* HMSimpleVideoViewController.xib */,
+				260478A0188FF3C300517DCA /* HMMeVideoPlayer.xib */,
 				08ACB7EE188DB8DB00C0EE27 /* HMSimpleVideoViewController.h */,
 				08ACB7EF188DB8DB00C0EE27 /* HMSimpleVideoViewController.m */,
 				08ACB7F5188DBA5B00C0EE27 /* HMSimpleVideoView.h */,
 				08ACB7F6188DBA5B00C0EE27 /* HMSimpleVideoView.m */,
+				260478A21890233400517DCA /* HMSimpleVideoPlayerProtocol.h */,
 			);
 			path = "Video Players Containers";
 			sourceTree = "<group>";
@@ -925,12 +930,13 @@
 			files = (
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				26796394188AD08100D19047 /* Localizable.strings in Resources */,
+				260478A1188FF3C300517DCA /* HMMeVideoPlayer.xib in Resources */,
+				08ACB7F3188DB8DB00C0EE27 /* HMSimpleVideoViewController.xib in Resources */,
 				0806FB371882A58F00F0EF50 /* RecorderStoryboard.storyboard in Resources */,
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				0840FF7118852C6300A6EF5E /* Storyboard.storyboard in Resources */,
-				08E50EC1188685E1001A8B75 /* Readme.txt in Resources */,
 				2679638A188ACE4F00D19047 /* Settings.bundle in Resources */,
 				26796390188ACF2600D19047 /* CustomSubviewController.xib in Resources */,
 				26796393188AD08100D19047 /* InfoPlist.strings in Resources */,
@@ -995,10 +1001,9 @@
 				08ACB7CF188CAAE900C0EE27 /* User.m in Sources */,
 				08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */,
 				26DC8F2A1888423F00F4DFB6 /* HMGMeTabVC.m in Sources */,
+				08ACB7D7188D3D3900C0EE27 /* HMTabBarController.m in Sources */,
 				0831C7D91885DA1A0024406B /* HMStoryDetailsViewController.m in Sources */,
-				08BDB33E18882D0E00AF1D73 /* Story.m in Sources */,
 				26DC8F2B1888423F00F4DFB6 /* HMGUserRemakeCVCell.m in Sources */,
-				08BDB33618882D0D00AF1D73 /* Scene.m in Sources */,
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
 				081237931882BED400DA5D23 /* HMRecorderViewController.m in Sources */,
 				0840FF7518852E1B00A6EF5E /* HMStartViewController.m in Sources */,
@@ -1008,6 +1013,7 @@
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
+				260478A518906BAE00517DCA /* HMRemakeCell.m in Sources */,
 				086D94A1188701EA0086C565 /* HMServer+Remakes.m in Sources */,
 				0840FF8E18854E6200A6EF5E /* HMStoriesViewController.m in Sources */,
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
@@ -1016,7 +1022,6 @@
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08ACB7B7188C99D400C0EE27 /* Remake.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
-				089BDEAB188FD5D900AEEC1E /* HMColor.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
 				08E50EB718866B16001A8B75 /* AVCamPreviewView.m in Sources */,
 				2679638F188ACF2600D19047 /* CustomSubviewController.m in Sources */,

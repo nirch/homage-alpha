@@ -77,4 +77,19 @@
  */
 -(void)deleteRemakeWithID:(NSString *)remakeID;
 
+///
+/**
+ *  A GET request to the server requesting info about remakes related to a user.
+ 
+ *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY.
+ 
+ *  Parser used: HMRemakesParser.
+ 
+ *  @code
+ [HMServer.sh refetchRemakesWithStoryID:storyID];
+ *  @endcode
+ *  @param storyID  The id of the story
+ */
+-(void)refetchRemakesWithStoryID:(NSString *)storyID;
+
 @end

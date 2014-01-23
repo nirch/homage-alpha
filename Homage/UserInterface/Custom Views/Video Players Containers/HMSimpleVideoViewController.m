@@ -192,6 +192,7 @@
 -(void)done
 {
     [self.videoPlayer stop];
+    if (self.delegate) [self.delegate videoPlayerHitStopButton];
     if (self.videoPlayer.isFullscreen) {
         [self.videoPlayer setFullscreen:NO animated:YES];
     }
@@ -210,6 +211,12 @@
         
     }];}
 
+-(void)play
+{
+    [self updateUIToPlayVideoState];
+    [self playVideo];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -217,8 +224,7 @@
 - (IBAction)guiPressedPlayButton:(UIButton *)sender
 {
     if (!self.videoURL) return;
-    [self updateUIToPlayVideoState];
-    [self playVideo];
+    [self play];
 }
 
 - (IBAction)onPressedStopButton:(id)sender

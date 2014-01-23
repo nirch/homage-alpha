@@ -7,22 +7,21 @@
 //
 
 #import "HMGMeTabVC.h"
-//#import <MediaPlayer/MediaPlayer.h>
-//#import <UIKit/UIKit.h>
 #import "HMGLog.h"
 #import "HMGUserRemakeCVCell.h"
 #import "HMServer+Remakes.h"
 #import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
-#import <ALMoviePlayerController/ALMoviePlayerController.h>
 #import "HMFontLabel.h"
 #import <InAppSettingsKit/IASKAppSettingsViewController.h>
+#import "HMSimpleVideoViewController.h"
+#import "HMSimpleVideoPlayerProtocol.h"
 
 
-@interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,ALMoviePlayerControllerDelegate>
+@interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerProtocol>
 
 @property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
-@property (strong,nonatomic) ALMoviePlayerController *moviePlayer;
+@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UILabel *headLine;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
@@ -109,11 +108,6 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
                                                      object:nil];
     
-    //observe when movie player finish playing
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onMovieFinishPlaying:)
-                                                       name:MPMoviePlayerPlaybackDidFinishNotification
-                                                     object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
@@ -122,7 +116,7 @@
 -(void)onRemakesRefetched:(NSNotification *)notification
 {
     //
-    // Backend notifies that local storage was updated with stories.
+    // Backend notifies that local storage was updated with remakes.
     //
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (notification.isReportingError) {
@@ -263,11 +257,10 @@
 
 }
 
--(void)viewDidDisappear:(BOOL)animated
+-(void)viewWillDisappear:(BOOL)animated
 {
     
-    //movie is playing in full screen, nothing should happen
-    if (self.moviePlayer.isFullscreen == YES) return;
+    [self.moviePlayer done];
     
     //no movie is playing. nothing should happen
     if (self.playingMovieIndex == -1) return;
@@ -452,39 +445,14 @@
         [self closeMovieInCell:otherRemakeCell];
     }
     
-    //self.currentMovieContainerCell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     self.playingMovieIndex = indexPath.item;
     
-    NSURL *URL = [NSURL URLWithString:videoURL];
-    
-    //init moviePlayer
-    self.moviePlayer = [[ALMoviePlayerController alloc] initWithFrame:cell.bounds];
-    self.moviePlayer.view.alpha = 1.f;
-    self.moviePlayer.delegate = self; //IMPORTANT!
-    
-    //create the controls
-    ALMoviePlayerControls *movieControls = [[ALMoviePlayerControls alloc] initWithMoviePlayer:self.moviePlayer style:ALMoviePlayerControlsStyleEmbedded];
-    [movieControls setBarHeight:50.f];
-    [movieControls setTimeRemainingDecrements:YES];
-    [self.moviePlayer setControls:movieControls];
-    
-    //set videoURL for playing
-    [self.moviePlayer setContentURL:URL];
+    HMSimpleVideoViewController *vc;
+    self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
+    self.moviePlayer.delegate = self;
+    self.moviePlayer.videoURL = videoURL;
     [self configureCellForMoviePlaying:cell active:YES];
     [self.moviePlayer play];
-    
-    //old code for MPMoviePlayerController
-    /*self.movieplayer = [[MPMoviePlayerController alloc] initWithContentURL:URL];
-    self.movieplayer.controlStyle = MPMovieControlStyleEmbedded;
-    self.movieplayer.scalingMode = MPMovieScalingModeAspectFit;
-    [self.movieplayer.view setFrame: cell.bounds];
-    self.playingMovieIndex = indexPath.item;
-    self.movieplayer.shouldAutoplay = YES;
-    [cell.moviePlaceHolder insertSubview:self.movieplayer.view belowSubview:cell.closeMovieButton];
-    [cell.guiThumbImage setHidden:YES];
-    [cell.buttonsView setHidden:YES];
-    [cell.moviePlaceHolder setHidden:NO];
-    [self.movieplayer setFullscreen:NO animated:YES];*/
 }
 
 -(void)configureCellForMoviePlaying:(HMGUserRemakeCVCell *)cell active:(BOOL)active
@@ -503,28 +471,7 @@
     }
 }
 
-- (void)moviePlayerWillMoveFromWindow
-{
-    //movie player must be readded to this view upon exiting fullscreen mode.
-    //if (![self.view.subviews containsObject:self.moviePlayer.view])
-        //[self.view addSubview:self.moviePlayer.view];
-    
-    //you MUST use [ALMoviePlayerController setFrame:] to adjust frame, NOT [ALMoviePlayerController.view setFrame:]
-    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
-    
-    [cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
-    //[self.currentMovieContainerCell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:self.currentMovieContainerCell.closeMovieButton];
-    [self.moviePlayer setFrame:cell.bounds];
-}
-
-
-- (IBAction)closeMovieButtonPushed:(UIButton *)sender
-{
-    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:sender.tag atSection:0];
-    [self closeMovieInCell:cell];
-}
-
--(void)onMovieFinishPlaying:(NSNotification *)notification
+-(void)videoPlayerHitStopButton
 {
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:cell];
@@ -532,12 +479,9 @@
 
 -(void)closeMovieInCell:(HMGUserRemakeCVCell *)remakeCell
 {
-    [self.moviePlayer stop];
-    
     self.moviePlayer = nil;
     [self configureCellForMoviePlaying:remakeCell active:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
-    //self.currentMovieContainerCell = nil;
 }
 
 - (IBAction)deleteRemake:(UIButton *)sender

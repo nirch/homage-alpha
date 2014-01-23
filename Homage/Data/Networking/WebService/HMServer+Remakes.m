@@ -52,6 +52,7 @@
     [self getRelativeURL:relativeURL
               parameters:nil
         notificationName:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY
+                    info:@{@"storyID":storyID}
                   parser:[HMRemakeParser new]
      ];
 }

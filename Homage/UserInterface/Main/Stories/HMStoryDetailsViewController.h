@@ -7,14 +7,18 @@
 //
 
 #import "HMStoryPresenterProtocol.h"
+#import "DB.h"
+#import "HMFontLabel.h"
 
 @interface HMStoryDetailsViewController : UIViewController<
-    HMStoryPresenterProtocol
->
+    HMStoryPresenterProtocol,NSFetchedResultsControllerDelegate>
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbnailImage;
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;
+@property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
+
 
 @end
