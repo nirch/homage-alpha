@@ -16,7 +16,7 @@
             <subviews>
                 <view clipsSubviews="YES" contentMode="scaleToFill" id="HJq-5X-mSh" userLabel="Video container">
                     <rect key="frame" x="11" y="11" width="262" height="141"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YYn-24-y2z" userLabel="Thumb Image View">
                             <rect key="frame" x="0.0" y="0.0" width="262" height="141"/>
@@ -54,7 +54,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="60P-uc-eta" userLabel="BIG Play Button">
                     <rect key="frame" x="11" y="11" width="262" height="141"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="10"/>
                     <state key="normal" image="iconPlayButton">
@@ -65,8 +65,8 @@
                     </connections>
                 </button>
                 <view alpha="0.49999999999999961" contentMode="scaleToFill" id="oQX-P0-00w" userLabel="Controls Container">
-                    <rect key="frame" x="11" y="108" width="262" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="11" y="108" width="262" height="44.000001943111414"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Y14-3x-C8g" userLabel="Button - Stop">
                             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>

@@ -76,5 +76,22 @@
  */
 -(void)play;
 
+///
+/**
+ * hide video label (currently "play our take"
+ */
+-(void)hideVideoLabel;
+
+///
+/**
+ * set the video player to fullScreen
+ */
+-(void)setFullScreen;
+
+///
+/**
+ * hide media controls
+ */
+-(void)hideMediaControls;
 
 @end

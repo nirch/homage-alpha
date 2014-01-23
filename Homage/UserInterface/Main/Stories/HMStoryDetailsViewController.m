@@ -21,7 +21,7 @@
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
-
+@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
 @end
 
 @implementation HMStoryDetailsViewController
@@ -37,14 +37,27 @@
     [self initObservers];
     [self initContent];
 	[self initGUI];
+    
 }
 
 -(void)initGUI
 {
     self.title = self.story.name;
-    self.guiThumbnailImage.image = self.story.thumbnail;
     self.guiBGImageView.image = [self.story.thumbnail applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
     [self.guiBGImageView addMotionEffectWithAmount:-30];
+    self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
+    self.guiDescriptionField.text = self.story.descriptionText;
+    [self initStoryMoviePlayer];
+}
+
+-(void)initStoryMoviePlayer
+{
+    HMSimpleVideoViewController *vc;
+    self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guisStoryMovieContainer];
+    self.moviePlayer.videoURL = self.story.videoURL;
+    [self.moviePlayer hideVideoLabel];
+    [self.moviePlayer hideMediaControls];
+    self.moviePlayer.videoImage = self.story.thumbnail;
 }
 
 -(void)initContent
@@ -205,7 +218,7 @@
     
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"sID=%@", self.story.sID];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
@@ -254,6 +267,7 @@
     [cell.layer setShadowOpacity:0.8];
     //
     
+    cell.guiUserName.text = remake.user.userID;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     
     if (remake.thumbnail) {
@@ -268,6 +282,18 @@
                                      info:@{@"indexPath":indexPath}
          ];
     }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
+    HMSimpleVideoViewController *vc;
+    vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:cell];
+    vc.videoURL = remake.videoURL;
+    [vc hideVideoLabel];
+    [vc play];
+    [vc setFullScreen];
 }
 
 
