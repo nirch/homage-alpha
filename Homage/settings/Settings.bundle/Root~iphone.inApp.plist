@@ -52,10 +52,10 @@
 			<key>IASKMailComposeCcRecipents</key>
 			<array/>
 			<key>IASKMailComposeSubject</key>
-			<string>feedback please!</string>
+			<string>feedback and suggestions please!</string>
 			<key>IASKMailComposeToRecipents</key>
 			<array>
-				<string>feedback@homage.it</string>
+				<string>tomer@homage.it</string>
 			</array>
 			<key>Title</key>
 			<string>FEEDBACK</string>
