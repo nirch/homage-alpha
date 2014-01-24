@@ -11,5 +11,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *guiTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 @property (weak, nonatomic) IBOutlet UIButton *guiRetryButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiTextIsGoodIcon;
 
 @end

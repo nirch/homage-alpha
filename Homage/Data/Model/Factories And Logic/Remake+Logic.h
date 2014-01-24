@@ -91,4 +91,14 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
  */
 -(BOOL)missingSomeTexts;
 
+///
+/**
+*  Returns a value of remake's text, given the text ID.
+*
+*  @param textID The text ID (notice, this starts at 1).
+*
+*  @return Returns a sting or nil if the id is out of bounds.
+*/
+-(NSString *)textWithID:(NSNumber *)textID;
+
 @end

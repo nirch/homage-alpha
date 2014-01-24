@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *guiCreateButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiCreateMovieActivity;
+@property (weak, nonatomic) IBOutlet UILabel *guiNoticeMessageLabel;
 
 @property (nonatomic, readonly) NSArray *textsDefinitions;
 @property (nonatomic, readonly) Remake *remake;
@@ -83,12 +84,13 @@
     NSInteger index = [info[@"textID"] integerValue] - 1;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     HMRecorderEditingTextCell *cell = (HMRecorderEditingTextCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-
+    [self validateTextAtIndexPath:indexPath];
     [cell.guiActivity stopAnimating];
 
     if (notification.isReportingError) {
         cell.guiTextField.textColor = HMColor.sh.recorderEditTextError;
         cell.guiRetryButton.hidden = NO;
+        cell.guiTextIsGoodIcon.hidden = YES;
         return;
     }
 
@@ -123,12 +125,24 @@
     cell.guiTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textDefinition.descriptionText.uppercaseString
                                                                               attributes:@{NSForegroundColorAttributeName:HMColor.sh.main1}];
     
-    NSString *text = self.remake.texts[indexPath.row];
-    cell.guiTextField.text = [text isEqual:[NSNull null]] ? @"" : text;
-    
+    [self validateTextAtIndexPath:indexPath];
     cell.guiActivity.tag = indexPath.row;
     cell.guiTextField.tag = indexPath.row;
     cell.guiRetryButton.tag = indexPath.row;
+}
+
+-(void)validateTextAtIndexPath:(NSIndexPath *)indexPath
+{
+    HMRecorderEditingTextCell *cell = (HMRecorderEditingTextCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSString *text = [self.remake textWithID:@(indexPath.row+1)];
+    if (text && text.length > 0) {
+        cell.guiTextField.text = text;
+        cell.guiTextIsGoodIcon.hidden = NO;
+        cell.guiRetryButton.hidden = YES;
+    } else {
+        cell.guiTextField.text = @"";
+        cell.guiTextIsGoodIcon.hidden = YES;
+    }
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -151,11 +165,30 @@
     }
     
     // Update server with text, if it was changed.
-    if (![textField.text isEqualToString:self.textsDefinitions[index]]) {
+    NSString *newText = [textField.text stringWithATrim];
+    NSString *oldText = [[self.remake textWithID:@(index+1)] stringWithATrim];
+    if (![newText isEqualToString:oldText]) {
         [self updateServerWithTextAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         [cell.guiActivity startAnimating];
     }
     return YES;
+}
+
+-(void)showMissingTextsMessage
+{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiCreateButton.alpha = 0;
+        self.guiNoticeMessageLabel.alpha = 1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.guiCreateButton.alpha = 1;
+            self.guiNoticeMessageLabel.alpha = 0;
+        } completion:nil];
+    }];
+    
+    
+
 }
 
 #pragma mark - Remote
@@ -170,9 +203,7 @@
 -(void)serverCreateMovie
 {
     if (self.remake.missingSomeTexts) {
-        // TODO: Epic fail here
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"Missing texts") message:LS(@"All texts are required.") delegate:nil cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
-        [alert show];
+        [self showMissingTextsMessage];
         return;
     }
     [self.guiCreateMovieActivity startAnimating];
@@ -191,7 +222,6 @@
 - (IBAction)onPressedCreateMovieButton:(UIButton *)sender
 {
     // Check if more texts needed.
-    sender.enabled = NO;
     [self serverCreateMovie];
 }
 

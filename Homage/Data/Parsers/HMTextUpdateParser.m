@@ -8,6 +8,7 @@
 
 #import "HMTextUpdateParser.h"
 #import "DB.h"
+#import "NSString+Utilities.h"
 
 @implementation HMTextUpdateParser
 
@@ -15,6 +16,17 @@
 // Each story is a dictionary.
 -(void)parse
 {
+    if (![self.objectToParse isKindOfClass:[NSDictionary class]]) {
+        NSString *errorMessage = [NSString stringWithFormat:@"Unexpected data from server %@", self.objectToParse];
+        [self.errors addObject:[NSError errorWithDomain:ERROR_DOMAIN_PARSERS
+                                                   code:HMParserErrorUnexpectedData
+                                               userInfo:@{NSLocalizedDescriptionKey:errorMessage}
+                                ]
+         ];
+        return;
+    }
+    
+    
     NSString *remakeID = self.parseInfo[@"remakeID"];
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     if (!remake) return;
@@ -25,13 +37,15 @@
     NSInteger index = textID.integerValue - 1;
     NSDictionary *textInfo = serverTexts[index];
     NSString *text = textInfo[@"text"];
-    
-    // Update the remake's texts
-    NSMutableArray *texts = [remake.texts mutableCopy];
-    if (index<[remake.texts count]) {
-        texts[index] = text;
-        remake.texts = texts;
+    if ([text isKindOfClass:[NSString class]]) {
+        // Update the remake's texts
+        NSMutableArray *texts = [remake.texts mutableCopy];
+        if (index<[remake.texts count]) {
+            texts[index] = [text stringWithATrim];
+            remake.texts = texts;
+        }
     }
+    
     
     
     [DB.sh save];

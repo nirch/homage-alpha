@@ -130,13 +130,19 @@
 -(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
-    User *user = [User userWithID:@"test567@homage.it" inContext:DB.sh.context];
+    User *user = [User userWithID:@"someTest@homage.it" inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
 
-//    [HMServer.sh refetchRemakesForUserID:user.userID];
-    
-//    Remake *remake = [Remake findWithID:@"52e116d2db25451700000003" inContext:DB.sh.context];
+////    [HMServer.sh refetchRemakesForUserID:user.userID];
+//    
+//    for (Remake *remake in User.current.remakes) {
+//        NSLog(@"%@ %@",remake.sID, remake.story.name);
+//    }
+//    // 52e24f2fdb254514b0000018 Star Wars
+//    // 52e24c42db254514b0000017 Birthday
+//    
+//    Remake *remake = [Remake findWithID:@"52e24c42db254514b0000017" inContext:DB.sh.context];
 //    if (remake) {
 //        HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
 //        vc.delegate = self;

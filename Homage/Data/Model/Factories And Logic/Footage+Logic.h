@@ -22,7 +22,8 @@ typedef NS_ENUM(NSInteger, HMFootageStatus) {
 typedef NS_ENUM(NSInteger, HMFootageReadyState) {
     HMFootageReadyStateReadyForFirstRetake,
     HMFootageReadyStateReadyForSecondRetake,
-    HMFootageReadyStateStillLocked
+    HMFootageReadyStateStillLocked,
+    HMFootageReadyStateStillUnkown
 };
 
 ///
@@ -45,5 +46,15 @@ typedef NS_ENUM(NSInteger, HMFootageReadyState) {
  *  Deletes the related raw local file and set rawLocalFile property to nil.
  */
 -(void)deleteRawLocalFile;
+
+///
+/**
+*  Returns the ready state of a footage, given a sceneID.
+*
+*   @param sceneID the scene id number of the related scene.
+*
+*   @return HMFootageReadyState value (ready for first retake, ready for second retake or still locked)
+*/
+-(HMFootageReadyState)readyStateBySceneID:(NSNumber *)sceneID;
 
 @end
