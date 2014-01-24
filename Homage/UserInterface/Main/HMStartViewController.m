@@ -110,7 +110,11 @@
     // Hardcoded user for development (until LOGIN screens are implemented)
     
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
-    if (!userName) userName = @"rafi@homage.it";
+    if (!userName)
+    {
+        userName = @"rafi@homage.it";
+        [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
+    }
     User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];

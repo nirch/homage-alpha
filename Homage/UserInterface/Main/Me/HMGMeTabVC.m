@@ -16,7 +16,7 @@
 #import <InAppSettingsKit/IASKAppSettingsViewController.h>
 #import "HMSimpleVideoViewController.h"
 #import "HMSimpleVideoPlayerProtocol.h"
-
+#import "HMRecorderViewController.h"
 
 @interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerProtocol>
 
@@ -316,6 +316,7 @@
     //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
     cell.shareButton.tag = indexPath.item;
     cell.actionButton.tag = indexPath.item;
+    cell.remakeButton.tag = indexPath.item;
     cell.closeMovieButton.tag = indexPath.item;
     cell.deleteButton.tag = indexPath.item;
     //
@@ -358,8 +359,10 @@
     {
         case HMGRemakeStatusInProgress:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            bgimage = [UIImage imageNamed:@"complete"];
-            [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
+            //bgimage = [UIImage imageNamed:@"complete"];
+            //[cell.actionButton setImage:bgimage forState:UIControlStateNormal];
+            cell.actionButton.enabled = NO;
+            [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
@@ -369,6 +372,8 @@
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
             bgimage = [UIImage imageNamed:@"play"];
             [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
+            [cell.actionButton setHidden:NO];
+            cell.actionButton.enabled = YES;
             [cell.shareButton setHidden:NO];
             cell.shareButton.enabled = YES;
             cell.remakeButton.enabled = YES;
@@ -376,9 +381,12 @@
             break;
         
         case HMGRemakeStatusNew:
-            [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            bgimage = [UIImage imageNamed:@"underconsruction"];
-            [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
+            //[cell.actionButton setTitle:@"" forState:UIControlStateNormal];
+            //bgimage = [UIImage imageNamed:@"underconsruction"];
+            //[cell.actionButton setImage:bgimage forState:UIControlStateNormal];
+            
+            cell.actionButton.enabled = NO;
+            [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
@@ -386,7 +394,9 @@
             break;
 
         case HMGRemakeStatusRendering:
-            [cell.actionButton setTitle:@"R" forState:UIControlStateNormal];
+            //[cell.actionButton setTitle:@"R" forState:UIControlStateNormal];
+            cell.actionButton.enabled = NO;
+            [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
@@ -539,6 +549,17 @@
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 	// your code here to reconfigure the app for changed settings
+}
+
+#pragma mark remaking
+
+- (IBAction)remakeButtonPushed:(UIButton *)button
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    HMGLogDebug(@"gonna remake story: %@" , remake.story.name);
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
 }
 
 #pragma mark sharing

@@ -103,14 +103,6 @@
     [self checkState];
 }
 
-
-
-
-
-
-
-
-
 -(void)checkState
 {
     //

@@ -223,7 +223,8 @@
 }
 -(void)setFullScreen
 {
-    if (!self.videoPlayer.isFullscreen) {
+    if (!self.videoPlayer.isFullscreen)
+    {
         self.videoPlayer.controlStyle = MPMovieControlStyleFullscreen;
         [self.videoPlayer setFullscreen:YES animated:YES];
     }

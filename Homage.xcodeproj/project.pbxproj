@@ -910,7 +910,7 @@
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 3HVGM4BBZC;
+						DevelopmentTeam = 56F7YSPHC5;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1035,7 +1035,6 @@
 				08ACB7B7188C99D400C0EE27 /* Remake.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
-				08E50EB718866B16001A8B75 /* AVCamPreviewView.m in Sources */,
 				2679638F188ACF2600D19047 /* CustomSubviewController.m in Sources */,
 				086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */,
