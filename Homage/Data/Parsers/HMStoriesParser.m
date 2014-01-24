@@ -46,7 +46,7 @@
     NSString *sID = info[@"_id"][@"$oid"];
     
     Story *story = [Story storyWithID:sID inContext:self.ctx];
-    story.isActive =            @(YES);
+    story.isActive =            @YES; // TODO: Support this when server supports it.
     story.orderID =             [info numberForKey:@"order_id"];
     story.name =                [info stringForKey:@"name"];
     story.descriptionText =     [info stringForKey:@"description"];

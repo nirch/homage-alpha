@@ -38,8 +38,8 @@
         
         // Auto migrate options
         self.dbDocument.persistentStoreOptions = @{
-                                                   NSMigratePersistentStoresAutomaticallyOption:@(YES),
-                                                   NSInferMappingModelAutomaticallyOption:@(YES)
+                                                   NSMigratePersistentStoresAutomaticallyOption:@YES,
+                                                   NSInferMappingModelAutomaticallyOption:@YES
                                                    };
     }
     return self;

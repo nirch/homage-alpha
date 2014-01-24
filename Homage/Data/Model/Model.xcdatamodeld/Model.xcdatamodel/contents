@@ -61,6 +61,7 @@
         <attribute name="isFirstUse" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isLoggedIn" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="isPublic" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="prefersToSeeScriptWhileRecording" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="skipRecorderTutorial" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="userID" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
@@ -71,6 +72,6 @@
         <element name="Scene" positionX="648" positionY="36" width="128" height="208"/>
         <element name="Story" positionX="475" positionY="135" width="128" height="238"/>
         <element name="Text" positionX="648" positionY="332" width="128" height="118"/>
-        <element name="User" positionX="108" positionY="297" width="128" height="148"/>
+        <element name="User" positionX="54" positionY="302" width="128" height="178"/>
     </elements>
 </model>

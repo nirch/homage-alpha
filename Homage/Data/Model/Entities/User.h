@@ -2,7 +2,7 @@
 //  User.h
 //  Homage
 //
-//  Created by Aviv Wolf on 1/20/14.
+//  Created by Aviv Wolf on 1/23/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -18,8 +18,9 @@
 @property (nonatomic, retain) NSNumber * isFirstUse;
 @property (nonatomic, retain) NSNumber * isLoggedIn;
 @property (nonatomic, retain) NSNumber * isPublic;
-@property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSNumber * skipRecorderTutorial;
+@property (nonatomic, retain) NSString * userID;
+@property (nonatomic, retain) NSNumber * prefersToSeeScriptWhileRecording;
 @property (nonatomic, retain) NSSet *remakes;
 @end
 

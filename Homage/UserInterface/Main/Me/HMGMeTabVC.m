@@ -206,7 +206,8 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Refetch stories from the server
-    [HMServer.sh refetchRemakesForUserID:[[User current] email]];
+    //[HMServer.sh refetchRemakesForUserID:[[User current] email]]; <<== BUG - you should refetch by user id not by email!
+    [HMServer.sh refetchRemakesForUserID:User.current.userID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 

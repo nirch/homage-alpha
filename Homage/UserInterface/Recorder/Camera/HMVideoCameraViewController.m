@@ -5,11 +5,9 @@
 //  Modification of the AVCam example by apple.
 //
 
-#define MIN_FRAME_RATE 3000
-#define MAX_FRAME_RATE 3000
-
 @import AVFoundation;
 @import AssetsLibrary;
+
 #import "HMVideoCameraViewController.h"
 #import "AVCamPreviewView.h"
 #import "HMNotificationCenter.h"
@@ -57,16 +55,9 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
     });
 }
 
--(void)revealCameraPreviewAnimated:(BOOL)animated
+-(void)dealloc
 {
-    if (!animated) {
-        self.view.alpha = 1;
-        return;
-    }
-    
-    [UIView animateWithDuration:2.0 animations:^{
-        self.view.alpha = 1;
-    }];
+    // NSLog(@">>> dealloc %@", [self class]);
 }
 
 
@@ -99,6 +90,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 //
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [self removeMyObservers];
     dispatch_async([self sessionQueue], ^{
         [[self session] stopRunning];
         
@@ -109,7 +101,20 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
         [self removeObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" context:CapturingStillImageContext];
         [self removeObserver:self forKeyPath:@"movieFileOutput.recording" context:RecordingContext];
     });
-    [self removeMyObservers];
+}
+
+#pragma mark - Reveal
+// Reveal slowly to prevent "flasing effect" of the preview
+-(void)revealCameraPreviewAnimated:(BOOL)animated
+{
+    if (!animated) {
+        self.view.alpha = 1;
+        return;
+    }
+    
+    [UIView animateWithDuration:2.0 animations:^{
+        self.view.alpha = 1;
+    }];
 }
 
 #pragma mark - Orientation and status bar

@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-@interface HMStartViewController : UIViewController
+#import "HMRecorderDelegate.h"
+
+@interface HMStartViewController : UIViewController<
+    HMRecorderDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIView *guiSplashView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;

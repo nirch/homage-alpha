@@ -4,11 +4,7 @@
 //  The contents of this file are implicitly included at the beginning of every source file.
 //
 
-#import <Availability.h>
-
-#ifndef __IPHONE_3_0
-#warning "This project uses features only available in iOS SDK 3.0 and later."
-#endif
+#define LS(STRING) NSLocalizedString(STRING,STRING)
 
 #ifdef __OBJC__
     @import UIKit;

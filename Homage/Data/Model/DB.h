@@ -10,18 +10,22 @@
 #import "MyManagedDocument.h"
 
 #import "Story+Factory.h"
-#import "Remake+Factory.h"
-#import "User+Factory.h"
-#import "Scene+Factory.h"
-#import "Text+Factory.h"
-#import "Footage+Factory.h"
+#import "Story+Logic.h"
 
-// Entities names
-#define HM_SCENE        @"Scene"
-#define HM_TEXT         @"Text"
-#define HM_REMAKE       @"Remake"
-#define HM_USER         @"User"
-#define HM_FOOTAGE      @"Footage"
+#import "Remake+Factory.h"
+#import "Remake+Logic.h"
+
+#import "User+Factory.h"
+#import "User+Logic.h"
+
+#import "Scene+Factory.h"
+#import "Scene+Logic.h"
+
+#import "Text+Factory.h"
+#import "Text+Logic.h"
+
+#import "Footage+Factory.h"
+#import "Footage+Logic.h"
 
 @interface DB : NSObject
 

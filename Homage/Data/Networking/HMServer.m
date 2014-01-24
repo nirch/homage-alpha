@@ -151,6 +151,7 @@
             // Parse response.
             //
             parser.objectToParse = responseObject;
+            parser.parseInfo = moreInfo;
             [parser parse];
             if (parser.error) {
 
@@ -226,6 +227,7 @@
             // Parse response.
             //
             parser.objectToParse = responseObject;
+            parser.parseInfo = moreInfo;
             [parser parse];
             if (parser.error) {
                 
@@ -240,10 +242,12 @@
             }
         }
         
+        [moreInfo addEntriesFromDictionary:parser.parseInfo];
+        
         //
         // Successful request and parsing.
         //
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:parser.parseInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
@@ -252,7 +256,7 @@
         //
         HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
         [moreInfo addEntriesFromDictionary:@{@"error":error}];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:moreInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
     }];
 }
@@ -302,6 +306,7 @@
             // Parse response.
             //
             parser.objectToParse = responseObject;
+            parser.parseInfo = moreInfo;
             [parser parse];
             if (parser.error) {
                 
@@ -329,7 +334,7 @@
         //
         HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
         [moreInfo addEntriesFromDictionary:@{@"error":error}];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:moreInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
     }];
 }
