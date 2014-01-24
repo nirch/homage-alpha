@@ -128,7 +128,7 @@
     [self advanceState];
 }
 
--(void)checkState
+-(void)advanceState
 {
     //
     // The flow state machine.
