@@ -1150,7 +1150,6 @@
 				08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */,
 				084E532E1891D84800D96258 /* HMRecorderEditTextsViewController.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
-				2679638F188ACF2600D19047 /* CustomSubviewController.m in Sources */,
 				086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				08DF23241892704300912657 /* HMGMeTabVC.m in Sources */,
 				08B958921891678600BCCF8C /* User+Factory.m in Sources */,

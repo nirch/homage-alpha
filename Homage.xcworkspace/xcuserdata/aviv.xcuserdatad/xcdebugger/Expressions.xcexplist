@@ -3,6 +3,41 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[HMRecorderDetailedOptionsBarViewController onMoviePlayerLoadStateDidChange:]:HMRecorderDetailedOptionsBarViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.moviePlayer.loadState">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Story(Factory) findSceneWithID:]:Story+Factory.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scenes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[HMStoriesViewController refreshFromLocalStorage]:HMStoriesViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.fetchedResultsController.allobjects">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__68-[HMServer postRelativeURL:parameters:notificationName:info:parser:]_block_invoke:HMServer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ALMoviePlayerController movieTimedOut]:ALMoviePlayerController.m">
+      </ContextState>
+      <ContextState
          contextName = "-[HMVideoCameraViewController configureCameraForFrameRate:]:HMVideoCameraViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -14,31 +49,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[HMRecorderDetailedOptionsBarViewController onMoviePlayerLoadStateDidChange:]:HMRecorderDetailedOptionsBarViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.moviePlayer.loadState">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[HMTextUpdateParser parse]:HMTextUpdateParser.m">
       </ContextState>
       <ContextState
-         contextName = "-[ALMoviePlayerController movieTimedOut]:ALMoviePlayerController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[HMStoriesViewController refreshFromLocalStorage]:HMStoriesViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.fetchedResultsController.allobjects">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[Story(Factory) findSceneWithID:]:Story+Factory.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.scenes">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[HMRecorderEditTextsViewController serverCreateMovie]:HMRecorderEditTextsViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
