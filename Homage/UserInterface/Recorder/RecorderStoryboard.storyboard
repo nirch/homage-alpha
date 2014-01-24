@@ -902,6 +902,13 @@
                                     <rect key="frame" x="142" y="0.0" width="284" height="66"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALL TEXTS ARE REQUIRED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RTQ-cS-tsB" customClass="HMFontLabel">
+                                            <rect key="frame" x="-5" y="22" width="295" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.98895317316055298" green="0.20224950261590097" blue="0.21298146668115139" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="uxL-Sk-4Op" customClass="HMFontButton">
                                             <rect key="frame" x="22" y="7" width="240" height="52"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -955,7 +962,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="color" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </activityIndicatorView>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="TGa-6p-X0F" userLabel="Retry Button">
+                                                <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="TGa-6p-X0F" userLabel="Retry Button - currently disabled">
                                                     <rect key="frame" x="404" y="6" width="44" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" image="iconSceneRetake">
@@ -965,6 +972,10 @@
                                                         <action selector="guiRetryButton:" destination="zeG-c8-37M" eventType="touchUpInside" id="KQi-Iq-Mue"/>
                                                     </connections>
                                                 </button>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconCheck" id="ctG-MG-z0x">
+                                                    <rect key="frame" x="404" y="6" width="44" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -976,6 +987,7 @@
                                     <outlet property="guiActivity" destination="Qe7-1A-MRn" id="Zgs-QA-dlp"/>
                                     <outlet property="guiRetryButton" destination="TGa-6p-X0F" id="yIw-tK-Ckx"/>
                                     <outlet property="guiTextField" destination="2xI-50-BsN" id="oXx-Oe-4gi"/>
+                                    <outlet property="guiTextIsGoodIcon" destination="ctG-MG-z0x" id="98k-Hj-0Vu"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -988,6 +1000,7 @@
                     <connections>
                         <outlet property="guiCreateButton" destination="uxL-Sk-4Op" id="ZeI-GR-bNr"/>
                         <outlet property="guiCreateMovieActivity" destination="VSI-R0-7Km" id="zdo-Yq-L23"/>
+                        <outlet property="guiNoticeMessageLabel" destination="RTQ-cS-tsB" id="jdn-Ir-YpC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TiI-8L-U2x" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -997,6 +1010,7 @@
     </scenes>
     <resources>
         <image name="iconCameraFlip" width="47" height="47"/>
+        <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>
         <image name="iconCreateMovieSmall" width="30" height="30"/>
         <image name="iconGotIt" width="45" height="45"/>

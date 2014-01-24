@@ -13,6 +13,7 @@
 #import "HMServer+LazyLoading.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMRoundCountdownLabel.h"
+#import "HMColor.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -296,7 +297,13 @@
 -(void)updateUIForSceneID:(NSNumber *)sceneID
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
+    Footage *footage = [self.remake footageWithSceneID:sceneID];
     self.guiCurrentSceneLabel.text = [scene titleForSceneID];
+    if ([footage readyStateBySceneID:sceneID] == HMFootageReadyStateReadyForFirstRetake) {
+        self.guiCurrentSceneLabel.textColor = HMColor.sh.text;
+    } else {
+        self.guiCurrentSceneLabel.textColor = HMColor.sh.textImpact;
+    }
     self.guiCurrentSceneDurationLabel.text = [scene titleForTime];
     
     // Current scene "OUR TAKE" video.

@@ -8,6 +8,7 @@
 
 #import "Remake+Logic.h"
 #import "DB.h"
+#import "NSString+Utilities.h"
 
 @implementation Remake (Logic)
 
@@ -92,11 +93,26 @@
     return YES;
 }
 
+-(NSString *)textWithID:(NSNumber *)textID
+{
+    NSInteger index = textID.integerValue - 1;
+    NSArray *texts = self.texts;
+    
+    // Make sure not out of bounds
+    if (index >= texts.count || index < 0) return nil;
+
+    // Get the text and trim it.
+    NSString *text = texts[index];
+    text = [text stringWithATrim];
+    return text;
+}
+
 -(BOOL)missingSomeTexts
 {
     if (!self.texts) return NO;
-    for (NSString *text in self.texts) {
-        if ([text isEqual:[NSNull null]]) return YES;
+    for (NSInteger textID=1;textID<=[self.texts count];textID++) {
+        NSString *text = [self textWithID:@(textID)];
+        if (!text || [text isEqualToString:@""]) return YES;
     }
     return NO;
 }
