@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>main1</key>
+	<string>#FFFFFFFF</string>
+	<key>main2</key>
+	<string>#FF7D5FFF</string>
+	<key>text</key>
+	<string>#FFFFFFFF</string>
+	<key>textImpact</key>
+	<string>#FF7D5FFF</string>
+	<key>recorderTableCellBackground</key>
+	<string>#00000000</string>
+	<key>recorderTableCellBackgroundHighlighted</key>
+	<string>#FF7D5F55</string>
+	<key>recorderEditTextPlaceHolder</key>
+	<string>#EEEEEEFF</string>
+	<key>recorderEditText</key>
+	<string>#FF7D5FFF</string>
+	<key>recorderEditTextError</key>
+	<string>#FF4D3FFF</string>
+</dict>
+</plist>

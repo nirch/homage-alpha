@@ -8,6 +8,12 @@
 	return [AVCaptureVideoPreviewLayer class];
 }
 
+-(void)dealloc
+{
+    // NSLog(@">>> dealloc %@", [self class]);
+}
+
+
 -(AVCaptureSession *)session
 {
 	return [(AVCaptureVideoPreviewLayer *)[self layer] session];

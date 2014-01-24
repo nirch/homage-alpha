@@ -77,6 +77,9 @@
  */
 -(void)deleteRemakeWithID:(NSString *)remakeID;
 
+
+    
+    
 ///
 /**
  *  A GET request to the server requesting info about remakes related to a user.
@@ -91,5 +94,7 @@
  *  @param storyID  The id of the story
  */
 -(void)refetchRemakesWithStoryID:(NSString *)storyID;
-
+    
+    
+    
 @end

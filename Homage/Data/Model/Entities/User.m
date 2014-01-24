@@ -2,7 +2,7 @@
 //  User.m
 //  Homage
 //
-//  Created by Aviv Wolf on 1/20/14.
+//  Created by Aviv Wolf on 1/23/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -17,8 +17,9 @@
 @dynamic isFirstUse;
 @dynamic isLoggedIn;
 @dynamic isPublic;
-@dynamic userID;
 @dynamic skipRecorderTutorial;
+@dynamic userID;
+@dynamic prefersToSeeScriptWhileRecording;
 @dynamic remakes;
 
 @end

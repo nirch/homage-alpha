@@ -41,7 +41,7 @@
 {
     id value = self[key];
     if ([value isKindOfClass:[NSNumber class]]) return @([value boolValue]);
-    return @(NO);
+    return @NO;
 }
 
 

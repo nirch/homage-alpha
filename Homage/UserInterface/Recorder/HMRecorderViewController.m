@@ -6,17 +6,23 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#define SILHOUETTE_HARD_CODED_ALPHA 0.2f
+
 #define OPTIONS_BAR_TRANSFORM_MAX 167.0f
 #define OPTIONS_BAR_TRANSFORM_CLOSED CGAffineTransformMakeTranslation(0, OPTIONS_BAR_TRANSFORM_MAX)
 #define OPTIONS_BAR_TRANSFORM_OPENED CGAffineTransformIdentity
 #define OPTIONS_BAR_TRANSFORM_HIDDEN CGAffineTransformMakeTranslation(0, 260)
 
 #import "HMRecorderViewController.h"
+#import "DB.h"
 #import "HMRecorderChildInterface.h"
 #import "HMRecorderMessagesOverlayViewController.h"
-#import "DB.h"
-#import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
+#import "HMServer+LazyLoading.h"
+
+// TODO: Temporary. This is for fake footages upload updates.
+// This will be the responsibility of the uploader and not the recorder.
+#import "HMServer+Footages.h"
 
 @interface HMRecorderViewController ()
 
@@ -26,14 +32,19 @@
 @property (weak, nonatomic) IBOutlet UIView *guiCameraContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiDetailedOptionsBarContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiWhileRecordingOverlay;
+@property (weak, nonatomic) IBOutlet UIView *guiTextsEditingContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiMessagesOverlayContainer;
 
 // Silhouette background image
 @property (weak, nonatomic) IBOutlet UIImageView *guiSilhouetteImageView;
 
-// Overlay recorder buttons
+// Top recorder buttons
 @property (weak, nonatomic) IBOutlet UIButton *guiDismissButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiCameraSwitchingButton;
+
+// Top script view
+@property (weak, nonatomic) IBOutlet UIView *guiTopScriptView;
+@property (weak, nonatomic) IBOutlet UILabel *guiScriptLabel;
 
 // Weak pointers to child view controllers
 @property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
@@ -43,6 +54,9 @@
 @property (nonatomic, readonly) HMRecorderState recorderState;
 @property (nonatomic) double startPanningY;
 @property (nonatomic, readonly) BOOL lockedAutoRotation;
+
+// Some physics animations
+@property (nonatomic, readonly) UIDynamicAnimator *animator;
 
 @end
 
@@ -79,9 +93,20 @@
     [self removeObservers];
 }
 
+-(void)dealloc
+{
+    HMGLogInfo(@"Recorder deallocated successfully for remakeID:%@", self.remake.sID);
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+#pragma mark - UI initializations
+-(void)initGUI
+{
+    self.guiSilhouetteImageView.alpha = 0;
 }
 
 #pragma mark - Recorder state flow
@@ -89,10 +114,10 @@
 {
     // Critical error if remake doesn't exist in local storage!
     if (!self.remake) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Critical error"
-                                                        message:@"Recorder missing reference to a 'REMAKE'."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"Critical error")
+                                                        message:LS(@"Recorder missing reference to a 'REMAKE'.")
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:LS(@"OK")
                                               otherButtonTitles:nil
                               ];
         [alert show];
@@ -100,7 +125,7 @@
     
     // Currently edited scene
     _recorderState = HMRecorderStateJustStarted;
-    [self checkState];
+    [self advanceState];
 }
 
 -(void)checkState
@@ -109,32 +134,54 @@
     // The flow state machine.
     // Moves to next stage according to current state.
     //
-    NSLog(@"%d", self.recorderState);
+    NSLog(@"%ld", (long)self.recorderState);
     if (self.recorderState == HMRecorderStateJustStarted) {
         
-        // 0 - HMRecorderStateJustStarted --> HMRecorderStateGeneralMessage
+        // 0 - HMRecorderStateJustStarted --> 1 - HMRecorderStateGeneralMessage
         [self stateShowGeneralIntroStateIfNeeded];
         
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
-        // 1 - HMRecorderStateGeneralMessage --> HMRecorderStateSceneContextMessage
+        // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage
         [self stateShowContextForNextScene];
         
     } else if (self.recorderState == HMRecorderStateSceneContextMessage) {
         
-        // 2 - HMRecorderStateSceneContextMessage --> HMRecorderStateMakingAScene
+        // 2 - HMRecorderStateSceneContextMessage --> 3 - HMRecorderStateMakingAScene
         [self stateMakingAScene];
         
     } else if (self.recorderState == HMRecorderStateMakingAScene) {
         
-        // 3- HMRecorderStateMakingAScene --> HMRecorderStateFinishedASceneMessage  or  ?
+        // 3 - HMRecorderStateMakingAScene -->
+        // --> 4 - HMRecorderStateFinishedASceneMessage  or
+        // or
+        // --> 5 - HMRecorderStateEditingTexts
+        // or
+        // --> 6 - HMRecorderStateFinishedAllScenesMessage
         [self stateFinishedMakingASceneAndCheckingWhatsNext];
         
     } else if (self.recorderState == HMRecorderStateFinishedASceneMessage) {
         
-        // 4 - HMRecorderStateFinishedASceneMessage --> going to next scene --> HMRecorderStateMakingAScene
+        // 4 - HMRecorderStateFinishedASceneMessage --> going to next scene --> 3 - HMRecorderStateMakingAScene
         [self stateMakingNextScene];
         
+    } else if (self.recorderState == HMRecorderStateEditingTexts) {
+        
+        // 5 - HMRecorderStateEditingTexts --> edited all texts --> 6 - HMRecorderStateFinishedAllScenesMessage
+        // or
+        // 5 - HMRecorderStateEditingTexts --> not all texts edited --> 3 - HMRecorderStateMakingAScene
+        [self stateEditingTexts];
+        
+    } else if (self.recorderState == HMRecorderStateFinishedAllScenesMessage) {
+        
+        // 6 - HMRecorderStateFinishedAllScenesMessage --> create movie request success --> Done!
+        // or
+        // 6 - HMRecorderStateFinishedAllScenesMessage --> 3 - HMRecorderStateMakingAScene
+        [self stateDoneIfUserRequestToCreateMovieIsASuccess];
+
+    } else if (self.recorderState == HMRecorderStateUserRequestToCheckWhatNext) {
+        // 7 - HMRecorderStateUserRequestToCheckWhatNext --> ?
+        [self stateFinishedMakingASceneAndCheckingWhatsNext];
     }
 }
 
@@ -154,8 +201,9 @@
     // Just started. Show general message.
     // But if user chosen not to show that message, skip it.
     _recorderState = HMRecorderStateGeneralMessage;
-    if ([User.current.skipRecorderTutorial isEqualToNumber:@(YES)]) {
-        [self checkState]; // Don't show and skip state.
+    if ([User.current.skipRecorderTutorial isEqualToNumber:@YES]) {
+        // Skip to next state without showing the general message.
+        [self advanceState];
     } else {
         [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral checkNextStateOnDismiss:YES info:nil];
     }
@@ -181,48 +229,59 @@
     // Making a scene :-)
     //
     _recorderState = HMRecorderStateMakingAScene;
+    [self updateUIForCurrentScene];
     [self closeDetailedOptionsAnimated:YES];
+    self.guiTextsEditingContainer.hidden = YES;
     
     // Now the user has control of the flow...
 }
 
 -(void)stateFinishedMakingASceneAndCheckingWhatsNext
 {
-    // HMRecorderStateMakingAScene --> ?
-    
-    //
-    // Check if we can continue to the next scene.
-    //
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
-    
     if (!nextSceneID) {
-        // HMRecorderStateMakingAScene --> HMRecorderStateFinishedAllScenesMessage
+        // All scenes retaken by the user (at least once).
+        // Will check if needs to edit texts or just show the finish message.
         
-        // All scenes retaken by the user.
+        // --> HMRecorderStateEditingTexts
+        if (self.remake.textsShouldBeEntered) {
+            _recorderState = HMRecorderStateEditingTexts;
+            [self showEditingTextsScreen];
+            return;
+        }
+
+        //  --> HMRecorderStateFinishedAllScenesMessage
         _recorderState = HMRecorderStateFinishedAllScenesMessage;
-        [self showFinishedSceneMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES];
+        [self showFinishedAllScenesMessage];
+        [self updateUIForCurrentScene];
+        return;
         
-        return;
     }
     
-    if (nextSceneID.integerValue <= self.currentSceneID.integerValue) {
-        // ?
-        return;
-    }
+    //  --> HMRecorderStateFinishedASceneMessage
     
-    //
     // Showing "finished a scene" message.
     // And change to the next scene.
-    //
     [self showFinishedSceneMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES];
+    [self updateUIForCurrentScene];
     _recorderState = HMRecorderStateFinishedASceneMessage;
 }
 
 -(void)stateMakingNextScene
 {
     _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
-    [self updateUIForCurrentScene];
     [self stateMakingAScene];
+}
+
+-(void)stateEditingTexts
+{
+    // TODO: implement
+}
+
+-(void)stateDoneIfUserRequestToCreateMovieIsASuccess
+{
+    // TODO: implement
+    [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
 }
 
 #pragma mark - Observers
@@ -258,6 +317,12 @@
                                                    selector:@selector(onRecorderEpicFail:)
                                                        name:HM_NOTIFICATION_RECORDER_EPIC_FAIL
                                                      object:nil];
+    
+    // Observe telling server to render
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRender:)
+                                                       name:HM_NOTIFICATION_SERVER_RENDER
+                                                     object:nil];
 
 
 }
@@ -268,6 +333,9 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_EPIC_FAIL object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_RENDER object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -289,7 +357,8 @@
         self.guiSilhouetteImageView.alpha = 0;
         self.guiSilhouetteImageView.hidden = NO;
         [UIView animateWithDuration:0.7 animations:^{
-            self.guiSilhouetteImageView.alpha = 1;
+            // TODO: Make silhouette alpha dynamic
+            self.guiSilhouetteImageView.alpha = SILHOUETTE_HARD_CODED_ALPHA;
         }];
     }
 }
@@ -345,7 +414,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         
         // Fade in silhouette image
-        self.guiSilhouetteImageView.alpha = 1;
+        self.guiSilhouetteImageView.alpha = self.guiSilhouetteImageView.image ? SILHOUETTE_HARD_CODED_ALPHA : 0;
         
         // Fade in buttons
         self.guiDismissButton.alpha = 1;
@@ -377,14 +446,29 @@
     footage.rawLocalFile = rawMoviePath;
     [DB.sh save];
 
+    // TODO: Temporary. This is for fake footages upload updates.
+    // This will be the responsibility of the uploader and not the recorder.
+    [HMServer.sh updateFootageForRemakeID:remakeID sceneID:sceneID];
+    
     // Move along to the next state.
-    [self checkState];
+    [self advanceState];
 }
 
 -(void)onRecorderEpicFail:(NSNotification *)notification
 {
     // TODO: open error screen here
     NSLog(@"Epic fail!");
+}
+
+-(void)onRender:(NSNotification *)notification
+{
+    if (notification.isReportingError) {
+        // TODO: Epic fail
+        HMGLogError(@"Epic fail");
+        return;
+    }
+    self.guiTextsEditingContainer.hidden = YES;
+    [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
 }
 
 #pragma mark - Scenes selection
@@ -396,20 +480,17 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil userInfo:@{@"sceneID":sceneID}];
 
     // Show silhouete of the related scene (or lazy load it).
-    self.guiSilhouetteImageView.image = [self silhouetteForScene:scene];
+    UIImage *sillhouetterImage = [self silhouetteForScene:scene];
+    self.guiSilhouetteImageView.image = sillhouetterImage;
+    self.guiSilhouetteImageView.alpha = sillhouetterImage ? SILHOUETTE_HARD_CODED_ALPHA : 0;
     self.guiSilhouetteImageView.hidden = NO;
     self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
-}
-
--(void)selectSceneID:(NSNumber *)sceneID
-{
-    _currentSceneID = sceneID;
-    [self updateUIForSceneID:sceneID];
-}
-
--(void)updateUIForCurrentScene
-{
-    [self updateUIForSceneID:self.currentSceneID];
+    
+    if (scene.script && scene.script.length>0) {
+        self.guiScriptLabel.text = scene.script;
+    } else {
+        self.guiScriptLabel.text = @"";
+    }
 }
 
 #pragma mark - Lazy loading
@@ -450,35 +531,102 @@
     }
 }
 
-#pragma mark - Messages overlay
--(void)dismissMessagesOverlay
+// Used for debugging
+//-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+//{
+//    NSArray *allowSegueTo = @[
+//                              @"while recording overlay containment segue",
+//                              @"video camera containment segue",
+//                              @"messages overlay containment segue",
+//                              @"recorder detailed options bar containment segue",
+//                              ];
+//    for (NSString *s in allowSegueTo) if ([s isEqualToString:identifier]) return YES;
+//    return NO;
+//}
+
+#pragma mark - Remaker protocol
+-(void)dismissOverlay
 {
-    [self dismissMessagesOverlayAndCheckNextState:NO];
+    [self dismissOverlayAdvancingState:NO];
 }
 
--(void)dismissMessagesOverlayAndCheckNextState:(BOOL)checkNextState
+-(void)dismissOverlayAdvancingState:(BOOL)advancingState
 {
     // hide animted
     [UIView animateWithDuration:0.3 animations:^{
-        //self.guiMessagesOverlayContainer.alpha = 0;
         self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(1.4, 0);
     } completion:^(BOOL finished) {
         self.guiMessagesOverlayContainer.hidden = YES;
-        
         // Check the recorder state and advance it if needed.
-        if (checkNextState) [self checkState];
+        if (advancingState) [self advanceState];
     }];
 }
 
--(void)dismissMessagesOverlayWithRecorderState:(HMRecorderState)recorderState checkNextState:(BOOL)checkNextState
+-(void)dismissOverlayAdvancingState:(BOOL)advancingState fromState:(HMRecorderState)fromState
 {
-    _recorderState = recorderState;
-    [self dismissMessagesOverlayAndCheckNextState:checkNextState];
+    // Change state to this
+    _recorderState = fromState;
+    
+    // Advance it if requested.
+    [self dismissOverlayAdvancingState:advancingState];
 }
 
-//
-//  Show message with message type.
-//
+-(void)toggleOptions
+{
+    [self toggleOptionsAnimated:YES];
+}
+
+-(void)updateWithUpdateType:(HMRemakerUpdateType)updateType info:(NSDictionary *)info
+{
+    if (updateType == HMRemakerUpdateTypeScriptToggle) {
+        if (self.detailedOptionsOpened) {
+            [self showTopScriptViewIfUserPreffered];
+        } else {
+            [self hideTopScriptView];
+        }
+        return;
+    }
+    
+    if (updateType == HMRemakerUpdateTypeCreateMovie) {
+        _recorderState = HMRecorderStateUserRequestToCheckWhatNext;
+        [self advanceState];
+        return;
+    }
+    
+    if (updateType == HMRemakerUpdateTypeCancelEditingTexts) {
+        [self stateMakingAScene];
+        return;
+    }
+    
+}
+
+-(void)updateUIForCurrentScene
+{
+    [self updateUIForSceneID:self.currentSceneID];
+}
+
+-(void)selectSceneID:(NSNumber *)sceneID
+{
+    _currentSceneID = sceneID;
+    [self updateUIForSceneID:sceneID];
+}
+
+-(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
+{
+    Scene *scene = [self.remake.story findSceneWithID:sceneID];
+    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
+                     checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
+                                        info:@{
+                                               @"icon name":@"iconSceneDescription",
+                                               @"title":scene.story.name.uppercaseString,
+                                               @"text":scene.context,
+                                               @"ok button text":LS(@"OK, GOT IT!")
+                                               }
+     ];
+}
+
+
+#pragma mark - Sort this out
 -(void)showMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     [self.messagesOverlayVC showMessageOfType:messageType checkNextStateOnDismiss:checkNextStateOnDismiss info:info];
@@ -490,23 +638,6 @@
         self.guiMessagesOverlayContainer.alpha = 1;
         self.guiMessagesOverlayContainer.transform = CGAffineTransformIdentity;
     }];
-}
-
-//
-//  Scene context message.
-//
--(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
-{
-    Scene *scene = [self.remake.story findSceneWithID:sceneID];
-    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
-                     checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
-                                        info:@{
-                                               @"icon name":@"iconSceneDescription",
-                                               @"title":scene.story.name.uppercaseString,
-                                               @"text":scene.context,
-                                               @"ok button text":@"OK, GOT IT!"
-                                               }
-     ];
 }
 
 -(void)showFinishedSceneMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
@@ -524,37 +655,28 @@
 
 -(void)showFinishedAllScenesMessage
 {
+    _recorderState = HMRecorderStateFinishedAllScenesMessage;
     [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedAllScenes
                      checkNextStateOnDismiss:YES
                                         info:nil
      ];
 }
 
-
-//
-//  Finished all scenes message!
-//
--(void)showFinishedAllSceneMessage
+-(void)showEditingTextsScreen
 {
-//    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
-//                                        info:@{
-//                                               @"title":[NSString stringWithFormat:@"%@ - %@", scene.story.name, scene.titleForSceneID],
-//                                               @"text":scene.context,
-//                                               @"ok button text":@"START!"
-//                                               }
-//     ];
+    self.guiTextsEditingContainer.hidden = NO;
+    self.guiTextsEditingContainer.center = CGPointMake(self.view.center.x, self.view.center.y + self.view.bounds.size.height / 2.0f);
+    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view.superview];
+    UISnapBehavior *snap;
+    snap = [[UISnapBehavior alloc] initWithItem:self.guiTextsEditingContainer snapToPoint:self.view.superview.center];
+    [snap setDamping:0.3];
+    [self.animator addBehavior:snap];
 }
-
 
 #pragma mark - toggle options bar
 -(void)initOptions
 {
     [self closeDetailedOptionsAnimated:NO];
-}
-
--(void)toggleOptions
-{
-    [self toggleOptionsAnimated:YES];
 }
 
 -(void)toggleOptionsAnimated:(BOOL)animated
@@ -568,6 +690,9 @@
 
 -(void)closeDetailedOptionsAnimated:(BOOL)animated
 {
+    [self showTopButtons];
+    [self hideTopScriptView];
+
     _detailedOptionsOpened = NO;
     if (!animated) {
         self.guiDetailedOptionsBarContainer.hidden = NO;
@@ -587,6 +712,9 @@
 
 -(void)openDetailedOptionsAnimated:(BOOL)animated
 {
+    [self hideTopButtons];
+    [self showTopScriptViewIfUserPreffered];
+    
     _detailedOptionsOpened = YES;
     if (!animated) {
         self.guiDetailedOptionsBarContainer.hidden = NO;
@@ -621,13 +749,81 @@
     }];
 }
 
+#pragma mark - Top buttons
+-(void)showTopButtons
+{
+    self.guiDismissButton.hidden = NO;
+    self.guiCameraSwitchingButton.hidden = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiDismissButton.alpha = 1;
+        self.guiCameraSwitchingButton.alpha = 1;
+    } completion:^(BOOL finished) {
+    }];
+}
+
+-(void)hideTopButtons
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiDismissButton.alpha = 0;
+        self.guiCameraSwitchingButton.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.guiDismissButton.hidden = YES;
+        self.guiCameraSwitchingButton.hidden = YES;
+    }];
+}
+
+#pragma mark - Top script view
+-(void)showTopScriptViewIfUserPreffered
+{
+    Scene *scene = [self.remake.story findSceneWithID:self.currentSceneID];
+    if (User.current.prefersToSeeScriptWhileRecording.boolValue && scene.hasScript) {
+        [self showTopScriptView];
+    } else {
+        [self hideTopScriptView];
+    }
+}
+
+-(void)showTopScriptView
+{
+    self.guiTopScriptView.hidden = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiTopScriptView.alpha = 1;
+    } completion:^(BOOL finished) {
+    }];
+}
+
+-(void)hideTopScriptView
+{
+    if (self.guiTopScriptView.hidden == YES) return;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiTopScriptView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.guiTopScriptView.hidden = YES;
+    }];
+}
+
+
+#pragma mark - Dismiss
+-(void)dismissWithReason:(HMRecorderDismissReason)reason
+{
+    if (self.delegate) {
+        [self.delegate recorderAsksDismissalWithReaon:reason
+                                             remakeID:self.remake.sID
+                                               sender:self
+         ];
+    } else {
+        HMGLogWarning(@"No HMRecorderDelegate for recorder. HMRecorderViewController dismissed itself.");
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
 - (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
 }
 
 - (IBAction)onTappedDetailedOptionsBar:(UITapGestureRecognizer *)sender
@@ -670,5 +866,17 @@
         }
     }
 }
+
+- (IBAction)onPressedDebugButton:(id)sender
+{
+//    for (Footage *footage in self.remake.footagesOrdered) {
+//        [HMServer.sh updateFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
+//    }
+//    Footage *footage = self.remake.footagesOrdered[0];
+//    [HMServer.sh updateFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
+//    
+//    
+}
+
 
 @end

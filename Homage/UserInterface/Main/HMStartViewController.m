@@ -11,6 +11,7 @@
 #import "HMNotificationCenter.h"
 #import "HMRemakerProtocol.h"
 #import "HMRecorderViewController.h"
+#import "HMServer+Remakes.h"
 
 @interface HMStartViewController ()
 
@@ -82,6 +83,7 @@
     // Will allow the splash screen to animate for about a second or two.
     NSTimeInterval timeIntervalSinceLaunch = [[NSDate date] timeIntervalSinceDate:self.launchDateTime];
     double delayInSeconds = timeIntervalSinceLaunch > 2.5 ? 0 : 2.5 - timeIntervalSinceLaunch;
+
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [UIView animateWithDuration:0.3 animations:^{
@@ -90,6 +92,26 @@
             self.guiSplashView.hidden = YES;
         }];
     });
+}
+
+#pragma mark - HMRecorderDelegate Example
+-(void)recorderAsksDismissalWithReaon:(HMRecorderDismissReason)reason
+                             remakeID:(NSString *)remakeID
+                               sender:(HMRecorderViewController *)sender
+{
+    HMGLogDebug(@"This is the remake ID the recorder used:%@", remakeID);
+    
+    // Handle reasons
+    if (reason == HMRecorderDismissReasonUserAbortedPressingX) {
+        // Some logic for this reason...
+    } else if (reason == HMRecorderDismissReasonFinishedRemake) {
+        // Some other logic for another reason...
+    }
+    
+    // Dismiss modal
+    [self dismissViewControllerAnimated:YES completion:^{
+        // Code here when the dismissal is done.
+    }];
 }
 
 #pragma mark - Application start
@@ -118,14 +140,15 @@
     User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
-    
-    HMGLogDebug(@"user is: %@" , user.email);
 
-    /*Remake *remake = user.remakes.allObjects.lastObject;
-    if (remake) {
-        HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
-        [self presentViewController:vc animated:YES completion:nil];
-    }*/
+//    [HMServer.sh refetchRemakesForUserID:user.userID];
+    
+//    Remake *remake = [Remake findWithID:@"52e116d2db25451700000003" inContext:DB.sh.context];
+//    if (remake) {
+//        HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
+//        vc.delegate = self;
+//        [self presentViewController:vc animated:YES completion:nil];
+//    }
 }
 
 -(void)failedStartingApplication
@@ -146,7 +169,7 @@
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end
