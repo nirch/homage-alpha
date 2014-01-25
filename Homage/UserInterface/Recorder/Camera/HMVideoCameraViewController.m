@@ -13,21 +13,22 @@
 #import "HMNotificationCenter.h"
 
 // Contexts
-static void * CapturingStillImageContext = &CapturingStillImageContext;
-static void * RecordingContext = &RecordingContext;
-static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDeviceAuthorizedContext;
+static void *RecordingContext = &RecordingContext;
+static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDeviceAuthorizedContext;
 
-@interface HMVideoCameraViewController () <AVCaptureFileOutputRecordingDelegate>
+@interface HMVideoCameraViewController () <
+    AVCaptureFileOutputRecordingDelegate
+>
 
 // For use in the storyboards.
 @property (nonatomic, weak) IBOutlet AVCamPreviewView *previewView;
+@property (nonatomic, weak) AVCaptureVideoPreviewLayer *previewLayer;
 
 // Session management.
 @property (nonatomic) dispatch_queue_t sessionQueue; // Communicate with the session and other session objects on this queue.
 @property (nonatomic) AVCaptureSession *session;
 @property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
-@property (nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 
 // Utilities.
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
@@ -35,54 +36,51 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 @property (nonatomic, readonly, getter = isSessionRunningAndDeviceAuthorized) BOOL sessionRunningAndDeviceAuthorized;
 @property (nonatomic) BOOL lockInterfaceRotation;
 @property (nonatomic) id runtimeErrorHandlingObserver;
+
+// Some info about beginning and end of a recording
 @property (nonatomic) NSDictionary *lastRecordingStartInfo;
 @property (nonatomic) NSDictionary *lastRecordingStopInfo;
+
+// Camera settings
+@property (nonatomic, readonly) NSString *camSettingsSessionPreset;
+@property (nonatomic, readonly) NSString *camSettingsPreviewLayerVideoGravity;
+
 
 @end
 
 @implementation HMVideoCameraViewController
 
+#pragma mark - Camera settings
+-(void)initCameraSettings
+{
+    _camSettingsSessionPreset               = AVCaptureSessionPreset1280x720;         // Video capture resolution
+    _camSettingsPreviewLayerVideoGravity    = AVLayerVideoGravityResizeAspectFill;    // Video gravity on the preview layer
+}
+
+#pragma mark - View controller life cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    //
+    // initialize the camera
+    //
+    [self initCameraSettings];
     [self initCamera];
-    self.view.alpha = 0;
 
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self revealCameraPreviewAnimated:YES];
-    });
+    //
+    // Reveal the preview slowly for a nicer effect.
+    //
+    [self slowReveal];
 }
-
--(void)dealloc
-{
-    // NSLog(@">>> dealloc %@", [self class]);
-}
-
 
 //
 // When the view will appear, add observers for recording states and set a runtime error handler (restarts on errors).
 //
 - (void)viewWillAppear:(BOOL)animated
 {
-    dispatch_async([self sessionQueue], ^{
-        [self addObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:SessionRunningAndDeviceAuthorizedContext];
-        [self addObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:CapturingStillImageContext];
-        [self addObserver:self forKeyPath:@"movieFileOutput.recording" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:RecordingContext];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:[[self videoDeviceInput] device]];
-        
-        __weak HMVideoCameraViewController *weakSelf = self;
-        [self setRuntimeErrorHandlingObserver:[[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureSessionRuntimeErrorNotification object:[self session] queue:nil usingBlock:^(NSNotification *note) {
-            HMVideoCameraViewController *strongSelf = weakSelf;
-            dispatch_async([strongSelf sessionQueue], ^{
-                // Manually restarting the session since it must have been stopped due to an error.
-                [[strongSelf session] startRunning];
-            });
-        }]];
-        [[self session] startRunning];
-    });
-    [self initMyObservers];
+    [self initAVObservers];
+    [self initAppObservers];
 }
 
 //
@@ -90,17 +88,139 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 //
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [self removeMyObservers];
-    dispatch_async([self sessionQueue], ^{
-        [[self session] stopRunning];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:[[self videoDeviceInput] device]];
-        [[NSNotificationCenter defaultCenter] removeObserver:[self runtimeErrorHandlingObserver]];
-        
-        [self removeObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized" context:SessionRunningAndDeviceAuthorizedContext];
-        [self removeObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" context:CapturingStillImageContext];
-        [self removeObserver:self forKeyPath:@"movieFileOutput.recording" context:RecordingContext];
+    [self removeAppObservers];
+    [self removeAVObservers];
+}
+
+#pragma mark - Silly effects
+-(void)slowReveal
+{
+    self.view.alpha = 0;
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self revealCameraPreviewAnimated:YES];
     });
+}
+
+#pragma mark - Observers
+-(void)initAVObservers
+{
+    // "Thank you for hiding the Beacon. I can't touch it myself. I know you have questions. Soon you will have answers."
+    // - The observer. Fringe.
+    
+    dispatch_async([self sessionQueue], ^{
+        
+        //
+        // Add 1: Session running and device authorized observer
+        //
+        [self addObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized"
+                  options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
+                  context:SessionRunningAndDeviceAuthorizedContext
+         ];
+
+        //
+        // Add 2: Movie file output recording observer
+        //
+        [self addObserver:self forKeyPath:@"movieFileOutput.recording"
+                  options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
+                  context:RecordingContext];
+        
+        //
+        // Add 3: subject are change observer
+        //
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(subjectAreaDidChange:)
+                                                     name:AVCaptureDeviceSubjectAreaDidChangeNotification
+                                                   object:self.videoDeviceInput.device
+         ];
+        
+        //
+        // Add 4: Runtime error handling observer
+        //
+        __weak HMVideoCameraViewController *weakSelf = self;
+        id observer = [[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureSessionRuntimeErrorNotification
+                                                                        object:self.session
+                                                                         queue:nil
+                                                                    usingBlock:^(NSNotification *note) {
+                                                                        
+                                                                        HMVideoCameraViewController *strongSelf = weakSelf;
+                                                                        dispatch_async(strongSelf.sessionQueue, ^{
+                                                                            // Manually restarting the session since it must have been stopped due to an error.
+                                                                            [strongSelf.session startRunning];
+                                                                        });
+                                                                    }];
+        self.runtimeErrorHandlingObserver = observer;
+        
+        //
+        // Starting the session
+        //
+        [self.session startRunning];
+    });
+}
+
+-(void)removeAVObservers
+{
+    dispatch_async([self sessionQueue], ^{
+        // Stop the session
+        [self.session stopRunning];
+        
+        //
+        // Remove 1 : Session running and device authorized observer
+        //
+        [self removeObserver:self
+                  forKeyPath:@"sessionRunningAndDeviceAuthorized"
+                     context:SessionRunningAndDeviceAuthorizedContext
+         ];
+        
+        //
+        // Remove 2: Movie file output recording observer
+        //
+        [self removeObserver:self
+                  forKeyPath:@"movieFileOutput.recording"
+                     context:RecordingContext
+         ];
+        
+        //
+        // Add 3: subject are change observer
+        //
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:AVCaptureDeviceSubjectAreaDidChangeNotification
+                                                      object:self.videoDeviceInput.device
+         ];
+        
+        //
+        // Add 4: Runtime error handling observer
+        //
+        [[NSNotificationCenter defaultCenter] removeObserver:self.runtimeErrorHandlingObserver];
+    });
+}
+
+-(void)initAppObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    //
+    // Request to start recording notification
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onShouldStartRecording:)
+                     name:HM_NOTIFICATION_RECORDER_START_RECORDING
+                   object:nil];
+    
+    //
+    // Request to stop recording notification
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onShouldStopRecording:)
+                     name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                   object:nil];
+}
+
+-(void)removeAppObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
 }
 
 #pragma mark - Reveal
@@ -150,30 +270,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 }
 
 
-#pragma mark - Observers
--(void)initMyObservers
-{
-    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    // Request to start recording notification
-    [nc addUniqueObserver:self
-                 selector:@selector(onShouldStartRecording:)
-                     name:HM_NOTIFICATION_RECORDER_START_RECORDING
-                   object:nil];
-    
-    // Request to stop recording notification
-    [nc addUniqueObserver:self
-                 selector:@selector(onShouldStopRecording:)
-                     name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
-                   object:nil];
-}
-
--(void)removeMyObservers
-{
-    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
-}
-
 #pragma mark - observers handlers
 -(void)onShouldStartRecording:(NSNotification *)notification
 {
@@ -211,15 +307,16 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 }
 
 #pragma mark - Camera initializations
+// Camera initializations
 -(void)initCamera
 {
     // Create the AVCaptureSession
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
-    [self setSession:session];
-    [self.session setSessionPreset:AVCaptureSessionPreset1280x720]; // Been requested to support only 720p (even on newer phones)
+    self.session = session;
+    self.session.sessionPreset = self.camSettingsSessionPreset;
     
     // Setup the preview view
-    [[self previewView] setSession:session];
+    [self initPreviewLayer];
     
     // Check for device authorization
     [self checkDeviceAuthorizationStatus];
@@ -279,15 +376,16 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
             
             
         }
-        
-//        AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-//        if ([session canAddOutput:stillImageOutput])
-//        {
-//            [stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
-//            [session addOutput:stillImageOutput];
-//            [self setStillImageOutput:stillImageOutput];
-//        }
     });
+}
+
+-(void)initPreviewLayer
+{
+    self.previewView.session = self.session;
+    self.previewLayer = (AVCaptureVideoPreviewLayer *)self.previewView.layer;
+
+    // Preview layer settings
+    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 }
 
 #pragma mark - Camera actions
@@ -489,22 +587,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
     }
 }
 
-+ (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position
-{
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
-    AVCaptureDevice *captureDevice = [devices firstObject];
-    
-    for (AVCaptureDevice *device in devices)
-    {
-        if ([device position] == position)
-        {
-            captureDevice = device;
-            break;
-        }
-    }
-    
-    return captureDevice;
-}
+
 
 //- (void)configureCameraForFrameRate:(AVCaptureDevice *)device
 //{
@@ -517,56 +600,50 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 //    }
 //}
 
-
-#pragma mark UI
-
-- (void)runStillImageCaptureAnimation
+#pragma mark - CAMERA CONFIGURATIONS
++(AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType
+                     preferringPosition:(AVCaptureDevicePosition)position
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[[self previewView] layer] setOpacity:0.0];
-        [UIView animateWithDuration:.25 animations:^{
-            [[[self previewView] layer] setOpacity:1.0];
-        }];
-    });
+    // Get a list of devices of the given media type (usually [Back Camera] + [Front Camera])
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
+    AVCaptureDevice *captureDevice = [devices firstObject];
+    for (AVCaptureDevice *device in devices)
+    {
+        if ([device position] == position)
+        {
+            captureDevice = device;
+            break;
+        }
+    }
+    return captureDevice;
 }
 
+#pragma mark - Device Authorization status
 - (void)checkDeviceAuthorizationStatus
 {
     NSString *mediaType = AVMediaTypeVideo;
-    
-    [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
-        if (granted)
-        {
+    [AVCaptureDevice requestAccessForMediaType:mediaType
+                             completionHandler:^(BOOL granted) {
+        if (granted) {
+
             //Granted access to mediaType
-            [self setDeviceAuthorized:YES];
-        }
-        else
-        {
+            self.deviceAuthorized = YES;
+            
+        } else {
+
             //Not granted access to mediaType
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[[UIAlertView alloc] initWithTitle:@"AVCam!"
-                                            message:@"AVCam doesn't have permission to use Camera, please change privacy settings"
+                [[[UIAlertView alloc] initWithTitle:LS(@"Homage CAM!")
+                                            message:LS(@"Homage doesn't have permission to use Camera, please change privacy settings")
                                            delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil] show];
-                [self setDeviceAuthorized:NO];
+                                  cancelButtonTitle:LS(@"OK")
+                                  otherButtonTitles:nil
+                  ] show];
+                self.deviceAuthorized = NO;
             });
         }
     }];
 }
-
-
-//
-//
-//    [[[ALAssetsLibrary alloc] init] writeVideoAtPathToSavedPhotosAlbum:outputFileURL completionBlock:^(NSURL *assetURL, NSError *error) {
-//        if (error)
-//            HMGLogError(@"%@", error);
-//
-//        [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
-//
-//        if (backgroundRecordingID != UIBackgroundTaskInvalid)
-//            [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
-//    }];
 
 
 @end

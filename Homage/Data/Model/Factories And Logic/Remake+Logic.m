@@ -103,8 +103,8 @@
 
     // Get the text and trim it.
     NSString *text = texts[index];
-    text = [text stringWithATrim];
-    return text;
+    if (![text isKindOfClass:[NSString class]]) return @"";
+    return [text stringWithATrim];
 }
 
 -(BOOL)missingSomeTexts

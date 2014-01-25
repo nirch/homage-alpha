@@ -28,8 +28,8 @@
     // Add blank texts to the remake.
     if (!remake.texts && remake.story.texts.count > 0) remake.texts = [NSMutableArray new];
     if (remake.texts) {
-        for (int i=[remake.texts count];i<remake.story.texts.count;i++){
-            [remake.texts addObject:[NSNull null]];
+        for (NSInteger i=[remake.texts count];i<remake.story.texts.count;i++){
+            [remake.texts addObject:@""];
         }
     }
 
