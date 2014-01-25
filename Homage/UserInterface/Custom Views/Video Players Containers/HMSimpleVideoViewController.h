@@ -41,6 +41,7 @@
  */
 @property id<HMSimpleVideoPlayerProtocol> delegate;
 
+
 ///
 /**
 *  Initializes a HMSimpleVideoViewController with a given nib name (a nib of a HMSimpleVideoView).
@@ -93,5 +94,11 @@
  * hide media controls
  */
 -(void)hideMediaControls;
+
+///
+/**
+ *  checks if the moviePlayer is playing
+ */
+-(BOOL)isInAction;
 
 @end

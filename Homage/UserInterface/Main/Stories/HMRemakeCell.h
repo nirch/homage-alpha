@@ -13,5 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiUserName;
+@property (weak, nonatomic) IBOutlet UIView *videoPlayerContainer;
 
 @end

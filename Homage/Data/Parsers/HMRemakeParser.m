@@ -37,6 +37,7 @@
     
     CLEAR_CACHE_CHECK(remake,thumbnailURL,thumbnail,@"thumbnail"); // clear remake.thumbnail if url changed
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
+    remake.videoURL = [info stringForKey:@"video"];
     
     remake.lastLocalUpdate = lastLocalUpdate;
     self.parseInfo[@"remakeID"] = remakeID;

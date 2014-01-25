@@ -7,7 +7,7 @@
 //
 
 #import "HMStoryDetailsViewController.h"
-
+#import "HMStoryPresenterProtocol.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+Remakes.h"
 #import "HMServer+LazyLoading.h"
@@ -17,11 +17,14 @@
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerProtocol>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
-@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
+@property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
+@property (strong,nonatomic)
+HMSimpleVideoViewController *remakeVideoPlayer;
+@property (nonatomic) NSInteger playingRemakeIndex;
 @end
 
 @implementation HMStoryDetailsViewController
@@ -53,11 +56,11 @@
 -(void)initStoryMoviePlayer
 {
     HMSimpleVideoViewController *vc;
-    self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guisStoryMovieContainer];
-    self.moviePlayer.videoURL = self.story.videoURL;
-    [self.moviePlayer hideVideoLabel];
-    [self.moviePlayer hideMediaControls];
-    self.moviePlayer.videoImage = self.story.thumbnail;
+    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guisStoryMovieContainer];
+    self.storyMoviePlayer.videoURL = self.story.videoURL;
+    [self.storyMoviePlayer hideVideoLabel];
+    [self.storyMoviePlayer hideMediaControls];
+    self.storyMoviePlayer.videoImage = self.story.thumbnail;
 }
 
 -(void)initContent
@@ -289,11 +292,58 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
     HMSimpleVideoViewController *vc;
-    vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:cell];
-    vc.videoURL = remake.videoURL;
-    [vc hideVideoLabel];
-    [vc play];
-    [vc setFullScreen];
+    self.remakeVideoPlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:cell.videoPlayerContainer];
+    self.remakeVideoPlayer.delegate = self;
+    self.playingRemakeIndex = indexPath.item;
+    self.remakeVideoPlayer.videoURL = remake.videoURL;
+    [self.remakeVideoPlayer hideVideoLabel];
+    [self.remakeVideoPlayer play];
+    [cell.videoPlayerContainer setHidden:YES];
+    [self.remakeVideoPlayer setFullScreen];
+    
+    
+}
+
+-(void)videoPlayerHitStopButton
+{
+    if ([self.storyMoviePlayer isInAction])
+    {
+        //do nothing.
+    } else if ([self.remakeVideoPlayer isInAction])
+    {
+        [self closeRemakeVideoPlayer];
+    }
+}
+
+-(void)videoExitFullScreen
+{
+    if ([self.storyMoviePlayer isInAction])
+    {
+        //do nothing.
+    } else if ([self.remakeVideoPlayer isInAction])
+    {
+        [self closeRemakeVideoPlayer];
+    }
+}
+
+-(void)videoPlayerHitPlayButton
+{
+    if ([self.storyMoviePlayer isInAction])
+    {
+        [self closeStoryVideoPlayer];
+    } else if ([self.remakeVideoPlayer isInAction]) {
+        [self closeRemakeVideoPlayer];
+    }
+}
+
+-(void)closeRemakeVideoPlayer
+{
+    self.playingRemakeIndex = -1;
+}
+
+-(void)closeStoryVideoPlayer
+{
+    [self.storyMoviePlayer done];
 }
 
 

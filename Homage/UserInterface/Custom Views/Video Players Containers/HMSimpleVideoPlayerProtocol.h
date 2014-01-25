@@ -12,5 +12,7 @@
 
 @optional
 -(void)videoPlayerHitStopButton;
+-(void)videoPlayerHitPlayButton;
+-(void)videoExitFullScreen;
 
 @end

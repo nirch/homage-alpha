@@ -15,6 +15,7 @@
 
 @property (nonatomic, readonly) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
+@property (atomic) BOOL videoLabelToBeHidden;
 
 @end
 
@@ -115,6 +116,7 @@
 -(void)onMoviePlayerDidExitFullscreen:(NSNotification *)notification
 {
     self.videoPlayer.controlStyle = MPMovieControlStyleNone;
+    if (self.delegate) [self.delegate videoExitFullScreen];
 }
 
 -(void)_startToPlayTheActualVideo
@@ -187,6 +189,7 @@
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.waitingToStartPlayingTheFile = YES;
     [self.videoPlayer prepareToPlay];
+    if (self.delegate) [self.delegate videoPlayerHitPlayButton];
 }
 
 -(void)done
@@ -196,7 +199,7 @@
     if (self.videoPlayer.isFullscreen) {
         [self.videoPlayer setFullscreen:NO animated:YES];
     }
-    self.videoView.guiVideoLabel.hidden = NO;
+    if (!self.videoLabelToBeHidden)  self.videoView.guiVideoLabel.hidden = NO;   
     self.videoView.guiPlayButton.hidden = NO;
     self.videoView.guiLoadActivity.alpha = 1;
     self.videoView.guiControlsContainer.hidden = YES;
@@ -220,6 +223,7 @@
 -(void)hideVideoLabel
 {
     [self.videoView.guiVideoLabel setHidden:YES];
+    self.videoLabelToBeHidden = YES;
 }
 -(void)setFullScreen
 {
@@ -227,12 +231,24 @@
     {
         self.videoPlayer.controlStyle = MPMovieControlStyleFullscreen;
         [self.videoPlayer setFullscreen:YES animated:YES];
+        [self.videoPlayer setScalingMode:MPMovieScalingModeAspectFit];
     }
 }
 
 -(void)hideMediaControls
 {
     [self.videoView.guiControlsContainer setHidden:YES];
+}
+
+-(BOOL)isInAction
+{
+    if (self.videoPlayer.playbackState != MPMoviePlaybackStateStopped)
+    {
+        return YES;
+    } else
+    {
+        return  NO;
+    }
 }
 
 #pragma mark - IB Actions
