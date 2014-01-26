@@ -36,6 +36,7 @@
     <entity name="Story" representedClassName="Story" syncable="YES">
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isSelfie" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="orderID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -67,11 +68,11 @@
         <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Footage" positionX="106" positionY="135" width="128" height="118"/>
-        <element name="Remake" positionX="295" positionY="180" width="128" height="193"/>
-        <element name="Scene" positionX="648" positionY="36" width="128" height="208"/>
-        <element name="Story" positionX="475" positionY="135" width="128" height="238"/>
-        <element name="Text" positionX="648" positionY="332" width="128" height="118"/>
-        <element name="User" positionX="54" positionY="302" width="128" height="178"/>
+        <element name="Footage" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Remake" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Scene" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Story" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Text" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

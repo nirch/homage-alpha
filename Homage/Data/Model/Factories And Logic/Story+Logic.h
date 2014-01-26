@@ -50,7 +50,7 @@
 *
 *  @return BOOL value indicating if the story is of the selfie type
 */
--(BOOL)isSelfie;
+-(BOOL)isASelfie;
 
 ///
 /**
@@ -58,6 +58,6 @@
 *
 *  @return BOOL value indicating if the story is of the director type
 */
--(BOOL)isDirector;
+-(BOOL)isADirector;
 
 @end

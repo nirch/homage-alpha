@@ -44,20 +44,14 @@
     return texts;
 }
 
--(BOOL)isDirector
+-(BOOL)isADirector
 {
-    for (Scene *scene in self.scenes) {
-        // If finds a non selfie, it is a director.
-        if (!scene.isSelfie.boolValue) return YES;
-    }
-    // All selfies, it is a selfie.
-    return NO;
+    return !self.isASelfie;
 }
 
--(BOOL)isSelfie
+-(BOOL)isASelfie
 {
-    // Isn't a director --> is a selfie.
-    return !self.isDirector;
+    return self.isSelfie.boolValue;
 }
 
 @end
