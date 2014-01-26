@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="OjE-Jj-DyB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="hOw-8k-6d7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" id="jge-Ad-RrV">
-                                <rect key="frame" x="18" y="100" width="284" height="34"/>
+                                <rect key="frame" x="18" y="141" width="284" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="minimumTrackTintColor" red="1" green="0.023573720190000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -21,12 +21,12 @@
                                 </connections>
                             </slider>
                             <view alpha="0.74999999999999978" contentMode="scaleToFill" id="uaX-VS-nXI" userLabel="Slice View" customClass="AWPieSliceView">
-                                <rect key="frame" x="209" y="141" width="91" height="91"/>
+                                <rect key="frame" x="218" y="244" width="91" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lez-6x-GXQ">
-                                <rect key="frame" x="20" y="141" width="100" height="30"/>
+                                <rect key="frame" x="20" y="171" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="Random Value"/>
@@ -35,7 +35,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" id="M3Y-1m-HKI">
-                                <rect key="frame" x="69" y="20" width="182" height="72"/>
+                                <rect key="frame" x="69" y="61" width="182" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Ld-eH-r4b">
@@ -55,22 +55,157 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="78"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="F5S-TG-Ppo">
+                                <rect key="frame" x="86" y="398" width="149" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedStart:" destination="OjE-Jj-DyB" eventType="touchUpInside" id="Def-u4-i3y"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="kde-hh-1i7">
+                                <rect key="frame" x="150" y="397" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="41l-XD-Dqc"/>
                     <connections>
                         <outlet property="guiCountDownLabel" destination="Bhe-mB-TD3" id="iEb-vq-Idn"/>
                         <outlet property="guiSlice" destination="uaX-VS-nXI" id="XHI-B6-Z2T"/>
                         <outlet property="guiSlider" destination="jge-Ad-RrV" id="ghS-Fv-7Qc"/>
+                        <outlet property="guiStartActivity" destination="kde-hh-1i7" id="XNh-iu-buj"/>
+                        <outlet property="guiStartButton" destination="F5S-TG-Ppo" id="elG-Tm-fdL"/>
+                        <segue destination="qXN-q0-2hs" kind="push" identifier="start" id="QZZ-rG-g8z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBg-bD-CGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="734" y="71"/>
+        </scene>
+        <!--Simple Data View Controller - Tests-->
+        <scene sceneID="sfy-rm-gTe">
+            <objects>
+                <viewController id="qXN-q0-2hs" customClass="HMSimpleDataViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nEQ-Qa-xY8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" id="Wpg-oh-Tin">
+                                <rect key="frame" x="0.0" y="123" width="320" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="qXN-q0-2hs" id="UwH-TX-0su"/>
+                                    <outlet property="delegate" destination="qXN-q0-2hs" id="m3j-V4-p80"/>
+                                </connections>
+                            </pickerView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" id="s08-8J-tHx">
+                                <rect key="frame" x="90" y="87" width="141" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Stories"/>
+                                    <segment title="Remakes"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onChangedDateToSee:" destination="qXN-q0-2hs" eventType="valueChanged" id="zfJ-oU-j6D"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="MC4-S3-NNI">
+                                <rect key="frame" x="20" y="254" width="72" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Remake Story">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedCreateRemakeForStoryButton:" destination="qXN-q0-2hs" eventType="touchUpInside" id="pYB-e7-3Gi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6Uh-Bm-d0c">
+                                <rect key="frame" x="127" y="269" width="67" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Edit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedEditRemakeButton:" destination="qXN-q0-2hs" eventType="touchUpInside" id="YWL-jM-2HQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YEe-li-XCr">
+                                <rect key="frame" x="233" y="269" width="67" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedDeleteRemakeButton:" destination="qXN-q0-2hs" eventType="touchUpInside" id="rKq-rx-A2Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Aiq-IM-RCb">
+                                <rect key="frame" x="93" y="366" width="135" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Refetch from server">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onRefresh:" destination="qXN-q0-2hs" eventType="touchUpInside" id="MGk-13-Efi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RpY-tH-Her">
+                                <rect key="frame" x="125" y="317" width="72" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Refresh UI">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onRefreshUI:" destination="qXN-q0-2hs" eventType="touchUpInside" id="HZB-Xn-rTW"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" id="yvY-Xa-npT">
+                                <rect key="frame" x="108" y="404" width="105" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tests" id="cM4-pt-U2A"/>
+                    <connections>
+                        <outlet property="guiCreateButton" destination="MC4-S3-NNI" id="NGh-m7-bbQ"/>
+                        <outlet property="guiDeleteButton" destination="YEe-li-XCr" id="vuZ-ri-vE7"/>
+                        <outlet property="guiEditButton" destination="6Uh-Bm-d0c" id="AZ5-0c-azg"/>
+                        <outlet property="guiPickerView" destination="Wpg-oh-Tin" id="flM-KQ-0M3"/>
+                        <outlet property="guiReachabilityImage" destination="yvY-Xa-npT" id="qOZ-R2-vir"/>
+                        <outlet property="guiSegmentedControl" destination="s08-8J-tHx" id="RVL-Lv-sEY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AXO-Yy-Yko" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1170" y="77"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zJp-cQ-BxO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hOw-8k-6d7" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a6J-Fr-Hiy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="OjE-Jj-DyB" kind="relationship" relationship="rootViewController" id="NbK-Kd-K4M"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DXY-es-Rvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="208" y="71"/>
         </scene>
     </scenes>
     <resources>
         <image name="logo" width="118" height="48"/>
+        <image name="wifi" width="64" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

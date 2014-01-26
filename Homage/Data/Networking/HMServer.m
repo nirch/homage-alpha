@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import <AFNetworking/AFNetworking.h>
 #import "HMServer.h"
 #import "HMParser.h"
 //#import "HMUploadManager.h"
@@ -15,7 +14,7 @@
 
 @property (strong, nonatomic) NSDictionary *cfg;
 @property (strong, nonatomic, readonly) NSURL *serverURL;
-@property (strong, nonatomic, readonly) AFHTTPSessionManager *session;
+
 
 @end
 
@@ -46,7 +45,6 @@
     if (self) {
         [self loadCFG];
         [self initSessionManager];
-        //[self testUploadManager];
     }
     return self;
 }

@@ -21,6 +21,8 @@
 #define HM_NOTIFICATION_RECORDER_START_RECORDING                    @"Recorder Start Recording"
 #define HM_NOTIFICATION_RECORDER_STOP_RECORDING                     @"Recorder Stop Recording"
 
+#define HM_NOTIFICATION_RECORDER_FLIP_CAMERA                        @"Recorder Flip Camera"
+
 
 #define HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE         @"Recorder Raw Footage Available"
 #define HM_NOTIFICATION_RECORDER_EPIC_FAIL                          @"Recorder Epic Fail"

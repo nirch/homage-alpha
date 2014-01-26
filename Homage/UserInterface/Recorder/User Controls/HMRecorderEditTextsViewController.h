@@ -15,4 +15,6 @@
     UITextFieldDelegate
 >
 
+-(void)updateValues;
+
 @end

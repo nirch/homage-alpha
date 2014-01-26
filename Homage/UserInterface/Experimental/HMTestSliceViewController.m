@@ -12,6 +12,7 @@
 #import "AWPieSliceView.h"
 #import "UIView+MotionEffect.h"
 #import "HMRoundCountdownLabel.h"
+#import "DB.h"
 
 @interface HMTestSliceViewController ()
 
@@ -26,11 +27,42 @@
     [super viewDidLoad];
     [self updateSliceWithCurrentValue];
     [self.guiBGImage addMotionEffectWithAmount:-20];
+    
+    // Prepare local storage and start the App.
+    [DB.sh useDocumentWithSuccessHandler:^{
+        [self startApplication];
+    } failHandler:^{
+        [self failedStartingApplication];
+    }];
 }
 
 -(void)updateSliceWithCurrentValue
 {
     self.guiSlice.value = self.guiSlider.value;
+}
+
+-(void)startApplication
+{
+    self.guiStartButton.enabled = YES;
+    [self.guiStartActivity stopAnimating];
+    
+    // Hardcoded user for development (until LOGIN screens are implemented)
+    User *user = [User userWithID:@"someTest@homage.it" inContext:DB.sh.context];
+    [user loginInContext:DB.sh.context];
+    [DB.sh save];
+    
+    //
+    [self performSegueWithIdentifier:@"start" sender:nil];
+}
+
+-(void)failedStartingApplication
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Critical error"
+                                                    message:@"Failed launching application."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 #pragma mark - IB Actions
@@ -53,5 +85,8 @@
     [self.guiCountDownLabel startTicking];
 }
 
+- (IBAction)onPressedStart:(id)sender {
+    [self performSegueWithIdentifier:@"start" sender:nil];
+}
 
 @end

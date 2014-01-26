@@ -16,6 +16,7 @@
 #import <InAppSettingsKit/IASKAppSettingsViewController.h>
 #import "HMSimpleVideoViewController.h"
 #import "HMSimpleVideoPlayerProtocol.h"
+#import "HMRecorderViewController.h"
 
 
 @interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerProtocol>
@@ -417,6 +418,8 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
+    UIViewController *vc = [HMRecorderViewController recorderForRemake:remake];
+    [self presentViewController:vc animated:NO completion:nil];
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     
     switch (remake.status.integerValue)

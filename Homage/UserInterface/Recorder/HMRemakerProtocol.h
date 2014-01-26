@@ -19,8 +19,10 @@ typedef NS_ENUM(NSInteger, HMRemakerUpdateType) {
     HMRemakerUpdateTypeCreateMovie,
     HMRemakerUpdateTypeCreateMovieSuccessfulResponse,
     HMRemakerUpdateTypeScriptToggle,
+    HMRemakerUpdateTypeRetakeScene,
     HMRemakerUpdateTypeCancelEditingTexts,
-    HMRemakerUpdateTypeEpicFailErrorMessage
+    HMRemakerUpdateTypeEpicFailErrorMessage,
+    HMRemakerUpdateTypeSelectSceneAndPrepareToShoot
 };
 
 ///

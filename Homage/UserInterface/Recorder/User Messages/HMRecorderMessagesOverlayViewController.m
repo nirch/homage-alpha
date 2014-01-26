@@ -14,10 +14,13 @@
 #import "UIImage+ImageEffects.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+Render.h"
+#import "HMRecorderPreviewViewController.h"
 
 @interface HMRecorderMessagesOverlayViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+
+@property (nonatomic, readonly) BOOL alreadyInitializedGUI;
 
 @property (weak, nonatomic) IBOutlet UIView *guiGeneralMessageContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *guiGeneralMessageSwipeUpIcon;
@@ -41,6 +44,8 @@
 
 @property (nonatomic, readonly) HMRecorderMessagesType messageType;
 @property (nonatomic, readonly) BOOL shouldCheckNextStateOnDismiss;
+@property (nonatomic) BOOL shouldDismissOnDecision;
+@property (nonatomic, readonly) NSDictionary *info;
 
 @end
 
@@ -54,11 +59,14 @@
     [self.guiDismissButton addMotionEffectWithAmount:15];
     [self.guiTextMessageIcon addMotionEffectWithAmount:15];
     [self.guiTextMessageTitleLabel addMotionEffectWithAmount:15];
+    [self.guiGeneralMessageOKButton addMotionEffectWithAmount:15];
+    [self.guiAreYouSureYouWantToRetakeLabel addMotionEffectWithAmount:15];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [[AMBlurView new] insertIntoView:self.guiBlurredView];
+    [self initGUIOnceAfterFirstAppearance];
     [self initObservers];
 }
 
@@ -70,6 +78,17 @@
 -(void)dealloc
 {
     // NSLog(@">>> dealloc %@", [self class]);
+}
+
+#pragma mark - UI init
+-(void)initGUIOnceAfterFirstAppearance
+{
+    if (self.alreadyInitializedGUI) return;
+    
+    [[AMBlurView new] insertIntoView:self.guiBlurredView];
+    
+    // Mark that GUI already initialized once.
+    _alreadyInitializedGUI = YES;
 }
 
 #pragma mark - Obesrvers
@@ -99,12 +118,23 @@
     self.guiDismissButton.enabled = YES;
 }
 
+#pragma mark - Segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"see preview segue"]) {
+        HMRecorderPreviewViewController *vc = segue.destinationViewController;
+        Remake *remake = [self.remakerDelegate remake];
+        Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
+        vc.footage = footage;
+    }
+}
 
 #pragma mark - Selecting and showing messages
 -(void)showMessageOfType:(HMRecorderMessagesType)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     _messageType = messageType;
     _shouldCheckNextStateOnDismiss = checkNextStateOnDismiss;
+    _info = info;
     self.guiGeneralMessageContainer.hidden = messageType != HMRecorderMessagesTypeGeneral;
     self.guiGeneralMessageSwipeUpIcon.hidden = messageType != HMRecorderMessagesTypeGeneral;
 
@@ -128,9 +158,7 @@
             } completion:nil];
         });
         
-        // Show the "Got it" button.
-        [self.guiGeneralMessageOKButton addMotionEffectWithAmount:10];
-        
+       
     } else if (self.messageType == HMRecorderMessagesTypeSceneContext) {
         
         //
@@ -164,6 +192,22 @@
         self.guiTextMessageLabel.text = LS(@"You nailed all scenes and ready to launch a movie");
         [self.guiDismissButton setTitle:LS(@"CREATE MOVIE") forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconCreateMovie"] forState:UIControlStateNormal];
+        
+    } else if (self.messageType == HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene) {
+        
+        self.shouldDismissOnDecision = [info[@"dismissOnDecision"] isEqualToNumber:@YES];
+        
+        //
+        //  Are you sure you want to retake a scene?
+        //
+        self.guiTextMessageContainer.hidden = YES;
+        self.guiAreYouSureToRetakeContainer.hidden = NO;
+        [self.guiAreYouSureToRetakeIcon.layer removeAllAnimations];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:1.3 delay:0 options:HM_ANIMATION_OPTION_PING_PONG animations:^{
+                self.guiAreYouSureToRetakeIcon.transform = CGAffineTransformMakeRotation(0.5);
+            } completion:nil];
+        });
         
     }
 }
@@ -201,26 +245,28 @@
 //
 - (IBAction)onPressedRetakeLastSceneButton:(UIButton *)sender
 {
-    self.guiTextMessageContainer.hidden = YES;
-    self.guiAreYouSureToRetakeContainer.hidden = NO;
-    [self.guiAreYouSureYouWantToRetakeLabel addMotionEffectWithAmount:20];
-    [self.guiAreYouSureToRetakeIcon.layer removeAllAnimations];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:1.3 delay:0 options:HM_ANIMATION_OPTION_PING_PONG animations:^{
-            self.guiAreYouSureToRetakeIcon.transform = CGAffineTransformMakeRotation(0.5);
-        } completion:nil];
-    });
+    NSDictionary *info = @{
+                           @"sceneID":[self.remakerDelegate currentSceneID],
+                           @"dismissOnDecision":@YES
+                           };
+    HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
+    [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
+    
 }
 
 - (IBAction)onPressedPreviewLastSceneButton:(UIButton *)sender
 {
 }
 
-//
-// Are you sure you want to retake buttons
-//
 - (IBAction)onPressedOopsDontRetakeButton:(UIButton *)sender
 {
+    if (self.shouldDismissOnDecision) {
+        [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
+        return;
+    }
+    //
+    // Go back to the message leading here.
+    //
     self.guiTextMessageContainer.hidden = NO;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     [self.guiAreYouSureToRetakeIcon.layer removeAllAnimations];
@@ -228,11 +274,39 @@
 
 - (IBAction)onPressedYeahRetakeThisScene:(UIButton *)sender
 {
+    if (self.shouldDismissOnDecision) {
+        //
+        //  Want to retake the scene
+        //
+        [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeSelectSceneAndPrepareToShoot info:self.info];
+        return;
+    }
+    
     //
     // Just stay in the same scene and allow user to retake.
     //
     [self.remakerDelegate updateUIForCurrentScene];
     [self.remakerDelegate dismissOverlayAdvancingState:NO fromState:HMRecorderStateMakingAScene];
 }
+
+- (IBAction)onPressedSeePreviewButton:(id)sender
+{
+    Remake *remake = [self.remakerDelegate remake];
+    Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
+    if (footage.rawLocalFile) {
+        [self performSegueWithIdentifier:@"see preview segue" sender:nil];
+    } else {
+        HMGLogDebug(@"Missing raw local file error");
+    }
+}
+
+// ============
+// Rewind segue
+// ============
+-(IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
+{
+    self.view.backgroundColor = [UIColor clearColor];
+}
+
 
 @end

@@ -25,6 +25,9 @@
 #define HM_NOTIFICATION_SERVER_TEXT                 @"Server Text"
 #define HM_NOTIFICATION_SERVER_RENDER               @"Server Render"
 
+// Reachability
+#define HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE @"Server Reachability Status Change"
+
 
 // Lazy loading notifications
 #define HM_NOTIFICATION_SERVER_STORY_THUMBNAIL      @"Server Story Thumbnail"

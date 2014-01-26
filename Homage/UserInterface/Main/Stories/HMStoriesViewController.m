@@ -32,19 +32,19 @@
 
 -(void)viewDidLoad
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     
     [self initGUI];
     [self initObservers];
     [self initContent];
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     UIRefreshControl *tempRefreshControl = [[UIRefreshControl alloc] init];
     [self.storiesCV addSubview:tempRefreshControl];
@@ -62,21 +62,21 @@
     self.headLine.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
     [self.headLine setTextColor:homageColor];
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
 
 -(void)initContent
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refreshFromLocalStorage];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
 
     // Observe application start
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -95,25 +95,25 @@
                                                    selector:@selector(onStoryThumbnailLoaded:)
                                                        name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                                      object:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers handlers
 -(void)onApplicationStartedNotification:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     //
     // Application notifies that local storage is ready and the app can start.
     //
     [self.refreshControl beginRefreshing];
     [self refetchStoriesFromServer];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
 
 -(void)onStoriesRefetched:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     //
     // Backend notifies that local storage was updated with stories.
     //
@@ -132,12 +132,12 @@
         [alert show];
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onStoryThumbnailLoaded:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
     UIImage *image = info[@"image"];
@@ -161,20 +161,20 @@
         cell.guiThumbImage.alpha = 1;
         cell.guiThumbImage.transform = CGAffineTransformIdentity;
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onPulledToRefetch
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refetchStoriesFromServer];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Navigation
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     if ([segue.identifier isEqualToString:@"story details segue"]) {
         //
@@ -189,21 +189,21 @@
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
     }
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Refresh stories
 -(void)refetchStoriesFromServer
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Refetch stories from the server
     [HMServer.sh refetchStories];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)refreshFromLocalStorage
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
@@ -212,7 +212,7 @@
     }
     [self.storiesCV reloadData];
     [self handleNoRemakes];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
 
@@ -220,7 +220,7 @@
 // Lazy instantiation of the fetched results controller.
 -(NSFetchedResultsController *)fetchedResultsController
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // If already exists, just return it.
     if (_fetchedResultsController) return _fetchedResultsController;
     
@@ -234,7 +234,7 @@
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return _fetchedResultsController;
 }
 
@@ -246,24 +246,24 @@
 #pragma mark - Table data source
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    HMGLogDebug(@"%s started and finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started and finished" , __PRETTY_FUNCTION__);
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
     return self.fetchedResultsController.fetchedObjects.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     static NSString *cellIdentifier = @"Story Cell";
     HMStoryCell *cell = (HMStoryCell *)[self.storiesCV dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     [self configureCell:cell forIndexPath:indexPath];
     return cell;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)configureCell:(HMStoryCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     //cell border design
     [cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
@@ -283,31 +283,31 @@
     cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
     cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Lazy loading
 -(UIImage *)thumbForStory:(Story *)story forIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (story.thumbnail) return story.thumbnail;
     [HMServer.sh lazyLoadImageFromURL:story.thumbnailURL
                      placeHolderImage:nil
                      notificationName:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                  info:@{@"indexPath":indexPath, @"storyID":story.sID}
     ];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return nil;
 }
 
 #pragma mark - Table delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (!story) return;
     [self performSegueWithIdentifier:@"story details segue" sender:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+//    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)handleNoRemakes

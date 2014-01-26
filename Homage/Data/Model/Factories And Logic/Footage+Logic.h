@@ -49,12 +49,10 @@ typedef NS_ENUM(NSInteger, HMFootageReadyState) {
 
 ///
 /**
-*  Returns the ready state of a footage, given a sceneID.
-*
-*   @param sceneID the scene id number of the related scene.
+*  Returns the ready state of a footage.
 *
 *   @return HMFootageReadyState value (ready for first retake, ready for second retake or still locked)
 */
--(HMFootageReadyState)readyStateBySceneID:(NSNumber *)sceneID;
+-(HMFootageReadyState)readyState;
 
 @end
