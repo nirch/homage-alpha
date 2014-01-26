@@ -601,6 +601,8 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
     NSInteger index = self.count - indexPath.row - 1;
     Scene *scene = self.scenesOrdered[index];
+    Footage *footage = [self.remake footageWithSceneID:scene.sID];
+    if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
 
