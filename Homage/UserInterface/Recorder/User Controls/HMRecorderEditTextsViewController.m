@@ -41,7 +41,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    // [[AMBlurView new] insertIntoView:self.tableView]; Two layers with a blut is a bit too much...
     [self initObservers];
 }
 
@@ -121,7 +120,9 @@
 -(void)configureCell:(HMRecorderEditingTextCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Text *textDefinition = self.textsDefinitions[indexPath.row];
+    NSString *textValue = [self.remake textWithID:textDefinition.sID];
     cell.guiTextField.delegate = self;
+    cell.guiTextField.text = textValue;
     cell.guiTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textDefinition.descriptionText.uppercaseString
                                                                               attributes:@{NSForegroundColorAttributeName:HMColor.sh.main1}];
     
@@ -208,6 +209,11 @@
     }
     [self.guiCreateMovieActivity startAnimating];
     [HMServer.sh renderRemakeWithID:self.remake.sID];
+}
+
+-(void)updateValues
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - IB Actions

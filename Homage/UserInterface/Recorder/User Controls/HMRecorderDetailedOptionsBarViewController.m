@@ -14,6 +14,7 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMRoundCountdownLabel.h"
 #import "HMColor.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -25,7 +26,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
-@property (weak, nonatomic) IBOutlet UIButton *guiCreateMovieButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiReachability;
+
+
 
 // Table of scenes
 @property (weak, nonatomic) IBOutlet UITableView *guiTableView;
@@ -38,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *guiOriginalTakesPageControl;
 @property (weak, nonatomic, readonly) HMSimpleVideoViewController *sceneVideoVC;
 @property (weak, nonatomic, readonly) HMSimpleVideoViewController *storyVideoVC;
+
+
 
 // Scene direction and show script buttons
 @property (weak, nonatomic) IBOutlet UIView *guiSceneDirectionButtonContainer;
@@ -76,7 +81,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self initGUIOnceAfterAppearance];
+    [self initGUIOnceAfterFirstAppearance];
     [self initObservers];
     [self updateTableHeader];
 }
@@ -110,16 +115,22 @@
     self.guiRoundCountdownLabal.delegate = self;
 }
 
--(void)initGUIOnceAfterAppearance
+-(void)initGUIOnceAfterFirstAppearance
 {
     if (self.alreadyInitializedGUI) return;
     
     // The scroll view containing the two videos
-    NSInteger originalTakesPages = 2;
+    // Change the content size according to the size of the containers
+    // Put the second container in the correct spot, according to the width
+    NSInteger videosPages = 2;
     CGSize size = self.guiSceneVideoContainerView.bounds.size;
-    size.width *= originalTakesPages;
-    self.guiOriginalTakesVideosScrollView.contentSize = size;
-    self.guiOriginalTakesPageControl.numberOfPages = originalTakesPages;
+    self.guiOriginalTakesVideosScrollView.contentSize = CGSizeMake(size.width * videosPages, size.height);
+    
+    CGRect frame = self.guiStoryVideoContainerView.frame;
+    frame.origin.x = size.width;
+    self.guiStoryVideoContainerView.frame = frame;
+    
+    self.guiOriginalTakesPageControl.numberOfPages = videosPages;
     self.guiOriginalTakesPageControl.currentPage = 0;
     
     // Mark that GUI already initialized once.
@@ -173,12 +184,18 @@
                      name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL
                    object:nil];
     
-    // Observe scene thumbnail
+    // Observe story thumbnail
     [nc addUniqueObserver:self
                  selector:@selector(onLazyLoadedStoryThumbnail:)
                      name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                    object:nil];
     
+    // Observe reachability status changes
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onReachabilityStatusChange:)
+                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                     object:HMServer.sh];
+
 }
 
 -(void)removeObservers
@@ -291,6 +308,12 @@
 {
     _sceneID = notification.userInfo[@"sceneID"];
     [self updateUIForSceneID:self.sceneID];
+    self.guiReachability.hidden = HMServer.sh.isReachable;
+}
+
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    self.guiReachability.hidden = HMServer.sh.isReachable;
 }
 
 #pragma mark - Scene selection
@@ -299,7 +322,7 @@
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
     Footage *footage = [self.remake footageWithSceneID:sceneID];
     self.guiCurrentSceneLabel.text = [scene titleForSceneID];
-    if ([footage readyStateBySceneID:sceneID] == HMFootageReadyStateReadyForFirstRetake) {
+    if ([footage readyState] == HMFootageReadyStateReadyForFirstRetake) {
         self.guiCurrentSceneLabel.textColor = HMColor.sh.text;
     } else {
         self.guiCurrentSceneLabel.textColor = HMColor.sh.textImpact;
@@ -388,22 +411,9 @@
     cell.guiSceneLabel.text = [Scene titleForSceneBySceneID:scene.sID];
     cell.readyState = footageReadyState;
     cell.guiSceneTimeLabel.text = scene.titleForTime;
-}
-
-#pragma mark - Table view delegate
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSInteger index = self.count - indexPath.row - 1;
-    HMFootageReadyState readyState = [self.footagesReadyStates[index] integerValue];
-    if (readyState == HMFootageReadyStateStillLocked) {
-        // Can't select locked scenes;
-        [self.guiTableView deselectRowAtIndexPath:indexPath animated:NO];
-        return;
-    }
-
-    // A selectable row
-    Scene *scene = self.scenesOrdered[index];
-    [self.remakerDelegate selectSceneID:scene.sID];
+    cell.guiSelectRowButton.tag = indexPath.row;
+    cell.guiRetakeSceneButton.tag = indexPath.row;
+    cell.guiRowIndicatorImage.alpha = 0;
 }
 
 -(void)updateTableHeader
@@ -516,6 +526,84 @@
 - (IBAction)onPressedCreateMovieButton:(id)sender
 {
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeCreateMovie info:nil];
+}
+
+- (IBAction)onPressedSelectScene:(UIButton *)sender
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+    NSInteger index = self.count - indexPath.row - 1;
+    HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
+    
+    //
+    // Some crazy animations
+    //
+    double delayInSeconds = 0.1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        HMSceneCell *cell = (HMSceneCell *)[self.guiTableView cellForRowAtIndexPath:indexPath];
+        if (footageReadyState == HMFootageReadyStateStillLocked)
+        {
+            cell.guiSceneLockedIcon.transform = CGAffineTransformMakeScale(1.2, 1.2);
+            [UIView animateWithDuration:0.5 animations:^{
+                cell.guiSceneLockedIcon.transform = CGAffineTransformIdentity;
+            }];
+            return;
+        }
+        
+        if (footageReadyState == HMFootageReadyStateReadyForSecondRetake) {
+            [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                cell.guiSceneRetakeIcon.transform = CGAffineTransformMakeRotation(-M_PI*0.2);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                    cell.guiSceneRetakeIcon.transform = CGAffineTransformIdentity;
+                } completion:nil];
+            }];
+        }
+        
+        //
+        //  The label scales a bit
+        //
+        [UIView animateWithDuration:0.7 animations:^{
+            cell.guiSceneLabel.alpha = 0.6;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.7 animations:^{
+                cell.guiSceneLabel.alpha = 1;
+            }];
+        }];
+        
+        //
+        //  Snappy arrow pointing on scene label
+        //
+        cell.guiRowIndicatorImage.alpha = 1;
+        cell.guiRowIndicatorImage.center = CGPointMake(-50,28+arc4random()%40-20);
+        cell.animator = [[UIDynamicAnimator alloc] initWithReferenceView:cell.guiRowIndicatorImage.superview];
+        UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cell.guiRowIndicatorImage snapToPoint:CGPointMake(39,28)];
+        [snap setDamping:0.3];
+        [cell.animator addBehavior:snap];
+        [UIView animateWithDuration:1.0 delay:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            cell.guiRowIndicatorImage.alpha = 0;
+        } completion:nil];
+    });
+    
+    // Will not select locked scenes.
+    if (footageReadyState == HMFootageReadyStateStillLocked) return;
+    
+    //
+    // Actually selecting the scene
+    //
+    Scene *scene = self.scenesOrdered[index];
+    [self.remakerDelegate selectSceneID:scene.sID];
+}
+
+- (IBAction)onPressedRetakeButton:(UIButton *)sender
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+    NSInteger index = self.count - indexPath.row - 1;
+    Scene *scene = self.scenesOrdered[index];
+    Footage *footage = [self.remake footageWithSceneID:scene.sID];
+    if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;
+    [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
 
 @end

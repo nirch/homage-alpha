@@ -7,12 +7,49 @@
 //
 
 @import MediaPlayer;
+@import AVFoundation;
 
 #import "HMSimpleVideoViewController.h"
 #import "HMNotificationCenter.h"
 
+@implementation UIDevice (ALSystemVersion)
+
+static const CGFloat movieBackgroundPadding = 0.f;
+static const NSTimeInterval fullscreenAnimationDuration = 0.3;
+
++ (float)iOSVersion {
+    static float version = 0.f;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    });
+    return version;
+}
+
+@end
+
+@implementation UIApplication (ALAppDimensions)
+
++ (CGSize)sizeInOrientation:(UIInterfaceOrientation)orientation {
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    UIApplication *application = [UIApplication sharedApplication];
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        size = CGSizeMake(size.height, size.width);
+    }
+    if (!application.statusBarHidden && [UIDevice iOSVersion] < 7.0) {
+        size.height -= MIN(application.statusBarFrame.size.width, application.statusBarFrame.size.height);
+    }
+    return size;
+}
+
+@end
+
+
 @interface HMSimpleVideoViewController ()
 
+@property (nonatomic, readonly) BOOL isFullscreen;
+@property (nonatomic, readonly, weak) UIView *containerView;
+@property (nonatomic, readonly) UIView *movieTempFullscreenBackgroundView;
 @property (nonatomic, readonly) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
 @property (atomic) BOOL videoLabelToBeHidden;
@@ -36,9 +73,14 @@
     self = [super initWithNibName:nibName bundle:nil];
     if (self) {
         [parentVC addChildViewController:self];
-        [containerView addSubview:self.view];
-        self.view.frame = containerView.bounds;
+        _containerView = containerView;
+        _isFullscreen = NO;
+        [self.containerView addSubview:self.view];
+        _shouldDisplayVideoLabel = YES;
         _videoView = (HMSimpleVideoView *)self.view;
+
+        
+        _movieTempFullscreenBackgroundView = [[UIView alloc] init];
     }
     return self;
 }
@@ -48,13 +90,24 @@
     [super viewDidLoad];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.view.frame = self.containerView.bounds;
+    self.containerView.clipsToBounds = YES;
+
+    [self fixLayout];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [self initObservers];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
     [self removeObservers];
 }
 
@@ -102,7 +155,7 @@
 
 -(void)onMoviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
-    [self done];
+    if (self.resetStateWhenVideoEnds) [self done];
 }
 
 -(void)onMoviePlayerPlaybackStateDidChange:(NSNotification *)notification
@@ -110,6 +163,12 @@
     if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
         self.videoPlayer.view.alpha = 1;
         [self.videoView.guiLoadActivity stopAnimating];
+        self.videoView.guiPlayPauseButton.selected = YES;
+        self.videoView.guiVideoSlider.hidden = YES;
+    } else {
+        self.videoView.guiPlayPauseButton.selected = NO;
+        self.videoView.guiVideoSlider.hidden = NO;
+        self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
     }
 }
 
@@ -122,7 +181,17 @@
 -(void)_startToPlayTheActualVideo
 {
     self.waitingToStartPlayingTheFile = NO;
-    [UIView animateWithDuration:0.8 animations:^{
+    
+    // If no time passed since play, don't do the fade out animation.
+    if ([[NSDate date] timeIntervalSinceDate:self.timePressedPlay] < 3.0f) {
+        self.videoView.alpha = 1;
+        [self.videoPlayer play];
+        return;
+    }
+    
+    
+    NSTimeInterval animationDuration = 0.4;
+    [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
         self.videoView.guiLoadActivity.alpha = 0;
         self.videoView.backgroundColor = [UIColor clearColor];
@@ -158,6 +227,7 @@
 -(void)updateUIToPlayVideoState
 {
     [self.videoView.guiLoadActivity startAnimating];
+    self.videoView.guiPlayPauseButton.selected = YES;
     [UIView animateWithDuration:0.3 animations:^{
         self.videoView.guiPlayButton.alpha = 0;
         self.videoView.guiVideoLabel.alpha = 0;
@@ -184,10 +254,32 @@
     return _videoPlayer;
 }
 
+-(void)extractThumbFromVideo
+{
+    //if (!self.extractThumbAtTime) return;
+    
+    NSURL *url = [NSURL URLWithString:self.videoURL];
+    AVURLAsset *asset1 = [[AVURLAsset alloc] initWithURL:url options:nil];
+
+    AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset1];
+    imageGenerator.appliesPreferredTrackTransform = YES;
+    
+    NSError *error;
+    CMTime time = CMTimeMake(1, 2);
+    CGImageRef imageRef = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:&error];
+    if (error) return;
+    self.videoImage = [[UIImage alloc] initWithCGImage:imageRef];
+}
+
 -(void)playVideo
 {
-    self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
+    _timePressedPlay = [NSDate date];
     self.waitingToStartPlayingTheFile = YES;
+    NSURL *url = [NSURL URLWithString:self.videoURL];
+    
+    HMGLogDebug(@"Trying to play video at:%@", url);
+    
+    if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     [self.videoPlayer prepareToPlay];
     if (self.delegate) [self.delegate videoPlayerHitPlayButton];
 }
@@ -195,9 +287,10 @@
 -(void)done
 {
     [self.videoPlayer stop];
+    self.videoView.guiPlayPauseButton.selected = NO;
     if (self.delegate) [self.delegate videoPlayerHitStopButton];
-    if (self.videoPlayer.isFullscreen) {
-        [self.videoPlayer setFullscreen:NO animated:YES];
+    if (self.isFullscreen) {
+        [self setFullScreen:NO animated:YES];
     }
     if (!self.videoLabelToBeHidden)  self.videoView.guiVideoLabel.hidden = NO;   
     self.videoView.guiPlayButton.hidden = NO;
@@ -209,7 +302,7 @@
         self.videoPlayer.view.alpha = 0;
         self.videoView.guiVideoThumb.alpha = 1;
         self.videoView.guiPlayButton.alpha = 1;
-        self.videoView.guiVideoLabel.alpha = 1;
+        if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.alpha = 1;
     } completion:^(BOOL finished) {
         
     }];}
@@ -225,6 +318,38 @@
     [self.videoView.guiVideoLabel setHidden:YES];
     self.videoLabelToBeHidden = YES;
 }
+
+-(void)showVideoLabelAnimated:(BOOL)animated
+{
+    _shouldDisplayVideoLabel = YES;
+    
+    if (!animated) {
+        self.videoView.guiVideoLabel.hidden = NO;
+        return;
+    }
+    
+    self.videoView.guiVideoLabel.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.videoView.guiVideoLabel.alpha = 1;
+    } completion:^(BOOL finished) {
+        self.videoView.guiVideoLabel.alpha = 1;
+    }];
+}
+
+//-(void)setFullScreen
+//{
+//    if (self.isFullScreen) return;
+//    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+//
+//    [self.view removeFromSuperview];
+//    [keyWindow addSubview:self.view];
+//    
+////    if (!self.videoPlayer.isFullscreen) {
+////        self.videoPlayer.controlStyle = MPMovieControlStyleFullscreen;
+////        [self.videoPlayer setFullscreen:YES animated:YES];
+////    }
+//}
+
 -(void)setFullScreen
 {
     if (!self.videoPlayer.isFullscreen)
@@ -234,6 +359,81 @@
         [self.videoPlayer setScalingMode:MPMovieScalingModeAspectFit];
     }
 }
+
+
+-(void)fixLayout
+{
+    self.view.frame = self.containerView.bounds;
+    self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
+}
+
+- (void)moviePlayerWillMoveFromWindow {
+    
+    if (![self.containerView.subviews containsObject:self.view]) {
+        [self.containerView addSubview:self.view];
+    }
+    [self fixLayout];
+}
+
+- (CGFloat)statusBarHeightInOrientation:(UIInterfaceOrientation)orientation {
+    if ([UIDevice iOSVersion] >= 7.0)
+    return 0.f;
+    else if ([UIApplication sharedApplication].statusBarHidden)
+    return 0.f;
+    return 20.f;
+}
+
+- (void)rotateMoviePlayerForOrientation:(UIInterfaceOrientation)orientation animated:(BOOL)animated completion:(void (^)(void))completion {
+    CGFloat angle;
+    CGSize windowSize = [UIApplication sizeInOrientation:orientation];
+    CGRect backgroundFrame;
+    CGRect movieFrame;
+    
+    CGFloat movieBackgroundPadding = 0;
+    
+    
+    switch (orientation) {
+            case UIInterfaceOrientationPortraitUpsideDown:
+            angle = M_PI;
+            backgroundFrame = CGRectMake(-movieBackgroundPadding, -movieBackgroundPadding, windowSize.width + movieBackgroundPadding*2, windowSize.height + movieBackgroundPadding*2);
+            movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.width - movieBackgroundPadding*2, backgroundFrame.size.height - movieBackgroundPadding*2);
+            break;
+            case UIInterfaceOrientationLandscapeLeft:
+            angle = - M_PI_2;
+            backgroundFrame = CGRectMake([self statusBarHeightInOrientation:orientation] - movieBackgroundPadding, -movieBackgroundPadding, windowSize.height + movieBackgroundPadding*2, windowSize.width + movieBackgroundPadding*2);
+            movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.height - movieBackgroundPadding*2, backgroundFrame.size.width - movieBackgroundPadding*2);
+            break;
+            case UIInterfaceOrientationLandscapeRight:
+            angle = M_PI_2;
+            backgroundFrame = CGRectMake(-movieBackgroundPadding, -movieBackgroundPadding, windowSize.height + movieBackgroundPadding*2, windowSize.width + movieBackgroundPadding*2);
+            movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.height - movieBackgroundPadding*2, backgroundFrame.size.width - movieBackgroundPadding*2);
+            break;
+            case UIInterfaceOrientationPortrait:
+        default:
+            angle = 0.f;
+            backgroundFrame = CGRectMake(-movieBackgroundPadding, [self statusBarHeightInOrientation:orientation] - movieBackgroundPadding, windowSize.width + movieBackgroundPadding*2, windowSize.height + movieBackgroundPadding*2);
+            movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.width - movieBackgroundPadding*2, backgroundFrame.size.height - movieBackgroundPadding*2);
+            break;
+    }
+    
+    if (animated) {
+        [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.movieTempFullscreenBackgroundView.transform = CGAffineTransformMakeRotation(angle);
+            self.movieTempFullscreenBackgroundView.frame = backgroundFrame;
+            self.view.frame = movieFrame;
+        } completion:^(BOOL finished) {
+            if (completion)
+            completion();
+        }];
+    } else {
+        self.movieTempFullscreenBackgroundView.transform = CGAffineTransformMakeRotation(angle);
+        self.movieTempFullscreenBackgroundView.frame = backgroundFrame;
+        self.view.frame = movieFrame;
+        if (completion)
+        completion();
+    }
+}
+
 
 -(void)hideMediaControls
 {
@@ -270,24 +470,27 @@
 {
     if (self.videoPlayer.playbackState == MPMoviePlaybackStateStopped || self.videoPlayer.playbackState == MPMoviePlaybackStatePaused) {
         [self.videoPlayer play];
-        self.videoView.guiPlayPauseButton.highlighted = YES;
+        self.videoView.guiPlayPauseButton.selected = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
         [self.videoPlayer pause];
-        self.videoView.guiPlayPauseButton.highlighted = NO;
+        self.videoView.guiPlayPauseButton.selected = NO;
     }
 }
 
 - (IBAction)onPressedFullScreenButton:(id)sender
 {
-    if (!self.videoPlayer.isFullscreen) {
-        self.videoPlayer.controlStyle = MPMovieControlStyleFullscreen;
-        [self.videoPlayer setFullscreen:YES animated:YES];
-    }
+    [self setFullScreen:!self.isFullscreen animated:YES];
 }
 
 - (IBAction)onPressedToggleControls:(id)sender
 {
     self.videoView.guiControlsContainer.hidden = !self.videoView.guiControlsContainer.hidden;
 }
+
+- (IBAction)onMovedSlider:(UISlider *)sender
+{
+    [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
+}
+
 
 @end

@@ -19,6 +19,7 @@
 #import "HMRecorderMessagesOverlayViewController.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+LazyLoading.h"
+#import "HMRecorderEditTextsViewController.h"
 
 // TODO: Temporary. This is for fake footages upload updates.
 // This will be the responsibility of the uploader and not the recorder.
@@ -48,12 +49,15 @@
 
 // Weak pointers to child view controllers
 @property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
+@property (weak, nonatomic, readonly) HMRecorderEditTextsViewController *editingTextsVC;
+
 
 // UI State
 @property (nonatomic, readonly) BOOL detailedOptionsOpened;
 @property (nonatomic, readonly) HMRecorderState recorderState;
 @property (nonatomic) double startPanningY;
 @property (nonatomic, readonly) BOOL lockedAutoRotation;
+@property (nonatomic, readonly) BOOL frontCameraAllowed;
 
 // Some physics animations
 @property (nonatomic, readonly) UIDynamicAnimator *animator;
@@ -170,7 +174,8 @@
         // 5 - HMRecorderStateEditingTexts --> edited all texts --> 6 - HMRecorderStateFinishedAllScenesMessage
         // or
         // 5 - HMRecorderStateEditingTexts --> not all texts edited --> 3 - HMRecorderStateMakingAScene
-        [self stateEditingTexts];
+        
+        // Nothing to do here. The editing texts screen will decide on the next state.
         
     } else if (self.recorderState == HMRecorderStateFinishedAllScenesMessage) {
         
@@ -205,7 +210,7 @@
         // Skip to next state without showing the general message.
         [self advanceState];
     } else {
-        [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral checkNextStateOnDismiss:YES info:nil];
+        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral checkNextStateOnDismiss:YES info:nil];
     }
     
 }
@@ -273,15 +278,18 @@
     [self stateMakingAScene];
 }
 
--(void)stateEditingTexts
-{
-    // TODO: implement
-}
+//-(void)stateEditingTexts
+//{
+//    // TODO: implement
+//}
 
 -(void)stateDoneIfUserRequestToCreateMovieIsASuccess
 {
-    // TODO: implement
-    [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
+//    if (self.remake.status.integerValue > HMGRemakeStatusNew) {
+//        [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
+//        return;
+//    }
+    [self stateMakingNextScene];
 }
 
 #pragma mark - Observers
@@ -408,7 +416,7 @@
     self.guiDismissButton.enabled = YES;
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.enabled = YES;
-    self.guiCameraSwitchingButton.hidden = NO;
+    self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
     
     [self closeDetailedOptionsAnimated:YES]; // Show in closed state.
     [UIView animateWithDuration:0.2 animations:^{
@@ -476,6 +484,14 @@
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
 
+    if (scene.isSelfie.boolValue) {
+        _frontCameraAllowed = YES;
+    } else {
+        _frontCameraAllowed = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FLIP_CAMERA object:self userInfo:@{@"forceCameraSelection":@"front"}];
+    }
+    self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
+    
     // Notify all child interfaces about the current scene ID.
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil userInfo:@{@"sceneID":sceneID}];
 
@@ -516,6 +532,7 @@
     return UIInterfaceOrientationMaskLandscape;
 }
 
+
 #pragma mark - containment segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -528,7 +545,10 @@
     // Specific destination view controllers
     if ([segue.identifier isEqualToString:@"messages overlay containment segue"]) {
         _messagesOverlayVC = segue.destinationViewController;
+    } else if ([segue.identifier isEqualToString:@""]) {
+        _editingTextsVC = segue.destinationViewController;
     }
+    
 }
 
 // Used for debugging
@@ -598,6 +618,25 @@
         return;
     }
     
+    if (updateType == HMRemakerUpdateTypeRetakeScene) {
+        NSNumber *sceneID = info[@"sceneID"];
+        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene
+                           checkNextStateOnDismiss:NO
+                                              info:@{@"sceneID":sceneID,
+                                                     @"dismissOnDecision":@YES
+                                                     }
+         ];
+        return;
+    }
+    
+    if (updateType == HMRemakerUpdateTypeSelectSceneAndPrepareToShoot) {
+        NSNumber *sceneID = info[@"sceneID"];
+        [self selectSceneID:sceneID];
+        [self closeDetailedOptionsAnimated:YES];
+        [self dismissOverlayAdvancingState:NO];
+        [self stateMakingAScene];
+    }
+    
 }
 
 -(void)updateUIForCurrentScene
@@ -614,24 +653,26 @@
 -(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
-    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
-                     checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
-                                        info:@{
-                                               @"icon name":@"iconSceneDescription",
-                                               @"title":scene.story.name.uppercaseString,
-                                               @"text":scene.context,
-                                               @"ok button text":LS(@"OK, GOT IT!")
-                                               }
+    [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
+                       checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
+                                          info:@{
+                                                 @"icon name":@"iconSceneDescription",
+                                                 @"title":scene.story.name.uppercaseString,
+                                                 @"text":scene.context,
+                                                 @"ok button text":LS(@"OK, GOT IT!")
+                                                 }
      ];
 }
 
 
 #pragma mark - Sort this out
--(void)showMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
+-(void)revealMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     [self.messagesOverlayVC showMessageOfType:messageType checkNextStateOnDismiss:checkNextStateOnDismiss info:info];
     
+    //
     // Show animated
+    //
     self.guiMessagesOverlayContainer.hidden = NO;
     self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(1.2, 1.2);
     [UIView animateWithDuration:0.3 animations:^{
@@ -644,21 +685,21 @@
 {
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
-    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
-                     checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
-                                        info:@{@"text":nextScene.context,
-                                               @"sceneID":sceneID,
-                                               @"nextSceneID":nextSceneID
-                                               }
+    [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
+                       checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
+                                          info:@{@"text":nextScene.context,
+                                                 @"sceneID":sceneID,
+                                                 @"nextSceneID":nextSceneID
+                                                 }
      ];
 }
 
 -(void)showFinishedAllScenesMessage
 {
     _recorderState = HMRecorderStateFinishedAllScenesMessage;
-    [self showMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedAllScenes
-                     checkNextStateOnDismiss:YES
-                                        info:nil
+    [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedAllScenes
+                       checkNextStateOnDismiss:YES
+                                          info:nil
      ];
 }
 
@@ -671,6 +712,8 @@
     snap = [[UISnapBehavior alloc] initWithItem:self.guiTextsEditingContainer snapToPoint:self.view.superview.center];
     [snap setDamping:0.3];
     [self.animator addBehavior:snap];
+    
+    [self.editingTextsVC updateValues];
 }
 
 #pragma mark - toggle options bar
@@ -753,7 +796,7 @@
 -(void)showTopButtons
 {
     self.guiDismissButton.hidden = NO;
-    self.guiCameraSwitchingButton.hidden = NO;
+    self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
@@ -817,6 +860,11 @@
     }
 }
 
+-(void)flipCamera
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FLIP_CAMERA object:self];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -825,6 +873,13 @@
 {
     [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
 }
+
+
+- (IBAction)onPressedFlipCameraButton:(UIButton *)sender
+{
+    [self flipCamera];
+}
+
 
 - (IBAction)onTappedDetailedOptionsBar:(UITapGestureRecognizer *)sender
 {

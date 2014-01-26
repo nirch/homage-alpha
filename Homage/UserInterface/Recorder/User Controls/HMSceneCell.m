@@ -19,18 +19,6 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    if (selected) {
-        self.guiSceneLabel.transform = CGAffineTransformMakeScale(0.9, 0.9);
-        [UIView animateWithDuration:1.0 animations:^{
-            self.guiSceneLabel.transform = CGAffineTransformIdentity;
-        }];
-    }
-}
-
 -(void)setReadyState:(HMFootageReadyState)readyState
 {
     if (readyState == HMFootageReadyStateReadyForFirstRetake) {

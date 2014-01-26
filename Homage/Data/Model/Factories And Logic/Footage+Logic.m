@@ -19,7 +19,7 @@
 
 -(NSString *)generateNewRawFileName
 {
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@_%f.mp4", self.remake.sID, self.sceneID, [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@_%d.mp4", self.remake.sID, self.sceneID, (NSInteger)[[NSDate date] timeIntervalSince1970]];
     return fileName;
 }
 
@@ -35,10 +35,10 @@
     self.rawLocalFile = nil;
 }
 
--(HMFootageReadyState)readyStateBySceneID:(NSNumber *)sceneID
+-(HMFootageReadyState)readyState
 {
     NSArray *readyStates = self.remake.footagesReadyStates;
-    NSInteger index = sceneID.integerValue-1;
+    NSInteger index = self.sceneID.integerValue-1;
     if (index>=0 && index<readyStates.count) return [readyStates[index] integerValue];
     return HMFootageReadyStateStillUnkown;
 }

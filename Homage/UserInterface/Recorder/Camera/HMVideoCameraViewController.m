@@ -27,6 +27,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 // Session management.
 @property (nonatomic) dispatch_queue_t sessionQueue; // Communicate with the session and other session objects on this queue.
 @property (nonatomic) AVCaptureSession *session;
+
+@property (nonatomic) AVCaptureDevice *videoDevice;
 @property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 
@@ -43,6 +45,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 
 // Camera settings
 @property (nonatomic, readonly) NSString *camSettingsSessionPreset;
+@property (nonatomic, readonly) NSInteger camSettingsPrefferedDevicePosition;
 @property (nonatomic, readonly) NSString *camSettingsPreviewLayerVideoGravity;
 
 
@@ -53,7 +56,11 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 #pragma mark - Camera settings
 -(void)initCameraSettings
 {
+    // Camera
     _camSettingsSessionPreset               = AVCaptureSessionPreset1280x720;         // Video capture resolution
+    _camSettingsPrefferedDevicePosition     = AVCaptureDevicePositionBack;            // Preffered camera position
+    
+    // Preview layer
     _camSettingsPreviewLayerVideoGravity    = AVLayerVideoGravityResizeAspectFill;    // Video gravity on the preview layer
 }
 
@@ -81,6 +88,15 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     [self initAVObservers];
     [self initAppObservers];
+}
+
+//
+// Fix orientation on view did appear
+//
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self updateOrientation:(UIInterfaceOrientation)[UIDevice currentDevice].orientation]; //[UIApplication sharedApplication].statusBarOrientation
+    
 }
 
 //
@@ -214,6 +230,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                  selector:@selector(onShouldStopRecording:)
                      name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                    object:nil];
+
+    //
+    // Request to flip camera
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onFlipCamera:)
+                     name:HM_NOTIFICATION_RECORDER_FLIP_CAMERA
+                   object:nil];
+
+
 }
 
 -(void)removeAppObservers
@@ -237,25 +263,55 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     }];
 }
 
-#pragma mark - Orientation and status bar
+#pragma mark - Status bar
+
+#pragma mark - status bar
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
 }
 
-- (BOOL)shouldAutorotate
-{
-    return !self.lockInterfaceRotation;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
+#pragma mark - Orientation changes
+//translate the orientation
+-(AVCaptureVideoOrientation)avOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation {
+    /**
+     Translation needed because LandscapeRight and LandscapeLeft are swapped in the enumeration.
+     Simple casting of UIDeviceOrientation to AVCaptureVideoOrientation may cause videos to be "upside down".
+     On portrait, return AVCaptureVideoOrientationLandscapeLeft by default.
+     */
+    AVCaptureVideoOrientation result;
+    
+    // Never regard portrait as interesting, and map the flipped enums to each other (a silly apple inconsistency).
+    if ( deviceOrientation == UIDeviceOrientationLandscapeLeft )
+    result = AVCaptureVideoOrientationLandscapeRight;
+    else if ( deviceOrientation == UIDeviceOrientationLandscapeRight )
+    result = AVCaptureVideoOrientationLandscapeLeft;
+    else if( deviceOrientation == UIDeviceOrientationPortrait)
+    result = AVCaptureVideoOrientationLandscapeLeft;
+    else result = AVCaptureVideoOrientationLandscapeLeft;
+    
+    return result;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)toInterfaceOrientation];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self updateOrientation:toInterfaceOrientation]; // [UIApplication sharedApplication].statusBarOrientation
+}
+
+-(void)updateOrientation:(UIInterfaceOrientation)orientation
+{
+    self.previewLayer.connection.videoOrientation = [self avOrientationForDeviceOrientation:orientation];
+}
+
+-(BOOL)shouldAutorotate
+{
+    return !self.lockInterfaceRotation;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 #pragma mark - Authorization
@@ -282,6 +338,26 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     NSDictionary *info = notification.userInfo;
     [self toggleMovieRecording:info];
 }
+
+-(void)onFlipCamera:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if ([info[@"forceCameraSelection"] isEqualToString:@"front"]) {
+        // Forces to front camera (no selfie allowed)
+        AVCaptureDevice *currentVideoDevice = [[self videoDeviceInput] device];
+        AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
+        if (currentPosition == AVCaptureDevicePositionFront) {
+            [self changeCamera];
+        }
+        return;
+    }
+    
+    //
+    // Front and back allowed. Flip it.
+    //
+    [self changeCamera];
+}
+
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -311,8 +387,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)initCamera
 {
     // Create the AVCaptureSession
-    AVCaptureSession *session = [[AVCaptureSession alloc] init];
-    self.session = session;
+    self.session = [[AVCaptureSession alloc] init];;
     self.session.sessionPreset = self.camSettingsSessionPreset;
     
     // Setup the preview view
@@ -323,31 +398,32 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     
     // Dispatch the rest of session setup to the sessionQueue so that the main queue isn't blocked.
     dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
-    [self setSessionQueue:sessionQueue];
+    self.sessionQueue = sessionQueue;
     
     dispatch_async(sessionQueue, ^{
-        [self setBackgroundRecordingID:UIBackgroundTaskInvalid];
-        
+        self.backgroundRecordingID = UIBackgroundTaskInvalid;
         NSError *error = nil;
         
-        AVCaptureDevice *videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
-        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        //
+        // Video Device
+        //
         
-        // Configure frame rate
-        //[self configureCameraForFrameRate:videoDevice];
+        // Initializing the video device and device input (back camera preffered)
+        self.videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
+        self.videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.videoDevice error:&error];
         
         if (error)
         {
             HMGLogError(@"%@", error);
         }
         
+        // Add the video device input to the session.
+        if ([self.session canAddInput:self.videoDeviceInput]) [self.session addInput:self.videoDeviceInput];
         
-        if ([session canAddInput:videoDeviceInput])
-        {
-            [session addInput:videoDeviceInput];
-            [self setVideoDeviceInput:videoDeviceInput];
-        }
         
+        //
+        // Audio Device
+        //
         AVCaptureDevice *audioDevice = [[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] firstObject];
         AVCaptureDeviceInput *audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
         
@@ -356,20 +432,19 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             HMGLogError(@"%@", error);
         }
         
-        if ([session canAddInput:audioDeviceInput])
+        if ([self.session canAddInput:audioDeviceInput])
         {
-            [session addInput:audioDeviceInput];
+            [self.session addInput:audioDeviceInput];
         }
         
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
-        if ([session canAddOutput:movieFileOutput])
+        if ([self.session canAddOutput:movieFileOutput])
         {
-            [session addOutput:movieFileOutput];
+            [self.session addOutput:movieFileOutput];
             AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-            
+  
             // Video stabilization
             if (connection.isVideoStabilizationSupported) connection.enablesVideoStabilizationWhenAvailable = YES;
-            
             
             // Set the output
             self.movieFileOutput = movieFileOutput;
@@ -403,11 +478,17 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]];
             }
             
-            // Update the orientation on the movie file output video connection before starting recording.
-            [[[self movieFileOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] videoOrientation]];
+            AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+            connection.videoOrientation = [self avOrientationForDeviceOrientation:[UIApplication sharedApplication].statusBarOrientation];
             
             // Turning OFF flash for video recording
             [HMVideoCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
+            
+            // Lock focus on a point (currently hard coded point, should be received from the server later.
+            [self focusWithMode:AVCaptureFocusModeLocked
+                 exposeWithMode:AVCaptureExposureModeLocked
+                  atDevicePoint:CGPointMake(0.5,0.5) monitorSubjectAreaChange:NO
+             ];
             
             // Start recording to a temp file.
             NSString *fileName = info[@"fileName"];
@@ -423,8 +504,24 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     });
 }
 
--(void)changeCamera:(id)sender
+-(void)changeCamera
 {
+    UIView *tempView = [[UIView alloc] init];
+    tempView.frame = self.previewView.frame;
+    
+    AVCamPreviewView *previewViewStrongRef = self.previewView;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView transitionFromView:self.previewView toView:tempView duration:0.5 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished) {
+        previewViewStrongRef.alpha = 0;
+        [UIView transitionFromView:tempView toView:previewViewStrongRef duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.previewView = previewViewStrongRef;
+                self.previewView.alpha = 1;
+            }];
+        }];
+    }];
+    [UIView commitAnimations];
+    
     dispatch_async([self sessionQueue], ^{
         AVCaptureDevice *currentVideoDevice = [[self videoDeviceInput] device];
         AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
@@ -447,7 +544,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
         
         [[self session] beginConfiguration];
-        
+
         [[self session] removeInput:[self videoDeviceInput]];
         if ([[self session] canAddInput:videoDeviceInput])
         {
@@ -465,6 +562,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         }
         
         [[self session] commitConfiguration];
+        [self updateOrientation:(UIInterfaceOrientation)[UIApplication sharedApplication].statusBarOrientation];
     });
 }
 

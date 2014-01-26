@@ -146,6 +146,16 @@
 		08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
 		08B958AB1891685300BCCF8C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
 		08CD317E188A959F00B0CBF7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
+		08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
+		08D03F7E18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
+		08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */; };
+		08D03F821894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */; };
+		08D03F8418944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */; };
+		08D03F8518944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */; };
+		08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
+		08D03F89189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
+		08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */; };
+		08D03F8D1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */; };
 		08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
 		08DF22FE18926E3900912657 /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
 		08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22F918926E3900912657 /* HMSimpleVideoView.m */; };
@@ -345,6 +355,15 @@
 		08B958A81891685300BCCF8C /* Story+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Story+Logic.h"; sourceTree = "<group>"; };
 		08B958A91891685300BCCF8C /* Story+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Story+Logic.m"; sourceTree = "<group>"; };
 		08B958AC18917CE000BCCF8C /* HMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderDelegate.h; sourceTree = "<group>"; };
+		08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMServer+ReachabilityMonitor.h"; path = "Networking/HMServer+ReachabilityMonitor.h"; sourceTree = "<group>"; };
+		08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMServer+ReachabilityMonitor.m"; path = "Networking/HMServer+ReachabilityMonitor.m"; sourceTree = "<group>"; };
+		08D03F7F1894295F00DEBDBC /* HMSimpleDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleDataViewController.h; sourceTree = "<group>"; };
+		08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSimpleDataViewController.m; sourceTree = "<group>"; };
+		08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderBigVideoPlayerView.xib; sourceTree = "<group>"; };
+		08D03F86189450B800DEBDBC /* HMRecorderPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderPreviewViewController.h; sourceTree = "<group>"; };
+		08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderPreviewViewController.m; sourceTree = "<group>"; };
+		08D03F8A1894557900DEBDBC /* HMExperimentalNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMExperimentalNavigationViewController.h; sourceTree = "<group>"; };
+		08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMExperimentalNavigationViewController.m; sourceTree = "<group>"; };
 		08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMMeVideoPlayer.xib; sourceTree = "<group>"; };
 		08DF22F718926E3900912657 /* HMSimpleVideoPlayerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerProtocol.h; sourceTree = "<group>"; };
 		08DF22F818926E3900912657 /* HMSimpleVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoView.h; sourceTree = "<group>"; };
@@ -550,6 +569,8 @@
 				081237941882CB6100DA5D23 /* ServerCFG.plist */,
 				081237D11882DA3D00DA5D23 /* HMServer.h */,
 				081237D21882DA3D00DA5D23 /* HMServer.m */,
+				08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */,
+				08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */,
 				0863D0AA1889CE2900B551FC /* S3 */,
 				086D94A5188702130086C565 /* LazyLoading */,
 				086D9498188701EA0086C565 /* WebService */,
@@ -677,6 +698,9 @@
 				084E532D1891D84800D96258 /* HMRecorderEditTextsViewController.m */,
 				084E53331891E6C100D96258 /* HMRecorderEditingTextCell.h */,
 				084E53341891E6C100D96258 /* HMRecorderEditingTextCell.m */,
+				08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */,
+				08D03F86189450B800DEBDBC /* HMRecorderPreviewViewController.h */,
+				08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */,
 			);
 			path = "User Controls";
 			sourceTree = "<group>";
@@ -768,8 +792,12 @@
 			isa = PBXGroup;
 			children = (
 				0884566118848D0E00B94267 /* ExperimentalStoryboard.storyboard */,
+				08D03F8A1894557900DEBDBC /* HMExperimentalNavigationViewController.h */,
+				08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */,
 				08845671188494D300B94267 /* HMTestSliceViewController.h */,
 				08845672188494D300B94267 /* HMTestSliceViewController.m */,
+				08D03F7F1894295F00DEBDBC /* HMSimpleDataViewController.h */,
+				08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */,
 			);
 			path = Experimental;
 			sourceTree = "<group>";
@@ -876,13 +904,13 @@
 		08DF23051892704300912657 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				08DF231F1892704300912657 /* Storyboard.storyboard */,
 				08DF23061892704300912657 /* HMStartViewController.h */,
 				08DF23071892704300912657 /* HMStartViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
 				08DF230A1892704300912657 /* Me */,
 				08DF23151892704300912657 /* Stories */,
-				08DF231F1892704300912657 /* Storyboard.storyboard */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1048,6 +1076,7 @@
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
+				08D03F8418944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
@@ -1066,6 +1095,7 @@
 				08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				084560001890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
+				08D03F8518944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				08DF22FE18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				08DF230418926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
@@ -1121,6 +1151,7 @@
 				08B958A2189167D800BCCF8C /* User+Logic.m in Sources */,
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
+				08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */,
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08DF232A1892704300912657 /* CustomSubviewController.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
@@ -1129,6 +1160,7 @@
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,
 				0845600D1890537C0040504D /* HMServer+Footages.m in Sources */,
 				08DF23221892704300912657 /* HMTabBarController.m in Sources */,
+				08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				08DF23281892704300912657 /* HMUserRemakesViewController.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
@@ -1159,11 +1191,13 @@
 				08B958791891477F00BCCF8C /* User.m in Sources */,
 				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
 				08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */,
+				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
 				08ACB7C7188C99D500C0EE27 /* Text.m in Sources */,
 				08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */,
 				08DF23301892704300912657 /* HMStoriesViewController.m in Sources */,
+				08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
 				084560051890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
@@ -1210,7 +1244,9 @@
 				084E533A189209D700D96258 /* HMServer+Texts.m in Sources */,
 				08DF23251892704300912657 /* HMGMeTabVC.m in Sources */,
 				08ACB7CC188C99D500C0EE27 /* Footage.m in Sources */,
+				08D03F7E18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08ACB7C8188C99D500C0EE27 /* Text.m in Sources */,
+				08D03F8D1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */,
 				084E53321891E3D100D96258 /* HMSceneCell.m in Sources */,
 				086D93D01886C8BB0086C565 /* HMParser.m in Sources */,
@@ -1240,6 +1276,7 @@
 				08B958A3189167D800BCCF8C /* User+Logic.m in Sources */,
 				08ACB7B4188C6B9500C0EE27 /* HMFontButton.m in Sources */,
 				0840FF7B1885351800A6EF5E /* MyManagedDocument.m in Sources */,
+				08D03F821894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */,
 				08B9589F189167C700BCCF8C /* Scene+Logic.m in Sources */,
 				086D94461886E2CD0086C565 /* HMRemakesParser.m in Sources */,
 				08B9586B1891377400BCCF8C /* NSString+Utilities.m in Sources */,
@@ -1266,6 +1303,7 @@
 				08455FFC1890458E0040504D /* HMRecorderViewController.m in Sources */,
 				08B9588B1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				08DF230018926E3900912657 /* HMSimpleVideoView.m in Sources */,
+				08D03F89189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				08DF230218926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
 				08B958911891678600BCCF8C /* Text+Factory.m in Sources */,
 				0806FB35188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,

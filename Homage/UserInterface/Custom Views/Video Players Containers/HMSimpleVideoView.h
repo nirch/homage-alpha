@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiStopButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiPlayPauseButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiFullScreenButton;
+@property (weak, nonatomic) IBOutlet UISlider *guiVideoSlider;
 
 @end

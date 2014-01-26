@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#import <AFNetworking/AFNetworking.h>
+
 @class HMParser;
 
 #define ERROR_DOMAIN_NETWORK @"Network error"
@@ -23,6 +25,9 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 
 +(HMServer *)sharedInstance;
 +(HMServer *)sh;
+
+// HTTP session manager
+@property (strong, nonatomic, readonly) AFHTTPSessionManager *session;
 
 #pragma mark - URL named
 -(NSString *)relativeURLNamed:(NSString *)urlName;

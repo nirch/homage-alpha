@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HMSimpleVideoViewController">
+            <connections>
+                <outlet property="view" destination="5wC-KB-stK" id="eGV-r8-Ase"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="5wC-KB-stK" userLabel="Scene original take container" customClass="HMSimpleVideoView">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" id="qFW-fO-RJM" userLabel="Video container">
+                    <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jZZ-zJ-ecy" userLabel="Thumb Image View">
+                            <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLAY YOUR TAKE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yb2-id-Aox">
+                    <rect key="frame" x="0.0" y="45" width="569" height="35"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="28"/>
+                    <color key="textColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                    <size key="shadowOffset" width="1" height="1"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="MTk-GS-j3R">
+                    <rect key="frame" x="274" y="145" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <color key="color" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gbO-qV-T5c" userLabel="Toggle controls button">
+                    <rect key="frame" x="0.0" y="0.0" width="568" height="319"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onPressedToggleControls:" destination="-1" eventType="touchUpInside" id="Fhn-dR-nzp"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="1VP-qM-2Xi" userLabel="BIG Play Button">
+                    <rect key="frame" x="0.0" y="1" width="568" height="319"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="10"/>
+                    <state key="normal" image="iconPlayButton">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="guiPressedPlayButton:" destination="-1" eventType="touchUpInside" id="0hO-ez-qI9"/>
+                    </connections>
+                </button>
+                <view hidden="YES" alpha="0.5" contentMode="scaleToFill" id="J4D-P6-mzT" userLabel="Controls Container">
+                    <rect key="frame" x="0.0" y="275" width="568" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="q9x-qU-3tf" userLabel="Button - Stop">
+                            <rect key="frame" x="0.0" y="1" width="44" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" image="iconSmallPlayerStop">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="onPressedStopButton:" destination="-1" eventType="touchUpInside" id="u87-DH-I7R"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BLU-xa-ar7" userLabel="Button - Pause/Play">
+                            <rect key="frame" x="262" y="1" width="44" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" image="iconSmallPlayerPlay">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="iconSmallPlayerPause"/>
+                            <connections>
+                                <action selector="onPressedPausePlayButton:" destination="-1" eventType="touchUpInside" id="CH1-h4-nmY"/>
+                            </connections>
+                        </button>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" id="n57-u5-r4k">
+                            <rect key="frame" x="312" y="5" width="238" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="minimumTrackTintColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="maximumTrackTintColor" red="0.0" green="0.0" blue="0.0" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onMovedSlider:" destination="-1" eventType="valueChanged" id="nVO-q2-Y35"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <connections>
+                <outlet property="guiControlsContainer" destination="J4D-P6-mzT" id="6ep-Bk-dhQ"/>
+                <outlet property="guiLoadActivity" destination="MTk-GS-j3R" id="lX7-Kh-F1R"/>
+                <outlet property="guiPlayButton" destination="1VP-qM-2Xi" id="QNG-KF-tHL"/>
+                <outlet property="guiPlayPauseButton" destination="BLU-xa-ar7" id="78C-01-4Gl"/>
+                <outlet property="guiStopButton" destination="q9x-qU-3tf" id="rgW-Pa-Jct"/>
+                <outlet property="guiVideoContainer" destination="qFW-fO-RJM" id="bcK-js-YO9"/>
+                <outlet property="guiVideoLabel" destination="yb2-id-Aox" id="Ane-pC-Q3u"/>
+                <outlet property="guiVideoSlider" destination="n57-u5-r4k" id="Ql0-y2-uMa"/>
+                <outlet property="guiVideoThumb" destination="jZZ-zJ-ecy" id="okL-vN-qg5"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="iconPlayButton" width="35" height="41"/>
+        <image name="iconSmallPlayerPause" width="10" height="19"/>
+        <image name="iconSmallPlayerPlay" width="19" height="19"/>
+        <image name="iconSmallPlayerStop" width="19" height="19"/>
+    </resources>
+</document>

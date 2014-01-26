@@ -14,7 +14,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiSceneLockedIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *guiSceneRetakeIcon;
 @property (weak, nonatomic) IBOutlet UILabel *guiSceneTimeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *guiRowIndicatorImage;
+@property (weak, nonatomic) IBOutlet UIButton *guiSelectRowButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiRetakeSceneButton;
 
 @property (nonatomic) HMFootageReadyState readyState;
+@property (nonatomic) UIDynamicAnimator *animator;
 
 @end

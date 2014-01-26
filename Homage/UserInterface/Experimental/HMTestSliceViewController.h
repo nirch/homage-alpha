@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
 @property (weak, nonatomic) IBOutlet AWPieSliceView *guiSlice;
 @property (weak, nonatomic) IBOutlet UISlider *guiSlider;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiStartActivity;
+@property (weak, nonatomic) IBOutlet UIButton *guiStartButton;
 
 @end

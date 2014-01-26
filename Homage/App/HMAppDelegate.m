@@ -7,11 +7,13 @@
 //
 
 #import "HMAppDelegate.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @implementation HMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [HMServer.sh startMonitoringReachability];
     return YES;
 }
 
