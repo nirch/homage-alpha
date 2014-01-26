@@ -52,7 +52,8 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 @property (nonatomic, readonly) UIView *movieTempFullscreenBackgroundView;
 @property (nonatomic, readonly) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
-@property (atomic) BOOL videoLabelToBeHidden;
+@property (nonatomic, readonly) BOOL shouldDisplayVideoLabel; // YES by default
+@property (nonatomic, readonly) NSDate *timePressedPlay;
 
 @end
 
@@ -292,7 +293,9 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     if (self.isFullscreen) {
         [self setFullScreen:NO animated:YES];
     }
-    if (!self.videoLabelToBeHidden)  self.videoView.guiVideoLabel.hidden = NO;   
+
+    if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.hidden = NO;
+    
     self.videoView.guiPlayButton.hidden = NO;
     self.videoView.guiLoadActivity.alpha = 1;
     self.videoView.guiControlsContainer.hidden = YES;
@@ -315,8 +318,29 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)hideVideoLabel
 {
-    [self.videoView.guiVideoLabel setHidden:YES];
-    self.videoLabelToBeHidden = YES;
+    [self hideVideoLabelAnimated:NO];
+}
+
+-(void)hideVideoLabelAnimated:(BOOL)animated
+{
+    _shouldDisplayVideoLabel = NO;
+    
+    if (!animated) {
+        self.videoView.guiVideoLabel.hidden = YES;
+        return;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.videoView.guiVideoLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.videoView.guiVideoLabel.alpha = 0;
+        self.videoView.guiVideoLabel.hidden = YES;
+    }];
+}
+
+-(void)showVideoLabel
+{
+    [self showVideoLabelAnimated:NO];
 }
 
 -(void)showVideoLabelAnimated:(BOOL)animated
@@ -352,11 +376,61 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)setFullScreen
 {
-    if (!self.videoPlayer.isFullscreen)
-    {
-        self.videoPlayer.controlStyle = MPMovieControlStyleFullscreen;
-        [self.videoPlayer setFullscreen:YES animated:YES];
-        [self.videoPlayer setScalingMode:MPMovieScalingModeAspectFit];
+    [self setFullScreen:YES animated:YES];
+}
+
+- (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated {
+    _isFullscreen = fullscreen;
+    CGFloat fullscreenAnimationDuration = 0.4;
+    if (fullscreen) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerWillEnterFullscreenNotification object:nil];
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if (!keyWindow) {
+            keyWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+        }
+        if (CGRectEqualToRect(self.movieTempFullscreenBackgroundView.frame, CGRectZero)) {
+            [self.movieTempFullscreenBackgroundView setFrame:keyWindow.bounds];
+        }
+        [keyWindow addSubview:self.movieTempFullscreenBackgroundView];
+        
+        self.movieTempFullscreenBackgroundView.alpha = 0.f;
+        [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.view.alpha = 0.f;
+            self.movieTempFullscreenBackgroundView.alpha = 1.f;
+        } completion:^(BOOL finished) {
+            [self.movieTempFullscreenBackgroundView addSubview:self.view];
+            UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+            [self rotateMoviePlayerForOrientation:currentOrientation animated:NO completion:^{
+                [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+                    self.view.alpha = 1.f;
+                } completion:^(BOOL finished) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerDidEnterFullscreenNotification object:nil];
+//                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationWillChange:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+
+                    self.videoView.frame = self.movieTempFullscreenBackgroundView.bounds;
+                    self.videoView.guiVideoContainer.frame = self.videoView.bounds;
+                    self.videoPlayer.view.frame = self.movieTempFullscreenBackgroundView.bounds;
+
+                
+                }];
+            }];
+        }];
+        
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerWillExitFullscreenNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+        [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.view.alpha = 0;
+            self.movieTempFullscreenBackgroundView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self moviePlayerWillMoveFromWindow];
+            [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+                self.view.alpha = 1;
+            } completion:^(BOOL finished) {
+                [self.movieTempFullscreenBackgroundView removeFromSuperview];
+                [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerDidExitFullscreenNotification object:nil];
+            }];
+        }];
     }
 }
 
