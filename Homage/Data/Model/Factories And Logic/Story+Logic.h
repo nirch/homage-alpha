@@ -43,4 +43,21 @@
 */
 -(Scene *)findSceneWithID:(NSNumber *)sID;
 
+///
+/**
+*  Returns YES to "selfie" type stories (selfie=@YES)
+*   NO otherwise
+*
+*  @return BOOL value indicating if the story is of the selfie type
+*/
+-(BOOL)isASelfie;
+
+///
+/**
+*  Returns YES to "director" type stories (selfie=@NO)
+*
+*  @return BOOL value indicating if the story is of the director type
+*/
+-(BOOL)isADirector;
+
 @end

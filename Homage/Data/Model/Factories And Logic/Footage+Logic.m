@@ -19,7 +19,7 @@
 
 -(NSString *)generateNewRawFileName
 {
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@_%d.mp4", self.remake.sID, self.sceneID, (NSInteger)[[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@_%ld.mp4", self.remake.sID, self.sceneID, (long)[[NSDate date] timeIntervalSince1970]];
     return fileName;
 }
 

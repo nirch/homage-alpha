@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-@protocol HMSimpleVideoPlayerProtocol <NSObject>
+@protocol HMSimpleVideoPlayerDelegate <NSObject>
 
 @optional
--(void)videoPlayerHitStopButton;
--(void)videoPlayerHitPlayButton;
--(void)videoExitFullScreen;
+-(void)videoPlayerDidStop;
+-(void)videoPlayerWillPlay;
+-(void)videoPlayerDidExitFullScreen;
 
 @end

@@ -56,8 +56,12 @@
     
     
     // Parse the scenes of this story.
-    for (NSDictionary *sceneInfo in info[@"scenes"])
-        [self parseSceneWithInfo:sceneInfo forStory:story];
+    BOOL allScenesAreSelfie = YES;
+    for (NSDictionary *sceneInfo in info[@"scenes"]) {
+        Scene *scene = [self parseSceneWithInfo:sceneInfo forStory:story];
+        if (scene.isSelfie.boolValue) allScenesAreSelfie = NO;
+    }
+    story.isSelfie = allScenesAreSelfie ? @YES : @NO;
     
     // Parse the texts of this story.
     for (NSDictionary *textInfo in info[@"texts"])
@@ -67,7 +71,7 @@
     HMGLogDebug(@"Parsed story '%@' scenes:%d texts:%d", story.name, story.scenes.count, story.texts.count);
 }
 
--(void)parseSceneWithInfo:(NSDictionary *)info forStory:(Story *)story
+-(Scene *)parseSceneWithInfo:(NSDictionary *)info forStory:(Story *)story
 {
     /**
     {
@@ -98,6 +102,8 @@
     scene.silhouetteURL =           [info stringForKey:@"silhouette"];
     
     scene.isSelfie =                [info boolNumberForKey:@"selfie"];
+    
+    return scene;
 }
 
 -(void)parseTextWithInfo:(NSDictionary *)info forStory:(Story *)story

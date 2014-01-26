@@ -44,5 +44,14 @@
     return texts;
 }
 
+-(BOOL)isADirector
+{
+    return !self.isASelfie;
+}
+
+-(BOOL)isASelfie
+{
+    return self.isSelfie.boolValue;
+}
 
 @end

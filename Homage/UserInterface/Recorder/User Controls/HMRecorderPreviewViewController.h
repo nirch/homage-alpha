@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import "HMSimpleVideoPlayerProtocol.h"
+#import "HMSimpleVideoPlayerDelegate.h"
 
 @class Footage;
 
 @interface HMRecorderPreviewViewController : UIViewController<
-    HMSimpleVideoPlayerProtocol
+    HMSimpleVideoPlayerDelegate
 >
 
 @property (nonatomic) Footage *footage;

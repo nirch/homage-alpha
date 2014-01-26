@@ -7,7 +7,8 @@
 //
 
 #import "HMSimpleVideoView.h"
-#import "HMSimpleVideoPlayerProtocol.h"
+#import "HMSimpleVideoPlayerDelegate.h"
+
 
 @interface HMSimpleVideoViewController : UIViewController
 
@@ -42,7 +43,7 @@
 /**
  *  delegate of HMSimpleVideoViewController
  */
-@property id<HMSimpleVideoPlayerProtocol> delegate;
+@property id<HMSimpleVideoPlayerDelegate> delegate;
 
 
 ///

@@ -203,5 +203,10 @@
     [HMServer.sh createRemakeForStoryWithID:story.sID forUserID:User.current.userID];
 }
 
+- (IBAction)onPressedDebug:(id)sender {
+    for (Story *story in self.stories) {
+        NSLog(@"story %@, %@", story.isSelfie?@"YES":@"NOPE", story.name);
+    }
+}
 
 @end
