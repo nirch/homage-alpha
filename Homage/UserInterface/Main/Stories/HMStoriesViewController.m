@@ -283,6 +283,13 @@
     cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
     cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
     
+    //TODO: adjust icons according to level of difficulty and selfi/director mode  
+    cell.guiLevelOfDifficulty.image = [UIImage imageNamed:@"circle"];
+    cell.guiShotMode.image = [UIImage imageNamed:@"circle"];
+    NSUInteger remakesNum = [story.remakes count];
+    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%d" , remakesNum];
+    
+    
 //    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 

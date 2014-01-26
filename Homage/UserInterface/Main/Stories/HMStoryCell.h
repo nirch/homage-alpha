@@ -12,6 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet  HMFontLabel *guiStoryNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
+@property (weak, nonatomic) IBOutlet UIImageView *guiLevelOfDifficulty;
 
+@property (weak, nonatomic) IBOutlet UIImageView *guiShotMode;
+@property (weak, nonatomic) IBOutlet UILabel *guiNumOfRemakes;
 
 @end
