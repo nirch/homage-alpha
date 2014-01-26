@@ -15,10 +15,10 @@
 #import "HMFontLabel.h"
 #import <InAppSettingsKit/IASKAppSettingsViewController.h>
 #import "HMSimpleVideoViewController.h"
-#import "HMSimpleVideoPlayerProtocol.h"
+#import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 
-@interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerProtocol>
+@interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
 @property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 @property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
@@ -484,7 +484,7 @@
     }
 }
 
--(void)videoPlayerHitStopButton
+-(void)videoPlayerDidStop
 {
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:cell];

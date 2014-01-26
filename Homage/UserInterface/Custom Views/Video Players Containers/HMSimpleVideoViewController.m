@@ -43,8 +43,6 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 }
 
 @end
-
-
 @interface HMSimpleVideoViewController ()
 
 @property (nonatomic, readonly) BOOL isFullscreen;
@@ -176,7 +174,9 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 -(void)onMoviePlayerDidExitFullscreen:(NSNotification *)notification
 {
     self.videoPlayer.controlStyle = MPMovieControlStyleNone;
-    if (self.delegate) [self.delegate videoExitFullScreen];
+    if ([self.delegate respondsToSelector:@selector(videoPlayerDidExitFullScreen)]) {
+        [self.delegate videoPlayerDidExitFullScreen];
+    }
 }
 
 -(void)_startToPlayTheActualVideo
@@ -277,19 +277,17 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     _timePressedPlay = [NSDate date];
     self.waitingToStartPlayingTheFile = YES;
     NSURL *url = [NSURL URLWithString:self.videoURL];
-    
     HMGLogDebug(@"Trying to play video at:%@", url);
-    
     if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     [self.videoPlayer prepareToPlay];
-    if (self.delegate) [self.delegate videoPlayerHitPlayButton];
+    if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
 }
 
 -(void)done
 {
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
-    if (self.delegate) [self.delegate videoPlayerHitStopButton];
+    if (self.delegate) [self.delegate videoPlayerDidStop];
     if (self.isFullscreen) {
         [self setFullScreen:NO animated:YES];
     }

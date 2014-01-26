@@ -17,7 +17,7 @@
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerProtocol>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
@@ -304,7 +304,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     
 }
 
--(void)videoPlayerHitStopButton
+-(void)videoPlayerDidStop
 {
     if ([self.storyMoviePlayer isInAction])
     {
@@ -315,7 +315,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     }
 }
 
--(void)videoExitFullScreen
+-(void)videoPlayerDidExitFullScreen
 {
     if ([self.storyMoviePlayer isInAction])
     {
@@ -326,7 +326,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     }
 }
 
--(void)videoPlayerHitPlayButton
+-(void)videoPlayerWillPlay
 {
     if ([self.storyMoviePlayer isInAction])
     {
