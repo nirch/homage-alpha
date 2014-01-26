@@ -26,9 +26,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.guiProgressBar.duration = 30;
-    [self.guiProgressBar start];
+    self.guiProgressBarView.delegate = self;
+    [self initGUI];
+    self.guiProgressBarView.duration = 5;
+    [self.guiProgressBarView start];
 	// Do any additional setup after loading the view.
+}
+
+-(void)initGUI
+{
+    UIColor *homageColor = [UIColor colorWithRed:255 green:125 blue:95 alpha:1];
+    [self.view sendSubviewToBack:self.guiDoneRenderingView];
+    [self.view addSubview:self.guiInProgressView];
+    self.guiInProgressLabel.textColor = homageColor;
+    self.guiDoneLabel.textColor = homageColor;
+    self.guiProgressBar.backgroundColor = homageColor;
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,8 +59,19 @@
 }
 -(void)timeProgressDidFinishAfterDuration:(NSTimeInterval)duration
 {
-     
+    [UIView transitionFromView:self.guiInProgressView
+                        toView:self.guiDoneRenderingView
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    completion:^(BOOL finished){
+                        [self.guiInProgressView removeFromSuperview];
+                    }];
+}
+
+- (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
+    //TODO: go to me tab
     
 }
+
 
 @end

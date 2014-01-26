@@ -287,7 +287,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 {
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
-    if (self.delegate) [self.delegate videoPlayerDidStop];
+    if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop)]) [self.delegate videoPlayerDidStop];
     if (self.isFullscreen) {
         [self setFullScreen:NO animated:YES];
     }

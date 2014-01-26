@@ -322,7 +322,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
         //do nothing.
     } else if ([self.remakeVideoPlayer isInAction])
     {
-        [self closeRemakeVideoPlayer];
+        [self.remakeVideoPlayer done];
     }
 }
 
@@ -356,6 +356,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     self.guiRemakeButton.enabled = NO;
     [self.guiRemakeActivity startAnimating];
     [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+    [self.storyMoviePlayer done];
 }
 
 

@@ -133,7 +133,7 @@
                                 </connections>
                             </button>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="HkM-dd-oCy">
-                                <rect key="frame" x="0.0" y="47" width="320" height="474"/>
+                                <rect key="frame" x="0.0" y="47" width="320" height="340"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Krx-vD-xcq">
                                     <size key="itemSize" width="320" height="219"/>
@@ -213,86 +213,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oP2-ed-tvA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2121" y="-93"/>
-        </scene>
-        <!--Table View Controller - Stories-->
-        <scene sceneID="epo-Yb-jM8">
-            <objects>
-                <tableViewController id="hCF-YO-Gvi" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xhn-DM-UfQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <inset key="contentInset" minX="0.0" minY="3" maxX="0.0" maxY="0.0"/>
-                        <inset key="scrollIndicatorInsets" minX="0.0" minY="3" maxX="0.0" maxY="0.0"/>
-                        <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" rowHeight="148" id="ijo-Fy-eBa" customClass="HMStoryCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="148"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ijo-Fy-eBa" id="jd3-Uz-gSj">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="148"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.19999999999999968" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyFilmCell" id="xdo-hF-4Wg">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="139"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </imageView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="BNB-7C-pz7" userLabel="Video Thumb Image">
-                                            <rect key="frame" x="15" y="0.0" width="290" height="139"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reel" id="bGZ-ZT-3iV" userLabel="reel Image View left">
-                                            <rect key="frame" x="0.0" y="0.0" width="16" height="149"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reel" id="2ka-Kh-dga" userLabel="reel Image View right">
-                                            <rect key="frame" x="304" y="0.0" width="16" height="149"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reelBottom" id="XTD-V9-IoR" userLabel="reel image View bottom">
-                                            <rect key="frame" x="15" y="139" width="290" height="11"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <view contentMode="scaleToFill" id="6as-Tr-BKT" userLabel="Label BG">
-                                            <rect key="frame" x="20" y="105" width="167" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ahq-XY-0K0" userLabel="Name - Label">
-                                                    <rect key="frame" x="11" y="2" width="145" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="guiStoryNameLabel" destination="ahq-XY-0K0" id="jq6-pa-0x4"/>
-                                    <outlet property="guiThumbImage" destination="BNB-7C-pz7" id="FMH-ph-RbZ"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="hCF-YO-Gvi" id="pXg-Uz-wQB"/>
-                            <outlet property="delegate" destination="hCF-YO-Gvi" id="N37-cQ-aFj"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Stories" id="Lxk-y5-6S0"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="vCv-fj-1aY">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <attributedString key="attributedTitle"/>
-                    </refreshControl>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Xla-FU-DLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3004" y="-99"/>
         </scene>
         <!--Story Details View Controller - Story-->
         <scene sceneID="xPY-3F-Ud8">
@@ -601,50 +521,76 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="2Qy-9m-bN4">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            <view contentMode="scaleToFill" id="xyw-kW-kKx" userLabel="inProgressView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="ec0-pW-kcw" customClass="AWTimeProgressView">
-                                <rect key="frame" x="0.0" y="20" width="320" height="29"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="YEw-Vf-gtE">
-                                        <rect key="frame" x="0.0" y="0.0" width="31" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.06587612323" blue="0.036397943770000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <view contentMode="scaleToFill" id="ec0-pW-kcw" customClass="AWTimeProgressView">
+                                        <rect key="frame" x="0.0" y="37" width="320" height="11"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="YEw-Vf-gtE">
+                                                <rect key="frame" x="0.0" y="0.0" width="21" height="10"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" red="1" green="0.06587612323" blue="0.036397943770000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rendering movie: &lt;movie name>" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMFontLabel">
+                                        <rect key="frame" x="4" y="1" width="316" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rendering...." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY">
-                                <rect key="frame" x="5" y="0.0" width="92" height="21"/>
+                            <view contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done! click here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwU-c8-CZT" customClass="HMFontLabel">
+                                        <rect key="frame" x="12" y="14" width="299" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="7fQ-KD-TVx" appends="YES" id="6TY-Ef-cGu"/>
+                                </connections>
+                            </view>
                         </subviews>
                     </view>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="guiLabel" destination="ZP7-sA-lhY" id="3Nu-95-kYG"/>
-                        <outlet property="guiProgressBar" destination="ec0-pW-kcw" id="8aF-Hg-aPx"/>
+                        <outlet property="guiDoneLabel" destination="VwU-c8-CZT" id="uqe-Ss-9XG"/>
+                        <outlet property="guiDoneRenderingView" destination="rrX-ch-KhL" id="c8O-Mc-ocK"/>
+                        <outlet property="guiInProgressLabel" destination="ZP7-sA-lhY" id="3iX-yY-y3l"/>
+                        <outlet property="guiInProgressView" destination="xyw-kW-kKx" id="PKZ-ab-8M3"/>
+                        <outlet property="guiProgressBar" destination="YEw-Vf-gtE" id="8Em-oe-wI2"/>
+                        <outlet property="guiProgressBarView" destination="ec0-pW-kcw" id="XUR-2m-UwS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gw6-Oi-3sg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="7fQ-KD-TVx">
+                    <connections>
+                        <action selector="movieDoneTapped:" destination="Zaz-2j-rCE" id="FqM-ti-9aL"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="166" y="798"/>
         </scene>
     </scenes>
     <resources>
         <image name="background" width="452" height="447"/>
-        <image name="emptyFilmCell" width="145" height="65"/>
         <image name="logo" width="118" height="48"/>
         <image name="reamke" width="26" height="22"/>
-        <image name="reel" width="16" height="150"/>
-        <image name="reelBottom" width="290" height="11"/>
         <image name="settings" width="28" height="12"/>
         <image name="share" width="19" height="27"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
