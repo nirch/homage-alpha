@@ -91,17 +91,40 @@
 
 -(void)stop
 {
+    [self stopAnimated:NO];
+}
+
+-(void)stopAnimated:(BOOL)animated
+{
     if (!self.isRunning) return;
     [self.mainTimer invalidate];
+
     NSTimeInterval timePassed = [[NSDate date] timeIntervalSinceDate:self.startingTime];
     [self.delegate timeProgressWasCancelledAfterDuration:timePassed];
     HMGLogDebug(@"delegate: progress stopped after duration:%.02f", timePassed);
-    [self.progressIndicator.layer removeAllAnimations];
-    if (self.hidesAutomatically) {
-        [self hideAnimated:YES cleanUp:YES];
-    } else {
-        [self cleanup];
+    
+    if (!animated) {
+       [self.progressIndicator.layer removeAllAnimations];
+        if (self.hidesAutomatically) {
+            [self hideAnimated:YES cleanUp:YES];
+        } else {
+            [self cleanup];
+        }
+        return;
     }
+    
+    self.progressIndicator.frame = [self.progressIndicator.layer.presentationLayer frame];
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.progressIndicator.frame = self.endFrame;
+    } completion:^(BOOL finished) {
+        [self.progressIndicator.layer removeAllAnimations];
+        if (self.hidesAutomatically) {
+            [self hideAnimated:YES cleanUp:YES];
+        } else {
+            [self cleanup];
+        }
+        return;        
+    }];
 }
 
 -(void)done

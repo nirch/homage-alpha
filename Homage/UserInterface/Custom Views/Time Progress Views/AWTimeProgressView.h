@@ -57,4 +57,13 @@
 */
 -(void)stop;
 
+///
+/**
+ *  Call to stop/cancel the progress before it is finished.
+ *
+ *  @param animated - A boolean value indicating if to animate the bar quickly to it's full state before stopping.
+ *
+ */
+-(void)stopAnimated:(BOOL)animated;
+
 @end
