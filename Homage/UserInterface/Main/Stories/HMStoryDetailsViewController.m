@@ -45,6 +45,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 {
     [self refetchRemakesForStoryID:self.story.sID];
     [self initContent];
+    [self.guiRemakeActivity setHidden:YES];
 }
 
 -(void)initGUI
@@ -95,12 +96,27 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     
 }
 
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self removeObservers];
+    [self.guiRemakeActivity setHidden:YES];
+}
+
 #pragma mark - Observers handlers
 -(void)onRemakeCreation:(NSNotification *)notification
 {
     // Update UI
     self.guiRemakeButton.enabled = YES;
     [self.guiRemakeActivity stopAnimating];
+    [self.guiRemakeActivity setHidden:YES];
     
     // Get the new remake object.
     NSString *remakeID = notification.userInfo[@"remakeID"];
@@ -112,7 +128,9 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     
     // Present the recorder for the newly created remake.
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:^{
+        [self popView:NO];
+    }];
 }
 
 -(void)onRemakesRefetched:(NSNotification *)notification
@@ -225,7 +243,16 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
+    
+    NSPredicate *storyPredicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
+    
+    NSPredicate *notSameUser = [NSPredicate predicateWithFormat:@"user!=%@" , [User current]];
+    
+    NSPredicate *compoundPredicate
+    = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser]];
+    
+    fetchRequest.predicate = compoundPredicate;
+    //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
@@ -359,13 +386,21 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 - (IBAction)onPressedRemakeButton:(UIButton *)sender
 {
     self.guiRemakeButton.enabled = NO;
+    [self.guiRemakeActivity setHidden:NO];
     [self.guiRemakeActivity startAnimating];
     [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     [self.storyMoviePlayer done];
+    //[self popView:NO];
 }
 
 
 - (IBAction)closeButtonPushed:(UIButton *)sender
+{
+    [self popView:YES];
+    
+}
+
+-(void)popView:(BOOL)animated
 {
     [self.navigationController popViewControllerAnimated:YES];
 }

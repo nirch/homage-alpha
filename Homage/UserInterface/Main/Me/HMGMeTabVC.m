@@ -17,6 +17,7 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
+#import "HMColor.h"
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
@@ -70,6 +71,7 @@
     
     self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
     [self.noRemakesLabel setHidden:YES];
+    self.noRemakesLabel.textColor = [HMColor.sh textImpact];
     self.title = NSLocalizedString(@"                              ME_TAB_HEADLINE_TITLE", nil);
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -105,6 +107,14 @@
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
+}
+
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_REMAKES object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -263,6 +273,7 @@
     
     HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:otherRemakeCell];
+    [self removeObservers];
     
 }
 
@@ -396,7 +407,7 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = NO;
+            cell.deleteButton.enabled = YES;
             break;
             
     }
@@ -481,6 +492,12 @@
 
 -(void)videoPlayerDidStop
 {
+    if (self.playingMovieIndex != -1)
+        [self closeCurrentlyPlayingMovie];
+}
+
+-(void)closeCurrentlyPlayingMovie
+{
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:cell];
 }
@@ -553,7 +570,10 @@
 
 - (IBAction)remakeButtonPushed:(UIButton *)button
 {
+    [self closeCurrentlyPlayingMovie];
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogDebug(@"gonna remake story: %@" , remake.story.name);
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
