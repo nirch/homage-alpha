@@ -146,6 +146,12 @@
 		08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
 		08B958AB1891685300BCCF8C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
 		08CD317E188A959F00B0CBF7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
+		08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */; };
+		08CDF8251896D4A200A9D235 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */; };
+		08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */; };
+		08CDF8271896D4A200A9D235 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */; };
+		08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8211896D4A200A9D235 /* HMUploadManager.m */; };
+		08CDF8291896D4A200A9D235 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8211896D4A200A9D235 /* HMUploadManager.m */; };
 		08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
 		08D03F7E18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
 		08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */; };
@@ -360,6 +366,14 @@
 		08B958A81891685300BCCF8C /* Story+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Story+Logic.h"; sourceTree = "<group>"; };
 		08B958A91891685300BCCF8C /* Story+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Story+Logic.m"; sourceTree = "<group>"; };
 		08B958AC18917CE000BCCF8C /* HMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderDelegate.h; sourceTree = "<group>"; };
+		08CDF81C1896D4A200A9D235 /* HMAWS3Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAWS3Client.h; sourceTree = "<group>"; };
+		08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAWS3Client.m; sourceTree = "<group>"; };
+		08CDF81E1896D4A200A9D235 /* HMUploadS3Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadS3Worker.h; sourceTree = "<group>"; };
+		08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadS3Worker.m; sourceTree = "<group>"; };
+		08CDF8201896D4A200A9D235 /* HMUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManager.h; sourceTree = "<group>"; };
+		08CDF8211896D4A200A9D235 /* HMUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadManager.m; sourceTree = "<group>"; };
+		08CDF8221896D4A200A9D235 /* HMUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManagerDelegate.h; sourceTree = "<group>"; };
+		08CDF8231896D4A200A9D235 /* HMUploadWorkerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadWorkerProtocol.h; sourceTree = "<group>"; };
 		08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMServer+ReachabilityMonitor.h"; path = "Networking/HMServer+ReachabilityMonitor.h"; sourceTree = "<group>"; };
 		08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMServer+ReachabilityMonitor.m"; path = "Networking/HMServer+ReachabilityMonitor.m"; sourceTree = "<group>"; };
 		08D03F7F1894295F00DEBDBC /* HMSimpleDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleDataViewController.h; sourceTree = "<group>"; };
@@ -588,7 +602,7 @@
 				081237D21882DA3D00DA5D23 /* HMServer.m */,
 				08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */,
 				08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */,
-				0863D0AA1889CE2900B551FC /* S3 */,
+				08CDF81A1896D4A200A9D235 /* Upload Manager */,
 				086D94A5188702130086C565 /* LazyLoading */,
 				086D9498188701EA0086C565 /* WebService */,
 			);
@@ -729,14 +743,6 @@
 				08455FF61890458E0040504D /* HMRecorderMessagesOverlayViewController.m */,
 			);
 			path = "User Messages";
-			sourceTree = "<group>";
-		};
-		0863D0AA1889CE2900B551FC /* S3 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = S3;
-			path = Networking/S3;
 			sourceTree = "<group>";
 		};
 		086D93C81886C8BB0086C565 /* Parsers */ = {
@@ -902,6 +908,30 @@
 				08B958A1189167D800BCCF8C /* User+Logic.m */,
 			);
 			path = "Factories And Logic";
+			sourceTree = "<group>";
+		};
+		08CDF81A1896D4A200A9D235 /* Upload Manager */ = {
+			isa = PBXGroup;
+			children = (
+				08CDF81B1896D4A200A9D235 /* AWS3Workers */,
+				08CDF8201896D4A200A9D235 /* HMUploadManager.h */,
+				08CDF8211896D4A200A9D235 /* HMUploadManager.m */,
+				08CDF8221896D4A200A9D235 /* HMUploadManagerDelegate.h */,
+				08CDF8231896D4A200A9D235 /* HMUploadWorkerProtocol.h */,
+			);
+			name = "Upload Manager";
+			path = "Networking/Upload Manager";
+			sourceTree = "<group>";
+		};
+		08CDF81B1896D4A200A9D235 /* AWS3Workers */ = {
+			isa = PBXGroup;
+			children = (
+				08CDF81C1896D4A200A9D235 /* HMAWS3Client.h */,
+				08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */,
+				08CDF81E1896D4A200A9D235 /* HMUploadS3Worker.h */,
+				08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */,
+			);
+			path = AWS3Workers;
 			sourceTree = "<group>";
 		};
 		08DF22F518926E3900912657 /* Video Players Containers */ = {
@@ -1088,7 +1118,7 @@
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 56F7YSPHC5;
+						DevelopmentTeam = 3HVGM4BBZC;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1240,6 +1270,7 @@
 				08B958921891678600BCCF8C /* User+Factory.m in Sources */,
 				08B95896189167A000BCCF8C /* Remake+Logic.m in Sources */,
 				084E53311891E3D100D96258 /* HMSceneCell.m in Sources */,
+				08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */,
 				086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */,
 				08B958791891477F00BCCF8C /* User.m in Sources */,
 				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
@@ -1249,6 +1280,7 @@
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
 				08ACB7C7188C99D500C0EE27 /* Text.m in Sources */,
 				08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */,
+				08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
 				08DF23301892704300912657 /* HMStoriesViewController.m in Sources */,
 				08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
@@ -1271,6 +1303,7 @@
 				08ACB7BB188C99D500C0EE27 /* Scene.m in Sources */,
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
+				08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				084E53411892240100D96258 /* HMServer+Render.m in Sources */,
@@ -1286,6 +1319,7 @@
 			files = (
 				08E50ECC188697CE001A8B75 /* HMRoundView.m in Sources */,
 				084560081890458E0040504D /* HMWhileRecordingOverlayViewController.m in Sources */,
+				08CDF8291896D4A200A9D235 /* HMUploadManager.m in Sources */,
 				08455FFA1890458E0040504D /* HMVideoCameraViewController.m in Sources */,
 				08ACB84A188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				084E53361891E6C100D96258 /* HMRecorderEditingTextCell.m in Sources */,
@@ -1293,6 +1327,7 @@
 				08ACB7C0188C99D500C0EE27 /* Story.m in Sources */,
 				08ACB7BC188C99D500C0EE27 /* Scene.m in Sources */,
 				08ACB7AF188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,
+				08CDF8251896D4A200A9D235 /* HMAWS3Client.m in Sources */,
 				0840FF8818853FB400A6EF5E /* HMGLog.m in Sources */,
 				084E533A189209D700D96258 /* HMServer+Texts.m in Sources */,
 				08DF23251892704300912657 /* HMGMeTabVC.m in Sources */,
@@ -1306,6 +1341,7 @@
 				0840FF9618854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				0840FF65188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
 				08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */,
+				08CDF8271896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
 				08DF23291892704300912657 /* HMUserRemakesViewController.m in Sources */,
 				084E533E18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				08DF23271892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
