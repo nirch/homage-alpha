@@ -56,7 +56,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 -(void)initStoryMoviePlayer
 {
     HMSimpleVideoViewController *vc;
-    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guisStoryMovieContainer];
+    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
     [self.storyMoviePlayer hideVideoLabel];
     [self.storyMoviePlayer hideMediaControls];
@@ -293,6 +293,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
     HMSimpleVideoViewController *vc;
     self.remakeVideoPlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:cell.videoPlayerContainer];
+    HMGLogDebug(@"user selected remake with url: %@" , remake.videoURL);
     self.remakeVideoPlayer.delegate = self;
     self.playingRemakeIndex = indexPath.item;
     self.remakeVideoPlayer.videoURL = remake.videoURL;
@@ -322,7 +323,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
         //do nothing.
     } else if ([self.remakeVideoPlayer isInAction])
     {
-        [self closeRemakeVideoPlayer];
+        [self.remakeVideoPlayer done];
     }
 }
 
@@ -356,6 +357,13 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     self.guiRemakeButton.enabled = NO;
     [self.guiRemakeActivity startAnimating];
     [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+    [self.storyMoviePlayer done];
+}
+
+
+- (IBAction)closeButtonPushed:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

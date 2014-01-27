@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
 
 @property (weak, nonatomic) IBOutlet UITextView *guiDescriptionField;
-@property (weak, nonatomic) IBOutlet UIView *guisStoryMovieContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiStoryMovieContainer;
 
 
 @end

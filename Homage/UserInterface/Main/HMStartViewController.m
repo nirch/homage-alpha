@@ -12,10 +12,22 @@
 #import "HMRemakerProtocol.h"
 #import "HMRecorderViewController.h"
 #import "HMServer+Remakes.h"
+#import "HMsideBarNavigatorDelegate.h"
+#import "HMsideBarViewController.h"
+#import "HMFontLabel.h"
+#import "HMColor.h"
+#import "HMRenderingViewController.h"
+#import "HMRenderingViewControllerDelegate.h"
 
-@interface HMStartViewController ()
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *appContainerView;
+@property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
+@property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
+@property (weak,nonatomic) UITabBarController *appTabBarController;
+@property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (atomic, readonly) NSDate *launchDateTime;
+@property (weak, nonatomic) IBOutlet HMFontLabel *guiTabNameLabel;
 
 @end
 
@@ -30,6 +42,7 @@
 
     // Init look
     [self initGUI];
+    [self initObservers];
     
     // Splash screen.
     [self prepareSplashView];
@@ -45,7 +58,21 @@
 
 -(void)initGUI
 {
-    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2"]];
+    //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
+    self.sideBarContainerView.hidden = YES;
+    CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+    self.renderingContainerView.hidden = YES;
+    self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
+}
+
+-(void)initObservers
+{
+    // Observe rendering begining
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onServerStartRendering:)
+                                                       name:HM_NOTIFICATION_SERVER_RENDER
+                                                     object:nil];
 }
 
 #pragma mark - Splash View
@@ -94,6 +121,39 @@
     });
 }
 
+- (IBAction)sideBarButtonPushed:(UIButton *)sender
+{
+    if (self.sideBarContainerView.hidden == YES) {
+        //need to show the sideBar
+        [self showSideBar];
+        
+    } else {
+        //need to hide the side bar
+        [self hideSideBar];
+    }
+}
+
+-(void)showSideBar
+{
+    self.sideBarContainerView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
+        self.appContainerView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
+    } completion:nil];
+
+}
+
+-(void)hideSideBar
+{
+     [UIView animateWithDuration:0.3 animations:^{
+        //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
+        self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        } completion:^(BOOL finished){
+            if (finished) self.sideBarContainerView.hidden = YES;
+        }];
+}
+
 #pragma mark - HMRecorderDelegate Example
 -(void)recorderAsksDismissalWithReaon:(HMRecorderDismissReason)reason
                              remakeID:(NSString *)remakeID
@@ -112,6 +172,22 @@
     [self dismissViewControllerAnimated:YES completion:^{
         // Code here when the dismissal is done.
     }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"appSegue"]) {
+        self.appTabBarController = segue.destinationViewController;
+        self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+    } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
+    {
+        HMsideBarViewController *vc = (HMsideBarViewController *)segue.destinationViewController;
+        vc.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"renderSegue"])
+    {
+        self.renderingVC = segue.destinationViewController;
+        self.renderingVC.delegate = self;
+    }
 }
 
 #pragma mark - Application start
@@ -134,13 +210,13 @@
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
     if (!userName)
     {
-        userName = @"rafi@homage.it";
+        userName = @"yoav@homage.it";
         [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
     }
     User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
-
+    
 ////    [HMServer.sh refetchRemakesForUserID:user.userID];
 //    
 //    for (Remake *remake in User.current.remakes) {
@@ -177,6 +253,90 @@
 {
     return UIInterfaceOrientationMaskPortrait;
 
+}
+
+-(void)storiesButtonPushed
+{
+    HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
+    if (self.appTabBarController.selectedIndex != 0)
+        [self switchToTab:0];
+    [self closeSideBar];
+    
+}
+
+-(void)meButtonPushed
+{
+    HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
+    if (self.appTabBarController.selectedIndex != 1)
+        [self switchToTab:1];
+    [self closeSideBar];
+    
+}
+
+-(void)settingsButtonPushed
+{
+    HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
+    if (self.appTabBarController.selectedIndex != 2)
+        [self switchToTab:2];
+    [self closeSideBar];
+}
+
+-(void)switchToTab:(NSUInteger)toIndex
+{
+    UIView *fromView = self.appTabBarController.selectedViewController.view;
+    UIView *toView = [[self.appTabBarController.viewControllers objectAtIndex:toIndex] view];
+    [UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:^(BOOL finished) {
+        if (finished)
+        {
+            self.appTabBarController.selectedIndex = toIndex;
+            HMGLogDebug(@"label should display %@" , self.appTabBarController.selectedViewController.title);
+            self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+        }
+    }];
+}
+
+-(void)closeSideBar
+{
+    if (self.sideBarContainerView.hidden == NO)
+        [self hideSideBar];
+}
+
+-(void)onServerStartRendering:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *remakeID = info[@"remakeID"];
+    
+    [self.renderingVC renderStartedWithRemakeID:remakeID];
+    [self showRenderingView];
+
+}
+
+-(void)showRenderingView
+{
+    self.renderingContainerView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+    } completion:nil];
+}
+
+-(void)hideRenderingView
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+        //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+    } completion:^(BOOL finished){
+        if (finished)
+        self.renderingContainerView.hidden = YES;
+    }];
+}
+
+- (void)renderDoneClicked
+{
+    //todo: switch to me tab
+    [self switchToTab:1];
+    [self hideRenderingView];
 }
 
 @end

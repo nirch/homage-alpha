@@ -50,6 +50,8 @@
     [self.storiesCV addSubview:tempRefreshControl];
     self.refreshControl = tempRefreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
+    self.title = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+    HMGLogDebug(@"title is: %@" , self.title);
     
     //self.view.backgroundColor = [UIColor clearColor];
     [self.storiesCV setBackgroundColor: [UIColor clearColor]];
@@ -282,6 +284,13 @@
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
     cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
+    
+    //TODO: adjust icons according to level of difficulty and selfi/director mode  
+    cell.guiLevelOfDifficulty.image = [UIImage imageNamed:@"circle"];
+    cell.guiShotMode.image = [UIImage imageNamed:@"circle"];
+    NSUInteger remakesNum = [story.remakes count];
+    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%d" , remakesNum];
+    
     
 //    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
