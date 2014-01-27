@@ -114,7 +114,7 @@
     }
     
     self.progressIndicator.frame = [self.progressIndicator.layer.presentationLayer frame];
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:self.durationForStopWithAnimation delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.progressIndicator.frame = self.endFrame;
     } completion:^(BOOL finished) {
         [self.progressIndicator.layer removeAllAnimations];

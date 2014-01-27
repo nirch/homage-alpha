@@ -16,6 +16,11 @@
 */
 @property NSTimeInterval duration;
 
+///
+/**
+ *  The duration for the animation after calling stopWithAnimation:YES
+ */
+@property NSTimeInterval durationForStopWithAnimation;
 
 ///
 /**
