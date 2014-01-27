@@ -45,6 +45,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 
 // Camera settings
 @property (nonatomic, readonly) NSString *camSettingsSessionPreset;
+@property (nonatomic, readonly) NSString *camSettingsSessionPresetFrontCameraFallback;
 @property (nonatomic, readonly) NSInteger camSettingsPrefferedDevicePosition;
 @property (nonatomic, readonly) NSString *camSettingsPreviewLayerVideoGravity;
 
@@ -57,11 +58,12 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)initCameraSettings
 {
     // Camera
-    _camSettingsSessionPreset               = AVCaptureSessionPreset1280x720;         // Video capture resolution
-    _camSettingsPrefferedDevicePosition     = AVCaptureDevicePositionBack;            // Preffered camera position
+    _camSettingsSessionPreset                       = AVCaptureSessionPreset1280x720;         // Video capture resolution
+    _camSettingsSessionPresetFrontCameraFallback    = AVCaptureSessionPreset640x480;          // If front camera can't show 720p, will try 480p.
+    _camSettingsPrefferedDevicePosition             = AVCaptureDevicePositionBack;            // Preffered camera position
     
     // Preview layer
-    _camSettingsPreviewLayerVideoGravity    = AVLayerVideoGravityResizeAspectFill;    // Video gravity on the preview layer
+    _camSettingsPreviewLayerVideoGravity            = AVLayerVideoGravityResizeAspectFill;    // Video gravity on the preview layer
 }
 
 #pragma mark - View controller life cycle
@@ -95,8 +97,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 //
 -(void)viewDidAppear:(BOOL)animated
 {
-    [self updateOrientation:(UIInterfaceOrientation)[UIDevice currentDevice].orientation]; //[UIApplication sharedApplication].statusBarOrientation
-    
+    [self updateOrientation:(UIInterfaceOrientation)[UIDevice currentDevice].orientation];
 }
 
 //
@@ -289,14 +290,20 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     else if( deviceOrientation == UIDeviceOrientationPortrait)
     result = AVCaptureVideoOrientationLandscapeLeft;
     else result = AVCaptureVideoOrientationLandscapeLeft;
-    
     return result;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [self updateOrientation:toInterfaceOrientation]; // [UIApplication sharedApplication].statusBarOrientation
+
+    [UIView animateWithDuration:duration animations:^{
+        self.previewView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self updateOrientation:toInterfaceOrientation];
+        [UIView animateWithDuration:duration animations:^{
+            self.previewView.alpha = 1;
+        }];
+    }];
 }
 
 -(void)updateOrientation:(UIInterfaceOrientation)orientation
@@ -478,8 +485,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]];
             }
             
+            // Update the orientation on the movie file output video connection before starting recording.
             AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-            connection.videoOrientation = [self avOrientationForDeviceOrientation:[UIApplication sharedApplication].statusBarOrientation];
+            connection.videoOrientation = self.previewLayer.connection.videoOrientation;
             
             // Turning OFF flash for video recording
             [HMVideoCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
@@ -526,7 +534,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         AVCaptureDevice *currentVideoDevice = [[self videoDeviceInput] device];
         AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
         AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
-        
+        //1605
         switch (currentPosition)
         {
             case AVCaptureDevicePositionUnspecified:
@@ -540,12 +548,25 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 break;
         }
         
+        NSError *error;
         AVCaptureDevice *videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:preferredPosition];
-        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
+        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        
+        if (error) {
+            HMGLogError(@">>>>> error");
+        }
         
         [[self session] beginConfiguration];
-
         [[self session] removeInput:[self videoDeviceInput]];
+        
+        self.session.sessionPreset = self.camSettingsSessionPreset;
+        if (videoDevice.position == AVCaptureDevicePositionFront && ![self.session canAddInput:videoDeviceInput]) {
+            // If can't add front camera, it is probably because
+            // it is an old device that doesn't support 720p front camera
+            // change to the fallback preset.
+            self.session.sessionPreset = self.camSettingsSessionPresetFrontCameraFallback;
+        }
+        
         if ([[self session] canAddInput:videoDeviceInput])
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:currentVideoDevice];
@@ -558,6 +579,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         }
         else
         {
+
+            
+            
             [[self session] addInput:[self videoDeviceInput]];
         }
         
@@ -704,12 +728,13 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     // Get a list of devices of the given media type (usually [Back Camera] + [Front Camera])
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
-    AVCaptureDevice *captureDevice = [devices firstObject];
+    AVCaptureDevice *captureDevice = [devices lastObject];
     for (AVCaptureDevice *device in devices)
     {
         if ([device position] == position)
         {
             captureDevice = device;
+            
             break;
         }
     }

@@ -29,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor clearColor];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -135,15 +136,6 @@
 -(void)timeProgressWasCancelledAfterDuration:(NSTimeInterval)duration
 {
 }
-
-// =======================================================================
-// An example of using the timed events feature of the AWTimeProgressView
-//
-//-(void)timeProgressDidEncounterEventIndex:(NSInteger)index afterDuration:(NSTimeInterval)duration
-//{
-//}
-// =======================================================================
-
 
 #pragma mark - IB Actions
 // ===========

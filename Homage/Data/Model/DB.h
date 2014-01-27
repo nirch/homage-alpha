@@ -27,6 +27,15 @@
 #import "Footage+Factory.h"
 #import "Footage+Logic.h"
 
+
+// User info
+#define HM_INFO_REMAKE_ID                           @"remakeID"
+#define HM_INFO_FILE_NAME                           @"fileName"
+#define HM_INFO_SCENE_ID                            @"sceneID"
+#define HM_INFO_DURATION_IN_SECONDS                 @"durationInSeconds"
+#define HM_INFO_REMAKE_ID                           @"remakeID"
+#define HM_INFO_PROGRESS                            @"progress"
+
 @interface DB : NSObject
 
 /* The managed document and managed object context used when buidling the core data stack. */
@@ -45,5 +54,6 @@
 // Helper methods
 -(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 -(id)fetchOrCreateEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
+
 
 @end

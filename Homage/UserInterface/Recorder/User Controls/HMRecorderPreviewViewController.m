@@ -30,6 +30,7 @@
     vc.videoLabelText = LS(@"SHOW YOUR TAKE");
     vc.videoURL = [NSString stringWithFormat:@"file://%@", self.footage.rawLocalFile];
     vc.resetStateWhenVideoEnds = NO;
+    vc.delegate = self;
     [vc extractThumbFromVideo];
     
 }
@@ -44,11 +45,9 @@
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
+-(void)videoPlayerDidStop
 {
-    // TODO: fix this, when camera problems with upside down captures are resolved.
-    return UIInterfaceOrientationMaskLandscape;
+    
 }
-
 
 @end

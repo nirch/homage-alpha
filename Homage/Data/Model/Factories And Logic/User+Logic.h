@@ -30,5 +30,8 @@
 // Mark user as logged out.
 -(void)logoutInContext:(NSManagedObjectContext *)context;
 
+// returns a remake with a given id, but only if it is owned by this user.
+// Otherwise returns 
+-(Remake *)findRemakeByID:(NSString *)remakeID inContext:(NSManagedObjectContext *)context;
 
 @end

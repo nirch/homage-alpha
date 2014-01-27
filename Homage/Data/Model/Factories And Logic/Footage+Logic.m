@@ -43,4 +43,11 @@
     return HMFootageReadyStateStillUnkown;
 }
 
+-(BOOL)needsToStartUpload
+{
+    if (!self.rawVideoS3Key) return NO;
+    if (!self.rawLocalFile) return NO;
+    return [self.newRawLocalFileWaitingForUpload isEqualToNumber:@1];
+}
+
 @end

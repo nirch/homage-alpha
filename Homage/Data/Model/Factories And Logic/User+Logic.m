@@ -68,6 +68,11 @@
     self.isLoggedIn = @NO;
 }
 
-
+-(Remake *)findRemakeByID:(NSString *)remakeID inContext:(NSManagedObjectContext *)context
+{
+    Remake *remake = [Remake findWithID:remakeID inContext:context];
+    if ([remake.user.userID isEqualToString:self.userID]) return remake;
+    return nil;
+}
 
 @end

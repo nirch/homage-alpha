@@ -8,12 +8,25 @@
 
 #import "HMAppDelegate.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "HMUploadManager.h"
+#import "HMUploadS3Worker.h"
 
 @implementation HMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //
+    // Start monitoring reachability.
+    // Observe notification in your UI, if you want to inform the user
+    // about reachability changes.
     [HMServer.sh startMonitoringReachability];
+    
+    // The upload manager with # workers of a specific type.
+    // You can always replace to another implementation of upload workers,
+    // as long as the workers conform to the HMUploadWorkerProtocol.
+    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+    
     return YES;
 }
 

@@ -169,7 +169,7 @@
         self.guiTextMessageLabel.text = info[@"text"];
         [self.guiDismissButton setTitle:info[@"ok button text"] forState:UIControlStateNormal];
         NSString *iconName = info[@"icon name"];
-        self.guiTextMessageIcon.image = [UIImage imageNamed:iconName];
+        self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
         
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         
