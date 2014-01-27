@@ -38,6 +38,7 @@
     if (self) {
         if (self.subviews.count>0) self.progressIndicator = self.subviews[0];
         if (self.subviews.count>1) self.eventIndicatorTemplate = self.subviews[1];
+        self.durationForStopWithAnimation = 0.2f;
     }
     return self;
 }
@@ -123,6 +124,12 @@
         } else {
             [self cleanup];
         }
+        
+        if ([self.delegate respondsToSelector:@selector(timeProgressDidFinishAnimationAfterStop)]) {
+            [self.delegate timeProgressDidFinishAnimationAfterStop];
+        }
+
+        
         return;        
     }];
 }
