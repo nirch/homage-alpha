@@ -2,7 +2,7 @@
 //  Scene.h
 //  Homage
 //
-//  Created by Aviv Wolf on 1/20/14.
+//  Created by Tomer Harry on 1/27/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -23,6 +23,8 @@
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * videoURL;
+@property (nonatomic, retain) NSNumber * focusPointX;
+@property (nonatomic, retain) NSNumber * focusPointY;
 @property (nonatomic, retain) Story *story;
 
 @end

@@ -103,6 +103,9 @@
     
     scene.isSelfie =                [info boolNumberForKey:@"selfie"];
     
+    scene.focusPointX =             [info numberForKey:@"focus_point_x"];
+    scene.focusPointY =             [info numberForKey:@"focus_point_y"];
+    
     return scene;
 }
 

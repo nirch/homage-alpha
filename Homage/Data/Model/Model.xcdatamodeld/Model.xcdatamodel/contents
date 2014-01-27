@@ -26,6 +26,8 @@
     <entity name="Scene" representedClassName="Scene" syncable="YES">
         <attribute name="context" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="focusPointX" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="focusPointY" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="isSelfie" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="script" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sID" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
@@ -71,11 +73,11 @@
         <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Footage" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Remake" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Scene" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Story" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Text" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Footage" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Remake" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="Scene" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="Story" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="Text" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="180"/>
     </elements>
 </model>
