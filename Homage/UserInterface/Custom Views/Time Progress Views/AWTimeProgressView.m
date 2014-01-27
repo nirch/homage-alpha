@@ -38,6 +38,7 @@
     if (self) {
         if (self.subviews.count>0) self.progressIndicator = self.subviews[0];
         if (self.subviews.count>1) self.eventIndicatorTemplate = self.subviews[1];
+        self.durationForStopWithAnimation = 0.2f;
     }
     return self;
 }
@@ -91,17 +92,46 @@
 
 -(void)stop
 {
+    [self stopAnimated:NO];
+}
+
+-(void)stopAnimated:(BOOL)animated
+{
     if (!self.isRunning) return;
     [self.mainTimer invalidate];
+
     NSTimeInterval timePassed = [[NSDate date] timeIntervalSinceDate:self.startingTime];
     [self.delegate timeProgressWasCancelledAfterDuration:timePassed];
     HMGLogDebug(@"delegate: progress stopped after duration:%.02f", timePassed);
-    [self.progressIndicator.layer removeAllAnimations];
-    if (self.hidesAutomatically) {
-        [self hideAnimated:YES cleanUp:YES];
-    } else {
-        [self cleanup];
+    
+    if (!animated) {
+       [self.progressIndicator.layer removeAllAnimations];
+        if (self.hidesAutomatically) {
+            [self hideAnimated:YES cleanUp:YES];
+        } else {
+            [self cleanup];
+        }
+        return;
     }
+    
+    self.progressIndicator.frame = [self.progressIndicator.layer.presentationLayer frame];
+    [UIView animateWithDuration:self.durationForStopWithAnimation delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.progressIndicator.frame = self.endFrame;
+    } completion:^(BOOL finished) {
+        [self.progressIndicator.layer removeAllAnimations];
+        if (self.hidesAutomatically) {
+            [self hideAnimated:YES cleanUp:YES];
+        } else {
+            [self cleanup];
+        }
+        
+        if ([self.delegate respondsToSelector:@selector(timeProgressDidFinishAnimationAfterStop)]) {
+            [self.delegate timeProgressDidFinishAnimationAfterStop];
+        }
+
+        
+        return;        
+    }];
 }
 
 -(void)done

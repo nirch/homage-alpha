@@ -14,6 +14,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMNotificationCenter.h"
 #import "HMRecorderViewController.h"
+#import "HMUploadManager.h"
 
 @interface HMSimpleDataViewController ()
 @property (weak, nonatomic) IBOutlet UIPickerView *guiPickerView;
@@ -203,10 +204,9 @@
     [HMServer.sh createRemakeForStoryWithID:story.sID forUserID:User.current.userID];
 }
 
-- (IBAction)onPressedDebug:(id)sender {
-    for (Story *story in self.stories) {
-        NSLog(@"story %@, %@", story.isSelfie?@"YES":@"NOPE", story.name);
-    }
+- (IBAction)onPressedDebug:(id)sender
+{
+
 }
 
 @end

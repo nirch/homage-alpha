@@ -12,12 +12,16 @@
 
 @interface Footage (Logic)
 
+///
 typedef NS_ENUM(NSInteger, HMFootageStatus) {
     HMFootageStatusStatusOpen,
     HMFootageStatusStatusUploading,
     HMFootageStatusStatusProcessing,
     HMFootageStatusStatusReady
 };
+
+
+
 
 typedef NS_ENUM(NSInteger, HMFootageReadyState) {
     HMFootageReadyStateReadyForFirstRetake,
@@ -54,5 +58,12 @@ typedef NS_ENUM(NSInteger, HMFootageReadyState) {
 *   @return HMFootageReadyState value (ready for first retake, ready for second retake or still locked)
 */
 -(HMFootageReadyState)readyState;
+
+///
+/**
+*   Returns YES if this footage already has a local raw file that needs to be uploaded.
+*   And it is still not uploading / wasn't uploaded.
+*/
+-(BOOL)needsToStartUpload;
 
 @end

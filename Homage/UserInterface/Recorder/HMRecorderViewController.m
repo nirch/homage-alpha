@@ -20,6 +20,7 @@
 #import "HMNotificationCenter.h"
 #import "HMServer+LazyLoading.h"
 #import "HMRecorderEditTextsViewController.h"
+#import "HMUploadManager.h"
 
 // TODO: Temporary. This is for fake footages upload updates.
 // This will be the responsibility of the uploader and not the recorder.
@@ -452,12 +453,10 @@
     Footage *footage = [self.remake footageWithSceneID:sceneID];
     if (footage.rawLocalFile) [footage deleteRawLocalFile];
     footage.rawLocalFile = rawMoviePath;
+    footage.newRawLocalFileWaitingForUpload = @YES;
     [DB.sh save];
+    [HMUploadManager.sh checkForUploadsWithPrioritizedFootages:@[footage]];
 
-    // TODO: Temporary. This is for fake footages upload updates.
-    // This will be the responsibility of the uploader and not the recorder.
-    [HMServer.sh updateFootageForRemakeID:remakeID sceneID:sceneID];
-    
     // Move along to the next state.
     [self advanceState];
 }
@@ -531,7 +530,6 @@
 {
     return UIInterfaceOrientationMaskLandscape;
 }
-
 
 #pragma mark - containment segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -924,13 +922,6 @@
 
 - (IBAction)onPressedDebugButton:(id)sender
 {
-//    for (Footage *footage in self.remake.footagesOrdered) {
-//        [HMServer.sh updateFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
-//    }
-//    Footage *footage = self.remake.footagesOrdered[0];
-//    [HMServer.sh updateFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
-//    
-//    
 }
 
 

@@ -252,6 +252,7 @@
 -(NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
+
 }
 
 -(void)storiesButtonPushed

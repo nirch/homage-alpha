@@ -16,6 +16,11 @@
 */
 @property NSTimeInterval duration;
 
+///
+/**
+ *  The duration for the animation after calling stopWithAnimation:YES
+ */
+@property NSTimeInterval durationForStopWithAnimation;
 
 ///
 /**
@@ -56,5 +61,14 @@
 *  Call to stop/cancel the progress before it is finished.
 */
 -(void)stop;
+
+///
+/**
+ *  Call to stop/cancel the progress before it is finished.
+ *
+ *  @param animated - A boolean value indicating if to animate the bar quickly to it's full state before stopping.
+ *
+ */
+-(void)stopAnimated:(BOOL)animated;
 
 @end

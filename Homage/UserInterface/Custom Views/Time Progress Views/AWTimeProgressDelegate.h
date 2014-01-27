@@ -14,5 +14,6 @@
 
 @optional
 -(void)timeProgressDidEncounterEventIndex:(NSInteger)index afterDuration:(NSTimeInterval)duration;
+-(void)timeProgressDidFinishAnimationAfterStop;
 
 @end

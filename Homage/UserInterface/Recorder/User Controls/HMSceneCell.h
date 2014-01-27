@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiRowIndicatorImage;
 @property (weak, nonatomic) IBOutlet UIButton *guiSelectRowButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiRetakeSceneButton;
+@property (weak, nonatomic) IBOutlet UIProgressView *guiUploadProgressBar;
 
 @property (nonatomic) HMFootageReadyState readyState;
 @property (nonatomic) UIDynamicAnimator *animator;

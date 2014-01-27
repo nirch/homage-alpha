@@ -62,11 +62,12 @@
 
 -(void)chooseSerializerForParser:(HMParser *)parser
 {
-    if (parser) {
-        self.session.responseSerializer = [AFJSONResponseSerializer new];
-    } else {
-        self.session.responseSerializer = [AFHTTPResponseSerializer new];
-    }
+//    if (parser) {
+//        self.session.responseSerializer = [AFJSONResponseSerializer new];
+//    } else {
+//        self.session.responseSerializer = [AFHTTPResponseSerializer new];
+//    }
+    self.session.responseSerializer = [AFJSONResponseSerializer new];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
 }
 
@@ -295,10 +296,7 @@
         // Successful response from server.
         //
         HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURL, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
-        
-        NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"Delete response:%@", string);
-        
+        HMGLogDebug(@"Response:%@", responseObject);
         if (parser) {
             //
             // Parse response.

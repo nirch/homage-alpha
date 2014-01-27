@@ -190,6 +190,12 @@
                      name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                    object:nil];
     
+    // Observe story thumbnail
+    [nc addUniqueObserver:self
+                 selector:@selector(onUploadProgress:)
+                     name:HM_NOTIFICATION_UPLOAD_PROGRESS
+                   object:nil];
+    
     // Observe reachability status changes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onReachabilityStatusChange:)
@@ -314,6 +320,20 @@
 -(void)onReachabilityStatusChange:(NSNotification *)notification
 {
     self.guiReachability.hidden = HMServer.sh.isReachable;
+}
+
+-(void)onUploadProgress:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSNumber *sceneID = info[HM_INFO_SCENE_ID];
+    NSInteger index = self.count - sceneID.integerValue;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    if (![self.guiTableView.indexPathsForVisibleRows containsObject:indexPath]) return;
+    HMSceneCell *cell = (HMSceneCell *)[self.guiTableView cellForRowAtIndexPath:indexPath];
+    double progress = [info[HM_INFO_PROGRESS] doubleValue];
+    cell.guiUploadProgressBar.progress = progress;
+    
+    
 }
 
 #pragma mark - Scene selection
@@ -444,10 +464,10 @@
     // Count down finished. Notify that the camera should start recording.
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_START_RECORDING
                                                         object:self
-                                                      userInfo:@{@"fileName":fileName,
-                                                                 @"remakeID":self.remake.sID,
-                                                                 @"sceneID":footage.sceneID,
-                                                                 @"durationInSeconds":@(footage.relatedScene.durationInSeconds)
+                                                      userInfo:@{HM_INFO_FILE_NAME:fileName,
+                                                                 HM_INFO_REMAKE_ID:self.remake.sID,
+                                                                 HM_INFO_SCENE_ID:footage.sceneID,
+                                                                 HM_INFO_DURATION_IN_SECONDS:@(footage.relatedScene.durationInSeconds)
                                                                  }
      ];
     dispatch_async(dispatch_get_main_queue(), ^{

@@ -52,5 +52,15 @@
  */
 -(BOOL)hasScript;
 
+///
+/**
+ * The point the camera should focus on
+ *
+ *  @return  A CGPoint representation of the point the camera should focus on
+ */
+-(CGPoint)focusCGPoint;
+
+
+
 
 @end

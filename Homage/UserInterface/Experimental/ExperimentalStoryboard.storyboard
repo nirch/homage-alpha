@@ -56,7 +56,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="F5S-TG-Ppo">
-                                <rect key="frame" x="86" y="398" width="149" height="45"/>
+                                <rect key="frame" x="86" y="397" width="149" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Start">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,7 +79,7 @@
                         <outlet property="guiSlider" destination="jge-Ad-RrV" id="ghS-Fv-7Qc"/>
                         <outlet property="guiStartActivity" destination="kde-hh-1i7" id="XNh-iu-buj"/>
                         <outlet property="guiStartButton" destination="F5S-TG-Ppo" id="elG-Tm-fdL"/>
-                        <segue destination="qXN-q0-2hs" kind="push" identifier="start" id="QZZ-rG-g8z"/>
+                        <segue destination="nAz-IL-3nD" kind="push" identifier="start" id="jcm-EJ-HpI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CBg-bD-CGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -91,7 +91,7 @@
             <objects>
                 <viewController id="qXN-q0-2hs" customClass="HMSimpleDataViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nEQ-Qa-xY8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" id="Wpg-oh-Tin">
@@ -180,6 +180,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="gve-F4-j6V"/>
                     <navigationItem key="navigationItem" title="Tests" id="cM4-pt-U2A"/>
                     <connections>
                         <outlet property="guiCreateButton" destination="MC4-S3-NNI" id="NGh-m7-bbQ"/>
@@ -192,7 +193,79 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXO-Yy-Yko" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1170" y="77"/>
+            <point key="canvasLocation" x="1850" y="-421"/>
+        </scene>
+        <!--Uploader Test View Controller - Test Uploader-->
+        <scene sceneID="3EB-cG-Jhc">
+            <objects>
+                <viewController id="T4l-0J-piu" customClass="HMUploaderTestViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yWD-6I-MJ6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8Ki-Yj-Mlj">
+                                <rect key="frame" x="145" y="94" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="test">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onTestPressed:" destination="T4l-0J-piu" eventType="touchUpInside" id="ipy-dA-zcF"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="ua3-Kl-I5O" customClass="AWTimeProgressView">
+                                <rect key="frame" x="20" y="152" width="280" height="10"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progressBarImage" id="5Pv-Bu-RHv">
+                                        <rect key="frame" x="0.0" y="0.0" width="142" height="10"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5Ql-nL-eYz">
+                                <rect key="frame" x="87" y="194" width="38" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.17119621360000001" green="1" blue="0.10540284599999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="iconSmallPlayerStop">
+                                    <color key="titleColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedCancelProgress:" destination="T4l-0J-piu" eventType="touchUpInside" id="FD8-7t-Jqe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l6q-E1-Pyp">
+                                <rect key="frame" x="194" y="194" width="38" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.17119621360000001" green="1" blue="0.10540284599999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="iconSmallPlayerPlay">
+                                    <color key="titleColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedStart:" destination="T4l-0J-piu" eventType="touchUpInside" id="qNp-Hq-hhl"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3.5" minValue="0.10000000000000001" maxValue="10" id="uld-ff-dad">
+                                <rect key="frame" x="35" y="250" width="267" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onChangedDuration:" destination="T4l-0J-piu" eventType="valueChanged" id="3rU-cs-mEq"/>
+                                </connections>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Test Uploader" id="fuL-pr-JF5"/>
+                    <connections>
+                        <outlet property="guiProgress" destination="ua3-Kl-I5O" id="ltS-we-gT8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="huH-lg-7du" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1850" y="308"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zJp-cQ-BxO">
@@ -212,9 +285,32 @@
             </objects>
             <point key="canvasLocation" x="208" y="71"/>
         </scene>
+        <!--Experimental Tabs View Controller-->
+        <scene sceneID="IJ0-or-5Av">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="nAz-IL-3nD" customClass="HMExperimentalTabsViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="z2i-B0-924"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="keJ-it-Xgx">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="qXN-q0-2hs" kind="relationship" relationship="viewControllers" id="ggW-pt-bnt"/>
+                        <segue destination="T4l-0J-piu" kind="relationship" relationship="viewControllers" id="XgR-gT-Gd7"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Ij-66-7WT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1179" y="71"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="iconSmallPlayerPlay" width="19" height="19"/>
+        <image name="iconSmallPlayerStop" width="19" height="19"/>
         <image name="logo" width="118" height="48"/>
+        <image name="progressBarImage" width="7" height="8"/>
         <image name="wifi" width="64" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

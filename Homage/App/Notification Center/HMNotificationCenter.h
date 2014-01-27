@@ -28,12 +28,16 @@
 // Reachability
 #define HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE @"Server Reachability Status Change"
 
+// Uploads
+#define HM_NOTIFICATION_UPLOAD_PROGRESS             @"Upload Progress"
+#define HM_NOTIFICATION_UPLOAD_FINISHED             @"Upload Finished"
 
 // Lazy loading notifications
 #define HM_NOTIFICATION_SERVER_STORY_THUMBNAIL      @"Server Story Thumbnail"
 #define HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL     @"Server Remake Thumbnail"
 #define HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL      @"Server Scene Thumbnil"
 #define HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE     @"Server Scene Silhouette"
+
 
 @interface HMNotificationCenter : NSObject
 

@@ -94,7 +94,6 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     [super viewWillAppear:animated];
     self.view.frame = self.containerView.bounds;
     self.containerView.clipsToBounds = YES;
-
     [self fixLayout];
 }
 
@@ -102,6 +101,11 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 {
     [super viewDidAppear:animated];
     [self initObservers];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self done];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -358,20 +362,6 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     }];
 }
 
-//-(void)setFullScreen
-//{
-//    if (self.isFullScreen) return;
-//    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-//
-//    [self.view removeFromSuperview];
-//    [keyWindow addSubview:self.view];
-//    
-////    if (!self.videoPlayer.isFullscreen) {
-////        self.videoPlayer.controlStyle = MPMovieControlStyleFullscreen;
-////        [self.videoPlayer setFullscreen:YES animated:YES];
-////    }
-//}
-
 -(void)setFullScreen
 {
     [self setFullScreen:YES animated:YES];
@@ -540,7 +530,9 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 - (IBAction)onPressedPausePlayButton:(id)sender
 {
-    if (self.videoPlayer.playbackState == MPMoviePlaybackStateStopped || self.videoPlayer.playbackState == MPMoviePlaybackStatePaused) {
+    MPMoviePlaybackState state = self.videoPlayer.playbackState;
+    
+    if (state == MPMoviePlaybackStateStopped || state == MPMoviePlaybackStatePaused) {
         [self.videoPlayer play];
         self.videoView.guiPlayPauseButton.selected = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
