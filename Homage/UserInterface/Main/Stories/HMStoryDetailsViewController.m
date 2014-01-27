@@ -36,11 +36,15 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self refetchRemakesForStoryID:self.story.sID];
     [self initObservers];
-    [self initContent];
 	[self initGUI];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self refetchRemakesForStoryID:self.story.sID];
+    [self initContent];
 }
 
 -(void)initGUI
