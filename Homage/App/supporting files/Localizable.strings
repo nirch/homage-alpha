@@ -50,4 +50,10 @@
 /*in stories tab ,when you have no stories, this label will show*/
 "NO_STORIES" = "(no stories)";
 
+/*a message to the user, notifing him that the movie is ready*/
+"REMAKE_READY_CLICK" = "Your Movie is Ready! Click Here";
+
+/*a message to the user, notifing him that the movie creation has faild*/
+"REMAKE_FAILED_CLICK" = "Movie Creation Faild... :( Click Here";
+
 
