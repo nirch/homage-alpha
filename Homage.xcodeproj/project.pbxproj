@@ -204,6 +204,7 @@
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
+		2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593E1895A99E003A7B3D /* HMsideBarViewController.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -414,6 +415,9 @@
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
 		2638593A18955252003A7B3D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		2638593D1895A99E003A7B3D /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsideBarViewController.h; sourceTree = "<group>"; };
+		2638593E1895A99E003A7B3D /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsideBarViewController.m; sourceTree = "<group>"; };
+		263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMsideBarNavigatorDelegate.h; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -916,7 +920,9 @@
 		08DF23051892704300912657 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				2638593418953866003A7B3D /* rendering */,
+				2638594118964F28003A7B3D /* settings */,
+				2638593C1895A979003A7B3D /* sideBar */,
+				2638593418953866003A7B3D /* renderingProgressBar */,
 				08DF231F1892704300912657 /* Storyboard.storyboard */,
 				08DF23061892704300912657 /* HMStartViewController.h */,
 				08DF23071892704300912657 /* HMStartViewController.m */,
@@ -937,7 +943,6 @@
 				08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */,
 				08DF230F1892704300912657 /* HMUserRemakesViewController.h */,
 				08DF23101892704300912657 /* HMUserRemakesViewController.m */,
-				08DF23111892704300912657 /* settings views */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -949,7 +954,8 @@
 				08DF23131892704300912657 /* CustomSubviewController.m */,
 				08DF23141892704300912657 /* CustomSubviewController.xib */,
 			);
-			path = "settings views";
+			name = "settings views";
+			path = "Me/settings views";
 			sourceTree = "<group>";
 		};
 		08DF23151892704300912657 /* Stories */ = {
@@ -1002,13 +1008,31 @@
 			path = Round;
 			sourceTree = "<group>";
 		};
-		2638593418953866003A7B3D /* rendering */ = {
+		2638593418953866003A7B3D /* renderingProgressBar */ = {
 			isa = PBXGroup;
 			children = (
 				2638593118953656003A7B3D /* HMRenderingViewController.h */,
 				2638593218953656003A7B3D /* HMRenderingViewController.m */,
 			);
-			name = rendering;
+			name = renderingProgressBar;
+			sourceTree = "<group>";
+		};
+		2638593C1895A979003A7B3D /* sideBar */ = {
+			isa = PBXGroup;
+			children = (
+				2638593D1895A99E003A7B3D /* HMsideBarViewController.h */,
+				2638593E1895A99E003A7B3D /* HMsideBarViewController.m */,
+				263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */,
+			);
+			name = sideBar;
+			sourceTree = "<group>";
+		};
+		2638594118964F28003A7B3D /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				08DF23111892704300912657 /* settings views */,
+			);
+			name = settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1183,6 +1207,7 @@
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,
 				084560071890458E0040504D /* HMWhileRecordingOverlayViewController.m in Sources */,
+				2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */,
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,
 				0845600D1890537C0040504D /* HMServer+Footages.m in Sources */,
 				08DF23221892704300912657 /* HMTabBarController.m in Sources */,

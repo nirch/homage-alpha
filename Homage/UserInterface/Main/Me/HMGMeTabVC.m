@@ -13,14 +13,14 @@
 #import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
 #import "HMFontLabel.h"
-#import <InAppSettingsKit/IASKAppSettingsViewController.h>
+//#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 #import "HMSimpleVideoViewController.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 
-@interface HMGMeTabVC () <IASKSettingsDelegate, UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
-@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
+//@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 @property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UILabel *headLine;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
@@ -30,21 +30,20 @@
 @property (weak,nonatomic) Remake *remakeToDelete;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
 
+
 @end
 
 @implementation HMGMeTabVC
 
-//ask aviv
+//TODO:ask aviv
 @synthesize fetchedResultsController = _fetchedResultsController;
-@synthesize appSettingsViewController = _appSettingsViewController;
+//@synthesize appSettingsViewController = _appSettingsViewController;
 
 - (void)viewDidLoad
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     //[self.refreshControl beginRefreshing];
-    [self refetchRemakesFromServer];
-
     [self initGUI];
     [self initObservers];
     [self initContent];
@@ -71,11 +70,7 @@
     
     self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
     [self.noRemakesLabel setHidden:YES];
-    
-    UIColor *homageColor = [UIColor colorWithRed:255 green:125 blue:95 alpha:1];
-    self.headLine.text = NSLocalizedString(@"ME_TAB_HEADLINE_TITLE", nil);
-    [self.headLine setTextColor:homageColor];
-    
+    self.title = NSLocalizedString(@"                              ME_TAB_HEADLINE_TITLE", nil);
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -147,7 +142,7 @@
     
     if (notification.isReportingError ) {
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
-        remake.thumbnail = [UIImage imageNamed:@"errorThumbnail"];
+        remake.thumbnail = [UIImage imageNamed:@"missingThumbnail"];
     } else {
         remake.thumbnail = image;
     }
@@ -250,7 +245,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
+    [self refetchRemakesFromServer];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -354,7 +349,7 @@
 -(void)updateUIOfRemakeCell:(HMGUserRemakeCVCell *)cell withStatus:(NSNumber *)status
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    UIImage *bgimage;
+    UIImage *image;
     
     switch (status.integerValue)
     {
@@ -371,8 +366,8 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            bgimage = [UIImage imageNamed:@"play"];
-            [cell.actionButton setImage:bgimage forState:UIControlStateNormal];
+            image = [UIImage imageNamed:@"play"];
+            [cell.actionButton setImage:image forState:UIControlStateNormal];
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;
             [cell.shareButton setHidden:NO];
@@ -428,7 +423,7 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
     UIViewController *vc = [HMRecorderViewController recorderForRemake:remake];
-    [self presentViewController:vc animated:NO completion:nil];
+    //[self presentViewController:vc animated:NO completion:nil];
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     
     switch (remake.status.integerValue)
@@ -528,7 +523,7 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
-#pragma mark settings
+/*#pragma mark settings
 
 - (IASKAppSettingsViewController*)appSettingsViewController {
 	if (!_appSettingsViewController) {
@@ -546,13 +541,13 @@
     UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
     [self.appSettingsViewController setShowCreditsFooter:NO];
     self.appSettingsViewController.showDoneButton = YES;
-    [self presentViewController:aNavController animated:YES completion:Nil];
+    [self presentViewController:aNavController animated:NO completion:Nil];
 }
 
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 	// your code here to reconfigure the app for changed settings
-}
+}*/
 
 #pragma mark remaking
 

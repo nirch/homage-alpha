@@ -56,7 +56,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 -(void)initStoryMoviePlayer
 {
     HMSimpleVideoViewController *vc;
-    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guisStoryMovieContainer];
+    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
     [self.storyMoviePlayer hideVideoLabel];
     [self.storyMoviePlayer hideMediaControls];
@@ -357,6 +357,12 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     [self.guiRemakeActivity startAnimating];
     [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     [self.storyMoviePlayer done];
+}
+
+
+- (IBAction)closeButtonPushed:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

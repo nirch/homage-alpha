@@ -50,6 +50,8 @@
     [self.storiesCV addSubview:tempRefreshControl];
     self.refreshControl = tempRefreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
+    self.title = NSLocalizedString(@"                              STORIES_TAB_HEADLINE_TITLE", nil);
+    HMGLogDebug(@"title is: %@" , self.title);
     
     //self.view.backgroundColor = [UIColor clearColor];
     [self.storiesCV setBackgroundColor: [UIColor clearColor]];
