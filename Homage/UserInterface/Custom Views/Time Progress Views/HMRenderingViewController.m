@@ -11,6 +11,7 @@
 #import "HMServer+Remakes.h"
 #import "DB.h"
 #import "Remake+Logic.h"
+#import "HMColor.h"
 
 @interface HMRenderingViewController ()
 
@@ -20,6 +21,7 @@
 
 #define TIMER_INTERVAL 10
 #define TIMER_TOLERANCE 5
+#define PROGRESS_BAR_DURATION 180
 #define REMAKE_ID_KEY @"remakeID"
 
 @implementation HMRenderingViewController
@@ -43,14 +45,15 @@
     [self initObservers];
 
     self.guiProgressBarView.delegate = self;
-    self.guiProgressBarView.duration = 180;
+    self.guiProgressBarView.duration = PROGRESS_BAR_DURATION;
     
     self.timer = nil;
 }
 
 -(void)initGUI
 {
-    UIColor *homageColor = [UIColor colorWithRed:255 green:125 blue:95 alpha:1];
+    
+    UIColor *homageColor = [HMColor.sh main2];
     [self.view sendSubviewToBack:self.guiDoneRenderingView];
     [self.view addSubview:self.guiInProgressView];
     self.guiInProgressLabel.textColor = homageColor;
@@ -126,9 +129,8 @@
                               duration:0.5
                                options:UIViewAnimationOptionTransitionCrossDissolve
                             completion:^(BOOL finished){
-                                [self.guiInProgressView removeFromSuperview];
+                                [self.view sendSubviewToBack:self.guiInProgressView];
                             }];
-
         });
 
     }
@@ -161,7 +163,7 @@
                       duration:0.5
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     completion:^(BOOL finished){
-                        [self.guiInProgressView removeFromSuperview];
+                        [self.view sendSubviewToBack:self.guiInProgressView];
                     }];
     
 
@@ -193,7 +195,10 @@
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:remakeID, REMAKE_ID_KEY, nil];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:TIMER_INTERVAL target:self selector:@selector(checkRemakeStatus:) userInfo:userInfo repeats:YES];
     self.timer.tolerance = TIMER_TOLERANCE;
+    Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
+    self.guiInProgressLabel.text = [NSString stringWithFormat:@"%@:%@" , NSLocalizedString(@"RENDERING_MOVIE_MESSAGE", nil) ,remake.story.name];
     
+    [self.view sendSubviewToBack:self.guiDoneRenderingView];
     [self.guiProgressBarView start];
 }
 

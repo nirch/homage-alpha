@@ -293,6 +293,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
     HMSimpleVideoViewController *vc;
     self.remakeVideoPlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:cell.videoPlayerContainer];
+    HMGLogDebug(@"user selected remake with url: %@" , remake.videoURL);
     self.remakeVideoPlayer.delegate = self;
     self.playingRemakeIndex = indexPath.item;
     self.remakeVideoPlayer.videoURL = remake.videoURL;

@@ -49,5 +49,13 @@
 /*this is the headline title of "me" and "stories" tab*/
 "ME_TAB_HEADLINE_TITLE" = "My Stories";
 "STORIES_TAB_HEADLINE_TITLE" = "Stories";
+/*a message to the user, notifing him that the movie is ready*/
+"REMAKE_READY_CLICK" = "Your Movie is Ready! Click Here";
+
+/*a message to the user, notifing him that the movie creation has faild*/
+"REMAKE_FAILED_CLICK" = "Oh... Movie Creation Failed. Click Here";
+
+/*a message to the user, notifing him that the movie is now rendering*/
+"RENDERING_MOVIE_MESSAGE" = "Rendering movie";
 
 

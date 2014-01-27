@@ -17,8 +17,9 @@
 #import "HMFontLabel.h"
 #import "HMColor.h"
 #import "HMRenderingViewController.h"
+#import "HMRenderingViewControllerDelegate.h"
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appContainerView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
@@ -60,7 +61,7 @@
     //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
     self.sideBarContainerView.hidden = YES;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(renderingBarHeight,49);
+    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
 }
@@ -185,6 +186,7 @@
     } else if ([segue.identifier isEqualToString:@"renderSegue"])
     {
         self.renderingVC = segue.destinationViewController;
+        self.renderingVC.delegate = self;
     }
 }
 
@@ -215,7 +217,6 @@
     [user loginInContext:DB.sh.context];
     [DB.sh save];
     
-
 ////    [HMServer.sh refetchRemakesForUserID:user.userID];
 //    
 //    for (Remake *remake in User.current.remakes) {
@@ -304,7 +305,7 @@
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remakeID"];
     
-    //[self.renderingVC renderStartedWithRemakeID:remakeID];
+    [self.renderingVC renderStartedWithRemakeID:remakeID];
     [self showRenderingView];
 
 }
@@ -322,14 +323,19 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
+        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
         //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
     } completion:^(BOOL finished){
         if (finished)
-        self.renderingContainerView.hidden = NO;
+        self.renderingContainerView.hidden = YES;
     }];
 }
 
-
+- (void)renderDoneClicked
+{
+    //todo: switch to me tab
+    [self switchToTab:1];
+    [self hideRenderingView];
+}
 
 @end
