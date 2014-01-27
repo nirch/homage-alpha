@@ -419,6 +419,7 @@
 		2638593E1895A99E003A7B3D /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsideBarViewController.m; sourceTree = "<group>"; };
 		263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMsideBarNavigatorDelegate.h; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = Me/HMRenderingViewControllerDelegate.h; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1011,6 +1012,7 @@
 		2638593418953866003A7B3D /* renderingProgressBar */ = {
 			isa = PBXGroup;
 			children = (
+				F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */,
 				2638593118953656003A7B3D /* HMRenderingViewController.h */,
 				2638593218953656003A7B3D /* HMRenderingViewController.m */,
 			);
