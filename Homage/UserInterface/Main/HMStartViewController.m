@@ -62,6 +62,7 @@
     //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
     self.sideBarContainerView.hidden = YES;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+    HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
     self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
@@ -331,6 +332,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+        HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
         self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
         //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
     } completion:^(BOOL finished){
