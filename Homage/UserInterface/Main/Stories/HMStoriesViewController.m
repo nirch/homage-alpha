@@ -100,6 +100,20 @@
 //    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self removeObservers];
+}
+
+
 #pragma mark - Observers handlers
 -(void)onApplicationStartedNotification:(NSNotification *)notification
 {

@@ -123,6 +123,7 @@
         <scene sceneID="YKl-gz-jue">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="4NA-z5-ECn" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -275,7 +276,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="tiZ-kN-hcG">
-                                <rect key="frame" x="10" y="217" width="300" height="24"/>
+                                <rect key="frame" x="10" y="207" width="300" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
@@ -356,8 +357,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="mGl-3D-sIL">
-                                <rect key="frame" x="224" y="218" width="20" height="20"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="QKM-Ja-akj">
+                                <rect key="frame" x="229" y="215" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
@@ -367,7 +368,7 @@
                     <connections>
                         <outlet property="guiBGImageView" destination="uur-eL-r2e" id="Z5q-hK-zXc"/>
                         <outlet property="guiDescriptionField" destination="YAE-ZL-RuW" id="kQL-RG-ttp"/>
-                        <outlet property="guiRemakeActivity" destination="mGl-3D-sIL" id="fgE-fl-lCt"/>
+                        <outlet property="guiRemakeActivity" destination="QKM-Ja-akj" id="bHC-B9-4Wf"/>
                         <outlet property="guiRemakeButton" destination="tiZ-kN-hcG" id="tU8-Od-e1R"/>
                         <outlet property="guiStoryMovieContainer" destination="ZjV-7o-L6U" id="Eh5-qX-ad0"/>
                         <outlet property="noRemakesLabel" destination="xrO-tV-a3k" id="lnJ-Q7-5TM"/>
@@ -390,7 +391,7 @@
                                 <rect key="frame" x="13" y="213" width="291" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="70" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="zSo-Xw-45U">
