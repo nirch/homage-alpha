@@ -10,6 +10,9 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
+#import "Mixpanel.h"
+
+#define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
 
 @implementation HMAppDelegate
 
@@ -26,6 +29,11 @@
     // You can always replace to another implementation of upload workers,
     // as long as the workers conform to the HMUploadWorkerProtocol.
     [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+
+    
+    #ifdef NDEBUG
+        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    #endif
     
     return YES;
 }
