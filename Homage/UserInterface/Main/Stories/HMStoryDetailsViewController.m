@@ -25,6 +25,7 @@
 @property (strong,nonatomic)
 HMSimpleVideoViewController *remakeVideoPlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
+@property (weak,nonatomic) Remake *oldRemakeInProgress;
 @end
 
 @implementation HMStoryDetailsViewController
@@ -36,7 +37,6 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initObservers];
 	[self initGUI];
     
 }
@@ -45,6 +45,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 {
     [self refetchRemakesForStoryID:self.story.sID];
     [self initContent];
+    [self initObservers];
     [self.guiRemakeActivity setHidden:YES];
 }
 
@@ -106,8 +107,12 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self removeObservers];
     [self.guiRemakeActivity setHidden:YES];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self removeObservers];
 }
 
 #pragma mark - Observers handlers
@@ -126,9 +131,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
         return;
     }
     
-    // Present the recorder for the newly created remake.
-    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:^{
+    [self initRecorderWithRemake:remake completion:^{
         [self popView:NO];
     }];
 }
@@ -388,11 +391,42 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     self.guiRemakeButton.enabled = NO;
     [self.guiRemakeActivity setHidden:NO];
     [self.guiRemakeActivity startAnimating];
-    [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     [self.storyMoviePlayer done];
-    //[self popView:NO];
+    
+    User *user = [User current];
+    self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
+    
+    if (self.oldRemakeInProgress)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OLD_REMAKE", nil) otherButtonTitles:NSLocalizedString(@"NEW_REMAKE", nil), nil];
+        [alertView show];
+    } else {
+        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+    }
+    
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    //old
+    if (buttonIndex == 0) {
+        [self initRecorderWithRemake:self.oldRemakeInProgress completion:^{
+            [self popView:NO];
+        }];
+    }
+    //start new remake
+    if (buttonIndex == 1) {
+        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+    }
+}
+
+-(void)initRecorderWithRemake:(Remake *)remake completion:(void (^)())completion
+{
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:completion];
+}
 
 - (IBAction)closeButtonPushed:(UIButton *)sender
 {

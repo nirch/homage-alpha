@@ -34,4 +34,6 @@
 // Otherwise returns 
 -(Remake *)findRemakeByID:(NSString *)remakeID inContext:(NSManagedObjectContext *)context;
 
+-(Remake *)userPreviousRemakeForStory:(NSString *)storyID;
+
 @end

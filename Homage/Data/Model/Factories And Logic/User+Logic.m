@@ -75,4 +75,16 @@
     return nil;
 }
 
+-(Remake *)userPreviousRemakeForStory:(NSString *)storyID
+{
+    for (Remake *remake in self.remakes)
+    {
+        if (remake.story.sID == storyID && (remake.status.integerValue == HMGRemakeStatusInProgress || remake.status.integerValue == HMGRemakeStatusTimeout))
+        {
+            return remake;
+        }
+    }
+    return nil;
+}
+
 @end
