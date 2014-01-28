@@ -18,6 +18,7 @@
 #import "HMColor.h"
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
+#import "Mixpanel.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
 
@@ -201,6 +202,11 @@
     
     // In development stuff
     [self debug];
+    
+    //Mixpanel analytics
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"userlogin" properties:@{
+                                             @"useremail" : [User current].userID}];
 }
 
 -(void)debug
@@ -216,6 +222,7 @@
     User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
+    
     
 ////    [HMServer.sh refetchRemakesForUserID:user.userID];
 //    
