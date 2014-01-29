@@ -216,6 +216,10 @@
 		267F523E1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 267F523D1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
+		F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
+		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
+		F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
+		F13FA5201899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,6 +445,10 @@
 		267F523D1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDetailedStoryRemakeVideoPlayerVC.m; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		F13FA5191899447F0026EA5F /* HMServer+Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Users.h"; sourceTree = "<group>"; };
+		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
+		F13FA51D1899497F0026EA5F /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
+		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
 		F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = Me/HMRenderingViewControllerDelegate.h; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -768,6 +776,8 @@
 				084E533C18920B5100D96258 /* HMTextUpdateParser.m */,
 				086D940E1886DACE0086C565 /* NSDictionary+TypeSafeValues.h */,
 				086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */,
+				F13FA51D1899497F0026EA5F /* HMUserParser.h */,
+				F13FA51E1899497F0026EA5F /* HMUserParser.m */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -804,6 +814,8 @@
 				084E5338189209D700D96258 /* HMServer+Texts.m */,
 				084E533F1892240100D96258 /* HMServer+Render.h */,
 				084E53401892240100D96258 /* HMServer+Render.m */,
+				F13FA5191899447F0026EA5F /* HMServer+Users.h */,
+				F13FA51A1899447F0026EA5F /* HMServer+Users.m */,
 			);
 			name = WebService;
 			path = Networking/WebService;
@@ -1240,6 +1252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */,
 				08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */,
 				08CDF8321897F6B000A9D235 /* Remake.m in Sources */,
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
@@ -1295,6 +1308,7 @@
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
+				F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */,
 				08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */,
 				08CDF83E1897F6B100A9D235 /* User.m in Sources */,
 				08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
@@ -1343,9 +1357,11 @@
 				08B95873189138EF00BCCF8C /* HMColor.m in Sources */,
 				08ACB7AF188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,
 				08CDF8251896D4A200A9D235 /* HMAWS3Client.m in Sources */,
+				F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */,
 				0840FF8818853FB400A6EF5E /* HMGLog.m in Sources */,
 				084E533A189209D700D96258 /* HMServer+Texts.m in Sources */,
 				08DF23251892704300912657 /* HMGMeTabVC.m in Sources */,
+				F13FA5201899497F0026EA5F /* HMUserParser.m in Sources */,
 				08D03F7E18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08D03F8D1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */,
