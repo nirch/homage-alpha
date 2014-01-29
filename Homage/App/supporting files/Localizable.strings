@@ -58,4 +58,12 @@
 /*a message to the user, notifing him that the movie is now rendering*/
 "RENDERING_MOVIE_MESSAGE" = "Rendering movie";
 
+/*the title for an alert view that pops when the user chooses of to make a new remake or continue from last sabed point*/
+"CONTINUE_WITH_REMAKE" = "Continue Remake";
+"CONTINUE_OR_START_FROM_SCRATCH" = "Would you like to continue from the last saved point, or start from scratch?";
+"NEW_REMAKE" = "New";
+"OLD_REMAKE" = "continue";
+
+
+
 

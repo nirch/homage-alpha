@@ -22,7 +22,6 @@
 @property (nonatomic, weak) id<HMRecorderDelegate> delegate;
 
 /** Creates a new recorder view controller for the related remake.
-
  Example usage:
  @code
     // Important : Make sure remake object is available first or nil will be returned.

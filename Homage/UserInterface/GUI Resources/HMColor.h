@@ -21,7 +21,7 @@
 /** The most common/regular color for text. */
 -(UIColor *)text;
 
-/** Text color with an impact. Use in titles, on text selection or when */
+/** Text color with an impact. Use in titles, on text selection or on important buttons */
 -(UIColor *)textImpact;
 
 #pragma mark - Colors: Recorder specific

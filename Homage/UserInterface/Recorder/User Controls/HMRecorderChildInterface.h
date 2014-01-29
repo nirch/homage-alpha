@@ -22,6 +22,8 @@
 #define HM_NOTIFICATION_RECORDER_STOP_RECORDING                     @"Recorder Stop Recording"
 
 #define HM_NOTIFICATION_RECORDER_FLIP_CAMERA                        @"Recorder Flip Camera"
+#define HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA                 @"Recorder Using Front Camera"
+#define HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA                  @"Recorder Using Back Camera"
 
 
 #define HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE         @"Recorder Raw Footage Available"

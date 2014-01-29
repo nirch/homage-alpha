@@ -1,6 +1,6 @@
---------------------------
+##########################
 Project highest structure:
---------------------------
+##########################
 
 - Data
 
@@ -25,11 +25,9 @@ Project highest structure:
     - Experimental                  : A playgroud to check UI elements. Don't put anything here that should be a part of the app.
 
 
-
-
---------------------------
-DATA Layer
---------------------------
+----------------------------
+DATA Layer (in more details)
+----------------------------
 
 - Model
 
@@ -42,5 +40,13 @@ DATA Layer
 
     - ServerCFG.plist               : Config file for the HMServer class (Configures the urls, protocol used etc.)
     - HMServer                      : Uses AFNetworking 2.0 to communicate with the server. Singleton, loads ServerCFG.plist on initialization.
-    - WebService                    : Categories on HMServer for handling requests to the web service.
     - LazyLoading                   : Categories on HMServer for handling background lazy loading of assets from the server.
+    - WebService                    : Categories on HMServer for handling requests to the web service.
+    - Upload Manager                : Management of the background uploading of raw user's footages to the server. 
+                                      Currently uploads to a A3 bucket on amazon using AWSS3.
+                                      To implement uploading in other ways or to other services, implement different workers.
+                                      
+- Parsers
+
+- ManageDocument
+

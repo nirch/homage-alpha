@@ -12,6 +12,4 @@
 
 @interface HMVideoCameraViewController : UIViewController
 
-
-
 @end

@@ -98,6 +98,7 @@
 #pragma mark - Manager actions
 -(void)checkForUploads
 {
+    HMGLogDebug(@"Uploader checks if any uploads are pending...");
     [self checkForUploadsWithPrioritizedFootages:nil];
 }
 
