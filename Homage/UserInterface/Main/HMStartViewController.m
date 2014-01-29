@@ -59,11 +59,11 @@
 
 -(void)initGUI
 {
-    //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
     self.sideBarContainerView.hidden = YES;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
-    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+    //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
 }
@@ -149,7 +149,6 @@
 -(void)hideSideBar
 {
      [UIView animateWithDuration:0.3 animations:^{
-        //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
         self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
         } completion:^(BOOL finished){
             if (finished) self.sideBarContainerView.hidden = YES;
@@ -181,6 +180,11 @@
     if ([segue.identifier isEqualToString:@"appSegue"]) {
         self.appTabBarController = segue.destinationViewController;
         self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+        HMGLogDebug(@"self.guiTabNameLabel.text = %@" , self.guiTabNameLabel.text);
+        if (!self.guiTabNameLabel.text)
+        {
+            self.guiTabNameLabel.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+        }
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
         HMsideBarViewController *vc = (HMsideBarViewController *)segue.destinationViewController;
@@ -190,6 +194,7 @@
         self.renderingVC = segue.destinationViewController;
         self.renderingVC.delegate = self;
     }
+    
 }
 
 #pragma mark - Application start
@@ -333,8 +338,8 @@
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
         HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
-        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
-        //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
     } completion:^(BOOL finished){
         if (finished)
         self.renderingContainerView.hidden = YES;
