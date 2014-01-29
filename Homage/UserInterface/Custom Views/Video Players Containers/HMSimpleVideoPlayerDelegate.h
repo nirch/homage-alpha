@@ -10,6 +10,7 @@
 
 @optional
 -(void)videoPlayerDidStop;
+-(void)videoPlayerDidFinishPlaying;
 -(void)videoPlayerWillPlay;
 -(void)videoPlayerDidExitFullScreen;
 

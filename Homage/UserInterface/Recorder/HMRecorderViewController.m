@@ -20,7 +20,12 @@
 #import "HMNotificationCenter.h"
 #import "HMServer+LazyLoading.h"
 #import "HMRecorderEditTextsViewController.h"
+#import "HMVideoCameraViewController.h"
 #import "HMUploadManager.h"
+
+// ---------------------------------------------------------------------------------------------------------------------
+#import <objc/message.h> // TODO: Used by the orientation hack. Remove this or you may not be approved for the appstore!
+// ---------------------------------------------------------------------------------------------------------------------
 
 // TODO: Temporary. This is for fake footages upload updates.
 // This will be the responsibility of the uploader and not the recorder.
@@ -52,13 +57,14 @@
 @property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
 @property (weak, nonatomic, readonly) HMRecorderEditTextsViewController *editingTextsVC;
 
-
 // UI State
 @property (nonatomic, readonly) BOOL detailedOptionsOpened;
 @property (nonatomic, readonly) HMRecorderState recorderState;
 @property (nonatomic) double startPanningY;
 @property (nonatomic, readonly) BOOL lockedAutoRotation;
 @property (nonatomic, readonly) BOOL frontCameraAllowed;
+@property (nonatomic, readonly) NSUInteger allowedOrientations;
+@property (nonatomic) BOOL flagForDebugging;
 
 // Some physics animations
 @property (nonatomic, readonly) UIDynamicAnimator *animator;
@@ -83,6 +89,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [self initRemakerState];
     [self initOptions];
@@ -91,7 +98,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self initObservers];
+
+    // ----------------------------------
+    // Hack forcing orientation.
+    // TODO: Remove this hack ASAP.
+    _allowedOrientations = UIInterfaceOrientationMaskLandscapeRight;
+    objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeRight );
+    // ----------------------------------
+
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -129,6 +145,16 @@
     }
     
     // Currently edited scene
+    
+    // If all scenes were already retaken, will start at the "Nailed all scenes" screen.
+    if (self.remake.allScenesTaken) {
+        _currentSceneID = [self.remake lastSceneID];
+        [self updateUIForSceneID:self.currentSceneID];
+        [self showFinishedAllScenesMessage];
+        return;
+    }
+    
+    // In all other cases, will just start at the "Just started" state.
     _recorderState = HMRecorderStateJustStarted;
     [self advanceState];
 }
@@ -321,6 +347,18 @@
                                                        name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
                                                      object:nil];
     
+    // Notification about the camera used (front)
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderUsingFrontCamera:)
+                                                       name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA
+                                                     object:nil];
+    
+    // Notification about the camera used (back)
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderUsingBackCamera:)
+                                                       name:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA
+                                                     object:nil];
+    
     // Handle recording errors by showing the FAIL message
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRecorderEpicFail:)
@@ -410,10 +448,21 @@
 {
     _lockedAutoRotation = NO;
     
+    HMRecordingStopReason stoppedReason = [notification.userInfo[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
+    if (stoppedReason == HMRecordingStopReasonEndedSuccessfully) {
+        // Do nothing for now. dimiss the "while recording dialogue later, when
+        // the
+    } else {
+        [self dismissWhileRecordingUI];
+    }
+}
+
+-(void)dismissWhileRecordingUI
+{
     self.guiSilhouetteImageView.hidden = NO;
     self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
     self.guiDetailedOptionsBarContainer.hidden = NO;
-
+    
     self.guiDismissButton.enabled = YES;
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.enabled = YES;
@@ -431,7 +480,7 @@
         
         // Fade out "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 0;
-
+        
     } completion:^(BOOL finished) {
         self.guiWhileRecordingOverlay.hidden = YES;
     }];
@@ -458,6 +507,7 @@
     [HMUploadManager.sh checkForUploadsWithPrioritizedFootages:@[footage]];
 
     // Move along to the next state.
+    [self dismissWhileRecordingUI];
     [self advanceState];
 }
 
@@ -476,6 +526,43 @@
     }
     self.guiTextsEditingContainer.hidden = YES;
     [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
+}
+
+
+-(void)onRecorderUsingFrontCamera:(NSNotification *)notificaiton
+{
+    // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
+    // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
+    // It will just transform the whole view upside down when using the front camera.
+    // TODO: remove this hack ASAP.
+    //CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI/2*3);
+    //self.view.transform =transform;
+    _allowedOrientations = UIInterfaceOrientationMaskLandscapeLeft;
+    
+    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)){
+        if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
+        {
+            objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeLeft );
+        }
+    }
+}
+
+-(void)onRecorderUsingBackCamera:(NSNotification *)notification
+{
+    // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
+    // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
+    // It will just transform the whole view upside down when using the front camera.
+    // TODO: remove this hack ASAP.
+    //CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI/2);
+    //self.view.transform =transform;
+    _allowedOrientations = UIInterfaceOrientationMaskLandscapeRight;
+    
+    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)){
+        if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
+        {
+            objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeRight );
+        }
+    }
 }
 
 #pragma mark - Scenes selection
@@ -528,13 +615,17 @@
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskLandscape;
+    // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
+    // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
+    // It will just transform the whole view upside down when using the front camera.
+    // TODO: remove this hack ASAP.
+    if (self.allowedOrientations == 0) return UIInterfaceOrientationMaskLandscapeRight;
+    return self.allowedOrientations;
 }
 
 #pragma mark - containment segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Pass self as delegate to those who conform to the HMRecorderChildInterface protocol.
     id<HMRecorderChildInterface> vc = segue.destinationViewController;
     if ([vc conformsToProtocol:@protocol(HMRecorderChildInterface)]) {
         [vc setRemakerDelegate:self];
@@ -543,10 +634,9 @@
     // Specific destination view controllers
     if ([segue.identifier isEqualToString:@"messages overlay containment segue"]) {
         _messagesOverlayVC = segue.destinationViewController;
-    } else if ([segue.identifier isEqualToString:@""]) {
+    } else if ([segue.identifier isEqualToString:@"editing texts segue"]) {
         _editingTextsVC = segue.destinationViewController;
     }
-    
 }
 
 // Used for debugging
@@ -922,6 +1012,18 @@
 
 - (IBAction)onPressedDebugButton:(id)sender
 {
+//    CGAffineTransform transform;
+//    if (self.flagForDebugging) {
+//        transform = CGAffineTransformMakeRotation(M_PI/2);
+//    } else {
+//        transform = CGAffineTransformMakeRotation(M_PI/2*3);
+//    }
+//    [UIView beginAnimations:@"View Flip" context:nil];
+//    [UIView setAnimationDuration:0.5f];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//    self.view.transform =transform;
+//    [UIView commitAnimations];
+//    self.flagForDebugging = !self.flagForDebugging;
 }
 
 

@@ -146,6 +146,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     [nc removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.videoPlayer];
+    [nc removeObserver:self name:MPMoviePlayerDidExitFullscreenNotification object:self.videoPlayer];
 }
 
 #pragma mark - Observers handlers
@@ -159,6 +160,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 -(void)onMoviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
     if (self.resetStateWhenVideoEnds) [self done];
+    if ([self.delegate respondsToSelector:@selector(videoPlayerDidFinishPlaying)]) [self.delegate videoPlayerDidFinishPlaying];
 }
 
 -(void)onMoviePlayerPlaybackStateDidChange:(NSNotification *)notification
@@ -253,16 +255,18 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     _videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
     _videoPlayer.scalingMode = MPMovieScalingModeAspectFill;
     _videoPlayer.controlStyle = MPMovieControlStyleNone;
-    _videoPlayer.shouldAutoplay = NO;
+    _videoPlayer.shouldAutoplay = YES;
     _videoPlayer.view.alpha = 0;
+    _videoPlayer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth |
+                                            UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin |
+                                            UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    
     [self.videoView.guiVideoContainer addSubview:self.videoPlayer.view];
     return _videoPlayer;
 }
 
 -(void)extractThumbFromVideo
 {
-    //if (!self.extractThumbAtTime) return;
-    
     NSURL *url = [NSURL URLWithString:self.videoURL];
     AVURLAsset *asset1 = [[AVURLAsset alloc] initWithURL:url options:nil];
 
@@ -445,6 +449,24 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     return 20.f;
 }
 
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    double delayInSeconds = duration;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self updateScalingModeForOrientation:toInterfaceOrientation];
+    });
+}
+
+-(void)updateScalingModeForOrientation:(UIInterfaceOrientation)orientation
+{
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+        _videoPlayer.scalingMode = MPMovieScalingModeAspectFill;
+    } else {
+        _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
+    }
+}
+
 - (void)rotateMoviePlayerForOrientation:(UIInterfaceOrientation)orientation animated:(BOOL)animated completion:(void (^)(void))completion {
     CGFloat angle;
     CGSize windowSize = [UIApplication sizeInOrientation:orientation];
@@ -453,6 +475,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     
     CGFloat movieBackgroundPadding = 0;
     
+    [self updateScalingModeForOrientation:orientation];
     
     switch (orientation) {
             case UIInterfaceOrientationPortraitUpsideDown:
@@ -512,6 +535,8 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
         return  NO;
     }
 }
+
+
 
 #pragma mark - IB Actions
 // ===========
