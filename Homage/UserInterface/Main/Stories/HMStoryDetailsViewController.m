@@ -16,6 +16,7 @@
 #import "HMRecorderViewController.h"
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
+#import "HMDetailedStoryRemakeVideoPlayerVC.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
@@ -306,6 +307,7 @@
     
     cell.guiUserName.text = remake.user.userID;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
+    cell.tag = indexPath.item;
     
     if (remake.thumbnail) {
         cell.guiThumbImage.image = remake.thumbnail;
@@ -321,7 +323,7 @@
     }
 }
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+/*-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -336,10 +338,9 @@
     [self.remakeVideoPlayer play];
     [cell.videoPlayerContainer setHidden:YES];
     [self.remakeVideoPlayer setFullScreen];
-    
-    
 }
 
+ */
 -(void)handleNoRemakes
 {
     if ([self.remakesCV numberOfItemsInSection:0] == 0) {
@@ -445,10 +446,31 @@
     }
 }
 
+#pragma mark segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    HMRemakeCell *cell = (HMRemakeCell *)sender;
+    
+    if ([segue.identifier isEqualToString:@"remakeVideoPlayerSegue"]) {
+        HMDetailedStoryRemakeVideoPlayerVC *vc = segue.destinationViewController;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell.tag inSection:0];
+        Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        vc.videoURL = remake.videoURL;
+    }
+}
+
 #pragma mark helper functions
 -(void)popView:(BOOL)animated
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+// ============
+// Rewind segue
+// ============
+-(IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
+{
+    //self.view.backgroundColor = [UIColor clearColor];
 }
 
 

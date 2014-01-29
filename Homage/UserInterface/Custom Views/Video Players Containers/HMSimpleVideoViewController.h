@@ -147,4 +147,10 @@
  */
 -(BOOL)isInAction;
 
+///
+/**
+ *  sets the movie scaling mode. currently implemented: "aspect fit"
+ */
+-(void)setScalingMode:(NSString *)scale;
+
 @end
