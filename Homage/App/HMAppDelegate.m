@@ -11,7 +11,8 @@
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
 
-// 
+#define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
+
 #import "DB.h"
 
 @implementation HMAppDelegate
