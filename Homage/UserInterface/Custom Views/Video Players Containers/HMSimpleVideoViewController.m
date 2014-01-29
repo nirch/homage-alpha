@@ -536,6 +536,14 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     }
 }
 
+-(void)setScalingMode:(NSString *)scale
+{
+    
+    if ([scale isEqualToString:@"aspect fit"])
+    {
+         _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
+    }
+}
 
 
 #pragma mark - IB Actions
