@@ -22,21 +22,21 @@
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
-@property (strong,nonatomic)
-HMSimpleVideoViewController *remakeVideoPlayer;
+@property (strong,nonatomic) HMSimpleVideoViewController *remakeVideoPlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
+@property (weak,nonatomic) Remake *oldRemakeInProgress;
 @end
 
 @implementation HMStoryDetailsViewController
 
 @synthesize fetchedResultsController = _fetchedResultsController;
-
 @synthesize story = _story;
 
+
+#pragma mark lifecycle related
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initObservers];
 	[self initGUI];
     
 }
@@ -45,8 +45,21 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 {
     [self refetchRemakesForStoryID:self.story.sID];
     [self initContent];
+    [self initObservers];
     [self.guiRemakeActivity setHidden:YES];
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.guiRemakeActivity setHidden:YES];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self removeObservers];
+}
+
+#pragma mark initializations
 
 -(void)initGUI
 {
@@ -104,11 +117,6 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [self removeObservers];
-    [self.guiRemakeActivity setHidden:YES];
-}
 
 #pragma mark - Observers handlers
 -(void)onRemakeCreation:(NSNotification *)notification
@@ -126,9 +134,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
         return;
     }
     
-    // Present the recorder for the newly created remake.
-    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:^{
+    [self initRecorderWithRemake:remake completion:^{
         [self popView:NO];
     }];
 }
@@ -166,6 +172,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     //NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
     
+    HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if (notification.isReportingError ) {
@@ -194,14 +201,6 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 
 }
 
--(void)handleNoRemakes
-{
-    if ([self.remakesCV numberOfItemsInSection:0] == 0) {
-        [self.noRemakesLabel setHidden:NO];
-    } else {
-        [self.noRemakesLabel setHidden:YES];
-    }
-}
 
 #pragma mark - Alerts
 -(void)remakeCreationFailMessage
@@ -213,6 +212,8 @@ HMSimpleVideoViewController *remakeVideoPlayer;
                                           otherButtonTitles:nil];
     [alert show];
 }
+
+#pragma mark refreshing remakes
 
 -(void)refetchRemakesForStoryID:(NSString *)storyID
 {
@@ -264,6 +265,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     return _fetchedResultsController;
 }
 
+#pragma mark remakes collection view
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
@@ -289,6 +291,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
+    HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     //cell border design
@@ -320,6 +323,7 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
     HMSimpleVideoViewController *vc;
@@ -335,6 +339,17 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     
     
 }
+
+-(void)handleNoRemakes
+{
+    if ([self.remakesCV numberOfItemsInSection:0] == 0) {
+        [self.noRemakesLabel setHidden:NO];
+    } else {
+        [self.noRemakesLabel setHidden:YES];
+    }
+}
+
+#pragma mark video players
 
 -(void)videoPlayerDidStop
 {
@@ -380,19 +395,25 @@ HMSimpleVideoViewController *remakeVideoPlayer;
 
 
 #pragma mark - IB Actions
-// ===========
-// IB Actions.
-// ===========
 - (IBAction)onPressedRemakeButton:(UIButton *)sender
 {
     self.guiRemakeButton.enabled = NO;
     [self.guiRemakeActivity setHidden:NO];
     [self.guiRemakeActivity startAnimating];
-    [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     [self.storyMoviePlayer done];
-    //[self popView:NO];
+    
+    User *user = [User current];
+    self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
+    
+    if (self.oldRemakeInProgress)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OLD_REMAKE", nil) otherButtonTitles:NSLocalizedString(@"NEW_REMAKE", nil), nil];
+        [alertView show];
+    } else {
+        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+    }
+    
 }
-
 
 - (IBAction)closeButtonPushed:(UIButton *)sender
 {
@@ -400,6 +421,31 @@ HMSimpleVideoViewController *remakeVideoPlayer;
     
 }
 
+#pragma mark recorder init
+-(void)initRecorderWithRemake:(Remake *)remake completion:(void (^)())completion
+{
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:completion];
+}
+
+#pragma mark UITextView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    //old
+    if (buttonIndex == 0) {
+        [self initRecorderWithRemake:self.oldRemakeInProgress completion:^{
+            [self popView:NO];
+        }];
+    }
+    //start new remake
+    if (buttonIndex == 1) {
+        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+    }
+}
+
+#pragma mark helper functions
 -(void)popView:(BOOL)animated
 {
     [self.navigationController popViewControllerAnimated:YES];

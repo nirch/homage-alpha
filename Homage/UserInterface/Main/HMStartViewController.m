@@ -18,6 +18,7 @@
 #import "HMColor.h"
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
+#import "Mixpanel.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
 
@@ -61,6 +62,7 @@
     //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
     self.sideBarContainerView.hidden = YES;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+    HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
     self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
@@ -201,6 +203,11 @@
     
     // In development stuff
     [self debug];
+    
+    //Mixpanel analytics
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"userlogin" properties:@{
+                                             @"useremail" : [User current].userID}];
 }
 
 -(void)debug
@@ -216,6 +223,7 @@
     User *user = [User userWithID:userName inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
+    
     
 ////    [HMServer.sh refetchRemakesForUserID:user.userID];
 //    
@@ -324,6 +332,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+        HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
         self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
         //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
     } completion:^(BOOL finished){
