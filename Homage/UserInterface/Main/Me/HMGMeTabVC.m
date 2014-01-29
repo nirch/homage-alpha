@@ -504,6 +504,7 @@
     self.moviePlayer.videoURL = videoURL;
     [self configureCellForMoviePlaying:cell active:YES];
     [self.moviePlayer play];
+    [self.moviePlayer setScalingMode:@"aspect fit"];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -512,7 +513,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (active)
     {
-        [cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
+        //[cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
         [cell.guiThumbImage setHidden:YES];
         [cell.buttonsView setHidden:YES];
         [cell.moviePlaceHolder setHidden:NO];

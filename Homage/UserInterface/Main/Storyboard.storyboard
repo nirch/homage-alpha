@@ -442,23 +442,23 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RemakeCell" id="5zl-VQ-6iZ" customClass="HMGUserRemakeCVCell">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RemakeCell" id="5zl-VQ-6iZ" customClass="HMGUserRemakeCVCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" id="la2-3O-w2A">
-                                                    <rect key="frame" x="-1" y="0.0" width="320" height="180"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
                                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="VI8-bD-3VH">
                                                     <rect key="frame" x="0.0" y="40" width="320" height="187"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <gestureRecognizers/>
                                                 </imageView>
+                                                <view autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="la2-3O-w2A" userLabel="movieContainerView">
+                                                    <rect key="frame" x="-1" y="0.0" width="320" height="223"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" id="LUz-op-R46">
                                                     <rect key="frame" x="0.0" y="0.0" width="319" height="227"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -524,7 +524,7 @@
                                             <outlet property="buttonsView" destination="LUz-op-R46" id="Fm6-xe-pTj"/>
                                             <outlet property="deleteButton" destination="xnf-kT-Sf2" id="3qw-9S-vem"/>
                                             <outlet property="guiThumbImage" destination="VI8-bD-3VH" id="2rZ-sH-TeS"/>
-                                            <outlet property="moviePlaceHolder" destination="la2-3O-w2A" id="Kv8-Hg-gDg"/>
+                                            <outlet property="moviePlaceHolder" destination="la2-3O-w2A" id="k0z-BK-lD7"/>
                                             <outlet property="remakeButton" destination="zVP-Pe-Sxq" id="3EJ-ei-Kxt"/>
                                             <outlet property="shareButton" destination="M0A-XO-3Ed" id="Xvy-86-MlX"/>
                                             <outlet property="storyNameLabel" destination="PBd-7c-2kj" id="K1c-MX-zit"/>
