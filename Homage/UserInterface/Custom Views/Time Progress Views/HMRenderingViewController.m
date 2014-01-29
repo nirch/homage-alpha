@@ -21,7 +21,7 @@
 
 #define TIMER_INTERVAL 10
 #define TIMER_TOLERANCE 5
-#define PROGRESS_BAR_DURATION 180
+#define PROGRESS_BAR_DURATION 300
 #define REMAKE_ID_KEY @"remakeID"
 
 @implementation HMRenderingViewController
