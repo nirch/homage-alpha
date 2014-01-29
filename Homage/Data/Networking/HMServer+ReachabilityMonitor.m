@@ -36,6 +36,11 @@
     }];
 }
 
+-(void)stopMonitoringReachability
+{
+    [self.session.reachabilityManager stopMonitoring];
+}
+
 -(BOOL)isReachable
 {
     return self.session.reachabilityManager.reachable;

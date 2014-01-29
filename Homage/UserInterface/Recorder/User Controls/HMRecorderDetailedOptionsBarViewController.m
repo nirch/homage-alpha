@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+@import AVFoundation;
+
 #import "HMRecorderDetailedOptionsBarViewController.h"
 #import "DB.h"
 #import "HMSceneCell.h"
@@ -27,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiReachability;
+@property (weak, nonatomic) IBOutlet UILabel *guiMicrophoneUnauthorizedLabel;
 
 
 
@@ -74,6 +77,7 @@
 {
     [super viewDidLoad];
     _remake = [self.remakerDelegate remake];
+    [self checkMicrophoneAuthorization];
     [self initGUI];
     [self initObservers];
     [self refreshInfo];
@@ -81,6 +85,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self checkMicrophoneAuthorization];
     [self initGUIOnceAfterFirstAppearance];
     [self initObservers];
     [self updateTableHeader];
@@ -98,6 +103,12 @@
     // NSLog(@">>> dealloc %@", [self class]);
 }
 
+-(void)checkMicrophoneAuthorization
+{
+    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL response){
+        self.guiMicrophoneUnauthorizedLabel.hidden = response;
+    }];
+}
 
 -(void)initGUI
 {
@@ -282,6 +293,17 @@
 
 -(void)onRecorderDetailedOptionsOpened:(NSNotification *)notification
 {
+    [self.guiTableView reloadData];
+
+    //
+    //  Snappy arrow pointing on scene label
+    //
+    if (self.sceneID) {
+        NSInteger rowNumber = self.count - self.sceneID.integerValue;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowNumber inSection:0];
+        [self snapIndicatorIntoPlaceAtIndexPath:indexPath];
+    }
+    
     self.guiLessDetailsBar.hidden = YES;
     self.guiMoreDetailsBar.hidden = NO;
     
@@ -290,6 +312,8 @@
     
     self.guiLessDetailsBar.alpha = 0;
     self.guiMoreDetailsBar.alpha = 1;
+    
+    
 }
 
 -(void)onRecorderDetailedOptionsOpening:(NSNotification *)notification
@@ -326,8 +350,8 @@
 {
     NSDictionary *info = notification.userInfo;
     NSNumber *sceneID = info[HM_INFO_SCENE_ID];
-    NSInteger index = self.count - sceneID.integerValue;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    NSInteger rowNumber = self.count - sceneID.integerValue;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:rowNumber inSection:0];
     if (![self.guiTableView.indexPathsForVisibleRows containsObject:indexPath]) return;
     HMSceneCell *cell = (HMSceneCell *)[self.guiTableView cellForRowAtIndexPath:indexPath];
     double progress = [info[HM_INFO_PROGRESS] doubleValue];
@@ -422,9 +446,18 @@
     return cell;
 }
 
--(void)configureCell:(HMSceneCell *)cell forIndexPath:(NSIndexPath *)indexPath
+// The scenes are ordered in the UI from bottom (lowest ID) to the top (highest ID)
+// The indexes for rows start at the top of course.
+// So given an indexPath, returns the index of the scene in the orderedScenes array.
+-(NSInteger)sceneIndexForIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger index = self.count - indexPath.row - 1;
+    return index;
+}
+
+-(void)configureCell:(HMSceneCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger index = [self sceneIndexForIndexPath:indexPath]; // self.count - indexPath.row - 1;
     Scene *scene = self.scenesOrdered[index];
     HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
     
@@ -433,7 +466,18 @@
     cell.guiSceneTimeLabel.text = scene.titleForTime;
     cell.guiSelectRowButton.tag = indexPath.row;
     cell.guiRetakeSceneButton.tag = indexPath.row;
-    cell.guiRowIndicatorImage.alpha = 0;
+    cell.guiRowIndicatorImage.alpha = [scene.sID isEqualToNumber:self.sceneID] ? 1 : 0;
+    cell.guiRowIndicatorImage.transform = CGAffineTransformIdentity;
+}
+
+-(void)snapIndicatorIntoPlaceAtIndexPath:(NSIndexPath *)indexPath
+{
+    HMSceneCell *cell = (HMSceneCell *)[self.guiTableView cellForRowAtIndexPath:indexPath];
+    cell.guiRowIndicatorImage.alpha = 1;
+    cell.animator = [[UIDynamicAnimator alloc] initWithReferenceView:cell.guiRowIndicatorImage.superview];
+    UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cell.guiRowIndicatorImage snapToPoint:CGPointMake(39,28)];
+    [snap setDamping:0.3];
+    [cell.animator addBehavior:snap];
 }
 
 -(void)updateTableHeader
@@ -551,13 +595,14 @@
 - (IBAction)onPressedSelectScene:(UIButton *)sender
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-    NSInteger index = self.count - indexPath.row - 1;
+    
+    NSInteger index = [self sceneIndexForIndexPath:indexPath];
     HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
     
     //
     // Some crazy animations
     //
-    double delayInSeconds = 0.1;
+    double delayInSeconds = 0.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
@@ -585,41 +630,44 @@
         //  The label scales a bit
         //
         [UIView animateWithDuration:0.7 animations:^{
-            cell.guiSceneLabel.alpha = 0.6;
+            cell.guiSceneLabel.alpha = 0.5;
+            cell.guiSceneLabel.transform = CGAffineTransformMakeScale(1.1, 1.1);
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.7 animations:^{
                 cell.guiSceneLabel.alpha = 1;
+                cell.guiSceneLabel.transform = CGAffineTransformIdentity;
             }];
         }];
         
         //
         //  Snappy arrow pointing on scene label
         //
-        cell.guiRowIndicatorImage.alpha = 1;
-        cell.guiRowIndicatorImage.center = CGPointMake(-50,28+arc4random()%40-20);
-        cell.animator = [[UIDynamicAnimator alloc] initWithReferenceView:cell.guiRowIndicatorImage.superview];
-        UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cell.guiRowIndicatorImage snapToPoint:CGPointMake(39,28)];
-        [snap setDamping:0.3];
-        [cell.animator addBehavior:snap];
-        [UIView animateWithDuration:1.0 delay:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            cell.guiRowIndicatorImage.alpha = 0;
-        } completion:nil];
+        [self snapIndicatorIntoPlaceAtIndexPath:indexPath];
     });
     
     // Will not select locked scenes.
     if (footageReadyState == HMFootageReadyStateStillLocked) return;
     
     //
+    // Hide selection indicator from all scenes
+    //
+    for (HMSceneCell *cell in self.guiTableView.visibleCells) {
+        cell.guiRowIndicatorImage.alpha = 0;
+        cell.guiRowIndicatorImage.center = CGPointMake(-50,28+arc4random()%40-20);
+    }
+    
+    //
     // Actually selecting the scene
     //
     Scene *scene = self.scenesOrdered[index];
     [self.remakerDelegate selectSceneID:scene.sID];
+    
 }
 
 - (IBAction)onPressedRetakeButton:(UIButton *)sender
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-    NSInteger index = self.count - indexPath.row - 1;
+    NSInteger index = [self sceneIndexForIndexPath:indexPath];
     Scene *scene = self.scenesOrdered[index];
     Footage *footage = [self.remake footageWithSceneID:scene.sID];
     if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;

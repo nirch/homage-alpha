@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet AWTimeProgressView *guiTimeProgressView;
 @property (weak, nonatomic) IBOutlet UIView *guiScriptContainer;
 @property (weak, nonatomic) IBOutlet UILabel *guiScriptLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiProcessingActivity;
+@property (weak, nonatomic) IBOutlet UILabel *guiProcessingLabel;
+
+
 
 @property (nonatomic, readonly) Remake *remake;
 @property (nonatomic, readonly) Scene *scene;
@@ -57,6 +61,8 @@
 
 -(void)updateUI
 {
+    [self.guiProcessingActivity stopAnimating];
+    self.guiProcessingLabel.hidden = YES;
     if (User.current.prefersToSeeScriptWhileRecording.boolValue && self.scene.hasScript) {
         self.guiScriptContainer.hidden = NO;
         self.guiScriptLabel.text = self.scene.script;
@@ -130,7 +136,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self
                                                       userInfo:info];
-    
+    self.guiProcessingLabel.hidden = NO;
+    [self.guiProcessingActivity startAnimating];
 }
 
 -(void)timeProgressWasCancelledAfterDuration:(NSTimeInterval)duration

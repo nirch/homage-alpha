@@ -56,13 +56,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self loadSubviews];
+    
     [self.guiDismissButton addMotionEffectWithAmount:15];
     [self.guiTextMessageIcon addMotionEffectWithAmount:15];
     [self.guiTextMessageTitleLabel addMotionEffectWithAmount:15];
     [self.guiGeneralMessageOKButton addMotionEffectWithAmount:15];
     [self.guiAreYouSureYouWantToRetakeLabel addMotionEffectWithAmount:15];
+}
+
+
+-(void)loadSubviews
+{
+    //
+    //  Because the messages UI started to contain different layouts on the same view controller
+    //  Each particular message layout was moved to it's own xib file, in order to reduce clutter
+    //  in the story board.
+    //  Each type of message screen has it's own xib file (all using this same view controller)
+    //
+    // Load subview from xibs
+    UIView *generalMessageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageGeneralView" owner:self options:nil][0];
+    generalMessageView.frame = self.view.bounds;
+    generalMessageView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:generalMessageView];
+//    self.guiGeneralMessageContainer.hidden = YES;
 
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -168,6 +189,8 @@
         self.guiTextMessageTitleLabel.text = info[@"title"];
         self.guiTextMessageLabel.text = info[@"text"];
         [self.guiDismissButton setTitle:info[@"ok button text"] forState:UIControlStateNormal];
+        [self.guiDismissButton setImage:[UIImage imageNamed:@"iconGotIt"] forState:UIControlStateNormal];
+
         NSString *iconName = info[@"icon name"];
         self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
         
@@ -247,7 +270,7 @@
 {
     NSDictionary *info = @{
                            @"sceneID":[self.remakerDelegate currentSceneID],
-                           @"dismissOnDecision":@YES
+                           @"dismissOnDecision":@NO
                            };
     HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
     [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
@@ -269,6 +292,7 @@
     //
     self.guiTextMessageContainer.hidden = NO;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
+    self.guiFinishedSceneButtonsContainer.hidden = NO;
     [self.guiAreYouSureToRetakeIcon.layer removeAllAnimations];
 }
 

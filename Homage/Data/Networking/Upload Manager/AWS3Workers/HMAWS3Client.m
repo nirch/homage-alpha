@@ -49,7 +49,7 @@
     // Initialize the S3 Client.
     [AmazonErrorHandler shouldNotThrowExceptions];
     AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
-    [AmazonLogger verboseLogging];
+    //[AmazonLogger verboseLogging];
     
     
     // Initialize the S3TransferManager

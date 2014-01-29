@@ -26,13 +26,13 @@
                                                                                  inParentVC:self
                                                                               containerView:self.guiContainerView
                                        ];
-    //vc.delegate = self;
+    vc.delegate = self;
     vc.videoLabelText = LS(@"SHOW YOUR TAKE");
     vc.videoURL = [NSString stringWithFormat:@"file://%@", self.footage.rawLocalFile];
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
     [vc extractThumbFromVideo];
-    
+    [vc play];
 }
 
 -(BOOL)prefersStatusBarHidden
@@ -45,9 +45,20 @@
     return YES;
 }
 
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+#pragma mark - HMSimpleVideoPlayerDelegate
 -(void)videoPlayerDidStop
 {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)videoPlayerDidFinishPlaying
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

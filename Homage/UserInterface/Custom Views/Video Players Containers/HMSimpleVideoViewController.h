@@ -12,6 +12,14 @@
 
 @interface HMSimpleVideoViewController : UIViewController
 
+#pragma mark - Properties
+
+///
+/**
+ *  The HMSimpleVideoView containing the custom UI for the video player.
+ */
+@property (nonatomic, weak, readonly) HMSimpleVideoView *videoView;
+
 ///
 /**
 *  The url of the video that will be loaded when pressing play.
@@ -30,21 +38,11 @@
 */
 @property (nonatomic) UIImage *videoImage;
 
-
--(void)extractThumbFromVideo;
-
-///
-/**
-*  The HMSimpleVideoView containing the custom UI for the video player.
-*/
-@property (nonatomic, weak, readonly) HMSimpleVideoView *videoView;
-
 ///
 /**
  *  delegate of HMSimpleVideoViewController
  */
 @property id<HMSimpleVideoPlayerDelegate> delegate;
-
 
 ///
 /**
@@ -56,16 +54,18 @@
  */
 @property (nonatomic) BOOL resetStateWhenVideoEnds;
 
+#pragma mark - Initializations with nibs
+
 ///
 /**
-*  Initializes a HMSimpleVideoViewController with a given nib name (a nib of a HMSimpleVideoView).
-*
-*  @param nibName       The name of the nib the HMSimpleVideoView layout is loaded from.
-*  @param parentVC      The parent view controller for this view controller.
-*  @param containerView The superview that will contain the HMSimpleVideoView (the video is embedded in that view).
-*
-*  @return a new instance HMSimpleVideoViewController.
-*/
+ *  Initializes a HMSimpleVideoViewController with a given nib name (a nib of a HMSimpleVideoView).
+ *
+ *  @param nibName       The name of the nib the HMSimpleVideoView layout is loaded from.
+ *  @param parentVC      The parent view controller for this view controller.
+ *  @param containerView The superview that will contain the HMSimpleVideoView (the video is embedded in that view).
+ *
+ *  @return a new instance HMSimpleVideoViewController.
+ */
 -(id)initWithNibNamed:(NSString *)nibName inParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView;
 
 ///
@@ -78,6 +78,16 @@
  *  @return a new instance HMSimpleVideoViewController.
  */
 -(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView;
+
+#pragma mark - Methods
+///
+/**
+*  Sets the videoImage by trying to grab a thumb image from the video itself.
+*  Currently, only supports videos available locally on local storage.
+*  Don't use this on videos on a remote URL.
+*/
+-(void)extractThumbFromVideo;
+
 
 ///
 /**
