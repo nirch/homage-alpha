@@ -19,6 +19,8 @@
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
 #import "Mixpanel.h"
+#import "HMUploadManager.h"
+#import "HMUploadS3Worker.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
 
@@ -208,6 +210,11 @@
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"userlogin" properties:@{
                                              @"useremail" : [User current].userID}];
+    
+    // The upload manager with # workers of a specific type.
+    // You can always replace to another implementation of upload workers,
+    // as long as the workers conform to the HMUploadWorkerProtocol.
+    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
 }
 
 -(void)debug

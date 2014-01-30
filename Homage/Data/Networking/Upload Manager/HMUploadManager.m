@@ -62,8 +62,8 @@
 
 -(void)startMonitoring
 {
-    [self checkForUploads];
     [self initObservers];
+    [self checkForUploads];
 }
 
 -(void)stopMonitoring
@@ -74,17 +74,24 @@
 #pragma mark - Observers
 -(void)initObservers
 {
-    // Observe refetching of remakes
+    // Observe reachability
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onReachabilityStatusChanged:)
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
                                                      object:nil];
+    
+  
+    
 }
+
+
+
 
 -(void)removeObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -114,16 +121,28 @@
     User *user = User.current;
     if (!user) return;
     
+    NSFetchRequest *fetchRequest;
+    NSError *error;
+    NSArray *footages;
     
+    //
+    // Check if some uploaded files upload state is inconsistent (can happen if user killed app in the middle of upload etc.)
+    //
+    fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_FOOTAGE];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF.remake.user=%@  AND newRawLocalFileWaitingForUpload=%@ AND NOT SELF.successfulyUploadedRawLocalFile=SELF.rawLocalFile",user,@NO];
+    error = nil;
+    footages = [DB.sh.context executeFetchRequest:fetchRequest error:&error];
+    HMGLogDebug(@"Footages that should but still didn't upload successfuly:%ld",(long)footages.count);
     
     //
     // Bring all footages for this user, that have open status.
     //
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_FOOTAGE];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF.remake.user=%@ AND status=%@ AND newRawLocalFileWaitingForUpload=%@",user,@(HMFootageStatusStatusOpen),@YES];
+    fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_FOOTAGE];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF.remake.user=%@ AND newRawLocalFileWaitingForUpload=%@",user,@YES];
     fetchRequest.fetchLimit = 10; // Limit to 10 footages at a time.
-    NSError *error;
-    NSArray *footages = [DB.sh.context executeFetchRequest:fetchRequest error:&error];
+    error = nil;
+    footages = [DB.sh.context executeFetchRequest:fetchRequest error:&error];
+    HMGLogDebug(@"Footages to upload:%ld",(long)footages.count);
     
     if (prioritizedFootages) {
         footages  = [footages sortedArrayUsingComparator:^NSComparisonResult(id footage1, id footage2) {
@@ -206,6 +225,7 @@
     if (success) {
         
         footage.newRawLocalFileWaitingForUpload = @NO;
+        footage.successfulyUploadedRawLocalFile = [aWorker source];
         [self updateServerAboutSuccessfulUploadForFootage:footage];
         
         // This worker earned his day pay

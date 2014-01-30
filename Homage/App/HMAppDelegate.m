@@ -19,19 +19,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    //
-    // Start monitoring reachability.
-    // Observe notification in your UI, if you want to inform the user
-    // about reachability changes.
-    [HMServer.sh startMonitoringReachability];
-    
-    // The upload manager with # workers of a specific type.
-    // You can always replace to another implementation of upload workers,
-    // as long as the workers conform to the HMUploadWorkerProtocol.
-    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
-
-    
     #ifdef NDEBUG
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
@@ -49,7 +36,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [HMServer.sh startMonitoringReachability];
+    [HMServer.sh stopMonitoringReachability];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -62,7 +49,7 @@
     [HMServer.sh startMonitoringReachability];
     
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if (HMServer.sh.isReachable && DB.sh.dbDocument.documentState == UIDocumentStateNormal) {
+    if (DB.sh.dbDocument.documentState == UIDocumentStateNormal && HMServer.sh.isReachable) {
         [HMUploadManager.sh checkForUploads];
     }
 }

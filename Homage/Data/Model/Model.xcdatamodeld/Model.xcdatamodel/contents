@@ -9,6 +9,7 @@
         <attribute name="rawVideoS3Key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sceneID" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="status" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="successfulyUploadedRawLocalFile" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="remake" maxCount="1" deletionRule="Nullify" destinationEntity="Remake" inverseName="footages" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <entity name="Remake" representedClassName="Remake" syncable="YES">
@@ -73,11 +74,11 @@
         <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Footage" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="Remake" positionX="0" positionY="0" width="128" height="195"/>
-        <element name="Scene" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="Story" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="Text" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Footage" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Remake" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Scene" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Story" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Text" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

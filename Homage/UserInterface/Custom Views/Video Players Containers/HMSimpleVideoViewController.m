@@ -77,8 +77,6 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
         [self.containerView addSubview:self.view];
         _shouldDisplayVideoLabel = YES;
         _videoView = (HMSimpleVideoView *)self.view;
-
-        
         _movieTempFullscreenBackgroundView = [[UIView alloc] init];
     }
     return self;
@@ -94,13 +92,13 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     [super viewWillAppear:animated];
     self.view.frame = self.containerView.bounds;
     self.containerView.clipsToBounds = YES;
+    [self initObservers];
     [self fixLayout];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self initObservers];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -188,15 +186,6 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 -(void)_startToPlayTheActualVideo
 {
     self.waitingToStartPlayingTheFile = NO;
-    
-    // If no time passed since play, don't do the fade out animation.
-    if ([[NSDate date] timeIntervalSinceDate:self.timePressedPlay] < 3.0f) {
-        self.videoView.alpha = 1;
-        [self.videoPlayer play];
-        return;
-    }
-    
-    
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
@@ -255,8 +244,8 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     _videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
     _videoPlayer.scalingMode = MPMovieScalingModeAspectFill;
     _videoPlayer.controlStyle = MPMovieControlStyleNone;
-    _videoPlayer.shouldAutoplay = YES;
-    _videoPlayer.view.alpha = 0;
+    _videoPlayer.shouldAutoplay = NO;
+    _videoPlayer.view.alpha = 1;
     _videoPlayer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth |
                                             UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin |
                                             UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -280,14 +269,26 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     self.videoImage = [[UIImage alloc] initWithCGImage:imageRef];
 }
 
+-(void)play
+{
+    [self updateUIToPlayVideoState];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // The UI / interface command to play the video.
+        // Will update the UI, and the vide video player to start to play the video.
+        [self playVideo];
+    });
+}
+
 -(void)playVideo
 {
+    // Telling the video player what the url is,
+    // and prepare to play the video.
     _timePressedPlay = [NSDate date];
     self.waitingToStartPlayingTheFile = YES;
     NSURL *url = [NSURL URLWithString:self.videoURL];
     HMGLogDebug(@"Trying to play video at:%@", url);
-    if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     [self.videoPlayer prepareToPlay];
+    if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
 }
 
@@ -316,11 +317,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
         
     }];}
 
--(void)play
-{
-    [self updateUIToPlayVideoState];
-    [self playVideo];
-}
+
 
 -(void)hideVideoLabel
 {
@@ -429,8 +426,13 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)fixLayout
 {
-    self.view.frame = self.containerView.bounds;
-    self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
+    CGRect f = self.containerView.bounds;
+    NSLog(@"%f %f %f %f", f.origin.x, f.origin.y, f.size.width, f.size.height);
+    self.view.frame = f;
+    
+    f = self.videoView.guiVideoContainer.bounds;
+    NSLog(@"%f %f %f %f", f.origin.x, f.origin.y, f.size.width, f.size.height);
+    self.videoPlayer.view.frame = f;
 }
 
 - (void)moviePlayerWillMoveFromWindow {

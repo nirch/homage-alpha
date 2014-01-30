@@ -115,12 +115,14 @@
     // Video controllers (scene & story)
     HMSimpleVideoViewController *vc;
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView];
-    self.sceneVideoVC.videoLabelText = LS(@"PLAY OUR TAKE");
+    self.sceneVideoVC.videoLabelText = LS(@"WATCH OUR SCENE");
+    self.sceneVideoVC.delegate = self;
     
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView];
-    self.storyVideoVC.videoLabelText = LS(@"PLAY OUR STORY");
+    self.storyVideoVC.videoLabelText = LS(@"WATCH OUR STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
+    self.storyVideoVC.delegate = self;
     
     // Countdown delegate
     self.guiRoundCountdownLabal.delegate = self;
@@ -134,11 +136,11 @@
     // Change the content size according to the size of the containers
     // Put the second container in the correct spot, according to the width
     NSInteger videosPages = 2;
-    CGSize size = self.guiSceneVideoContainerView.bounds.size;
+    CGSize size = self.guiOriginalTakesVideosScrollView.bounds.size;
     self.guiOriginalTakesVideosScrollView.contentSize = CGSizeMake(size.width * videosPages, size.height);
     
     CGRect frame = self.guiStoryVideoContainerView.frame;
-    frame.origin.x = size.width;
+    frame.origin.x += size.width;
     self.guiStoryVideoContainerView.frame = frame;
     
     self.guiOriginalTakesPageControl.numberOfPages = videosPages;
@@ -539,6 +541,13 @@
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeScriptToggle info:nil];
 }
 
+#pragma mark - HMSimpleVideoPlayerDelegate
+-(void)videoPlayerDidFinishPlaying
+{
+    [self.sceneVideoVC done];
+    [self.storyVideoVC done];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -567,11 +576,16 @@
     // (user can cancel this action before the countdown ends)
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
-    
+
+    Scene *scene = [self.remake.story findSceneWithID:self.sceneID];
+    CGPoint focusPoint = scene.focusCGPoint;
+    NSDictionary *userInfo = @{HM_INFO_FOCUS_POINT:@[@(focusPoint.x),@(focusPoint.y)]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil userInfo:userInfo];
 }
 
 - (IBAction)onPressedCancelCountdownButton:(UIButton *)sender
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
     [self.guiRoundCountdownLabal cancel];
     self.guiCountdownContainer.hidden = YES;
 }

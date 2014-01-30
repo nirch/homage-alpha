@@ -13,6 +13,9 @@
 #import "UIView+MotionEffect.h"
 #import "HMRoundCountdownLabel.h"
 #import "DB.h"
+#import "HMUploadManager.h"
+#import "HMUploadS3Worker.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @interface HMTestSliceViewController ()
 
@@ -47,12 +50,26 @@
     [self.guiStartActivity stopAnimating];
     
     // Hardcoded user for development (until LOGIN screens are implemented)
-    User *user = [User userWithID:@"someTest@homage.it" inContext:DB.sh.context];
+    User *user = [User userWithID:@"moreTests@homage.it" inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
     [DB.sh save];
     
     //
     [self performSegueWithIdentifier:@"start" sender:nil];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // The upload manager with # workers of a specific type.
+        // You can always replace to another implementation of upload workers,
+        // as long as the workers conform to the HMUploadWorkerProtocol.
+        [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+        [HMUploadManager.sh startMonitoring];
+        
+        //
+        // Start monitoring reachability.
+        // Observe notification in your UI, if you want to inform the user
+        // about reachability changes.
+        [HMServer.sh startMonitoringReachability];
+    });
 }
 
 -(void)failedStartingApplication

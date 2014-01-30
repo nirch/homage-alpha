@@ -8,13 +8,15 @@
 
 #import "HMRecorderChildInterface.h"
 #import "HMCountDownDelegate.h"
+#import "HMSimpleVideoPlayerDelegate.h"
 
 @interface HMRecorderDetailedOptionsBarViewController : UIViewController<
     HMRecorderChildInterface,
     UITableViewDataSource,
     UITableViewDelegate,
     UIScrollViewDelegate,
-    HMCountDownDelegate
+    HMCountDownDelegate,
+    HMSimpleVideoPlayerDelegate
 >
 
 

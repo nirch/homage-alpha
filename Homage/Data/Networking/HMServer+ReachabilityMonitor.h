@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, HMNetworkReachabilityStatus) {
 @interface HMServer (ReachabilityMonitor)
 
 -(void)startMonitoringReachability;
+-(void)stopMonitoringReachability;
 -(BOOL)isReachable;
 -(AFNetworkReachabilityStatus)reachabilityStatus;
 

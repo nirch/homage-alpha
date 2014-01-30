@@ -11,6 +11,7 @@
 #import "HMVideoCameraViewController.h"
 #import "AVCamPreviewView.h"
 #import "HMNotificationCenter.h"
+#import "InfoKeys.h"
 
 // Contexts
 static void *RecordingContext = &RecordingContext;
@@ -37,6 +38,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 @property (nonatomic, readonly, getter = isSessionRunningAndDeviceAuthorized) BOOL sessionRunningAndDeviceAuthorized;
 @property (nonatomic) BOOL lockInterfaceRotation;
 @property (nonatomic) id runtimeErrorHandlingObserver;
+@property (nonatomic) CGPoint focusPoint;
 
 // Some info about beginning and end of a recording
 @property (nonatomic) NSDictionary *lastRecordingStartInfo;
@@ -96,17 +98,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 //
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"%d", [UIDevice currentDevice].orientation);
     [self updateOrientation:(UIInterfaceOrientation)[UIDevice currentDevice].orientation];
 }
 
 //
 // When view did disappear, stop the session and remove the observers.
 //
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [self removeAppObservers];
     [self removeAVObservers];
+    [self removeAppObservers];
 }
 
 #pragma mark - Silly effects
@@ -240,6 +241,21 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                      name:HM_NOTIFICATION_RECORDER_FLIP_CAMERA
                    object:nil];
 
+    //
+    // Countdown started. Will focus camera on a specific point.
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onStartedCountdownNeedToFocusOnPoint:)
+                     name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING
+                   object:nil];
+
+    //
+    // Countdown started. Will focus camera on a specific point.
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onCanceledCountdownNeedToResetCameraSettings:)
+                     name:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING
+                   object:nil];
 
 }
 
@@ -248,6 +264,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_FLIP_CAMERA object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
 }
 
 #pragma mark - Reveal
@@ -363,12 +382,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [self changeCamera];
 }
 
--(BOOL)isFrontCamera
+-(void)onStartedCountdownNeedToFocusOnPoint:(NSNotification *)notification
 {
-    AVCaptureDevice *currentVideoDevice = self.videoDeviceInput.device;
-    AVCaptureDevicePosition position = currentVideoDevice.position;
-    if (position == AVCaptureDevicePositionFront) return YES;
-    return NO;
+    NSArray *pointArray = notification.userInfo[HM_INFO_FOCUS_POINT];
+    CGPoint point = CGPointMake([pointArray[0] doubleValue], [pointArray[1] doubleValue]);
+    [self tryToFocusCameraOnPoint:point];
+}
+
+-(void)onCanceledCountdownNeedToResetCameraSettings:(NSNotification *)notification
+{
+    [self resetCameraToInitialFocusSettings];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -476,6 +499,25 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 }
 
 #pragma mark - Camera actions
+-(void)tryToFocusCameraOnPoint:(CGPoint)point
+{
+    self.focusPoint = point;
+    // Focus on a point
+    [self focusWithMode:AVCaptureFocusModeAutoFocus
+         exposeWithMode:AVCaptureExposureModeAutoExpose
+          atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
+     ];
+}
+
+-(void)resetCameraToInitialFocusSettings
+{
+    // Return to continues auto focus
+    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus
+         exposeWithMode:AVCaptureExposureModeContinuousAutoExposure
+          atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
+     ];
+}
+
 -(void)toggleMovieRecording:(NSDictionary *)info
 {
     dispatch_async([self sessionQueue], ^{
@@ -500,7 +542,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             // Lock focus on a point (currently hard coded point, should be received from the server later.
             [self focusWithMode:AVCaptureFocusModeLocked
                  exposeWithMode:AVCaptureExposureModeLocked
-                  atDevicePoint:CGPointMake(0.5,0.5) monitorSubjectAreaChange:NO
+                  atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
              ];
             
             // Start recording to a temp file.
@@ -519,27 +561,35 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         {
             self.lastRecordingStopInfo = info;
             [[self movieFileOutput] stopRecording];
+            [self resetCameraToInitialFocusSettings];
         }
     });
+}
+
+-(BOOL)isFrontCamera
+{
+    AVCaptureDevice *currentVideoDevice = self.videoDeviceInput.device;
+    AVCaptureDevicePosition position = currentVideoDevice.position;
+    if (position == AVCaptureDevicePositionFront) return YES;
+    return NO;
 }
 
 -(void)changeCamera
 {
     UIView *tempView = [[UIView alloc] init];
-    tempView.frame = self.previewView.frame;
+    tempView.frame = self.previewView.superview.frame;
+    tempView.backgroundColor = [UIColor darkGrayColor];
     
     AVCamPreviewView *previewViewStrongRef = self.previewView;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView transitionFromView:self.previewView toView:tempView duration:0.5 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished) {
+    [UIView transitionFromView:self.previewView.superview toView:tempView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished) {
         previewViewStrongRef.alpha = 0;
-        [UIView transitionFromView:tempView toView:previewViewStrongRef duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.5 animations:^{
+        [UIView transitionFromView:tempView toView:self.previewView.superview duration:0.0 options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.7 delay:0.7 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 self.previewView = previewViewStrongRef;
                 self.previewView.alpha = 1;
-            }];
+            } completion:nil];
         }];
     }];
-    [UIView commitAnimations];
     
     dispatch_async([self sessionQueue], ^{
         AVCaptureDevice *currentVideoDevice = [[self videoDeviceInput] device];

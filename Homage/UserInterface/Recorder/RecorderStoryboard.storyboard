@@ -151,178 +151,14 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" id="G0b-KV-hWj" userLabel="Common message dialogue container">
-                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor ..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FHd-ZG-uH0" customClass="HMFontLabel">
-                                        <rect key="frame" x="116" y="111" width="337" height="68"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QQa-kq-qTu" customClass="HMFontLabel">
-                                        <rect key="frame" x="133" y="76" width="303" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view hidden="YES" contentMode="scaleToFill" id="eJa-cn-Z8H" userLabel="Finished Scene Buttons">
-                                        <rect key="frame" x="0.0" y="255" width="568" height="65"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" id="LKB-Jd-hua" customClass="HMFontButton">
-                                                <rect key="frame" x="0.0" y="0.0" width="283" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" title="RETAKE LAST SCENE" image="iconSmallRetakeSceneBlack">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="onPressedRetakeLastSceneButton:" destination="73n-P8-4qd" eventType="touchUpInside" id="9P5-sO-m75"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" id="Fue-WE-MwR" customClass="HMFontButton">
-                                                <rect key="frame" x="285" y="0.0" width="283" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" title="CAN I SEE A PREVIEW?" image="iconSmallPreviewBlack">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="onPressedSeePreviewButton:" destination="73n-P8-4qd" eventType="touchUpInside" id="QTS-KK-z4v"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="FQj-lE-7D0" customClass="HMFontButton">
-                                        <rect key="frame" x="164" y="187" width="240" height="52"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <inset key="titleEdgeInsets" minX="23" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <size key="titleShadowOffset" width="1" height="1"/>
-                                        <state key="normal" title="OK, GOT IT!" image="iconGotIt">
-                                            <color key="titleColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted" image="iconRoundEmpty"/>
-                                        <connections>
-                                            <action selector="onPressedDismissButton:" destination="73n-P8-4qd" eventType="touchUpInside" id="tlZ-3G-TiI"/>
-                                        </connections>
-                                    </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="gAV-MB-oPe" userLabel="Message Activity Indicator">
-                                        <rect key="frame" x="274" y="231" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="color" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </activityIndicatorView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconTrophy" id="J0M-X1-kui">
-                                        <rect key="frame" x="242" y="27" width="85" height="52"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="L0U-BL-q8V" userLabel="Retake - Are you sure?">
-                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ARE YOU SURE YOU WANT TO RETAKE THIS SCENE?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SbJ-Au-aBS" customClass="HMFontLabel">
-                                        <rect key="frame" x="107" y="119" width="355" height="82"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" id="gaG-D0-110" userLabel="Are you sure you want to retake scene buttons">
-                                        <rect key="frame" x="0.0" y="247" width="568" height="73"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" id="vv7-EL-1X8" customClass="HMFontButton">
-                                                <rect key="frame" x="0.0" y="8" width="188" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" title="OOPS..NOPE" image="iconSmallXBlack">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="onPressedOopsDontRetakeButton:" destination="73n-P8-4qd" eventType="touchUpInside" id="mvP-HL-s3a"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" id="WXQ-wW-lLi" customClass="HMFontButton">
-                                                <rect key="frame" x="190" y="8" width="188" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" title="YEAH, START ROLLING" image="iconSmallRetakeSceneBlack">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="onPressedYeahRetakeThisScene:" destination="73n-P8-4qd" eventType="touchUpInside" id="QIW-xx-NiZ"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="wordWrap" id="CRq-ad-gu1" customClass="HMFontButton">
-                                                <rect key="frame" x="380" y="8" width="188" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" title="CAN I SEE A PREVIEW?" image="iconSmallPreviewBlack">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="onPressedSeePreviewButton:" destination="73n-P8-4qd" eventType="touchUpInside" id="2Uu-dH-3XN"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconRetakeMedium" id="UzW-EH-3Gr">
-                                        <rect key="frame" x="242" y="59" width="85" height="52"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="guiActivity" destination="gAV-MB-oPe" id="Wfq-2x-gc1"/>
-                        <outlet property="guiAreYouSureToRetakeContainer" destination="L0U-BL-q8V" id="qFf-Jl-7nS"/>
-                        <outlet property="guiAreYouSureToRetakeIcon" destination="UzW-EH-3Gr" id="Lrv-FE-CJF"/>
-                        <outlet property="guiAreYouSureYouWantToRetakeLabel" destination="SbJ-Au-aBS" id="Reu-AR-5LB"/>
                         <outlet property="guiBlurredView" destination="MYM-6F-YAT" id="1NL-MS-zUW"/>
-                        <outlet property="guiDismissButton" destination="FQj-lE-7D0" id="H6d-8f-a5G"/>
-                        <outlet property="guiFinishedSceneButtonsContainer" destination="eJa-cn-Z8H" id="ubP-Wk-eMe"/>
-                        <outlet property="guiFinishedScenePreviewButton" destination="Fue-WE-MwR" id="jDW-vg-6UA"/>
-                        <outlet property="guiFinishedSceneRetakeButton" destination="LKB-Jd-hua" id="Bxm-Aw-feO"/>
-                        <outlet property="guiTextMessageContainer" destination="G0b-KV-hWj" id="HVG-aA-5eH"/>
-                        <outlet property="guiTextMessageIcon" destination="J0M-X1-kui" id="ovf-3a-T77"/>
-                        <outlet property="guiTextMessageLabel" destination="FHd-ZG-uH0" id="E7d-kj-Qu0"/>
-                        <outlet property="guiTextMessageTitleLabel" destination="QQa-kq-qTu" id="fn3-Z9-Ved"/>
-                        <segue destination="tXs-Kq-hUw" kind="modal" identifier="see preview segue" modalTransitionStyle="coverVertical" id="DmU-xm-yNH"/>
+                        <segue destination="tXs-Kq-hUw" kind="modal" identifier="see preview segue" modalTransitionStyle="crossDissolve" id="DmU-xm-yNH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tFd-9k-m3b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -340,7 +176,7 @@
                             <view contentMode="scaleToFill" id="k7w-Et-QWO" userLabel="Video player container">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="haA-jn-S6L" userLabel="Close button">
                                 <rect key="frame" x="0.0" y="0.0" width="46" height="46"/>
@@ -381,7 +217,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
@@ -406,7 +242,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" id="NcZ-Uk-buY" userLabel="Bottom Bar - More details">
+                            <view contentMode="scaleToFill" id="NcZ-Uk-buY" userLabel="Bottom Bar - More details">
                                 <rect key="frame" x="0.0" y="31" width="568" height="221"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -458,16 +294,16 @@
                                             </view>
                                             <scrollView clipsSubviews="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="1VQ-4a-tOr">
                                                 <rect key="frame" x="0.0" y="0.0" width="284" height="163"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" id="fo0-Da-Ch8" userLabel="Video container - Scene">
-                                                        <rect key="frame" x="0.0" y="0.0" width="284" height="163"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <rect key="frame" x="15" y="15" width="254" height="133"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" id="Yal-og-8ud" userLabel="Video container - Story">
-                                                        <rect key="frame" x="0.0" y="0.0" width="284" height="163"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <rect key="frame" x="15" y="15" width="254" height="133"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </view>
                                                 </subviews>
@@ -476,8 +312,10 @@
                                                 </connections>
                                             </scrollView>
                                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="2" currentPage="1" id="0b6-7A-Qyl">
-                                                <rect key="frame" x="122" y="137" width="39" height="37"/>
+                                                <rect key="frame" x="122" y="136" width="39" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="pageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="currentPageIndicatorTintColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <action selector="onChangedValueOriginalTakesPageControl:" destination="m2k-fx-mZd" eventType="valueChanged" id="B7P-YF-rOT"/>
                                                 </connections>
@@ -615,7 +453,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
-                            <view contentMode="scaleToFill" id="ncI-xc-Aml" userLabel="Bottom Bar - Less details">
+                            <view hidden="YES" contentMode="scaleToFill" id="ncI-xc-Aml" userLabel="Bottom Bar - Less details">
                                 <rect key="frame" x="0.0" y="31" width="568" height="55"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -1047,19 +885,14 @@
         <image name="iconCreateMovieSmall" width="30" height="30"/>
         <image name="iconGotIt" width="45" height="45"/>
         <image name="iconMediumPlayerStop" width="35" height="35"/>
-        <image name="iconRetakeMedium" width="36" height="36"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconRowIndicator" width="10" height="23"/>
-        <image name="iconSceneDescriptionBlack" width="29" height="22"/>
+        <image name="iconSceneDescriptionBlack" width="28" height="21"/>
         <image name="iconSceneLocked" width="45" height="45"/>
         <image name="iconSceneRetake" width="20" height="20"/>
         <image name="iconSceneScript" width="22" height="20"/>
         <image name="iconSceneScriptLighter" width="22" height="20"/>
         <image name="iconSmallClock" width="20" height="20"/>
-        <image name="iconSmallPreviewBlack" width="28" height="19"/>
-        <image name="iconSmallRetakeSceneBlack" width="20" height="20"/>
-        <image name="iconSmallXBlack" width="12" height="17"/>
-        <image name="iconTrophy" width="30" height="46"/>
         <image name="iconUpArrowSmall" width="24" height="10"/>
         <image name="textPlate" width="375" height="14"/>
         <image name="wifi" width="64" height="50"/>

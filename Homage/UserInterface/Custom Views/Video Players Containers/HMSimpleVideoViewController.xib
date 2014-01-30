@@ -23,12 +23,17 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         </imageView>
+                        <view contentMode="scaleToFill" id="0yu-Af-sKW" userLabel="Thumb Overlay">
+                            <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLAY OUR TAKE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6s3-t7-uJ6">
-                    <rect key="frame" x="0.0" y="100" width="284" height="35"/>
+                    <rect key="frame" x="0.0" y="107" width="284" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="28"/>
                     <color key="textColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -114,6 +119,7 @@
                 <outlet property="guiVideoContainer" destination="HJq-5X-mSh" id="MSb-t7-kAG"/>
                 <outlet property="guiVideoLabel" destination="6s3-t7-uJ6" id="EGn-sT-ILp"/>
                 <outlet property="guiVideoThumb" destination="YYn-24-y2z" id="GRP-rR-XLM"/>
+                <outlet property="guiVideoThumbOverlay" destination="0yu-Af-sKW" id="WTu-X0-ANi"/>
             </connections>
         </view>
     </objects>

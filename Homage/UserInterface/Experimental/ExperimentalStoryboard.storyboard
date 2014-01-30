@@ -195,10 +195,10 @@
             </objects>
             <point key="canvasLocation" x="1850" y="-421"/>
         </scene>
-        <!--Uploader Test View Controller - Test Uploader-->
+        <!--View Controller - Test Uploader-->
         <scene sceneID="3EB-cG-Jhc">
             <objects>
-                <viewController id="T4l-0J-piu" customClass="HMUploaderTestViewController" sceneMemberID="viewController">
+                <viewController id="T4l-0J-piu" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yWD-6I-MJ6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -283,12 +283,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXY-es-Rvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="208" y="71"/>
+            <point key="canvasLocation" x="198" y="93"/>
         </scene>
-        <!--Experimental Tabs View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="IJ0-or-5Av">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="nAz-IL-3nD" customClass="HMExperimentalTabsViewController" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="nAz-IL-3nD" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="z2i-B0-924"/>
                     <nil key="simulatedBottomBarMetrics"/>
