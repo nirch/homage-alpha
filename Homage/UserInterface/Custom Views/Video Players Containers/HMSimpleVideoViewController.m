@@ -429,7 +429,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     self.view.frame = self.containerView.bounds;
     //TODO: verify with aviv if this is the correct fix
     if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
-        self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
+    self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
 }
 
 - (void)moviePlayerWillMoveFromWindow {
