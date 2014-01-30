@@ -23,7 +23,45 @@
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
+    // Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                           UIRemoteNotificationTypeSound |
+                                                                           UIRemoteNotificationTypeAlert
+                                                                           )
+     ];
+    
+    
+    // TODO: Route here the remote notification received when the app was inactive
+    if (launchOptions) {
+        NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (notificationInfo) {
+            // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
+            // IMPORTANT!!!!!:
+            // Remmember that your app was just launched, you will have to initialize stuff first, before navigating to the screen you want.
+            // You don't even have the local storage at this point and you have to wait for NSManagedDocument to open/be created.
+            // So raise some flags or whatever here, and do the navigation logic in your UIViewControllers where they belong and at the proper moment!
+        }
+    }
+    
     return YES;
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    // TODO: Route here the remote notification received when the app was active
+    // This is a simple situation and the easiest way to announce about the notification is just
+    // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
+    // add an observer for it.
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	HMGLogDebug(@"Registered to remote notifications with token: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	HMGLogError(@"Failed to get token for remote notifications: %@", error);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
