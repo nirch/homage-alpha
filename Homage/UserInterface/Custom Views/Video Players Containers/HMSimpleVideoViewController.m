@@ -426,13 +426,10 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)fixLayout
 {
-    CGRect f = self.containerView.bounds;
-    NSLog(@"%f %f %f %f", f.origin.x, f.origin.y, f.size.width, f.size.height);
-    self.view.frame = f;
-    
-    f = self.videoView.guiVideoContainer.bounds;
-    NSLog(@"%f %f %f %f", f.origin.x, f.origin.y, f.size.width, f.size.height);
-    self.videoPlayer.view.frame = f;
+    self.view.frame = self.containerView.bounds;
+    //TODO: verify with aviv if this is the correct fix
+    if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
+        self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
 }
 
 - (void)moviePlayerWillMoveFromWindow {
