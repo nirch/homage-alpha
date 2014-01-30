@@ -13,6 +13,8 @@
 #define HM_NOTIFICATION_APPLICATION_STARTED @"Application Started"
 
 // Fetches from the REST API.
+#define HM_NOTIFICATION_SERVER_USER_CREATION        @"Server New User"
+
 #define HM_NOTIFICATION_SERVER_STORIES              @"Server Stories"
 
 #define HM_NOTIFICATION_SERVER_REMAKE_CREATION      @"Server New Remake"
