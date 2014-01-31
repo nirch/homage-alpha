@@ -10,8 +10,6 @@
 
 @interface HMAWS3Client()
 
-@property (nonatomic, strong) S3TransferManager *tm;
-
 @end
 
 @implementation HMAWS3Client

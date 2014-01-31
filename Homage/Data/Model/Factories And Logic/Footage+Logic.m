@@ -43,11 +43,17 @@
     return HMFootageReadyStateStillUnkown;
 }
 
--(BOOL)needsToStartUpload
+-(BOOL)rawLocalFileShouldBeUploaded
 {
     if (!self.rawVideoS3Key) return NO;
     if (!self.rawLocalFile) return NO;
-    return [self.newRawLocalFileWaitingForUpload isEqualToNumber:@1];
+    if (self.rawUploadedFile && !self.rawUploadedFile) return YES;
+    return ![self.rawLocalFile isEqualToString:self.rawUploadedFile];
+}
+
+-(NSString *)identifier
+{
+    return [NSString stringWithFormat:@"%@_%@", self.remake.sID, self.sceneID];
 }
 
 @end

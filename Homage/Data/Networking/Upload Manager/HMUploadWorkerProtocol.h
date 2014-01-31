@@ -32,8 +32,11 @@
 ///
 /**
 *  Gives the worker the command to start uploading the file.
+*
+*   @return YES if was able to start working. NO otherwise. (A manager probably should check this returned value)
+*
 */
--(void)startWorking;
+-(BOOL)startWorking;
 
 ///
 /**

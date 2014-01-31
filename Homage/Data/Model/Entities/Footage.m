@@ -2,7 +2,7 @@
 //  Footage.m
 //  Homage
 //
-//  Created by Aviv Wolf on 1/29/14.
+//  Created by Aviv Wolf on 1/31/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -14,13 +14,14 @@
 
 @dynamic lastUploadAttemptTime;
 @dynamic lastUploadFailedErrorDescription;
-@dynamic newRawLocalFileWaitingForUpload;
 @dynamic processedVideoS3Key;
 @dynamic rawLocalFile;
 @dynamic rawVideoS3Key;
 @dynamic sceneID;
 @dynamic status;
-@dynamic successfulyUploadedRawLocalFile;
+@dynamic rawUploadedFile;
+@dynamic currentlyUploaded;
+@dynamic uploadsFailedCounter;
 @dynamic remake;
 
 @end

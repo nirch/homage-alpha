@@ -103,4 +103,11 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
 */
 -(NSString *)textWithID:(NSNumber *)textID;
 
+///
+/**
+*  Iterates footages of this remake and calls deleteRawLocalFile on each of them
+*/
+-(void)deleteRawLocalFiles;
+
+
 @end
