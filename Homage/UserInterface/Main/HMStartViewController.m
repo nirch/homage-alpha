@@ -19,12 +19,15 @@
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
 #import "Mixpanel.h"
+#import "HMLoginViewController.h"
+#import "HMSignupViewController.h"
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appContainerView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
+@property (weak, nonatomic) IBOutlet UIView *loginContainerView;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (atomic, readonly) NSDate *launchDateTime;
@@ -48,7 +51,10 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
+}
 
+-(void)viewDidAppear:(BOOL)animated
+{
     // Prepare local storage and start the App.
     [DB.sh useDocumentWithSuccessHandler:^{
         [self startApplication];
@@ -66,6 +72,8 @@
     self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
+    self.loginContainerView.hidden = YES;
+    self.loginContainerView.alpha = 0;
 }
 
 -(void)initObservers
@@ -193,7 +201,12 @@
     {
         self.renderingVC = segue.destinationViewController;
         self.renderingVC.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"loginSegue"])
+    {
+        HMLoginViewController *vc = (HMLoginViewController *)segue.destinationViewController;
+        vc.delegate = self;
     }
+    
     
 }
 
@@ -206,29 +219,69 @@
     // Dismiss the splash screen.
     [self dismissSplashScreen];
     
+    if (![User current])
+        [self presentLoginScreen];
+    
     // In development stuff
-    [self debug];
+    /*NSTimeInterval timeIntervalSinceLaunch = [[NSDate date] timeIntervalSinceDate:self.launchDateTime];
+    double delayInSeconds = timeIntervalSinceLaunch > 5.0 ? 0 : 5.0 - timeIntervalSinceLaunch;
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self userLogin];
+    });
+
+    //[self debug];
     
     //Mixpanel analytics
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"userlogin" properties:@{
-                                             @"useremail" : [User current].userID}];
+                                             @"useremail" : [User current].userID}];*/
+}
+
+-(void)presentLoginScreen
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.hidden = NO;
+        self.loginContainerView.alpha = 1;
+    } completion:nil];
+}
+
+
+-(void)userLogin
+{
+    HMSignupViewController *signupVC = [[HMSignupViewController alloc] init];
+    [self presentViewController:signupVC animated:NO completion:nil];
+    
+    /*//no user in local storage
+    if (![User current])
+    {
+        HMLoginViewController *loginVC = [[HMLoginViewController alloc] initWithNibName:nil bundle:nil];
+        if (loginVC)
+            [self presentViewController:loginVC animated:NO completion:^{
+                NSLog(@"kuku");
+            }];
+        *NSLog(@"[MainViewController] Show login view controller");
+        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+        [self presentViewController:loginVC animated:animated completion:nil];*/
 }
 
 -(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
     
-    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
-    if (!userName)
+    if (![User current])
     {
-        userName = @"yoav@homage.it";
-        [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
+        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
+        if (!userName)
+        {
+            userName = @"yoav@homage.it";
+            [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
+        }
+        User *user = [User userWithID:userName inContext:DB.sh.context];
+        [user loginInContext:DB.sh.context];
+        [DB.sh save];
     }
-    User *user = [User userWithID:userName inContext:DB.sh.context];
-    [user loginInContext:DB.sh.context];
-    [DB.sh save];
-    
     
 ////    [HMServer.sh refetchRemakesForUserID:user.userID];
 //    
@@ -351,6 +404,22 @@
     //todo: switch to me tab
     [self switchToTab:1];
     [self hideRenderingView];
+}
+
+-(void)onLoginPressedSkip
+{
+    [self.loginContainerView removeFromSuperview];
+}
+
+-(void)onLoginPressedShootWithRemake:(Remake *)remake
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.loginContainerView.hidden = YES;
+        HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+        if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+    }];
 }
 
 @end

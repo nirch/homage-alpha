@@ -215,6 +215,7 @@
 		2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593E1895A99E003A7B3D /* HMsideBarViewController.m */; };
 		267F523E1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 267F523D1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
+		269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMLoginViewController.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
@@ -444,6 +445,9 @@
 		267F523C1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDetailedStoryRemakeVideoPlayerVC.h; sourceTree = "<group>"; };
 		267F523D1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDetailedStoryRemakeVideoPlayerVC.m; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
+		269C8AF8189971F800F28B7A /* HMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginViewController.h; sourceTree = "<group>"; };
+		269C8AF9189971F800F28B7A /* HMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginViewController.m; sourceTree = "<group>"; };
+		26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F13FA5191899447F0026EA5F /* HMServer+Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Users.h"; sourceTree = "<group>"; };
 		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
@@ -973,12 +977,15 @@
 		08DF23051892704300912657 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */,
 				2638594118964F28003A7B3D /* settings */,
 				2638593C1895A979003A7B3D /* sideBar */,
 				2638593418953866003A7B3D /* renderingProgressBar */,
 				08DF231F1892704300912657 /* Storyboard.storyboard */,
 				08DF23061892704300912657 /* HMStartViewController.h */,
 				08DF23071892704300912657 /* HMStartViewController.m */,
+				269C8AF8189971F800F28B7A /* HMLoginViewController.h */,
+				269C8AF9189971F800F28B7A /* HMLoginViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
 				08DF230A1892704300912657 /* Me */,
@@ -1291,6 +1298,7 @@
 				08B9589A189167B500BCCF8C /* Footage+Logic.m in Sources */,
 				08455FF71890458E0040504D /* AVCamPreviewView.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
+				269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */,
 				08455FF91890458E0040504D /* HMVideoCameraViewController.m in Sources */,
 				08455FFB1890458E0040504D /* HMRecorderViewController.m in Sources */,
 				08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */,
