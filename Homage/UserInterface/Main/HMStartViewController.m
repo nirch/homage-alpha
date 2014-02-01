@@ -19,8 +19,10 @@
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
 #import "Mixpanel.h"
+#import "HMUploadManager.h"
+#import "HMUploadS3Worker.h"
+#import "HMLoginDelegate.h"
 #import "HMLoginViewController.h"
-#import "HMSignupViewController.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
@@ -51,16 +53,18 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
+    
     // Prepare local storage and start the App.
     [DB.sh useDocumentWithSuccessHandler:^{
         [self startApplication];
     } failHandler:^{
         [self failedStartingApplication];
     }];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    
 }
 
 -(void)initGUI
@@ -188,6 +192,7 @@
     if ([segue.identifier isEqualToString:@"appSegue"]) {
         self.appTabBarController = segue.destinationViewController;
         self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+        self.appTabBarController.tabBar.hidden = YES;
         HMGLogDebug(@"self.guiTabNameLabel.text = %@" , self.guiTabNameLabel.text);
         if (!self.guiTabNameLabel.text)
         {
@@ -220,23 +225,19 @@
     [self dismissSplashScreen];
     
     if (![User current])
+    {
         [self presentLoginScreen];
+    } else {
+        //Mixpanel analytics
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"userlogin" properties:@{
+                                                  @"useremail" : [User current].userID}];
+    }
     
-    // In development stuff
-    /*NSTimeInterval timeIntervalSinceLaunch = [[NSDate date] timeIntervalSinceDate:self.launchDateTime];
-    double delayInSeconds = timeIntervalSinceLaunch > 5.0 ? 0 : 5.0 - timeIntervalSinceLaunch;
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self userLogin];
-    });
-
-    //[self debug];
-    
-    //Mixpanel analytics
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"userlogin" properties:@{
-                                             @"useremail" : [User current].userID}];*/
+    // The upload manager with # workers of a specific type.
+    // You can always replace to another implementation of upload workers,
+    // as long as the workers conform to the HMUploadWorkerProtocol.
+    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
 }
 
 -(void)presentLoginScreen
@@ -247,24 +248,6 @@
     } completion:nil];
 }
 
-
--(void)userLogin
-{
-    HMSignupViewController *signupVC = [[HMSignupViewController alloc] init];
-    [self presentViewController:signupVC animated:NO completion:nil];
-    
-    /*//no user in local storage
-    if (![User current])
-    {
-        HMLoginViewController *loginVC = [[HMLoginViewController alloc] initWithNibName:nil bundle:nil];
-        if (loginVC)
-            [self presentViewController:loginVC animated:NO completion:^{
-                NSLog(@"kuku");
-            }];
-        *NSLog(@"[MainViewController] Show login view controller");
-        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-        [self presentViewController:loginVC animated:animated completion:nil];*/
-}
 
 -(void)debug
 {
@@ -282,21 +265,6 @@
         [user loginInContext:DB.sh.context];
         [DB.sh save];
     }
-    
-////    [HMServer.sh refetchRemakesForUserID:user.userID];
-//    
-//    for (Remake *remake in User.current.remakes) {
-//        NSLog(@"%@ %@",remake.sID, remake.story.name);
-//    }
-//    // 52e24f2fdb254514b0000018 Star Wars
-//    // 52e24c42db254514b0000017 Birthday
-//    
-//    Remake *remake = [Remake findWithID:@"52e24c42db254514b0000017" inContext:DB.sh.context];
-//    if (remake) {
-//        HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
-//        vc.delegate = self;
-//        [self presentViewController:vc animated:YES completion:nil];
-//    }
 }
 
 -(void)failedStartingApplication
@@ -349,16 +317,17 @@
 
 -(void)switchToTab:(NSUInteger)toIndex
 {
-    UIView *fromView = self.appTabBarController.selectedViewController.view;
-    UIView *toView = [[self.appTabBarController.viewControllers objectAtIndex:toIndex] view];
-    [UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:^(BOOL finished) {
-        if (finished)
-        {
-            self.appTabBarController.selectedIndex = toIndex;
-            HMGLogDebug(@"label should display %@" , self.appTabBarController.selectedViewController.title);
-            self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
-        }
-    }];
+    UIViewController *fromVC = self.appTabBarController.selectedViewController;
+    UIView *fromView = fromVC.view;
+    
+    self.appTabBarController.selectedIndex = toIndex;
+    
+    UIViewController *toVC = self.appTabBarController.selectedViewController;
+    UIView *toView = toVC.view;
+    
+    self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+    
+    [UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
 }
 
 -(void)closeSideBar

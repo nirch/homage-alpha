@@ -16,6 +16,7 @@
 #import "HMRecorderViewController.h"
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
+#import "Mixpanel.h"
 
 @interface HMLoginViewController ()
 
@@ -109,6 +110,12 @@
     [user loginInContext:DB.sh.context];
     [DB.sh save];
     [[NSUserDefaults standardUserDefaults] setValue:userID forKey:@"useremail"];
+    
+    //mixPanel analitics
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"userlogin" properties:@{
+                                              @"useremail" : [User current].userID}];
+    
     [self switchToIntroView];
 }
 
