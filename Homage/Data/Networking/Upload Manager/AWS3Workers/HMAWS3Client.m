@@ -10,8 +10,6 @@
 
 @interface HMAWS3Client()
 
-@property (nonatomic, strong) S3TransferManager *tm;
-
 @end
 
 @implementation HMAWS3Client
@@ -46,21 +44,17 @@
 
 -(void)initS3TransferManager
 {
+    HMGLogDebug(@"initS3TransferManager");
+    
     // Initialize the S3 Client.
     [AmazonErrorHandler shouldNotThrowExceptions];
     AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
-    //[AmazonLogger verboseLogging];
+    // [AmazonLogger verboseLogging];
     
     
     // Initialize the S3TransferManager
     self.tm = [S3TransferManager new];
     self.tm.s3 = s3;
-    // self.tm.delegate = self;
-    
-    // Log the available buckets for this client.
-    for (S3Bucket *bucket in self.tm.s3.listBuckets) {
-        HMGLogDebug(@"Buckets available:%@", bucket.name);
-    }
 }
 
 -(S3TransferOperation *)startUploadJobForWorker:(HMUploadS3Worker *)s3worker

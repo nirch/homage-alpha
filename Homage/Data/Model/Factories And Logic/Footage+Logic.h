@@ -61,9 +61,17 @@ typedef NS_ENUM(NSInteger, HMFootageReadyState) {
 
 ///
 /**
-*   Returns YES if this footage already has a local raw file that needs to be uploaded.
-*   And it is still not uploading / wasn't uploaded.
+*   Returns YES if this footage already has a local raw file that was not successfully uploaded in the past.
+*   (the rawLocalFile should be identical to rawUploadedFile, if a succesful upload took place)
 */
--(BOOL)needsToStartUpload;
+-(BOOL)rawLocalFileShouldBeUploaded;
+
+///
+/**
+*  An identifier including the remake id and scene id related to this footage
+*
+*  @return A string value of the format <remakeID>_<sceneID>
+*/
+-(NSString *)identifier;
 
 @end

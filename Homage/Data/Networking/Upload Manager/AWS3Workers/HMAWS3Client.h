@@ -16,6 +16,8 @@
 
 @interface HMAWS3Client : NSObject<AmazonServiceRequestDelegate>
 
+@property (nonatomic, strong) S3TransferManager *tm;
+
 // HMAWS3Client is a singleton
 +(HMAWS3Client *)sharedInstance;
 

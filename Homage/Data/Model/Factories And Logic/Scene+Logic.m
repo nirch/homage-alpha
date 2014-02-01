@@ -43,17 +43,15 @@
 {
     CGPoint focusPoint;
     
-    if (self.focusPointX == nil || self.focusPointY)
+    if (!self.focusPointX || !self.focusPointY)
     {
         HMGLogWarning(@"No focus point provided for scene %d in story %@ hence fallback to default", self.sID.integerValue, self.story.name);
-        
         focusPoint = CGPointMake(0.5f, 0.5f);
     }
     else
     {
         focusPoint = CGPointMake(self.focusPointX.doubleValue, self.focusPointY.doubleValue);
     }
-    
     return focusPoint;
 }
 

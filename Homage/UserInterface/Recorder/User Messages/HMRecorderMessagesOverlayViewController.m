@@ -76,12 +76,24 @@
     //  Each type of message screen has it's own xib file (all using this same view controller)
     //
     // Load subview from xibs
+    
     UIView *generalMessageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageGeneralView" owner:self options:nil][0];
     generalMessageView.frame = self.view.bounds;
     generalMessageView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:generalMessageView];
-//    self.guiGeneralMessageContainer.hidden = YES;
 
+    UIView *commonMessageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageCommonView" owner:self options:nil][0];
+    commonMessageView.frame = self.view.bounds;
+    commonMessageView.backgroundColor = [UIColor clearColor];
+    commonMessageView.hidden = YES;
+    [self.view addSubview:commonMessageView];
+    
+    
+    UIView *areYouSureMessageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageRetakeAreYouSureView" owner:self options:nil][0];
+    areYouSureMessageView.frame = self.view.bounds;
+    areYouSureMessageView.backgroundColor = [UIColor clearColor];
+    areYouSureMessageView.hidden = YES;
+    [self.view addSubview:areYouSureMessageView];
 }
 
 
@@ -279,6 +291,13 @@
 
 - (IBAction)onPressedPreviewLastSceneButton:(UIButton *)sender
 {
+    Remake *remake = [self.remakerDelegate remake];
+    Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
+    if (footage.rawLocalFile) {
+        [self performSegueWithIdentifier:@"see preview segue" sender:nil];
+    } else {
+        HMGLogDebug(@"Missing raw local file error");
+    }
 }
 
 - (IBAction)onPressedOopsDontRetakeButton:(UIButton *)sender

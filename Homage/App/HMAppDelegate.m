@@ -19,24 +19,49 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    //
-    // Start monitoring reachability.
-    // Observe notification in your UI, if you want to inform the user
-    // about reachability changes.
-    [HMServer.sh startMonitoringReachability];
-    
-    // The upload manager with # workers of a specific type.
-    // You can always replace to another implementation of upload workers,
-    // as long as the workers conform to the HMUploadWorkerProtocol.
-    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
-
-    
     #ifdef NDEBUG
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
+    // Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                           UIRemoteNotificationTypeSound |
+                                                                           UIRemoteNotificationTypeAlert
+                                                                           )
+     ];
+    
+    
+    // TODO: Route here the remote notification received when the app was inactive
+    if (launchOptions) {
+        NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (notificationInfo) {
+            // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
+            // IMPORTANT!!!!!:
+            // Remmember that your app was just launched, you will have to initialize stuff first, before navigating to the screen you want.
+            // You don't even have the local storage at this point and you have to wait for NSManagedDocument to open/be created.
+            // So raise some flags or whatever here, and do the navigation logic in your UIViewControllers where they belong and at the proper moment!
+        }
+    }
+    
     return YES;
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    // TODO: Route here the remote notification received when the app was active
+    // This is a simple situation and the easiest way to announce about the notification is just
+    // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
+    // add an observer for it.
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	HMGLogDebug(@"Registered to remote notifications with token: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	HMGLogError(@"Failed to get token for remote notifications: %@", error);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -49,7 +74,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [HMServer.sh startMonitoringReachability];
+    [HMServer.sh stopMonitoringReachability];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -60,11 +85,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [HMServer.sh startMonitoringReachability];
-    
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if (HMServer.sh.isReachable && DB.sh.dbDocument.documentState == UIDocumentStateNormal) {
-        [HMUploadManager.sh checkForUploads];
-    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

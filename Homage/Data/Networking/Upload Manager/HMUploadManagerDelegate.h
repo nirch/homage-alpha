@@ -16,6 +16,7 @@
 *
 *  @param worker   The worker reporting the progress
 *  @param progress A fraction of the progress for this job.
+*  @param info     Information about the worker and it's job.
 */
 -(void)worker:(id)worker reportingProgress:(double)progress info:(NSDictionary *)info;
 
@@ -25,6 +26,7 @@
  *
  *  @param worker   The worker reporting the end of the job.
  *  @param success  A boolean value indicating if the job was finished successfuly or not.
+ *  @param info     Information about the worker and it's job.
  */
 -(void)worker:(id)worker reportingFinishedWithSuccess:(BOOL)success info:(NSDictionary *)info;
 

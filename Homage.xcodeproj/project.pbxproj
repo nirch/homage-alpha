@@ -150,8 +150,6 @@
 		08CDF83B1897F6B100A9D235 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
 		08CDF83E1897F6B100A9D235 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF83D1897F6B100A9D235 /* User.m */; };
 		08CDF83F1897F6B100A9D235 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF83D1897F6B100A9D235 /* User.m */; };
-		08CDF8421897F6B100A9D235 /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8411897F6B100A9D235 /* Footage.m */; };
-		08CDF8431897F6B100A9D235 /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8411897F6B100A9D235 /* Footage.m */; };
 		08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
 		08CDF8461898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
 		08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
@@ -164,6 +162,8 @@
 		08D03F89189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
 		08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */; };
 		08D03F8D1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */; };
+		08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D1C3C8189B09A200C18AB0 /* Footage.m */; };
+		08D1C3CA189B09A200C18AB0 /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D1C3C8189B09A200C18AB0 /* Footage.m */; };
 		08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
 		08DF22FE18926E3900912657 /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
 		08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22F918926E3900912657 /* HMSimpleVideoView.m */; };
@@ -208,6 +208,10 @@
 		08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECE1886994A001A8B75 /* HMRoundButton.m */; };
 		08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
+		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
+		08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
+		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
+		08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593218953656003A7B3D /* HMRenderingViewController.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
@@ -381,8 +385,6 @@
 		08CDF8391897F6B100A9D235 /* Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text.m; sourceTree = "<group>"; };
 		08CDF83C1897F6B100A9D235 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		08CDF83D1897F6B100A9D235 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		08CDF8401897F6B100A9D235 /* Footage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Footage.h; sourceTree = "<group>"; };
-		08CDF8411897F6B100A9D235 /* Footage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Footage.m; sourceTree = "<group>"; };
 		08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageGeneralView.xib; sourceTree = "<group>"; };
 		08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMServer+ReachabilityMonitor.h"; path = "Networking/HMServer+ReachabilityMonitor.h"; sourceTree = "<group>"; };
 		08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMServer+ReachabilityMonitor.m"; path = "Networking/HMServer+ReachabilityMonitor.m"; sourceTree = "<group>"; };
@@ -393,6 +395,8 @@
 		08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderPreviewViewController.m; sourceTree = "<group>"; };
 		08D03F8A1894557900DEBDBC /* HMExperimentalNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMExperimentalNavigationViewController.h; sourceTree = "<group>"; };
 		08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMExperimentalNavigationViewController.m; sourceTree = "<group>"; };
+		08D1C3C7189B09A200C18AB0 /* Footage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Footage.h; sourceTree = "<group>"; };
+		08D1C3C8189B09A200C18AB0 /* Footage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Footage.m; sourceTree = "<group>"; };
 		08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMMeVideoPlayer.xib; sourceTree = "<group>"; };
 		08DF22F818926E3900912657 /* HMSimpleVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoView.h; sourceTree = "<group>"; };
 		08DF22F918926E3900912657 /* HMSimpleVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSimpleVideoView.m; sourceTree = "<group>"; };
@@ -433,6 +437,9 @@
 		08E50ECE1886994A001A8B75 /* HMRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRoundButton.m; sourceTree = "<group>"; };
 		08E50ED118869ADD001A8B75 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
+		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
+		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
+		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
 		2638593118953656003A7B3D /* HMRenderingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewController.h; path = "../Custom Views/Time Progress Views/HMRenderingViewController.h"; sourceTree = "<group>"; };
 		2638593218953656003A7B3D /* HMRenderingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRenderingViewController.m; path = "../Custom Views/Time Progress Views/HMRenderingViewController.m"; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
@@ -593,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */,
+				08EF1714189A717D0093000B /* InfoKeys.h */,
 				0840FF801885356A00A6EF5E /* DB.h */,
 				0840FF811885356A00A6EF5E /* DB.m */,
 				086D94971886FF5E0086C565 /* Entities */,
@@ -761,6 +769,8 @@
 				08455FF51890458E0040504D /* HMRecorderMessagesOverlayViewController.h */,
 				08455FF61890458E0040504D /* HMRecorderMessagesOverlayViewController.m */,
 				08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */,
+				08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */,
+				08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */,
 			);
 			path = "User Messages";
 			sourceTree = "<group>";
@@ -789,8 +799,8 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				08CDF8401897F6B100A9D235 /* Footage.h */,
-				08CDF8411897F6B100A9D235 /* Footage.m */,
+				08D1C3C7189B09A200C18AB0 /* Footage.h */,
+				08D1C3C8189B09A200C18AB0 /* Footage.m */,
 				08CDF83C1897F6B100A9D235 /* User.h */,
 				08CDF83D1897F6B100A9D235 /* User.m */,
 				08CDF8381897F6B100A9D235 /* Text.h */,
@@ -1149,7 +1159,7 @@
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 56F7YSPHC5;
+						DevelopmentTeam = 3HVGM4BBZC;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1188,6 +1198,7 @@
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				2638593B18955252003A7B3D /* Settings.bundle in Resources */,
+				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				08D03F8418944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
@@ -1196,6 +1207,7 @@
 				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
 				08DF232C1892704300912657 /* CustomSubviewController.xib in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
+				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1209,8 +1221,10 @@
 				08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				084560001890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
+				08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
 				08D03F8518944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				08DF22FE18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
+				08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				08DF230418926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				08CDF8461898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
@@ -1292,6 +1306,7 @@
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
+				08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,
 				08DF232E1892704300912657 /* HMRemakeCell.m in Sources */,
@@ -1337,7 +1352,6 @@
 				08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,
 				08E50EC618868AEF001A8B75 /* HMFontLabel.m in Sources */,
 				086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */,
-				08CDF8421897F6B100A9D235 /* Footage.m in Sources */,
 				084E533D18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
@@ -1421,7 +1435,6 @@
 				0840FF67188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				0806FA3518828AEB007514BE /* HomageTests.m in Sources */,
 				0840FF6E188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
-				08CDF8431897F6B100A9D235 /* Footage.m in Sources */,
 				08CDF83B1897F6B100A9D235 /* Text.m in Sources */,
 				08DF23211892704300912657 /* HMStartViewController.m in Sources */,
 				086D94A9188702130086C565 /* HMServer+LazyLoading.m in Sources */,
@@ -1432,6 +1445,7 @@
 				08B9588B1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				08DF230018926E3900912657 /* HMSimpleVideoView.m in Sources */,
 				08D03F89189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
+				08D1C3CA189B09A200C18AB0 /* Footage.m in Sources */,
 				08CDF82F1897F6B000A9D235 /* Scene.m in Sources */,
 				08DF230218926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
 				08B958911891678600BCCF8C /* Text+Factory.m in Sources */,

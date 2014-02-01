@@ -56,16 +56,26 @@
     _progress = 0;
 }
 
--(void)startWorking
+-(BOOL)startWorking
 {
     S3TransferOperation *transferOperation = [self.client startUploadJobForWorker:self];
+    if (!transferOperation) {
+        HMGLogError(@"Couldn't start upload job (transferOperation is nil) %@", self.jobID);
+        return NO;
+    }
     self.userInfo[@"transferOperation"] = transferOperation;
+    return YES;
 }
 
 -(void)stopWorking
 {
+//    [self.client.tm cancelAllTransfers];
     S3TransferOperation *transferOperation = self.userInfo[@"transferOperation"];
-    [transferOperation cancel];
+    S3PutObjectRequest *putRequest = transferOperation.putRequest;
+    [transferOperation pause];
+    [transferOperation cleanup];
+    [putRequest cancel];
+    [self.userInfo removeObjectForKey:@"transferOperation"];
 }
 
 #pragma mark - AmazonServiceRequestDelegate
@@ -86,7 +96,7 @@
     double progress = ((double)totalBytesWritten/(double)totalBytesExpectedToWrite);
     if (progress > self.progress+0.05) {
         _progress = progress;
-        HMGLogDebug(@"%@ %.02f writtern", self.name, self.progress);
+        HMGLogDebug(@"%@ %.02f writtern", self.source, self.progress);
         
         // Update the manager, if able.
         if ([self.delegate respondsToSelector:@selector(worker:reportingProgress:info:)]) {

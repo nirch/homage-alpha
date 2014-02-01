@@ -13,6 +13,8 @@
 @interface HMRecorderPreviewViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *guiContainerView;
+@property (weak, nonatomic) HMSimpleVideoViewController *videoVC;
+@property (nonatomic) BOOL alreadyDismissed;
 
 @end
 
@@ -32,7 +34,14 @@
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
     [vc extractThumbFromVideo];
-    [vc play];
+
+    self.videoVC = vc;
+    self.alreadyDismissed = NO;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.videoVC play];
 }
 
 -(BOOL)prefersStatusBarHidden
@@ -53,12 +62,16 @@
 #pragma mark - HMSimpleVideoPlayerDelegate
 -(void)videoPlayerDidStop
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.alreadyDismissed) return;
+    self.alreadyDismissed = YES;
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.alreadyDismissed) return;
+    self.alreadyDismissed = YES;
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

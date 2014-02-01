@@ -51,7 +51,41 @@
 ///
 /**
  *  Check for uploads, but give a list of spcific footages a priority above all others.
+ *     Same as checkForUploads, but also provides a list of footages that will get higher priority
+ *     when the manager picks raw files to be uploaded.
+ *
+ *  @param footages - an array of footages what will be prioritized when choosing the next raw file of a footage to upload.
  */
 -(void)checkForUploadsWithPrioritizedFootages:(NSArray *)footages;
+
+///
+/**
+*  Given a footage, will check if that footage is currently being uploaded.
+*   if it does, that upload will be stopped and the relevant worker will be returned to the idle workers pool.
+*   if it doesn't, nothing will happen.
+*
+*   @param footage - the footage what the upload of should be canceled (if such exists).
+*/
+-(void)cancelUploadForFootage:(Footage *)footage;
+
+///
+/**
+*  A way to ask the upload manager if he currently uploads a file related to the given footage.
+*
+*  @param footage The footage we ask the question about.
+*
+*  @return YES if an upload job currently exists fot this footage.
+*/
+-(BOOL)isCurrentlyUploadingFootage:(Footage *)footage;
+
+///
+/**
+ *  Cancel all upload jobs currently active (if any exist).
+ *   All workers will return to the idle workers pool.
+ */
+-(void)cancelAllUploads;
+
+
+
 
 @end

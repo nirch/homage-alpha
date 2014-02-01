@@ -20,6 +20,9 @@
 // Don't use these notifications to inform that a recording was stopped.
 #define HM_NOTIFICATION_RECORDER_START_RECORDING                    @"Recorder Start Recording"
 #define HM_NOTIFICATION_RECORDER_STOP_RECORDING                     @"Recorder Stop Recording"
+#define HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING   @"Recorder Start Countdown Before Recording"
+#define HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING  @"Recorder Cancel Countdown Before Recording"
+
 
 #define HM_NOTIFICATION_RECORDER_FLIP_CAMERA                        @"Recorder Flip Camera"
 #define HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA                 @"Recorder Using Front Camera"
