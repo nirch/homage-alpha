@@ -7,6 +7,7 @@
 //
 
 #import "HMFontButton.h"
+#import "HMColor.h"
 
 @implementation HMFontButton
 
@@ -22,6 +23,7 @@
 -(void)initCustomFont
 {
     self.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.titleLabel.font.pointSize];
+    [self setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
 }
 
 

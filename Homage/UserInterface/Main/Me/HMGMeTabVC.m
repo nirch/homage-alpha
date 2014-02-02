@@ -18,6 +18,7 @@
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
+#import "HMDetailedStoryRemakeVideoPlayerVC.h"
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
@@ -355,6 +356,7 @@
     cell.remakeButton.tag = indexPath.item;
     cell.closeMovieButton.tag = indexPath.item;
     cell.deleteButton.tag = indexPath.item;
+    cell.tag = indexPath.item;
     //
         
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
@@ -498,13 +500,16 @@
     
     self.playingMovieIndex = indexPath.item;
     
-    HMSimpleVideoViewController *vc;
+
+    [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
+    
+    /*HMSimpleVideoViewController *vc;
     self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
     self.moviePlayer.delegate = self;
     self.moviePlayer.videoURL = videoURL;
     [self configureCellForMoviePlaying:cell active:YES];
     [self.moviePlayer play];
-    [self.moviePlayer setScalingMode:@"aspect fit"];
+    [self.moviePlayer setScalingMode:@"aspect fit"];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -692,6 +697,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"videoPlayerSegue"]) {
+        HMDetailedStoryRemakeVideoPlayerVC *vc = segue.destinationViewController;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.playingMovieIndex inSection:0];
+        Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        vc.videoURL = remake.videoURL;
+    }
+}
+
+// ============
+// Rewind segue
+// ============
+-(IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
+{
+    //self.view.backgroundColor = [UIColor clearColor];
 }
 
 @end

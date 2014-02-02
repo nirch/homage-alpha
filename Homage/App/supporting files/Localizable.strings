@@ -56,7 +56,7 @@
 "REMAKE_FAILED_CLICK" = "Oh... Movie Creation Failed. Click Here";
 
 /*a message to the user, notifing him that the movie is now rendering*/
-"RENDERING_MOVIE_MESSAGE" = "Rendering movie";
+"RENDERING_MOVIE_MESSAGE" = "Preparing your movie";
 
 /*the title for an alert view that pops when the user chooses of to make a new remake or continue from last sabed point*/
 "CONTINUE_WITH_REMAKE" = "Continue Remake";

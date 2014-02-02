@@ -42,7 +42,7 @@
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel2;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel3;
 
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityIndicator;
 
 
 @end
@@ -64,7 +64,8 @@
 {
     self.guiIntroView.alpha = 0;
     self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
-    [self.guiBGImageView addMotionEffectWithAmount:-30];
+    self.guiActivityIndicator.hidden = YES;
+    self.guiSignUpMailTextField.keyboardType = UIKeyboardTypeEmailAddress;
 }
 -(void)initObservers
 {
@@ -96,9 +97,10 @@
                                               otherButtonTitles:nil
                               ];
         [alert show];
-        self.guiSignUpMailTextField.text = @"";
     } else {
         [HMServer.sh createUserWithID:emailAsddress];
+        self.guiActivityIndicator.hidden = NO;
+        [self.guiActivityIndicator startAnimating];
     }
 }
 
@@ -116,6 +118,7 @@
     [mixpanel track:@"userlogin" properties:@{
                                               @"useremail" : [User current].userID}];
     
+    [self.guiActivityIndicator stopAnimating];
     [self switchToIntroView];
 }
 
