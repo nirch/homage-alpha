@@ -9,5 +9,9 @@
 #import "DB.h"
 
 
-@interface HMGMeTabVC : UIViewController <UITextViewDelegate,NSFetchedResultsControllerDelegate> 
+@interface HMGMeTabVC : UIViewController <UITextViewDelegate,NSFetchedResultsControllerDelegate>
+
+-(void)refetchRemakesFromServer;
+-(void)refreshFromLocalStorage;
+
 @end

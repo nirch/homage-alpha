@@ -21,7 +21,7 @@
 
 #define TIMER_INTERVAL 10
 #define TIMER_TOLERANCE 5
-#define PROGRESS_BAR_DURATION 10
+#define PROGRESS_BAR_DURATION 300
 #define REMAKE_ID_KEY @"remakeID"
 
 @implementation HMRenderingViewController
@@ -167,7 +167,7 @@
     self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
     
     [UIView animateWithDuration:0.5 animations:^{
-        [self.view sendSubviewToBack:self.guiInProgressView];
+        [self.view bringSubviewToFront:self.guiDoneRenderingView];
     }];
 
     
