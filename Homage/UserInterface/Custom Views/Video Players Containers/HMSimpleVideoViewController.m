@@ -94,11 +94,14 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     self.containerView.clipsToBounds = YES;
     [self initObservers];
     [self fixLayout];
+    self.videoPlayer.view.alpha = 0;
+    self.videoView.guiVideoThumb.alpha = 1;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated

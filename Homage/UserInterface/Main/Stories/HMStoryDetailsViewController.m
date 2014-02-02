@@ -80,6 +80,7 @@
     [self.storyMoviePlayer hideVideoLabel];
     [self.storyMoviePlayer hideMediaControls];
     self.storyMoviePlayer.videoImage = self.story.thumbnail;
+    self.storyMoviePlayer.delegate = self;
 }
 
 -(void)initContent

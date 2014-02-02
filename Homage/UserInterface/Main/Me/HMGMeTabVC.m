@@ -185,6 +185,7 @@
     //NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
     
+    HMGLogDebug(@"if the bug reproduces, indexPath is: %d" , indexPath.item);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if (notification.isReportingError ) {
@@ -294,7 +295,15 @@
     
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
+    
+    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
+    //show only inprogress and done remakes
+    NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"(status=1 OR status=3)"];
+    
+    NSPredicate *compoundPredicate
+    = [NSCompoundPredicate andPredicateWithSubpredicates:@[userPredicate,statusPredicate]];
+    
+    fetchRequest.predicate = compoundPredicate;
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     

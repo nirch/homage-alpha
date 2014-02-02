@@ -21,7 +21,7 @@
 
 #define TIMER_INTERVAL 10
 #define TIMER_TOLERANCE 5
-#define PROGRESS_BAR_DURATION 300
+#define PROGRESS_BAR_DURATION 10
 #define REMAKE_ID_KEY @"remakeID"
 
 @implementation HMRenderingViewController
@@ -55,7 +55,9 @@
     
     UIColor *homageColor = [HMColor.sh main2];
     [self.view sendSubviewToBack:self.guiDoneRenderingView];
-    [self.view addSubview:self.guiInProgressView];
+    //[self.view addSubview:self.guiInProgressView];
+    //[self.guiDoneRenderingView setHidden:YES];
+    //[self.guiInProgressView setHidden:NO];
     self.guiInProgressLabel.textColor = homageColor;
     self.guiDoneLabel.textColor = homageColor;
     self.guiProgressBar.backgroundColor = homageColor;
@@ -124,13 +126,19 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [UIView transitionFromView:self.guiInProgressView
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.view bringSubviewToFront:self.guiDoneRenderingView];
+            }];
+            
+            /*[UIView transitionFromView:self.guiInProgressView
                                 toView:self.guiDoneRenderingView
                               duration:0.5
                                options:UIViewAnimationOptionTransitionCrossDissolve
                             completion:^(BOOL finished){
-                                [self.view sendSubviewToBack:self.guiInProgressView];
-                            }];
+                                //[self.view sendSubviewToBack:self.guiInProgressView];
+                                [self.guiDoneRenderingView setHidden:YES];
+                                [self.guiDoneRenderingView setHidden:NO];
+                            }];*/
         });
 
     }
@@ -158,13 +166,19 @@
 
     self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
     
-    [UIView transitionFromView:self.guiInProgressView
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view sendSubviewToBack:self.guiInProgressView];
+    }];
+
+    
+    /*[UIView transitionFromView:self.guiInProgressView
                         toView:self.guiDoneRenderingView
                       duration:0.5
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     completion:^(BOOL finished){
                         [self.view sendSubviewToBack:self.guiInProgressView];
-                    }];
+                        
+                    }];*/
     
 
 }
@@ -172,6 +186,8 @@
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
     HMGLogDebug(@"%s", __PRETTY_FUNCTION__);
     [self.delegate renderDoneClicked];
+    [self.view sendSubviewToBack:self.guiDoneRenderingView];
+    
 }
 
 - (void)renderStartedWithRemakeID:(NSString *)remakeID {
