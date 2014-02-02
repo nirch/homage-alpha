@@ -117,4 +117,10 @@
     return NO;
 }
 
+-(void)deleteRawLocalFiles
+{
+    for (Footage *footage in self.footages)
+        [footage deleteRawLocalFile];
+}
+
 @end

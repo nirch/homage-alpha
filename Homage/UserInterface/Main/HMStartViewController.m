@@ -21,12 +21,15 @@
 #import "Mixpanel.h"
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
+#import "HMLoginDelegate.h"
+#import "HMLoginViewController.h"
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appContainerView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
+@property (weak, nonatomic) IBOutlet UIView *loginContainerView;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (atomic, readonly) NSDate *launchDateTime;
@@ -50,7 +53,7 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
-
+    
     // Prepare local storage and start the App.
     [DB.sh useDocumentWithSuccessHandler:^{
         [self startApplication];
@@ -59,15 +62,22 @@
     }];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
 -(void)initGUI
 {
-    //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
     self.sideBarContainerView.hidden = YES;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
-    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+    //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
+    self.loginContainerView.hidden = YES;
+    self.loginContainerView.alpha = 0;
 }
 
 -(void)initObservers
@@ -151,7 +161,6 @@
 -(void)hideSideBar
 {
      [UIView animateWithDuration:0.3 animations:^{
-        //self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(-150,0);
         self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
         } completion:^(BOOL finished){
             if (finished) self.sideBarContainerView.hidden = YES;
@@ -183,6 +192,12 @@
     if ([segue.identifier isEqualToString:@"appSegue"]) {
         self.appTabBarController = segue.destinationViewController;
         self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+        self.appTabBarController.tabBar.hidden = YES;
+        HMGLogDebug(@"self.guiTabNameLabel.text = %@" , self.guiTabNameLabel.text);
+        if (!self.guiTabNameLabel.text)
+        {
+            self.guiTabNameLabel.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+        }
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
         HMsideBarViewController *vc = (HMsideBarViewController *)segue.destinationViewController;
@@ -191,7 +206,13 @@
     {
         self.renderingVC = segue.destinationViewController;
         self.renderingVC.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"loginSegue"])
+    {
+        HMLoginViewController *vc = (HMLoginViewController *)segue.destinationViewController;
+        vc.delegate = self;
     }
+    
+    
 }
 
 #pragma mark - Application start
@@ -203,13 +224,15 @@
     // Dismiss the splash screen.
     [self dismissSplashScreen];
     
-    // In development stuff
-    [self debug];
-    
-    //Mixpanel analytics
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"userlogin" properties:@{
-                                             @"useremail" : [User current].userID}];
+    if (![User current])
+    {
+        [self presentLoginScreen];
+    } else {
+        //Mixpanel analytics
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"userlogin" properties:@{
+                                                  @"useremail" : [User current].userID}];
+    }
     
     // The upload manager with # workers of a specific type.
     // You can always replace to another implementation of upload workers,
@@ -217,35 +240,31 @@
     [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
 }
 
+-(void)presentLoginScreen
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.hidden = NO;
+        self.loginContainerView.alpha = 1;
+    } completion:nil];
+}
+
+
 -(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
     
-    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
-    if (!userName)
+    if (![User current])
     {
-        userName = @"yoav@homage.it";
-        [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
+        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
+        if (!userName)
+        {
+            userName = @"yoav@homage.it";
+            [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
+        }
+        User *user = [User userWithID:userName inContext:DB.sh.context];
+        [user loginInContext:DB.sh.context];
+        [DB.sh save];
     }
-    User *user = [User userWithID:userName inContext:DB.sh.context];
-    [user loginInContext:DB.sh.context];
-    [DB.sh save];
-    
-    
-////    [HMServer.sh refetchRemakesForUserID:user.userID];
-//    
-//    for (Remake *remake in User.current.remakes) {
-//        NSLog(@"%@ %@",remake.sID, remake.story.name);
-//    }
-//    // 52e24f2fdb254514b0000018 Star Wars
-//    // 52e24c42db254514b0000017 Birthday
-//    
-//    Remake *remake = [Remake findWithID:@"52e24c42db254514b0000017" inContext:DB.sh.context];
-//    if (remake) {
-//        HMRecorderViewController *vc = [HMRecorderViewController recorderForRemake:remake];
-//        vc.delegate = self;
-//        [self presentViewController:vc animated:YES completion:nil];
-//    }
 }
 
 -(void)failedStartingApplication
@@ -298,16 +317,17 @@
 
 -(void)switchToTab:(NSUInteger)toIndex
 {
-    UIView *fromView = self.appTabBarController.selectedViewController.view;
-    UIView *toView = [[self.appTabBarController.viewControllers objectAtIndex:toIndex] view];
-    [UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:^(BOOL finished) {
-        if (finished)
-        {
-            self.appTabBarController.selectedIndex = toIndex;
-            HMGLogDebug(@"label should display %@" , self.appTabBarController.selectedViewController.title);
-            self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
-        }
-    }];
+    UIViewController *fromVC = self.appTabBarController.selectedViewController;
+    UIView *fromView = fromVC.view;
+    
+    self.appTabBarController.selectedIndex = toIndex;
+    
+    UIViewController *toVC = self.appTabBarController.selectedViewController;
+    UIView *toView = toVC.view;
+    
+    self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+    
+    [UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
 }
 
 -(void)closeSideBar
@@ -340,8 +360,8 @@
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
         HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
-        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
-        //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
+        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
     } completion:^(BOOL finished){
         if (finished)
         self.renderingContainerView.hidden = YES;
@@ -353,6 +373,22 @@
     //todo: switch to me tab
     [self switchToTab:1];
     [self hideRenderingView];
+}
+
+-(void)onLoginPressedSkip
+{
+    [self.loginContainerView removeFromSuperview];
+}
+
+-(void)onLoginPressedShootWithRemake:(Remake *)remake
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.loginContainerView.hidden = YES;
+        HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+        if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+    }];
 }
 
 @end

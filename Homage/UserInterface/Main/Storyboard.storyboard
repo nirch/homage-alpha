@@ -12,15 +12,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" id="CVV-sU-tHe">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="568"/>
+                            <containerView contentMode="scaleToFill" id="CVV-sU-tHe" userLabel="side bar container view">
+                                <rect key="frame" x="0.0" y="0.0" width="250" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="2Bz-2S-I1k" kind="embed" identifier="sideBarSegue" id="Nzu-KS-bh7"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" id="oj9-Vs-QHV">
+                            <view contentMode="scaleToFill" id="oj9-Vs-QHV" userLabel="app view">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="569"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -53,12 +53,20 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <containerView autoresizesSubviews="NO" contentMode="scaleToFill" id="fIN-2a-57r">
+                            <containerView autoresizesSubviews="NO" contentMode="scaleToFill" id="fIN-2a-57r" userLabel="renderBar container View">
                                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="Zaz-2j-rCE" kind="embed" identifier="renderSegue" id="d8n-DU-AyY"/>
+                                </connections>
+                            </containerView>
+                            <containerView contentMode="scaleToFill" id="eTd-5y-QS3" userLabel="login container view">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="6YW-7r-Kk7" kind="embed" identifier="loginSegue" id="HXU-IQ-kw0"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" id="LGr-HO-h8t" userLabel="Splash View">
@@ -111,6 +119,7 @@
                         <outlet property="guiTabNameLabel" destination="PcV-Lk-RmR" id="dlw-f3-Q9x"/>
                         <outlet property="guiTextLabel1" destination="9bm-AI-VPM" id="VQ5-TV-52e"/>
                         <outlet property="guiTextLabel2" destination="oTj-zv-yPe" id="5dd-hx-AJe"/>
+                        <outlet property="loginContainerView" destination="eTd-5y-QS3" id="Xdh-iZ-u9Y"/>
                         <outlet property="renderingContainerView" destination="fIN-2a-57r" id="GfI-QZ-JqM"/>
                         <outlet property="sideBarContainerView" destination="CVV-sU-tHe" id="Jqg-Cf-MeQ"/>
                     </connections>
@@ -159,7 +168,8 @@
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="HkM-dd-oCy">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="520"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="84"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Krx-vD-xcq">
                                     <size key="itemSize" width="320" height="219"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -299,6 +309,7 @@
                                 <rect key="frame" x="10" y="317" width="300" height="188"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="75"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="hqq-tY-Hk9">
                                     <size key="itemSize" width="145" height="82"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -679,15 +690,15 @@
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="2Bz-2S-I1k" customClass="HMsideBarViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="76j-ok-Cpt">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homageH" id="2iE-eA-xyT">
-                                <rect key="frame" x="-1" y="0.0" width="151" height="516"/>
+                                <rect key="frame" x="-1" y="0.0" width="251" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nR4-uX-sgD">
-                                <rect key="frame" x="7" y="49" width="137" height="84"/>
+                                <rect key="frame" x="56" y="49" width="137" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="stories">
@@ -698,7 +709,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bkd-Dk-DVo">
-                                <rect key="frame" x="7" y="251" width="135" height="84"/>
+                                <rect key="frame" x="57" y="251" width="135" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="settings">
@@ -709,7 +720,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="os6-0F-yVc">
-                                <rect key="frame" x="7" y="149" width="137" height="84"/>
+                                <rect key="frame" x="56" y="149" width="137" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="me">
@@ -736,6 +747,146 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9s5-UW-DuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-151" y="-13"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="oiO-oP-zMe">
+            <objects>
+                <viewController id="6YW-7r-Kk7" customClass="HMLoginViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sfJ-wd-PPM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" id="9aM-rr-aN3">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" id="oSd-y7-0vr" userLabel="signUpView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="With Homage you will be the star of an amazing video" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w8k-or-UbW">
+                                        <rect key="frame" x="20" y="20" width="280" height="87.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a Story, shoot the Video -> share it with the world" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iCG-JN-prc">
+                                        <rect key="frame" x="20" y="90" width="280" height="87.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Any location becomes a movie studio!" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YfC-fY-IIc">
+                                        <rect key="frame" x="21" y="159" width="280" height="87.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="IET-vm-wkf">
+                                        <rect key="frame" x="14" y="351" width="281" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="textColor" red="0.73906674589999999" green="0.73906674589999999" blue="0.73906674589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bTk-IG-czK">
+                                        <rect key="frame" x="14" y="389" width="281" height="29.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Sign Up">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedSignUp:" destination="6YW-7r-Kk7" eventType="touchUpInside" id="xMf-sd-2bZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="cup-Yg-xb7" userLabel="introView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="559.99999978920437"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to star in a video you will need to:" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JT7-Rn-lDV">
+                                        <rect key="frame" x="23" y="12" width="279" height="83"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="use a plain wall as a background" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8f-mZ-qfN">
+                                        <rect key="frame" x="20" y="147" width="279" height="79"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to avoid shadows step away from the wall." lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zlx-8V-UJO">
+                                        <rect key="frame" x="23" y="88" width="279" height="89"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for best results, make sure your clothes are in different in color from the wall." lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2de-ox-2EP">
+                                        <rect key="frame" x="13" y="225" width="279" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mzE-bG-vX9">
+                                        <rect key="frame" x="23" y="420" width="91.5" height="46.99999997878502"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="skip">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedSkipButton:" destination="6YW-7r-Kk7" eventType="touchUpInside" id="WFb-gj-mpf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oyj-uG-goY">
+                                        <rect key="frame" x="20" y="309.00000287164613" width="264" height="86"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Shoot my First story">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedShootFirstMovie:" destination="6YW-7r-Kk7" eventType="touchUpInside" id="lwI-0D-BeW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="guiBGImageView" destination="9aM-rr-aN3" id="Fnh-1y-EuL"/>
+                        <outlet property="guiIntroLabel1" destination="JT7-Rn-lDV" id="Jwh-Df-8zZ"/>
+                        <outlet property="guiIntroLabel2" destination="x8f-mZ-qfN" id="zJ4-x6-WmC"/>
+                        <outlet property="guiIntroLabel4" destination="2de-ox-2EP" id="ccy-rB-Qic"/>
+                        <outlet property="guiIntroSkipButton" destination="mzE-bG-vX9" id="VIa-FD-ww5"/>
+                        <outlet property="guiIntroView" destination="cup-Yg-xb7" id="w5R-pX-mwE"/>
+                        <outlet property="guiIntrolabel3" destination="Zlx-8V-UJO" id="I4s-iA-I0i"/>
+                        <outlet property="guiShootFirstStoryButton" destination="oyj-uG-goY" id="YWy-iq-irA"/>
+                        <outlet property="guiSignUpButton" destination="bTk-IG-czK" id="dKe-1c-XBs"/>
+                        <outlet property="guiSignUpMailTextField" destination="IET-vm-wkf" id="W1e-f3-FSX"/>
+                        <outlet property="guiSignUpView" destination="oSd-y7-0vr" id="iNT-Lk-2av"/>
+                        <outlet property="guiSignupLabel1" destination="w8k-or-UbW" id="pAE-76-kt5"/>
+                        <outlet property="guiSignupLabel2" destination="iCG-JN-prc" id="gyn-hY-fNs"/>
+                        <outlet property="guiSignupLabel3" destination="YfC-fY-IIc" id="LYI-hB-Awn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GdL-7k-ikp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="170" y="-705"/>
         </scene>
     </scenes>
     <resources>

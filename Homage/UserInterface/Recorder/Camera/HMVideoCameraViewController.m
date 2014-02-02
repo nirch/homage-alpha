@@ -49,6 +49,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 @property (nonatomic, readonly) NSString *camSettingsSessionPresetFrontCameraFallback;
 @property (nonatomic, readonly) NSInteger camSettingsPrefferedDevicePosition;
 @property (nonatomic, readonly) NSString *camSettingsPreviewLayerVideoGravity;
+@property (nonatomic, readonly) NSInteger camSettingsMinFramesPerSecond;
+@property (nonatomic, readonly) NSInteger camSettingsMaxFramesPerSecond;
 
 
 @end
@@ -62,6 +64,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     _camSettingsSessionPreset                       = AVCaptureSessionPreset1280x720;           // Video capture resolution
     _camSettingsSessionPresetFrontCameraFallback    = AVCaptureSessionPreset640x480;            // If front camera can't show 720p, will try 480p.
     _camSettingsPrefferedDevicePosition             = AVCaptureDevicePositionBack;              // Preffered camera position
+    _camSettingsMinFramesPerSecond                  = 25;                                       // Min fps. Set to 0, if you want to use device defaults instead.
+    _camSettingsMaxFramesPerSecond                  = 25;                                       // Max fps. Set to 0, if you want to use device defaults instead.
     
     // Preview layer
     _camSettingsPreviewLayerVideoGravity            = AVLayerVideoGravityResizeAspectFill;      // Video gravity on the preview layer
@@ -472,6 +476,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             [self.session addInput:audioDeviceInput];
         }
         
+        //
+        // Output!
+        //
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
         if ([self.session canAddOutput:movieFileOutput])
         {
@@ -483,9 +490,12 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             
             // Set the output
             self.movieFileOutput = movieFileOutput;
-            
-            
         }
+        
+        //
+        //  Framerate
+        //
+        if (self.videoDeviceInput.device) [self updateFPS];
     });
 }
 
@@ -728,6 +738,35 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 }
 
 #pragma mark Device Configuration
+- (void)updateFPS
+{
+    AVCaptureDevice *device = self.videoDeviceInput.device;
+    NSInteger minFPS = self.camSettingsMinFramesPerSecond;
+    NSInteger maxFPS = self.camSettingsMaxFramesPerSecond;
+    dispatch_async([self sessionQueue], ^{
+        NSError *error;
+        
+        if ([device lockForConfiguration:&error])
+        {
+            NSArray *supportedFPSRanges = device.activeFormat.videoSupportedFrameRateRanges;
+            BOOL frameRateSupported = NO;
+            for (AVFrameRateRange *range in supportedFPSRanges) {
+                if (range.minFrameRate <= minFPS && range.maxFrameRate >= maxFPS) {
+                    frameRateSupported = YES;
+                }
+            }
+            if (frameRateSupported) {
+                device.activeVideoMinFrameDuration = CMTimeMake(1, minFPS);
+                device.activeVideoMaxFrameDuration = CMTimeMake(1, maxFPS);
+                HMGLogDebug(@"Changed to frame rate range: %d - %d", minFPS, maxFPS);
+            } else {
+                HMGLogDebug(@"Frame rate range unsupported: %d - %d. Using camera defaults instead.", minFPS, maxFPS);
+            }
+        } else {
+            HMGLogError(@"%@", error);
+        }
+    });
+}
 
 - (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange
 {
@@ -772,19 +811,6 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         }
     }
 }
-
-
-
-//- (void)configureCameraForFrameRate:(AVCaptureDevice *)device
-//{
-//    if ( [device lockForConfiguration:NULL] == YES ) {
-//        // device.activeFormat = bestFormat;
-//        device.activeVideoMinFrameDuration = CMTimeMake(1, 1);
-//        device.activeVideoMaxFrameDuration = CMTimeMake(1, 1);
-//        //id x = device.activeFormat.videoSupportedFrameRateRanges;
-//        [device unlockForConfiguration];
-//    }
-//}
 
 #pragma mark - CAMERA CONFIGURATIONS
 +(AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType

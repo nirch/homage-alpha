@@ -20,7 +20,7 @@
     // Returns (JSON) with the info about the new remake.
     [self postRelativeURLNamed:@"new user"
                     parameters:@{@"user_id":userID}
-              notificationName:HM_NOTIFICATION_SERVER_REMAKE_CREATION
+              notificationName:HM_NOTIFICATION_SERVER_USER_CREATION
                           info:@{@"userID":userID}
                         parser:[HMUserParser new]
      ];

@@ -502,8 +502,12 @@
     Footage *footage = [self.remake footageWithSceneID:sceneID];
     if (footage.rawLocalFile) [footage deleteRawLocalFile];
     footage.rawLocalFile = rawMoviePath;
-    footage.newRawLocalFileWaitingForUpload = @YES;
     [DB.sh save];
+
+    // If uploader is currently uploading a file for this footage, cancel the upload (it is irelevant, a newer file is available).
+    [HMUploadManager.sh cancelUploadForFootage:footage];
+    
+    // Tell the uploader to check for needed uploads. Give this footage, with the new rawLocalFile, priority.
     [HMUploadManager.sh checkForUploadsWithPrioritizedFootages:@[footage]];
 
     // Move along to the next state.
