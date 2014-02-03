@@ -28,9 +28,9 @@
     vc.videoURL = self.videoURL;
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
-    //[vc extractThumbFromVideo];
+    [vc extractThumbFromVideo];
     [vc play];
-    [vc setScalingMode:@"aspect fit"];
+    //[vc setScalingMode:@"aspect fit"];
 }
 
 

@@ -153,4 +153,10 @@
  */
 -(void)setScalingMode:(NSString *)scale;
 
+///
+/**
+ *  sets the movie thumbnail image
+ */
+-(void)setVideoImage:(UIImage *)videoImage;
+
 @end

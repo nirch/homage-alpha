@@ -10,14 +10,16 @@
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
 #import "HMColor.h"
+#import "HMFontButton.h"
 
 @interface HMsideBarViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *storiesButton;
-@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
-@property (weak, nonatomic) IBOutlet UIButton *meButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *storiesButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *settingsButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *meButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttonCollection;
+
+@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
 
 @end
 
@@ -41,11 +43,13 @@
 
 -(void)initGUI
 {
-   self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
+   self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:4.0 tintColor:nil saturationDeltaFactor:0.0
+ maskImage:nil];
     [self.guiBGImageView addMotionEffectWithAmount:-30];
-    for (UIButton *button in self.buttonCollection)
+    for (HMFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
     }
 }
 

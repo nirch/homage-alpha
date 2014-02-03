@@ -94,11 +94,14 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     self.containerView.clipsToBounds = YES;
     [self initObservers];
     [self fixLayout];
+    self.videoPlayer.view.alpha = 0;
+    self.videoView.guiVideoThumb.alpha = 1;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -242,7 +245,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     if (_videoPlayer) return _videoPlayer;
     _videoPlayer = [[MPMoviePlayerController alloc] init];
     _videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
-    _videoPlayer.scalingMode = MPMovieScalingModeAspectFill;
+    _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
     _videoPlayer.controlStyle = MPMovieControlStyleNone;
     _videoPlayer.shouldAutoplay = NO;
     _videoPlayer.view.alpha = 1;
@@ -426,8 +429,13 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)fixLayout
 {
+    [self displayRectBounds:self.view.frame Name:@"view.frame"];
+    [self displayRectBounds:self.containerView.bounds Name:@"containerView.bounds"];
+    
     self.view.frame = self.containerView.bounds;
     //TODO: verify with aviv if this is the correct fix
+    [self displayRectBounds:self.videoView.guiVideoContainer.bounds Name:@"videoView.guiVideoContainer.bounds"];
+    [self displayRectBounds:self.videoPlayer.view.frame Name:@"self.videoPlayer.view.frame"];
     if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
     self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
 }
@@ -586,6 +594,11 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 - (IBAction)onMovedSlider:(UISlider *)sender
 {
     [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
+}
+
+-(void)displayRectBounds:(CGRect)rect Name: name
+{
+    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
 

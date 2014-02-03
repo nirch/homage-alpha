@@ -23,6 +23,7 @@
 #import "HMUploadS3Worker.h"
 #import "HMLoginDelegate.h"
 #import "HMLoginViewController.h"
+#import "HMGMeTabVC.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
@@ -372,6 +373,12 @@
 {
     //todo: switch to me tab
     [self switchToTab:1];
+    if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
+    {
+        HMGMeTabVC *vc = (HMGMeTabVC *)self.appTabBarController.selectedViewController;
+        [vc refreshFromLocalStorage];
+        [vc refetchRemakesFromServer];
+    }
     [self hideRenderingView];
 }
 
