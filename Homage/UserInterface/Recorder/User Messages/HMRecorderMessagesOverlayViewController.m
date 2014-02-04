@@ -169,13 +169,15 @@
     _shouldCheckNextStateOnDismiss = checkNextStateOnDismiss;
     _info = info;
     self.guiGeneralMessageContainer.hidden = messageType != HMRecorderMessagesTypeGeneral;
-    self.guiGeneralMessageSwipeUpIcon.hidden = messageType != HMRecorderMessagesTypeGeneral;
-
+    //THE HAND!!!
+    //self.guiGeneralMessageSwipeUpIcon.hidden = messageType != HMRecorderMessagesTypeGeneral;
+    self.guiGeneralMessageSwipeUpIcon.hidden = messageType == HMRecorderMessagesTypeGeneral;
     self.guiTextMessageContainer.hidden = messageType == HMRecorderMessagesTypeGeneral;
     self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene && messageType != HMRecorderMessagesTypeFinishedAllScenes ;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     
-    if (self.messageType == HMRecorderMessagesTypeGeneral) {
+    //THE HAND!!
+    /*if (self.messageType == HMRecorderMessagesTypeGeneral) {
 
         //
         // The intro message.
@@ -192,7 +194,7 @@
         });
         
        
-    } else if (self.messageType == HMRecorderMessagesTypeSceneContext) {
+    } else*/ if (self.messageType == HMRecorderMessagesTypeSceneContext) {
         
         //
         //  The scene context message.

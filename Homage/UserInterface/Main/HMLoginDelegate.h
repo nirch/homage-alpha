@@ -12,6 +12,7 @@
 @protocol HMLoginDelegate <NSObject>
 
 -(void)onLoginPressedSkip;
--(void)onLoginPressedShootWithRemake:(Remake *)remake;
+//-(void)onLoginPressedShootWithRemake:(Remake *)remake;
+-(void)onLoginPressedShootWithStoryID:(NSString *)story;
 
 @end

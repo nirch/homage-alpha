@@ -69,6 +69,8 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 
 @property (nonatomic) Remake *remake;
 @property (nonatomic, readonly) NSNumber *currentSceneID;
+//THE HAND!!!
+@property (nonatomic, readonly) BOOL showHand;
 
 -(void)toggleOptions;
 

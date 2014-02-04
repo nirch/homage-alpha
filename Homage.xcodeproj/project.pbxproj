@@ -987,7 +987,6 @@
 		08DF23051892704300912657 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */,
 				2638594118964F28003A7B3D /* settings */,
 				2638593C1895A979003A7B3D /* sideBar */,
 				2638593418953866003A7B3D /* renderingProgressBar */,
@@ -996,6 +995,7 @@
 				08DF23071892704300912657 /* HMStartViewController.m */,
 				269C8AF8189971F800F28B7A /* HMLoginViewController.h */,
 				269C8AF9189971F800F28B7A /* HMLoginViewController.m */,
+				26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
 				08DF230A1892704300912657 /* Me */,

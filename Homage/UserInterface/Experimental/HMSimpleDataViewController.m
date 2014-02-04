@@ -166,7 +166,9 @@
 - (IBAction)onRefresh:(id)sender {
     if (!HMServer.sh.isReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server unreachable" message:@":-(" delegate:nil cancelButtonTitle:@"Darn, OK." otherButtonTitles:nil];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
         return;
     }
     

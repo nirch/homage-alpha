@@ -17,6 +17,7 @@
 #import "HMRoundCountdownLabel.h"
 #import "HMColor.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "HMAnimationsFX.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -65,6 +66,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRecordButton;
 @property (weak, nonatomic) IBOutlet UIView *guiCountdownContainer;
 @property (weak, nonatomic) IBOutlet HMRoundCountdownLabel *guiRoundCountdownLabal;
+
+
+//THE HAND!!!
+@property (weak, nonatomic) IBOutlet UIImageView *guiPointingHand;
+
 
 
 @end
@@ -146,8 +152,24 @@
     self.guiOriginalTakesPageControl.numberOfPages = videosPages;
     self.guiOriginalTakesPageControl.currentPage = 0;
     
+    //THE HAND!!!
+    self.guiPointingHand.hidden = YES;
+    if (![User current].skipRecorderTutorial && self.remakerDelegate.showHand == YES);
+    {
+        self.guiPointingHand.hidden = NO;
+        self.guiPointingHand.transform = CGAffineTransformMakeTranslation(0, 5);
+        double delayInSeconds = 0.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [UIView animateWithDuration:1.3 delay:0 options:HM_ANIMATION_OPTION_PING_PONG animations:^{
+                self.guiPointingHand.transform = CGAffineTransformMakeTranslation(0, -5);
+            } completion:nil];
+        });
+    }
+    
     // Mark that GUI already initialized once.
     _alreadyInitializedGUI = YES;
+    
 }
 
 -(void)refreshInfo
@@ -559,6 +581,8 @@
 
 - (IBAction)onPressedOpenButton:(UIButton *)sender
 {
+    //THE HAND!!!
+    self.guiPointingHand.hidden = YES;
     [self.remakerDelegate toggleOptions];
 }
 

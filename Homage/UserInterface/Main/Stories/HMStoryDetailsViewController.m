@@ -17,6 +17,7 @@
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
 #import "HMDetailedStoryRemakeVideoPlayerVC.h"
+#import "HMColor.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
 
@@ -48,6 +49,7 @@
     [self initContent];
     [self initObservers];
     [self.guiRemakeActivity setHidden:YES];
+    [self.storyMoviePlayer play];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -70,6 +72,13 @@
     self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
     self.guiDescriptionField.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
+    
+    //design remake button
+    self.guiRemakeButton.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.guiRemakeButton.titleLabel.font.pointSize];
+    [self.guiRemakeButton setTitleColor:[HMColor.sh main2] forState:UIControlStateNormal];
+    [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
+    [self.guiRemakeButton.layer setBorderWidth:2.0f];
+    [self.guiRemakeButton.layer setCornerRadius:7.5f];
 }
 
 -(void)initStoryMoviePlayer
@@ -156,7 +165,9 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
                               ];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
     } else {
         [self refreshFromLocalStorage];
@@ -212,7 +223,9 @@
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
-    [alert show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
 }
 
 #pragma mark refreshing remakes
@@ -410,7 +423,9 @@
     if (self.oldRemakeInProgress)
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OLD_REMAKE", nil) otherButtonTitles:NSLocalizedString(@"NEW_REMAKE", nil), nil];
-        [alertView show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
     } else {
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     }

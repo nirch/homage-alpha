@@ -142,7 +142,9 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
                               ];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

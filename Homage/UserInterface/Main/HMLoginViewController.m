@@ -18,7 +18,10 @@
 #import "UIImage+ImageEffects.h"
 #import "Mixpanel.h"
 
+
 @interface HMLoginViewController ()
+
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 
@@ -75,11 +78,23 @@
                                                        name:HM_NOTIFICATION_SERVER_USER_CREATION
                                                      object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeCreated:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
-                                                     object:nil];
+                                                     object:nil];*/
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self removeObservers];
+}
+
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
+    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
 }
 
 
@@ -96,7 +111,9 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
                               ];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
     } else {
         [HMServer.sh createUserWithID:emailAsddress];
         self.guiActivityIndicator.hidden = NO;
@@ -149,24 +166,19 @@
 {
     
     NSString *storyID = @DIVE_SCHOOL;
-    NSString *userID = [User current].userID;
-    
-    [HMServer.sh createRemakeForStoryWithID:storyID forUserID:userID];
+    //NSString *userID = [User current].userID;
+    [self.delegate onLoginPressedShootWithStoryID:storyID];
+    //[HMServer.sh createRemakeForStoryWithID:storyID forUserID:userID];
 }
 
-
--(void)onRemakeCreated:(NSNotification *)notification
+/*-(void)onRemakeCreated:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remakeID"];
     
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    /*[self dismissViewControllerAnimated:YES completion:^{
-        HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
-    }];*/
     [self.delegate onLoginPressedShootWithRemake:remake];
-}
+}*/
 
 - (void)didReceiveMemoryWarning
 {
