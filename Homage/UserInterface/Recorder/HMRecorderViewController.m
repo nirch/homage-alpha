@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#define SILHOUETTE_HARD_CODED_ALPHA 1.0f
+#define SILHOUETTE_HARD_CODED_ALPHA 0.9f
 
 #define OPTIONS_BAR_TRANSFORM_MAX 167.0f
 #define OPTIONS_BAR_TRANSFORM_CLOSED CGAffineTransformMakeTranslation(0, OPTIONS_BAR_TRANSFORM_MAX)
