@@ -69,6 +69,9 @@
 // Some physics animations
 @property (nonatomic, readonly) UIDynamicAnimator *animator;
 
+//THE HAND!!!
+@property (nonatomic,readwrite) BOOL showHand;
+
 @end
 
 @implementation HMRecorderViewController
@@ -820,6 +823,8 @@
         [self closeDetailedOptionsAnimated:animated];
     } else {
         [self openDetailedOptionsAnimated:animated];
+        //THE HAND!!
+        self.showHand = NO;
     }
 }
 

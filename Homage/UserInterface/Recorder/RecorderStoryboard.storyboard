@@ -525,6 +525,10 @@
                                         <rect key="frame" x="284" y="0.0" width="284" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSwipeUp" id="6la-ur-1NE">
+                                                <rect key="frame" x="210" y="4" width="33" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconUpArrowSmall" id="e4Y-rA-xzv">
                                                 <rect key="frame" x="242" y="10" width="42" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -630,6 +634,7 @@
                         <outlet property="guiMoreDetailsBar" destination="NcZ-Uk-buY" id="n6c-D3-Irr"/>
                         <outlet property="guiOriginalTakesPageControl" destination="0b6-7A-Qyl" id="Wza-0c-NUy"/>
                         <outlet property="guiOriginalTakesVideosScrollView" destination="1VQ-4a-tOr" id="bp9-9T-LSf"/>
+                        <outlet property="guiPointingHand" destination="6la-ur-1NE" id="c4N-4e-cYi"/>
                         <outlet property="guiReachability" destination="iN6-gZ-YWh" id="pLG-4w-SOr"/>
                         <outlet property="guiRecordButton" destination="8MZ-0V-BOY" id="Mht-8b-Nt4"/>
                         <outlet property="guiRoundCountdownLabal" destination="nid-Yd-ydR" id="LGT-FE-4RU"/>
@@ -893,6 +898,7 @@
         <image name="iconSceneScript" width="22" height="20"/>
         <image name="iconSceneScriptLighter" width="22" height="20"/>
         <image name="iconSmallClock" width="20" height="20"/>
+        <image name="iconSwipeUp" width="29" height="43"/>
         <image name="iconUpArrowSmall" width="24" height="10"/>
         <image name="textPlate" width="375" height="14"/>
         <image name="wifi" width="64" height="50"/>

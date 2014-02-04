@@ -24,6 +24,7 @@
 #import "HMLoginDelegate.h"
 #import "HMLoginViewController.h"
 #import "HMGMeTabVC.h"
+#import "HMStoryPresenterProtocol.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
@@ -35,6 +36,7 @@
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (atomic, readonly) NSDate *launchDateTime;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiTabNameLabel;
+@property (weak,nonatomic) Story *loginStory;
 
 @end
 
@@ -55,17 +57,16 @@
     [self prepareSplashView];
     [self startSplashView];
     
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
     // Prepare local storage and start the App.
     [DB.sh useDocumentWithSuccessHandler:^{
         [self startApplication];
     } failHandler:^{
         [self failedStartingApplication];
     }];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    
 }
 
 -(void)initGUI
@@ -212,8 +213,6 @@
         HMLoginViewController *vc = (HMLoginViewController *)segue.destinationViewController;
         vc.delegate = self;
     }
-    
-    
 }
 
 #pragma mark - Application start
@@ -275,7 +274,9 @@
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
-    [alert show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
 }
 
 #pragma mark - Orientations
@@ -387,7 +388,7 @@
     [self.loginContainerView removeFromSuperview];
 }
 
--(void)onLoginPressedShootWithRemake:(Remake *)remake
+/*-(void)onLoginPressedShootWithRemake:(Remake *)remake
 {
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 0;
@@ -395,6 +396,29 @@
         self.loginContainerView.hidden = YES;
         HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
         if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+    }];
+}*/
+
+-(void)onLoginPressedShootWithStoryID:(NSString *)storyID
+{
+    Story *story = [Story storyWithID:storyID inContext:DB.sh.context];
+    
+    UINavigationController *navVC;
+    UIViewController *vc = self.appTabBarController.selectedViewController;
+    if ([vc isKindOfClass:[UINavigationController class]])
+    {
+        navVC = (UINavigationController *)vc;
+    }
+    
+    id<HMStoryPresenterProtocol>detailedStoryVC = (id<HMStoryPresenterProtocol>)[navVC.viewControllers objectAtIndex:1];
+    detailedStoryVC.story = story;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.loginContainerView removeFromSuperview];
+        [navVC popToViewController:detailedStoryVC animated:NO];
+        
     }];
 }
 

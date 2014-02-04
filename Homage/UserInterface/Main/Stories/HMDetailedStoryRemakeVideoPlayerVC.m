@@ -19,18 +19,18 @@
 
 - (void)viewDidLoad
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
 	HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMFullScreenVideoPlayerPortrait"
                                                                                  inParentVC:self
                                                                               containerView:self.guiVideoContainerView
                                        ];
-    //vc.delegate = self;
     vc.videoURL = self.videoURL;
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
-    [vc extractThumbFromVideo];
     [vc play];
     //[vc setScalingMode:@"aspect fit"];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 

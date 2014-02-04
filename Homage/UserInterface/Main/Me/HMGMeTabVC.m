@@ -168,7 +168,10 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
                               ];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
+        
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
     } else {
         [self refreshFromLocalStorage];
@@ -224,7 +227,9 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
                               ];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     } else {
         [self refetchRemakesFromServer];
@@ -291,7 +296,10 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // If already exists, just return it.
-    if (_fetchedResultsController) return _fetchedResultsController;
+    if (_fetchedResultsController) {
+        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+        return _fetchedResultsController;
+    }
     
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
@@ -512,6 +520,7 @@
 
     [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
     
+    //old code for playing movie inside cell
     /*HMSimpleVideoViewController *vc;
     self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
     self.moviePlayer.delegate = self;
@@ -577,7 +586,9 @@
 
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"DELETE_REMAKE", nil) message:NSLocalizedString(@"APPROVE_DELETION", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
     alertView.tag = TRASH_ALERT_VIEW_TAG;
-    [alertView show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alertView show];
+    });
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -590,7 +601,9 @@
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
-    [alert show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
 }
 
 
@@ -607,7 +620,9 @@
     if (self.remakeToContinueWith.status.integerValue != HMGRemakeStatusDone) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OLD_REMAKE", nil) otherButtonTitles:NSLocalizedString(@"NEW_REMAKE", nil), nil];
         alertView.tag = REMAKE_ALERT_VIEW_TAG;
-        [alertView show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
     } else {
         [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID];
     }
@@ -627,7 +642,11 @@
     [activityViewController setValue:shareString forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    [self presentViewController:activityViewController animated:YES completion:^{}];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:activityViewController animated:YES completion:^{}];
+    });
+    
     
 }
 

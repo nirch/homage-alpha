@@ -41,8 +41,8 @@
                     <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                     <size key="shadowOffset" width="1" height="1"/>
                 </label>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="sHJ-vl-n4x">
-                    <rect key="frame" x="132" y="66" width="20" height="20"/>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="sHJ-vl-n4x">
+                    <rect key="frame" x="124" y="57" width="37" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="color" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </activityIndicatorView>
