@@ -20,10 +20,13 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *storiesCV;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noStoriesLabel;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
+@property (weak,nonatomic) Story *introStory;
 
 @end
 
 @implementation HMStoriesViewController
+
+#define DIVE_SCHOOL "52de83db8bc427751c000305";
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -195,10 +198,16 @@
         //
         // Segue to story details.
         //
-        NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
-        Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
         id<HMStoryPresenterProtocol>vc = (id<HMStoryPresenterProtocol>)segue.destinationViewController;
-        vc.story = story;
+        
+        if (self.introStory) {
+            vc.story = self.introStory;
+            self.introStory = nil;
+        } else {
+            NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
+            Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+            vc.story = story;
+        }
         
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
@@ -328,6 +337,13 @@
     ];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return nil;
+}
+
+-(void)prepareToShootIntroStory
+{
+    NSString *storyID = @DIVE_SCHOOL;
+    self.introStory = [Story storyWithID:storyID inContext:DB.sh.context];
+    [self performSegueWithIdentifier:@"story details segue" sender:nil];
 }
 
 @end

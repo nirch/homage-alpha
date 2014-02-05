@@ -12,5 +12,6 @@
     NSFetchedResultsControllerDelegate
 >
 
+-(void)prepareToShootIntroStory;
 
 @end
