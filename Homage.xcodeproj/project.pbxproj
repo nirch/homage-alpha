@@ -220,6 +220,8 @@
 		267F523E1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 267F523D1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMLoginViewController.m */; };
+		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
+		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
@@ -455,6 +457,10 @@
 		269C8AF8189971F800F28B7A /* HMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginViewController.h; sourceTree = "<group>"; };
 		269C8AF9189971F800F28B7A /* HMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginViewController.m; sourceTree = "<group>"; };
 		26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
+		65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontLabel.m; sourceTree = "<group>"; };
+		65C10D8F18A265DC00A65917 /* HMDinFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontButton.m; sourceTree = "<group>"; };
+		65C10D9018A265DC00A65917 /* HMDinFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDinFontButton.h; sourceTree = "<group>"; };
+		65C10D9118A265DC00A65917 /* HMDinFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDinFontLabel.h; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F13FA5191899447F0026EA5F /* HMServer+Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Users.h"; sourceTree = "<group>"; };
 		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
@@ -1058,6 +1064,10 @@
 		08E50EC318868ACD001A8B75 /* Custom Font Related */ = {
 			isa = PBXGroup;
 			children = (
+				65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */,
+				65C10D8F18A265DC00A65917 /* HMDinFontButton.m */,
+				65C10D9018A265DC00A65917 /* HMDinFontButton.h */,
+				65C10D9118A265DC00A65917 /* HMDinFontLabel.h */,
 				08E50EC418868AEF001A8B75 /* HMFontLabel.h */,
 				08E50EC518868AEF001A8B75 /* HMFontLabel.m */,
 				08ACB7B1188C6B9500C0EE27 /* HMFontButton.h */,
@@ -1283,6 +1293,7 @@
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */,
 				08CDF8361897F6B000A9D235 /* Story.m in Sources */,
+				65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
 				08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */,
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
@@ -1357,6 +1368,7 @@
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
+				65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				084E53411892240100D96258 /* HMServer+Render.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
