@@ -13,6 +13,7 @@
 #import "HMStoryPresenterProtocol.h"
 #import "HMNotificationCenter.h"
 #import "HMGLog.h"
+#import "HMColor.h"
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -200,15 +201,16 @@
         //
         id<HMStoryPresenterProtocol>vc = (id<HMStoryPresenterProtocol>)segue.destinationViewController;
         
+        //user is going to shoot intro movie
         if (self.introStory) {
             vc.story = self.introStory;
             self.introStory = nil;
+        //user selected a story from the collection view
         } else {
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
             Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
-        }
-        
+        }        
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
     }
@@ -289,7 +291,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     //cell border design
-    [cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
+    [cell.layer setBorderColor:[HMColor.sh main2].CGColor];
     [cell.layer setBorderWidth:1.0f];
     [cell.layer setCornerRadius:7.5f];
     [cell.layer setShadowOffset:CGSizeMake(0, 1)];
