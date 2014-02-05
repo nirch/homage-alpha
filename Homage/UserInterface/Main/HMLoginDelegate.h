@@ -13,6 +13,6 @@
 
 -(void)onLoginPressedSkip;
 //-(void)onLoginPressedShootWithRemake:(Remake *)remake;
--(void)onLoginPressedShootWithStoryID:(NSString *)story;
+-(void)onLoginPressedShootFirstStory;
 
 @end

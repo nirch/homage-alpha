@@ -19,19 +19,17 @@
 #import "Mixpanel.h"
 
 
-@interface HMLoginViewController ()
-
+@interface HMLoginViewController () <UITextFieldDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 
-@property (weak, nonatomic) IBOutlet UIView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIView *guiIntroView;
 
 @property (weak, nonatomic) IBOutlet UITextField *guiSignUpMailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *guiSignUpButton;
-
 
 @property (weak, nonatomic) IBOutlet UIButton *guiIntroSkipButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiShootFirstStoryButton;
@@ -52,15 +50,13 @@
 
 @implementation HMLoginViewController
 
-#define DIVE_SCHOOL "52de83db8bc427751c000305";
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self initObservers];
     [self initGUI];
-    NSLog(@"self.view.frame = origin(%f,%f) , size(%f,%f)" , self.view.frame.origin.x , self.view.frame.origin.y , self.view.frame.size.height , self.view.frame.size.width);
-    NSLog(@"self.guiBGImageView.frame = origin(%f,%f) , size(%f,%f)" , self.guiBGImageView.frame.origin.x , self.guiBGImageView.frame.origin.y , self.guiBGImageView.frame.size.height , self.guiBGImageView.frame.size.width);
+    //NSLog(@"self.view.frame = origin(%f,%f) , size(%f,%f)" , self.view.frame.origin.x , self.view.frame.origin.y , self.view.frame.size.height , self.view.frame.size.width);
+    //NSLog(@"self.guiBGImageView.frame = origin(%f,%f) , size(%f,%f)" , self.guiBGImageView.frame.origin.x , self.guiBGImageView.frame.origin.y , self.guiBGImageView.frame.size.height , self.guiBGImageView.frame.size.width);
 }
 
 -(void)initGUI
@@ -69,6 +65,10 @@
     self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
     self.guiActivityIndicator.hidden = YES;
     self.guiSignUpMailTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    self.guiSignUpMailTextField.returnKeyType = UIReturnKeyDone;
+    self.guiSignUpMailTextField.delegate = self;
+    self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
+    self.guiSignUpView.scrollEnabled = NO;
 }
 -(void)initObservers
 {
@@ -83,6 +83,13 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
                                                      object:nil];*/
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -95,6 +102,8 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
     //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
+    [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 
@@ -115,6 +124,7 @@
             [alert show];
         });
     } else {
+        [self.view endEditing:YES];
         [HMServer.sh createUserWithID:emailAsddress];
         self.guiActivityIndicator.hidden = NO;
         [self.guiActivityIndicator startAnimating];
@@ -161,14 +171,9 @@
 }
 
 
-
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
-    
-    NSString *storyID = @DIVE_SCHOOL;
-    //NSString *userID = [User current].userID;
-    [self.delegate onLoginPressedShootWithStoryID:storyID];
-    //[HMServer.sh createRemakeForStoryWithID:storyID forUserID:userID];
+    [self.delegate onLoginPressedShootFirstStory];
 }
 
 /*-(void)onRemakeCreated:(NSNotification *)notification
@@ -197,9 +202,38 @@
     
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.guiSignUpMailTextField resignFirstResponder];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
+
+-(void)keyboardWasShown:(NSNotification *)notification
+{
+    NSDictionary* info = notification.userInfo;
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height + 100, 0.0);
+    self.guiSignUpView.contentInset = contentInsets;
+    self.guiSignUpView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, self.guiSignUpMailTextField.frame.origin) ) {
+        [self.guiSignUpView scrollRectToVisible:self.guiSignUpMailTextField.frame animated:YES];
+    }
+}
+
+-(void)keyboardWillBeHidden:(NSNotification *)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.guiSignUpView.contentInset = contentInsets;
+    self.guiSignUpView.scrollIndicatorInsets = contentInsets;
+}
+
+
 
 
 @end

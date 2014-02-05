@@ -1,4 +1,4 @@
-//
+ //
 //  HMStartViewController.m
 //  Homage
 //
@@ -24,7 +24,7 @@
 #import "HMLoginDelegate.h"
 #import "HMLoginViewController.h"
 #import "HMGMeTabVC.h"
-#import "HMStoryPresenterProtocol.h"
+#import "HMStoriesViewController.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
@@ -195,11 +195,11 @@
         self.appTabBarController = segue.destinationViewController;
         self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
         self.appTabBarController.tabBar.hidden = YES;
-        HMGLogDebug(@"self.guiTabNameLabel.text = %@" , self.guiTabNameLabel.text);
         if (!self.guiTabNameLabel.text)
         {
             self.guiTabNameLabel.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
         }
+        
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
         HMsideBarViewController *vc = (HMsideBarViewController *)segue.destinationViewController;
@@ -213,6 +213,21 @@
         HMLoginViewController *vc = (HMLoginViewController *)segue.destinationViewController;
         vc.delegate = self;
     }
+}
+
+-(void)showIntroStory
+{
+    UINavigationController *navVC;
+    UIViewController *vc = self.appTabBarController.selectedViewController;
+    if ([vc isKindOfClass:[UINavigationController class]])
+    {
+        navVC = (UINavigationController *)vc;
+    }
+    
+    HMStoriesViewController *storyVC = (HMStoriesViewController *)[navVC.viewControllers objectAtIndex:0];
+    [storyVC prepareToShootIntroStory];
+    
+
 }
 
 #pragma mark - Application start
@@ -399,26 +414,13 @@
     }];
 }*/
 
--(void)onLoginPressedShootWithStoryID:(NSString *)storyID
+-(void)onLoginPressedShootFirstStory
 {
-    Story *story = [Story storyWithID:storyID inContext:DB.sh.context];
-    
-    UINavigationController *navVC;
-    UIViewController *vc = self.appTabBarController.selectedViewController;
-    if ([vc isKindOfClass:[UINavigationController class]])
-    {
-        navVC = (UINavigationController *)vc;
-    }
-    
-    id<HMStoryPresenterProtocol>detailedStoryVC = (id<HMStoryPresenterProtocol>)[navVC.viewControllers objectAtIndex:1];
-    detailedStoryVC.story = story;
-    
+    [self showIntroStory];
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 0;
     } completion:^(BOOL finished) {
         [self.loginContainerView removeFromSuperview];
-        [navVC popToViewController:detailedStoryVC animated:NO];
-        
     }];
 }
 
