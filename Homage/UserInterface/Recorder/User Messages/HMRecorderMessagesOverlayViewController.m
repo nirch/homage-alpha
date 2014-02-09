@@ -200,12 +200,11 @@
         
         self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
-        [UIView animateWithDuration:0.5 delay:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^(void) {
-        }completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.5 delay:6.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
             HMGLogDebug(@"alpha finished");
             self.guiGeneralMessageOKButton.alpha = 1;
         }];
-    
+        
         
        
     } else if (self.messageType == HMRecorderMessagesTypeSceneContext) {
@@ -223,11 +222,12 @@
         self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
         
         
-        self.guiGeneralMessageOKButton.alpha = 0;
-        
-        [UIView animateWithDuration:0.5 delay:1.0 options:UIViewAnimationOptionCurveLinear animations:^(void) {
-            self.guiDismissButton.hidden = NO;
-        } completion:nil];
+        self.guiDismissButton.alpha = 0;
+        HMGLogDebug(@"alpha started");
+        [UIView animateWithDuration:0.5 delay:6.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
+            HMGLogDebug(@"alpha finished");
+            self.guiDismissButton.alpha = 1;
+        }];
         
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         
