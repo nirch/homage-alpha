@@ -200,9 +200,10 @@
         
         self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
-        [UIView animateWithDuration:0.5 delay:6.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
-            HMGLogDebug(@"alpha finished");
+        [UIView animateWithDuration:0.5 delay:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.guiGeneralMessageOKButton.alpha = 1;
+        } completion:^(BOOL finished) {
+            HMGLogDebug(@"alpha finished");
         }];
         
         

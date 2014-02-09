@@ -125,6 +125,11 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                                      object:nil];
     
+    // Observe deletion of remake
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRemakeDeletion:)
+                                                       name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
+                                                     object:nil];
 }
 
 -(void)removeObservers
@@ -133,6 +138,8 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
+
 }
 
 
@@ -469,10 +476,12 @@
     }
     //start new remake
     if (buttonIndex == 2) {
+        NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
+        HMGLogDebug(@"user chose to make new remake and delete previous remake with id: %@" , remakeIDToDelete);
+        [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+        self.oldRemakeInProgress = nil;
     }
-    
-    
 }
 
 #pragma mark segue
@@ -527,6 +536,31 @@
     [sender dismissViewControllerAnimated:YES completion:^{
         //[self.navigationController popViewControllerAnimated:YES];
     }];
+}
+
+-(void)onRemakeDeletion:(NSNotification *)notification
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    NSDictionary *info = notification.userInfo;
+    NSString *remakeID = info[@"remakeID"];
+    
+    if (notification.isReportingError) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                        message:@"Something went wrong :-(\n\nTry to delete the remake later."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
+        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
+    } else {
+        Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+        [DB.sh.context deleteObject:remake];
+    }
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 

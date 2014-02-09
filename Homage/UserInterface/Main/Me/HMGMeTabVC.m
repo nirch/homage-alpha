@@ -665,13 +665,19 @@
     //remake button pushed
     if (alertView.tag == REMAKE_ALERT_VIEW_TAG)
     {
-        //OLD
-        if (buttonIndex == 0) {
+        
+        if (buttonIndex == 0)
+        {
+            
+        }
+        
+        //continue with old remake
+        if (buttonIndex == 1) {
             // Present the recorder for the newly created remake.
             [self initRecorderWithRemake:self.remakeToContinueWith];
         }
         //start new remake
-        if (buttonIndex == 1) {
+        if (buttonIndex == 2) {
             NSString *remakeIDToDelete = self.remakeToContinueWith.sID;
             HMGLogDebug(@"user chose to make new remake and delete previous remake with id: %@" , remakeIDToDelete);
             [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
