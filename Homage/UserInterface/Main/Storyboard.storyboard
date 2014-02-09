@@ -53,6 +53,11 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Sia-Zy-ZGY" appends="YES" id="1rX-JO-5ev"/>
+                                    <outletCollection property="gestureRecognizers" destination="iaH-O3-Nun" appends="YES" id="QYg-3e-qIn"/>
+                                </connections>
                             </view>
                             <containerView autoresizesSubviews="NO" contentMode="scaleToFill" id="fIN-2a-57r" userLabel="renderBar container View">
                                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
@@ -126,6 +131,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hza-mr-33u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="Sia-Zy-ZGY">
+                    <connections>
+                        <action selector="onSwipeToHideSideBar:" destination="Mko-4Y-5oJ" id="vUj-xr-iQt"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="iaH-O3-Nun">
+                    <connections>
+                        <action selector="onSwipeToShowSideBar:" destination="Mko-4Y-5oJ" id="2k0-WY-KHM"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="166" y="122"/>
         </scene>
@@ -287,12 +302,12 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="tiZ-kN-hcG">
-                                <rect key="frame" x="72" y="3" width="179" height="50"/>
+                                <rect key="frame" x="11" y="3" width="251" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="яemake it!">
+                                <state key="normal" title="Make your own version">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -591,10 +606,10 @@
             </objects>
             <point key="canvasLocation" x="1651" y="1581"/>
         </scene>
-        <!--Navigation Controller - stories-->
+        <!--Stories Nav Controller - stories-->
         <scene sceneID="cAa-tY-Av8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="8zG-cl-qtn" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="8zG-cl-qtn" customClass="HMStoriesNavController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="stories" id="WoR-uH-QWh"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -675,6 +690,7 @@
                         <outlet property="guiInProgressView" destination="xyw-kW-kKx" id="PKZ-ab-8M3"/>
                         <outlet property="guiProgressBar" destination="YEw-Vf-gtE" id="8Em-oe-wI2"/>
                         <outlet property="guiProgressBarView" destination="ec0-pW-kcw" id="XUR-2m-UwS"/>
+                        <outlet property="guiTopView" destination="aih-xq-6XI" id="v6Z-U9-0Bf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gw6-Oi-3sg" userLabel="First Responder" sceneMemberID="firstResponder"/>

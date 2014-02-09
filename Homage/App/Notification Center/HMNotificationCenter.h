@@ -40,6 +40,7 @@
 #define HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL      @"Server Scene Thumbnil"
 #define HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE     @"Server Scene Silhouette"
 
+#define HM_NOTIFICATION_RECORDER_FINISHED           @"Recoder was dismissed"
 
 @interface HMNotificationCenter : NSObject
 

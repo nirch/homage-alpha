@@ -8,9 +8,7 @@
 
 #import "HMRecorderDelegate.h"
 
-@interface HMStartViewController : UIViewController<
-    HMRecorderDelegate
->
+@interface HMStartViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *guiSplashView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;

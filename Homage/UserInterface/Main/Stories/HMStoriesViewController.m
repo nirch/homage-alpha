@@ -201,6 +201,8 @@
         //
         id<HMStoryPresenterProtocol>vc = (id<HMStoryPresenterProtocol>)segue.destinationViewController;
         
+        vc.autoStartPlayingStory = YES;
+        
         //user is going to shoot intro movie
         if (self.introStory) {
             vc.story = self.introStory;

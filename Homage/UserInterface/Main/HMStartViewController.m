@@ -89,6 +89,12 @@
                                                    selector:@selector(onServerStartRendering:)
                                                        name:HM_NOTIFICATION_SERVER_RENDER
                                                      object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRecorderFinished:)
+                                                       name:HM_NOTIFICATION_RECORDER_FINISHED
+                                                     object:nil];
 }
 
 #pragma mark - Splash View
@@ -153,7 +159,6 @@
 {
     self.sideBarContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
-        self.sideBarContainerView.transform = CGAffineTransformMakeTranslation(0,0);
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
         self.appContainerView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
     } completion:nil];
@@ -167,26 +172,6 @@
         } completion:^(BOOL finished){
             if (finished) self.sideBarContainerView.hidden = YES;
         }];
-}
-
-#pragma mark - HMRecorderDelegate Example
--(void)recorderAsksDismissalWithReaon:(HMRecorderDismissReason)reason
-                             remakeID:(NSString *)remakeID
-                               sender:(HMRecorderViewController *)sender
-{
-    HMGLogDebug(@"This is the remake ID the recorder used:%@", remakeID);
-    
-    // Handle reasons
-    if (reason == HMRecorderDismissReasonUserAbortedPressingX) {
-        // Some logic for this reason...
-    } else if (reason == HMRecorderDismissReasonFinishedRemake) {
-        // Some other logic for another reason...
-    }
-    
-    // Dismiss modal
-    [self dismissViewControllerAnimated:YES completion:^{
-        // Code here when the dismissal is done.
-    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -309,8 +294,18 @@
 -(void)storiesButtonPushed
 {
     HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
-    if (self.appTabBarController.selectedIndex != 0)
-        [self switchToTab:0];
+    
+    [self switchToTab:0];
+    UIViewController *VC = self.appTabBarController.selectedViewController;
+    if ([VC isKindOfClass:[UINavigationController class]])
+    {
+        UINavigationController *navVC = (UINavigationController *)VC;
+        if ([navVC.viewControllers count] > 1)
+        {
+            [navVC popToRootViewControllerAnimated:YES];
+        }
+    }
+  
     [self closeSideBar];
     
 }
@@ -344,13 +339,24 @@
     
     self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
     
-    [UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
+    if ( toVC != fromVC )[UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
 }
 
 -(void)closeSideBar
 {
     if (self.sideBarContainerView.hidden == NO)
         [self hideSideBar];
+}
+
+
+- (IBAction)onSwipeToShowSideBar:(UISwipeGestureRecognizer *)sender
+{
+    if (self.sideBarContainerView.hidden == YES) [self showSideBar];
+}
+
+- (IBAction)onSwipeToHideSideBar:(UISwipeGestureRecognizer *)sender
+{
+    [self hideSideBar];
 }
 
 -(void)onServerStartRendering:(NSNotification *)notification
@@ -422,6 +428,11 @@
     } completion:^(BOOL finished) {
         [self.loginContainerView removeFromSuperview];
     }];
+}
+
+-(void)onRecorderFinished:(NSNotification *)notification
+{
+    [self storiesButtonPushed];
 }
 
 @end

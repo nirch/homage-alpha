@@ -11,5 +11,6 @@
 @protocol HMStoryPresenterProtocol <NSObject>
 
 @property (nonatomic) Story *story;
+@property (nonatomic) BOOL autoStartPlayingStory;
 
 @end

@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, HMRecorderDismissReason) {
 *  @param reason The reason why the recorder is about to be closed.
 *  @param remakeID The id of the remake the recorder edited.
 */
--(void)recorderAsksDismissalWithReaon:(HMRecorderDismissReason)reason
+-(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason
                              remakeID:(NSString *)remakeID
                                sender:(HMRecorderViewController *)sender;
 

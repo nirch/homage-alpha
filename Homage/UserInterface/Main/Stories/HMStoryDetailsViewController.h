@@ -14,7 +14,6 @@
 @interface HMStoryDetailsViewController : UIViewController<
     HMStoryPresenterProtocol,NSFetchedResultsControllerDelegate>
 
-
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;

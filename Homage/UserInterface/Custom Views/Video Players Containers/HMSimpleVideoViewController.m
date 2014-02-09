@@ -429,13 +429,9 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)fixLayout
 {
-    [self displayRectBounds:self.view.frame Name:@"view.frame"];
-    [self displayRectBounds:self.containerView.bounds Name:@"containerView.bounds"];
-    
+    //[self displayRectBounds:self.view.frame Name:@"view.frame"];
     self.view.frame = self.containerView.bounds;
     //TODO: verify with aviv if this is the correct fix
-    [self displayRectBounds:self.videoView.guiVideoContainer.bounds Name:@"videoView.guiVideoContainer.bounds"];
-    [self displayRectBounds:self.videoPlayer.view.frame Name:@"self.videoPlayer.view.frame"];
     if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
     self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
 }

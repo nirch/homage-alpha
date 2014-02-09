@@ -103,6 +103,11 @@
     [self initObservers];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self removeObservers];
@@ -177,24 +182,33 @@
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     
     //THE HAND!!
-    /*if (self.messageType == HMRecorderMessagesTypeGeneral) {
+    if (self.messageType == HMRecorderMessagesTypeGeneral) {
 
         //
         // The intro message.
         //
         
         // Animate swipe up/down icon repeatedly.
-        self.guiGeneralMessageSwipeUpIcon.transform = CGAffineTransformMakeTranslation(0, 5);
+        /*self.guiGeneralMessageSwipeUpIcon.transform = CGAffineTransformMakeTranslation(0, 5);
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [UIView animateWithDuration:1.3 delay:0 options:HM_ANIMATION_OPTION_PING_PONG animations:^{
                 self.guiGeneralMessageSwipeUpIcon.transform = CGAffineTransformMakeTranslation(0, -5);
             } completion:nil];
-        });
+        });*/
+        
+        self.guiGeneralMessageOKButton.alpha = 0;
+        HMGLogDebug(@"alpha started");
+        [UIView animateWithDuration:0.5 delay:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^(void) {
+        }completion:^(BOOL finished) {
+            HMGLogDebug(@"alpha finished");
+            self.guiGeneralMessageOKButton.alpha = 1;
+        }];
+    
         
        
-    } else*/ if (self.messageType == HMRecorderMessagesTypeSceneContext) {
+    } else if (self.messageType == HMRecorderMessagesTypeSceneContext) {
         
         //
         //  The scene context message.
@@ -207,6 +221,13 @@
 
         NSString *iconName = info[@"icon name"];
         self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
+        
+        
+        self.guiGeneralMessageOKButton.alpha = 0;
+        
+        [UIView animateWithDuration:0.5 delay:1.0 options:UIViewAnimationOptionCurveLinear animations:^(void) {
+            self.guiDismissButton.hidden = NO;
+        } completion:nil];
         
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         

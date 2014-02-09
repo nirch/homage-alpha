@@ -20,7 +20,7 @@
 #import "HMColor.h"
 #import "HMDetailedStoryRemakeVideoPlayerVC.h"
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate>
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
 
 //@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 @property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
@@ -39,7 +39,6 @@
 #define REMAKE_ALERT_VIEW_TAG 100
 #define TRASH_ALERT_VIEW_TAG  200
 
-//TODO:ask aviv
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 #pragma mark lifecycle related
@@ -618,8 +617,7 @@
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
     if (self.remakeToContinueWith.status.integerValue != HMGRemakeStatusDone) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OLD_REMAKE", nil) otherButtonTitles:NSLocalizedString(@"NEW_REMAKE", nil), nil];
-        alertView.tag = REMAKE_ALERT_VIEW_TAG;
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];
         });
@@ -646,8 +644,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self presentViewController:activityViewController animated:YES completion:^{}];
     });
-    
-    
 }
 
 #pragma mark recorder init
@@ -655,6 +651,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    recorderVC.delegate = self;
     if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -737,6 +734,29 @@
         vc.videoURL = remake.videoURL;
     }
 }
+
+#pragma mark - HMRecorderDelegate
+-(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason
+                              remakeID:(NSString *)remakeID
+                                sender:(HMRecorderViewController *)sender
+{
+    HMGLogDebug(@"This is the remake ID the recorder used:%@", remakeID);
+    
+    // Handle reasons
+    if (reason == HMRecorderDismissReasonUserAbortedPressingX)
+    {
+        //do nothing, need to stay on story details
+    } else if (reason == HMRecorderDismissReasonFinishedRemake)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:nil];
+    }
+    
+    //Dismiss modal recoder??
+    [sender dismissViewControllerAnimated:YES completion:^{
+        //[self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
 
 // ============
 // Rewind segue

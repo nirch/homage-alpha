@@ -220,6 +220,7 @@
 		267F523E1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 267F523D1898FE3A00B8A17A /* HMDetailedStoryRemakeVideoPlayerVC.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMLoginViewController.m */; };
+		26A5DF9F18A791E300ADD149 /* HMStoriesNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5DF9E18A791E300ADD149 /* HMStoriesNavController.m */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
@@ -456,6 +457,9 @@
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
 		269C8AF8189971F800F28B7A /* HMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginViewController.h; sourceTree = "<group>"; };
 		269C8AF9189971F800F28B7A /* HMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginViewController.m; sourceTree = "<group>"; };
+		26A5DF9D18A791E300ADD149 /* HMStoriesNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesNavController.h; sourceTree = "<group>"; };
+		26A5DF9E18A791E300ADD149 /* HMStoriesNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoriesNavController.m; sourceTree = "<group>"; };
+		26A5DFA018A7923000ADD149 /* HMStoriesNavControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMStoriesNavControllerDelegate.h; sourceTree = "<group>"; };
 		26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
 		65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontLabel.m; sourceTree = "<group>"; };
 		65C10D8F18A265DC00A65917 /* HMDinFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontButton.m; sourceTree = "<group>"; };
@@ -503,6 +507,9 @@
 		0806FA0318828AEB007514BE = {
 			isa = PBXGroup;
 			children = (
+				26A5DF9D18A791E300ADD149 /* HMStoriesNavController.h */,
+				26A5DF9E18A791E300ADD149 /* HMStoriesNavController.m */,
+				26A5DFA018A7923000ADD149 /* HMStoriesNavControllerDelegate.h */,
 				0806FA1518828AEB007514BE /* Homage */,
 				0806FA2E18828AEB007514BE /* HomageTests */,
 				0806FA0E18828AEB007514BE /* Frameworks */,
@@ -1317,6 +1324,7 @@
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
+				26A5DF9F18A791E300ADD149 /* HMStoriesNavController.m in Sources */,
 				08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,

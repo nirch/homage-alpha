@@ -31,7 +31,7 @@
 // This will be the responsibility of the uploader and not the recorder.
 #import "HMServer+Footages.h"
 
-@interface HMRecorderViewController ()
+@interface HMRecorderViewController () <UIAlertViewDelegate>
 
 // IB outlets
 
@@ -752,10 +752,11 @@
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                           info:@{
                                                  @"icon name":@"iconSceneDescription",
-                                                 @"title":scene.story.name.uppercaseString,
+                                                 //@"title":scene.story.name.uppercaseString,
+                                                 @"title":[NSString stringWithFormat:LS(@"SCENE_TITLE") , sceneID.integerValue],
                                                  @"text":scene.context,
-                                                 @"ok button text":LS(@"OK, GOT IT!")
-                                                 }
+                                                 @"ok button text":LS(@"NEXT_SCENE"),
+                                                }
      ];
 }
 
@@ -947,7 +948,7 @@
 -(void)dismissWithReason:(HMRecorderDismissReason)reason
 {
     if (self.delegate) {
-        [self.delegate recorderAsksDismissalWithReaon:reason
+        [self.delegate recorderAsksDismissalWithReason:reason
                                              remakeID:self.remake.sID
                                                sender:self
          ];
@@ -968,7 +969,12 @@
 // ===========
 - (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
 {
-    [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"LEAVE_RECORDER_TITLE") message:LS(@"LEAVE_RECORDER_MESSAGE") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES") , nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alertView show];
+    });
+
 }
 
 
@@ -1035,5 +1041,15 @@
 //    self.flagForDebugging = !self.flagForDebugging;
 }
 
+#pragma mark UITextView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    //leave recorder
+    if (buttonIndex == 1) {
+        [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
+    }
+}
 
 @end

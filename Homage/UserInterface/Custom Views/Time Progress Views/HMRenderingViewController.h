@@ -13,6 +13,7 @@
 #import "HMFontLabel.h"
 
 @interface HMRenderingViewController : UIViewController <AWTimeProgressDelegate>
+@property (strong, nonatomic) IBOutlet UIView *guiTopView;
 
 @property (weak, nonatomic) IBOutlet UIView *guiInProgressView;
 

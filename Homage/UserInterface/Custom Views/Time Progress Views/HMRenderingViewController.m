@@ -61,6 +61,11 @@
     self.guiInProgressLabel.textColor = homageColor;
     self.guiDoneLabel.textColor = homageColor;
     self.guiProgressBar.backgroundColor = homageColor;
+
+    //small border for rendering view
+    [self.guiTopView.layer setBorderColor:[HMColor.sh textImpact].CGColor];
+    [self.guiTopView.layer setBorderWidth:1.0f];
+    [self.guiTopView.layer setCornerRadius:7.5f];
 }
 
 #pragma mark - Observers

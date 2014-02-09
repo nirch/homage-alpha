@@ -5,6 +5,7 @@
 "NUM_OF_REMAKES" = "#remakes: %d";
 
 "ERROR" = "Error";
+"CANCEL" = "Cancel";
 
 //indicating that the video saving process had failed */
 "VIDEO_SAVING_FAILED" = "Video saving failed";
@@ -64,6 +65,13 @@
 "NEW_REMAKE" = "New";
 "OLD_REMAKE" = "continue";
 
+/*leave recorder alert view*/
+"LEAVE_RECORDER_TITLE"="Leave recorder";
+"LEAVE_RECORDER_MESSAGE" = "This will close the recorder. Are you sure?";
 
+
+/*go to next scene button*/
+"NEXT_SCENE" = "Shoot Scene!";
+"SCENE_TITLE" = "Scene No. %d";
 
 
