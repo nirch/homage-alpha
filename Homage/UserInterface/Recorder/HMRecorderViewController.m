@@ -577,7 +577,7 @@
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
 
-    if (scene.isSelfie.boolValue) {
+    if (scene.isSelfie.boolValue && [HMVideoCameraViewController canFlipToFrontCamera]) {
         _frontCameraAllowed = YES;
     } else {
         _frontCameraAllowed = NO;
