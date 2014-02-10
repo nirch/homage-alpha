@@ -587,7 +587,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ckf-Qr-Dbx">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ckf-Qr-Dbx" id="Nlg-6q-I3Z">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -605,7 +605,7 @@
         <!--Navigation Controller - Item-->
         <scene sceneID="aZo-J1-2Kd">
             <objects>
-                <navigationController definesPresentationContext="YES" id="ecJ-Xd-7yq" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="ecJ-Xd-7yq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="XfT-l5-BHw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ne3-Mk-TmS">
                         <autoresizingMask key="autoresizingMask"/>
