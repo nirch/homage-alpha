@@ -22,6 +22,7 @@
 #import "HMRecorderEditTextsViewController.h"
 #import "HMVideoCameraViewController.h"
 #import "HMUploadManager.h"
+#import "Mixpanel.h"
 
 // ---------------------------------------------------------------------------------------------------------------------
 #import <objc/message.h> // TODO: Used by the orientation hack. Remove this or you may not be approved for the appstore!
@@ -853,6 +854,9 @@
 
 -(void)openDetailedOptionsAnimated:(BOOL)animated
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"optionsBarOpen" properties:@{
+                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name}];
     [self hideTopButtons];
     [self showTopScriptViewIfUserPreffered];
     
@@ -980,12 +984,16 @@
 
 - (IBAction)onPressedFlipCameraButton:(UIButton *)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"FlipCamera" properties:@{
+                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name}];
     [self flipCamera];
 }
 
 
 - (IBAction)onTappedDetailedOptionsBar:(UITapGestureRecognizer *)sender
 {
+ 
     [self toggleOptionsAnimated:YES];
 }
 

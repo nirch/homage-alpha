@@ -321,6 +321,9 @@
 
 -(void)settingsButtonPushed
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"SettingTabClicked" properties:@{
+                                                   @"useremail" : [User current].userID}];
     HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
     if (self.appTabBarController.selectedIndex != 2)
         [self switchToTab:2];
