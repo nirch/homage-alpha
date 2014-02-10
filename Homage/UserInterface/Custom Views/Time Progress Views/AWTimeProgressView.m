@@ -119,9 +119,9 @@
         } else {
             [self cleanup];
         }
+        HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
         return;
     }
-    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
     
     self.progressIndicator.frame = [self.progressIndicator.layer.presentationLayer frame];
     [UIView animateWithDuration:self.durationForStopWithAnimation delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -231,6 +231,7 @@
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.progressIndicator.frame = self.startingFrame;
+    HMGLogDebug(@"duration of animation is: %f" , self.duration);
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.progressIndicator.frame = self.endFrame;
     } completion:nil];

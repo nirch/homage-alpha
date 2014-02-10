@@ -5,16 +5,6 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>IASKViewControllerClass</key>
-			<string>CustomSubviewController</string>
-			<key>IASKViewControllerSelector</key>
-			<string>init</string>
-			<key>Title</key>
-			<string>Custom Subview</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>

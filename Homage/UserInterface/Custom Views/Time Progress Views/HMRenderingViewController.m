@@ -135,15 +135,6 @@
                 [self.view bringSubviewToFront:self.guiDoneRenderingView];
             }];
             
-            /*[UIView transitionFromView:self.guiInProgressView
-                                toView:self.guiDoneRenderingView
-                              duration:0.5
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            completion:^(BOOL finished){
-                                //[self.view sendSubviewToBack:self.guiInProgressView];
-                                [self.guiDoneRenderingView setHidden:YES];
-                                [self.guiDoneRenderingView setHidden:NO];
-                            }];*/
         });
 
     }
@@ -174,18 +165,6 @@
     [UIView animateWithDuration:0.5 animations:^{
         [self.view bringSubviewToFront:self.guiDoneRenderingView];
     }];
-
-    
-    /*[UIView transitionFromView:self.guiInProgressView
-                        toView:self.guiDoneRenderingView
-                      duration:0.5
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    completion:^(BOOL finished){
-                        [self.view sendSubviewToBack:self.guiInProgressView];
-                        
-                    }];*/
-    
-
 }
 
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
