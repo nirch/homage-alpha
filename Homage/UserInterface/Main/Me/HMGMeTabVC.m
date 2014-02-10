@@ -631,11 +631,11 @@
 - (IBAction)shareButtonPushed:(UIButton *)button
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSString *shareString = @"Check out the cool video i created with #Homage App";
+    NSString *shareString = @"Check out the cool video i created with #HomageApp";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.videoURL , nil];
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     [activityViewController setValue:shareString forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
