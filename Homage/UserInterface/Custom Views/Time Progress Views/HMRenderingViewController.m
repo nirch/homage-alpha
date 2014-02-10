@@ -197,7 +197,7 @@
 
 - (void)renderStartedWithRemakeID:(NSString *)remakeID {
     
-    HMGLogDebug(@"%s", __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 
     if (self.guiProgressBarView.isRunning)
     {
@@ -221,6 +221,8 @@
     
     [self.view sendSubviewToBack:self.guiDoneRenderingView];
     [self.guiProgressBarView start];
+    
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 - (void)checkRemakeStatus:(NSTimer *)timer

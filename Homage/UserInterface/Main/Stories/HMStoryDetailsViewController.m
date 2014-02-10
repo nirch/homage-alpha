@@ -54,7 +54,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
+    self.guiRemakeButton.enabled = YES;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -455,7 +455,9 @@
 {
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
     recorderVC.delegate = self;
+    [self.storyMoviePlayer done];
     if (recorderVC) [self presentViewController:recorderVC animated:YES completion:completion];
+    
 }
 
 #pragma mark UITextView delegate
@@ -557,7 +559,7 @@
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     } else {
         Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-        [DB.sh.context deleteObject:remake];
+        if (remake) [DB.sh.context deleteObject:remake];
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

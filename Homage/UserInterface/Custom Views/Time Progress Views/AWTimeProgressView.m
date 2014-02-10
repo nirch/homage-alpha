@@ -45,6 +45,7 @@
 
 -(void)cleanup
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     // Main timer
     [self.mainTimer invalidate];
     self.mainTimer = nil;
@@ -69,13 +70,18 @@
     
     // Lower the running flag.
     _isRunning = NO;
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Start and stop
 -(void)start
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     // Ignore if already running.
-    if (self.isRunning) return;
+    if (self.isRunning)
+    {
+      [self stop];  
+    }
     
     _isRunning = YES;
     [self initGUI];
@@ -88,6 +94,7 @@
     _startingTime = [NSDate date];
     [self.delegate timeProgressDidStartAtTime:self.startingTime forDuration:self.duration];
     HMGLogDebug(@"delegate: progress started at:%@ for duration:%.02f", self.startingTime, self.duration);
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)stop
@@ -97,6 +104,7 @@
 
 -(void)stopAnimated:(BOOL)animated
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!self.isRunning) return;
     [self.mainTimer invalidate];
 
@@ -113,6 +121,7 @@
         }
         return;
     }
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
     
     self.progressIndicator.frame = [self.progressIndicator.layer.presentationLayer frame];
     [UIView animateWithDuration:self.durationForStopWithAnimation delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -198,6 +207,7 @@
 #pragma mark - GUI initializations
 -(void)initGUI
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.eventIndicatorTemplate.hidden = YES;
 
     _width = self.bounds.size.width;
@@ -212,16 +222,19 @@
     // End frame
     f.size.width = self.width;
     _endFrame = f;
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 
 #pragma mark - Progress animation
 -(void)startAnimations
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.progressIndicator.frame = self.startingFrame;
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.progressIndicator.frame = self.endFrame;
     } completion:nil];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Handle events
