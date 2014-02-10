@@ -18,6 +18,7 @@
 #import "HMGLog.h"
 #import "HMDetailedStoryRemakeVideoPlayerVC.h"
 #import "HMColor.h"
+#import "Mixpanel.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
 
@@ -73,6 +74,7 @@
 
 -(void)initGUI
 {
+    
     self.title = self.story.name;
     self.guiBGImageView.image = [self.story.thumbnail applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
     [self.guiBGImageView addMotionEffectWithAmount:-30];
@@ -90,6 +92,7 @@
 
 -(void)initStoryMoviePlayer
 {
+
     HMSimpleVideoViewController *vc;
     self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
@@ -379,6 +382,7 @@
 
 -(void)videoPlayerDidStop
 {
+    
     if ([self.storyMoviePlayer isInAction])
     {
         //do nothing.
@@ -387,7 +391,23 @@
         [self closeRemakeVideoPlayer];
     }
 }
+-(void)videoPlayerDidFinishPlaying
+{
+    
+    if ([self.storyMoviePlayer isInAction])
+    {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"FinishPlayStory" properties:@{
+                                                        @"useremail" : [User current].userID, @"story" : self.story.name}];
+       [self closeStoryVideoPlayer];
+        
+    } else if ([self.remakeVideoPlayer isInAction])
+    {
+        [self closeRemakeVideoPlayer];
+    }
+}
 
+//videoPlayerDidFinishPlaying
 -(void)videoPlayerDidExitFullScreen
 {
     if ([self.storyMoviePlayer isInAction])
@@ -401,6 +421,9 @@
 
 -(void)videoPlayerWillPlay
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"StartPlayStory" properties:@{
+                                                   @"useremail" : [User current].userID, @"story" : self.story.name}];
     if ([self.storyMoviePlayer isInAction])
     {
         [self closeStoryVideoPlayer];

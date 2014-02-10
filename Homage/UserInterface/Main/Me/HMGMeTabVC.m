@@ -19,6 +19,7 @@
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "HMDetailedStoryRemakeVideoPlayerVC.h"
+#import "mixPanel.h"
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
 
@@ -44,6 +45,10 @@
 #pragma mark lifecycle related
 - (void)viewDidLoad
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"EnterMeTab" properties:@{
+                                                   @"useremail" : [User current].userID}];
+    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     //[self.refreshControl beginRefreshing];
@@ -51,6 +56,7 @@
     [self initContent];
     self.playingMovieIndex = -1;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     
 }
 
@@ -507,6 +513,7 @@
 #pragma mark video player
 -(void)playRemakeVideoWithURL:(NSString *)videoURL inCell:(HMGUserRemakeCVCell *)cell withIndexPath:(NSIndexPath *)indexPath
 {
+    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (self.playingMovieIndex != -1) //another movie is being played in another cell
     {
@@ -515,7 +522,10 @@
     }
     
     self.playingMovieIndex = indexPath.item;
-    
+    //playRemakeVideoFromMeTab
+     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"RemakeFromMe" properties:@{
+                                                 @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
 
     [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
     
@@ -578,12 +588,14 @@
 #pragma mark remaking
 - (IBAction)deleteRemake:(UIButton *)sender
 {
+   
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.remakeToDelete = remake;
 
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"DELETE_REMAKE", nil) message:NSLocalizedString(@"APPROVE_DELETION", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
+    
     alertView.tag = TRASH_ALERT_VIEW_TAG;
     dispatch_async(dispatch_get_main_queue(), ^{
         [alertView show];
@@ -608,12 +620,15 @@
 
 - (IBAction)remakeButtonPushed:(UIButton *)button
 {
+     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self closeCurrentlyPlayingMovie];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [mixpanel track:@"RemakeFromMe" properties:@{
+                                                @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
     if (self.remakeToContinueWith.status.integerValue != HMGRemakeStatusDone) {
@@ -630,6 +645,8 @@
 #pragma mark sharing
 - (IBAction)shareButtonPushed:(UIButton *)button
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *shareString = @"Check out the cool video i created with #HomageApp";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
@@ -640,7 +657,6 @@
     [activityViewController setValue:shareString forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self presentViewController:activityViewController animated:YES completion:^{}];
     });
@@ -661,7 +677,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     //remake button pushed
     if (alertView.tag == REMAKE_ALERT_VIEW_TAG)
     {
@@ -689,6 +705,9 @@
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)
     {
         if (buttonIndex == 0) {
+            
+            [mixpanel track:@"DeleteRemake" properties:@{
+                                                         @"useremail" : [User current].userID, @"Story" : self.remakeToDelete.story.name,@"clickOnApprove": @"No"}];
             self.remakeToDelete = nil;
         }
         if (buttonIndex == 1) {
@@ -696,6 +715,8 @@
             HMGLogDebug(@"user chose to delete remake with id: %@" , remakeID);
             [HMServer.sh deleteRemakeWithID:remakeID];
             //[DB.sh.context deleteObject:self.remakeToDelete];
+            [mixpanel track:@"DeleteRemake" properties:@{
+                                                         @"useremail" : [User current].userID, @"Story" : self.remakeToDelete.story.name,@"clickOnApprove": @"Yes"}];
             self.remakeToDelete = nil;
         }
     }
