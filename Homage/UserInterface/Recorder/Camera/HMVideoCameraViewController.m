@@ -584,6 +584,12 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     return NO;
 }
 
++(BOOL)canFlipToFrontCamera
+{
+    AVCaptureDevice *videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionFront];
+    return [videoDevice supportsAVCaptureSessionPreset:AVCaptureSessionPreset1280x720];
+}
+
 -(void)changeCamera
 {
     UIView *tempView = [[UIView alloc] init];
@@ -632,6 +638,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             // If can't add front camera, it is probably because
             // it is an old device that doesn't support 720p front camera
             // change to the fallback preset.
+            
             self.session.sessionPreset = self.camSettingsSessionPresetFrontCameraFallback;
         }
         

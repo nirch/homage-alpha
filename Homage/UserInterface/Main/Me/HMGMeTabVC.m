@@ -648,13 +648,13 @@
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSString *shareString = @"Check out the cool video i created with #Homage App";
+    NSString *shareString = @"Check out the cool video i created with #HomageApp";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [mixpanel track:@"ShareRemake" properties:@{
                                                 @"useremail" : [User current].userID, @"Story" : remake.story.name}];
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.videoURL , nil];
-   UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     [activityViewController setValue:shareString forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

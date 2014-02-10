@@ -15,6 +15,7 @@
     </entity>
     <entity name="Remake" representedClassName="Remake" syncable="YES">
         <attribute name="lastLocalUpdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="shareURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sID" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="texts" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -75,11 +76,11 @@
         <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Footage" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Remake" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Scene" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Story" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Text" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Footage" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="Remake" positionX="0" positionY="0" width="128" height="208"/>
+        <element name="Scene" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Story" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="Text" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="180"/>
     </elements>
 </model>
