@@ -15,6 +15,7 @@
 #import "HMNotificationCenter.h"
 #import "HMServer+Render.h"
 #import "HMRecorderPreviewViewController.h"
+#import "mixpanel.h"
 
 @interface HMRecorderMessagesOverlayViewController ()
 
@@ -343,6 +344,10 @@
 
 - (IBAction)onPressedOopsDontRetakeButton:(UIButton *)sender
 {
+     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"PressedOopsDontRetake" properties:@{
+                                                    @"useremail" : [User current].userID, @"story" : [self.remakerDelegate remake].story.name}];
+    
     if (self.shouldDismissOnDecision) {
         [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
         return;
@@ -358,6 +363,9 @@
 
 - (IBAction)onPressedYeahRetakeThisScene:(UIButton *)sender
 {
+     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"YeahRetakeThisScene" properties:@{
+                                                    @"useremail" : [User current].userID, @"story" : [self.remakerDelegate remake].story.name}];
     if (self.shouldDismissOnDecision) {
         //
         //  Want to retake the scene
@@ -375,7 +383,12 @@
 
 - (IBAction)onPressedSeePreviewButton:(id)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+   
+    
     Remake *remake = [self.remakerDelegate remake];
+    [mixpanel track:@"RecorderPreview" properties:@{
+                                                    @"useremail" : [User current].userID, @"story" : remake.story.name}];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
     if (footage.rawLocalFile) {
         [self performSegueWithIdentifier:@"see preview segue" sender:nil];

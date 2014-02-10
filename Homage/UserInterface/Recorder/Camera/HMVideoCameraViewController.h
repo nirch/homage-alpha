@@ -12,4 +12,6 @@
 
 @interface HMVideoCameraViewController : UIViewController
 
++(BOOL)canFlipToFrontCamera;
+
 @end

@@ -142,8 +142,6 @@
 		08CDF8291896D4A200A9D235 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8211896D4A200A9D235 /* HMUploadManager.m */; };
 		08CDF82E1897F6B000A9D235 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF82D1897F6B000A9D235 /* Scene.m */; };
 		08CDF82F1897F6B000A9D235 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF82D1897F6B000A9D235 /* Scene.m */; };
-		08CDF8321897F6B000A9D235 /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8311897F6B000A9D235 /* Remake.m */; };
-		08CDF8331897F6B000A9D235 /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8311897F6B000A9D235 /* Remake.m */; };
 		08CDF8361897F6B000A9D235 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8351897F6B000A9D235 /* Story.m */; };
 		08CDF8371897F6B000A9D235 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8351897F6B000A9D235 /* Story.m */; };
 		08CDF83A1897F6B100A9D235 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
@@ -224,6 +222,7 @@
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 		F13FA5201899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
+		F15D608F18A916BB0052779F /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = F15D608E18A916BB0052779F /* Remake.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,8 +375,6 @@
 		08CDF8231896D4A200A9D235 /* HMUploadWorkerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadWorkerProtocol.h; sourceTree = "<group>"; };
 		08CDF82C1897F6B000A9D235 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		08CDF82D1897F6B000A9D235 /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
-		08CDF8301897F6B000A9D235 /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
-		08CDF8311897F6B000A9D235 /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		08CDF8341897F6B000A9D235 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		08CDF8351897F6B000A9D235 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		08CDF8381897F6B100A9D235 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
@@ -461,6 +458,8 @@
 		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
 		F13FA51D1899497F0026EA5F /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
 		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
+		F15D608D18A916BB0052779F /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
+		F15D608E18A916BB0052779F /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = Me/HMRenderingViewControllerDelegate.h; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -800,6 +799,8 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				F15D608D18A916BB0052779F /* Remake.h */,
+				F15D608E18A916BB0052779F /* Remake.m */,
 				08D1C3C7189B09A200C18AB0 /* Footage.h */,
 				08D1C3C8189B09A200C18AB0 /* Footage.m */,
 				08CDF83C1897F6B100A9D235 /* User.h */,
@@ -808,8 +809,6 @@
 				08CDF8391897F6B100A9D235 /* Text.m */,
 				08CDF8341897F6B000A9D235 /* Story.h */,
 				08CDF8351897F6B000A9D235 /* Story.m */,
-				08CDF8301897F6B000A9D235 /* Remake.h */,
-				08CDF8311897F6B000A9D235 /* Remake.m */,
 				08CDF82C1897F6B000A9D235 /* Scene.h */,
 				08CDF82D1897F6B000A9D235 /* Scene.m */,
 			);
@@ -1285,7 +1284,6 @@
 			files = (
 				F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */,
 				08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */,
-				08CDF8321897F6B000A9D235 /* Remake.m in Sources */,
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
 				08DF230118926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
 				08E50ECF1886994A001A8B75 /* HMRoundButton.m in Sources */,
@@ -1317,6 +1315,7 @@
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
 				08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */,
+				F15D608F18A916BB0052779F /* Remake.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,
 				08DF232E1892704300912657 /* HMRemakeCell.m in Sources */,
@@ -1415,7 +1414,6 @@
 				086D93D21886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				086D94A2188701EA0086C565 /* HMServer+Remakes.m in Sources */,
 				0840FF831885356A00A6EF5E /* DB.m in Sources */,
-				08CDF8331897F6B000A9D235 /* Remake.m in Sources */,
 				08B9589B189167B500BCCF8C /* Footage+Logic.m in Sources */,
 				0831C7E51885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				08B958891891678600BCCF8C /* Footage+Factory.m in Sources */,

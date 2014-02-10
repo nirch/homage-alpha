@@ -18,6 +18,7 @@
 #import "HMColor.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMAnimationsFX.h"
+#import "mixpanel.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -546,11 +547,15 @@
 #pragma mark - Show/Hide script
 -(void)toggleUserPreferenceToShowingOrHidingScriptWhileRecording
 {
+    
     if (User.current.prefersToSeeScriptWhileRecording.boolValue) {
         User.current.prefersToSeeScriptWhileRecording = @NO;
     } else {
         User.current.prefersToSeeScriptWhileRecording = @YES;
     }
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"ShowHideScript" properties:@{
+                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name,@"Show" : User.current.prefersToSeeScriptWhileRecording}];
 }
 
 -(void)updateShowHideScriptButton
@@ -616,6 +621,9 @@
 
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"ShowSceneDirection" properties:@{
+                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name}];
     [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID checkNextStateOnDismiss:NO];
 }
 
@@ -710,6 +718,13 @@
     Footage *footage = [self.remake footageWithSceneID:scene.sID];
     if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
+}
+-(void)videoPlayerWillPlay
+{
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel track:@"PlayingScene" properties:@{
+                                            @"useremail" : [User current].userID}];
 }
 
 @end
