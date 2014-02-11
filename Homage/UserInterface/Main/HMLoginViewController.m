@@ -47,6 +47,9 @@
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityIndicator;
 
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *guiButtonsCollection;
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *guiLabelsCollection;
+@property (weak, nonatomic) IBOutlet UIImageView *guiHLogo;
 
 @end
 
@@ -82,9 +85,21 @@
     self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
     self.guiSignUpView.scrollEnabled = NO;
     UIColor *hcolor = [HMColor.sh main2];
-    [self.guiSignupLabel1 setTextColor:hcolor];
-    [self.guiSignupLabel2 setTextColor:hcolor];
-    [self.guiSignupLabel3 setTextColor:hcolor];
+    
+    for (UIButton *button in self.guiButtonsCollection)
+    {
+        button.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:button.titleLabel.font.pointSize];
+        [button setTitleColor:[HMColor.sh main2] forState:UIControlStateNormal];
+        [button.layer setBorderColor:[HMColor.sh main2].CGColor];
+        [button.layer setBorderWidth:2.0f];
+        [button.layer setCornerRadius:7.5f];
+    }
+    
+    for (UILabel *label in self.guiLabelsCollection)
+    {
+        [label setFont:[UIFont fontWithName:@"DINOT-Regular" size:label.font.pointSize]];
+        [label setTextColor:hcolor];
+    }
 }
 
 -(void)initStoryMoviePlayer
