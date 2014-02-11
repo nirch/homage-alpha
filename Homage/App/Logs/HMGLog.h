@@ -10,7 +10,7 @@
 
 // define a macro which will let us compile-out log statements at a certain level when in release mode
 #ifndef HMG_COMPILE_TIME_LOG_LEVEL
-    #ifdef NDEBUG
+    #ifndef DEBUG
         #define HMG_COMPILE_TIME_LOG_LEVEL ASL_LEVEL_NOTICE
     #else
         #define HMG_COMPILE_TIME_LOG_LEVEL ASL_LEVEL_DEBUG
