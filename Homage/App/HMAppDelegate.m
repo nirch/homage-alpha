@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    #ifdef NDEBUG
+    #ifndef DEBUG
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
