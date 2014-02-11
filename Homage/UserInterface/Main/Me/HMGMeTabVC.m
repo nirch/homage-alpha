@@ -489,11 +489,13 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
             [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
+            [mixpanel track:@"PlayRemakeFromME" properties:@{
+                                                         @"useremail" : [User current].userID, @"Story" : remake.story.name}];
             break;
         case HMGRemakeStatusInProgress:
             //TODO:connect to recorder at last non taken scene
@@ -523,9 +525,9 @@
     
     self.playingMovieIndex = indexPath.item;
     //playRemakeVideoFromMeTab
-     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"RemakeFromMe" properties:@{
-                                                 @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
+   //  Mixpanel *mixpanel = [Mixpanel sharedInstance];
+  //  [mixpanel track:@"PlayRemakeFromME" properties:@{
+  //                                              @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
 
     [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
     
