@@ -17,6 +17,10 @@
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
 #import "Mixpanel.h"
+#import "HMColor.h"
+@import MediaPlayer;
+@import AVFoundation;
+
 
 
 @interface HMLoginViewController () <UITextFieldDelegate>
@@ -34,14 +38,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiIntroSkipButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiShootFirstStoryButton;
 
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntroLabel1;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntroLabel2;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntrolabel3;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntroLabel4;
-
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel1;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel2;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel3;
+
+@property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
+@property (strong,nonatomic) MPMoviePlayerController *moviePlayer;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityIndicator;
 
@@ -59,6 +61,16 @@
     //NSLog(@"self.guiBGImageView.frame = origin(%f,%f) , size(%f,%f)" , self.guiBGImageView.frame.origin.x , self.guiBGImageView.frame.origin.y , self.guiBGImageView.frame.size.height , self.guiBGImageView.frame.size.width);
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    
+}
+
 -(void)initGUI
 {
     self.guiIntroView.alpha = 0;
@@ -69,7 +81,20 @@
     self.guiSignUpMailTextField.delegate = self;
     self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
     self.guiSignUpView.scrollEnabled = NO;
+    UIColor *hcolor = [HMColor.sh main2];
+    [self.guiSignupLabel1 setTextColor:hcolor];
+    [self.guiSignupLabel2 setTextColor:hcolor];
+    [self.guiSignupLabel3 setTextColor:hcolor];
 }
+
+-(void)initStoryMoviePlayer
+{
+    self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]]];
+    [self.moviePlayer.view setFrame:self.guiIntroMovieContainer.frame];
+    [self.moviePlayer play];
+    [self.view addSubview:self.moviePlayer.view];
+}
+
 -(void)initObservers
 {
     // Observe creation of user
@@ -154,7 +179,9 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.guiSignUpView.alpha = 0;
         self.guiIntroView.alpha = 1;
-    } completion:nil];
+    } completion:^(BOOL finished){
+        [self initStoryMoviePlayer];
+    }];
 }
 
 

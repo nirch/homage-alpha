@@ -199,13 +199,23 @@
             } completion:nil];
         });*/
         
-        self.guiGeneralMessageOKButton.alpha = 0;
+        /*self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
         [UIView animateWithDuration:0.5 delay:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.guiGeneralMessageOKButton.alpha = 1;
         } completion:^(BOOL finished) {
             HMGLogDebug(@"alpha finished");
-        }];
+        }];*/
+        
+        self.guiGeneralMessageOKButton.alpha = 0;
+        HMGLogDebug(@"alpha started");
+        double delayInSeconds = 0.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [UIView animateWithDuration:0.5 animations:^{
+                self.guiGeneralMessageOKButton.alpha = 1;
+            }];
+        });
         
         
        
@@ -226,10 +236,17 @@
         
         self.guiDismissButton.alpha = 0;
         HMGLogDebug(@"alpha started");
-        [UIView animateWithDuration:0.5 delay:6.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
+        double delayInSeconds = 0.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [UIView animateWithDuration:0.5 animations:^{
+                self.guiDismissButton.alpha = 1;
+            }];
+        });
+        /*[UIView animateWithDuration:0.5 delay:6.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
             HMGLogDebug(@"alpha finished");
             self.guiDismissButton.alpha = 1;
-        }];
+        }];*/
         
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         
