@@ -67,7 +67,7 @@
                                     <segue destination="Zaz-2j-rCE" kind="embed" identifier="renderSegue" id="d8n-DU-AyY"/>
                                 </connections>
                             </containerView>
-                            <containerView contentMode="scaleToFill" id="eTd-5y-QS3" userLabel="login container view">
+                            <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="eTd-5y-QS3" userLabel="login container view">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -847,7 +847,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" id="xgh-oz-LkQ" userLabel="moviePlayer">
                                         <rect key="frame" x="0.0" y="64" width="320" height="180"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mzE-bG-vX9">

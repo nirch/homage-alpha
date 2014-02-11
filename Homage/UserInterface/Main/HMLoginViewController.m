@@ -18,7 +18,9 @@
 #import "UIImage+ImageEffects.h"
 #import "Mixpanel.h"
 #import "HMColor.h"
-#import "HMSimpleVideoViewController.h"
+@import MediaPlayer;
+@import AVFoundation;
+
 
 
 @interface HMLoginViewController () <UITextFieldDelegate>
@@ -41,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel3;
 
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
-@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
+@property (strong,nonatomic) MPMoviePlayerController *moviePlayer;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityIndicator;
 
@@ -61,12 +63,12 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    //[self initStoryMoviePlayer];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [self.moviePlayer done];
+    
 }
 
 -(void)initGUI
@@ -87,15 +89,10 @@
 
 -(void)initStoryMoviePlayer
 {
-    HMSimpleVideoViewController *vc;
-    self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiIntroMovieContainer];
-    
-    NSString *introVideo = [[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"];
-    introVideo = @"https://homageapp.s3.amazonaws.com/Remakes/52d7fd79db25451694000001/Test_52d7fd79db25451694000001.mp4";
-    self.moviePlayer.videoURL = introVideo;
-    [self.moviePlayer hideVideoLabel];
-    [self.moviePlayer hideMediaControls];
-    self.moviePlayer.videoImage = [UIImage imageNamed:@"introThumbnail"];
+    self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]]];
+    [self.moviePlayer.view setFrame:self.guiIntroMovieContainer.frame];
+    [self.moviePlayer play];
+    [self.view addSubview:self.moviePlayer.view];
 }
 
 -(void)initObservers
@@ -182,7 +179,9 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.guiSignUpView.alpha = 0;
         self.guiIntroView.alpha = 1;
-    } completion:nil];
+    } completion:^(BOOL finished){
+        [self initStoryMoviePlayer];
+    }];
 }
 
 
