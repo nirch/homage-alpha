@@ -379,7 +379,7 @@
                                     <outlet property="delegate" destination="ZiT-ur-2sF" id="6zZ-FG-ckl"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" id="ZjV-7o-L6U">
+                            <view contentMode="scaleToFill" id="ZjV-7o-L6U" userLabel="storyMovieContainer">
                                 <rect key="frame" x="10" y="55" width="300" height="157"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -587,7 +587,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ckf-Qr-Dbx">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ckf-Qr-Dbx" id="Nlg-6q-I3Z">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -605,7 +605,7 @@
         <!--Navigation Controller - Item-->
         <scene sceneID="aZo-J1-2Kd">
             <objects>
-                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="ecJ-Xd-7yq" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="ecJ-Xd-7yq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="XfT-l5-BHw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ne3-Mk-TmS">
                         <autoresizingMask key="autoresizingMask"/>
@@ -820,7 +820,6 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter your email" minimumFontSize="17" id="IET-vm-wkf">
                                         <rect key="frame" x="23" y="452" width="281" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <color key="textColor" red="0.73906674589999999" green="0.73906674589999999" blue="0.73906674589999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -846,34 +845,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to star in a video you will need to:" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JT7-Rn-lDV">
-                                        <rect key="frame" x="23" y="12" width="279" height="83"/>
+                                    <view contentMode="scaleToFill" id="xgh-oz-LkQ" userLabel="moviePlayer">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="180"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to avoid shadows step away from the wall." lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zlx-8V-UJO">
-                                        <rect key="frame" x="23" y="88" width="279" height="89"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="use a plain wall as a background" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8f-mZ-qfN">
-                                        <rect key="frame" x="20" y="147" width="279" height="79"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for best results, make sure your clothes are in different in color from the wall." lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2de-ox-2EP">
-                                        <rect key="frame" x="13" y="225" width="279" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mzE-bG-vX9">
                                         <rect key="frame" x="23" y="489" width="92" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -906,12 +882,9 @@
                     <connections>
                         <outlet property="guiActivityIndicator" destination="Vva-wT-fwg" id="Ns8-kG-qC1"/>
                         <outlet property="guiBGImageView" destination="9aM-rr-aN3" id="Fnh-1y-EuL"/>
-                        <outlet property="guiIntroLabel1" destination="JT7-Rn-lDV" id="Jwh-Df-8zZ"/>
-                        <outlet property="guiIntroLabel2" destination="x8f-mZ-qfN" id="zJ4-x6-WmC"/>
-                        <outlet property="guiIntroLabel4" destination="2de-ox-2EP" id="ccy-rB-Qic"/>
+                        <outlet property="guiIntroMovieContainer" destination="xgh-oz-LkQ" id="CnO-m2-BB1"/>
                         <outlet property="guiIntroSkipButton" destination="mzE-bG-vX9" id="VIa-FD-ww5"/>
                         <outlet property="guiIntroView" destination="cup-Yg-xb7" id="w5R-pX-mwE"/>
-                        <outlet property="guiIntrolabel3" destination="Zlx-8V-UJO" id="I4s-iA-I0i"/>
                         <outlet property="guiShootFirstStoryButton" destination="oyj-uG-goY" id="YWy-iq-irA"/>
                         <outlet property="guiSignUpButton" destination="bTk-IG-czK" id="dKe-1c-XBs"/>
                         <outlet property="guiSignUpMailTextField" destination="IET-vm-wkf" id="W1e-f3-FSX"/>
@@ -943,6 +916,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="anA-Bb-o6J"/>
+        <segue reference="Wy5-cH-9ZA"/>
     </inferredMetricsTieBreakers>
 </document>

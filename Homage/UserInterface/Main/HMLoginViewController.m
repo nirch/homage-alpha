@@ -17,6 +17,8 @@
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
 #import "Mixpanel.h"
+#import "HMColor.h"
+#import "HMSimpleVideoViewController.h"
 
 
 @interface HMLoginViewController () <UITextFieldDelegate>
@@ -34,14 +36,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiIntroSkipButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiShootFirstStoryButton;
 
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntroLabel1;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntroLabel2;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntrolabel3;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiIntroLabel4;
-
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel1;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel2;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiSignupLabel3;
+
+@property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
+@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityIndicator;
 
@@ -59,6 +59,16 @@
     //NSLog(@"self.guiBGImageView.frame = origin(%f,%f) , size(%f,%f)" , self.guiBGImageView.frame.origin.x , self.guiBGImageView.frame.origin.y , self.guiBGImageView.frame.size.height , self.guiBGImageView.frame.size.width);
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    //[self initStoryMoviePlayer];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.moviePlayer done];
+}
+
 -(void)initGUI
 {
     self.guiIntroView.alpha = 0;
@@ -69,7 +79,25 @@
     self.guiSignUpMailTextField.delegate = self;
     self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
     self.guiSignUpView.scrollEnabled = NO;
+    UIColor *hcolor = [HMColor.sh main2];
+    [self.guiSignupLabel1 setTextColor:hcolor];
+    [self.guiSignupLabel2 setTextColor:hcolor];
+    [self.guiSignupLabel3 setTextColor:hcolor];
 }
+
+-(void)initStoryMoviePlayer
+{
+    HMSimpleVideoViewController *vc;
+    self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiIntroMovieContainer];
+    
+    NSString *introVideo = [[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"];
+    introVideo = @"https://homageapp.s3.amazonaws.com/Remakes/52d7fd79db25451694000001/Test_52d7fd79db25451694000001.mp4";
+    self.moviePlayer.videoURL = introVideo;
+    [self.moviePlayer hideVideoLabel];
+    [self.moviePlayer hideMediaControls];
+    self.moviePlayer.videoImage = [UIImage imageNamed:@"introThumbnail"];
+}
+
 -(void)initObservers
 {
     // Observe creation of user
