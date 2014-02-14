@@ -25,10 +25,12 @@
 #import "HMLoginViewController.h"
 #import "HMGMeTabVC.h"
 #import "HMStoriesViewController.h"
+#import "HMServer+ReachabilityMonitor.h"
+#import "HMDinFontLabel.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *appContainerView;
+@property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
 @property (weak, nonatomic) IBOutlet UIView *loginContainerView;
@@ -37,6 +39,9 @@
 @property (atomic, readonly) NSDate *launchDateTime;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiTabNameLabel;
 @property (weak,nonatomic) Story *loginStory;
+@property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
+@property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
+@property (weak, nonatomic) IBOutlet HMDinFontLabel *guiNoConnectivityLabel;
 
 @end
 
@@ -74,12 +79,19 @@
     self.sideBarContainerView.hidden = YES;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
-    //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
-    self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
+
     self.renderingContainerView.hidden = YES;
     self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
     self.loginContainerView.hidden = YES;
     self.loginContainerView.alpha = 0;
+    
+    self.guiNoConnectivityView.hidden = YES;
+    self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
+    
+    //debug
+    //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
+    //[self.guiAppContainerView.layer setBorderWidth:2.0f];
+    //[self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
 }
 
 -(void)initObservers
@@ -95,6 +107,12 @@
                                                    selector:@selector(onRecorderFinished:)
                                                        name:HM_NOTIFICATION_RECORDER_FINISHED
                                                      object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onReachabilityStatusChange:)
+                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                     object:HMServer.sh];
+
 }
 
 #pragma mark - Splash View
@@ -160,7 +178,7 @@
     self.sideBarContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
-        self.appContainerView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
+        self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
     } completion:nil];
 
 }
@@ -168,7 +186,7 @@
 -(void)hideSideBar
 {
      [UIView animateWithDuration:0.3 animations:^{
-        self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
         } completion:^(BOOL finished){
             if (finished) self.sideBarContainerView.hidden = YES;
         }];
@@ -242,6 +260,7 @@
 
 -(void)presentLoginScreen
 {
+    self.appWrapperView.hidden = YES;
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.hidden = NO;
         self.loginContainerView.alpha = 1;
@@ -332,17 +351,17 @@
 
 -(void)switchToTab:(NSUInteger)toIndex
 {
-    UIViewController *fromVC = self.appTabBarController.selectedViewController;
-    UIView *fromView = fromVC.view;
+    //UIViewController *fromVC = self.appTabBarController.selectedViewController;
+    //UIView *fromView = fromVC.view;
     
     self.appTabBarController.selectedIndex = toIndex;
     
-    UIViewController *toVC = self.appTabBarController.selectedViewController;
-    UIView *toView = toVC.view;
+    //UIViewController *toVC = self.appTabBarController.selectedViewController;
+    //UIView *toView = toVC.view;
     
     self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
     
-    if ( toVC != fromVC )[UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
+    //if ( toVC != fromVC )[UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
 }
 
 -(void)closeSideBar
@@ -367,31 +386,44 @@
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remakeID"];
     
-    [self.renderingVC renderStartedWithRemakeID:remakeID];
     [self showRenderingView];
-
+    [self.renderingVC renderStartedWithRemakeID:remakeID];
 }
 
 -(void)showRenderingView
 {
+    
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.renderingContainerView.hidden = NO;
+    CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+    CGRect newAppContainerViewFrame = self.appWrapperView.frame;
+    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
+    newAppContainerViewFrame.size.height -= renderingBarHeight;
     [UIView animateWithDuration:0.3 animations:^{
-        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,0);
-        //self.appContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,0);
+        self.appWrapperView.frame = newAppContainerViewFrame;
     } completion:nil];
+    [self displayRectBounds:self.appWrapperView.frame Name:@"self.appContainerView.frame"];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)hideRenderingView
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
+    CGRect newAppContainerViewFrame = self.appWrapperView.frame;
+    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
+    newAppContainerViewFrame.size.height += renderingBarHeight;
     [UIView animateWithDuration:0.3 animations:^{
-        CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-        HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
         //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
-        self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
+        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
+        self.appWrapperView.frame = newAppContainerViewFrame;
     } completion:^(BOOL finished){
         if (finished)
         self.renderingContainerView.hidden = YES;
     }];
+    [self displayRectBounds:self.appWrapperView.frame Name:@"self.appContainerView.frame"];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 - (void)renderDoneClicked
@@ -409,22 +441,14 @@
 
 -(void)onLoginPressedSkip
 {
+    self.appWrapperView.hidden = NO;
     [self.loginContainerView removeFromSuperview];
 }
 
-/*-(void)onLoginPressedShootWithRemake:(Remake *)remake
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.loginContainerView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.loginContainerView.hidden = YES;
-        HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-        if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
-    }];
-}*/
 
 -(void)onLoginPressedShootFirstStory
 {
+    self.appWrapperView.hidden = NO;
     [self showIntroStory];
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 0;
@@ -436,6 +460,62 @@
 -(void)onRecorderFinished:(NSNotification *)notification
 {
     [self storiesButtonPushed];
+}
+
+
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    if (!HMServer.sh.isReachable) {
+        [self showNoConnectivity];
+    } else {
+        [self hideNoConnectivity];
+    }
+}
+
+
+-(void)showNoConnectivity
+{
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    if (!self.guiNoConnectivityView.hidden) return;
+    
+    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
+    self.guiNoConnectivityView.hidden = NO;
+    CGFloat offset = self.guiNoConnectivityView.frame.size.height;
+    CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
+    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
+    newAppContainerViewFrame.size.height -= offset;
+    newAppContainerViewFrame.origin.y += offset;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiAppContainerView.frame = newAppContainerViewFrame;
+    } completion:nil];
+    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+}
+
+-(void)hideNoConnectivity
+{
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    if (self.guiNoConnectivityView.hidden) return;
+    
+    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
+    CGFloat offset = self.guiNoConnectivityView.frame.size.height;
+    CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
+    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
+    newAppContainerViewFrame.size.height += offset;
+    newAppContainerViewFrame.origin.y -= offset;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiAppContainerView.frame = newAppContainerViewFrame;
+    } completion:^(BOOL finished){
+        if (finished)
+            self.guiNoConnectivityView.hidden = YES;
+    }];
+    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+}
+
+-(void)displayRectBounds:(CGRect)rect Name: name
+{
+    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
 @end

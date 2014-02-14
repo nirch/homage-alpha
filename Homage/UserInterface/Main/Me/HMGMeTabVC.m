@@ -78,14 +78,15 @@
     
     HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:otherRemakeCell];
+    [self removeObservers];
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self removeObservers];
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark initializations

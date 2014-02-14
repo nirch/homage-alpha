@@ -291,7 +291,8 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
     NSURL *url = [NSURL URLWithString:self.videoURL];
     HMGLogDebug(@"Trying to play video at:%@", url);
     [self.videoPlayer prepareToPlay];
-    if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
+    //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
+    self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
 }
 

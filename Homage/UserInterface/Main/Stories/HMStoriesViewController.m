@@ -42,13 +42,17 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self removeObservers];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self initObservers];
     [self initContent];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark initializations
@@ -312,7 +316,13 @@
     
     //TODO: adjust icons according to level of difficulty and selfi/director mode  
     cell.guiLevelOfDifficulty.image = [UIImage imageNamed:@"circle"];
-    cell.guiShotMode.image = [UIImage imageNamed:@"circle"];
+    
+    if (story.isASelfie) {
+        cell.guiShotMode.image = [UIImage imageNamed:@"selfieIcon"];
+    } else {
+        cell.guiShotMode.image = [UIImage imageNamed:@"circle"];
+    }
+    
     NSUInteger remakesNum = [story.remakes count];
     cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%lu" , (unsigned long)remakesNum];
     

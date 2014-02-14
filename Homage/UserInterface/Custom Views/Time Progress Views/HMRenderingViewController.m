@@ -28,15 +28,18 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return self;
 }
 
 - (void)viewDidLoad
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     HMGLogDebug(@"%s", __PRETTY_FUNCTION__);
     
@@ -48,39 +51,40 @@
     self.guiProgressBarView.duration = PROGRESS_BAR_DURATION;
     
     self.timer = nil;
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initGUI
 {
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIColor *homageColor = [HMColor.sh main2];
-    [self.view sendSubviewToBack:self.guiDoneRenderingView];
-    //[self.view addSubview:self.guiInProgressView];
-    //[self.guiDoneRenderingView setHidden:YES];
-    //[self.guiInProgressView setHidden:NO];
+    //[self.view sendSubviewToBack:self.guiDoneRenderingView];
     self.guiInProgressLabel.textColor = homageColor;
     self.guiDoneLabel.textColor = homageColor;
-    self.guiProgressBar.backgroundColor = homageColor;
 
     //small border for rendering view
     [self.guiTopView.layer setBorderColor:[HMColor.sh textImpact].CGColor];
-    [self.guiTopView.layer setBorderWidth:1.0f];
-    //[self.guiTopView.layer setCornerRadius:7.5f];
+    [self.guiTopView.layer setBorderWidth:0.5f];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Observe remake status
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeStatusNotification:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE
                                                      object:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers handlers
 -(void)onRemakeStatusNotification:(NSNotification *)notification
 {
+    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Checking the status of the remake
     
     // TODO: Get the String of the remakeID key as a constant from the notification center
@@ -124,20 +128,21 @@
     {
         [self.timer invalidate];
         self.timer = nil;
-        [self.guiProgressBarView stop];
+        [self.guiProgressBarView stopAnimated:YES];
         
         // Since the progress bar has an animtation for finishing the progress bar, we are delaying the the switch to the label view in order for the animation to finish
         double delayInSeconds = 0.3;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [UIView animateWithDuration:0.5 animations:^{
+            /*[UIView animateWithDuration:0.5 animations:^{
                 [self.view bringSubviewToFront:self.guiDoneRenderingView];
-            }];
+            }];*/
             
         });
 
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
@@ -145,16 +150,19 @@
 
 -(void)timeProgressDidStartAtTime:(NSDate *)time forDuration:(NSTimeInterval)duration
 {
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)timeProgressWasCancelledAfterDuration:(NSTimeInterval)duration
 {
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)timeProgressDidFinishAfterDuration:(NSTimeInterval)duration
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGLogWarning(@"Progress Bar finished, but the remake isn't ready yet");
     
     [self.timer invalidate];
@@ -162,15 +170,17 @@
 
     self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
     
-    [UIView animateWithDuration:0.5 animations:^{
+    /*[UIView animateWithDuration:0.5 animations:^{
         [self.view bringSubviewToFront:self.guiDoneRenderingView];
-    }];
+    }];*/
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
-    HMGLogDebug(@"%s", __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.delegate renderDoneClicked];
-    [self.view sendSubviewToBack:self.guiDoneRenderingView];
+    //[self.view sendSubviewToBack:self.guiDoneRenderingView];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
 
@@ -198,7 +208,7 @@
     Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
     self.guiInProgressLabel.text = [NSString stringWithFormat:@"%@:%@" , NSLocalizedString(@"RENDERING_MOVIE_MESSAGE", nil) ,remake.story.name];
     
-    [self.view sendSubviewToBack:self.guiDoneRenderingView];
+    //[self.view sendSubviewToBack:self.guiDoneRenderingView];
     [self.guiProgressBarView start];
     
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
@@ -206,19 +216,22 @@
 
 - (void)checkRemakeStatus:(NSTimer *)timer
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // When the timer is fired, calling the server to get the status of the remake
     
     NSString *remakeID = [timer.userInfo valueForKey:REMAKE_ID_KEY];
     [[HMServer sh] refetchRemakeWithID:remakeID];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 - (void)didReceiveMemoryWarning
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super didReceiveMemoryWarning];
     
     HMGLogWarning(@"%s received memory warning", __PRETTY_FUNCTION__);
-    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     // Dispose of any resources that can be recreated.
 }
 

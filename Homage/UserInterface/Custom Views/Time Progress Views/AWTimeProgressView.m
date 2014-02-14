@@ -34,12 +34,22 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
+    HMGLogDebug(@"%s started in %p", __PRETTY_FUNCTION__ , &self);
     self = [super initWithCoder:aDecoder];
     if (self) {
         if (self.subviews.count>0) self.progressIndicator = self.subviews[0];
         if (self.subviews.count>1) self.eventIndicatorTemplate = self.subviews[1];
+        [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame from SB"];
         self.durationForStopWithAnimation = 0.2f;
+        
+        //debug progress bar bug
+        /*CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+        CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+        CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+        UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:0.7];
+        [self.progressIndicator setBackgroundColor:color];*/
     }
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
     return self;
 }
 
@@ -113,7 +123,9 @@
     HMGLogDebug(@"delegate: progress stopped after duration:%.02f", timePassed);
     
     if (!animated) {
-       [self.progressIndicator.layer removeAllAnimations];
+        [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
+        [self.progressIndicator.layer removeAllAnimations];
+        [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
         if (self.hidesAutomatically) {
             [self hideAnimated:YES cleanUp:YES];
         } else {
@@ -138,13 +150,14 @@
             [self.delegate timeProgressDidFinishAnimationAfterStop];
         }
 
-        
+        HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
         return;        
     }];
 }
 
 -(void)done
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     NSTimeInterval timePassed = [[NSDate date] timeIntervalSinceDate:self.startingTime];
     [self.delegate timeProgressDidFinishAfterDuration:timePassed];
     HMGLogDebug(@"delegate: progress finished after duration:%.02f", timePassed);
@@ -153,6 +166,7 @@
     } else {
         [self cleanup];
     }
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)dealloc
@@ -162,6 +176,7 @@
 
 -(void)showAnimated:(BOOL)animated
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!animated) {
         self.alpha = 1;
         return;
@@ -169,10 +184,12 @@
     [UIView animateWithDuration:0.1 animations:^{
         self.alpha = 1;
     }];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)hideAnimated:(BOOL)animated cleanUp:(BOOL)cleanUp
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!animated) {
         self.alpha = 0;
         return;
@@ -180,16 +197,21 @@
     [UIView animateWithDuration:0.1 animations:^{
         self.alpha = 0;
     }];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
+    
 }
 
 -(void)hideAnimated:(BOOL)animated
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     [self hideAnimated:animated cleanUp:NO];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Main Timer
 -(void)startTheClock
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     [self.mainTimer invalidate];
     self.mainTimer = [NSTimer scheduledTimerWithTimeInterval:self.duration
                                                       target:self
@@ -197,6 +219,7 @@
                                                     userInfo:nil
                                                      repeats:NO
                                             ];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)onMainTimerDone:(NSTimer *)timer
@@ -209,7 +232,7 @@
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.eventIndicatorTemplate.hidden = YES;
-
+    
     _width = self.bounds.size.width;
     _height = self.bounds.size.height;
     
@@ -217,11 +240,13 @@
     CGRect f = self.progressIndicator.frame;
     f.size.width = 0;
     f.origin.x = 0;
+    [self displayRectBounds:f Name:@"starting f"];
     _startingFrame = f;
     
     // End frame
     f.size.width = self.width;
     _endFrame = f;
+    [self displayRectBounds:f Name:@"end f"];
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
@@ -231,16 +256,23 @@
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.progressIndicator.frame = self.startingFrame;
-    HMGLogDebug(@"duration of animation is: %f" , self.duration);
+    [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
+    HMGLogDebug(@"duration of animation is: %f. starting now!" , self.duration);
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.progressIndicator.frame = self.endFrame;
-    } completion:nil];
+    } completion:^(BOOL finished)
+     {
+         HMGLogDebug(@"animation completed");
+     }];
+    
+    [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Handle events
 -(void)initializeEvents
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!self.timedEvents) return;
     
     if (self.eventIndicatorTemplate) self.eventsIndicatorsViews = [NSMutableArray new];
@@ -255,10 +287,12 @@
         // Create a simple view indicator for each event.
         [self addIndicatorAtTime:eventTime atIndex:i];
     }
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)scheduleEventAtTime:(NSTimeInterval)eventTime atIndex:(NSInteger)index
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:eventTime
                                                       target:self
                                                     selector:@selector(onEventEncountered:)
@@ -266,10 +300,12 @@
                                                      repeats:NO
                       ];
     [self.timers addObject:timer];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)addIndicatorAtTime:(NSTimeInterval)eventTime atIndex:(NSInteger)index
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!self.eventsIndicatorsViews) return;
     UIView *newView = [UIView new];
     UIView *tpl = self.eventIndicatorTemplate;
@@ -288,10 +324,12 @@
     
     [self.eventsIndicatorsViews addObject:newView];
     [self addSubview:newView];
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)onEventEncountered:(NSTimer *)timer
 {
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     NSInteger index = [timer.userInfo integerValue];
     
     // Animate the event indicator.
@@ -315,7 +353,13 @@
         [self.delegate timeProgressDidEncounterEventIndex:index afterDuration:timePassed];
         HMGLogDebug(@"delegate: progress encountered event %d after duration:%.02f", index, timePassed);
     }
+    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 
+}
+
+-(void)displayRectBounds:(CGRect)rect Name: name
+{
+    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
 @end

@@ -100,6 +100,8 @@
         [label setFont:[UIFont fontWithName:@"DINOT-Regular" size:label.font.pointSize]];
         [label setTextColor:hcolor];
     }
+    [self.guiHLogo.layer setCornerRadius:7.5];
+    [self.guiHLogo.layer setMasksToBounds:YES];
 }
 
 -(void)initStoryMoviePlayer
@@ -208,13 +210,14 @@
 
 
 - (IBAction)onPressedSkipButton:(UIButton *)sender {
-    //[self dismissViewControllerAnimated:YES completion:nil];
+    [self.moviePlayer stop];
     [self.delegate onLoginPressedSkip];
 }
 
 
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
+    [self.moviePlayer stop];
     [self.delegate onLoginPressedShootFirstStory];
 }
 

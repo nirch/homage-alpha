@@ -22,8 +22,26 @@
                             </containerView>
                             <view contentMode="scaleToFill" id="oj9-Vs-QHV" userLabel="app view">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="569"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" id="BGe-RC-PIs" userLabel="no connectivity View">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" id="vUV-gb-yMF">
+                                                <rect key="frame" x="9" y="3" width="25" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Y U dont have connectivity?!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMDinFontLabel">
+                                                <rect key="frame" x="51" y="3" width="259" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cJv-hE-5uF">
                                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -47,7 +65,6 @@
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="showSettingModal:" destination="k3P-hU-fx4" eventType="touchUpInside" id="myq-1u-JFt"/>
                                             <action selector="sideBarButtonPushed:" destination="Mko-4Y-5oJ" eventType="touchUpInside" id="nE2-8C-cFJ"/>
                                         </connections>
                                     </button>
@@ -118,9 +135,12 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="appContainerView" destination="oj9-Vs-QHV" id="Cih-E0-VBT"/>
+                        <outlet property="appWrapperView" destination="oj9-Vs-QHV" id="3Jj-gS-xwd"/>
                         <outlet property="guiActivity" destination="R2K-xF-bXS" id="ZKF-1h-oIw"/>
+                        <outlet property="guiAppContainerView" destination="cJv-hE-5uF" id="3Sn-Ar-WzE"/>
                         <outlet property="guiBGImage" destination="cRg-QS-yh6" id="pRm-DC-evB"/>
+                        <outlet property="guiNoConnectivityLabel" destination="IDg-TI-8JI" id="78F-9E-wfy"/>
+                        <outlet property="guiNoConnectivityView" destination="BGe-RC-PIs" id="uVW-lK-Tz6"/>
                         <outlet property="guiSplashView" destination="LGr-HO-h8t" id="JrG-Ne-26o"/>
                         <outlet property="guiTabNameLabel" destination="PcV-Lk-RmR" id="dlw-f3-Q9x"/>
                         <outlet property="guiTextLabel1" destination="9bm-AI-VPM" id="VQ5-TV-52e"/>
@@ -214,6 +234,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yre-Et-9j7">
                                                     <rect key="frame" x="48" y="189" width="32" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9KD-jG-LUX">
                                                     <rect key="frame" x="8" y="189" width="32" height="24"/>
@@ -653,16 +674,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="ec0-pW-kcw" customClass="AWTimeProgressView">
-                                        <rect key="frame" x="0.0" y="37" width="320" height="11"/>
+                                        <rect key="frame" x="0.0" y="33" width="320" height="15"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" id="YEw-Vf-gtE">
-                                                <rect key="frame" x="0.0" y="-6" width="21" height="16"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.06587612323" blue="0.036397943770000003" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rendering movie: &lt;movie name>" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMFontLabel">
                                         <rect key="frame" x="4" y="1" width="316" height="21"/>
@@ -674,7 +695,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
+                            <view hidden="YES" contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -700,7 +721,6 @@
                         <outlet property="guiDoneRenderingView" destination="rrX-ch-KhL" id="c8O-Mc-ocK"/>
                         <outlet property="guiInProgressLabel" destination="ZP7-sA-lhY" id="3iX-yY-y3l"/>
                         <outlet property="guiInProgressView" destination="xyw-kW-kKx" id="PKZ-ab-8M3"/>
-                        <outlet property="guiProgressBar" destination="YEw-Vf-gtE" id="8Em-oe-wI2"/>
                         <outlet property="guiProgressBarView" destination="ec0-pW-kcw" id="XUR-2m-UwS"/>
                         <outlet property="guiTopView" destination="aih-xq-6XI" id="v6Z-U9-0Bf"/>
                     </connections>
@@ -915,6 +935,7 @@
         <image name="share" width="19" height="27"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
         <image name="trash" width="28" height="38"/>
+        <image name="warning" width="200" height="200"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

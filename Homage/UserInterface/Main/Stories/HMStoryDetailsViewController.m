@@ -40,34 +40,45 @@
 #pragma mark lifecycle related
 -(void)viewDidLoad
 {
+    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
 	[self initGUI];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refetchRemakesForStoryID:self.story.sID];
     [self initContent];
     [self initObservers];
     [self.guiRemakeActivity setHidden:YES];
     if (self.autoStartPlayingStory) [self.storyMoviePlayer play];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiRemakeButton.enabled = YES;
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.guiRemakeActivity setHidden:YES];
     [self.guiRemakeActivity stopAnimating];
+    [self removeObservers];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [self removeObservers];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.storyMoviePlayer done];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark initializations
@@ -75,6 +86,7 @@
 -(void)initGUI
 {
     
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
     self.guiBGImageView.image = [self.story.thumbnail applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
     [self.guiBGImageView addMotionEffectWithAmount:-30];
@@ -88,11 +100,14 @@
     [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
     [self.guiRemakeButton.layer setBorderWidth:2.0f];
     [self.guiRemakeButton.layer setCornerRadius:7.5f];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)initStoryMoviePlayer
 {
 
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMSimpleVideoViewController *vc;
     self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
@@ -100,16 +115,20 @@
     [self.storyMoviePlayer hideMediaControls];
     self.storyMoviePlayer.videoImage = self.story.thumbnail;
     self.storyMoviePlayer.delegate = self;
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initContent
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refreshFromLocalStorage];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Observe remake creation
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeCreation:)
@@ -133,22 +152,25 @@
                                                    selector:@selector(onRemakeDeletion:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
                                                      object:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)removeObservers
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
-
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 #pragma mark - Observers handlers
 -(void)onRemakeCreation:(NSNotification *)notification
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Update UI
     self.guiRemakeButton.enabled = YES;
     [self.guiRemakeActivity stopAnimating];
@@ -159,15 +181,15 @@
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     if (notification.isReportingError || !remake) {
         [self remakeCreationFailMessage];
+        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return;
     }
     [self initRecorderWithRemake:remake completion:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onRemakesRefetched:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     //
     // Backend notifies that local storage was updated with remakes.
     //
@@ -232,6 +254,7 @@
 #pragma mark - Alerts
 -(void)remakeCreationFailMessage
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
                                                     message:@"Failed creating remake.\n\nTry again later."
                                                    delegate:self
@@ -246,6 +269,7 @@
 
 -(void)refetchRemakesForStoryID:(NSString *)storyID
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [HMServer.sh refetchRemakesWithStoryID:storyID];
 }
 

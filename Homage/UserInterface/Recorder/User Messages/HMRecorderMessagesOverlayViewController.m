@@ -209,7 +209,7 @@
         
         self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
-        double delayInSeconds = 0.0;
+        double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [UIView animateWithDuration:0.5 animations:^{
@@ -236,7 +236,7 @@
         
         self.guiDismissButton.alpha = 0;
         HMGLogDebug(@"alpha started");
-        double delayInSeconds = 0.0;
+        double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [UIView animateWithDuration:0.5 animations:^{

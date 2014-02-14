@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet AWTimeProgressView *guiProgressBarView;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiInProgressLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiDoneRenderingView;
-@property (weak, nonatomic) IBOutlet UIView *guiProgressBar;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiDoneLabel;
 
 -(void) renderStartedWithRemakeID:(NSString *)remakeID;
