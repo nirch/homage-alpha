@@ -50,9 +50,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self refetchRemakesForStoryID:self.story.sID];
     [self initContent];
-    [self initObservers];
     [self.guiRemakeActivity setHidden:YES];
     if (self.autoStartPlayingStory) [self.storyMoviePlayer play];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -62,6 +60,8 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiRemakeButton.enabled = YES;
+    [self initObservers];
+    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -217,6 +217,11 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
+    
+    //need to check if this notification came from the same sender
+    id sender = info[@"sender"];
+    if (sender != self) return;
+    
     NSIndexPath *indexPath = info[@"indexPath"];
     //NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
@@ -370,7 +375,7 @@
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath}
+                                     info:@{@"indexPath":indexPath,@"sender":self}
          ];
     }
 }

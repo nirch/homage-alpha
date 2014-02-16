@@ -202,6 +202,7 @@
         {
             self.guiTabNameLabel.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
         }
+        [self setNavControllersDelegate];
         
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
@@ -216,6 +217,19 @@
         HMLoginViewController *vc = (HMLoginViewController *)segue.destinationViewController;
         vc.delegate = self;
     }
+}
+
+-(void)setNavControllersDelegate
+{
+   /*
+    for (UIViewController *vc in self.appTabBarController.viewControllers)
+   {
+       if ([vc isKindOfClass:[UINavigationController class]])
+       {
+           vc.
+       }
+   }
+    */
 }
 
 -(void)showIntroStory
@@ -448,6 +462,7 @@
 
 -(void)onLoginPressedShootFirstStory
 {
+    [self switchToTab:0];
     self.appWrapperView.hidden = NO;
     [self showIntroStory];
     [UIView animateWithDuration:0.3 animations:^{

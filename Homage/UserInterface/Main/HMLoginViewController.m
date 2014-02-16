@@ -58,7 +58,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initObservers];
     [self initGUI];
     //NSLog(@"self.view.frame = origin(%f,%f) , size(%f,%f)" , self.view.frame.origin.x , self.view.frame.origin.y , self.view.frame.size.height , self.view.frame.size.width);
     //NSLog(@"self.guiBGImageView.frame = origin(%f,%f) , size(%f,%f)" , self.guiBGImageView.frame.origin.x , self.guiBGImageView.frame.origin.y , self.guiBGImageView.frame.size.height , self.guiBGImageView.frame.size.width);
@@ -66,13 +65,20 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
+   [self initObservers]; 
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self removeObservers];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     
 }
+
 
 -(void)initGUI
 {
@@ -132,11 +138,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [self removeObservers];
 }
 
 -(void)removeObservers

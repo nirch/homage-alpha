@@ -71,6 +71,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self removeObservers];
     [self.moviePlayer done];
     
     //no movie is playing. nothing should happen
@@ -78,8 +79,7 @@
     
     HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:otherRemakeCell];
-    [self removeObservers];
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -153,11 +153,13 @@
 
 -(void)removeObservers
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_REMAKES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers handlers
@@ -190,6 +192,11 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
+    
+    //need to check if this notification came from the same sender
+    id sender = info[@"sender"];
+    if (sender != self) return;
+    
     NSIndexPath *indexPath = info[@"indexPath"];
     //NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
@@ -393,7 +400,7 @@
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath}
+                                     info:@{@"indexPath":indexPath,@"sender":self}
          ];
     }
     
