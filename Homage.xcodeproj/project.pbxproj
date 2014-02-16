@@ -216,7 +216,6 @@
 		269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMLoginViewController.m */; };
 		269E8E1918ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */; };
 		269E8E1C18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */; };
-		269E8E1F18B0C8E0009B0CCE /* HMNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269E8E1E18B0C8E0009B0CCE /* HMNavViewController.m */; };
 		26A239B418A96F6600980BFC /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 26A239A918A96C8700980BFC /* introVideo.mp4 */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
@@ -453,8 +452,6 @@
 		269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMsettingsIntroMovieViewController.xib; sourceTree = SOURCE_ROOT; };
 		269E8E1A18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsettingsIntroMovieViewController.h; sourceTree = SOURCE_ROOT; };
 		269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsettingsIntroMovieViewController.m; sourceTree = SOURCE_ROOT; };
-		269E8E1D18B0C8E0009B0CCE /* HMNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNavViewController.h; sourceTree = "<group>"; };
-		269E8E1E18B0C8E0009B0CCE /* HMNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMNavViewController.m; sourceTree = "<group>"; };
 		26A239A918A96C8700980BFC /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
 		26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
 		65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontLabel.m; sourceTree = "<group>"; };
@@ -1006,8 +1003,6 @@
 				08DF23091892704300912657 /* HMTabBarController.m */,
 				08DF230A1892704300912657 /* Me */,
 				08DF23151892704300912657 /* Stories */,
-				269E8E1D18B0C8E0009B0CCE /* HMNavViewController.h */,
-				269E8E1E18B0C8E0009B0CCE /* HMNavViewController.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1301,7 +1296,6 @@
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
 				08DF230118926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
 				08E50ECF1886994A001A8B75 /* HMRoundButton.m in Sources */,
-				269E8E1F18B0C8E0009B0CCE /* HMNavViewController.m in Sources */,
 				08B958A2189167D800BCCF8C /* User+Logic.m in Sources */,
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */,

@@ -495,12 +495,12 @@
     
 }
 
-- (IBAction)closeButtonPushed:(UIButton *)sender
+/*- (IBAction)closeButtonPushed:(UIButton *)sender
 {
     HMGLogDebug(@"top view controller is: %@" , [[self.navigationController.topViewController class] description]);
     [self popViewAnimated:YES];
     
-}
+}*/
 
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake completion:(void (^)())completion

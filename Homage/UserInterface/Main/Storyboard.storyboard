@@ -139,6 +139,7 @@
                         <outlet property="guiActivity" destination="R2K-xF-bXS" id="ZKF-1h-oIw"/>
                         <outlet property="guiAppContainerView" destination="cJv-hE-5uF" id="3Sn-Ar-WzE"/>
                         <outlet property="guiBGImage" destination="cRg-QS-yh6" id="pRm-DC-evB"/>
+                        <outlet property="guiNavButton" destination="zUe-p0-Ug6" id="a8W-kJ-pMb"/>
                         <outlet property="guiNoConnectivityLabel" destination="IDg-TI-8JI" id="78F-9E-wfy"/>
                         <outlet property="guiNoConnectivityView" destination="BGe-RC-PIs" id="uVW-lK-Tz6"/>
                         <outlet property="guiSplashView" destination="LGr-HO-h8t" id="JrG-Ne-26o"/>
@@ -297,18 +298,8 @@
                                 <rect key="frame" x="-21" y="-48" width="364" height="600"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hsC-3g-djs">
-                                <rect key="frame" x="276" y="6" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="close">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeButtonPushed:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="3t9-2l-pq9"/>
-                                </connections>
-                            </button>
                             <view alpha="0.69999999999999973" contentMode="scaleToFill" id="PCC-H7-f64" userLabel="DescriptionBG">
-                                <rect key="frame" x="10" y="216" width="300" height="51"/>
+                                <rect key="frame" x="10" y="222" width="300" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="story description" id="YAE-ZL-RuW">
@@ -322,19 +313,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="tiZ-kN-hcG">
-                                <rect key="frame" x="11" y="3" width="251" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Make your own version">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedRemakeButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="0ig-hQ-4Jj"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" customClass="HMFontLabel">
                                 <rect key="frame" x="10" y="401" width="300" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -401,12 +379,25 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" id="ZjV-7o-L6U" userLabel="storyMovieContainer">
-                                <rect key="frame" x="10" y="55" width="300" height="157"/>
+                                <rect key="frame" x="10" y="6" width="300" height="180"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="tiZ-kN-hcG">
+                                <rect key="frame" x="10" y="177" width="300" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Make your own version">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedRemakeButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="0ig-hQ-4Jj"/>
+                                </connections>
+                            </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="KL3-sw-np8">
-                                <rect key="frame" x="223" y="18" width="20" height="20"/>
+                                <rect key="frame" x="278" y="187" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
@@ -626,8 +617,11 @@
         <!--Navigation Controller - Item-->
         <scene sceneID="aZo-J1-2Kd">
             <objects>
-                <navigationController definesPresentationContext="YES" id="ecJ-Xd-7yq" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="ecJ-Xd-7yq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="XfT-l5-BHw"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ne3-Mk-TmS">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -639,10 +633,10 @@
             </objects>
             <point key="canvasLocation" x="1601" y="1340"/>
         </scene>
-        <!--Stories Nav Controller - stories-->
+        <!--Navigation Controller - stories-->
         <scene sceneID="cAa-tY-Av8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="8zG-cl-qtn" customClass="HMStoriesNavController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="8zG-cl-qtn" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="stories" id="WoR-uH-QWh"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -943,6 +937,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="anA-Bb-o6J"/>
+        <segue reference="Wy5-cH-9ZA"/>
     </inferredMetricsTieBreakers>
 </document>

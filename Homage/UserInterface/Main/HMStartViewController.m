@@ -28,7 +28,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMDinFontLabel.h"
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
@@ -42,6 +42,10 @@
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
 @property (weak, nonatomic) IBOutlet HMDinFontLabel *guiNoConnectivityLabel;
+@property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
+
+#define SETTING_TAG 1
+#define BACK_TAG 2
 
 @end
 
@@ -163,13 +167,23 @@
 
 - (IBAction)sideBarButtonPushed:(UIButton *)sender
 {
-    if (self.sideBarContainerView.hidden == YES) {
-        //need to show the sideBar
-        [self showSideBar];
-        
-    } else {
-        //need to hide the side bar
-        [self hideSideBar];
+    if (sender.tag == SETTING_TAG) {
+        if (self.sideBarContainerView.hidden == YES) {
+            //need to show the sideBar
+            [self showSideBar];
+            
+        } else {
+            //need to hide the side bar
+            [self hideSideBar];
+        }
+    } else if (sender.tag == BACK_TAG)
+    {
+        UIViewController *vc = self.appTabBarController.selectedViewController;
+        if ([vc isKindOfClass:[UINavigationController class]])
+        {
+            UINavigationController *navVC = (UINavigationController *)vc;
+            [navVC popViewControllerAnimated:YES];
+        }
     }
 }
 
@@ -221,15 +235,34 @@
 
 -(void)setNavControllersDelegate
 {
-   /*
+   
     for (UIViewController *vc in self.appTabBarController.viewControllers)
    {
        if ([vc isKindOfClass:[UINavigationController class]])
        {
-           vc.
+           UINavigationController *navVC = (UINavigationController *)vc;
+           navVC.delegate = self;
        }
    }
-    */
+
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [self updateNavButtonForNavController:navigationController];
+}
+
+-(void)updateNavButtonForNavController:(UINavigationController *)navVC
+{
+    if ([navVC.viewControllers count] > 1)
+    {
+        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+        self.guiNavButton.tag = BACK_TAG;
+    } else
+    {
+        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"settings"] forState:UIControlStateNormal];
+        self.guiNavButton.tag = SETTING_TAG;
+    }
 }
 
 -(void)showIntroStory
@@ -531,6 +564,16 @@
 -(void)displayRectBounds:(CGRect)rect Name: name
 {
     NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
+}
+
+-(void)navControllerPushed
+{
+    
+}
+
+-(void)navControllerPopped
+{
+    
 }
 
 @end
