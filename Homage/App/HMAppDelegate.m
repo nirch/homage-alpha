@@ -84,7 +84,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [HMServer.sh startMonitoringReachability];
+    [HMServer.sh startMonitoringReachability];    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

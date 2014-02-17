@@ -303,6 +303,7 @@
     // You can always replace to another implementation of upload workers,
     // as long as the workers conform to the HMUploadWorkerProtocol.
     [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+    [HMUploadManager.sh startMonitoring];
 }
 
 -(void)presentLoginScreen

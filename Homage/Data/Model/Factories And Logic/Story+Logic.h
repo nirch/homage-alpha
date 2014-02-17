@@ -8,6 +8,13 @@
 
 #import "Story.h"
 
+typedef NS_ENUM(NSInteger, HMStoryLevel) {
+    HMStoryLevelEasy,
+    HMStoryLevelMedium,
+    HMStoryLevelHard
+};
+
+
 @interface Story (Logic)
 
 ///

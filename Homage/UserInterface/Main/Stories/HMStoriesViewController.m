@@ -314,13 +314,12 @@
     cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
     cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
     
-    //TODO: adjust icons according to level of difficulty and selfi/director mode  
-    cell.guiLevelOfDifficulty.image = [UIImage imageNamed:@"circle"];
+    cell.guiLevelOfDifficulty.image = [self getDifficultyLevelThumbForStory:story];
     
     if (story.isASelfie) {
-        cell.guiShotMode.image = [UIImage imageNamed:@"selfieIcon"];
+        cell.guiShotMode.image = [UIImage imageNamed:@"selfie"];
     } else {
-        cell.guiShotMode.image = [UIImage imageNamed:@"circle"];
+        cell.guiShotMode.image = [UIImage imageNamed:@"director"];
     }
     
     NSUInteger remakesNum = [story.remakes count];
@@ -328,6 +327,24 @@
     
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(UIImage *)getDifficultyLevelThumbForStory:(Story *)story
+{
+    UIImage *image;
+    switch (story.level.integerValue)
+    {
+        case HMStoryLevelEasy:
+            image = [UIImage imageNamed:@"easy"];
+            break;
+        case HMStoryLevelMedium:
+            image = [UIImage imageNamed:@"medium"];
+            break;
+        case HMStoryLevelHard:
+            image = [UIImage imageNamed:@"hard"];
+            break;
+    }
+    return image;
 }
 
 -(void)handleNoRemakes
