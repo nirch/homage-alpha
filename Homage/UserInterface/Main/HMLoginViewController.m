@@ -202,7 +202,6 @@
     }];
 }
 
-
 - (BOOL) validateEmail:(NSString *)emailAddress {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
@@ -214,7 +213,6 @@
     [self.moviePlayer stop];
     [self.delegate onLoginPressedSkip];
 }
-
 
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
@@ -278,8 +276,6 @@
     self.guiSignUpView.contentInset = contentInsets;
     self.guiSignUpView.scrollIndicatorInsets = contentInsets;
 }
-
-
 
 
 @end

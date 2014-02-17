@@ -58,7 +58,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIColor *homageColor = [HMColor.sh main2];
-    //[self.view sendSubviewToBack:self.guiDoneRenderingView];
+    [self.view sendSubviewToBack:self.guiDoneRenderingView];
     self.guiInProgressLabel.textColor = homageColor;
     self.guiDoneLabel.textColor = homageColor;
 
@@ -135,9 +135,9 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            /*[UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.5 animations:^{
                 [self.view bringSubviewToFront:self.guiDoneRenderingView];
-            }];*/
+            }];
             
         });
 
@@ -170,16 +170,16 @@
 
     self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
     
-    /*[UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         [self.view bringSubviewToFront:self.guiDoneRenderingView];
-    }];*/
+    }];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.delegate renderDoneClicked];
-    //[self.view sendSubviewToBack:self.guiDoneRenderingView];
+    [self.view sendSubviewToBack:self.guiDoneRenderingView];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
@@ -208,7 +208,7 @@
     Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
     self.guiInProgressLabel.text = [NSString stringWithFormat:@"%@:%@" , NSLocalizedString(@"RENDERING_MOVIE_MESSAGE", nil) ,remake.story.name];
     
-    //[self.view sendSubviewToBack:self.guiDoneRenderingView];
+    [self.view sendSubviewToBack:self.guiDoneRenderingView];
     [self.guiProgressBarView start];
     
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);

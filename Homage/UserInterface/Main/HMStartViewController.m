@@ -476,6 +476,8 @@
 
 - (void)renderDoneClicked
 {
+    [self hideRenderingView];
+    
     //todo: switch to me tab
     [self switchToTab:1];
     if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
@@ -484,7 +486,6 @@
         [vc refreshFromLocalStorage];
         [vc refetchRemakesFromServer];
     }
-    [self hideRenderingView];
 }
 
 -(void)onLoginPressedSkip
