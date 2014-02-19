@@ -8,11 +8,12 @@
 
 #import "HMDetailedStoryRemakeVideoPlayerVC.h"
 #import "HMSimpleVideoViewController.h"
+#import <ALMoviePlayerController/ALMoviePlayerController.h>
+#import "HMColor.h"
 
 
-@interface HMDetailedStoryRemakeVideoPlayerVC ()
-@property (weak, nonatomic) IBOutlet UIView *guiVideoContainerView;
-
+@interface HMDetailedStoryRemakeVideoPlayerVC () <ALMoviePlayerControllerDelegate>
+@property (nonatomic, strong) ALMoviePlayerController *moviePlayer;
 @end
 
 @implementation HMDetailedStoryRemakeVideoPlayerVC
@@ -21,16 +22,58 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
-	HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMFullScreenVideoPlayerPortrait"
-                                                                                 inParentVC:self
+	
+    // create a movie player
+    self.moviePlayer = [[ALMoviePlayerController alloc] initWithFrame:self.view.frame];
+    self.moviePlayer.delegate = self;
+    [self.moviePlayer setFullscreen:YES animated:YES];
+    
+    // create the controls
+    ALMoviePlayerControls *movieControls = [[ALMoviePlayerControls alloc] initWithMoviePlayer:self.moviePlayer style:ALMoviePlayerControlsStyleFullscreen];
+    
+    // optionally customize the controls here...
+
+    [movieControls setBarColor:[HMColor.sh main2] withAlpha:0.6];
+    [movieControls setTimeRemainingDecrements:YES];
+    [movieControls setFadeDelay:2.0];
+    [movieControls setBarHeight:30.f];
+    [movieControls setSeekRate:2.f];
+    
+    // assign the controls to the movie player
+    [self.moviePlayer setControls:movieControls];
+    
+    // add movie player to your view
+    [self.view addSubview:self.moviePlayer.view];
+    
+    //set contentURL (this will automatically start playing the movie)
+    [self.moviePlayer setContentURL:[NSURL URLWithString:self.videoURL]];
+    
+     //old code for using HMSimpleVideoViewController
+     /*HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMFullScreenVideoPlayerPortrait"
+      inParentVC:self
                                                                               containerView:self.guiVideoContainerView
                                        ];
     vc.videoURL = self.videoURL;
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
     [vc play];
-    //[vc setScalingMode:@"aspect fit"];
+    //[vc setScalingMode:@"aspect fit"];*/
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+- (void)moviePlayerWillMoveFromWindow
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.moviePlayer stop];
+        if (![self.view.subviews containsObject:self.moviePlayer.view])
+            [self.view addSubview:self.moviePlayer.view];        
+    }];
+}
+
+- (void)movieTimedOut
+{
+    
 }
 
 

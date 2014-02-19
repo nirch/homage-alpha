@@ -233,12 +233,12 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yre-Et-9j7">
-                                                    <rect key="frame" x="39" y="188" width="25" height="25"/>
+                                                    <rect key="frame" x="46" y="186" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9KD-jG-LUX">
-                                                    <rect key="frame" x="8" y="189" width="25" height="25"/>
+                                                    <rect key="frame" x="8" y="186" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
@@ -433,17 +433,6 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dhy-NA-hkz" userLabel="Close button">
-                                <rect key="frame" x="0.0" y="0.0" width="46" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="close">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="aEE-Sp-2jQ" kind="unwind" unwindAction="unwindToThisViewController:" id="hde-9o-YI9"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -452,7 +441,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REV-TQ-bIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="aEE-Sp-2jQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3060" y="-73"/>
         </scene>
@@ -922,7 +910,6 @@
     </scenes>
     <resources>
         <image name="background" width="452" height="447"/>
-        <image name="close" width="46" height="45"/>
         <image name="homageH" width="110" height="170"/>
         <image name="logo" width="118" height="48"/>
         <image name="reamke" width="26" height="22"/>

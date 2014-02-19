@@ -993,14 +993,14 @@
 		08DF23051892704300912657 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				26A239A818A963CA00980BFC /* login */,
-				2638594118964F28003A7B3D /* settings */,
-				2638593C1895A979003A7B3D /* sideBar */,
-				2638593418953866003A7B3D /* renderingProgressBar */,
 				08DF23061892704300912657 /* HMStartViewController.h */,
 				08DF23071892704300912657 /* HMStartViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
+				26A239A818A963CA00980BFC /* login */,
+				2638594118964F28003A7B3D /* settings */,
+				2638593C1895A979003A7B3D /* sideBar */,
+				2638593418953866003A7B3D /* renderingProgressBar */,
 				08DF230A1892704300912657 /* Me */,
 				08DF23151892704300912657 /* Stories */,
 			);

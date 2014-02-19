@@ -14,17 +14,18 @@
 #import "HMNotificationCenter.h"
 #import "HMFontLabel.h"
 //#import <InAppSettingsKit/IASKAppSettingsViewController.h>
-#import "HMSimpleVideoViewController.h"
+//#import "HMSimpleVideoViewController.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "HMDetailedStoryRemakeVideoPlayerVC.h"
 #import "mixPanel.h"
+#import <ALMoviePlayerController/ALMoviePlayerController.h>
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
 
 //@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
-@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
+//@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 @property (nonatomic) NSInteger playingMovieIndex;
@@ -32,6 +33,7 @@
 @property (weak,nonatomic) Remake *remakeToDelete;
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
+@property (nonatomic, strong) ALMoviePlayerController *moviePlayer;
 
 @end
 
@@ -72,7 +74,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self removeObservers];
-    [self.moviePlayer done];
+    //[self.moviePlayer done];
     
     //no movie is playing. nothing should happen
     if (self.playingMovieIndex == -1) return;
@@ -533,12 +535,15 @@
     }
     
     self.playingMovieIndex = indexPath.item;
+    [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
+    
+
     //playRemakeVideoFromMeTab
    //  Mixpanel *mixpanel = [Mixpanel sharedInstance];
   //  [mixpanel track:@"PlayRemakeFromME" properties:@{
   //                                              @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
 
-    [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
+    
     
     //old code for playing movie inside cell
     /*HMSimpleVideoViewController *vc;
