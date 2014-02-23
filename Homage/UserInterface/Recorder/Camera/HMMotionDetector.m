@@ -28,9 +28,9 @@
 
 @implementation HMMotionDetector
 
-#define MOTION_TH 0.05
-#define ROTATION_TH 0.05
-#define ACCELRATION_TH 0.05
+#define MOTION_TH 0.4
+#define ROTATION_TH 0.8
+#define ACCELRATION_TH 0.2
 
 
 +(HMMotionDetector *)sharedInstance
@@ -64,7 +64,7 @@
 
 -(void)start
 {
-    NSTimeInterval updateInterval = 0.1;
+    NSTimeInterval updateInterval = 0.05;
     self.calculateStability = NO;
     
     CMMotionManager *mManager = [HMMotionDetector motionManager];
@@ -85,7 +85,7 @@
                 self.prevAccelerationY = deviceMotion.userAcceleration.y;
                 self.prevAccelerationZ = deviceMotion.userAcceleration.z;
                 self.calculateStability = YES;
-            } else if (![self isCameraStable:deviceMotion withAttitude:YES withRotationRate:NO withAcceleration:NO])
+            } else if (![self isCameraStable:deviceMotion withAttitude:NO withRotationRate:NO withAcceleration:YES])
             {
                 [self.delegate onCameraNotStable];
                 self.calculateStability = NO;
@@ -107,27 +107,27 @@
 
 -(BOOL)isAttitudeStableForRoll:(double)roll pitch:(double)pitch yaw:(double)yaw
 {
-        double rollDelta = abs(roll - self.prevAttitudeRoll);
-        double pitchDelta = abs(pitch - self.prevAttitudePitch);
-        double yawDelta = abs(yaw - self.prevAttitudeYaw);
+        double rollDelta = fabs(roll - self.prevAttitudeRoll);
+        double pitchDelta = fabs(pitch - self.prevAttitudePitch);
+        double yawDelta = fabs(yaw - self.prevAttitudeYaw);
         if ((rollDelta > MOTION_TH) || (pitchDelta > MOTION_TH) || (yawDelta > MOTION_TH)) return NO;
     return YES;
 }
 
 -(BOOL)isCameraStableInRotationForX:(double)x Y:(double)y Z:(double)z
 {
-        double deltaX = abs(x - self.prevRotationRateX);
-        double deltaY = abs(y - self.prevRotationRateY);
-        double deltaZ = abs(z - self.prevRotationRateZ);
+        double deltaX = fabs(x - self.prevRotationRateX);
+        double deltaY = fabs(y - self.prevRotationRateY);
+        double deltaZ = fabs(z - self.prevRotationRateZ);
         if ((deltaX > ROTATION_TH) || (deltaY > ROTATION_TH) || (deltaZ > ROTATION_TH)) return NO;
     return YES;
 }
 
 -(BOOL)isCameraStableInAccelerationForX:(double)x Y:(double)y Z:(double)z
 {
-        double deltaX = abs(x - self.prevAccelerationX);
-        double deltaY = abs(y - self.prevAccelerationY);
-        double deltaZ = abs(z - self.prevAccelerationZ);
+        double deltaX = fabs(x - self.prevAccelerationX);
+        double deltaY = fabs(y - self.prevAccelerationY);
+        double deltaZ = fabs(z - self.prevAccelerationZ);
         if ((deltaX > ACCELRATION_TH) || (deltaY > ACCELRATION_TH) || (deltaZ > ACCELRATION_TH)) return NO;
     return YES;
 }

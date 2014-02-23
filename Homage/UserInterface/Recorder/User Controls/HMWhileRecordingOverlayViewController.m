@@ -33,6 +33,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
+    HMMotionDetector.sh.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -116,7 +117,8 @@
 {
     // If user requested to stop the recording, also force the timer to stop.
     NSDictionary *info = notification.userInfo;
-    if ([info[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue] == HMRecordingStopReasonUserCanceled) {
+    NSInteger recordStopReason = [info[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
+    if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable) {
         [self.guiTimeProgressView stop];
         [HMMotionDetector.sh stop];
     }

@@ -708,7 +708,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     // No camera errors. Check the reason for why the recording was stopped.
     // Was it cancelled by the user or a legal footage is available?
     //
-    if ([self.lastRecordingStopInfo[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue] == HMRecordingStopReasonUserCanceled) {
+    
+    NSInteger recordStopReason = [self.lastRecordingStopInfo[HM_INFO_KEY_RECORDING_STOP_REASON]integerValue];
+    if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable) {
         HMGLogDebug(@"User canceled recording.");
         [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
         return;

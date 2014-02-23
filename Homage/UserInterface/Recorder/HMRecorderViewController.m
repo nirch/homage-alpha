@@ -23,6 +23,7 @@
 #import "HMVideoCameraViewController.h"
 #import "HMUploadManager.h"
 #import "Mixpanel.h"
+#import <AudioToolbox/AudioServices.h>
 
 // ---------------------------------------------------------------------------------------------------------------------
 #import <objc/message.h> // TODO: Used by the orientation hack. Remove this or you may not be approved for the appstore!
@@ -457,15 +458,18 @@
         // Do nothing for now. dimiss the "while recording dialogue later, when
         // the
     } else if (stoppedReason == HMRecordingStopReasonCameraNotStable) {
+        
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
-                           checkNextStateOnDismiss:YES
+                           checkNextStateOnDismiss:NO
                                               info:@{
                                                      @"icon name":@"iconEpicFail",
                                                      @"title":LS(@"CAMERA_NOT_STABLE_TITLE"),
                                                      @"text":LS(@"CAMERA_NOT_STABLE"),
-                                                     @"ok button text":LS(@"NEXT_SCENE"),
+                                                     @"ok button text":LS(@"OK_GOT_IT"),
                                                      }
          ];
+        [self dismissWhileRecordingUI];
     
     } else {
         [self dismissWhileRecordingUI];
