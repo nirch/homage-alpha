@@ -74,4 +74,7 @@
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 
+"CAMERA_NOT_STABLE" = "Camera unstable! please keep the camera steady";
+"CAMERA_NOT_STABLE_TITLE" = "Wow there shaky...";
+
 

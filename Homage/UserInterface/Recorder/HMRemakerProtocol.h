@@ -12,7 +12,8 @@
 
 typedef NS_ENUM(NSInteger, HMRecordingStopReason) {
     HMRecordingStopReasonUserCanceled,
-    HMRecordingStopReasonEndedSuccessfully
+    HMRecordingStopReasonEndedSuccessfully,
+    HMRecordingStopReasonCameraNotStable
 };
 
 typedef NS_ENUM(NSInteger, HMRemakerUpdateType) {

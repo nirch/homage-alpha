@@ -9,18 +9,17 @@
 #import "HMWhileRecordingOverlayViewController.h"
 #import "HMNotificationCenter.h"
 #import "AWTimeProgressView.h"
+#import "HMMotionDetectorDelegate.h"
 #import "DB.h"
+#import "HMMotionDetector.h"
 
-@interface HMWhileRecordingOverlayViewController ()
+@interface HMWhileRecordingOverlayViewController () <HMMotionDetectorDelegate>
 
 @property (weak, nonatomic) IBOutlet AWTimeProgressView *guiTimeProgressView;
 @property (weak, nonatomic) IBOutlet UIView *guiScriptContainer;
 @property (weak, nonatomic) IBOutlet UILabel *guiScriptLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiProcessingActivity;
 @property (weak, nonatomic) IBOutlet UILabel *guiProcessingLabel;
-
-
-
 @property (nonatomic, readonly) Remake *remake;
 @property (nonatomic, readonly) Scene *scene;
 
@@ -110,6 +109,7 @@
     [self update];
     [self updateUI];
     [self.guiTimeProgressView start];
+    [HMMotionDetector.sh start];
 }
 
 -(void)onStopRecording:(NSNotification *)notification
@@ -118,6 +118,7 @@
     NSDictionary *info = notification.userInfo;
     if ([info[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue] == HMRecordingStopReasonUserCanceled) {
         [self.guiTimeProgressView stop];
+        [HMMotionDetector.sh stop];
     }
 }
 
@@ -138,10 +139,23 @@
                                                       userInfo:info];
     self.guiProcessingLabel.hidden = NO;
     [self.guiProcessingActivity startAnimating];
+    [HMMotionDetector.sh stop];
 }
 
 -(void)timeProgressWasCancelledAfterDuration:(NSTimeInterval)duration
 {
+}
+
+//HMMotionDetector delegate function. should mimic what happens if the user hit stop button
+-(void)onCameraNotStable
+{
+    //top the recording
+    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonCameraNotStable)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                                                        object:self
+                                                      userInfo:info];
+    [HMMotionDetector.sh stop];
+
 }
 
 #pragma mark - IB Actions

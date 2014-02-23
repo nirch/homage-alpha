@@ -456,6 +456,17 @@
     if (stoppedReason == HMRecordingStopReasonEndedSuccessfully) {
         // Do nothing for now. dimiss the "while recording dialogue later, when
         // the
+    } else if (stoppedReason == HMRecordingStopReasonCameraNotStable) {
+        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
+                           checkNextStateOnDismiss:YES
+                                              info:@{
+                                                     @"icon name":@"iconEpicFail",
+                                                     @"title":LS(@"CAMERA_NOT_STABLE_TITLE"),
+                                                     @"text":LS(@"CAMERA_NOT_STABLE"),
+                                                     @"ok button text":LS(@"NEXT_SCENE"),
+                                                     }
+         ];
+    
     } else {
         [self dismissWhileRecordingUI];
     }

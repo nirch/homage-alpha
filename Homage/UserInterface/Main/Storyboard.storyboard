@@ -436,9 +436,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <outlet property="guiVideoContainerView" destination="68O-ux-pR6" id="ZEI-J8-ycN"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REV-TQ-bIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

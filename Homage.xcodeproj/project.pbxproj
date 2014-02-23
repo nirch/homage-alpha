@@ -217,6 +217,8 @@
 		269E8E1918ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */; };
 		269E8E1C18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */; };
 		26A239B418A96F6600980BFC /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 26A239A918A96C8700980BFC /* introVideo.mp4 */; };
+		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
+		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
 		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
@@ -453,6 +455,10 @@
 		269E8E1A18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsettingsIntroMovieViewController.h; sourceTree = SOURCE_ROOT; };
 		269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsettingsIntroMovieViewController.m; sourceTree = SOURCE_ROOT; };
 		26A239A918A96C8700980BFC /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
+		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
+		26B498A918B5FD7100026401 /* HMMotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMotionDetector.m; sourceTree = "<group>"; };
+		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		26B498AD18B60D4A00026401 /* HMMotionDetectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMMotionDetectorDelegate.h; sourceTree = "<group>"; };
 		26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
 		65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontLabel.m; sourceTree = "<group>"; };
 		65C10D8F18A265DC00A65917 /* HMDinFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontButton.m; sourceTree = "<group>"; };
@@ -474,6 +480,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */,
 				0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */,
 				0806FA1418828AEB007514BE /* UIKit.framework in Frameworks */,
 				08455FD8189032FF0040504D /* AWSS3.framework in Frameworks */,
@@ -522,6 +529,7 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26B498AB18B6011E00026401 /* CoreMotion.framework */,
 				08455FD7189032FF0040504D /* AWSS3.framework */,
 				08455FD4189032B90040504D /* AWSRuntime.framework */,
 				0806FA0F18828AEB007514BE /* Foundation.framework */,
@@ -745,6 +753,9 @@
 				08455FE31890458E0040504D /* HMVideoCameraViewController.m */,
 				08455FE01890458E0040504D /* AVCamPreviewView.h */,
 				08455FE11890458E0040504D /* AVCamPreviewView.m */,
+				26B498A818B5FD7100026401 /* HMMotionDetector.h */,
+				26B498A918B5FD7100026401 /* HMMotionDetector.m */,
+				26B498AD18B60D4A00026401 /* HMMotionDetectorDelegate.h */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -1313,6 +1324,7 @@
 				0845600D1890537C0040504D /* HMServer+Footages.m in Sources */,
 				08DF23221892704300912657 /* HMTabBarController.m in Sources */,
 				08CDF83A1897F6B100A9D235 /* Text.m in Sources */,
+				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
 				08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				08DF23281892704300912657 /* HMUserRemakesViewController.m in Sources */,
