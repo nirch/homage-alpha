@@ -42,6 +42,8 @@
 
 #define HM_NOTIFICATION_RECORDER_FINISHED           @"Recoder was dismissed"
 
+#define HM_NOTIFICATION_CAMERA_NOT_STABLE           @"Camera not stable"
+
 @interface HMNotificationCenter : NSObject
 
 @end

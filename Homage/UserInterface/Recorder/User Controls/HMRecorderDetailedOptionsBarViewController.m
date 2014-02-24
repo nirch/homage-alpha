@@ -19,6 +19,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMAnimationsFX.h"
 #import "mixpanel.h"
+#import "HMMotionDetector.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -232,11 +233,19 @@
                      name:HM_NOTIFICATION_UPLOAD_PROGRESS
                    object:nil];
     
+    
+    
     // Observe reachability status changes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onReachabilityStatusChange:)
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
                                                      object:HMServer.sh];
+    
+    //observe camera movment
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onPressedCancelCountdownButton:)
+                                                       name:HM_NOTIFICATION_CAMERA_NOT_STABLE
+                                                     object:nil];
 
 }
 
@@ -249,7 +258,8 @@
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
+    
 }
 
 #pragma mark - Observers handlers
@@ -603,6 +613,7 @@
 {
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
+    [HMMotionDetector.sh start];
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
 

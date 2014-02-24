@@ -8,10 +8,12 @@
 
 #import "HMMotionDetector.h"
 #import "HMMotionDetectorDelegate.h"
+#import "HMNotificationCenter.h"
+#import "HMRemakerProtocol.h"
 @import CoreMotion;
 
 
-@interface HMMotionDetector () <HMMotionDetectorDelegate>
+@interface HMMotionDetector () 
 
 @property double prevAttitudeRoll;
 @property double prevAttitudePitch;
@@ -28,9 +30,9 @@
 
 @implementation HMMotionDetector
 
-#define MOTION_TH 0.4
-#define ROTATION_TH 0.8
-#define ACCELRATION_TH 0.2
+#define MOTION_TH 0.3
+#define ROTATION_TH 0.7
+#define ACCELRATION_TH 0.1
 
 
 +(HMMotionDetector *)sharedInstance
@@ -87,12 +89,20 @@
                 self.calculateStability = YES;
             } else if (![self isCameraStable:deviceMotion withAttitude:NO withRotationRate:NO withAcceleration:YES])
             {
-                [self.delegate onCameraNotStable];
+                [self postCameraNotStableNotification];
                 self.calculateStability = NO;
-                
+                [self stop];
             }
          }];
     }
+}
+
+-(void)postCameraNotStableNotification
+{
+    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonCameraNotStable)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_CAMERA_NOT_STABLE
+                                                        object:self
+                                                      userInfo:info];
 }
 
 -(BOOL)isCameraStable:(CMDeviceMotion *)deviceMotion withAttitude:(BOOL)attitude withRotationRate:(BOOL)rotation withAcceleration:(BOOL)accleration

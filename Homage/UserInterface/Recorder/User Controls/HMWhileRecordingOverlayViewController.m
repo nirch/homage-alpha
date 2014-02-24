@@ -13,7 +13,7 @@
 #import "DB.h"
 #import "HMMotionDetector.h"
 
-@interface HMWhileRecordingOverlayViewController () <HMMotionDetectorDelegate>
+@interface HMWhileRecordingOverlayViewController ()
 
 @property (weak, nonatomic) IBOutlet AWTimeProgressView *guiTimeProgressView;
 @property (weak, nonatomic) IBOutlet UIView *guiScriptContainer;
@@ -33,7 +33,6 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
-    HMMotionDetector.sh.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -86,6 +85,12 @@
                                                    selector:@selector(onStopRecording:)
                                                        name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                      object:nil];
+    
+    //observe camera movment
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onStopRecording:)
+                                                       name:HM_NOTIFICATION_CAMERA_NOT_STABLE
+                                                     object:nil];
 }
 
 -(void)removeObservers
@@ -93,6 +98,7 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -110,7 +116,7 @@
     [self update];
     [self updateUI];
     [self.guiTimeProgressView start];
-    [HMMotionDetector.sh start];
+
 }
 
 -(void)onStopRecording:(NSNotification *)notification
@@ -148,17 +154,6 @@
 {
 }
 
-//HMMotionDetector delegate function. should mimic what happens if the user hit stop button
--(void)onCameraNotStable
-{
-    //top the recording
-    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonCameraNotStable)};
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
-                                                        object:self
-                                                      userInfo:info];
-    [HMMotionDetector.sh stop];
-
-}
 
 #pragma mark - IB Actions
 // ===========

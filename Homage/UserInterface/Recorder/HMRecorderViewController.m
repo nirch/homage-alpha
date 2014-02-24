@@ -375,7 +375,12 @@
                                                    selector:@selector(onRender:)
                                                        name:HM_NOTIFICATION_SERVER_RENDER
                                                      object:nil];
-
+    
+    //observe camera movment
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onStopRecording:)
+                                                       name:HM_NOTIFICATION_CAMERA_NOT_STABLE
+                                                     object:nil];
 
 }
 
@@ -388,6 +393,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_EPIC_FAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_RENDER object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
 }
 
 #pragma mark - Observers handlers
