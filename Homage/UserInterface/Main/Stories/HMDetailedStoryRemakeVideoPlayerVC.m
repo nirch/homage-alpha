@@ -33,7 +33,9 @@
     
     // optionally customize the controls here...
 
-    [movieControls setBarColor:[HMColor.sh main2] withAlpha:0.6];
+    
+    UIColor *barColor = [[HMColor.sh main2] colorWithAlphaComponent:0.6];
+    [movieControls setBarColor:barColor];
     [movieControls setTimeRemainingDecrements:YES];
     [movieControls setFadeDelay:2.0];
     [movieControls setBarHeight:30.f];
