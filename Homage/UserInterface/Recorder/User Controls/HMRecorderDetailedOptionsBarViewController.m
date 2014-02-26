@@ -563,17 +563,17 @@
     } else {
         User.current.prefersToSeeScriptWhileRecording = @YES;
     }
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"ShowHideScript" properties:@{
-                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name,@"Show" : User.current.prefersToSeeScriptWhileRecording}];
 }
 
 -(void)updateShowHideScriptButton
 {
     if (User.current.prefersToSeeScriptWhileRecording.boolValue) {
         [self.guiShowScriptButton setTitle:LS(@"HIDE SCRIPT") forState:UIControlStateNormal];
+        [[Mixpanel sharedInstance] track:@"REHideScript" properties:@{@"story" : self.remake.story.name}];
     } else {
         [self.guiShowScriptButton setTitle:LS(@"SHOW SCRIPT") forState:UIControlStateNormal];
+        [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name}];
+
     }
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeScriptToggle info:nil];
 }
@@ -583,6 +583,14 @@
 {
     [self.sceneVideoVC done];
     [self.storyVideoVC done];
+    
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REfinishOurScene"];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+        [[Mixpanel sharedInstance] track:@"REfinishOurStory"];
+    }
 }
 
 #pragma mark - IB Actions
@@ -598,6 +606,7 @@
 {
     //THE HAND!!!
     self.guiPointingHand.hidden = YES;
+    [[Mixpanel sharedInstance] track:@"REexpandMenu"];
     [self.remakerDelegate toggleOptions];
 }
 
@@ -614,6 +623,7 @@
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
+    [[Mixpanel sharedInstance] track:@"REHitRecord"];
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
 
@@ -627,14 +637,13 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
     [self.guiRoundCountdownLabal cancel];
+    [[Mixpanel sharedInstance] track:@"RECancelRecord"];
     self.guiCountdownContainer.hidden = YES;
 }
 
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"ShowSceneDirection" properties:@{
-                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"REMenuSceneDirection" properties:@{@"story" : self.remake.story.name}];
     [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID checkNextStateOnDismiss:NO];
 }
 
@@ -652,7 +661,7 @@
 - (IBAction)onPressedSelectScene:(UIButton *)sender
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-    
+    [[Mixpanel sharedInstance] track:@"REReturnToScene" properties:@{@"sceneNumber" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
     NSInteger index = [self sceneIndexForIndexPath:indexPath];
     HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
     
@@ -730,12 +739,28 @@
     if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
+
 -(void)videoPlayerWillPlay
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    
-    [mixpanel track:@"PlayingScene" properties:@{
-                                            @"useremail" : [User current].userID}];
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REPlayOurScene"];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+       [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
+    }
+}
+
+-(void)videoPlayerDidStop
+{
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REStopOurScene"];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+        [[Mixpanel sharedInstance] track:@"REStopOurStory"];
+    }
+
 }
 
 @end

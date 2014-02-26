@@ -47,6 +47,7 @@
 #define SETTING_TAG 1
 #define BACK_TAG 2
 
+
 @end
 
 @implementation HMStartViewController
@@ -167,6 +168,7 @@
 
 - (IBAction)sideBarButtonPushed:(UIButton *)sender
 {
+    [[Mixpanel sharedInstance] track:@"SideBarPushed"];
     if (sender.tag == SETTING_TAG) {
         if (self.sideBarContainerView.hidden == YES) {
             //need to show the sideBar
@@ -295,8 +297,8 @@
     } else {
         //Mixpanel analytics
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"userlogin" properties:@{
-                                                  @"useremail" : [User current].userID}];
+        [mixpanel identify:[User current].userID];
+        [mixpanel track:@"userLogin"];
     }
     
     // The upload manager with # workers of a specific type.
@@ -360,7 +362,7 @@
 
 -(void)storiesButtonPushed
 {
-    HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
+    [[Mixpanel sharedInstance] track:@"SBPressStories"];
     
     [self switchToTab:0];
     UIViewController *VC = self.appTabBarController.selectedViewController;
@@ -379,7 +381,7 @@
 
 -(void)meButtonPushed
 {
-    HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
+    [[Mixpanel sharedInstance] track:@"SBPressMe"];
     if (self.appTabBarController.selectedIndex != 1)
         [self switchToTab:1];
     [self closeSideBar];
@@ -388,10 +390,7 @@
 
 -(void)settingsButtonPushed
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"SettingTabClicked" properties:@{
-                                                   @"useremail" : [User current].userID}];
-    HMGLogDebug(@"selected index is: %d" , self.appTabBarController.selectedIndex);
+    [[Mixpanel sharedInstance] track:@"SBPressSettings"];
     if (self.appTabBarController.selectedIndex != 2)
         [self switchToTab:2];
     [self closeSideBar];
@@ -399,17 +398,8 @@
 
 -(void)switchToTab:(NSUInteger)toIndex
 {
-    //UIViewController *fromVC = self.appTabBarController.selectedViewController;
-    //UIView *fromView = fromVC.view;
-    
     self.appTabBarController.selectedIndex = toIndex;
-    
-    //UIViewController *toVC = self.appTabBarController.selectedViewController;
-    //UIView *toView = toVC.view;
-    
     self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
-    
-    //if ( toVC != fromVC )[UIView transitionFromView:fromView toView:toView duration:0.3 options:UIViewAnimationOptionTransitionNone completion:nil];
 }
 
 -(void)closeSideBar
@@ -474,18 +464,20 @@
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
-- (void)renderDoneClicked
+- (void)renderDoneClickedWithSuccess:(BOOL)success
 {
-    [self hideRenderingView];
-    
-    //todo: switch to me tab
-    [self switchToTab:1];
-    if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
+    if (success)
     {
-        HMGMeTabVC *vc = (HMGMeTabVC *)self.appTabBarController.selectedViewController;
-        [vc refreshFromLocalStorage];
-        [vc refetchRemakesFromServer];
+        [self switchToTab:1];
+        if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
+        {
+            HMGMeTabVC *vc = (HMGMeTabVC *)self.appTabBarController.selectedViewController;
+            [vc refreshFromLocalStorage];
+            [vc refetchRemakesFromServer];
+        }
     }
+    
+    [self hideRenderingView];
 }
 
 -(void)onLoginPressedSkip

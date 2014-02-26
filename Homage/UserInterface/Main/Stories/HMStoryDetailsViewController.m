@@ -40,7 +40,6 @@
 #pragma mark lifecycle related
 -(void)viewDidLoad
 {
-    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
 	[self initGUI];
@@ -52,7 +51,11 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self initContent];
     [self.guiRemakeActivity setHidden:YES];
-    if (self.autoStartPlayingStory) [self.storyMoviePlayer play];
+    if (self.autoStartPlayingStory)
+    {
+        [self.storyMoviePlayer play];
+        self.autoStartPlayingStory = NO;
+    }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -411,54 +414,23 @@
 
 -(void)videoPlayerDidStop
 {
-    
-    if ([self.storyMoviePlayer isInAction])
-    {
-        //do nothing.
-    } else if ([self.remakeVideoPlayer isInAction])
-    {
-        [self closeRemakeVideoPlayer];
-    }
+    [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name}];
+    //[self closeStoryVideoPlayer];
 }
 -(void)videoPlayerDidFinishPlaying
 {
-    
-    if ([self.storyMoviePlayer isInAction])
-    {
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"FinishPlayStory" properties:@{
-                                                        @"useremail" : [User current].userID, @"story" : self.story.name}];
-       [self closeStoryVideoPlayer];
-        
-    } else if ([self.remakeVideoPlayer isInAction])
-    {
-        [self closeRemakeVideoPlayer];
-    }
+    [[Mixpanel sharedInstance] track:@"SDFinishPlayStory" properties:@{@"story" : self.story.name}];
+    //[self closeStoryVideoPlayer];
 }
 
-//videoPlayerDidFinishPlaying
 -(void)videoPlayerDidExitFullScreen
 {
-    if ([self.storyMoviePlayer isInAction])
-    {
-        //do nothing.
-    } else if ([self.remakeVideoPlayer isInAction])
-    {
-        [self.remakeVideoPlayer done];
-    }
+    [[Mixpanel sharedInstance] track:@"SDExitFullScreen" properties:@{@"story" : self.story.name}];
 }
 
 -(void)videoPlayerWillPlay
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"StartPlayStory" properties:@{
-                                                   @"useremail" : [User current].userID, @"story" : self.story.name}];
-    if ([self.storyMoviePlayer isInAction])
-    {
-        [self closeStoryVideoPlayer];
-    } else if ([self.remakeVideoPlayer isInAction]) {
-        [self closeRemakeVideoPlayer];
-    }
+    [[Mixpanel sharedInstance] track:@"SDStartPlayStory" properties:@{@"story" : self.story.name}];
 }
 
 -(void)closeRemakeVideoPlayer
@@ -490,6 +462,7 @@
             [alertView show];
         });
     } else {
+        [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     }
     
@@ -527,11 +500,12 @@
     //continue With old remake
     if (buttonIndex == 1) {
         [self initRecorderWithRemake:self.oldRemakeInProgress completion:nil];
+        [[Mixpanel sharedInstance] track:@"SDOldRemake" properties:@{@"story" : self.story.name}];
     }
     //start new remake
     if (buttonIndex == 2) {
         NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
-        HMGLogDebug(@"user chose to make new remake and delete previous remake with id: %@" , remakeIDToDelete);
+        [[Mixpanel sharedInstance] track:@"SDNewRemakeOld" properties:@{@"story" : self.story.name}];
         [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
         self.oldRemakeInProgress = nil;
@@ -547,6 +521,7 @@
         HMDetailedStoryRemakeVideoPlayerVC *vc = segue.destinationViewController;
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell.tag inSection:0];
         Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"story" : self.story.name , @"remakeNum" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
         vc.videoURL = remake.videoURL;
     }
 }

@@ -13,22 +13,22 @@
 #import "Mixpanel.h"
 #import "DB.h"
 
-#define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
-
 @implementation HMAppDelegate
+
+#define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    #ifndef DEBUG
-        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-    #endif
-    
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                            UIRemoteNotificationTypeSound |
                                                                            UIRemoteNotificationTypeAlert
                                                                            )
      ];
+    
+     #ifndef DEBUG
+         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+     #endif
     
     
     // TODO: Route here the remote notification received when the app was inactive

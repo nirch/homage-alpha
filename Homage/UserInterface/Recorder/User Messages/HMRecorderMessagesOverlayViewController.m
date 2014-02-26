@@ -189,6 +189,7 @@
         // The intro message.
         //
         
+        //the hand!!
         // Animate swipe up/down icon repeatedly.
         /*self.guiGeneralMessageSwipeUpIcon.transform = CGAffineTransformMakeTranslation(0, 5);
         double delayInSeconds = 0.5;
@@ -199,14 +200,7 @@
             } completion:nil];
         });*/
         
-        /*self.guiGeneralMessageOKButton.alpha = 0;
-        HMGLogDebug(@"alpha started");
-        [UIView animateWithDuration:0.5 delay:3.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.guiGeneralMessageOKButton.alpha = 1;
-        } completion:^(BOOL finished) {
-            HMGLogDebug(@"alpha finished");
-        }];*/
-        
+        [[Mixpanel sharedInstance] track:@"REGeneralScreenEntry"];
         self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
         double delayInSeconds = 1.0;
@@ -243,10 +237,6 @@
                 self.guiDismissButton.alpha = 1;
             }];
         });
-        /*[UIView animateWithDuration:0.5 delay:6.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
-            HMGLogDebug(@"alpha finished");
-            self.guiDismissButton.alpha = 1;
-        }];*/
         
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         
@@ -256,7 +246,7 @@
         self.guiTextMessageTitleLabel.text = LS(@"GREAT JOB!");
         self.guiTextMessageIcon.image = [UIImage imageNamed:@"iconTrophy"];
         self.guiTextMessageLabel.text = [NSString stringWithFormat:LS(@"At the next scene %@"), info[@"text"]];
-        [self.guiDismissButton setTitle:LS(@"NEXT SCENE") forState:UIControlStateNormal];
+        [self.guiDismissButton setTitle:LS(@"NEXT_SCENE") forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconNextScene"] forState:UIControlStateNormal];
         
     } else if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes ) {
@@ -302,16 +292,22 @@
 // ===========
 - (IBAction)onPressedDismissButton:(UIButton *)sender
 {
-    if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes) {
+    if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes)
+    {
         sender.enabled = NO;
+        [[Mixpanel sharedInstance] track: @"RECreateMovie"];
         [self serverCreateMovie];
         return;
+    } else if (self.messageType == HMRecorderMessagesTypeSceneContext)
+    {
+        [[Mixpanel sharedInstance] track: @"RESceneDescriptionDone"];
     }
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
 }
 
 - (IBAction)onPressedDismissAndDontShowIntroMessageAgainButton:(UIButton *)sender
 {
+    [[Mixpanel sharedInstance] track:@"REDontShowAgain"];
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
     User.current.skipRecorderTutorial = @YES;
     [DB.sh save];
@@ -326,6 +322,7 @@
                            @"sceneID":[self.remakerDelegate currentSceneID],
                            @"dismissOnDecision":@NO
                            };
+    [[Mixpanel sharedInstance] track:@"RERetakeLast" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%d" , [self.remakerDelegate currentSceneID].integerValue] , @"story" : [self.remakerDelegate remake].story.name}];
     HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
     [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
     
@@ -333,6 +330,7 @@
 
 - (IBAction)onPressedPreviewLastSceneButton:(UIButton *)sender
 {
+    [[Mixpanel sharedInstance] track:@"RESeePreview" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%d" , [self.remakerDelegate currentSceneID].integerValue] , @"story" : [self.remakerDelegate remake].story.name}];
     Remake *remake = [self.remakerDelegate remake];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
     if (footage.rawLocalFile) {
@@ -344,9 +342,7 @@
 
 - (IBAction)onPressedOopsDontRetakeButton:(UIButton *)sender
 {
-     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"PressedOopsDontRetake" properties:@{
-                                                    @"useremail" : [User current].userID, @"story" : [self.remakerDelegate remake].story.name}];
+    [[Mixpanel sharedInstance] track:@"REOopsNope" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%d" , [self.remakerDelegate currentSceneID].integerValue] , @"story" : [self.remakerDelegate remake].story.name}];
     
     if (self.shouldDismissOnDecision) {
         [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];

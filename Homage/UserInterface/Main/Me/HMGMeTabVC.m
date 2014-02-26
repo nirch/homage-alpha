@@ -47,10 +47,6 @@
 #pragma mark lifecycle related
 - (void)viewDidLoad
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"EnterMeTab" properties:@{
-                                                   @"useremail" : [User current].userID}];
-    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     //[self.refreshControl beginRefreshing];
@@ -65,6 +61,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [[Mixpanel sharedInstance] track:@"MEEnterTab"];
     [self initObservers];
     [self refetchRemakesFromServer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -81,6 +78,7 @@
     
     HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:otherRemakeCell];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -301,6 +299,7 @@
 -(void)onPulledToRefetch
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [[Mixpanel sharedInstance] track:@"MEUserRefresh"];
     [self refetchRemakesFromServer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -500,13 +499,11 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
+            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"Story" : remake.story.name}];
             [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
-            [mixpanel track:@"PlayRemakeFromME" properties:@{
-                                                         @"useremail" : [User current].userID, @"Story" : remake.story.name}];
             break;
         case HMGRemakeStatusInProgress:
             //TODO:connect to recorder at last non taken scene
@@ -536,14 +533,6 @@
     
     self.playingMovieIndex = indexPath.item;
     [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
-    
-
-    //playRemakeVideoFromMeTab
-   //  Mixpanel *mixpanel = [Mixpanel sharedInstance];
-  //  [mixpanel track:@"PlayRemakeFromME" properties:@{
-  //                                              @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
-
-    
     
     //old code for playing movie inside cell
     /*HMSimpleVideoViewController *vc;
@@ -636,15 +625,13 @@
 
 - (IBAction)remakeButtonPushed:(UIButton *)button
 {
-     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self closeCurrentlyPlayingMovie];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [mixpanel track:@"RemakeFromMe" properties:@{
-                                                @"useremail" : [User current].userID, @"Story" : self.remakeToContinueWith.story.name}];
+    [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"Story" : self.remakeToContinueWith.story.name}];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
     if (self.remakeToContinueWith.status.integerValue != HMGRemakeStatusDone) {
@@ -661,14 +648,11 @@
 #pragma mark sharing
 - (IBAction)shareButtonPushed:(UIButton *)button
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *shareString = @"Check out the cool video i created with #HomageApp";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [mixpanel track:@"ShareRemake" properties:@{
-                                                @"useremail" : [User current].userID, @"Story" : remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name}];
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     [activityViewController setValue:shareString forKey:@"subject"];
@@ -694,7 +678,6 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     //remake button pushed
     if (alertView.tag == REMAKE_ALERT_VIEW_TAG)
     {
@@ -708,11 +691,12 @@
         if (buttonIndex == 1) {
             // Present the recorder for the newly created remake.
             [self initRecorderWithRemake:self.remakeToContinueWith];
+            [[Mixpanel sharedInstance] track:@"MEOldRemake" properties:@{@"story" : self.remakeToContinueWith.story.name}];
         }
         //start new remake
         if (buttonIndex == 2) {
             NSString *remakeIDToDelete = self.remakeToContinueWith.sID;
-            HMGLogDebug(@"user chose to make new remake and delete previous remake with id: %@" , remakeIDToDelete);
+            [[Mixpanel sharedInstance] track:@"MENewRemakeWithOld" properties:@{@"story" : self.remakeToContinueWith.story.name}];
             [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
             [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID];
             self.remakeToContinueWith = nil;
@@ -722,18 +706,14 @@
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)
     {
         if (buttonIndex == 0) {
-            
-            [mixpanel track:@"DeleteRemake" properties:@{
-                                                         @"useremail" : [User current].userID, @"Story" : self.remakeToDelete.story.name,@"clickOnApprove": @"No"}];
             self.remakeToDelete = nil;
         }
         if (buttonIndex == 1) {
             NSString *remakeID = self.remakeToDelete.sID;
-            HMGLogDebug(@"user chose to delete remake with id: %@" , remakeID);
+            [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"Story" : self.remakeToDelete.story.name}];
             [HMServer.sh deleteRemakeWithID:remakeID];
             //[DB.sh.context deleteObject:self.remakeToDelete];
-            [mixpanel track:@"DeleteRemake" properties:@{
-                                                         @"useremail" : [User current].userID, @"Story" : self.remakeToDelete.story.name,@"clickOnApprove": @"Yes"}];
+            
             self.remakeToDelete = nil;
         }
     }

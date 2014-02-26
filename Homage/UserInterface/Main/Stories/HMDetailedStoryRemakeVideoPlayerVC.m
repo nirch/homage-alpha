@@ -50,17 +50,6 @@
     //set contentURL (this will automatically start playing the movie)
     [self.moviePlayer setContentURL:[NSURL URLWithString:self.videoURL]];
     
-     //old code for using HMSimpleVideoViewController
-     /*HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMFullScreenVideoPlayerPortrait"
-      inParentVC:self
-                                                                              containerView:self.guiVideoContainerView
-                                       ];
-    vc.videoURL = self.videoURL;
-    vc.resetStateWhenVideoEnds = NO;
-    vc.delegate = self;
-    [vc play];
-    //[vc setScalingMode:@"aspect fit"];*/
-    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 

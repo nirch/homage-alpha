@@ -770,6 +770,7 @@
 -(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
+    [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                           info:@{
@@ -803,6 +804,7 @@
 {
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
+    [[Mixpanel sharedInstance] track:@"REFinishedScene" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                           info:@{@"text":nextScene.context,
@@ -1005,9 +1007,7 @@
 
 - (IBAction)onPressedFlipCameraButton:(UIButton *)sender
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"FlipCamera" properties:@{
-                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"REFlipCamera" properties:@{@"story" : self.remake.story.name}];
     [self flipCamera];
 }
 
@@ -1077,6 +1077,7 @@
     
     //leave recorder
     if (buttonIndex == 1) {
+        [[Mixpanel sharedInstance] track:@"UserClosedRecorder"];
         [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
     }
 }

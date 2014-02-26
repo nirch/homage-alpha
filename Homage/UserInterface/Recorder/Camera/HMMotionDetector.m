@@ -10,6 +10,7 @@
 #import "HMMotionDetectorDelegate.h"
 #import "HMNotificationCenter.h"
 #import "HMRemakerProtocol.h"
+#import "Mixpanel.h"
 @import CoreMotion;
 
 
@@ -99,6 +100,7 @@
 
 -(void)postCameraNotStableNotification
 {
+    [[Mixpanel sharedInstance] track:@"RECameraNotStable"];
     NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonCameraNotStable)};
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_CAMERA_NOT_STABLE
                                                         object:self

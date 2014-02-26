@@ -14,6 +14,7 @@
 #import "HMNotificationCenter.h"
 #import "HMGLog.h"
 #import "HMColor.h"
+#import "Mixpanel.h"
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -190,6 +191,7 @@
 -(void)onPulledToRefetch
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [[Mixpanel sharedInstance] track:@"UserPulledRefresh"];
     [self refetchStoriesFromServer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -211,11 +213,13 @@
         if (self.introStory) {
             vc.story = self.introStory;
             self.introStory = nil;
+            [[Mixpanel sharedInstance] track:@"ShootIntroStory"];
         //user selected a story from the collection view
         } else {
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
             Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
+            [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name , @"index" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
         }        
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);

@@ -185,8 +185,8 @@
     
     //mixPanel analitics
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"userlogin" properties:@{
-                                              @"useremail" : [User current].userID}];
+    [mixpanel identify:[User current].userID];
+    [mixpanel track:@"UserSignup"];
     
     [self.guiActivityIndicator stopAnimating];
     [self switchToIntroView];
@@ -211,12 +211,14 @@
 
 - (IBAction)onPressedSkipButton:(UIButton *)sender {
     [self.moviePlayer stop];
-    [self.delegate onLoginPressedSkip];
+    [[Mixpanel sharedInstance] track:@"HitSkipButton"];
+    [self.delegate onLoginPressedSkip];    
 }
 
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
     [self.moviePlayer stop];
+    [[Mixpanel sharedInstance] track:@"HitShootFirst"];
     [self.delegate onLoginPressedShootFirstStory];
 }
 

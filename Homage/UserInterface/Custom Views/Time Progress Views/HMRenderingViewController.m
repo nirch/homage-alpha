@@ -12,10 +12,12 @@
 #import "DB.h"
 #import "Remake+Logic.h"
 #import "HMColor.h"
+#import "Mixpanel.h"
 
 @interface HMRenderingViewController ()
 
 @property (strong, nonatomic) NSTimer* timer;
+@property (nonatomic) BOOL renderingEnded;
 
 @end
 
@@ -91,7 +93,7 @@
     NSString *remakeID = [notification.userInfo valueForKey:@"remakeID"];
     Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
     
-    BOOL renderingEnded = NO;
+    self.renderingEnded = NO;
     
     switch (remake.status.integerValue) {
         case HMGRemakeStatusNew:
@@ -106,17 +108,17 @@
         case HMGRemakeStatusDone:
             HMGLogInfo(@"Remake <%@> video is ready", remakeID);
             self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_READY_CLICK", nil);
-            renderingEnded = YES;
+            self.renderingEnded = YES;
             break;
         case HMGRemakeStatusTimeout:
             HMGLogError(@"Remake <%@> has status <Timeout> while sent for rendering", remakeID);
             self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
-            renderingEnded = YES;
+            self.renderingEnded = YES;
             break;
         case HMGRemakeStatusDeleted:
             HMGLogError(@"Remake <%@> has status <Deleted> while sent for rendering", remakeID);
             self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
-            renderingEnded = YES;
+            self.renderingEnded = YES;
             break;
         default:
             HMGLogWarning(@"Remake <%@> has unknown status <%d>", remakeID, remake.status.integerValue);
@@ -124,7 +126,7 @@
     }
     
     // Stoping the timer and the progress bar if the rendering is done
-    if (renderingEnded)
+    if (self.renderingEnded)
     {
         [self.timer invalidate];
         self.timer = nil;
@@ -178,7 +180,9 @@
 
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self.delegate renderDoneClicked];
+    NSString *success = self.renderingEnded ? @"YES" : @"NO";
+    [[Mixpanel sharedInstance] track:@"hitRenderButton" properties:@{@"remakeSuccessful" : success}];
+    [self.delegate renderDoneClickedWithSuccess:self.renderingEnded];
     [self.view sendSubviewToBack:self.guiDoneRenderingView];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
