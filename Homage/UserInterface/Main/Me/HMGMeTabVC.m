@@ -18,7 +18,7 @@
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
-#import "HMDetailedStoryRemakeVideoPlayerVC.h"
+#import "HMVideoPlayerVC.h"
 #import "mixPanel.h"
 #import <ALMoviePlayerController/ALMoviePlayerController.h>
 
@@ -752,10 +752,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"videoPlayerSegue"]) {
-        HMDetailedStoryRemakeVideoPlayerVC *vc = segue.destinationViewController;
+        HMVideoPlayerVC *vc = segue.destinationViewController;
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.playingMovieIndex inSection:0];
         Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        vc.videoURL = remake.videoURL;
+        vc.videoURL = [NSURL URLWithString:remake.videoURL];
     }
 }
 

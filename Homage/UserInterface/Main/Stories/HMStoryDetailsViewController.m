@@ -16,7 +16,7 @@
 #import "HMRecorderViewController.h"
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
-#import "HMDetailedStoryRemakeVideoPlayerVC.h"
+#import "HMVideoPlayerVC.h"
 #import "HMColor.h"
 #import "Mixpanel.h"
 
@@ -518,11 +518,11 @@
     HMRemakeCell *cell = (HMRemakeCell *)sender;
     
     if ([segue.identifier isEqualToString:@"remakeVideoPlayerSegue"]) {
-        HMDetailedStoryRemakeVideoPlayerVC *vc = segue.destinationViewController;
+        HMVideoPlayerVC *vc = segue.destinationViewController;
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell.tag inSection:0];
         Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"story" : self.story.name , @"remakeNum" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
-        vc.videoURL = remake.videoURL;
+        vc.videoURL = [NSURL URLWithString:remake.videoURL];
     }
 }
 

@@ -17,9 +17,11 @@
 @property (weak, nonatomic) IBOutlet HMFontButton *storiesButton;
 @property (weak, nonatomic) IBOutlet HMFontButton *settingsButton;
 @property (weak, nonatomic) IBOutlet HMFontButton *meButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *howToButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 
 @property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
+
 
 @end
 
@@ -76,5 +78,12 @@
     if ([self.delegate respondsToSelector:@selector(settingsButtonPushed)])
         [self.delegate settingsButtonPushed];
 }
+
+- (IBAction)HowToPushed:(UIButton *)sender
+{
+    if ([self.delegate respondsToSelector:@selector(howToButtonPushed)])
+        [self.delegate howToButtonPushed];
+}
+
 
 @end

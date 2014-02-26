@@ -1,5 +1,5 @@
 //
-//  HMDetailedStoryRemakeVideoPlayerVC.h
+//  HMVideoPlayerVC.h
 //  Homage
 //
 //  Created by Yoav Caspin on 1/29/14.
@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "HMSimpleVideoPlayerDelegate.h"
 
-@interface HMDetailedStoryRemakeVideoPlayerVC : UIViewController <HMSimpleVideoPlayerDelegate>
+@interface HMVideoPlayerVC : UIViewController 
 
-@property (nonatomic) NSString *videoURL;
+@property (nonatomic) NSURL *videoURL;
 
 @end

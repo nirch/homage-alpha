@@ -420,10 +420,10 @@
             </objects>
             <point key="canvasLocation" x="2541" y="-93"/>
         </scene>
-        <!--Detailed Story Remake Video PlayerVC-->
+        <!--Video PlayerVC-->
         <scene sceneID="mZB-sQ-zLp">
             <objects>
-                <viewController id="D63-KS-K9R" customClass="HMDetailedStoryRemakeVideoPlayerVC" sceneMemberID="viewController">
+                <viewController id="D63-KS-K9R" customClass="HMVideoPlayerVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2ou-Tb-cao">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -737,18 +737,6 @@
                                     <action selector="storiesButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="beq-Jh-9gz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bkd-Dk-DVo">
-                                <rect key="frame" x="1" y="252" width="250" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.35000000000000003" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="settings">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="settingsButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="w3T-q8-SeB"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="os6-0F-yVc">
                                 <rect key="frame" x="0.0" y="151" width="250" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -761,12 +749,37 @@
                                     <action selector="meButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="kO0-PG-cd8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bkd-Dk-DVo">
+                                <rect key="frame" x="0.0" y="252" width="250" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.35000000000000003" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="settings">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="settingsButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="w3T-q8-SeB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="36P-bm-q0f">
+                                <rect key="frame" x="0.0" y="353" width="250" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="how to awesome">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="HowToPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="ZKN-Df-XW4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                     <connections>
                         <outlet property="guiBGImageView" destination="2iE-eA-xyT" id="4vQ-27-4x3"/>
+                        <outlet property="howToButton" destination="36P-bm-q0f" id="dYL-55-kYg"/>
                         <outlet property="meButton" destination="os6-0F-yVc" id="dm9-5s-G8T"/>
                         <outlet property="settingsButton" destination="Bkd-Dk-DVo" id="Wh2-ti-99t"/>
                         <outlet property="storiesButton" destination="nR4-uX-sgD" id="K11-oM-zpF"/>
@@ -774,6 +787,7 @@
                         <outletCollection property="buttonCollection" destination="Bkd-Dk-DVo" id="0Ta-QN-qOb"/>
                         <outletCollection property="buttonCollection" destination="os6-0F-yVc" id="HHA-6B-3lo"/>
                         <outletCollection property="buttonCollection" destination="os6-0F-yVc" id="RKM-9d-Kv4"/>
+                        <outletCollection property="buttonCollection" destination="36P-bm-q0f" id="sqS-fM-lMD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9s5-UW-DuL" userLabel="First Responder" sceneMemberID="firstResponder"/>

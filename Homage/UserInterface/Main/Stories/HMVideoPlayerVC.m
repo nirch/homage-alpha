@@ -1,22 +1,22 @@
 //
-//  HMDetailedStoryRemakeVideoPlayerVC.m
+//  HMVideoPlayerVC.m
 //  Homage
 //
 //  Created by Yoav Caspin on 1/29/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import "HMDetailedStoryRemakeVideoPlayerVC.h"
+#import "HMVideoPlayerVC.h"
 #import "HMSimpleVideoViewController.h"
 #import <ALMoviePlayerController/ALMoviePlayerController.h>
 #import "HMColor.h"
 
 
-@interface HMDetailedStoryRemakeVideoPlayerVC () <ALMoviePlayerControllerDelegate>
+@interface HMVideoPlayerVC () <ALMoviePlayerControllerDelegate>
 @property (nonatomic, strong) ALMoviePlayerController *moviePlayer;
 @end
 
-@implementation HMDetailedStoryRemakeVideoPlayerVC
+@implementation HMVideoPlayerVC
 
 - (void)viewDidLoad
 {
@@ -33,9 +33,6 @@
     
     // optionally customize the controls here...
 
-    
-    UIColor *barColor = [[HMColor.sh main2] colorWithAlphaComponent:0.6];
-    [movieControls setBarColor:barColor];
     [movieControls setTimeRemainingDecrements:YES];
     [movieControls setFadeDelay:2.0];
     [movieControls setBarHeight:30.f];
@@ -48,7 +45,7 @@
     [self.view addSubview:self.moviePlayer.view];
     
     //set contentURL (this will automatically start playing the movie)
-    [self.moviePlayer setContentURL:[NSURL URLWithString:self.videoURL]];
+    [self.moviePlayer setContentURL:self.videoURL];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -76,11 +73,6 @@
 -(BOOL)shouldAutorotate
 {
     return YES;
-}
-
--(void)videoPlayerDidStop
-{
-    
 }
 
 - (void)didReceiveMemoryWarning

@@ -13,5 +13,6 @@
 -(void)storiesButtonPushed;
 -(void)meButtonPushed;
 -(void)settingsButtonPushed;
+-(void)howToButtonPushed;
 
 @end

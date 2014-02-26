@@ -27,6 +27,7 @@
 #import "HMStoriesViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMDinFontLabel.h"
+#import "HMVideoPlayerVC.h"
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate>
 
@@ -43,10 +44,11 @@
 @property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
 @property (weak, nonatomic) IBOutlet HMDinFontLabel *guiNoConnectivityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
+@property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
+
 
 #define SETTING_TAG 1
 #define BACK_TAG 2
-
 
 @end
 
@@ -394,6 +396,24 @@
     if (self.appTabBarController.selectedIndex != 2)
         [self switchToTab:2];
     [self closeSideBar];
+}
+
+-(void)howToButtonPushed
+{
+    [self initIntroMoviePlayer];
+    [self closeSideBar];
+}
+
+-(void)initIntroMoviePlayer
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
+    HMVideoPlayerVC *videoPlayerController = [[HMVideoPlayerVC alloc] init];
+    NSURL *videoURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]];
+    videoPlayerController.videoURL = videoURL;
+    [self presentViewController:videoPlayerController animated:YES completion:nil];
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)switchToTab:(NSUInteger)toIndex
