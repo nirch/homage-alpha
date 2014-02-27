@@ -21,6 +21,7 @@
 #import "HMVideoPlayerVC.h"
 #import "mixPanel.h"
 #import <ALMoviePlayerController/ALMoviePlayerController.h>
+#import "HMVideoPlayerVC.h"
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
 
@@ -532,7 +533,10 @@
     }
     
     self.playingMovieIndex = indexPath.item;
-    [self performSegueWithIdentifier:@"videoPlayerSegue" sender:nil];
+    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
+    [self presentViewController:videoPlayerVC animated:YES completion:nil];
     
     //old code for playing movie inside cell
     /*HMSimpleVideoViewController *vc;
@@ -751,12 +755,12 @@
 #pragma mark segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"videoPlayerSegue"]) {
+    /*if ([segue.identifier isEqualToString:@"videoPlayerSegue"]) {
         HMVideoPlayerVC *vc = segue.destinationViewController;
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.playingMovieIndex inSection:0];
         Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
         vc.videoURL = [NSURL URLWithString:remake.videoURL];
-    }
+    }*/
 }
 
 #pragma mark - HMRecorderDelegate

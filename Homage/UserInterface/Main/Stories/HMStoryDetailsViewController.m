@@ -383,24 +383,16 @@
     }
 }
 
-/*-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
-    HMSimpleVideoViewController *vc;
-    self.remakeVideoPlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:cell.videoPlayerContainer];
-    HMGLogDebug(@"user selected remake with url: %@" , remake.videoURL);
-    self.remakeVideoPlayer.delegate = self;
     self.playingRemakeIndex = indexPath.item;
-    self.remakeVideoPlayer.videoURL = remake.videoURL;
-    [self.remakeVideoPlayer hideVideoLabel];
-    [self.remakeVideoPlayer play];
-    [cell.videoPlayerContainer setHidden:YES];
-    [self.remakeVideoPlayer setFullScreen];
+    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
+    [self presentViewController:videoPlayerVC animated:YES completion:nil];
 }
 
- */
 -(void)handleNoRemakes
 {
     if ([self.remakesCV numberOfItemsInSection:0] == 0) {
