@@ -81,8 +81,13 @@
 
 -(void)onMoviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
-    self.movieFinished = YES;
-    [self moviePlayerWillMoveFromWindow];
+    NSDictionary *info = notification.userInfo;
+    NSNumber *finishReason = info[@"MPMoviePlayerPlaybackDidFinishReasonUserInfoKey"];
+    if (finishReason.integerValue == MPMovieFinishReasonPlaybackEnded)
+    {
+        self.movieFinished = YES;
+        [self moviePlayerWillMoveFromWindow];
+    }
 }
 
 
