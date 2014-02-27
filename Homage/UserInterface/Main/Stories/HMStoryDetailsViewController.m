@@ -17,10 +17,11 @@
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
 #import "HMVideoPlayerVC.h"
+#import "HMVideoPlayerDelegate.h"
 #import "HMColor.h"
 #import "Mixpanel.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
@@ -56,6 +57,9 @@
         [self.storyMoviePlayer play];
         self.autoStartPlayingStory = NO;
     }
+    //CFRelease(NULL);
+    //NSArray *array = [NSArray array];
+    //[array objectAtIndex:1002];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -389,6 +393,7 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.playingRemakeIndex = indexPath.item;
     HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    videoPlayerVC.delegate = self;
     videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
     [self presentViewController:videoPlayerVC animated:YES completion:nil];
 }
@@ -402,7 +407,7 @@
     }
 }
 
-#pragma mark video players
+#pragma mark HMSimpleVideoPlayerDelegate
 
 -(void)videoPlayerDidStop
 {
@@ -434,6 +439,19 @@
 {
     [self.storyMoviePlayer done];
 }
+
+#pragma mark remakes video player delgate
+#pragma mark HMVideoPlayerVC delegate
+-(void)videoPlayerFinished
+{
+    [[Mixpanel sharedInstance] track:@"SDFinishWatchRemake"];
+}
+
+-(void)videoPlayerStopped
+{
+    [[Mixpanel sharedInstance] track:@"SDStopPlayRemake"];
+}
+
 
 
 #pragma mark - IB Actions

@@ -28,8 +28,11 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMDinFontLabel.h"
 #import "HMVideoPlayerVC.h"
+#import "HMVideoPlayerDelegate.h"
+#import <CrashReporter/PLCrashReporter.h>
+#import <CrashReporter/PLCrashReport.h>
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
@@ -303,11 +306,59 @@
         [mixpanel track:@"userLogin"];
     }
     
+    [self reportCrashesIfExist];
+    
     // The upload manager with # workers of a specific type.
     // You can always replace to another implementation of upload workers,
     // as long as the workers conform to the HMUploadWorkerProtocol.
     [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
     [HMUploadManager.sh startMonitoring];
+}
+
+#pragma mark crash reports
+-(void)reportCrashesIfExist
+{
+    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
+    NSError *error;
+    
+    // Check if we previously crashed
+    if ([crashReporter hasPendingCrashReport])
+        [self handleCrashReport];
+    
+    // Enable the Crash Reporter
+    if (![crashReporter enableCrashReporterAndReturnError: &error])
+        HMGLogWarning(@"Warning: Could not enable crash reporter: %@", error);
+}
+
+- (void)handleCrashReport {
+    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
+    NSData *crashData;
+    NSError *error;
+    
+    // Try loading the crash report
+    crashData = [crashReporter loadPendingCrashReportDataAndReturnError: &error];
+    if (crashData == nil) {
+        HMGLogWarning(@"Could not load crash report: %@", error);
+    } else {
+        PLCrashReport *report = [[PLCrashReport alloc] initWithData: crashData error: &error];
+        if (report == nil)
+        {
+            HMGLogWarning(@"could not parse crash report");
+        } else
+        {
+            HMGLogInfo(@"app crashed on %@", report.systemInfo.timestamp);
+            HMGLogInfo(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
+                       report.signalInfo.code, report.signalInfo.address);
+            HMGLogInfo(@"crashed with exception: %@ reason: %@ stack: %@" , report.exceptionInfo.exceptionName , report.exceptionInfo.exceptionReason , report.exceptionInfo.stackFrames);
+            
+            NSNumber *address = [NSNumber numberWithLongLong:report.signalInfo.address];
+            [[Mixpanel sharedInstance] track:@"AppCrash" properties:@{@"signal" : report.signalInfo.name , @"code" : report.signalInfo.code , @"address" : address , @"exceptionName" : report.exceptionInfo.exceptionName , @"exceptionReason" : report.exceptionInfo.exceptionReason , @"stackFrames" : report.exceptionInfo.stackFrames}];            
+        }
+    }
+    
+    // Purge the report
+    [crashReporter purgePendingCrashReport];
+    return;
 }
 
 -(void)presentLoginScreen
@@ -400,6 +451,7 @@
 
 -(void)howToButtonPushed
 {
+    [[Mixpanel sharedInstance] track:@"playIntroStory "];
     [self initIntroMoviePlayer];
     [self closeSideBar];
 }
@@ -409,6 +461,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
 
     HMVideoPlayerVC *videoPlayerController = [[HMVideoPlayerVC alloc] init];
+    videoPlayerController.delegate = self;
     NSURL *videoURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]];
     videoPlayerController.videoURL = videoURL;
     [self presentViewController:videoPlayerController animated:YES completion:nil];
@@ -580,14 +633,15 @@
     NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
--(void)navControllerPushed
+#pragma mark HMVideoPlayerVC delegate
+-(void)videoPlayerFinished
 {
-    
+    [[Mixpanel sharedInstance] track:@"finishIntroStory "];
 }
 
--(void)navControllerPopped
+-(void)videoPlayerStopped
 {
-    
+    [[Mixpanel sharedInstance] track:@"stopIntroStory"];
 }
 
 @end

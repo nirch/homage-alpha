@@ -456,6 +456,7 @@
 		269E8E1A18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsettingsIntroMovieViewController.h; sourceTree = SOURCE_ROOT; };
 		269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsettingsIntroMovieViewController.m; sourceTree = SOURCE_ROOT; };
 		26A239A918A96C8700980BFC /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
+		26A70BB318BF82BC00CF93C1 /* HMVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
 		26B498A918B5FD7100026401 /* HMMotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMotionDetector.m; sourceTree = "<group>"; };
 		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -1051,6 +1052,7 @@
 			children = (
 				267F523C1898FE3A00B8A17A /* HMVideoPlayerVC.h */,
 				267F523D1898FE3A00B8A17A /* HMVideoPlayerVC.m */,
+				26A70BB318BF82BC00CF93C1 /* HMVideoPlayerDelegate.h */,
 				08DF23161892704300912657 /* HMRemakeCell.h */,
 				08DF23171892704300912657 /* HMRemakeCell.m */,
 				08DF23181892704300912657 /* HMStoriesViewController.h */,

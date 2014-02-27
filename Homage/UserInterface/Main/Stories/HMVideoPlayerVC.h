@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HMSimpleVideoPlayerDelegate.h"
+#import "HMVideoPlayerDelegate.h"
 
 @interface HMVideoPlayerVC : UIViewController 
 
 @property (nonatomic) NSURL *videoURL;
+@property (nonatomic) id<HMVideoPlayerDelegate> delegate;
 
 @end

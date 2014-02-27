@@ -15,15 +15,17 @@
 #import "HMFontLabel.h"
 //#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 //#import "HMSimpleVideoViewController.h"
-#import "HMSimpleVideoPlayerDelegate.h"
+//#import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
-#import "HMVideoPlayerVC.h"
 #import "mixPanel.h"
 #import <ALMoviePlayerController/ALMoviePlayerController.h>
 #import "HMVideoPlayerVC.h"
+#import "HMVideoPlayerDelegate.h"
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate>
+
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
+//HMSimpleVideoPlayerDelegate removed
 
 //@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 //@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
@@ -534,6 +536,7 @@
     
     self.playingMovieIndex = indexPath.item;
     HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    videoPlayerVC.delegate = self;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
     [self presentViewController:videoPlayerVC animated:YES completion:nil];
@@ -752,17 +755,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark segue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    /*if ([segue.identifier isEqualToString:@"videoPlayerSegue"]) {
-        HMVideoPlayerVC *vc = segue.destinationViewController;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.playingMovieIndex inSection:0];
-        Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        vc.videoURL = [NSURL URLWithString:remake.videoURL];
-    }*/
-}
-
 #pragma mark - HMRecorderDelegate
 -(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason
                               remakeID:(NSString *)remakeID
@@ -783,6 +775,17 @@
     [sender dismissViewControllerAnimated:YES completion:^{
         //[self.navigationController popViewControllerAnimated:YES];
     }];
+}
+
+#pragma mark HMVideoPlayerVC delegate
+-(void)videoPlayerFinished
+{
+   [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
+}
+
+-(void)videoPlayerStopped
+{
+    [[Mixpanel sharedInstance] track:@"MEStopWatchRemake"];
 }
 
 
