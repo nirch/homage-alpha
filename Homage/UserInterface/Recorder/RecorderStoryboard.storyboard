@@ -109,6 +109,14 @@
                                     <segue destination="73n-P8-4qd" kind="embed" identifier="messages overlay containment segue" id="xvk-vy-3XK"/>
                                 </connections>
                             </containerView>
+                            <containerView alpha="0.0" contentMode="scaleToFill" id="vdq-Aj-jVY" userLabel="help screens Container View">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.18646094199999999" green="0.18646627660000001" blue="0.18646341559999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="xmX-EA-Pjz" kind="embed" id="15o-P7-KRp"/>
+                                </connections>
+                            </containerView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="GKV-nR-Rxj">
                                 <rect key="frame" x="226" y="135" width="116" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -131,6 +139,7 @@
                         <outlet property="guiCameraSwitchingButton" destination="JxT-FD-7FR" id="O46-iA-7t3"/>
                         <outlet property="guiDetailedOptionsBarContainer" destination="aFe-rO-lqD" id="Iy4-ai-kOK"/>
                         <outlet property="guiDismissButton" destination="IEt-8i-eNP" id="3za-qN-06x"/>
+                        <outlet property="guiHelperScreenContainer" destination="vdq-Aj-jVY" id="JiW-YM-rLy"/>
                         <outlet property="guiMessagesOverlayContainer" destination="o9Z-78-Oru" id="xkF-y4-muH"/>
                         <outlet property="guiSceneDirectionButton" destination="sjq-Nv-QkO" id="cmS-S0-bWb"/>
                         <outlet property="guiScriptLabel" destination="iJL-4S-1qD" id="3KV-SS-dl3"/>
@@ -669,7 +678,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h0v-PR-Ybz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1018" y="1179"/>
+            <point key="canvasLocation" x="1018" y="941"/>
         </scene>
         <!--While Recording Overlay View Controller-->
         <scene sceneID="yTk-LR-Abk">
@@ -901,8 +910,102 @@
             </objects>
             <point key="canvasLocation" x="1018" y="516"/>
         </scene>
+        <!--Recorder Tutorial View Controller-->
+        <scene sceneID="lJh-g0-3di">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="xmX-EA-Pjz" customClass="HMRecorderTutorialViewController" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OfS-OH-ndd">
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.19999999999999968" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpScreenBackground" id="A4q-7v-rdU">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="O3Q-33-w9J">
+                                <rect key="frame" x="457" y="137" width="91" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="22"/>
+                                <state key="normal" title="Next" backgroundImage="TutorialNextButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedNextButton:" destination="xmX-EA-Pjz" eventType="touchUpInside" id="LBh-dS-CqL"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scene Duration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fSI-Yq-Kku">
+                                <rect key="frame" x="85" y="184" width="157" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get inspired" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="df3-3S-ihd">
+                                <rect key="frame" x="361" y="190" width="157" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="qhN-8u-mBC">
+                                <rect key="frame" x="204" y="285" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="g6d-bl-3V8">
+                                <rect key="frame" x="536" y="285" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actor here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TYx-NN-xLw">
+                                <rect key="frame" x="321" y="28" width="137" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Solid color wall" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GiR-kb-PVD">
+                                <rect key="frame" x="20" y="161" width="151" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="vwZ-ol-8xX">
+                                <rect key="frame" x="85" y="97" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="EJ1-Kz-kGL">
+                                <rect key="frame" x="274" y="126" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="guiFigureLabel" destination="TYx-NN-xLw" id="htI-sT-som"/>
+                        <outlet property="guiFigurePosition" destination="EJ1-Kz-kGL" id="uaF-Cc-h7R"/>
+                        <outlet property="guiGetInspiredLabel" destination="df3-3S-ihd" id="VSj-Ab-Ld7"/>
+                        <outlet property="guiGetInspiredPosition" destination="g6d-bl-3V8" id="glp-19-joF"/>
+                        <outlet property="guiSceneDurationLabel" destination="fSI-Yq-Kku" id="vBW-ZR-u1M"/>
+                        <outlet property="guiSceneDurationPosition" destination="qhN-8u-mBC" id="XV2-2R-66S"/>
+                        <outlet property="guiWallLabel" destination="GiR-kb-PVD" id="zt3-aB-prB"/>
+                        <outlet property="guiWallPosition" destination="vwZ-ol-8xX" id="m0r-Ta-4zh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZOe-v7-YOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="407" y="795"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="HelpScreenBackground" width="568" height="320"/>
+        <image name="TutorialNextButton" width="97" height="48"/>
         <image name="iconCameraFlip" width="47" height="47"/>
         <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>

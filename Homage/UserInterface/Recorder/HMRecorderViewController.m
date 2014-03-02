@@ -44,6 +44,8 @@
 @property (weak, nonatomic) IBOutlet UIView *guiTextsEditingContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiMessagesOverlayContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiSceneDirectionButton;
+@property (weak, nonatomic) IBOutlet UIView *guiHelperScreenContainer;
+
 
 // Silhouette background image
 @property (weak, nonatomic) IBOutlet UIImageView *guiSilhouetteImageView;
@@ -180,6 +182,15 @@
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
         // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage
+        // OR
+        // 1 - HMRecorderStateGeneralMessage --> 8 - HMRecorderStateHelpScreens
+        //[self stateShowContextForNextScene];
+    
+        [self stateShowHelpScreens];
+        
+    } else if (self.recorderState == HMRecorderStateHelpScreens) {
+        
+        // 8 - HMRecorderStateHelpScreens --> 2 - HMRecorderStateSceneContextMessage
         [self stateShowContextForNextScene];
         
     } else if (self.recorderState == HMRecorderStateSceneContextMessage) {
@@ -257,6 +268,14 @@
     //
     _recorderState = HMRecorderStateSceneContextMessage;
     [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES info:nil];
+}
+
+-(void)stateShowHelpScreens
+{
+    _recorderState = HMRecorderStateHelpScreens;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiHelperScreenContainer.alpha = 1;
+    }];
 }
 
 -(void)stateMakingAScene
@@ -696,6 +715,17 @@
 -(void)dismissOverlayAdvancingState:(BOOL)advancingState info:(NSDictionary *)info
 {
     CGAffineTransform defaultTransform = CGAffineTransformMakeScale(1.4, 0);
+    
+    if (info[@"dismissing help screen"]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiHelperScreenContainer.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.guiHelperScreenContainer.hidden = YES;
+            // Check the recorder state and advance it if needed.
+            if (advancingState) [self advanceState];
+        }];
+        return;
+    }
     
     if (info[@"minimized scene direction"]) {
         [UIView animateWithDuration:0.2 animations:^{

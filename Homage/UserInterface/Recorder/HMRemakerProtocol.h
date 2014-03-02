@@ -32,38 +32,42 @@ typedef NS_ENUM(NSInteger, HMRemakerUpdateType) {
 */
 typedef NS_ENUM(NSInteger, HMRecorderState) {
     /**
-     *  The recorder was just opened.
+     *  0 - The recorder was just opened.
      */
     HMRecorderStateJustStarted,
     /**
-     *  The introduction message displayed to the user.
+     *  1 - The introduction message displayed to the user.
      */
     HMRecorderStateGeneralMessage,
     /**
-     *  A description message for the user about the current scene to retake.
+     *  2 - A description message for the user about the current scene to retake.
      */
     HMRecorderStateSceneContextMessage,
     /**
-     *  The user get controls of the flow where he can retake current or previous scenes.
+     *  3 - The user get controls of the flow where he can retake current or previous scenes.
      */
     HMRecorderStateMakingAScene,
     /**
-     *  The user created a take successfully for the current scene.
+     *  4 - The user created a take successfully for the current scene.
      */
     HMRecorderStateFinishedASceneMessage,
     /**
-     *  The user created takes for all the available scenes in this remake but she needs to edit texts.
+     *  5 - The user created takes for all the available scenes in this remake but she needs to edit texts.
      *  Before being able to create the movie.
      */
     HMRecorderStateEditingTexts,
     /**
-     *  The user created takes for all the available scenes in this remake.
+     *  6 - The user created takes for all the available scenes in this remake.
      */
     HMRecorderStateFinishedAllScenesMessage,
     /**
-    *  Some user interaction requires the state machine to determine what next.
+    *  7 - Some user interaction requires the state machine to determine what next.
     */
-    HMRecorderStateUserRequestToCheckWhatNext
+    HMRecorderStateUserRequestToCheckWhatNext,
+    /**
+     * 8 - Help screen explaining some UI elements to the user
+     */
+    HMRecorderStateHelpScreens
 };
 
 @protocol HMRemakerProtocol <NSObject>
