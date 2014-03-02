@@ -14,13 +14,12 @@
 #import "HMNotificationCenter.h"
 #import "HMFontLabel.h"
 //#import <InAppSettingsKit/IASKAppSettingsViewController.h>
-#import "HMSimpleVideoViewController.h"
-#import "HMSimpleVideoPlayerDelegate.h"
+#import "HMFullScreenVideoPlayerViewController.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMSimpleVideoPlayerDelegate>
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate>
 
 //@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 //@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
@@ -529,8 +528,7 @@
     }
     
     self.playingMovieIndex = indexPath.item;
-    HMSimpleVideoViewController *videoPlayerVC = [[HMSimpleVideoViewController alloc ] initWithDefaultNibInParentVC:self containerView:self.view];
-    videoPlayerVC.delegate = self;
+    HMFullScreenVideoPlayerViewController *videoPlayerVC = [[HMFullScreenVideoPlayerViewController alloc] init];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     videoPlayerVC.videoURL = remake.videoURL;
     [self presentViewController:videoPlayerVC animated:YES completion:nil];

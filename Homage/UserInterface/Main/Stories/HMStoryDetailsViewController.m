@@ -18,15 +18,16 @@
 #import "HMGLog.h"
 #import "HMColor.h"
 #import "Mixpanel.h"
+#import "HMFullScreenVideoPlayerViewController.h"
 #import "HMSimpleVideoPlayerDelegate.h"
-#import "HMSimpleVideoViewController.h"
+#import "HMSimpleDataViewController.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate,UIScrollViewDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
-@property (strong,nonatomic) HMSimpleVideoViewController *remakeVideoPlayer;
+@property (strong,nonatomic) HMFullScreenVideoPlayerViewController *remakeVideoPlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
 @property (weak, nonatomic) IBOutlet UIView *guiUpperScreenContainer;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
@@ -395,10 +396,9 @@
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.playingRemakeIndex = indexPath.item;
-    HMSimpleVideoViewController *videoPlayerVC = [[HMSimpleVideoViewController alloc ] initWithDefaultNibInParentVC:self containerView:self.view];
-    videoPlayerVC.delegate = self;
-    videoPlayerVC.videoURL = remake.videoURL;
-    [self presentViewController:videoPlayerVC animated:YES completion:nil];
+    self.remakeVideoPlayer= [[HMFullScreenVideoPlayerViewController alloc ] init];
+    self.remakeVideoPlayer.videoURL = remake.videoURL;
+    [self presentViewController:self.remakeVideoPlayer animated:YES completion:nil];
 }
 
 -(void)handleNoRemakes
