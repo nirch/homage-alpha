@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ILR-Rm-ajx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ILR-Rm-ajx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -71,7 +71,7 @@
                                     <action selector="onPressedDismissRecorderButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="ujl-VF-8aW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JxT-FD-7FR" userLabel="Flip camera">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JxT-FD-7FR" userLabel="Flip camera button">
                                 <rect key="frame" x="523" y="-2" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,6 +80,17 @@
                                 </state>
                                 <connections>
                                     <action selector="onPressedFlipCameraButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="Vy0-UI-VLL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sjq-Nv-QkO" userLabel="Scene description button">
+                                <rect key="frame" x="0.0" y="54" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="iconSceneDescriptionBW">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedSceneDirectionButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="8Af-xY-jHP"/>
                                 </connections>
                             </button>
                             <containerView hidden="YES" contentMode="scaleToFill" id="KHc-rN-Ccn" userLabel="Texts editing container">
@@ -96,6 +107,14 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="73n-P8-4qd" kind="embed" identifier="messages overlay containment segue" id="xvk-vy-3XK"/>
+                                </connections>
+                            </containerView>
+                            <containerView alpha="0.0" contentMode="scaleToFill" id="vdq-Aj-jVY" userLabel="help screens Container View">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.18646094199999999" green="0.18646627660000001" blue="0.18646341559999999" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="xmX-EA-Pjz" kind="embed" id="15o-P7-KRp"/>
                                 </connections>
                             </containerView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="GKV-nR-Rxj">
@@ -120,7 +139,9 @@
                         <outlet property="guiCameraSwitchingButton" destination="JxT-FD-7FR" id="O46-iA-7t3"/>
                         <outlet property="guiDetailedOptionsBarContainer" destination="aFe-rO-lqD" id="Iy4-ai-kOK"/>
                         <outlet property="guiDismissButton" destination="IEt-8i-eNP" id="3za-qN-06x"/>
+                        <outlet property="guiHelperScreenContainer" destination="vdq-Aj-jVY" id="JiW-YM-rLy"/>
                         <outlet property="guiMessagesOverlayContainer" destination="o9Z-78-Oru" id="xkF-y4-muH"/>
+                        <outlet property="guiSceneDirectionButton" destination="sjq-Nv-QkO" id="cmS-S0-bWb"/>
                         <outlet property="guiScriptLabel" destination="iJL-4S-1qD" id="3KV-SS-dl3"/>
                         <outlet property="guiSilhouetteImageView" destination="koQ-R3-wbM" id="Fj2-BE-ecP"/>
                         <outlet property="guiTextsEditingContainer" destination="KHc-rN-Ccn" id="VHO-4W-xE2"/>
@@ -335,17 +356,24 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="284" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CREATE MOVIE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AWc-0D-ojj">
-                                                            <rect key="frame" x="38" y="13" width="117" height="43"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CREATE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AWc-0D-ojj">
+                                                            <rect key="frame" x="38" y="13" width="84" height="43"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="21"/>
                                                             <color key="textColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconCreateMovieSmall" id="uaJ-Bd-miH">
-                                                            <rect key="frame" x="149" y="4" width="55" height="55"/>
+                                                            <rect key="frame" x="115" y="4" width="55" height="55"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOVIE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ON8-Zi-dj9">
+                                                            <rect key="frame" x="165" y="13" width="73" height="43"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="21"/>
+                                                            <color key="textColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sA0-uD-vku" userLabel="Create Movie Button">
                                                             <rect key="frame" x="0.0" y="0.0" width="284" height="64"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -650,7 +678,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h0v-PR-Ybz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1018" y="1179"/>
+            <point key="canvasLocation" x="1018" y="941"/>
         </scene>
         <!--While Recording Overlay View Controller-->
         <scene sceneID="yTk-LR-Abk">
@@ -882,8 +910,102 @@
             </objects>
             <point key="canvasLocation" x="1018" y="516"/>
         </scene>
+        <!--Recorder Tutorial View Controller-->
+        <scene sceneID="lJh-g0-3di">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="xmX-EA-Pjz" customClass="HMRecorderTutorialViewController" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OfS-OH-ndd">
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.19999999999999968" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpScreenBackground" id="A4q-7v-rdU">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="O3Q-33-w9J">
+                                <rect key="frame" x="457" y="137" width="91" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="22"/>
+                                <state key="normal" title="Next" backgroundImage="TutorialNextButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedNextButton:" destination="xmX-EA-Pjz" eventType="touchUpInside" id="LBh-dS-CqL"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scene Duration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fSI-Yq-Kku">
+                                <rect key="frame" x="85" y="184" width="157" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get inspired" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="df3-3S-ihd">
+                                <rect key="frame" x="361" y="190" width="157" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="qhN-8u-mBC">
+                                <rect key="frame" x="204" y="285" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="g6d-bl-3V8">
+                                <rect key="frame" x="536" y="285" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actor here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TYx-NN-xLw">
+                                <rect key="frame" x="321" y="28" width="137" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Solid color wall" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GiR-kb-PVD">
+                                <rect key="frame" x="20" y="161" width="151" height="69"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="vwZ-ol-8xX">
+                                <rect key="frame" x="85" y="97" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="EJ1-Kz-kGL">
+                                <rect key="frame" x="274" y="126" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="guiFigureLabel" destination="TYx-NN-xLw" id="htI-sT-som"/>
+                        <outlet property="guiFigurePosition" destination="EJ1-Kz-kGL" id="uaF-Cc-h7R"/>
+                        <outlet property="guiGetInspiredLabel" destination="df3-3S-ihd" id="VSj-Ab-Ld7"/>
+                        <outlet property="guiGetInspiredPosition" destination="g6d-bl-3V8" id="glp-19-joF"/>
+                        <outlet property="guiSceneDurationLabel" destination="fSI-Yq-Kku" id="vBW-ZR-u1M"/>
+                        <outlet property="guiSceneDurationPosition" destination="qhN-8u-mBC" id="XV2-2R-66S"/>
+                        <outlet property="guiWallLabel" destination="GiR-kb-PVD" id="zt3-aB-prB"/>
+                        <outlet property="guiWallPosition" destination="vwZ-ol-8xX" id="m0r-Ta-4zh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZOe-v7-YOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="407" y="795"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="HelpScreenBackground" width="568" height="320"/>
+        <image name="TutorialNextButton" width="97" height="48"/>
         <image name="iconCameraFlip" width="47" height="47"/>
         <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>
@@ -892,6 +1014,7 @@
         <image name="iconMediumPlayerStop" width="35" height="35"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconRowIndicator" width="10" height="23"/>
+        <image name="iconSceneDescriptionBW" width="47" height="47"/>
         <image name="iconSceneDescriptionBlack" width="28" height="21"/>
         <image name="iconSceneLocked" width="45" height="45"/>
         <image name="iconSceneRetake" width="20" height="20"/>

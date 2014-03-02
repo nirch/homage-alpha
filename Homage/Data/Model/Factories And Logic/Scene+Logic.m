@@ -25,7 +25,10 @@
 -(NSString *)titleForTime
 {
     double seconds = self.duration.doubleValue / 1000.0f;
-    return [NSString stringWithFormat:@"%3.1f", seconds];
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    numberFormatter.roundingMode = NSNumberFormatterRoundHalfUp;
+    NSString *secondsString = [numberFormatter stringFromNumber:@(seconds)];
+    return [NSString stringWithFormat:@"%@ SEC", secondsString];
 }
 
 -(NSTimeInterval)durationInSeconds

@@ -73,6 +73,8 @@
 		084E533E18920B5100D96258 /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E533C18920B5100D96258 /* HMTextUpdateParser.m */; };
 		084E53411892240100D96258 /* HMServer+Render.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53401892240100D96258 /* HMServer+Render.m */; };
 		084E53421892240100D96258 /* HMServer+Render.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53401892240100D96258 /* HMServer+Render.m */; };
+		085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */; };
+		085BF6F018C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		0863D0A91889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		086D93CF1886C8BB0086C565 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
@@ -308,6 +310,8 @@
 		084E533C18920B5100D96258 /* HMTextUpdateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTextUpdateParser.m; sourceTree = "<group>"; };
 		084E533F1892240100D96258 /* HMServer+Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Render.h"; sourceTree = "<group>"; };
 		084E53401892240100D96258 /* HMServer+Render.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Render.m"; sourceTree = "<group>"; };
+		085BF6ED18C36AC2009D79C5 /* HMRecorderTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderTutorialViewController.h; sourceTree = "<group>"; };
+		085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderTutorialViewController.m; sourceTree = "<group>"; };
 		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
 		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		086D93C91886C8BB0086C565 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -744,6 +748,7 @@
 				08455FDF1890458E0040504D /* Camera */,
 				08455FEA1890458E0040504D /* User Controls */,
 				08455FF41890458E0040504D /* User Messages */,
+				085BF6EC18C36A58009D79C5 /* Tutorial */,
 			);
 			path = Recorder;
 			sourceTree = "<group>";
@@ -792,6 +797,15 @@
 				08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */,
 			);
 			path = "User Messages";
+			sourceTree = "<group>";
+		};
+		085BF6EC18C36A58009D79C5 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				085BF6ED18C36AC2009D79C5 /* HMRecorderTutorialViewController.h */,
+				085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		086D93C81886C8BB0086C565 /* Parsers */ = {
@@ -1189,7 +1203,7 @@
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 56F7YSPHC5;
+						DevelopmentTeam = 3HVGM4BBZC;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1311,6 +1325,7 @@
 				08B958A2189167D800BCCF8C /* User+Logic.m in Sources */,
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */,
+				085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
 				08CDF8361897F6B000A9D235 /* Story.m in Sources */,
 				65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
@@ -1462,6 +1477,7 @@
 				0840FF9A188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
 				08455FF81890458E0040504D /* AVCamPreviewView.m in Sources */,
 				0845600E1890537C0040504D /* HMServer+Footages.m in Sources */,
+				085BF6F018C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
 				0840FF67188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				0806FA3518828AEB007514BE /* HomageTests.m in Sources */,
 				0840FF6E188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,

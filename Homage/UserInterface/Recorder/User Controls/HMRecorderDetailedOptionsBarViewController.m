@@ -644,7 +644,7 @@
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
     [[Mixpanel sharedInstance] track:@"REMenuSceneDirection" properties:@{@"story" : self.remake.story.name}];
-    [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID checkNextStateOnDismiss:NO];
+    [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID checkNextStateOnDismiss:NO info:nil];
 }
 
 - (IBAction)onPressedToggleShowingScriptButton:(id)sender

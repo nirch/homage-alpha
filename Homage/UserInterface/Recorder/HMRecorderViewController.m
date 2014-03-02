@@ -43,6 +43,9 @@
 @property (weak, nonatomic) IBOutlet UIView *guiWhileRecordingOverlay;
 @property (weak, nonatomic) IBOutlet UIView *guiTextsEditingContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiMessagesOverlayContainer;
+@property (weak, nonatomic) IBOutlet UIButton *guiSceneDirectionButton;
+@property (weak, nonatomic) IBOutlet UIView *guiHelperScreenContainer;
+
 
 // Silhouette background image
 @property (weak, nonatomic) IBOutlet UIImageView *guiSilhouetteImageView;
@@ -179,6 +182,15 @@
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
         // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage
+        // OR
+        // 1 - HMRecorderStateGeneralMessage --> 8 - HMRecorderStateHelpScreens
+        //[self stateShowContextForNextScene];
+    
+        [self stateShowHelpScreens];
+        
+    } else if (self.recorderState == HMRecorderStateHelpScreens) {
+        
+        // 8 - HMRecorderStateHelpScreens --> 2 - HMRecorderStateSceneContextMessage
         [self stateShowContextForNextScene];
         
     } else if (self.recorderState == HMRecorderStateSceneContextMessage) {
@@ -255,7 +267,15 @@
     // Showing context for the next scene needing a first retake.
     //
     _recorderState = HMRecorderStateSceneContextMessage;
-    [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES];
+    [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:YES info:nil];
+}
+
+-(void)stateShowHelpScreens
+{
+    _recorderState = HMRecorderStateHelpScreens;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiHelperScreenContainer.alpha = 1;
+    }];
 }
 
 -(void)stateMakingAScene
@@ -684,14 +704,43 @@
 #pragma mark - Remaker protocol
 -(void)dismissOverlay
 {
-    [self dismissOverlayAdvancingState:NO];
+    [self dismissOverlayAdvancingState:NO info:nil];
 }
 
 -(void)dismissOverlayAdvancingState:(BOOL)advancingState
 {
-    // hide animted
+    [self dismissOverlayAdvancingState:advancingState info:nil];
+}
+
+-(void)dismissOverlayAdvancingState:(BOOL)advancingState info:(NSDictionary *)info
+{
+    CGAffineTransform defaultTransform = CGAffineTransformMakeScale(1.4, 0);
+    
+    if (info[@"dismissing help screen"]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiHelperScreenContainer.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.guiHelperScreenContainer.hidden = YES;
+            // Check the recorder state and advance it if needed.
+            if (advancingState) [self advanceState];
+        }];
+        return;
+    }
+    
+    if (info[@"minimized scene direction"]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiMessagesOverlayContainer.transform = [self minimizedSceneDirectionTransform];
+        } completion:^(BOOL finished) {
+            self.guiMessagesOverlayContainer.hidden = YES;
+            // Check the recorder state and advance it if needed.
+            if (advancingState) [self advanceState];
+        }];
+        return;
+    }
+    
+    // Default dismiss animation
     [UIView animateWithDuration:0.3 animations:^{
-        self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(1.4, 0);
+        self.guiMessagesOverlayContainer.transform = defaultTransform;
     } completion:^(BOOL finished) {
         self.guiMessagesOverlayContainer.hidden = YES;
         // Check the recorder state and advance it if needed.
@@ -699,13 +748,29 @@
     }];
 }
 
--(void)dismissOverlayAdvancingState:(BOOL)advancingState fromState:(HMRecorderState)fromState
+-(CGAffineTransform)minimizedSceneDirectionTransform
+{
+    CGPoint dc = self.guiSceneDirectionButton.center;
+    CGPoint sc = self.guiMessagesOverlayContainer.center;
+    
+    double scaleX = 0.01;
+    double scaleY = 0.01;
+    
+    double moveX = dc.x - sc.x;
+    double moveY = dc.y - sc.y;
+    
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(moveX, moveY);
+    transform = CGAffineTransformScale(transform, scaleX, scaleY);
+    return transform;
+}
+
+-(void)dismissOverlayAdvancingState:(BOOL)advancingState fromState:(HMRecorderState)fromState info:(NSDictionary *)info
 {
     // Change state to this
     _recorderState = fromState;
     
     // Advance it if requested.
-    [self dismissOverlayAdvancingState:advancingState];
+    [self dismissOverlayAdvancingState:advancingState info:info];
 }
 
 -(void)toggleOptions
@@ -767,19 +832,23 @@
     [self updateUIForSceneID:sceneID];
 }
 
--(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
+-(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
     [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
+    
+    NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                   @"icon name":@"iconSceneDescription",
+                                                                                   //@"title":scene.story.name.uppercaseString,
+                                                                                   @"title":[NSString stringWithFormat:LS(@"SCENE_TITLE") , sceneID.integerValue],
+                                                                                   @"text":scene.context,
+                                                                                   @"ok button text":LS(@"NEXT_SCENE"),
+                                                                                   }];
+    if (info) [allInfo addEntriesFromDictionary:info];
+    
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
-                                          info:@{
-                                                 @"icon name":@"iconSceneDescription",
-                                                 //@"title":scene.story.name.uppercaseString,
-                                                 @"title":[NSString stringWithFormat:LS(@"SCENE_TITLE") , sceneID.integerValue],
-                                                 @"text":scene.context,
-                                                 @"ok button text":LS(@"NEXT_SCENE"),
-                                                }
+                                          info:allInfo
      ];
 }
 
@@ -794,7 +863,14 @@
     //
     self.guiMessagesOverlayContainer.hidden = NO;
     self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    [UIView animateWithDuration:0.3 animations:^{
+    double animationDuration = 0.3; // default value
+    
+    if (info[@"minimized scene direction"]) {
+        animationDuration = 0.2;
+        self.guiMessagesOverlayContainer.transform = [self minimizedSceneDirectionTransform];
+    }
+    
+    [UIView animateWithDuration:animationDuration animations:^{
         self.guiMessagesOverlayContainer.alpha = 1;
         self.guiMessagesOverlayContainer.transform = CGAffineTransformIdentity;
     }];
@@ -922,9 +998,11 @@
 {
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
+    self.guiSceneDirectionButton.hidden = NO;
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
+        self.guiSceneDirectionButton.alpha = 1;
     } completion:^(BOOL finished) {
     }];
 }
@@ -934,10 +1012,17 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 0;
         self.guiCameraSwitchingButton.alpha = 0;
+        self.guiSceneDirectionButton.alpha = 0;
     } completion:^(BOOL finished) {
         self.guiDismissButton.hidden = YES;
+        self.guiSceneDirectionButton.hidden = YES;
         self.guiCameraSwitchingButton.hidden = YES;
     }];
+}
+
+-(CGRect)sceneDirectionMinimizedFrame
+{
+    return self.guiSceneDirectionButton.frame;
 }
 
 #pragma mark - Top script view
@@ -994,6 +1079,13 @@
 // ===========
 // IB Actions.
 // ===========
+- (IBAction)onPressedSceneDirectionButton:(id)sender
+{
+    [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:NO info:@{@"blur alpha":@0.85,@"minimized scene direction":@YES}];
+}
+
+
+
 - (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
 {
     
