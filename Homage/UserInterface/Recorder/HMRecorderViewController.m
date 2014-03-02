@@ -455,6 +455,7 @@
 
     self.guiDismissButton.enabled = NO;
     self.guiCameraSwitchingButton.enabled = NO;
+    self.guiSceneDirectionButton.enabled = NO;
 
     self.guiWhileRecordingOverlay.hidden = NO;
     self.guiWhileRecordingOverlay.alpha = 0;
@@ -468,6 +469,7 @@
         // Fade out unwanted buttons
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiDismissButton.alpha = 0;
+        self.guiSceneDirectionButton.alpha = 0;
         
         // Fade in "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 1;
@@ -518,6 +520,9 @@
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.enabled = YES;
     self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
+
+    self.guiSceneDirectionButton.enabled = YES;
+    self.guiSceneDirectionButton.hidden = NO;
     
     [self closeDetailedOptionsAnimated:YES]; // Show in closed state.
     [UIView animateWithDuration:0.2 animations:^{
@@ -528,6 +533,7 @@
         // Fade in buttons
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
+        self.guiSceneDirectionButton.alpha = 1;
         
         // Fade out "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 0;
