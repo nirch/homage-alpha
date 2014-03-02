@@ -279,7 +279,8 @@
 -(void)stateShowHelpScreens
 {
     _recorderState = HMRecorderStateHelpScreens;
-    self.guiHelperScreenContainer.hidden = NO;
+    //TODO: uncomment line below
+    //self.guiHelperScreenContainer.hidden = NO;
     self.guiHelperScreenContainer.alpha = 0;
     [UIView animateWithDuration:0.6 animations:^{
         self.guiHelperScreenContainer.alpha = 1;
