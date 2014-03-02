@@ -24,8 +24,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiWallLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiWallPosition;
 
-
-
 @property (nonatomic) NSArray *labels;
 @property (nonatomic) NSArray *positions;
 @property (nonatomic) NSInteger index;

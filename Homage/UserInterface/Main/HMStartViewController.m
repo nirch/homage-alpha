@@ -27,11 +27,12 @@
 #import "HMStoriesViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMDinFontLabel.h"
-#import "HMFullScreenVideoPlayerViewController.h"
+#import "HMVideoPlayerVC.h"
+#import "HMVideoPlayerDelegate.h"
 #import <CrashReporter/PLCrashReporter.h>
 #import <CrashReporter/PLCrashReport.h>
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
@@ -46,7 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
 @property (weak, nonatomic) IBOutlet HMDinFontLabel *guiNoConnectivityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
-@property (nonatomic, strong) HMFullScreenVideoPlayerViewController *moviePlayer;
+@property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 
 
 #define SETTING_TAG 1
@@ -458,10 +459,11 @@
 -(void)initIntroMoviePlayer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    self.moviePlayer = [[HMFullScreenVideoPlayerViewController alloc] init];
-    NSString *videoURL = [[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"];
-    self.moviePlayer.videoURL = videoURL;
-    [self presentViewController:self.moviePlayer animated:YES completion:nil];
+    HMVideoPlayerVC *videoPlayerController = [[HMVideoPlayerVC alloc] init];
+    videoPlayerController.delegate = self;
+    NSURL *videoURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]];
+    videoPlayerController.videoURL = videoURL;
+    [self presentViewController:videoPlayerController animated:YES completion:nil];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

@@ -18,16 +18,15 @@
 #import "HMGLog.h"
 #import "HMColor.h"
 #import "Mixpanel.h"
-#import "HMFullScreenVideoPlayerViewController.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMSimpleDataViewController.h"
+#import "HMVideoPlayerVC.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,HMVideoPlayerDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
-@property (strong,nonatomic) HMFullScreenVideoPlayerViewController *remakeVideoPlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
 @property (weak, nonatomic) IBOutlet UIView *guiUpperScreenContainer;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
@@ -396,9 +395,10 @@
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.playingRemakeIndex = indexPath.item;
-    self.remakeVideoPlayer= [[HMFullScreenVideoPlayerViewController alloc ] init];
-    self.remakeVideoPlayer.videoURL = remake.videoURL;
-    [self presentViewController:self.remakeVideoPlayer animated:YES completion:nil];
+    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    videoPlayerVC.delegate = self;
+    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
+    [self presentViewController:videoPlayerVC animated:YES completion:nil];
 }
 
 -(void)handleNoRemakes
@@ -609,7 +609,7 @@
 {
     CGFloat currentOffset = self.remakesCV.contentOffset.y;
     CGFloat contentInset = self.remakesCV.contentInset.top;
-    self.guiUpperScreenContainer.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
+    self.guiDescriptionBG.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
 }
 
 

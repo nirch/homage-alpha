@@ -14,12 +14,18 @@
 #import "HMNotificationCenter.h"
 #import "HMFontLabel.h"
 //#import <InAppSettingsKit/IASKAppSettingsViewController.h>
-#import "HMFullScreenVideoPlayerViewController.h"
+//#import "HMSimpleVideoViewController.h"
+//#import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
+#import <ALMoviePlayerController/ALMoviePlayerController.h>
+#import "HMVideoPlayerVC.h"
+#import "HMVideoPlayerDelegate.h"
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate>
+
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
+//HMSimpleVideoPlayerDelegate removed
 
 //@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
 //@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
@@ -30,6 +36,7 @@
 @property (weak,nonatomic) Remake *remakeToDelete;
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
+@property (nonatomic, strong) ALMoviePlayerController *moviePlayer;
 
 @end
 
@@ -118,7 +125,7 @@
 -(void)initObservers
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-
+    
     // Observe refetching of remakes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakesRefetched:)
@@ -144,7 +151,7 @@
     
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
+    
 }
 
 -(void)removeObservers
@@ -369,15 +376,15 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     //cell border design
-    /*[cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
+    [cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
     [cell.layer setBorderWidth:1.0f];
     [cell.layer setCornerRadius:7.5f];
     [cell.layer setShadowOffset:CGSizeMake(0, 1)];
     [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
     [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];*/
+    [cell.layer setShadowOpacity:0.8];
     //
-
+    
     //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
     cell.shareButton.tag = indexPath.item;
     cell.actionButton.tag = indexPath.item;
@@ -386,7 +393,7 @@
     cell.deleteButton.tag = indexPath.item;
     cell.tag = indexPath.item;
     //
-        
+    
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     
     if (remake.thumbnail) {
@@ -445,7 +452,7 @@
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
             break;
-        
+            
         case HMGRemakeStatusNew:
             //[cell.actionButton setTitle:@"" forState:UIControlStateNormal];
             //bgimage = [UIImage imageNamed:@"underconsruction"];
@@ -458,7 +465,7 @@
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
             break;
-
+            
         case HMGRemakeStatusRendering:
             //[cell.actionButton setTitle:@"R" forState:UIControlStateNormal];
             cell.actionButton.enabled = NO;
@@ -511,7 +518,7 @@
             //TODO: what to do?
             break;
     }
-
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -528,19 +535,20 @@
     }
     
     self.playingMovieIndex = indexPath.item;
-    HMFullScreenVideoPlayerViewController *videoPlayerVC = [[HMFullScreenVideoPlayerViewController alloc] init];
+    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    videoPlayerVC.delegate = self;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    videoPlayerVC.videoURL = remake.videoURL;
+    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
     [self presentViewController:videoPlayerVC animated:YES completion:nil];
     
     //old code for playing movie inside cell
     /*HMSimpleVideoViewController *vc;
-    self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
-    self.moviePlayer.delegate = self;
-    self.moviePlayer.videoURL = videoURL;
-    [self configureCellForMoviePlaying:cell active:YES];
-    [self.moviePlayer play];
-    [self.moviePlayer setScalingMode:@"aspect fit"];*/
+     self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
+     self.moviePlayer.delegate = self;
+     self.moviePlayer.videoURL = videoURL;
+     [self configureCellForMoviePlaying:cell active:YES];
+     [self.moviePlayer play];
+     [self.moviePlayer setScalingMode:@"aspect fit"];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -582,7 +590,7 @@
 -(void)closeMovieInCell:(HMGUserRemakeCVCell *)remakeCell
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    //self.moviePlayer = nil;
+    self.moviePlayer = nil;
     [self configureCellForMoviePlaying:remakeCell active:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -592,12 +600,12 @@
 #pragma mark remaking
 - (IBAction)deleteRemake:(UIButton *)sender
 {
-   
+    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.remakeToDelete = remake;
-
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"DELETE_REMAKE", nil) message:NSLocalizedString(@"APPROVE_DELETION", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
     
     alertView.tag = TRASH_ALERT_VIEW_TAG;
@@ -772,7 +780,7 @@
 #pragma mark HMVideoPlayerVC delegate
 -(void)videoPlayerFinished
 {
-   [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
+    [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
 }
 
 -(void)videoPlayerStopped

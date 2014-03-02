@@ -221,6 +221,7 @@
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
 		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
+		26F231A618C3A97F00E58FF4 /* HMVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F231A418C3A97F00E58FF4 /* HMVideoPlayerVC.m */; };
 		26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
@@ -465,6 +466,8 @@
 		26B498AD18B60D4A00026401 /* HMMotionDetectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMMotionDetectorDelegate.h; sourceTree = "<group>"; };
 		26B498AE18BA4A8D00026401 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
+		26F231A418C3A97F00E58FF4 /* HMVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVideoPlayerVC.m; sourceTree = "<group>"; };
+		26F231A518C3A97F00E58FF4 /* HMVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerVC.h; sourceTree = "<group>"; };
 		26FB16A018C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFullScreenVideoPlayerViewController.h; sourceTree = "<group>"; };
 		26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFullScreenVideoPlayerViewController.m; sourceTree = "<group>"; };
 		65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontLabel.m; sourceTree = "<group>"; };
@@ -1066,6 +1069,8 @@
 		08DF23151892704300912657 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
+				26F231A418C3A97F00E58FF4 /* HMVideoPlayerVC.m */,
+				26F231A518C3A97F00E58FF4 /* HMVideoPlayerVC.h */,
 				26A70BB318BF82BC00CF93C1 /* HMVideoPlayerDelegate.h */,
 				08DF23161892704300912657 /* HMRemakeCell.h */,
 				08DF23171892704300912657 /* HMRemakeCell.m */,
@@ -1208,7 +1213,7 @@
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 3HVGM4BBZC;
+						DevelopmentTeam = 56F7YSPHC5;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1338,6 +1343,7 @@
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,
+				26F231A618C3A97F00E58FF4 /* HMVideoPlayerVC.m in Sources */,
 				084560071890458E0040504D /* HMWhileRecordingOverlayViewController.m in Sources */,
 				2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */,
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,

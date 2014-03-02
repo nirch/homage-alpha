@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
-
+@property (weak, nonatomic) IBOutlet UIView *guiDescriptionBG;
 @property (weak, nonatomic) IBOutlet UITextView *guiDescriptionField;
 @property (weak, nonatomic) IBOutlet UIView *guiStoryMovieContainer;
 
