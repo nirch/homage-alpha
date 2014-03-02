@@ -181,12 +181,18 @@
         
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
-        // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage
+        User *user = [User current];
+        
+        // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage (if user already seen tutorials)
         // OR
         // 1 - HMRecorderStateGeneralMessage --> 8 - HMRecorderStateHelpScreens
         //[self stateShowContextForNextScene];
     
-        [self stateShowHelpScreens];
+        if (user.skipRecorderTutorial) {
+            [self stateShowContextForNextScene];
+        } else {
+            [self stateShowHelpScreens];
+        }
         
     } else if (self.recorderState == HMRecorderStateHelpScreens) {
         
