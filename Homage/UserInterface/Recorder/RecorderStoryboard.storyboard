@@ -71,7 +71,7 @@
                                     <action selector="onPressedDismissRecorderButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="ujl-VF-8aW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JxT-FD-7FR" userLabel="Flip camera">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JxT-FD-7FR" userLabel="Flip camera button">
                                 <rect key="frame" x="523" y="-2" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,6 +80,17 @@
                                 </state>
                                 <connections>
                                     <action selector="onPressedFlipCameraButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="Vy0-UI-VLL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sjq-Nv-QkO" userLabel="Scene description button">
+                                <rect key="frame" x="0.0" y="54" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="iconSceneDescriptionBW">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedSceneDirectionButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="8Af-xY-jHP"/>
                                 </connections>
                             </button>
                             <containerView hidden="YES" contentMode="scaleToFill" id="KHc-rN-Ccn" userLabel="Texts editing container">
@@ -121,6 +132,7 @@
                         <outlet property="guiDetailedOptionsBarContainer" destination="aFe-rO-lqD" id="Iy4-ai-kOK"/>
                         <outlet property="guiDismissButton" destination="IEt-8i-eNP" id="3za-qN-06x"/>
                         <outlet property="guiMessagesOverlayContainer" destination="o9Z-78-Oru" id="xkF-y4-muH"/>
+                        <outlet property="guiSceneDirectionButton" destination="sjq-Nv-QkO" id="cmS-S0-bWb"/>
                         <outlet property="guiScriptLabel" destination="iJL-4S-1qD" id="3KV-SS-dl3"/>
                         <outlet property="guiSilhouetteImageView" destination="koQ-R3-wbM" id="Fj2-BE-ecP"/>
                         <outlet property="guiTextsEditingContainer" destination="KHc-rN-Ccn" id="VHO-4W-xE2"/>
@@ -899,6 +911,7 @@
         <image name="iconMediumPlayerStop" width="35" height="35"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconRowIndicator" width="10" height="23"/>
+        <image name="iconSceneDescriptionBW" width="47" height="47"/>
         <image name="iconSceneDescriptionBlack" width="28" height="21"/>
         <image name="iconSceneLocked" width="45" height="45"/>
         <image name="iconSceneRetake" width="20" height="20"/>

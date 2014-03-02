@@ -77,12 +77,14 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
 
 -(void)dismissOverlay;
 -(void)dismissOverlayAdvancingState:(BOOL)advancingState;
--(void)dismissOverlayAdvancingState:(BOOL)advancingState fromState:(HMRecorderState)fromState;
+-(void)dismissOverlayAdvancingState:(BOOL)advancingState info:(NSDictionary *)info;
+-(void)dismissOverlayAdvancingState:(BOOL)advancingState fromState:(HMRecorderState)fromState info:(NSDictionary *)info;
 
 @optional
+-(CGAffineTransform)minimizedSceneDirectionTransform;
 -(void)updateWithUpdateType:(HMRemakerUpdateType)updateType info:(NSDictionary *)info;
 -(void)updateUIForCurrentScene;
 -(void)selectSceneID:(NSNumber *)sceneID;
--(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss;
+-(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info;
 
 @end

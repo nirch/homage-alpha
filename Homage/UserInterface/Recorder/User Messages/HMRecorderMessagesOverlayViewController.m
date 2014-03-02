@@ -182,6 +182,8 @@
     self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene && messageType != HMRecorderMessagesTypeFinishedAllScenes ;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     
+    self.guiBlurredView.alpha = info[@"blur alpha"] ? [info[@"blur alpha"] doubleValue] : 1;
+    
     //THE HAND!!
     if (self.messageType == HMRecorderMessagesTypeGeneral) {
 
@@ -226,7 +228,6 @@
 
         NSString *iconName = info[@"icon name"];
         self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
-        
         
         self.guiDismissButton.alpha = 0;
         HMGLogDebug(@"alpha started");
@@ -301,6 +302,8 @@
     } else if (self.messageType == HMRecorderMessagesTypeSceneContext)
     {
         [[Mixpanel sharedInstance] track: @"RESceneDescriptionDone"];
+        [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized scene direction":@YES}];
+        return;
     }
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
 }
@@ -374,7 +377,7 @@
     // Just stay in the same scene and allow user to retake.
     //
     [self.remakerDelegate updateUIForCurrentScene];
-    [self.remakerDelegate dismissOverlayAdvancingState:NO fromState:HMRecorderStateMakingAScene];
+    [self.remakerDelegate dismissOverlayAdvancingState:NO fromState:HMRecorderStateMakingAScene info:nil];
 }
 
 - (IBAction)onPressedSeePreviewButton:(id)sender
