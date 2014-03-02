@@ -27,9 +27,9 @@
      ];
     
     
-    //#ifndef DEBUG
+    #ifndef DEBUG
          [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-    //#endif
+    #endif
     
     
     // TODO: Route here the remote notification received when the app was inactive

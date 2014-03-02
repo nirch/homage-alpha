@@ -95,9 +95,18 @@
     self.cfg = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
     
     // Init the server NSURL
-    NSString *port = self.cfg[@"port"];
-    NSString *protocol = self.cfg[@"protocol"];
-    NSString *host = self.cfg[@"host"];
+    #ifndef DEBUG
+        // Production server
+        NSString *port = self.cfg[@"prod_port"];
+        NSString *protocol = self.cfg[@"prod_protocol"];
+        NSString *host = self.cfg[@"prod_host"];
+    #else
+        // Test server
+        NSString *port = self.cfg[@"port"];
+        NSString *protocol = self.cfg[@"protocol"];
+        NSString *host = self.cfg[@"host"];
+    #endif
+    
     if (port) {
         _serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@", protocol, host, port]];
     } else {
