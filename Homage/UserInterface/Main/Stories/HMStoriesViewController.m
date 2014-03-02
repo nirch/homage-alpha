@@ -301,14 +301,14 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     //cell border design
-    [cell.layer setBorderColor:[HMColor.sh main2].CGColor];
+    /*[cell.layer setBorderColor:[HMColor.sh main2].CGColor];
     [cell.layer setBorderWidth:1.0f];
     [cell.layer setCornerRadius:7.5f];
     [cell.layer setShadowOffset:CGSizeMake(0, 1)];
     [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
     [cell.layer setShadowRadius:8.0];
     [cell.layer setShadowOpacity:0.8];
-    //
+    //*/
     
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
     

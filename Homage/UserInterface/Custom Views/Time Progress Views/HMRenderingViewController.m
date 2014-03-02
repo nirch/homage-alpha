@@ -211,7 +211,6 @@
     self.timer.tolerance = TIMER_TOLERANCE;
     Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
     self.guiInProgressLabel.text = [NSString stringWithFormat:@"%@:%@" , NSLocalizedString(@"RENDERING_MOVIE_MESSAGE", nil) ,remake.story.name];
-    
     [self.view sendSubviewToBack:self.guiDoneRenderingView];
     [self.guiProgressBarView start];
     

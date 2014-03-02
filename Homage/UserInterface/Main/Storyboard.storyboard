@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Mko-4Y-5oJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Mko-4Y-5oJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -207,7 +207,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Krx-vD-xcq">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Krx-vD-xcq">
                                     <size key="itemSize" width="320" height="219"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -229,21 +229,21 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="JWM-Cs-k2w">
-                                                    <rect key="frame" x="0.0" y="40" width="320" height="179"/>
+                                                    <rect key="frame" x="0.0" y="32" width="320" height="179"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yre-Et-9j7">
-                                                    <rect key="frame" x="46" y="186" width="30" height="30"/>
+                                                    <rect key="frame" x="46" y="180" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9KD-jG-LUX">
-                                                    <rect key="frame" x="8" y="186" width="30" height="30"/>
+                                                    <rect key="frame" x="8" y="180" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" id="ltR-RC-vnp">
-                                                    <rect key="frame" x="254" y="189" width="58" height="24"/>
+                                                    <rect key="frame" x="254" y="185" width="58" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zCL-L2-HEd">
@@ -299,20 +299,49 @@
                                 <rect key="frame" x="-21" y="-48" width="364" height="600"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <view alpha="0.69999999999999973" contentMode="scaleToFill" id="PCC-H7-f64" userLabel="DescriptionBG">
-                                <rect key="frame" x="10" y="222" width="300" height="51"/>
+                            <view contentMode="scaleToFill" id="wbp-ym-nCD">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="275"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="story description" id="YAE-ZL-RuW">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="51"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <view contentMode="scaleToFill" id="ZjV-7o-L6U" userLabel="storyMovieContainer">
+                                        <rect key="frame" x="0.0" y="1" width="320" height="180"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
+                                    </view>
+                                    <view alpha="0.69999999999999973" contentMode="scaleToFill" id="PCC-H7-f64" userLabel="DescriptionBG">
+                                        <rect key="frame" x="0.0" y="180" width="320" height="95"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="story description" id="YAE-ZL-RuW">
+                                                <rect key="frame" x="0.0" y="0.0" width="326" height="51"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="tiZ-kN-hcG">
+                                        <rect key="frame" x="49" y="223" width="222" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Make your own!">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedRemakeButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="0ig-hQ-4Jj"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="KL3-sw-np8">
+                                        <rect key="frame" x="247" y="239" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" customClass="HMFontLabel">
                                 <rect key="frame" x="10" y="401" width="300" height="21"/>
@@ -322,25 +351,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="n4c-ID-VSQ">
-                                <rect key="frame" x="0.0" y="275" width="320" height="224"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="hqq-tY-Hk9">
-                                    <size key="itemSize" width="145" height="82"/>
+                                <inset key="contentInset" minX="0.0" minY="275" maxX="0.0" maxY="0.0"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="hqq-tY-Hk9">
+                                    <size key="itemSize" width="159" height="82"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RemakeCell" id="8a9-hu-Nw7" customClass="HMRemakeCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="145" height="82"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="145" height="82"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Vaa-IJ-F0q">
-                                                    <rect key="frame" x="0.0" y="0.0" width="145" height="82"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" id="yq0-5A-pdt" userLabel="labelBG">
@@ -358,14 +388,14 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" id="Qog-IG-6oe" userLabel="videoPlayerContainerView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="145" height="82"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <size key="customSize" width="145" height="82"/>
+                                        <size key="customSize" width="160" height="90"/>
                                         <connections>
                                             <outlet property="guiThumbImage" destination="Vaa-IJ-F0q" id="9Qq-Qx-a7z"/>
                                             <outlet property="guiUserName" destination="8zk-Pr-2hS" id="Bhs-TJ-rfE"/>
@@ -378,28 +408,6 @@
                                     <outlet property="delegate" destination="ZiT-ur-2sF" id="6zZ-FG-ckl"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" id="ZjV-7o-L6U" userLabel="storyMovieContainer">
-                                <rect key="frame" x="10" y="6" width="300" height="180"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="tiZ-kN-hcG">
-                                <rect key="frame" x="10" y="177" width="300" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Make your own version">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedRemakeButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="0ig-hQ-4Jj"/>
-                                </connections>
-                            </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="KL3-sw-np8">
-                                <rect key="frame" x="278" y="187" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -411,6 +419,7 @@
                         <outlet property="guiRemakeActivity" destination="KL3-sw-np8" id="gFe-SP-dRB"/>
                         <outlet property="guiRemakeButton" destination="tiZ-kN-hcG" id="S36-Ge-MjL"/>
                         <outlet property="guiStoryMovieContainer" destination="ZjV-7o-L6U" id="Eh5-qX-ad0"/>
+                        <outlet property="guiUpperScreenContainer" destination="wbp-ym-nCD" id="rah-H9-OGW"/>
                         <outlet property="noRemakesLabel" destination="xrO-tV-a3k" id="lnJ-Q7-5TM"/>
                         <outlet property="remakesCV" destination="n4c-ID-VSQ" id="LNh-x3-q49"/>
                     </connections>
@@ -437,7 +446,7 @@
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="70" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="zSo-Xw-45U">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="433"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bs7-l7-LoP">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="1" id="Bs7-l7-LoP">
                                     <size key="itemSize" width="320" height="227"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>

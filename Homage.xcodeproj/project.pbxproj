@@ -211,7 +211,6 @@
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
 		2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593E1895A99E003A7B3D /* HMsideBarViewController.m */; };
-		267F523E1898FE3A00B8A17A /* HMVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 267F523D1898FE3A00B8A17A /* HMVideoPlayerVC.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMLoginViewController.m */; };
 		269E8E1918ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */; };
@@ -447,8 +446,6 @@
 		2638593D1895A99E003A7B3D /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsideBarViewController.h; sourceTree = "<group>"; };
 		2638593E1895A99E003A7B3D /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsideBarViewController.m; sourceTree = "<group>"; };
 		263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMsideBarNavigatorDelegate.h; sourceTree = "<group>"; };
-		267F523C1898FE3A00B8A17A /* HMVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerVC.h; sourceTree = "<group>"; };
-		267F523D1898FE3A00B8A17A /* HMVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVideoPlayerVC.m; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
 		269C8AF8189971F800F28B7A /* HMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginViewController.h; sourceTree = "<group>"; };
 		269C8AF9189971F800F28B7A /* HMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginViewController.m; sourceTree = "<group>"; };
@@ -1050,8 +1047,6 @@
 		08DF23151892704300912657 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
-				267F523C1898FE3A00B8A17A /* HMVideoPlayerVC.h */,
-				267F523D1898FE3A00B8A17A /* HMVideoPlayerVC.m */,
 				26A70BB318BF82BC00CF93C1 /* HMVideoPlayerDelegate.h */,
 				08DF23161892704300912657 /* HMRemakeCell.h */,
 				08DF23171892704300912657 /* HMRemakeCell.m */,
@@ -1323,7 +1318,6 @@
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,
-				267F523E1898FE3A00B8A17A /* HMVideoPlayerVC.m in Sources */,
 				084560071890458E0040504D /* HMWhileRecordingOverlayViewController.m in Sources */,
 				2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */,
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,

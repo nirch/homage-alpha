@@ -16,19 +16,21 @@
 #import "HMRecorderViewController.h"
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
-#import "HMVideoPlayerVC.h"
-#import "HMVideoPlayerDelegate.h"
 #import "HMColor.h"
 #import "Mixpanel.h"
+#import "HMSimpleVideoPlayerDelegate.h"
+#import "HMSimpleVideoViewController.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMSimpleVideoPlayerDelegate,HMRecorderDelegate,UIScrollViewDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
 @property (strong,nonatomic) HMSimpleVideoViewController *remakeVideoPlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
+@property (weak, nonatomic) IBOutlet UIView *guiUpperScreenContainer;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
+
 @end
 
 @implementation HMStoryDetailsViewController
@@ -105,8 +107,9 @@
     self.guiRemakeButton.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.guiRemakeButton.titleLabel.font.pointSize];
     [self.guiRemakeButton setTitleColor:[HMColor.sh main2] forState:UIControlStateNormal];
     [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
-    [self.guiRemakeButton.layer setBorderWidth:2.0f];
+    [self.guiRemakeButton.layer setBorderWidth:0.5f];
     [self.guiRemakeButton.layer setCornerRadius:7.5f];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
@@ -360,13 +363,13 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     //cell border design
-    [cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
+    /*[cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
     [cell.layer setBorderWidth:1.0f];
     [cell.layer setCornerRadius:7.5f];
     [cell.layer setShadowOffset:CGSizeMake(0, 1)];
     [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
     [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];
+    [cell.layer setShadowOpacity:0.8];*/
     //
     
     cell.guiUserName.text = remake.user.userID;
@@ -392,9 +395,9 @@
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.playingRemakeIndex = indexPath.item;
-    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    HMSimpleVideoViewController *videoPlayerVC = [[HMSimpleVideoViewController alloc ] initWithDefaultNibInParentVC:self containerView:self.view];
     videoPlayerVC.delegate = self;
-    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
+    videoPlayerVC.videoURL = remake.videoURL;
     [self presentViewController:videoPlayerVC animated:YES completion:nil];
 }
 
@@ -525,14 +528,14 @@
 #pragma mark segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    HMRemakeCell *cell = (HMRemakeCell *)sender;
+    //HMRemakeCell *cell = (HMRemakeCell *)sender;
     
     if ([segue.identifier isEqualToString:@"remakeVideoPlayerSegue"]) {
-        HMVideoPlayerVC *vc = segue.destinationViewController;
+        /*HMSimpleVideoViewController *vc = segue.destinationViewController;
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell.tag inSection:0];
         Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"story" : self.story.name , @"remakeNum" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
-        vc.videoURL = [NSURL URLWithString:remake.videoURL];
+        vc.videoURL = remake.videoURL];*/
     }
 }
 
@@ -600,6 +603,13 @@
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat currentOffset = self.remakesCV.contentOffset.y;
+    CGFloat contentInset = self.remakesCV.contentInset.top;
+    self.guiUpperScreenContainer.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
 }
 
 
