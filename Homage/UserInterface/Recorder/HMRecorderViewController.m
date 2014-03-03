@@ -186,13 +186,13 @@
         // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage (if user already seen tutorials)
         // OR
         // 1 - HMRecorderStateGeneralMessage --> 8 - HMRecorderStateHelpScreens
-        //[self stateShowContextForNextScene];
+        [self stateShowContextForNextScene];
     
-        if (user.skipRecorderTutorial) {
-            [self stateShowContextForNextScene];
-        } else {
-            [self stateShowHelpScreens];
-        }
+//        if (user.skipRecorderTutorial) {
+//            [self stateShowContextForNextScene];
+//        } else {
+//            [self stateShowHelpScreens];
+//        }
         
     } else if (self.recorderState == HMRecorderStateHelpScreens) {
         
@@ -280,7 +280,7 @@
 {
     _recorderState = HMRecorderStateHelpScreens;
     //TODO: uncomment line below
-    //self.guiHelperScreenContainer.hidden = NO;
+    self.guiHelperScreenContainer.hidden = NO;
     self.guiHelperScreenContainer.alpha = 0;
     [UIView animateWithDuration:0.6 animations:^{
         self.guiHelperScreenContainer.alpha = 1;
