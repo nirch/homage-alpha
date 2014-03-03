@@ -19,7 +19,6 @@
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
-#import <ALMoviePlayerController/ALMoviePlayerController.h>
 #import "HMVideoPlayerVC.h"
 #import "HMVideoPlayerDelegate.h"
 
@@ -36,7 +35,7 @@
 @property (weak,nonatomic) Remake *remakeToDelete;
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
-@property (nonatomic, strong) ALMoviePlayerController *moviePlayer;
+@property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 
 @end
 
@@ -539,6 +538,7 @@
     videoPlayerVC.delegate = self;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
+    self.moviePlayer = videoPlayerVC;
     [self presentViewController:videoPlayerVC animated:YES completion:nil];
     
     //old code for playing movie inside cell
@@ -590,7 +590,7 @@
 -(void)closeMovieInCell:(HMGUserRemakeCVCell *)remakeCell
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    self.moviePlayer = nil;
+    //self.moviePlayer = nil;
     [self configureCellForMoviePlaying:remakeCell active:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -778,13 +778,15 @@
 }
 
 #pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerFinished
+-(void)videoPlayerFinishedPlaying
 {
+    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
     [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
 }
 
 -(void)videoPlayerStopped
 {
+    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
     [[Mixpanel sharedInstance] track:@"MEStopWatchRemake"];
 }
 

@@ -463,10 +463,11 @@
     videoPlayerController.delegate = self;
     NSURL *videoURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]];
     videoPlayerController.videoURL = videoURL;
+    self.moviePlayer = videoPlayerController;
     [self presentViewController:videoPlayerController animated:YES completion:nil];
-    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
+
 
 -(void)switchToTab:(NSUInteger)toIndex
 {
@@ -633,14 +634,17 @@
 }
 
 #pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerFinished
-{
-    [[Mixpanel sharedInstance] track:@"finishIntroStory "];
-}
-
 -(void)videoPlayerStopped
 {
+    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
     [[Mixpanel sharedInstance] track:@"stopIntroStory"];
+}
+
+-(void)videoPlayerFinishedPlaying
+{
+    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil]
+    ;
+    [[Mixpanel sharedInstance] track:@"finishIntroStory "];
 }
 
 @end
