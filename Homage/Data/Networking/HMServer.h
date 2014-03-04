@@ -165,4 +165,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
                     info:(NSDictionary *)info
                   parser:(HMParser *)parser;
 
+// TODO: REMOVE!!!!!!!!!!!!!!!!!!!!
+-(void)ranHack;
+
 @end

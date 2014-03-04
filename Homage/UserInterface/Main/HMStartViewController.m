@@ -304,6 +304,12 @@
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         [mixpanel identify:[User current].userID];
         [mixpanel track:@"userLogin"];
+        
+        // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
+        if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
+        {
+            [[HMServer sh] ranHack];
+        }
     }
     
     [self reportCrashesIfExist];

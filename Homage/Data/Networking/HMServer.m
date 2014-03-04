@@ -345,4 +345,22 @@
 }
 
 
+// TODO: REMOVE!!!!!!!!!!!!!!!!!!!!
+-(void)ranHack
+{
+    // Ran always uses the Test server!!!!
+    NSString *port = self.cfg[@"port"];
+    NSString *protocol = self.cfg[@"protocol"];
+    NSString *host = self.cfg[@"host"];
+    
+    if (port) {
+        _serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@", protocol, host, port]];
+    } else {
+        _serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", protocol, host]];
+    }
+    
+    [self initSessionManager];
+}
+
+
 @end
