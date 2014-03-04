@@ -59,7 +59,7 @@
     BOOL allScenesAreSelfie = YES;
     for (NSDictionary *sceneInfo in info[@"scenes"]) {
         Scene *scene = [self parseSceneWithInfo:sceneInfo forStory:story];
-        if (scene.isSelfie.boolValue) allScenesAreSelfie = NO;
+        if (!scene.isSelfie.boolValue) allScenesAreSelfie = NO;
     }
     story.isSelfie = allScenesAreSelfie ? @YES : @NO;
     

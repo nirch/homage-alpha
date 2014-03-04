@@ -155,7 +155,7 @@
     self.guiOriginalTakesPageControl.currentPage = 0;
     
     //THE HAND!!!
-    self.guiPointingHand.hidden = YES;
+    /*self.guiPointingHand.hidden = YES;
     if (![User current].skipRecorderTutorial && self.remakerDelegate.showHand == YES);
     {
         self.guiPointingHand.hidden = NO;
@@ -167,7 +167,7 @@
                 self.guiPointingHand.transform = CGAffineTransformMakeTranslation(0, -5);
             } completion:nil];
         });
-    }
+    }*/
     
     // Mark that GUI already initialized once.
     _alreadyInitializedGUI = YES;
@@ -623,7 +623,8 @@
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
-    [[Mixpanel sharedInstance] track:@"REHitRecord"];
+    NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%d" , self.sceneID.integerValue];
+    [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID}];
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
 

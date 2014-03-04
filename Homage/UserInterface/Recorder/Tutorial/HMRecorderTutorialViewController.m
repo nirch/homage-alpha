@@ -159,8 +159,8 @@
         NSInteger index = indexNumber.integerValue;
         UILabel *label = self.labels[index];
         UIImageView *arrow = self.arrows[index];
-        [self revealView:label delay:1];
-        [self fadeInView:arrow delay:1.3];
+        [self revealView:label delay:0.5];
+        [self fadeInView:arrow delay:0.7];
     };
 }
 

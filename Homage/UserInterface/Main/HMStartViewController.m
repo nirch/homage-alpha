@@ -91,7 +91,6 @@
     HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
 
     self.renderingContainerView.hidden = YES;
-    self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
     self.loginContainerView.hidden = YES;
     self.loginContainerView.alpha = 0;
     
@@ -263,11 +262,11 @@
 {
     if ([navVC.viewControllers count] > 1)
     {
-        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"backButtonBlack"] forState:UIControlStateNormal];
         self.guiNavButton.tag = BACK_TAG;
     } else
     {
-        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"settings"] forState:UIControlStateNormal];
+        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"settingsBlack"] forState:UIControlStateNormal];
         self.guiNavButton.tag = SETTING_TAG;
     }
 }
@@ -302,7 +301,9 @@
     } else {
         //Mixpanel analytics
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel identify:[User current].userID];
+        NSString *userName = [User current].userID;
+        [mixpanel identify:userName];
+        [mixpanel.people set:@{@"user" : userName}];
         [mixpanel track:@"userLogin"];
     }
     

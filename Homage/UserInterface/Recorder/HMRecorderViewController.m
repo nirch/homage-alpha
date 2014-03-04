@@ -183,8 +183,8 @@
         
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
-        BOOL debugAlwaysSkipHelpScreens = YES; // Set to NO or remove this for correct behavior.
-        BOOL debugAlwaysShowHelpScreens = NO;  // Set to NO or remove this for correct behavior.
+        BOOL debugAlwaysSkipHelpScreens = NO; // Set to NO or remove this for correct behavior.
+        BOOL debugAlwaysShowHelpScreens = YES;  // Set to NO or remove this for correct behavior.
         
         if (debugAlwaysShowHelpScreens) {
             [self stateShowHelpScreens];
@@ -906,7 +906,9 @@
 {
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
-    [[Mixpanel sharedInstance] track:@"REFinishedScene" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
+    
+    NSString *eventName = [NSString stringWithFormat:@"REFinishedScene%d" , sceneID.integerValue];
+    [[Mixpanel sharedInstance] track:eventName properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                           info:@{@"text":nextScene.context,

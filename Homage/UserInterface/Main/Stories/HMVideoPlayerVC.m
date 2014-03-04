@@ -81,6 +81,7 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [self.videoPlayer stop];
     [self removeObservers];
 }
 

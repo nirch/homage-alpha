@@ -185,7 +185,9 @@
     
     //mixPanel analitics
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel identify:[User current].userID];
+    NSString *userName = [User current].userID;
+    [mixpanel identify:userName];
+    [mixpanel.people set:@{@"user" : userName}];
     [mixpanel track:@"UserSignup"];
     
     [self.guiActivityIndicator stopAnimating];

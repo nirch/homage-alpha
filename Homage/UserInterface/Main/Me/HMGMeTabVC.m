@@ -375,13 +375,13 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     //cell border design
-    [cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
+    /*[cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
     [cell.layer setBorderWidth:1.0f];
     [cell.layer setCornerRadius:7.5f];
     [cell.layer setShadowOffset:CGSizeMake(0, 1)];
     [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
     [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];
+    [cell.layer setShadowOpacity:0.8];*/
     //
     
     //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
