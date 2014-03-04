@@ -30,6 +30,8 @@
 @property (nonatomic) NSInteger playingRemakeIndex;
 @property (weak, nonatomic) IBOutlet UIView *guiUpperScreenContainer;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
+@property (nonatomic, strong) HMVideoPlayerVC *remakeMoviePlayer;
+
 
 @end
 
@@ -398,6 +400,7 @@
     HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
     videoPlayerVC.delegate = self;
     videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
+    self.remakeMoviePlayer = videoPlayerVC;
     [self presentViewController:videoPlayerVC animated:YES completion:nil];
 }
 
@@ -443,15 +446,17 @@
     [self.storyMoviePlayer done];
 }
 
-#pragma mark remakes video player delgate
+#
 #pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerFinished
+-(void)videoPlayerFinishedPlaying
 {
+    [self.remakeMoviePlayer dismissViewControllerAnimated:YES completion:nil];
     [[Mixpanel sharedInstance] track:@"SDFinishWatchRemake"];
 }
 
 -(void)videoPlayerStopped
 {
+    [self.remakeMoviePlayer dismissViewControllerAnimated:YES completion:nil];
     [[Mixpanel sharedInstance] track:@"SDStopPlayRemake"];
 }
 

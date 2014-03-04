@@ -12,6 +12,6 @@
 
 @optional
 -(void)videoPlayerStopped;
--(void)videoPlayerFinished;
+-(void)videoPlayerFinishedPlaying;
 
 @end

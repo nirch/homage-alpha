@@ -12,5 +12,6 @@
     HMRecorderChildInterface
 >
 
+-(void)start;
 
 @end

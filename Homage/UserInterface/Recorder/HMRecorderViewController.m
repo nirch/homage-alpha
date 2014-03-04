@@ -21,6 +21,7 @@
 #import "HMServer+LazyLoading.h"
 #import "HMRecorderEditTextsViewController.h"
 #import "HMVideoCameraViewController.h"
+#import "HMRecorderTutorialViewController.h"
 #import "HMUploadManager.h"
 #import "Mixpanel.h"
 #import <AudioToolbox/AudioServices.h>
@@ -61,6 +62,7 @@
 // Weak pointers to child view controllers
 @property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
 @property (weak, nonatomic, readonly) HMRecorderEditTextsViewController *editingTextsVC;
+@property (weak, nonatomic, readonly) HMRecorderTutorialViewController *tutorialVC;
 
 // UI State
 @property (nonatomic, readonly) BOOL detailedOptionsOpened;
@@ -181,18 +183,23 @@
         
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
-        User *user = [User current];
+        BOOL debugAlwaysSkipHelpScreens = YES; // Set to NO or remove this for correct behavior.
+        BOOL debugAlwaysShowHelpScreens = NO;  // Set to NO or remove this for correct behavior.
+        
+        if (debugAlwaysShowHelpScreens) {
+            [self stateShowHelpScreens];
+            return;
+        }
         
         // 1 - HMRecorderStateGeneralMessage --> 2 - HMRecorderStateSceneContextMessage (if user already seen tutorials)
         // OR
         // 1 - HMRecorderStateGeneralMessage --> 8 - HMRecorderStateHelpScreens
-        [self stateShowContextForNextScene];
-    
-//        if (user.skipRecorderTutorial) {
-//            [self stateShowContextForNextScene];
-//        } else {
-//            [self stateShowHelpScreens];
-//        }
+        User *user = [User current];
+        if (user.skipRecorderTutorial || debugAlwaysSkipHelpScreens) {
+            [self stateShowContextForNextScene];
+        } else {
+            [self stateShowHelpScreens];
+        }
         
     } else if (self.recorderState == HMRecorderStateHelpScreens) {
         
@@ -282,8 +289,10 @@
     //TODO: uncomment line below
     self.guiHelperScreenContainer.hidden = NO;
     self.guiHelperScreenContainer.alpha = 0;
-    [UIView animateWithDuration:0.6 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.guiHelperScreenContainer.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self.tutorialVC start];
     }];
 }
 
@@ -700,6 +709,8 @@
         _messagesOverlayVC = segue.destinationViewController;
     } else if ([segue.identifier isEqualToString:@"editing texts segue"]) {
         _editingTextsVC = segue.destinationViewController;
+    } else if ([segue.identifier isEqualToString:@"tutorial screen segue"]) {
+        _tutorialVC = segue.destinationViewController;
     }
 }
 

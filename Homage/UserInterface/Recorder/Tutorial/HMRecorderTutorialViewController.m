@@ -26,6 +26,7 @@
 
 @property (nonatomic) NSArray *labels;
 @property (nonatomic) NSArray *positions;
+@property (nonatomic) NSMutableArray *arrows;
 @property (nonatomic) NSInteger index;
 @property (nonatomic) NSArray *tutorials;
 
@@ -38,7 +39,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initGUI];
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -49,7 +49,12 @@
                        @[@2,@3]
                        ];
     
-    [self showTutorialAtIndex:self.index];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self initGUI];
+    [self hideAllAnimated:NO];
 }
 
 -(void)initGUI
@@ -64,6 +69,11 @@
                        self.guiFigurePosition,
                        self.guiWallPosition];
     
+    self.arrows = [NSMutableArray new];
+    
+    for (NSInteger i=0;i<self.labels.count;i++) {
+        [self.arrows addObject:[self createArrowForIndex:i]];
+    }
     
     [self hideAllAnimated:NO];
 
@@ -74,6 +84,7 @@
     if (!animated) {
         for (UIView *view in self.positions) view.hidden = YES;
         for (UILabel *label in self.labels) label.alpha = 0;
+        for (UIImageView *arrow in self.arrows) arrow.alpha = 0;
         return;
     }
     
@@ -82,7 +93,42 @@
     }];
 }
 
+#pragma mark - Arrows
+-(UIImageView *)createArrowForIndex:(NSInteger)index
+{
+    UIImage *image = [UIImage imageNamed:@"ToturialArrow"];
+    UIImageView *arrow = [[UIImageView alloc] initWithImage:image];
+    arrow.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+
+    UILabel *label = self.labels[index];
+    UIView *position = self.positions[index];
+    
+    CGFloat x1 = label.center.x;
+    CGFloat y1 = label.center.y;
+    CGFloat x2 = position.center.x;
+    CGFloat y2 = position.center.y;
+    
+    CGFloat x = (x1+x2)/2.0f;
+    CGFloat y = (y1+y2)/2.0f;
+    
+    [self.view addSubview:arrow];
+    
+    arrow.center = CGPointMake(x, y);
+    
+    CGFloat angle = atan2( x2 - x1 , y1 - y2);
+    
+    arrow.transform = CGAffineTransformMakeRotation(angle);
+    
+    return arrow;
+}
+
 #pragma mark - Flow
+-(void)start
+{
+    self.index = 0;
+    [self showTutorialAtIndex:self.index];
+}
+
 -(void)next
 {
     self.index++;
@@ -108,13 +154,38 @@
     }
     
     NSArray *indexesToReveal = self.tutorials[index];
-    [UIView animateWithDuration:1.0 animations:^{
-        for (NSNumber *indexNumber in indexesToReveal) {
-            NSInteger index = indexNumber.integerValue;
-            UILabel *label = self.labels[index];
-            label.alpha = 1;
-        };
+
+    for (NSNumber *indexNumber in indexesToReveal) {
+        NSInteger index = indexNumber.integerValue;
+        UILabel *label = self.labels[index];
+        UIImageView *arrow = self.arrows[index];
+        [self revealView:label delay:1];
+        [self fadeInView:arrow delay:1.3];
+    };
+}
+
+-(void)revealView:(UIView *)view delay:(CGFloat)delay
+{
+    view.alpha = 0;
+    [UIView animateWithDuration:0.3/1.5 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+        view.alpha = 1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3/2 animations:^{
+            view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.3/2 animations:^{
+                view.transform = CGAffineTransformIdentity;
+            }];
+        }];
     }];
+}
+
+-(void)fadeInView:(UIView *)view delay:(CGFloat)delay
+{
+    [UIView animateWithDuration:0.3/1.5 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        view.alpha = 1;
+    } completion:nil];
 }
 
 #pragma mark - IB Actions
