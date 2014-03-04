@@ -153,6 +153,14 @@
 - (IBAction)onPressedSignUp:(UIButton *)sender
 {
     NSString *emailAsddress = self.guiSignUpMailTextField.text;
+    
+    // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
+    if ([emailAsddress isEqualToString:@"ranpeer@gmail.com"])
+    {
+        [[HMServer sh] ranHack];
+    }
+    
+    
     BOOL isCorrectFormat = [self validateEmail:emailAsddress];
     
     if (!isCorrectFormat)
