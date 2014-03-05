@@ -303,6 +303,7 @@
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         NSString *userName = [User current].userID;
         [mixpanel identify:userName];
+        [mixpanel registerSuperProperties:@{@"email": userName}];
         [mixpanel.people set:@{@"user" : userName}];
         [mixpanel track:@"userLogin"];
         

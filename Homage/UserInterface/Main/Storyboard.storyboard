@@ -220,7 +220,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="JWM-Cs-k2w">
-                                                    <rect key="frame" x="3" y="0.0" width="314" height="180"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" id="hd2-Cj-AN4" userLabel="storyNameBG">
@@ -264,6 +264,11 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <real key="value" value="0.20000000000000001"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="guiLevelOfDifficulty" destination="9KD-jG-LUX" id="dRC-Pp-pPy"/>
                                             <outlet property="guiNumOfRemakes" destination="zCL-L2-HEd" id="ED5-2d-Onx"/>
@@ -372,6 +377,11 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <size key="customSize" width="159" height="90"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <real key="value" value="0.20000000000000001"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="guiThumbImage" destination="Vaa-IJ-F0q" id="9Qq-Qx-a7z"/>
                                             <outlet property="guiUserName" destination="8zk-Pr-2hS" id="Bhs-TJ-rfE"/>
@@ -460,7 +470,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="VI8-bD-3VH">
-                                                    <rect key="frame" x="3" y="0.0" width="314" height="180"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <gestureRecognizers/>
                                                 </imageView>
@@ -536,6 +546,11 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <real key="value" value="0.29999999999999999"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="actionButton" destination="K1r-AP-wTJ" id="Hdh-dP-a5D"/>
                                             <outlet property="buttonsView" destination="LUz-op-R46" id="Fm6-xe-pTj"/>

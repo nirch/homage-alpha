@@ -193,8 +193,9 @@
     
     //mixPanel analitics
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    NSString *userName = [User current].userID;
+    NSString *userName = [User current].email;
     [mixpanel identify:userName];
+    [mixpanel registerSuperProperties:@{@"email": userName}];
     [mixpanel.people set:@{@"user" : userName}];
     [mixpanel track:@"UserSignup"];
     
