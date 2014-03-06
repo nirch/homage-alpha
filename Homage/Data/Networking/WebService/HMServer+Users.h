@@ -27,5 +27,6 @@
  */
 -(void)createUserWithID:(NSString *)userID;
 
+-(void)updateUser:(NSString *)userID withParams:(NSDictionary *)userParams;
 
 @end

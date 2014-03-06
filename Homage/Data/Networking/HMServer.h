@@ -165,6 +165,50 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
                     info:(NSDictionary *)info
                   parser:(HMParser *)parser;
 
+
+///
+/**
+ *  A simple HTTP PUT request with a name of the URL.
+ *  @code
+ [self putRelativeURLNamed:@"remake"
+ parameters:@{@"story_id":storyID, @"user_id":userID}
+ notificationName:HM_NOTIFICATION_SERVER_NEW_REMAKE
+ parser:[HMRemakeParser new]
+ ];
+ *  @endcode
+ *  @param relativeURLName  The name of the wanted url (defined in ServerCFG.plist)
+ *  @param parameters       A dictionary of key,value parameters for the PUT request. (optional)
+ *  @param notificationName The name of the notification posted with notification center, when the request+parsing are done (with an error or successfully).
+ *  @param parser           An HMParser instance that will parse the response from the server.
+ */
+-(void)putRelativeURLNamed:(NSString *)relativeURLName
+                 parameters:(NSDictionary *)parameters
+           notificationName:(NSString *)notificationName
+                       info:(NSDictionary *)info
+                     parser:(HMParser *)parser;
+
+///
+/**
+ *  A simple HTTP PUT request with a relative URL.
+ *  @code
+ [self putRelativeURL:@"someurl/example"
+ parameters:@{@"story_id":storyID, @"user_id":userID}
+ notificationName:HM_NOTIFICATION_SERVER_SOME_EXAMPLE
+ parser:[HMSomeParser new]
+ ];
+ *  @endcode
+ *  @param relativeURL      The relative url (Relative to the host defined in ServerCFG.plist)
+ *  @param parameters       A dictionary of key,value parameters for the PUT request. (optional)
+ *  @param notificationName The name of the notification posted with notification center, when the request+parsing are done (with an error or successfully).
+ *  @param parser           An HMParser instance that will parse the response from the server.
+ */
+-(void)putRelativeURL:(NSString *)relativeURL
+            parameters:(NSDictionary *)parameters
+      notificationName:(NSString *)notificationName
+                  info:(NSDictionary *)info
+                parser:(HMParser *)parser;
+
+
 // TODO: REMOVE!!!!!!!!!!!!!!!!!!!!
 -(void)ranHack;
 

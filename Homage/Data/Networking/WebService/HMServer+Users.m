@@ -26,4 +26,14 @@
      ];
 }
 
+-(void)updateUser:(NSString *)userID withParams:(NSDictionary *)userParams
+{
+    [self putRelativeURLNamed:@"update user"
+                    parameters:userParams
+              notificationName:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
+                          info:@{@"userID":userID}
+                        parser:[HMUserParser new]
+     ];
+}
+
 @end

@@ -345,6 +345,82 @@
 }
 
 
+// The most basic PUT request
+-(void)putRelativeURLNamed:(NSString *)relativeURLName
+                 parameters:(NSDictionary *)parameters
+           notificationName:(NSString *)notificationName
+                       info:(NSDictionary *)info
+                     parser:(HMParser *)parser
+{
+    [self putRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
+               parameters:(NSDictionary *)parameters
+         notificationName:(NSString *)notificationName
+                     info:(NSDictionary *)info
+                   parser:(HMParser *)parser];
+}
+
+
+// The most basic PUT request
+-(void)putRelativeURL:(NSString *)relativeURL
+            parameters:(NSDictionary *)parameters
+      notificationName:(NSString *)notificationName
+                  info:(NSDictionary *)info
+                parser:(HMParser *)parser
+{
+    NSMutableDictionary *moreInfo = [info mutableCopy];
+    
+    //
+    // send PUT Request to server
+    //
+    NSDate *requestDateTime = [NSDate date];
+    HMGLogDebug(@"PUT request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
+    [self chooseSerializerForParser:parser];
+    [self.session PUT:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        //
+        // Successful response from server.
+        //
+        HMGLogDebug(@"Response successful.\t%@\t%@\t(time:%f)", relativeURL, [responseObject class], [[NSDate date] timeIntervalSinceDate:requestDateTime]);
+        
+        if (parser) {
+            //
+            // Parse response.
+            //
+            parser.objectToParse = responseObject;
+            parser.parseInfo = moreInfo;
+            [parser parse];
+            if (parser.error) {
+                
+                //
+                // Parser error.
+                //
+                HMGLogError(@"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
+                [moreInfo addEntriesFromDictionary:@{@"error":parser.error}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
+                return;
+                
+            }
+        }
+        
+        [moreInfo addEntriesFromDictionary:parser.parseInfo];
+        
+        //
+        // Successful request and parsing.
+        //
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        //
+        // Failed request.
+        //
+        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        [moreInfo addEntriesFromDictionary:@{@"error":error}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
+        
+    }];
+}
+
 // TODO: REMOVE!!!!!!!!!!!!!!!!!!!!
 -(void)ranHack
 {

@@ -68,7 +68,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.49019607840000001" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.49019607840000001" blue="0.37254901959999998" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Sia-Zy-ZGY" appends="YES" id="1rX-JO-5ev"/>
@@ -76,9 +76,9 @@
                                 </connections>
                             </view>
                             <containerView autoresizesSubviews="NO" contentMode="scaleToFill" id="fIN-2a-57r" userLabel="renderBar container View">
-                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
+                                <rect key="frame" x="0.0" y="535" width="320" height="33"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="0.49019607843137253" blue="0.37254901960784315" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Zaz-2j-rCE" kind="embed" identifier="renderSegue" id="d8n-DU-AyY"/>
                                 </connections>
@@ -305,7 +305,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="uur-eL-r2e" userLabel="Background Image View - background2">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="uur-eL-r2e" userLabel="Background Image View - background2">
                                 <rect key="frame" x="-21" y="-48" width="364" height="604"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -417,7 +417,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Story" id="W2N-Qt-Czx"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -653,54 +653,55 @@
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="Zaz-2j-rCE" customClass="HMRenderingViewController" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="center" id="aih-xq-6XI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="33"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="xyw-kW-kKx" userLabel="inProgressView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="33"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="ec0-pW-kcw" customClass="AWTimeProgressView">
-                                        <rect key="frame" x="0.0" y="33" width="320" height="15"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="9"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" id="YEw-Vf-gtE">
-                                                <rect key="frame" x="0.0" y="0.0" width="55" height="15"/>
+                                                <rect key="frame" x="0.0" y="4" width="55" height="3"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="1" green="0.06587612323" blue="0.036397943770000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rendering movie: &lt;movie name>" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMFontLabel">
-                                        <rect key="frame" x="4" y="1" width="316" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rendering movie: &lt;movie name>" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMFontLabel">
+                                        <rect key="frame" x="0.0" y="9" width="320" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done! click here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwU-c8-CZT" customClass="HMFontLabel">
-                                        <rect key="frame" x="12" y="14" width="299" height="21"/>
+                                        <rect key="frame" x="7" y="7" width="299" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="7fQ-KD-TVx" appends="YES" id="6TY-Ef-cGu"/>
                                 </connections>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" red="1" green="0.49019607840000001" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <toolbarItems/>
                     <connections>

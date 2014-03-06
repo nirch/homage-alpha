@@ -768,7 +768,7 @@
         //do nothing, need to stay on story details
     } else if (reason == HMRecorderDismissReasonFinishedRemake)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:@{@"remakeID" : remakeID}];
     }
     
     //Dismiss modal recoder??

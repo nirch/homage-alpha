@@ -31,8 +31,17 @@
 #import "HMVideoPlayerDelegate.h"
 #import <CrashReporter/PLCrashReporter.h>
 #import <CrashReporter/PLCrashReport.h>
+#import "HMAppDelegate.h"
+#import "HMServer+Users.h"
+#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
+
+typedef NS_ENUM(NSInteger, HMAppTab) {
+    HMStoriesTab,
+    HMMeTab,
+    HMSettingsTab,
+};
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
@@ -48,6 +57,7 @@
 @property (weak, nonatomic) IBOutlet HMDinFontLabel *guiNoConnectivityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
+@property (nonatomic) NSInteger selectedTab;
 
 
 #define SETTING_TAG 1
@@ -82,6 +92,25 @@
     } failHandler:^{
         [self failedStartingApplication];
     }];
+    
+    /*HMAppDelegate *appDelegate = (HMAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.pushNotificationFromBG)
+    {
+        [self initGUI];
+        [self initObservers];
+        [DB.sh useDocumentWithSuccessHandler:^{
+            [self startApplication];
+        } failHandler:^{
+            [self failedStartingApplication];
+        }];
+        [self meButtonPushed];
+    }*/
+
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
 }
 
 -(void)initGUI
@@ -97,6 +126,8 @@
     self.guiNoConnectivityView.hidden = YES;
     self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
     
+    self.selectedTab = HMStoriesTab;
+    
     //debug
     //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
     //[self.guiAppContainerView.layer setBorderWidth:2.0f];
@@ -107,13 +138,7 @@
 {
     // Observe rendering begining
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onServerStartRendering:)
-                                                       name:HM_NOTIFICATION_SERVER_RENDER
-                                                     object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRecorderFinished:)
+                                                   selector:@selector(onRemakeFinishedSuccesfuly:)
                                                        name:HM_NOTIFICATION_RECORDER_FINISHED
                                                      object:nil];
     
@@ -121,7 +146,35 @@
                                                    selector:@selector(onReachabilityStatusChange:)
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
                                                      object:HMServer.sh];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserMovieReady:)
+                                                       name:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY
+                                                     object:HMServer.sh];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserPreferencesUpdate:)
+                                                       name:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
+                                                     object:nil];
+    
+    
+}
 
+-(void)updateUserPreferences
+{
+    NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
+    
+    NSString *userID = [User current].userID;
+    [info setValue:userID forKey:@"user_id"];
+    
+    //user remake sharing preferences
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL shareRemakes = [defaults boolForKey:@"remakesArePublic"];
+    
+    NSString *shareValue = shareRemakes ? @"YES" : @"NO";
+    [info setValue:shareValue forKey:@"is_public"];
+    
+    [HMServer.sh updateUser:userID withParams:info];
 }
 
 #pragma mark - Splash View
@@ -205,7 +258,7 @@
 
 -(void)hideSideBar
 {
-     [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
         } completion:^(BOOL finished){
             if (finished) self.sideBarContainerView.hidden = YES;
@@ -306,6 +359,7 @@
         [mixpanel registerSuperProperties:@{@"email": userName}];
         [mixpanel.people set:@{@"user" : userName}];
         [mixpanel track:@"userLogin"];
+        //[self updateUserPreferences];
         
         // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
         if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
@@ -321,6 +375,10 @@
     // as long as the workers conform to the HMUploadWorkerProtocol.
     [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
     [HMUploadManager.sh startMonitoring];
+    
+    //DEBUG
+    //[self showRenderingView];
+    //[self.renderingVC renderStartedWithRemakeID:@"52d7fd79db25451694000001"];
 }
 
 #pragma mark crash reports
@@ -425,7 +483,7 @@
 {
     [[Mixpanel sharedInstance] track:@"SBPressStories"];
     
-    [self switchToTab:0];
+    [self switchToTab:HMStoriesTab];
     UIViewController *VC = self.appTabBarController.selectedViewController;
     if ([VC isKindOfClass:[UINavigationController class]])
     {
@@ -444,7 +502,7 @@
 {
     [[Mixpanel sharedInstance] track:@"SBPressMe"];
     if (self.appTabBarController.selectedIndex != 1)
-        [self switchToTab:1];
+        [self switchToTab:HMMeTab];
     [self closeSideBar];
     
 }
@@ -453,7 +511,7 @@
 {
     [[Mixpanel sharedInstance] track:@"SBPressSettings"];
     if (self.appTabBarController.selectedIndex != 2)
-        [self switchToTab:2];
+        [self switchToTab:HMSettingsTab];
     [self closeSideBar];
 }
 
@@ -477,10 +535,14 @@
 }
 
 
--(void)switchToTab:(NSUInteger)toIndex
+-(void)switchToTab:(NSInteger)toIndex
 {
+    //check is user changes prepferences in Settings
+    if (self.selectedTab == HMSettingsTab) [self updateUserPreferences];
+    
     self.appTabBarController.selectedIndex = toIndex;
     self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+    self.selectedTab = toIndex;
 }
 
 -(void)closeSideBar
@@ -500,29 +562,23 @@
     [self hideSideBar];
 }
 
--(void)onServerStartRendering:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    NSString *remakeID = info[@"remakeID"];
-    
-    [self showRenderingView];
-    [self.renderingVC renderStartedWithRemakeID:remakeID];
-}
-
 -(void)showRenderingView
 {
-    
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    
     self.renderingContainerView.hidden = NO;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     CGRect newAppContainerViewFrame = self.appWrapperView.frame;
-    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
+    
     newAppContainerViewFrame.size.height -= renderingBarHeight;
+    self.renderingContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
-        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,0);
         self.appWrapperView.frame = newAppContainerViewFrame;
+        self.renderingContainerView.alpha = 1;
+        //self.appWrapperView.layer.borderColor = [[UIColor yellowColor] CGColor];
+        //self.appWrapperView.layer.borderWidth = 3.0f;
     } completion:nil];
-    [self displayRectBounds:self.appWrapperView.frame Name:@"self.appContainerView.frame"];
+    
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
@@ -531,12 +587,11 @@
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     CGRect newAppContainerViewFrame = self.appWrapperView.frame;
-    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
+    
     newAppContainerViewFrame.size.height += renderingBarHeight;
     [UIView animateWithDuration:0.3 animations:^{
-        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,49);
-        //self.renderingContainerView.transform = CGAffineTransformMakeTranslation(0,renderingBarHeight);
         self.appWrapperView.frame = newAppContainerViewFrame;
+        self.renderingContainerView.alpha = 0;
     } completion:^(BOOL finished){
         if (finished)
         self.renderingContainerView.hidden = YES;
@@ -549,7 +604,7 @@
 {
     if (success)
     {
-        [self switchToTab:1];
+        [self switchToTab:HMMeTab];
         if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
         {
             HMGMeTabVC *vc = (HMGMeTabVC *)self.appTabBarController.selectedViewController;
@@ -570,7 +625,7 @@
 
 -(void)onLoginPressedShootFirstStory
 {
-    [self switchToTab:0];
+    [self switchToTab:HMStoriesTab];
     self.appWrapperView.hidden = NO;
     [self showIntroStory];
     [UIView animateWithDuration:0.3 animations:^{
@@ -580,9 +635,17 @@
     }];
 }
 
--(void)onRecorderFinished:(NSNotification *)notification
+-(void)onRemakeFinishedSuccesfuly:(NSNotification *)notification
 {
     [self storiesButtonPushed];
+    NSDictionary *info = notification.userInfo;
+    NSString *remakeID = info[@"remakeID"];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self storiesButtonPushed];
+    } completion:^(BOOL finished) {
+        [self showRenderingView];
+        [self.renderingVC renderStartedWithRemakeID:remakeID];
+    }];
 }
 
 
@@ -592,6 +655,23 @@
         [self showNoConnectivity];
     } else {
         [self hideNoConnectivity];
+    }
+}
+
+-(void)onUserPreferencesUpdate:(NSNotification *)notification
+{
+    
+    if (notification.isReportingError)
+    {
+        HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                        message:@"Failed updating preferences.\n\nTry again later."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
     }
 }
 
@@ -655,4 +735,14 @@
     [[Mixpanel sharedInstance] track:@"finishIntroStory "];
 }
 
+#pragma mark push notifications handler
+-(void)onUserMovieReady:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *movieName = info[@"movie name"];
+    
+    [self showRenderingView];
+    [self.renderingVC presentMovieReady:movieName];
+    
+}
 @end

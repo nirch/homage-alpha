@@ -12,8 +12,10 @@
 #import "HMUploadS3Worker.h"
 #import "Mixpanel.h"
 #import "DB.h"
+#import "HMNotificationCenter.h"
 
 @implementation HMAppDelegate
+@synthesize pushNotificationFromBG;
 
 #define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
 
@@ -26,7 +28,6 @@
                                                                            )
      ];
     
-    
     #ifndef DEBUG
          [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
@@ -36,6 +37,14 @@
     if (launchOptions) {
         NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (notificationInfo) {
+            
+            NSInteger pushNotificationType = (int)notificationInfo[@"type"];
+            
+            if ( pushNotificationType == HMPushMovieReady )
+            {
+                self.pushNotificationFromBG = YES;
+            }
+            
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
             // IMPORTANT!!!!!:
             // Remmember that your app was just launched, you will have to initialize stuff first, before navigating to the screen you want.
@@ -43,7 +52,6 @@
             // So raise some flags or whatever here, and do the navigation logic in your UIViewControllers where they belong and at the proper moment!
         }
     }
-    
     return YES;
 }
 
@@ -53,6 +61,14 @@
     // This is a simple situation and the easiest way to announce about the notification is just
     // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
     // add an observer for it.
+    
+    NSInteger pushNotificationType = (int)userInfo[@"type"];
+    
+    if ( pushNotificationType == HMPushMovieReady )
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY object:self userInfo:userInfo];
+    }
+
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken

@@ -576,7 +576,8 @@
     } else if (reason == HMRecorderDismissReasonFinishedRemake)
     {
         //[self.navigationController popViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:@{@"remakeID" : remakeID}];
     }
     
     //Dismiss modal recoder??

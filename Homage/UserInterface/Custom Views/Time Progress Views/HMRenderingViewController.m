@@ -59,14 +59,16 @@
 -(void)initGUI
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    UIColor *homageColor = [HMColor.sh main2];
+    //UIColor *homageColor = [HMColor.sh main2];
     [self.view sendSubviewToBack:self.guiDoneRenderingView];
-    self.guiInProgressLabel.textColor = homageColor;
-    self.guiDoneLabel.textColor = homageColor;
+    //self.guiInProgressLabel.textColor = homageColor;
+    //self.guiDoneLabel.textColor = homageColor;
 
     //small border for rendering view
-    [self.guiTopView.layer setBorderColor:[HMColor.sh textImpact].CGColor];
-    [self.guiTopView.layer setBorderWidth:0.5f];
+    //[self.guiTopView.layer setBorderColor:[HMColor.sh textImpact].CGColor];
+    //[self.guiTopView.layer setBorderWidth:0.5f];
+    self.guiProgressBarView.alpha = 1;
+    self.guiDoneRenderingView.alpha = 0;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -107,17 +109,17 @@
             break;
         case HMGRemakeStatusDone:
             HMGLogInfo(@"Remake <%@> video is ready", remakeID);
-            self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_READY_CLICK", nil);
+            self.guiDoneLabel.text = [NSString stringWithFormat:LS(@"REMAKE_READY_CLICK") , remake.story.name];
             self.renderingEnded = YES;
             break;
         case HMGRemakeStatusTimeout:
             HMGLogError(@"Remake <%@> has status <Timeout> while sent for rendering", remakeID);
-            self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
+            self.guiDoneLabel.text = LS(@"REMAKE_FAILED_CLICK");
             self.renderingEnded = YES;
             break;
         case HMGRemakeStatusDeleted:
             HMGLogError(@"Remake <%@> has status <Deleted> while sent for rendering", remakeID);
-            self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
+            self.guiDoneLabel.text = LS(@"REMAKE_FAILED_CLICK");
             self.renderingEnded = YES;
             break;
         default:
@@ -137,14 +139,21 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [UIView animateWithDuration:0.5 animations:^{
-                [self.view bringSubviewToFront:self.guiDoneRenderingView];
-            }];
+            [self showDoneView];
             
         });
 
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)showDoneView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        //[self.view bringSubviewToFront:self.guiDoneRenderingView];
+        self.guiInProgressView.alpha = 0;
+        self.guiDoneRenderingView.alpha = 1;
+    }];
 }
 
 
@@ -237,5 +246,13 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     // Dispose of any resources that can be recreated.
 }
+
+-(void)presentMovieReady:(NSString *)movieName
+{
+    self.guiDoneLabel.text = [NSString stringWithFormat:LS(@"REMAKE_READY_CLICK") , movieName];
+    [self showDoneView];
+    
+}
+
 
 @end

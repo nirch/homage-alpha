@@ -184,7 +184,7 @@
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
         BOOL debugAlwaysSkipHelpScreens = NO; // Set to NO or remove this for correct behavior.
-        BOOL debugAlwaysShowHelpScreens = YES;  // Set to NO or remove this for correct behavior.
+        BOOL debugAlwaysShowHelpScreens = NO;  // Set to NO or remove this for correct behavior.
         
         if (debugAlwaysShowHelpScreens) {
             [self stateShowHelpScreens];

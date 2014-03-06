@@ -34,7 +34,7 @@
 			<key>Title</key>
 			<string>HOMAGE_SHARE</string>
 			<key>Key</key>
-			<string>privacy</string>
+			<string>remakesArePublic</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

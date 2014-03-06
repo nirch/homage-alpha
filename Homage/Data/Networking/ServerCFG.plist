@@ -16,6 +16,8 @@
 	<string>80</string>
 	<key>urls</key>
 	<dict>
+		<key>update user</key>
+		<string>user</string>
 		<key>new user</key>
 		<string>user</string>
 		<key>stories</key>

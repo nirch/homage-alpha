@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiDoneLabel;
 
 -(void) renderStartedWithRemakeID:(NSString *)remakeID;
+-(void)presentMovieReady:(NSString *)movieName;
 
 ///
 /**

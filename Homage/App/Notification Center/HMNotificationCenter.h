@@ -27,6 +27,8 @@
 #define HM_NOTIFICATION_SERVER_TEXT                 @"Server Text"
 #define HM_NOTIFICATION_SERVER_RENDER               @"Server Render"
 
+#define HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE @"update remakes share policy"
+
 // Reachability
 #define HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE @"Server Reachability Status Change"
 
@@ -43,6 +45,11 @@
 #define HM_NOTIFICATION_RECORDER_FINISHED           @"Recoder was dismissed"
 
 #define HM_NOTIFICATION_CAMERA_NOT_STABLE           @"Camera not stable"
+
+//push notifications
+#define HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY @"push notification when user's movie is ready"
+
+
 
 @interface HMNotificationCenter : NSObject
 
