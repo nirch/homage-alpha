@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 @property (nonatomic) NSInteger selectedTab;
+@property (nonatomic) BOOL justStarted;
 
 
 #define SETTING_TAG 1
@@ -73,7 +74,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
     // Launch time
     _launchDateTime = [NSDate date];
-
+    self.justStarted = YES;
     // Init look
     [self initGUI];
     [self initObservers];
@@ -87,8 +88,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)viewDidAppear:(BOOL)animated
 {
     // Prepare local storage and start the App.
+    if (!self.justStarted) return;
+    
     [DB.sh useDocumentWithSuccessHandler:^{
         [self startApplication];
+        self.justStarted = NO;
     } failHandler:^{
         [self failedStartingApplication];
     }];

@@ -126,7 +126,7 @@
     NSInteger recordStopReason = [info[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
     if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable) {
         [self.guiTimeProgressView stop];
-        [HMMotionDetector.sh stop];
+        //[HMMotionDetector.sh stop];
     }
 }
 
@@ -147,7 +147,7 @@
                                                       userInfo:info];
     self.guiProcessingLabel.hidden = NO;
     [self.guiProcessingActivity startAnimating];
-    [HMMotionDetector.sh stop];
+    //[HMMotionDetector.sh stop];
 }
 
 -(void)timeProgressWasCancelledAfterDuration:(NSTimeInterval)duration

@@ -69,7 +69,6 @@ static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self initObservers];
-    [self displayRectBounds:self.videoPlayer.view.frame Name:@"self.videoPlayer.view.frame"];
 }
 
 -(void)viewDidAppear:(BOOL)animated

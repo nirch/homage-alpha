@@ -32,12 +32,12 @@
          [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
-    
     // TODO: Route here the remote notification received when the app was inactive
     if (launchOptions) {
         NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (notificationInfo) {
             
+            self.pushNotificationFromBG = NO;
             NSInteger pushNotificationType = (int)notificationInfo[@"type"];
             
             if ( pushNotificationType == HMPushMovieReady )

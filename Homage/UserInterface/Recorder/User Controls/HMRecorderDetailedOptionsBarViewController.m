@@ -622,7 +622,7 @@
 {
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
-    [HMMotionDetector.sh start];
+    //[HMMotionDetector.sh start];
     NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%d" , self.sceneID.integerValue];
     [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID}];
     self.guiCountdownContainer.hidden = NO;

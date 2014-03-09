@@ -61,9 +61,6 @@
         [self.storyMoviePlayer play];
         self.autoStartPlayingStory = NO;
     }
-    //CFRelease(NULL);
-    //NSArray *array = [NSArray array];
-    //[array objectAtIndex:1002];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -397,7 +394,7 @@
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.playingRemakeIndex = indexPath.item;
-    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
+    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc] init];
     videoPlayerVC.delegate = self;
     videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
     self.remakeMoviePlayer = videoPlayerVC;

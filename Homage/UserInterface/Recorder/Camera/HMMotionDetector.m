@@ -31,9 +31,9 @@
 
 @implementation HMMotionDetector
 
-#define MOTION_TH 0.3
-#define ROTATION_TH 0.7
-#define ACCELRATION_TH 0.1
+#define MOTION_TH 0.05
+#define ROTATION_TH 0.9
+#define ACCELRATION_TH 0.2
 
 
 +(HMMotionDetector *)sharedInstance
@@ -65,38 +65,6 @@
 }
 
 
--(void)start
-{
-    NSTimeInterval updateInterval = 0.05;
-    self.calculateStability = NO;
-    
-    CMMotionManager *mManager = [HMMotionDetector motionManager];
-    if ([mManager isDeviceMotionAvailable] == YES)
-    {
-        [mManager setDeviceMotionUpdateInterval:updateInterval];
-        [mManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *deviceMotion , NSError *error) {
-            
-            if (!self.calculateStability)
-            {
-                self.prevAttitudeRoll  = deviceMotion.attitude.roll;
-                self.prevAttitudePitch = deviceMotion.attitude.pitch;
-                self.prevAttitudeYaw   = deviceMotion.attitude.yaw;
-                self.prevRotationRateX = deviceMotion.rotationRate.x;
-                self.prevRotationRateY = deviceMotion.rotationRate.y;
-                self.prevRotationRateZ = deviceMotion.rotationRate.z;
-                self.prevAccelerationX = deviceMotion.userAcceleration.x;
-                self.prevAccelerationY = deviceMotion.userAcceleration.y;
-                self.prevAccelerationZ = deviceMotion.userAcceleration.z;
-                self.calculateStability = YES;
-            } else if (![self isCameraStable:deviceMotion withAttitude:NO withRotationRate:NO withAcceleration:YES])
-            {
-                [self postCameraNotStableNotification];
-                self.calculateStability = NO;
-                [self stop];
-            }
-         }];
-    }
-}
 
 -(void)postCameraNotStableNotification
 {
@@ -148,6 +116,40 @@
 {
     CMMotionManager *mManager = [HMMotionDetector motionManager];
     if ([mManager isDeviceMotionActive] == YES) [mManager stopDeviceMotionUpdates];
+    [self postCameraNotStableNotification];
 }
+
+-(void)start
+{
+    NSTimeInterval updateInterval = 0.05;
+    self.calculateStability = NO;
+    
+    CMMotionManager *mManager = [HMMotionDetector motionManager];
+    if ([mManager isDeviceMotionAvailable] == YES)
+    {
+        [mManager setDeviceMotionUpdateInterval:updateInterval];
+        [mManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *deviceMotion , NSError *error) {
+            
+            if (!self.calculateStability)
+            {
+                self.prevAttitudeRoll  = deviceMotion.attitude.roll;
+                self.prevAttitudePitch = deviceMotion.attitude.pitch;
+                self.prevAttitudeYaw   = deviceMotion.attitude.yaw;
+                self.prevRotationRateX = deviceMotion.rotationRate.x;
+                self.prevRotationRateY = deviceMotion.rotationRate.y;
+                self.prevRotationRateZ = deviceMotion.rotationRate.z;
+                self.prevAccelerationX = deviceMotion.userAcceleration.x;
+                self.prevAccelerationY = deviceMotion.userAcceleration.y;
+                self.prevAccelerationZ = deviceMotion.userAcceleration.z;
+                self.calculateStability = YES;
+            } else if (![self isCameraStable:deviceMotion withAttitude:YES withRotationRate:YES withAcceleration:YES])
+            {
+                [mManager stopDeviceMotionUpdates];
+                [self stop];
+            }
+        }];
+    }
+}
+
 
 @end

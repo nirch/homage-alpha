@@ -123,9 +123,7 @@
     HMGLogDebug(@"delegate: progress stopped after duration:%.02f", timePassed);
     
     if (!animated) {
-        [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
         [self.progressIndicator.layer removeAllAnimations];
-        [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
         if (self.hidesAutomatically) {
             [self hideAnimated:YES cleanUp:YES];
         } else {
@@ -240,23 +238,19 @@
     CGRect f = self.progressIndicator.frame;
     f.size.width = 0;
     f.origin.x = 0;
-    [self displayRectBounds:f Name:@"starting f"];
     _startingFrame = f;
     
     // End frame
     f.size.width = self.width;
     _endFrame = f;
-    [self displayRectBounds:f Name:@"end f"];
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
-
 
 #pragma mark - Progress animation
 -(void)startAnimations
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     self.progressIndicator.frame = self.startingFrame;
-    [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
     HMGLogDebug(@"duration of animation is: %f. starting now!" , self.duration);
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.progressIndicator.frame = self.endFrame;
@@ -265,7 +259,6 @@
          HMGLogDebug(@"animation completed");
      }];
     
-    [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame"];
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 

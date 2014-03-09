@@ -25,6 +25,7 @@
 #import "HMUploadManager.h"
 #import "Mixpanel.h"
 #import <AudioToolbox/AudioServices.h>
+#import "HMMotionDetector.h"
 
 // ---------------------------------------------------------------------------------------------------------------------
 #import <objc/message.h> // TODO: Used by the orientation hack. Remove this or you may not be approved for the appstore!
@@ -462,6 +463,7 @@
 -(void)onStartRecording:(NSNotification *)notification
 {
     _lockedAutoRotation = YES;
+    //[HMMotionDetector.sh start];
     
     [self hideDetailsOptionsAnimated:YES];
 
@@ -498,11 +500,9 @@
 -(void)onStopRecording:(NSNotification *)notification
 {
     _lockedAutoRotation = NO;
-    
     HMRecordingStopReason stoppedReason = [notification.userInfo[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
     if (stoppedReason == HMRecordingStopReasonEndedSuccessfully) {
-        // Do nothing for now. dimiss the "while recording dialogue later, when
-        // the
+        //[HMMotionDetector.sh stop];
     } else if (stoppedReason == HMRecordingStopReasonCameraNotStable) {
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
