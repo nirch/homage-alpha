@@ -8,6 +8,9 @@
 #import "HMAWS3Client.h"
 #import "HMUploadS3Worker.h"
 
+#define UPLOAD_TIMEOUT 600
+#define CONNECTION_TIMEOUT 60
+
 @interface HMAWS3Client()
 
 @end
@@ -51,6 +54,9 @@
     AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
     // [AmazonLogger verboseLogging];
     
+    s3.timeout = UPLOAD_TIMEOUT;
+    s3.connectionTimeout = CONNECTION_TIMEOUT;
+    s3.maxRetries = 10;
     
     // Initialize the S3TransferManager
     self.tm = [S3TransferManager new];
