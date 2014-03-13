@@ -85,12 +85,6 @@
                                                    selector:@selector(onStopRecording:)
                                                        name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                      object:nil];
-    
-    //observe camera movment
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onStopRecording:)
-                                                       name:HM_NOTIFICATION_CAMERA_NOT_STABLE
-                                                     object:nil];
 }
 
 -(void)removeObservers
@@ -98,7 +92,6 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -126,7 +119,6 @@
     NSInteger recordStopReason = [info[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
     if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable) {
         [self.guiTimeProgressView stop];
-        //[HMMotionDetector.sh stop];
     }
 }
 
@@ -147,7 +139,6 @@
                                                       userInfo:info];
     self.guiProcessingLabel.hidden = NO;
     [self.guiProcessingActivity startAnimating];
-    //[HMMotionDetector.sh stop];
 }
 
 -(void)timeProgressWasCancelledAfterDuration:(NSTimeInterval)duration
@@ -170,6 +161,10 @@
                                                       userInfo:info];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 
 @end

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ILR-Rm-ajx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="ILR-Rm-ajx">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Recorder View Controller-->
@@ -132,6 +132,7 @@
                         <gestureRecognizers/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
@@ -177,6 +178,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="guiBlurredView" destination="MYM-6F-YAT" id="1NL-MS-zUW"/>
                         <segue destination="tXs-Kq-hUw" kind="modal" identifier="see preview segue" modalTransitionStyle="crossDissolve" id="DmU-xm-yNH"/>
@@ -242,6 +244,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="previewView" destination="Csu-Cq-OwN" id="MGa-IZ-hB5"/>
                     </connections>
@@ -659,6 +662,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="guiCloseButton" destination="DFL-bL-apN" id="vPP-yr-lIS"/>
                         <outlet property="guiCountdownContainer" destination="cwP-eK-oSv" id="YCL-Ot-T3I"/>
@@ -765,6 +769,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="guiProcessingActivity" destination="J19-bn-JuN" id="DEx-3K-B9b"/>
                         <outlet property="guiProcessingLabel" destination="GnI-Ij-8xb" id="S9G-Q6-wkl"/>
@@ -907,6 +912,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="guiCreateButton" destination="uxL-Sk-4Op" id="ZeI-GR-bNr"/>
                         <outlet property="guiCreateMovieActivity" destination="VSI-R0-7Km" id="zdo-Yq-L23"/>
@@ -995,6 +1001,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="guiFigureLabel" destination="TYx-NN-xLw" id="htI-sT-som"/>
                         <outlet property="guiFigurePosition" destination="EJ1-Kz-kGL" id="uaF-Cc-h7R"/>

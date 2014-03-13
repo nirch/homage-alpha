@@ -404,5 +404,9 @@
     self.view.backgroundColor = [UIColor clearColor];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 @end

@@ -213,6 +213,7 @@
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
 		2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593E1895A99E003A7B3D /* HMsideBarViewController.m */; };
+		266CD07C18D1AAF3006ADB5C /* OnBorading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 266CD07B18D1AAF3006ADB5C /* OnBorading.storyboard */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		269C8AFA189971F800F28B7A /* HMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMLoginViewController.m */; };
 		269E8E1918ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */; };
@@ -452,6 +453,7 @@
 		2638593D1895A99E003A7B3D /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsideBarViewController.h; sourceTree = "<group>"; };
 		2638593E1895A99E003A7B3D /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsideBarViewController.m; sourceTree = "<group>"; };
 		263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMsideBarNavigatorDelegate.h; sourceTree = "<group>"; };
+		266CD07B18D1AAF3006ADB5C /* OnBorading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnBorading.storyboard; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
 		269C8AF8189971F800F28B7A /* HMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginViewController.h; sourceTree = "<group>"; };
 		269C8AF9189971F800F28B7A /* HMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginViewController.m; sourceTree = "<group>"; };
@@ -1032,7 +1034,7 @@
 				08DF23071892704300912657 /* HMStartViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
-				26A239A818A963CA00980BFC /* login */,
+				26A239A818A963CA00980BFC /* on boarding */,
 				2638594118964F28003A7B3D /* settings */,
 				2638593C1895A979003A7B3D /* sideBar */,
 				2638593418953866003A7B3D /* renderingProgressBar */,
@@ -1151,15 +1153,16 @@
 			name = settings;
 			sourceTree = "<group>";
 		};
-		26A239A818A963CA00980BFC /* login */ = {
+		26A239A818A963CA00980BFC /* on boarding */ = {
 			isa = PBXGroup;
 			children = (
 				269C8AF8189971F800F28B7A /* HMLoginViewController.h */,
 				269C8AF9189971F800F28B7A /* HMLoginViewController.m */,
 				26E37B4E189C2F980018A6CB /* HMLoginDelegate.h */,
 				26A239A918A96C8700980BFC /* introVideo.mp4 */,
+				266CD07B18D1AAF3006ADB5C /* OnBorading.storyboard */,
 			);
-			name = login;
+			name = "on boarding";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1261,6 +1264,7 @@
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
+				266CD07C18D1AAF3006ADB5C /* OnBorading.storyboard in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 			);
@@ -1571,6 +1575,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1603,6 +1608,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

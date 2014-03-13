@@ -16,6 +16,6 @@
 +(HMMotionDetector *)sh;
 
 -(void)start;
--(void)stop;
+-(void)stopWithNotification:(BOOL)postNotification;
 
 @end

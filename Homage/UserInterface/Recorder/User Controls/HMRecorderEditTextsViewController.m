@@ -236,4 +236,9 @@
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeCancelEditingTexts info:nil];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 @end

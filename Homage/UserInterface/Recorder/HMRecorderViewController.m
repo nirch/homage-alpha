@@ -417,7 +417,7 @@
     
     //observe camera movment
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onStopRecording:)
+                                                   selector:@selector(onCameraNotStable:)
                                                        name:HM_NOTIFICATION_CAMERA_NOT_STABLE
                                                      object:nil];
 
@@ -502,9 +502,8 @@
     _lockedAutoRotation = NO;
     HMRecordingStopReason stoppedReason = [notification.userInfo[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
     if (stoppedReason == HMRecordingStopReasonEndedSuccessfully) {
-        //[HMMotionDetector.sh stop];
+        [HMMotionDetector.sh stopWithNotification:NO];
     } else if (stoppedReason == HMRecordingStopReasonCameraNotStable) {
-        
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
                            checkNextStateOnDismiss:NO
@@ -536,7 +535,10 @@
     self.guiSceneDirectionButton.enabled = YES;
     self.guiSceneDirectionButton.hidden = NO;
     
+    
+    //[self displayRectBounds:self.guiDetailedOptionsBarContainer.frame Name:@"guiDetailedOptionsBarContainer"];
     [self closeDetailedOptionsAnimated:YES]; // Show in closed state.
+    //[self displayRectBounds:self.guiDetailedOptionsBarContainer.frame Name:@"guiDetailedOptionsBarContainer"];
     [UIView animateWithDuration:0.2 animations:^{
         
         // Fade in silhouette image
@@ -1200,6 +1202,19 @@
         [[Mixpanel sharedInstance] track:@"UserClosedRecorder"];
         [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
     }
+}
+
+-(void)onCameraNotStable:(NSNotification *)notification
+{
+    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonCameraNotStable)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                                                        object:self
+                                                      userInfo:info];
+}
+
+-(void)displayRectBounds:(CGRect)rect Name: name
+{
+    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
 @end

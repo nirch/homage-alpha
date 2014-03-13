@@ -197,5 +197,11 @@
     [self next];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+
 
 @end
