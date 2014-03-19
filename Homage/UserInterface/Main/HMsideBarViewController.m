@@ -11,6 +11,7 @@
 #import "UIImage+ImageEffects.h"
 #import "HMColor.h"
 #import "HMFontButton.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface HMsideBarViewController ()
 
@@ -18,7 +19,12 @@
 @property (weak, nonatomic) IBOutlet HMFontButton *settingsButton;
 @property (weak, nonatomic) IBOutlet HMFontButton *meButton;
 @property (weak, nonatomic) IBOutlet HMFontButton *howToButton;
-@property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+//@property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+
+@property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
+@property (weak, nonatomic) IBOutlet UILabel *guiHelloUserLabel;
+@property (weak, nonatomic) IBOutlet UIButton *guiJoinButton;
+
 
 @property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
 
@@ -45,9 +51,9 @@
 
 -(void)initGUI
 {
-   self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:4.0 tintColor:nil saturationDeltaFactor:0.0
+   /*self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:4.0 tintColor:nil saturationDeltaFactor:0.0
  maskImage:nil];
-    [self.guiBGImageView addMotionEffectWithAmount:-30];
+    [self.guiBGImageView addMotionEffectWithAmount:-30];*/
     for (HMFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
@@ -84,6 +90,14 @@
     if ([self.delegate respondsToSelector:@selector(howToButtonPushed)])
         [self.delegate howToButtonPushed];
 }
+
+-(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
+{
+    self.guiProfilePictureView.profileID = fbProfileID;
+    self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO USER") , userName];
+}
+
+
 
 
 @end

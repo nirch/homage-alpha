@@ -22,7 +22,7 @@
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
 #import "HMLoginDelegate.h"
-#import "HMLoginViewController.h"
+#import "HMIntroMovieViewController.h"
 #import "HMGMeTabVC.h"
 #import "HMStoriesViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
@@ -34,8 +34,9 @@
 #import "HMAppDelegate.h"
 #import "HMServer+Users.h"
 #import <InAppSettingsKit/IASKAppSettingsViewController.h>
+#import "HMLoginMainViewController.h"
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,IASKSettingsDelegate>
 
 typedef NS_ENUM(NSInteger, HMAppTab) {
     HMStoriesTab,
@@ -49,6 +50,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak, nonatomic) IBOutlet UIView *loginContainerView;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
+@property (weak,nonatomic) HMsideBarViewController *sideBarVC;
 @property (atomic, readonly) NSDate *launchDateTime;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiTabNameLabel;
 @property (weak,nonatomic) Story *loginStory;
@@ -283,17 +285,18 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
-        HMsideBarViewController *vc = (HMsideBarViewController *)segue.destinationViewController;
-        vc.delegate = self;
+        self.sideBarVC = (HMsideBarViewController *)segue.destinationViewController;
+        self.sideBarVC.delegate = self;
+        
     } else if ([segue.identifier isEqualToString:@"renderSegue"])
     {
         self.renderingVC = segue.destinationViewController;
         self.renderingVC.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"loginSegue"])
+    } /*else if ([segue.identifier isEqualToString:@"loginSegue"])
     {
-        HMLoginViewController *vc = (HMLoginViewController *)segue.destinationViewController;
+        HMIntroMovieViewController *vc = (HMIntroMovieViewController *)segue.destinationViewController;
         vc.delegate = self;
-    }
+    }*/
 }
 
 -(void)setNavControllersDelegate
@@ -349,22 +352,35 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     // Notify that the app has started (it already has the local storage available).
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     
+    IASKAppSettingsViewController *iaskVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IASKSettingsVC"];
+    iaskVC.delegate = self;
+    
     // Dismiss the splash screen.
     [self dismissSplashScreen];
     
     if (![User current])
     {
-        [self presentLoginScreen];
+        HMLoginMainViewController *loginVC = [HMLoginMainViewController instantiateLoginScreen];
+        if (loginVC)
+        {
+            loginVC.delegate = self;
+            [self presentViewController:loginVC animated:YES completion:nil];
+            
+        }
     } else {
         //Mixpanel analytics
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        NSString *userName = [User current].userID;
-        [mixpanel identify:userName];
-        [mixpanel registerSuperProperties:@{@"email": userName}];
-        [mixpanel.people set:@{@"user" : userName}];
-        [mixpanel track:@"userLogin"];
-        //[self updateUserPreferences];
+        User *user = [User current];
+        [mixpanel identify:user.userID];
+    
+        if (user.email) {
+            [mixpanel registerSuperProperties:@{@"email": user.email}];
+            [mixpanel.people set:@{@"user" : user.email}];
+        }
         
+        [mixpanel track:@"userLogin"];
+        
+        [self onUserSignedIn:user];
         // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
         if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
         {
@@ -431,14 +447,15 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     return;
 }
 
--(void)presentLoginScreen
-{
-    self.appWrapperView.hidden = YES;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.loginContainerView.hidden = NO;
-        self.loginContainerView.alpha = 1;
-    } completion:nil];
-}
+//-(void)presentLoginScreen
+//{
+//    self.appWrapperView.hidden = YES;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.loginContainerView.hidden = NO;
+//        self.loginContainerView.alpha = 1;
+//    } completion:nil];
+    
+//}
 
 
 -(void)debug
@@ -620,7 +637,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [self hideRenderingView];
 }
 
--(void)onLoginPressedSkip
+/*-(void)onLoginPressedSkip
 {
     self.appWrapperView.hidden = NO;
     [self.loginContainerView removeFromSuperview];
@@ -637,7 +654,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     } completion:^(BOOL finished) {
         [self.loginContainerView removeFromSuperview];
     }];
-}
+}*/
 
 -(void)onRemakeFinishedSuccesfuly:(NSNotification *)notification
 {
@@ -748,6 +765,38 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [self showRenderingView];
     [self.renderingVC presentMovieReady:movieName];
     
+}
+
+-(void)onUserSignedIn:(User *)user
+{
+    NSString *userName;
+    NSString *fbProfileID;
+    if (user.firstName) {
+        userName = user.firstName;
+    } else if (user.email)
+    {
+        userName = user.email;
+    } else {
+        userName = @"Guest";
+    }
+    
+    if (user.fbID)
+    {
+        fbProfileID = user.fbID;
+    } else {
+        fbProfileID = nil;
+    }
+    
+    [self.sideBarVC updateSideBarGUIWithName:userName FBProfile:fbProfileID];
+    
+}
+
+#pragma mark -
+- (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForSpecifier:(IASKSpecifier*)specifier {
+	if ([specifier.key isEqualToString:@"loginStateButton"]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"loginStateButton" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+    }
 }
 
 @end

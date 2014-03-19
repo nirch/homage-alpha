@@ -13,6 +13,8 @@
 #import "Mixpanel.h"
 #import "DB.h"
 #import "HMNotificationCenter.h"
+#import <FacebookSDK/FacebookSDK.h>
+
 
 @implementation HMAppDelegate
 @synthesize pushNotificationFromBG;
@@ -37,12 +39,11 @@
         NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (notificationInfo) {
             
-            self.pushNotificationFromBG = NO;
-            NSInteger pushNotificationType = (int)notificationInfo[@"type"];
+            HMPushNotificationType pushNotificationType = [[notificationInfo objectForKey:@"type"] intValue];
             
             if ( pushNotificationType == HMPushMovieReady )
             {
-                self.pushNotificationFromBG = YES;
+                
             }
             
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
@@ -52,6 +53,8 @@
             // So raise some flags or whatever here, and do the navigation logic in your UIViewControllers where they belong and at the proper moment!
         }
     }
+    
+    [FBLoginView class];
     return YES;
 }
 
@@ -62,7 +65,8 @@
     // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
     // add an observer for it.
     
-    NSInteger pushNotificationType = (int)userInfo[@"type"];
+    
+    HMPushNotificationType pushNotificationType = [[userInfo objectForKey:@"type"] intValue];
     
     if ( pushNotificationType == HMPushMovieReady )
     {
@@ -74,6 +78,7 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	HMGLogDebug(@"Registered to remote notifications with token: %@", deviceToken);
+    self.pushToken = deviceToken;
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
@@ -107,6 +112,19 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    
+    // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    
+    // You can add your app-specific url handling code here if needed
+    
+    return wasHandled;
 }
 
 

@@ -2,7 +2,7 @@
 //  HMLoginDelegate.h
 //  Homage
 //
-//  Created by Yoav Caspin on 1/31/14.
+//  Created by Yoav Caspin on 3/19/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -11,8 +11,6 @@
 
 @protocol HMLoginDelegate <NSObject>
 
--(void)onLoginPressedSkip;
-//-(void)onLoginPressedShootWithRemake:(Remake *)remake;
--(void)onLoginPressedShootFirstStory;
+-(void)onUserSignedIn:(User *)user;
 
 @end

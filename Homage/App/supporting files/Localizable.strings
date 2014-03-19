@@ -70,12 +70,20 @@
 "LEAVE_RECORDER_TITLE"="Leave recorder";
 "LEAVE_RECORDER_MESSAGE" = "This will close the recorder. Are you sure?";
 
-
 /*go to next scene button*/
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! please keep the camera steady while shooting";
 "CAMERA_NOT_STABLE_TITLE" = "Wow there Shaaaaaaaky...";
+
+"UNKNOWN_MAIL_ADDRESS" = "Unknown mail address";
+"INCORRECT_PASSWORD" = "Incorect Password";
+"INCORRECT_EMAIL_ADDRESS_FORMAT" = "incorrect email format";
+"UNSUFFICIENT PASSWORD" = "Password must be at least 6 charecters long";
+
+"HELLO USER" = "Hello %@";
+
+
 
 

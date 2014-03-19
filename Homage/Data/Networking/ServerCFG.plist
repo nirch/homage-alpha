@@ -19,7 +19,7 @@
 		<key>update user</key>
 		<string>user</string>
 		<key>new user</key>
-		<string>user</string>
+		<string>user/v2</string>
 		<key>stories</key>
 		<string>stories</string>
 		<key>new remake</key>

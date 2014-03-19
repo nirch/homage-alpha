@@ -19,13 +19,17 @@
 
 -(void)parseUser:(NSDictionary *)info
 {
-    NSString *userID = info[@"_id"];
+    NSString *userID = info[@"_id"][@"$oid"];
     User *user = [User userWithID:userID inContext:self.ctx];
 
     // Currently the user id and the email are the same
-    user.email = userID;
+    user.email = info[@"email"];
     user.isPublic = [info boolNumberForKey:@"is_public"];
+    user.userID = userID;
+    user.firstName = info[@"facebook"][@"first_name"];
+    user.fbID = info[@"facebook"][@"id"];
+    
+    self.parseInfo[@"userID"] = userID;
 }
-
 
 @end

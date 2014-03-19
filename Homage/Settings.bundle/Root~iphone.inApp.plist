@@ -66,6 +66,14 @@
 			<key>Type</key>
 			<string>IASKMailComposeSpecifier</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Key</key>
+			<string>loginStateButton</string>
+			<key>Title</key>
+			<string>Login</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

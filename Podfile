@@ -4,4 +4,4 @@ pod 'AFNetworking',     '~> 2.0.3'
 pod 'InAppSettingsKit', '~> 2.0',   :inhibit_warnings => true
 pod 'Mixpanel',                     :inhibit_warnings => true
 pod 'PLCrashReporter' , '1.2-rc4'
-#pod 'AWSiOSSDK',  		'~> 1.7.1', :inhibit_warnings => true
+pod 'Facebook-iOS-SDK', '~> 3.12'

@@ -11,5 +11,6 @@
 
 @interface HMsideBarViewController : UIViewController
 @property id<HMsideBarNavigatorDelegate> delegate;
+-(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID;
 
 @end
