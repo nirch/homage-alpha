@@ -27,7 +27,7 @@
 #define HM_NOTIFICATION_SERVER_TEXT                 @"Server Text"
 #define HM_NOTIFICATION_SERVER_RENDER               @"Server Render"
 
-#define HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE @"update remakes share policy"
+#define HM_NOTIFICATION_SERVER_USER_UPDATE @"update user details"
 
 // Reachability
 #define HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE @"Server Reachability Status Change"

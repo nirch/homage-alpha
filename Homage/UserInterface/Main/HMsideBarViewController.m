@@ -11,6 +11,7 @@
 #import "UIImage+ImageEffects.h"
 #import "HMColor.h"
 #import "HMFontButton.h"
+#import "HMFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface HMsideBarViewController ()
@@ -22,11 +23,10 @@
 //@property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
-@property (weak, nonatomic) IBOutlet UILabel *guiHelloUserLabel;
-@property (weak, nonatomic) IBOutlet UIButton *guiJoinButton;
-
-
+@property (weak, nonatomic) IBOutlet HMFontLabel *guiHelloUserLabel;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiJoinButton;
 @property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiLogoutButton;
 
 
 @end
@@ -91,13 +91,29 @@
         [self.delegate howToButtonPushed];
 }
 
+- (IBAction)logoutButtonPushed:(HMFontButton *)sender
+{
+    [self.delegate logoutPushed];
+}
+
+- (IBAction)joinButtonPushed:(HMFontButton *)sender
+{
+    [self.delegate joinButtonPushed];
+    self.guiJoinButton.hidden = YES;
+}
+
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
 {
     self.guiProfilePictureView.profileID = fbProfileID;
     self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO USER") , userName];
+    if (![userName isEqualToString:@"Guest"])
+    {
+        self.guiJoinButton.hidden = YES;
+        self.guiLogoutButton.hidden = NO;
+    } else
+    {
+        self.guiJoinButton.hidden = NO;
+        self.guiLogoutButton.hidden = YES;
+    }
 }
-
-
-
-
 @end

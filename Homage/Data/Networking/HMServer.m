@@ -8,6 +8,8 @@
 
 #import "HMServer.h"
 #import "HMParser.h"
+#import "HMJSONResponseSerializerWithData.h"
+
 //#import "HMUploadManager.h"
 
 @interface HMServer()
@@ -67,7 +69,7 @@
 //    } else {
 //        self.session.responseSerializer = [AFHTTPResponseSerializer new];
 //    }
-    self.session.responseSerializer = [AFJSONResponseSerializer new];
+    self.session.responseSerializer = [HMJSONResponseSerializerWithData new];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
 }
 
@@ -263,6 +265,7 @@
         // Failed request.
         //
         HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        
         [moreInfo addEntriesFromDictionary:@{@"error":error}];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         

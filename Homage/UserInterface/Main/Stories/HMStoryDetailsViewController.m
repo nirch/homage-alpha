@@ -93,7 +93,6 @@
 
 -(void)initGUI
 {
-    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
     self.guiBGImageView.image = [self.story.thumbnail applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];

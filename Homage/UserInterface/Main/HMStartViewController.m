@@ -36,7 +36,7 @@
 #import <InAppSettingsKit/IASKAppSettingsViewController.h>
 #import "HMLoginMainViewController.h"
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,IASKSettingsDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
 
 typedef NS_ENUM(NSInteger, HMAppTab) {
     HMStoriesTab,
@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (weak,nonatomic) HMsideBarViewController *sideBarVC;
+@property (weak,nonatomic) HMLoginMainViewController *loginVC;
 @property (atomic, readonly) NSDate *launchDateTime;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiTabNameLabel;
 @property (weak,nonatomic) Story *loginStory;
@@ -160,7 +161,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserPreferencesUpdate:)
-                                                       name:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
+                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATE
                                                      object:nil];
     
     
@@ -180,7 +181,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     NSString *shareValue = shareRemakes ? @"YES" : @"NO";
     [info setValue:shareValue forKey:@"is_public"];
     
-    [HMServer.sh updateUser:userID withParams:info];
+    [HMServer.sh updateUserWithDictionary:info];
 }
 
 #pragma mark - Splash View
@@ -292,11 +293,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     {
         self.renderingVC = segue.destinationViewController;
         self.renderingVC.delegate = self;
-    } /*else if ([segue.identifier isEqualToString:@"loginSegue"])
+    } else if ([segue.identifier isEqualToString:@"loginSegue"])
     {
-        HMIntroMovieViewController *vc = (HMIntroMovieViewController *)segue.destinationViewController;
-        vc.delegate = self;
-    }*/
+        self.loginVC = (HMLoginMainViewController *)segue.destinationViewController;
+        self.loginVC.delegate = self;
+    }
 }
 
 -(void)setNavControllersDelegate
@@ -352,21 +353,12 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     // Notify that the app has started (it already has the local storage available).
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     
-    IASKAppSettingsViewController *iaskVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IASKSettingsVC"];
-    iaskVC.delegate = self;
-    
     // Dismiss the splash screen.
     [self dismissSplashScreen];
     
     if (![User current])
     {
-        HMLoginMainViewController *loginVC = [HMLoginMainViewController instantiateLoginScreen];
-        if (loginVC)
-        {
-            loginVC.delegate = self;
-            [self presentViewController:loginVC animated:YES completion:nil];
-            
-        }
+        [self presentLoginScreen];
     } else {
         //Mixpanel analytics
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
@@ -380,7 +372,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         
         [mixpanel track:@"userLogin"];
         
-        [self onUserSignedIn:user];
+        [self onUserLoginStateChange:user];
         // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
         if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
         {
@@ -447,15 +439,26 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     return;
 }
 
-//-(void)presentLoginScreen
-//{
-//    self.appWrapperView.hidden = YES;
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.loginContainerView.hidden = NO;
-//        self.loginContainerView.alpha = 1;
-//    } completion:nil];
+-(void)presentLoginScreen
+{
+    self.appWrapperView.hidden = YES;
+    self.loginContainerView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.alpha = 1;
+    } completion:nil];
     
-//}
+}
+
+-(void)hideLoginScreen
+{
+    self.appWrapperView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loginContainerView.alpha = 0;
+    } completion:^(BOOL finished)
+     {
+         self.loginContainerView.hidden = NO;
+     }];
+}
 
 
 -(void)debug
@@ -637,24 +640,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [self hideRenderingView];
 }
 
-/*-(void)onLoginPressedSkip
-{
-    self.appWrapperView.hidden = NO;
-    [self.loginContainerView removeFromSuperview];
-}
-
-
--(void)onLoginPressedShootFirstStory
-{
-    [self switchToTab:HMStoriesTab];
-    self.appWrapperView.hidden = NO;
-    [self showIntroStory];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.loginContainerView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.loginContainerView removeFromSuperview];
-    }];
-}*/
 
 -(void)onRemakeFinishedSuccesfuly:(NSNotification *)notification
 {
@@ -685,6 +670,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     if (notification.isReportingError)
     {
         HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+        HMGLogError(@"error details is: %@" , notification.reportedError.localizedDescription);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
                                                         message:@"Failed updating preferences.\n\nTry again later."
                                                        delegate:self
@@ -767,7 +753,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
 }
 
--(void)onUserSignedIn:(User *)user
+-(void)onUserLoginStateChange:(User *)user
 {
     NSString *userName;
     NSString *fbProfileID;
@@ -791,12 +777,33 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
 }
 
-#pragma mark -
+-(void)logoutPushed
+{
+    [[User current] logoutInContext:DB.sh.context];
+    [self presentLoginScreen];
+    [self hideSideBar];
+    [self.loginVC onUserLogout];
+
+}
+
+-(void)joinButtonPushed
+{
+    [self.loginVC onUserJoin];
+    [self presentLoginScreen];
+    [self hideSideBar];    
+}
+
+-(void)dismissLoginScreen
+{
+    [self hideLoginScreen];
+}
+
+/*#pragma mark iask buttons delegate
 - (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForSpecifier:(IASKSpecifier*)specifier {
 	if ([specifier.key isEqualToString:@"loginStateButton"]) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"loginStateButton" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
     }
-}
+}*/
 
 @end

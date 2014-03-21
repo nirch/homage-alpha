@@ -211,7 +211,9 @@
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
 		2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593E1895A99E003A7B3D /* HMsideBarViewController.m */; };
+		26457E6918D9E32D00DA43FD /* HMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26457E6818D9E32D00DA43FD /* HMSettingsViewController.m */; };
 		2648C63018D9A5760033A4C2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648C62F18D9A5760033A4C2 /* User.m */; };
+		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
 		266CD07C18D1AAF3006ADB5C /* OnBoarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 266CD07B18D1AAF3006ADB5C /* OnBoarding.storyboard */; };
 		266CD07F18D1C1F5006ADB5C /* HMLoginMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266CD07E18D1C1F5006ADB5C /* HMLoginMainViewController.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
@@ -451,9 +453,13 @@
 		2638593D1895A99E003A7B3D /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsideBarViewController.h; sourceTree = "<group>"; };
 		2638593E1895A99E003A7B3D /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsideBarViewController.m; sourceTree = "<group>"; };
 		263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMsideBarNavigatorDelegate.h; sourceTree = "<group>"; };
+		26457E6718D9E32D00DA43FD /* HMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSettingsViewController.h; sourceTree = "<group>"; };
+		26457E6818D9E32D00DA43FD /* HMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSettingsViewController.m; sourceTree = "<group>"; };
 		2648C62A18D996270033A4C2 /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
 		2648C62E18D9A5760033A4C2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		2648C62F18D9A5760033A4C2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
+		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
 		266CD07B18D1AAF3006ADB5C /* OnBoarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnBoarding.storyboard; sourceTree = "<group>"; };
 		266CD07D18D1C1F5006ADB5C /* HMLoginMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginMainViewController.h; sourceTree = "<group>"; };
 		266CD07E18D1C1F5006ADB5C /* HMLoginMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginMainViewController.m; sourceTree = "<group>"; };
@@ -664,6 +670,8 @@
 				086D94A5188702130086C565 /* LazyLoading */,
 				086D9498188701EA0086C565 /* WebService */,
 				08CDF81A1896D4A200A9D235 /* Upload Manager */,
+				2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */,
+				2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -1152,6 +1160,8 @@
 			isa = PBXGroup;
 			children = (
 				08DF23111892704300912657 /* settings views */,
+				26457E6718D9E32D00DA43FD /* HMSettingsViewController.h */,
+				26457E6818D9E32D00DA43FD /* HMSettingsViewController.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -1378,6 +1388,7 @@
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,
 				08DF232E1892704300912657 /* HMRemakeCell.m in Sources */,
 				08B9589A189167B500BCCF8C /* Footage+Logic.m in Sources */,
+				2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */,
 				08455FF71890458E0040504D /* AVCamPreviewView.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
 				269C8AFA189971F800F28B7A /* HMIntroMovieViewController.m in Sources */,
@@ -1395,6 +1406,7 @@
 				08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */,
 				086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */,
 				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
+				26457E6918D9E32D00DA43FD /* HMSettingsViewController.m in Sources */,
 				08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */,
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,

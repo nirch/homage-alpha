@@ -11,6 +11,7 @@
 
 @protocol HMLoginDelegate <NSObject>
 
--(void)onUserSignedIn:(User *)user;
+-(void)dismissLoginScreen;
+-(void)onUserLoginStateChange:(User *)user;
 
 @end

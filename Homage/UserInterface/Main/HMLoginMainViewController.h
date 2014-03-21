@@ -13,6 +13,8 @@
 
 @property id<HMLoginDelegate> delegate;
 +(HMLoginMainViewController *)instantiateLoginScreen;
+-(void)onUserLogout;
+-(void)onUserJoin;
 
 
 @end

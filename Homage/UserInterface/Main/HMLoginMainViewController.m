@@ -15,6 +15,10 @@
 #import "HMAppDelegate.h"
 #import "HMIntroMovieViewController.h"
 #import "HMIntroMovieDelagate.h"
+#import "UIImage+ImageEffects.h"
+#import "HMFontButton.h"
+#import "HMFontLabel.h"
+#import "HMColor.h"
 
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {
     HMFaceBookConnect,
@@ -28,6 +32,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMIncorrectPassword,
     HMBadPassword,
     HMIncorrectMailAddressFormat,
+    HMMailAddressAlreadyTaken,
 };
 
 
@@ -35,16 +40,23 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainerView;
-@property (weak, nonatomic) IBOutlet UIButton *guiSignupButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiLoginButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiGuestButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiForgotPasswordButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiSignupButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiLoginButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiGuestButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiForgotPasswordButton;
 @property (weak, nonatomic) IBOutlet UITextField *guiMailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *guiPasswordTextField;
 @property (weak, nonatomic) IBOutlet UILabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
+@property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+
+@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMFontLabel) NSArray *labelCollection;
+
+
 @property (strong, nonatomic) IBOutlet FBLoginView *guiFBLoginView;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
+@property (nonatomic) BOOL userJoinFlow;
 
 @property NSString *loginMethod;
 
@@ -54,7 +66,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 - (void)viewDidLoad
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     [super viewDidLoad];
+    
+    self.userJoinFlow = NO;
     
     //FBloginView
     FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info", @"email" , @"user_birthday"]];
@@ -73,24 +89,45 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.guiSignUpView addSubview:loginView];*/
     
     [self initGUI];
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self initObservers];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self removeObservers];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initGUI
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiIntroMovieContainerView.alpha = 0;
     self.guiIntroMovieContainerView.hidden = YES;
     self.guiLoginErrorLabel.alpha = 0;
     self.guiLoginErrorLabel.hidden = YES;
+    self.guiGuestButton.hidden = NO;
+    
+    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
+    
+    for (HMFontButton *button in self.buttonCollection)
+    {
+        [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
+    }
+    
+    for (HMFontLabel *label in self.labelCollection)
+    {
+        [label setTextColor:[HMColor.sh textImpact]];
+    }
     
     //text field stuff
     self.guiMailTextField.keyboardType = UIKeyboardTypeEmailAddress;
@@ -102,32 +139,48 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     //sign up scrool view stuff
     self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
     self.guiSignUpView.scrollEnabled = NO;
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
 
-- (void)didReceiveMemoryWarning
+-(void)initObservers
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    // Observe creation of user
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserCreated:)
+                                                       name:HM_NOTIFICATION_SERVER_USER_CREATION
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserUpdated:)
+                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATE
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
-
-
-
--(IBAction)onPressedSignUpLogin:(UIButton *)sender
+-(void)removeObservers
 {
-    self.loginMethod = @"mail";
-    
-    if (![self checkCredentials]) return;
-    
-    [self.view endEditing:YES];
-    NSDictionary *deviceInfo = [self getDeviceInformation];
-    NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
-    [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
+    [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
+
 
 -(BOOL)checkCredentials
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *emailAddress = self.guiMailTextField.text;
     
     // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
@@ -141,6 +194,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (!isMailCorrectFormat)
     {
         [self presentErrorLabelWithReason:HMIncorrectMailAddressFormat];
+        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
     
@@ -149,20 +203,25 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (!isPasswordCorrectFormat)
     {
         [self presentErrorLabelWithReason:HMBadPassword];
+        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
     return YES;
 }
 
 -(BOOL)validatePassword:(NSString *)password
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if ([password length] < 4) return NO;
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return YES;
 }
 
 -(void)presentErrorLabelWithReason:(NSInteger)reason
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     switch (reason) {
         case HMUnknownMailAddress:
             [self showErrorLabelWithString:LS(@"UNKNOWN_MAIL_ADDRESS")];
@@ -176,67 +235,162 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         case HMBadPassword:
             [self showErrorLabelWithString:LS(@"UNSUFFICIENT PASSWORD")];
              break;
+        case HMMailAddressAlreadyTaken:
+            [self showErrorLabelWithString:LS(@"EMAIL_TAKEN")];
+            break;
         default:
             break;
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)showErrorLabelWithString:(NSString *)errorString
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiLoginErrorLabel.hidden = NO;
     self.guiLoginErrorLabel.text = errorString;
     [UIView animateWithDuration:0.3 animations:^{
         self.guiLoginErrorLabel.alpha = 1;
     }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)hideErrorLabel
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [UIView animateWithDuration:0.3 animations:^{
         self.guiLoginErrorLabel.alpha = 0;
     } completion:^(BOOL finished) {
         self.guiLoginErrorLabel.hidden = YES;
     }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+
+//FBLoginView delegate
+-(void)loginViewFetchedUserInfo:(FBLoginView *)loginView
+                           user:(id<FBGraphUser>)user
+{
+    self.loginMethod = @"facebook";
+    
+    NSDictionary *deviceInfo = [self getDeviceInformation];
+    
+    
+    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username , @"location" : user.location};
+    
+    if ([user objectForKey:@"birthday"])
+    {
+        NSMutableDictionary *temp = [FBDictionary mutableCopy];
+        [temp setValue:[user objectForKey:@"birthday"] forKey:@"birthday"];
+        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
+    }
+    
+    NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES , @"email" : [user objectForKey:@"email"]};
+    
+    
+    if (!self.userJoinFlow)
+    {
+       [HMServer.sh createUserWithDictionary:FBSignupDictionary];
+    } else if (self.userJoinFlow && [User current])
+    {
+        NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES , @"email" : [user objectForKey:@"email"]};
+        [HMServer.sh updateUserWithDictionary:FBUpdateDictionary];
+    }
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+
+-(IBAction)onPressedSignUpLogin:(UIButton *)sender
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    self.loginMethod = @"mail";
+    
+    if (![self checkCredentials]) return;
+    
+    [self.view endEditing:YES];
+    NSDictionary *deviceInfo = [self getDeviceInformation];
+    NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField , @"is_public" : @YES , @"device" : deviceInfo };
+    
+    if (!self.userJoinFlow)
+    {
+       [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
+    } else if(self.userJoinFlow && [User current])
+    {
+        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField , @"is_public" : [User current].isPublic , @"device" : deviceInfo};
+        [HMServer.sh updateUserWithDictionary:mailSignUpDictionary];
+    }
+    
+    self.guiMailTextField.text = @"";
+    self.guiPasswordTextField.text = @"";
+
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)onPressedGuest:(UIButton *)sender
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = @"guest";
     
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *guestDictionary = @{@"is_public" : @NO , @"device" : deviceInfo};
     [HMServer.sh createUserWithDictionary:guestDictionary];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)initObservers
+-(void)onLoginPressedSkip
 {
-    // Observe creation of user
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onUserCreated:)
-                                                       name:HM_NOTIFICATION_SERVER_USER_CREATION
-                                                     object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self hideIntroMovieView];
+    [self.delegate dismissLoginScreen];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)removeObservers
+-(void)onLoginPressedShootFirstStory
 {
-    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
-    [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self hideIntroMovieView];
+    [self.delegate dismissLoginScreen];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 -(void)onUserCreated:(NSNotification *)notification
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
+    if (notification.isReportingError)
+    {
+        NSDictionary *userInfo = notification.userInfo;
+        NSError *error = userInfo[@"error"];
+        NSDictionary *body = error.userInfo[@"body"];
+        long errorCode = [body[@"error_code"] longValue];
+        
+        switch (errorCode) {
+            case 1001: //incorrect password
+                [self presentErrorLabelWithReason:HMIncorrectPassword];
+                return;
+                break;
+            case 1004:
+                [self presentErrorLabelWithReason:HMMailAddressAlreadyTaken];
+                return;
+                break;
+            default:
+                break;
+        }
+        
+        
+        
+        if (errorCode == 1001)
+        {
+            [self presentErrorLabelWithReason:HMIncorrectPassword];
+            return;
+        }
+    }
+
+    if ([User current]) return;
+
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
     User *user = [User userWithID:userID inContext:DB.sh.context];
@@ -245,7 +399,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     {
         [user loginInContext:DB.sh.context];
         [DB.sh save];
-        [self.delegate onUserSignedIn:user];
+        [self.delegate onUserLoginStateChange:user];
     }
     
     NSString *userEmail = user.email;
@@ -260,11 +414,24 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [mixpanel.people set:@{@"user" : userEmail}];
     }
     [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
-    [self presentIntroMovie];
+    [self displayIntroMovieView];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)presentIntroMovie
+-(void)onUserUpdated:(NSNotification *)notification
 {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *userID = userInfo[@"userID"];
+    [User userWithID:userID inContext:DB.sh.context];
+    
+    [self.delegate onUserLoginStateChange:[User current]];
+    [self.delegate dismissLoginScreen];
+    self.userJoinFlow = NO;
+}
+
+-(void)displayIntroMovieView
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiIntroMovieContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^
      {
@@ -275,16 +442,37 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
          self.guiSignUpView.hidden = YES;
          [self.introMovieController initStoryMoviePlayer];
      }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)hideIntroMovieView
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    self.guiSignUpView.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^
+    {
+        self.guiIntroMovieContainerView.alpha = 0;
+        self.guiSignUpView.alpha = 1;
+    } completion:^(BOOL finished)
+    {
+        self.guiIntroMovieContainerView.hidden = YES;
+    }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [textField resignFirstResponder];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return YES;
 }
 
+
+#pragma mark Text Field/Keyboard stuff
 -(void)keyboardWasShown:(NSNotification *)notification
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary* info = notification.userInfo;
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
@@ -299,13 +487,16 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (!CGRectContainsPoint(aRect, self.guiMailTextField.frame.origin) ) {
         [self.guiSignUpView scrollRectToVisible:self.guiMailTextField.frame animated:YES];
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)keyboardWillBeHidden:(NSNotification *)notification
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.guiSignUpView.contentInset = contentInsets;
     self.guiSignUpView.scrollIndicatorInsets = contentInsets;
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (BOOL) validateEmail:(NSString *)emailAddress {
@@ -314,8 +505,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     return [emailTest evaluateWithObject:emailAddress];
 }
 
+
 -(NSDictionary *)getDeviceInformation
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIDevice *device = [UIDevice currentDevice];
     
     NSDictionary *deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString]};
@@ -325,39 +518,41 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     if (pushToken) [deviceDictionary setValue:pushToken forKey:@"push_token"];*/
     
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return deviceDictionary;
 }
 
 +(HMLoginMainViewController *)instantiateLoginScreen
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OnBoarding" bundle:nil];
     HMLoginMainViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginMainVC"];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return vc;
 }
 
-//FBLoginView delegate
--(void)loginViewFetchedUserInfo:(FBLoginView *)loginView
-                           user:(id<FBGraphUser>)user
+-(void)onUserLogout
 {
-    self.loginMethod = @"facebook";
-    
-    NSDictionary *deviceInfo = [self getDeviceInformation];
-    
-
-    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username , @"location" : user.location};
-    
-    if ([user objectForKey:@"birthday"])
+    if ([self.loginMethod isEqualToString: @"facebook"])
     {
-        NSMutableDictionary *temp = [FBDictionary mutableCopy];
-        [temp setValue:[user objectForKey:@"birthday"] forKey:@"birthday"];
-        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
+        if (FBSession.activeSession.state == FBSessionStateOpen
+            || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+        {
+            
+            // Close the session and remove the access token from the cache
+            // The session state handler (in the app delegate) will be called automatically
+            [FBSession.activeSession closeAndClearTokenInformation];
+        }
     }
     
-    NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @NO , @"email" : [user objectForKey:@"email"]};
-    
-    [HMServer.sh createUserWithDictionary:FBSignupDictionary];
+    self.guiGuestButton.hidden = NO;
 }
 
+-(void)onUserJoin
+{
+    self.guiGuestButton.hidden = YES;
+    self.userJoinFlow = YES;
+}
 
 /*Implementing the loginViewShowingLoggedInUser: delegate method allows you to modify your app's UI to show a logged in experience. In the example below, we notify the user that they are logged in by changing the status:*/
 
@@ -418,6 +613,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if ([segue.identifier isEqualToString:@"IntroSegue"])
     {
         self.introMovieController = segue.destinationViewController;
@@ -425,14 +621,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
 }
 
--(void)onLoginPressedSkip
+
+- (void)didReceiveMemoryWarning
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
--(void)onLoginPressedShootFirstStory
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+
 
 
 @end

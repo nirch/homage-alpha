@@ -1,5 +1,5 @@
 //
-//  HMLoginViewController.m
+//  HMIntroMovieViewController.m
 //  Homage
 //
 //  Created by Yoav Caspin on 1/29/14.
@@ -26,11 +26,12 @@
 @interface HMIntroMovieViewController () <UITextFieldDelegate>
 
 
-
 @property (weak, nonatomic) IBOutlet UIButton *guiIntroSkipButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiShootFirstStoryButton;
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
 @property (strong,nonatomic) MPMoviePlayerController *moviePlayer;
+
+@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
 
 
 @end
@@ -67,7 +68,11 @@
 
 -(void)initGUI
 {
-    
+    for (HMFontButton *button in self.buttonCollection)
+    {
+        [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
+    }
 }
 
 -(void)initStoryMoviePlayer

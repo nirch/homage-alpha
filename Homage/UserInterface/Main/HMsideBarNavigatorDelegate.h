@@ -14,5 +14,7 @@
 -(void)meButtonPushed;
 -(void)settingsButtonPushed;
 -(void)howToButtonPushed;
+-(void)logoutPushed;
+-(void)joinButtonPushed;
 
 @end

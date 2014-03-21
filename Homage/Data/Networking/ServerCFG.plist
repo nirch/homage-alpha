@@ -17,7 +17,7 @@
 	<key>urls</key>
 	<dict>
 		<key>update user</key>
-		<string>user</string>
+		<string>user/v2</string>
 		<key>new user</key>
 		<string>user/v2</string>
 		<key>stories</key>

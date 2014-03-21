@@ -25,8 +25,7 @@
  *  @endcode
  *  @param userID  The id of the user (e-mail)
  */
--(void)createUserWithID:(NSString *)userID;
--(void)createUserWithDictionary:(NSDictionary *)dictionary;
--(void)updateUser:(NSString *)userID withParams:(NSDictionary *)userParams;
+-(void)createUserWithDictionary:(NSDictionary *)userParams;
+-(void)updateUserWithDictionary:(NSDictionary *)userParams;
 
 @end

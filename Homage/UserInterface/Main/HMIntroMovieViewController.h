@@ -1,5 +1,5 @@
 //
-//  HMLoginViewController.h
+//  HMIntroMovieViewController.h
 //  Homage
 //
 //  Created by Yoav Caspin on 1/29/14.
