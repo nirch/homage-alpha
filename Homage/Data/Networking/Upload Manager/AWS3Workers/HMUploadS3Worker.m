@@ -10,8 +10,9 @@
 
 @interface HMUploadS3Worker()
 
-@property (nonatomic, weak) HMAWS3Client *client;
+@property (nonatomic) HMAWS3Client *client;
 @property (nonatomic) NSString *name;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 
 @end
 
@@ -40,7 +41,7 @@
 {
     self = [super init];
     if (self) {
-        self.client = HMAWS3Client.sh;
+        self.client = [HMAWS3Client new];
     }
     return self;
 }
@@ -63,6 +64,7 @@
         HMGLogError(@"Couldn't start upload job (transferOperation is nil) %@", self.jobID);
         return NO;
     }
+    [self markAsWorkingInTheBackground];
     self.userInfo[@"transferOperation"] = transferOperation;
     return YES;
 }
@@ -76,6 +78,35 @@
     [transferOperation cleanup];
     [putRequest cancel];
     [self.userInfo removeObjectForKey:@"transferOperation"];
+}
+
+-(void)markAsWorkingInTheBackground
+{
+    //
+    // Just in case it is still marked.
+    //
+    [self unmarkAsWorkingInTheBackground];
+    
+    //
+    // Mark for working in the background.
+    //
+    UIApplication *app = [UIApplication sharedApplication];
+    __weak HMUploadS3Worker *wSelf = self;
+    _backgroundTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        // Clean up any unfinished task business by marking where you
+        // stopped or ending the task outright.
+        [app endBackgroundTask:wSelf.backgroundTask];
+        wSelf.backgroundTask = UIBackgroundTaskInvalid;
+    }];
+}
+
+-(void)unmarkAsWorkingInTheBackground
+{
+    if (self.backgroundTask != UIBackgroundTaskInvalid) {
+        UIApplication *app = [UIApplication sharedApplication];
+        [app endBackgroundTask:self.backgroundTask];
+        self.backgroundTask = UIBackgroundTaskInvalid;
+    }
 }
 
 #pragma mark - AmazonServiceRequestDelegate
@@ -134,6 +165,7 @@
         [self.delegate worker:self reportingFinishedWithSuccess:YES info:nil];
     }
 
+    [self unmarkAsWorkingInTheBackground];
 }
 
 
@@ -149,6 +181,8 @@
     if ([self.delegate respondsToSelector:@selector(worker:reportingFinishedWithSuccess:info:)]) {
         [self.delegate worker:self reportingFinishedWithSuccess:NO info:@{@"error":error}];
     }
+    
+    [self unmarkAsWorkingInTheBackground];
 }
 
 
@@ -163,6 +197,8 @@
     if ([self.delegate respondsToSelector:@selector(worker:reportingFinishedWithSuccess:info:)]) {
         [self.delegate worker:self reportingFinishedWithSuccess:NO info:@{@"exception":exception}];
     }
+    
+    [self unmarkAsWorkingInTheBackground];
 }
 
 

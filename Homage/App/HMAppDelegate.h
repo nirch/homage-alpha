@@ -13,5 +13,5 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 @interface HMAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic) BOOL *pushNotificationFromBG;
+@property (nonatomic) BOOL pushNotificationFromBG;
 @end

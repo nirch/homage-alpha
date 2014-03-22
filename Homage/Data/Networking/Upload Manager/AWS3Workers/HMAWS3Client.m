@@ -79,7 +79,6 @@
         return nil;
     }
     
-    
     // The upload request.
     // Sets the worker as the delegate.
     S3PutObjectRequest *uploadRequest = [S3PutObjectRequest new];
@@ -88,7 +87,6 @@
     uploadRequest.key = s3worker.destination;
     uploadRequest.delegate = s3worker;
     S3TransferOperation *transferOpertaion = [self.tm upload:uploadRequest];
-    
     return transferOpertaion;
 }
 

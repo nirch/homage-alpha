@@ -20,12 +20,19 @@
 		0806FB2B1882944D00F0EF50 /* HMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB2A1882944D00F0EF50 /* HMAppDelegate.m */; };
 		0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */; };
 		0806FB35188295CD00F0EF50 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */; };
+		08081FB518D083DA00999068 /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
+		08081FB618D083DA00999068 /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
+		08081FB818D0A9EA00999068 /* close up.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08081FB718D0A9EA00999068 /* close up.ctr */; };
+		08081FB918D0A9EA00999068 /* close up.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08081FB718D0A9EA00999068 /* close up.ctr */; };
 		081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 081237941882CB6100DA5D23 /* ServerCFG.plist */; };
 		081237961882CB6100DA5D23 /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 081237941882CB6100DA5D23 /* ServerCFG.plist */; };
 		081237D31882DA3D00DA5D23 /* HMServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 081237D21882DA3D00DA5D23 /* HMServer.m */; };
 		081237D41882DA3D00DA5D23 /* HMServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 081237D21882DA3D00DA5D23 /* HMServer.m */; };
 		0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
 		0831C7E51885ECD30024406B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
+		0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8D918D04E1700222997 /* CoreMedia.framework */; };
+		0838E8DC18D04E2400222997 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DB18D04E2400222997 /* CoreVideo.framework */; };
+		0838E8DE18D04E4600222997 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DD18D04E4600222997 /* AVFoundation.framework */; };
 		0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */; };
 		0840FF65188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */; };
 		0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF63188518ED00A6EF5E /* AWPieSliceView.m */; };
@@ -204,6 +211,7 @@
 		08E50ED01886994A001A8B75 /* HMRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECE1886994A001A8B75 /* HMRoundButton.m */; };
 		08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
+		08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */; };
 		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
@@ -260,11 +268,17 @@
 		0806FB291882944D00F0EF50 /* HMAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAppDelegate.h; sourceTree = "<group>"; };
 		0806FB2A1882944D00F0EF50 /* HMAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAppDelegate.m; sourceTree = "<group>"; };
 		0806FB33188295CD00F0EF50 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		08081FB318D083DA00999068 /* HMExtractController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMExtractController.h; sourceTree = "<group>"; };
+		08081FB418D083DA00999068 /* HMExtractController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMExtractController.mm; sourceTree = "<group>"; };
+		08081FB718D0A9EA00999068 /* close up.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up.ctr"; path = "App/close up.ctr"; sourceTree = "<group>"; };
 		081237941882CB6100DA5D23 /* ServerCFG.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ServerCFG.plist; path = Networking/ServerCFG.plist; sourceTree = "<group>"; };
 		081237D11882DA3D00DA5D23 /* HMServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMServer.h; path = Networking/HMServer.h; sourceTree = "<group>"; };
 		081237D21882DA3D00DA5D23 /* HMServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMServer.m; path = Networking/HMServer.m; sourceTree = "<group>"; };
 		0831C7E21885ECD30024406B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		0838E8D918D04E1700222997 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		0838E8DB18D04E2400222997 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		0838E8DD18D04E4600222997 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0840FF60188518ED00A6EF5E /* AWPieSliceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPieSliceLayer.h; sourceTree = "<group>"; };
 		0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPieSliceLayer.m; sourceTree = "<group>"; };
 		0840FF62188518ED00A6EF5E /* AWPieSliceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPieSliceView.h; sourceTree = "<group>"; };
@@ -440,6 +454,7 @@
 		08E50ECE1886994A001A8B75 /* HMRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRoundButton.m; sourceTree = "<group>"; };
 		08E50ED118869ADD001A8B75 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
+		08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
@@ -490,6 +505,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */,
+				0838E8DE18D04E4600222997 /* AVFoundation.framework in Frameworks */,
+				0838E8DC18D04E2400222997 /* CoreVideo.framework in Frameworks */,
+				0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */,
 				26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */,
 				26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */,
 				0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */,
@@ -540,6 +559,10 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */,
+				0838E8DD18D04E4600222997 /* AVFoundation.framework */,
+				0838E8DB18D04E2400222997 /* CoreVideo.framework */,
+				0838E8D918D04E1700222997 /* CoreMedia.framework */,
 				26B498AE18BA4A8D00026401 /* AudioToolbox.framework */,
 				26B498AB18B6011E00026401 /* CoreMotion.framework */,
 				08455FD7189032FF0040504D /* AWSS3.framework */,
@@ -568,6 +591,7 @@
 		0806FA1618828AEB007514BE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				08081FB718D0A9EA00999068 /* close up.ctr */,
 				0806FA1718828AEB007514BE /* Homage-Info.plist */,
 				0806FA1B18828AEB007514BE /* main.m */,
 				0806FA1D18828AEB007514BE /* Homage-Prefix.pch */,
@@ -764,6 +788,8 @@
 			children = (
 				08455FE21890458E0040504D /* HMVideoCameraViewController.h */,
 				08455FE31890458E0040504D /* HMVideoCameraViewController.m */,
+				08081FB318D083DA00999068 /* HMExtractController.h */,
+				08081FB418D083DA00999068 /* HMExtractController.mm */,
 				08455FE01890458E0040504D /* AVCamPreviewView.h */,
 				08455FE11890458E0040504D /* AVCamPreviewView.m */,
 				26B498A818B5FD7100026401 /* HMMotionDetector.h */,
@@ -1209,11 +1235,11 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = HM;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 56F7YSPHC5;
+						DevelopmentTeam = 3HVGM4BBZC;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1245,6 +1271,7 @@
 			files = (
 				26A239B418A96F6600980BFC /* introVideo.mp4 in Resources */,
 				08B958751891394400BCCF8C /* Colors.plist in Resources */,
+				08081FB818D0A9EA00999068 /* close up.ctr in Resources */,
 				08DF23361892704300912657 /* Storyboard.storyboard in Resources */,
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
@@ -1272,6 +1299,7 @@
 			files = (
 				08B958761891394400BCCF8C /* Colors.plist in Resources */,
 				08DF23371892704300912657 /* Storyboard.storyboard in Resources */,
+				08081FB918D0A9EA00999068 /* close up.ctr in Resources */,
 				081237961882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				084560001890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
@@ -1421,6 +1449,7 @@
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
 				084E5339189209D700D96258 /* HMServer+Texts.m in Sources */,
+				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,6 +1481,7 @@
 				0840FF65188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
 				08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */,
 				08CDF8271896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
+				08081FB618D083DA00999068 /* HMExtractController.mm in Sources */,
 				08DF23291892704300912657 /* HMUserRemakesViewController.m in Sources */,
 				084E533E18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				08DF23271892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
@@ -1539,7 +1569,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1578,7 +1607,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1613,17 +1641,62 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (DD2XVN763C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (DD2XVN763C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aviv Wolf (8L8QG7KHK3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/InAppSettingsKit\"",
+					"\"${PODS_ROOT}/Headers/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/PLCrashReporter\"",
+					"Gp_vim/VimGui/**",
+					"Gp_vim/Core/ImageLib/**",
+					"Gp_vim/Core/Util/**",
+					"Gp_vim/Homage/**",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreTelephony,
+					"-framework",
+					CrashReporter,
+					"-framework",
+					Foundation,
+					"-framework",
+					MessageUI,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "286EAD60-0A3D-40B6-8A04-1B7EB7E30733";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1634,17 +1707,62 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (DD2XVN763C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (DD2XVN763C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aviv Wolf (8L8QG7KHK3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/InAppSettingsKit\"",
+					"\"${PODS_ROOT}/Headers/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/PLCrashReporter\"",
+					"Gp_vim/VimGui/**",
+					"Gp_vim/Core/ImageLib/**",
+					"Gp_vim/Core/Util/**",
+					"Gp_vim/Homage/**",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreTelephony,
+					"-framework",
+					CrashReporter,
+					"-framework",
+					Foundation,
+					"-framework",
+					MessageUI,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "286EAD60-0A3D-40B6-8A04-1B7EB7E30733";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1653,7 +1771,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Homage.app/Homage";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1678,7 +1795,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Homage.app/Homage";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

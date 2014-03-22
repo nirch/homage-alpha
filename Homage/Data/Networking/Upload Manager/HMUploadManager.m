@@ -113,9 +113,9 @@
 
 -(void)checkForUploadsWithPrioritizedFootages:(NSArray *)prioritizedFootages
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self _checkForUploadsWithPrioritizedFootages:prioritizedFootages];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+    [self _checkForUploadsWithPrioritizedFootages:prioritizedFootages];
+//    });
 }
 
 -(void)_checkForUploadsWithPrioritizedFootages:(NSArray *)prioritizedFootages
