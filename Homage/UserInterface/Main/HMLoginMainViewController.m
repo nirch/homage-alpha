@@ -422,7 +422,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
-    [User userWithID:userID inContext:DB.sh.context];
+    User *user = [User userWithID:userID inContext:DB.sh.context];
+    
+    if (userInfo[@"email"]) user.email = userInfo[@"email"];
+    if (userInfo[@"is_public"]) user.isPublic = userInfo[@"is_public"];
+    if (userInfo[@"first_name"]) user.firstName = userInfo[@"first_name"];
+    if (userInfo[@"fbID"]) user.fbID = userInfo[@"fbID"];
+
+    [user loginInContext:DB.sh.context];
     
     [self.delegate onUserLoginStateChange:[User current]];
     [self.delegate dismissLoginScreen];
@@ -487,6 +494,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (!CGRectContainsPoint(aRect, self.guiMailTextField.frame.origin) ) {
         [self.guiSignUpView scrollRectToVisible:self.guiMailTextField.frame animated:YES];
     }
+    self.guiLoginErrorLabel.hidden = YES;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 

@@ -40,66 +40,89 @@
 
 - (void)viewDidLoad
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     [self initGUI];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-   
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+
 }
 
 
 -(void)initGUI
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
     for (HMFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
     }
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initStoryMoviePlayer
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
     self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]]];
     [self.moviePlayer.view setFrame:self.guiIntroMovieContainer.frame];
     [self.moviePlayer play];
     [self.view addSubview:self.moviePlayer.view];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)onPressedSkipButton:(UIButton *)sender {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
     [self.moviePlayer stop];
     [[Mixpanel sharedInstance] track:@"HitSkipButton"];
     [self.delegate onLoginPressedSkip];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+
     [self.moviePlayer stop];
     [[Mixpanel sharedInstance] track:@"HitShootFirst"];
     [self.delegate onLoginPressedShootFirstStory];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+
 }
 
 - (void)didReceiveMemoryWarning
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(BOOL)shouldAutorotate

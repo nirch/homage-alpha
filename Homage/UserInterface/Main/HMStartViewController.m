@@ -169,19 +169,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)updateUserPreferences
 {
-    NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
     
     NSString *userID = [User current].userID;
-    [info setValue:userID forKey:@"user_id"];
     
-    //user remake sharing preferences
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL shareRemakes = [defaults boolForKey:@"remakesArePublic"];
-    
     NSString *shareValue = shareRemakes ? @"YES" : @"NO";
-    [info setValue:shareValue forKey:@"is_public"];
     
-    [HMServer.sh updateUserWithDictionary:info];
+    [HMServer.sh updateUserWithDictionary:@{@"user_id" : userID , @"is_public" : shareValue}];
 }
 
 #pragma mark - Splash View
@@ -590,6 +585,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     
+    if (!self.renderingContainerView.hidden) return;
+    
     self.renderingContainerView.hidden = NO;
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     CGRect newAppContainerViewFrame = self.appWrapperView.frame;
@@ -609,6 +606,9 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)hideRenderingView
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    
+    if (self.renderingContainerView.hidden) return;
+    
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
     CGRect newAppContainerViewFrame = self.appWrapperView.frame;
     
@@ -679,6 +679,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [alert show];
         });
+        NSError *error = notification.userInfo[@"error"];
+        NSLog(@"error: %@" , [error localizedDescription]);
     }
 }
 
@@ -782,6 +784,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [[User current] logoutInContext:DB.sh.context];
     [self presentLoginScreen];
     [self hideSideBar];
+    [self hideRenderingView];
     [self.loginVC onUserLogout];
 
 }
