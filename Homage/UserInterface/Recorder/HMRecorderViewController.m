@@ -27,10 +27,11 @@
 #import <AudioToolbox/AudioServices.h>
 #import "HMMotionDetector.h"
 
+/*
 // ---------------------------------------------------------------------------------------------------------------------
 #import <objc/message.h> // TODO: Used by the orientation hack. Remove this or you may not be approved for the appstore!
 // ---------------------------------------------------------------------------------------------------------------------
-
+*/
 // TODO: Temporary. This is for fake footages upload updates.
 // This will be the responsibility of the uploader and not the recorder.
 #import "HMServer+Footages.h"
@@ -110,13 +111,14 @@
 {
     [self initObservers];
 
+/*
     // ----------------------------------
     // Hack forcing orientation.
     // TODO: Remove this hack ASAP.
     _allowedOrientations = UIInterfaceOrientationMaskLandscapeRight;
     objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeRight );
     // ----------------------------------
-
+*/
 }
 
 
@@ -390,18 +392,24 @@
                                                    selector:@selector(onNewRawFootageFileAvailable:)
                                                        name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
                                                      object:nil];
-    
+
+    // TODO: Remove this comment (orientation hack)
+    /*
     // Notification about the camera used (front)
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRecorderUsingFrontCamera:)
                                                        name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA
                                                      object:nil];
+    */
     
+    // TODO: Remove this comment (orientation hack)
+    /*
     // Notification about the camera used (back)
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRecorderUsingBackCamera:)
                                                        name:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA
                                                      object:nil];
+    */
     
     // Handle recording errors by showing the FAIL message
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -603,9 +611,10 @@
     [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
 }
 
-
+/*
 -(void)onRecorderUsingFrontCamera:(NSNotification *)notificaiton
 {
+
     // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
     // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
     // It will just transform the whole view upside down when using the front camera.
@@ -620,8 +629,11 @@
             objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeLeft );
         }
     }
-}
 
+}
+*/
+
+/*
 -(void)onRecorderUsingBackCamera:(NSNotification *)notification
 {
     // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
@@ -639,6 +651,7 @@
         }
     }
 }
+*/
 
 #pragma mark - Scenes selection
 -(void)updateUIForSceneID:(NSNumber *)sceneID
@@ -688,15 +701,21 @@
     return !self.lockedAutoRotation;
 }
 
+
 -(NSUInteger)supportedInterfaceOrientations
 {
+    /*
     // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
     // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
     // It will just transform the whole view upside down when using the front camera.
     // TODO: remove this hack ASAP.
     if (self.allowedOrientations == 0) return UIInterfaceOrientationMaskLandscapeRight;
     return self.allowedOrientations;
+     */
+    
+    return UIInterfaceOrientationMaskLandscape;
 }
+
 
 #pragma mark - containment segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

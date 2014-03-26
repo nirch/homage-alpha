@@ -381,11 +381,13 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
             [self switchToTab:HMMeTab];
         }
         
+        /*
         // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
         if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
         {
             [[HMServer sh] ranHack];
         }
+        */
     }
     
     [self reportCrashesIfExist];
