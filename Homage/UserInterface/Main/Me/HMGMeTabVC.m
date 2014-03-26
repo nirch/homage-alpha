@@ -72,6 +72,11 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
@@ -151,7 +156,11 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
                                                      object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(refreshRemakes)
+                                                       name:HM_REFRESH_USER_DATA
+                                                     object:nil];
+
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
@@ -164,6 +173,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
+    [nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -191,6 +201,11 @@
     }
     [self.refreshControl endRefreshing];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)refreshRemakes
+{
+    [self refetchRemakesFromServer];
 }
 
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification

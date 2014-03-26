@@ -52,6 +52,9 @@
 //user requests to join (currently from me tab while sharing)
 #define HM_NOTIFICATION_USER_JOIN @"user requests to join"
 
+//update GUI after user updated/switched accounts
+#define HM_REFRESH_USER_DATA @"update gui after user updated/switched accounts"
+
 @interface HMNotificationCenter : NSObject
 
 @end

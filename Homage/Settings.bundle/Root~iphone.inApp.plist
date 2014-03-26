@@ -8,24 +8,6 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>USER_DETAILS</string>
-		</dict>
-		<dict>
-			<key>Title</key>
-			<string>EMAIL</string>
-			<key>Key</key>
-			<string>useremail</string>
-			<key>DefaultValue</key>
-			<string></string>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>IASKTextAlignment</key>
-			<string>IASKUITextAlignmentLeft</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
 			<string>PRIVACY</string>
 		</dict>
 		<dict>
@@ -65,14 +47,6 @@
 			<string>FEEDBACK</string>
 			<key>Type</key>
 			<string>IASKMailComposeSpecifier</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
-			<key>Key</key>
-			<string>loginStateButton</string>
-			<key>Title</key>
-			<string>Login</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>

@@ -354,11 +354,11 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="159" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" id="yq0-5A-pdt" userLabel="labelBG">
+                                                <view hidden="YES" contentMode="scaleToFill" id="yq0-5A-pdt" userLabel="labelBG">
                                                     <rect key="frame" x="6" y="6" width="79" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8zk-Pr-2hS" customClass="HMFontLabel">
+                                                        <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8zk-Pr-2hS" customClass="HMFontLabel">
                                                             <rect key="frame" x="0.0" y="-6" width="153" height="32"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -903,6 +903,17 @@
                                         <color key="textColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xry-Np-IlX" customClass="HMFontButton">
+                                        <rect key="frame" x="137" y="530" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButtonPushed:" destination="QbO-El-nSp" eventType="touchUpInside" id="A2n-Pf-YTX"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EHn-lw-3WS" customClass="HMFontButton">
                                         <rect key="frame" x="137" y="530" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -915,27 +926,17 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4Ml-B1-sdD" customClass="HMFontButton">
-                                        <rect key="frame" x="38" y="492" width="72" height="30"/>
+                                        <rect key="frame" x="123" y="442" width="72" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <state key="normal" title="SIGN UP">
+                                        <state key="normal" title="SIGN IN">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="onPressedSignUpLogin:" destination="QbO-El-nSp" eventType="touchUpInside" id="dNz-fc-JaF"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jWB-UY-9s3" customClass="HMFontButton">
-                                        <rect key="frame" x="212" y="492" width="62" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                        <state key="normal" title="LOGIN">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onPressedSignUpLogin:" destination="QbO-El-nSp" eventType="touchUpInside" id="R65-1n-bi2"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2ka-xU-4Lb" customClass="HMFontButton">
-                                        <rect key="frame" x="105" y="440" width="110" height="30"/>
+                                        <rect key="frame" x="105" y="423" width="110" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="forgot password?">
@@ -947,13 +948,6 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="|" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kXg-ER-vSy">
-                                        <rect key="frame" x="147" y="485" width="27" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <color key="textColor" red="1" green="0.49019607840000001" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </scrollView>
@@ -962,11 +956,11 @@
                     </view>
                     <connections>
                         <outlet property="guiBGImageView" destination="2ke-zy-oEP" id="ybK-cm-szb"/>
+                        <outlet property="guiCancelButton" destination="Xry-Np-IlX" id="op9-qR-52k"/>
                         <outlet property="guiFBLoginView" destination="GOe-39-Yz9" id="bRZ-qH-r86"/>
                         <outlet property="guiForgotPasswordButton" destination="2ka-xU-4Lb" id="yPJ-3o-1zu"/>
                         <outlet property="guiGuestButton" destination="EHn-lw-3WS" id="FOb-ge-vuh"/>
                         <outlet property="guiIntroMovieContainerView" destination="STm-SM-IBI" id="llg-dg-Oui"/>
-                        <outlet property="guiLoginButton" destination="jWB-UY-9s3" id="VaO-Qk-iwb"/>
                         <outlet property="guiLoginErrorLabel" destination="9O1-YS-X0U" id="Z5b-ZA-yOF"/>
                         <outlet property="guiMailTextField" destination="7SA-1V-0Fd" id="TAE-uK-yz7"/>
                         <outlet property="guiPasswordTextField" destination="XfZ-Fw-lJk" id="psS-X7-k6b"/>
@@ -974,10 +968,10 @@
                         <outlet property="guiSignupButton" destination="4Ml-B1-sdD" id="6NH-z7-agQ"/>
                         <outletCollection property="buttonCollection" destination="4Ml-B1-sdD" id="2P0-yO-Cpk"/>
                         <outletCollection property="buttonCollection" destination="2ka-xU-4Lb" id="j6u-bK-XfI"/>
-                        <outletCollection property="buttonCollection" destination="jWB-UY-9s3" id="ZXi-Yi-ZyX"/>
                         <outletCollection property="buttonCollection" destination="EHn-lw-3WS" id="Dp1-SI-40O"/>
                         <outletCollection property="labelCollection" destination="Wxd-bB-nO6" id="CJ7-84-TH2"/>
                         <outletCollection property="labelCollection" destination="xFw-UZ-8ya" id="KEv-MN-r1g"/>
+                        <outletCollection property="buttonCollection" destination="Xry-Np-IlX" id="ILy-ID-4Zb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sId-6U-xXH" userLabel="First Responder" sceneMemberID="firstResponder"/>
