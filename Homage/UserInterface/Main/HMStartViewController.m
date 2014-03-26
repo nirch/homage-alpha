@@ -174,8 +174,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)updateUserPreferences
 {
-    
     NSString *userID = [User current].userID;
+    if (!userID) return;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL shareRemakes = [defaults boolForKey:@"remakesArePublic"];
@@ -481,23 +481,23 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 }
 
 
--(void)debug
+/*-(void)debug
 {
     // Hardcoded user for development (until LOGIN screens are implemented)
     
     if (![User current])
     {
-        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
+        //NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
         if (!userName)
         {
             userName = @"yoav@homage.it";
-            [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
+            //[[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
         }
         User *user = [User userWithID:userName inContext:DB.sh.context];
         [user loginInContext:DB.sh.context];
         [DB.sh save];
     }
-}
+}*/
 
 -(void)failedStartingApplication
 {
@@ -822,7 +822,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [self hideRenderingView];
     [self switchToTab:HMStoriesTab];
     [self.loginVC onUserLogout];
-
 }
 
 -(void)joinButtonPushed
