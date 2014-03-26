@@ -179,6 +179,18 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL shareRemakes = [defaults boolForKey:@"remakesArePublic"];
+    if (shareRemakes && [[User current] isGuestUser])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
+        shareRemakes = NO;
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"SIGN_UP_NOW", nil) message:NSLocalizedString(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES", nil) delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
+        //alertView.tag = SHARE_ALERT_VIEW_TAG;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+    }
+    
     NSString *shareValue = shareRemakes ? @"YES" : @"NO";
     
     [HMServer.sh updateUserWithDictionary:@{@"user_id" : userID , @"is_public" : shareValue}];

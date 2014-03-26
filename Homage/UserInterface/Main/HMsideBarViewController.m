@@ -99,7 +99,6 @@
 - (IBAction)joinButtonPushed:(HMFontButton *)sender
 {
     [self.delegate joinButtonPushed];
-    self.guiJoinButton.hidden = YES;
 }
 
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID

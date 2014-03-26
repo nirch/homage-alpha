@@ -45,6 +45,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (weak, nonatomic) IBOutlet HMFontButton *guiLoginButton;
 @property (weak, nonatomic) IBOutlet HMFontButton *guiGuestButton;
 @property (weak, nonatomic) IBOutlet HMFontButton *guiForgotPasswordButton;
+@property (weak, nonatomic) IBOutlet HMFontButton *guiCancelButton;
 @property (weak, nonatomic) IBOutlet UITextField *guiMailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *guiPasswordTextField;
 @property (weak, nonatomic) IBOutlet UILabel *guiLoginErrorLabel;
@@ -117,6 +118,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiLoginErrorLabel.alpha = 0;
     self.guiLoginErrorLabel.hidden = YES;
     self.guiGuestButton.hidden = NO;
+    self.guiCancelButton.hidden = YES;
     
     self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
     
@@ -135,12 +137,17 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiMailTextField.keyboardType = UIKeyboardTypeEmailAddress;
     self.guiMailTextField.returnKeyType = UIReturnKeyDone;
     self.guiPasswordTextField.returnKeyType = UIReturnKeyDone;
+    self.guiPasswordTextField.secureTextEntry = YES;
     self.guiMailTextField.delegate = self;
     self.guiPasswordTextField.delegate = self;
     
     //sign up scrool view stuff
     self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
     self.guiSignUpView.scrollEnabled = NO;
+    
+    //TODO: hide forgot pass for now
+    self.guiForgotPasswordButton.hidden = YES;
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
@@ -402,6 +409,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
+    HMGLogDebug(@"user created with userID: %@" , userID);
     
     if ([userID isEqualToString:[User current].userID]) return;
     
@@ -410,6 +418,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (user)
     {
         [user loginInContext:DB.sh.context];
+        if ([[User current] isGuestUser])
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
+        }
         [DB.sh save];
         [self.delegate onUserLoginStateChange:user];
     }
@@ -458,6 +470,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     NSString *userID = userInfo[@"userID"];
     User *user = [User userWithID:userID inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
+    [[NSUserDefaults standardUserDefaults] setBool:YES  forKey:@"remakesArePublic"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     [self.delegate onUserLoginStateChange:[User current]];
     [self.delegate dismissLoginScreen];
     self.userJoinFlow = NO;
@@ -586,11 +600,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     self.guiGuestButton.hidden = NO;
+    self.guiCancelButton.hidden = YES;
 }
 
 -(void)onUserJoin
 {
     self.guiGuestButton.hidden = YES;
+    self.guiCancelButton.hidden = NO;
     self.userJoinFlow = YES;
 }
 
@@ -670,5 +686,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 }
 
 
+- (IBAction)cancelButtonPushed:(id)sender
+{
+    [self.delegate dismissLoginScreen];
+    self.guiCancelButton.hidden = YES;
+    
+}
 
 @end
