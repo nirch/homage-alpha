@@ -17,7 +17,6 @@
 
 
 @implementation HMAppDelegate
-@synthesize pushNotificationFromBG;
 
 #define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
 
@@ -34,6 +33,8 @@
          [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
+    self.pushNotificationFromBG = nil;
+    
     // TODO: Route here the remote notification received when the app was inactive
     if (launchOptions) {
         NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -43,7 +44,9 @@
             
             if ( pushNotificationType == HMPushMovieReady )
             {
-                
+                NSString *remakeID = [notificationInfo objectForKey:@"remake_id"];
+                //NSString *storyName = [notificationInfo objectForKey:@"story_name"];
+                self.pushNotificationFromBG =@{@"remake_id" : remakeID };
             }
             
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
@@ -54,7 +57,7 @@
         }
     }
     
-    [FBLoginView class];
+    //[FBLoginView class];
     return YES;
 }
 

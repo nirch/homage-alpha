@@ -22,6 +22,13 @@
     return ![self isThisUser:otherUser];
 }
 
+#pragma mark is guest user
+-(BOOL)isGuestUser
+{
+    if (self.email) return NO;
+    return YES;
+}
+
 #pragma mark - Login / Logout user
 // Marks all users in local storage as logged out.
 +(void)logoutAllInContext:(NSManagedObjectContext *)context

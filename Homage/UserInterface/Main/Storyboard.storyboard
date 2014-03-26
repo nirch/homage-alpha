@@ -40,7 +40,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cJv-hE-5uF">
                                         <rect key="frame" x="0.0" y="60" width="320" height="508"/>

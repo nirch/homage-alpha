@@ -206,6 +206,7 @@
 		08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
+		2610133718E172A80065C72B /* HMLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2610133618E172A80065C72B /* HMLoginTests.m */; };
 		2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593218953656003A7B3D /* HMRenderingViewController.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
@@ -444,6 +445,7 @@
 		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
+		2610133618E172A80065C72B /* HMLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginTests.m; sourceTree = "<group>"; };
 		2638593118953656003A7B3D /* HMRenderingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewController.h; path = "../Custom Views/Time Progress Views/HMRenderingViewController.h"; sourceTree = "<group>"; };
 		2638593218953656003A7B3D /* HMRenderingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRenderingViewController.m; path = "../Custom Views/Time Progress Views/HMRenderingViewController.m"; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 			children = (
 				0806FA3418828AEB007514BE /* HomageTests.m */,
 				0806FA2F18828AEB007514BE /* Supporting Files */,
+				2610133618E172A80065C72B /* HMLoginTests.m */,
 			);
 			path = HomageTests;
 			sourceTree = "<group>";
@@ -1505,6 +1508,7 @@
 				0845600A1890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				086D94111886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
 				086D93D41886C8BB0086C565 /* HMStoriesParser.m in Sources */,
+				2610133718E172A80065C72B /* HMLoginTests.m in Sources */,
 				086D94A4188701EA0086C565 /* HMServer+Stories.m in Sources */,
 				08B958931891678600BCCF8C /* User+Factory.m in Sources */,
 				08DF23351892704300912657 /* HMStoryDetailsViewController.m in Sources */,

@@ -62,6 +62,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self stopStoryMoviePlayer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
@@ -95,6 +96,11 @@
     [self.moviePlayer play];
     [self.view addSubview:self.moviePlayer.view];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)stopStoryMoviePlayer
+{
+    [self.moviePlayer stop];
 }
 
 - (IBAction)onPressedSkipButton:(UIButton *)sender {

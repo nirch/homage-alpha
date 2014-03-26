@@ -27,7 +27,16 @@
 {
     NSString *remakeID = info[@"_id"][@"$oid"];
     NSString *storyID = info[@"story_id"][@"$oid"];
-    NSString *userID = [info stringForKey:@"user_id"];
+    
+    NSString *userID;
+    if ([info[@"user_id"] isKindOfClass: [NSDictionary class]])
+    {
+        userID = info[@"user_id"][@"$oid"];
+    } else
+    {
+        userID = [info stringForKey:@"user_id"];
+    }
+
     NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     Story *story = [Story storyWithID:storyID inContext:self.ctx];
     User *user = [User userWithID:userID inContext:self.ctx];

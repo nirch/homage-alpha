@@ -81,6 +81,7 @@
                                                    selector:@selector(onRemakeStatusNotification:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE
                                                      object:nil];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -253,6 +254,5 @@
     [self showDoneView];
     
 }
-
 
 @end

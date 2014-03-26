@@ -14,6 +14,9 @@
 -(BOOL)isThisUser:(User *)otherUser;
 -(BOOL)isNotThisUser:(User *)otherUser;
 
+#pragma mark - is guest user
+-(BOOL)isGuestUser;
+
 #pragma mark - Login / Logout user
 // Marks all users in local storage as logged out.
 +(void)logoutAllInContext:(NSManagedObjectContext *)context;

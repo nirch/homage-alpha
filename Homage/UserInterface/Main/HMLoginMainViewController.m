@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMBadPassword,
     HMIncorrectMailAddressFormat,
     HMMailAddressAlreadyTaken,
+    HMExistingFacebookUser,
 };
 
 
@@ -55,6 +56,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 
 @property (strong, nonatomic) IBOutlet FBLoginView *guiFBLoginView;
+@property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
 @property (nonatomic) BOOL userJoinFlow;
 
@@ -172,6 +174,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UPDATE object:nil];
     [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -238,6 +241,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         case HMMailAddressAlreadyTaken:
             [self showErrorLabelWithString:LS(@"EMAIL_TAKEN")];
             break;
+        case HMExistingFacebookUser:
+            [self showErrorLabelWithString:LS(@"EXISTING_FACEBOOK_USER")];
+            break;
         default:
             break;
     }
@@ -271,7 +277,15 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                            user:(id<FBGraphUser>)user
 {
+    if ([self isFacebookUser:self.cachedUser equalToFacebookUser:user])
+    {
+        [self.delegate dismissLoginScreen];
+        [self hideIntroMovieView];
+        return;
+    }
+    
     self.loginMethod = @"facebook";
+    self.cachedUser = user;
     
     NSDictionary *deviceInfo = [self getDeviceInformation];
     
@@ -290,7 +304,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     if (!self.userJoinFlow)
     {
-       [HMServer.sh createUserWithDictionary:FBSignupDictionary];
+        [HMServer.sh createUserWithDictionary:FBSignupDictionary];
+        NSLog(@"?????????   creating user with email: %@ ???????????????" , [user objectForKey:@"email"]);
     } else if (self.userJoinFlow && [User current])
     {
         NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES , @"email" : [user objectForKey:@"email"]};
@@ -300,6 +315,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
+-(BOOL)isFacebookUser:(id<FBGraphUser>)firstUser equalToFacebookUser:(id<FBGraphUser>)secondUser
+{
+    return [firstUser.id isEqual:secondUser.id];
+}
 
 -(IBAction)onPressedSignUpLogin:(UIButton *)sender
 {
@@ -310,14 +329,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
-    NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField , @"is_public" : @YES , @"device" : deviceInfo };
+    NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
     
     if (!self.userJoinFlow)
     {
        [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
     } else if(self.userJoinFlow && [User current])
     {
-        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField , @"is_public" : [User current].isPublic , @"device" : deviceInfo};
+        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : [User current].isPublic , @"device" : deviceInfo};
         [HMServer.sh updateUserWithDictionary:mailSignUpDictionary];
     }
     
@@ -373,26 +392,19 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
                 return;
                 break;
             case 1004:
-                [self presentErrorLabelWithReason:HMMailAddressAlreadyTaken];
+                [self presentErrorLabelWithReason:HMExistingFacebookUser];
                 return;
                 break;
             default:
                 break;
         }
-        
-        
-        
-        if (errorCode == 1001)
-        {
-            [self presentErrorLabelWithReason:HMIncorrectPassword];
-            return;
-        }
     }
-
-    if ([User current]) return;
 
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
+    
+    if ([userID isEqualToString:[User current].userID]) return;
+    
     User *user = [User userWithID:userID inContext:DB.sh.context];
     
     if (user)
@@ -420,17 +432,32 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)onUserUpdated:(NSNotification *)notification
 {
+
+    if (notification.isReportingError)
+    {
+        NSDictionary *userInfo = notification.userInfo;
+        NSError *error = userInfo[@"error"];
+        NSDictionary *body = error.userInfo[@"body"];
+        long errorCode = [body[@"error_code"] longValue];
+        
+        switch (errorCode) {
+            case 1001: //incorrect password
+                [self presentErrorLabelWithReason:HMIncorrectPassword];
+                return;
+                break;
+            case 1004:
+                [self presentErrorLabelWithReason:HMExistingFacebookUser];
+                return;
+                break;
+            default:
+                break;
+        }
+    }
+    
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
     User *user = [User userWithID:userID inContext:DB.sh.context];
-    
-    if (userInfo[@"email"]) user.email = userInfo[@"email"];
-    if (userInfo[@"is_public"]) user.isPublic = userInfo[@"is_public"];
-    if (userInfo[@"first_name"]) user.firstName = userInfo[@"first_name"];
-    if (userInfo[@"fbID"]) user.fbID = userInfo[@"fbID"];
-
     [user loginInContext:DB.sh.context];
-    
     [self.delegate onUserLoginStateChange:[User current]];
     [self.delegate dismissLoginScreen];
     self.userJoinFlow = NO;
@@ -456,6 +483,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiSignUpView.hidden = NO;
+    [self.introMovieController stopStoryMoviePlayer];
     [UIView animateWithDuration:0.3 animations:^
     {
         self.guiIntroMovieContainerView.alpha = 0;
@@ -521,11 +549,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     NSDictionary *deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString]};
     
-    /*HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSData *pushToken = myDelegate.pushToken;
     
-    if (pushToken) [deviceDictionary setValue:pushToken forKey:@"push_token"];*/
-    
+    if (pushToken)
+    {
+        deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString] , @"push_token" : pushToken};
+    }
+        
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return deviceDictionary;
 }
@@ -551,6 +582,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
             // The session state handler (in the app delegate) will be called automatically
             [FBSession.activeSession closeAndClearTokenInformation];
         }
+        self.cachedUser = nil;
     }
     
     self.guiGuestButton.hidden = NO;

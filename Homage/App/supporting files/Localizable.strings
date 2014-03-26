@@ -82,8 +82,17 @@
 "INCORRECT_EMAIL_ADDRESS_FORMAT" = "incorrect email format";
 "UNSUFFICIENT PASSWORD" = "Password must be at least 6 charecters long";
 "EMAIL_TAKEN" = "Email address already used";
+"EXISTING_FACEBOOK_USER" = "Mail address is already associated with facebook account";
 
 "HELLO USER" = "Hello %@";
+
+"SIGN_UP_NOW" = "Join us!";
+"ONLY_SIGN_IN_USERS_CAN_SHARE" = "Only signed in users can share remakes. plz signup/login to continue";
+"NOT_NOW" = "Not now";
+"JOIN_NOW" = "Join now!";
+
+
+
 
 
 

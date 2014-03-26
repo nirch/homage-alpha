@@ -16,11 +16,12 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sID=%@ AND story=%@",sID, story];
     Remake *remake = [DB.sh fetchOrCreateEntityNamed:HM_REMAKE withPredicate:predicate inContext:context];
     
+    //TODO: try to figure out why was this needed in the first place
     // Should never be owned by another user! This is a critical error!
-    if (remake.user && [remake.user isNotThisUser:user]) {
+    /*if (remake.user && [remake.user isNotThisUser:user]) {
         HMGLogError(@"Critical model/parsing error: remake already owned by user (%@). Why %@?", remake.user.userID, user.userID);
         return nil;
-    }
+    }*/
     remake.sID = sID;
     remake.story = story;
     remake.user = user;

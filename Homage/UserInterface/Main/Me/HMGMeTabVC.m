@@ -32,8 +32,10 @@
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) NSString *currentFetchedResultsUser;
 @property (weak,nonatomic) Remake *remakeToDelete;
 @property (weak,nonatomic) Remake *remakeToContinueWith;
+@property (weak,nonatomic) Remake *remakeToShare;
 @property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 
@@ -43,6 +45,7 @@
 
 #define REMAKE_ALERT_VIEW_TAG 100
 #define TRASH_ALERT_VIEW_TAG  200
+#define SHARE_ALERT_VIEW_TAG  300
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -60,7 +63,7 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[Mixpanel sharedInstance] track:@"MEEnterTab"];
@@ -278,8 +281,6 @@
 -(void)refetchRemakesFromServer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    // Refetch stories from the server
-    //[HMServer.sh refetchRemakesForUserID:[[User current] email]]; <<== BUG - you should refetch by user id not by email!
     [HMServer.sh refetchRemakesForUserID:User.current.userID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -289,12 +290,17 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
+    NSLog(@"num of fetched objects: %d" , self.fetchedResultsController.fetchedObjects.count);
     if (error) {
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
         return;
     }
-    [self.userRemakesCV reloadData];
-    [self handleNoRemakes];
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       [self.userRemakesCV reloadData];
+                       [self handleNoRemakes];
+                   });
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -313,14 +319,14 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // If already exists, just return it.
-    if (_fetchedResultsController) {
+    if (_fetchedResultsController && [self.currentFetchedResultsUser isEqualToString:[User current].userID]) {
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return _fetchedResultsController;
     }
     
     // Define fetch request.
+    self.currentFetchedResultsUser = [User current].userID;
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
-    
     NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
     //show only inprogress and done remakes
     NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"(status=1 OR status=3)"];
@@ -643,6 +649,7 @@
     
     if (self.remakeToContinueWith.status.integerValue != HMGRemakeStatusDone) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+        alertView.tag = REMAKE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];
         });
@@ -655,10 +662,30 @@
 #pragma mark sharing
 - (IBAction)shareButtonPushed:(UIButton *)button
 {
+    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    
+    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([[User current] isGuestUser])
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"SIGN_UP_NOW", nil) message:NSLocalizedString(@"ONLY_SIGN_IN_USERS_CAN_SHARE", nil) delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
+        alertView.tag = SHARE_ALERT_VIEW_TAG;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+
+    } else [self shareRemake:remakeToShare];
+    
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)shareRemake:(Remake *)remake
+{
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *shareString = @"Check out the cool video i created with #HomageApp";
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name}];
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
@@ -668,6 +695,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self presentViewController:activityViewController animated:YES completion:^{}];
     });
+ 
 }
 
 #pragma mark recorder init
@@ -723,11 +751,23 @@
             
             self.remakeToDelete = nil;
         }
+    } else if (alertView.tag == SHARE_ALERT_VIEW_TAG)
+    {
+        //dont join
+        if (buttonIndex == 0)
+        {
+            self.remakeToShare = nil;
+        }
+        //join now!
+        if (buttonIndex == 1)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_USER_JOIN object:nil userInfo:nil];
+        }
+    
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
-
 
 #pragma mark helper functions
 -(void)displayViewBounds:(UIView *)view

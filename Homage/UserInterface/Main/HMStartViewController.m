@@ -157,13 +157,18 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserMovieReady:)
                                                        name:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY
-                                                     object:HMServer.sh];
+                                                     object:[[UIApplication sharedApplication] delegate]];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserPreferencesUpdate:)
                                                        name:HM_NOTIFICATION_SERVER_USER_UPDATE
                                                      object:nil];
     
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserJoin:)
+                                                       name:HM_NOTIFICATION_USER_JOIN
+                                                     object:nil];
+
     
 }
 
@@ -368,6 +373,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         [mixpanel track:@"userLogin"];
         
         [self onUserLoginStateChange:user];
+        
+        HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+        if (myDelegate.pushNotificationFromBG)
+        {
+            //NSDictionary *info = myDelegate.pushNotificationFromBG;
+            [self switchToTab:HMMeTab];
+        }
+        
         // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
         if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
         {
@@ -624,6 +637,12 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
+-(BOOL)isRenderingViewShowing
+{
+    if (self.renderingContainerView.hidden) return NO;
+    return YES;
+}
+
 - (void)renderDoneClickedWithSuccess:(BOOL)success
 {
     if (success)
@@ -748,11 +767,15 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)onUserMovieReady:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
-    NSString *movieName = info[@"movie name"];
+    NSString *storyName = info[@"story_name"];
     
-    [self showRenderingView];
-    [self.renderingVC presentMovieReady:movieName];
-    
+    if ([self isRenderingViewShowing])
+    {
+       [self.renderingVC presentMovieReady:storyName];
+    } else
+    {
+        [self switchToTab:HMMeTab];
+    }
 }
 
 -(void)onUserLoginStateChange:(User *)user
@@ -785,15 +808,26 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [self presentLoginScreen];
     [self hideSideBar];
     [self hideRenderingView];
+    [self switchToTab:HMStoriesTab];
     [self.loginVC onUserLogout];
 
 }
 
 -(void)joinButtonPushed
 {
+    [self presentJoinUI];
+}
+
+-(void)onUserJoin:(NSNotification *)notification
+{
+    [self presentJoinUI];
+}
+
+-(void)presentJoinUI
+{
     [self.loginVC onUserJoin];
     [self presentLoginScreen];
-    [self hideSideBar];    
+    [self hideSideBar];
 }
 
 -(void)dismissLoginScreen
