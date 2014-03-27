@@ -12,18 +12,19 @@
 #import "HMRenderingViewControllerDelegate.h"
 #import "HMFontLabel.h"
 
-@interface HMRenderingViewController : UIViewController <AWTimeProgressDelegate>
+@interface HMRenderingViewController : UIViewController 
 @property (strong, nonatomic) IBOutlet UIView *guiTopView;
 
 @property (weak, nonatomic) IBOutlet UIView *guiInProgressView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityWheel;
+@property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
 
-@property (weak, nonatomic) IBOutlet AWTimeProgressView *guiProgressBarView;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiInProgressLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiDoneRenderingView;
 @property (weak, nonatomic) IBOutlet HMFontLabel *guiDoneLabel;
 
--(void) renderStartedWithRemakeID:(NSString *)remakeID;
--(void)presentMovieReady:(NSString *)movieName;
+-(void)renderStartedWithRemakeID:(NSString *)remakeID;
+-(void)presentMovieStatus:(BOOL)success forStory:(NSString *)storyName;
 
 ///
 /**

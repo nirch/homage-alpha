@@ -10,6 +10,6 @@
 
 @protocol HMRenderingViewControllerDelegate <NSObject>
 
-- (void)renderDoneClickedWithSuccess:(BOOL)success;
-
+-(void)renderDoneClickedWithSuccess:(BOOL)success;
+-(void)dismissRenderingView;
 @end

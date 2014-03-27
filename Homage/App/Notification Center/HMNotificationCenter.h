@@ -47,7 +47,7 @@
 #define HM_NOTIFICATION_CAMERA_NOT_STABLE           @"Camera not stable"
 
 //push notifications
-#define HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY @"push notification when user's movie is ready"
+#define HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS @"push notification when user's movie is ready or failed to render"
 
 //user requests to join (currently from me tab while sharing)
 #define HM_NOTIFICATION_USER_JOIN @"user requests to join"

@@ -45,8 +45,7 @@
             if ( pushNotificationType == HMPushMovieReady )
             {
                 NSString *remakeID = [notificationInfo objectForKey:@"remake_id"];
-                //NSString *storyName = [notificationInfo objectForKey:@"story_name"];
-                self.pushNotificationFromBG =@{@"remake_id" : remakeID };
+                self.pushNotificationFromBG = @{@"remake_id" : remakeID };
             }
             
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
@@ -68,14 +67,32 @@
     // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
     // add an observer for it.
     
-    
+    NSMutableDictionary *info = [userInfo mutableCopy];
     HMPushNotificationType pushNotificationType = [[userInfo objectForKey:@"type"] intValue];
     
-    if ( pushNotificationType == HMPushMovieReady )
+    NSLog(@"app state: %d" ,application.applicationState);
+    
+    if ( pushNotificationType == HMPushMovieReady || HMPushMovieFailed)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY object:self userInfo:userInfo];
+        if (application.applicationState == UIApplicationStateActive)
+        {
+            [info setObject:[NSNumber numberWithInt:UIApplicationStateActive] forKey:@"app_state"];
+        } else if (application.applicationState == UIApplicationStateInactive)
+        {
+            [info setObject:[NSNumber numberWithInt:UIApplicationStateInactive] forKey:@"app_state"];
+            
+        }
+        
+        if (pushNotificationType == HMPushMovieReady)
+        {
+            [info setObject:[NSNumber numberWithBool:YES] forKey:@"success"];
+        } else
+        {
+            [info setObject:[NSNumber numberWithBool:NO] forKey:@"success"];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS object:self userInfo:info];
     }
-
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken

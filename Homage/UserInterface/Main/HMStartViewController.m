@@ -155,8 +155,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
                                                      object:HMServer.sh];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onUserMovieReady:)
-                                                       name:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_READY
+                                                   selector:@selector(onUserMovieFinishedRendering:)
+                                                       name:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS
                                                      object:[[UIApplication sharedApplication] delegate]];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -645,7 +645,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         if (finished)
         self.renderingContainerView.hidden = YES;
     }];
-    [self displayRectBounds:self.appWrapperView.frame Name:@"self.appContainerView.frame"];
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
@@ -776,15 +775,19 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 }
 
 #pragma mark push notifications handler
--(void)onUserMovieReady:(NSNotification *)notification
+-(void)onUserMovieFinishedRendering:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
-    NSString *storyName = info[@"story_name"];
+    NSString *storyID = info[@"story_id"];
+    NSNumber *appState = info[@"app_state"];
+    NSNumber *success = info[@"success"];
     
-    if ([self isRenderingViewShowing])
+    if (appState.intValue == UIApplicationStateActive)
     {
-       [self.renderingVC presentMovieReady:storyName];
-    } else
+        Story *story = [Story storyWithID:storyID inContext:DB.sh.context];
+        [self.renderingVC presentMovieStatus:success.boolValue forStory:story.name];
+        [self showRenderingView];
+    } else if (appState.intValue == UIApplicationStateInactive && success.boolValue)
     {
         [self switchToTab:HMMeTab];
     }
@@ -844,6 +847,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)dismissLoginScreen
 {
     [self hideLoginScreen];
+}
+
+-(void)dismissRenderingView
+{
+    [self hideRenderingView];
 }
 
 /*#pragma mark iask buttons delegate
