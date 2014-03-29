@@ -92,7 +92,10 @@
 "NOT_NOW" = "Not now";
 "JOIN_NOW" = "Join now!";
 
-
+/*remake options menu*/
+"OPTIONS" = "Options";
+"MARK_AS_INAPPROPRIATE" = "Mark as inappropriate";
+"MARK_AS_INAPPROPRIATE_QUESTION" = "Are you sure you to flag this remake as inappropriate";
 
 
 

@@ -22,7 +22,7 @@
 #import "HMSimpleDataViewController.h"
 #import "HMVideoPlayerVC.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,HMVideoPlayerDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,HMVideoPlayerDelegate,UIActionSheetDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
@@ -31,11 +31,15 @@
 @property (weak, nonatomic) IBOutlet UIView *guiUpperScreenContainer;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
 @property (nonatomic, strong) HMVideoPlayerVC *remakeMoviePlayer;
+@property (nonatomic) Remake *flaggedRemake;
 
 
 @end
 
 @implementation HMStoryDetailsViewController
+
+#define REMAKE_ALERT_TAG 100
+#define MARK_AS_INAPPROPRIATE_TAG 200
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize story = _story;
@@ -373,6 +377,7 @@
     cell.guiUserName.text = remake.user.userID;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     cell.tag = indexPath.item;
+    cell.guiMoreButton.tag = indexPath.item;
     
     if (remake.thumbnail) {
         cell.guiThumbImage.image = remake.thumbnail;
@@ -473,6 +478,7 @@
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
         dispatch_async(dispatch_get_main_queue(), ^{
+            alertView.tag = REMAKE_ALERT_TAG;
             [alertView show];
         });
     } else {
@@ -482,12 +488,43 @@
     
 }
 
-/*- (IBAction)closeButtonPushed:(UIButton *)sender
+
+- (IBAction)moreButtonPushed:(UIButton *)sender
 {
-    HMGLogDebug(@"top view controller is: %@" , [[self.navigationController.topViewController class] description]);
-    [self popViewAnimated:YES];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    self.flaggedRemake = remake;
     
-}*/
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:LS(@"OPTIONS") delegate:self cancelButtonTitle:LS(@"CANCEL") destructiveButtonTitle:nil otherButtonTitles:LS(@"MARK_AS_INAPPROPRIATE"), nil];
+    [actionSheet showInView:self.view];
+}
+
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+   switch (buttonIndex)
+    {
+        case 0:
+            [self showMarkAsInappropriateAlert];
+            break;
+    }
+}
+
+-(void)showMarkAsInappropriateAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"MARK_AS_INAPPROPRIATE", nil) message:NSLocalizedString(@"MARK_AS_INAPPROPRIATE_QUESTION", nil) delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        alertView.tag = MARK_AS_INAPPROPRIATE_TAG;
+        [alertView show];
+    });
+}
+
+-(void)markAsInapppropriate
+{
+    NSString *userID = [User current].userID;
+    NSString *remakeID = self.flaggedRemake.sID;
+    [HMServer.sh markRemakeAsInappropriate:@{@"remake_id" : remakeID , @"user_id" : userID}];
+}
 
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake completion:(void (^)())completion
@@ -499,30 +536,40 @@
     
 }
 
-#pragma mark UITextView delegate
+#pragma mark UIAlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
-    //cancel
-    if (buttonIndex == 0) {
-        [self.guiRemakeActivity setHidden:YES];
-        [self.guiRemakeActivity stopAnimating];
-        self.guiRemakeButton.enabled = YES;
-    }
-    
-    //continue With old remake
-    if (buttonIndex == 1) {
-        [self initRecorderWithRemake:self.oldRemakeInProgress completion:nil];
-        [[Mixpanel sharedInstance] track:@"SDOldRemake" properties:@{@"story" : self.story.name}];
-    }
-    //start new remake
-    if (buttonIndex == 2) {
-        NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
-        [[Mixpanel sharedInstance] track:@"SDNewRemakeOld" properties:@{@"story" : self.story.name}];
-        [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
-        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
-        self.oldRemakeInProgress = nil;
+    if (alertView.tag == REMAKE_ALERT_TAG)
+    {
+        switch (buttonIndex)
+        {
+            case 0:
+                [self.guiRemakeActivity setHidden:YES];
+                [self.guiRemakeActivity stopAnimating];
+                self.guiRemakeButton.enabled = YES;
+                break;
+            case 1:
+                [self initRecorderWithRemake:self.oldRemakeInProgress completion:nil];
+                [[Mixpanel sharedInstance] track:@"SDOldRemake" properties:@{@"story" : self.story.name}];
+                break;
+            case 2:
+                [[Mixpanel sharedInstance] track:@"SDNewRemakeOld" properties:@{@"story" : self.story.name}];
+                NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
+                [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
+                [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+                self.oldRemakeInProgress = nil;
+        }
+    } else if (alertView.tag == MARK_AS_INAPPROPRIATE_TAG)
+    {
+        switch (buttonIndex)
+        {
+            case 0:
+                break;
+            case 1:
+                [self markAsInapppropriate];
+        }
     }
 }
 
@@ -613,6 +660,8 @@
     CGFloat contentInset = self.remakesCV.contentInset.top;
     self.guiDescriptionBG.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
 }
+
+
 
 
 // ============

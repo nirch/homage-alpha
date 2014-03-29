@@ -5,3 +5,4 @@ pod 'InAppSettingsKit', '~> 2.0',   :inhibit_warnings => true
 pod 'Mixpanel',                     :inhibit_warnings => true
 pod 'PLCrashReporter' , '1.2-rc4'
 pod 'Facebook-iOS-SDK', '~> 3.12'
+pod 'Nimbus', '~> 1.2'

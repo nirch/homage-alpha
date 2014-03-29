@@ -787,7 +787,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         Story *story = [Story storyWithID:storyID inContext:DB.sh.context];
         [self.renderingVC presentMovieStatus:success.boolValue forStory:story.name];
         [self showRenderingView];
-    } else if (appState.intValue == UIApplicationStateInactive && success.boolValue)
+    } else if (appState.intValue == UIApplicationStateInactive)
     {
         [self switchToTab:HMMeTab];
     }

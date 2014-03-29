@@ -264,6 +264,7 @@
         self.guiDoneLabel.text = [NSString stringWithFormat:LS(@"REMAKE_FAILED_CLICK") , storyName];
     }
     
+    [self stopTimer];
     [self showDoneViewAnimated:NO];
     
 }

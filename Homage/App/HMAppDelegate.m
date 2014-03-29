@@ -42,7 +42,7 @@
             
             HMPushNotificationType pushNotificationType = [[notificationInfo objectForKey:@"type"] intValue];
             
-            if ( pushNotificationType == HMPushMovieReady )
+            if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
             {
                 NSString *remakeID = [notificationInfo objectForKey:@"remake_id"];
                 self.pushNotificationFromBG = @{@"remake_id" : remakeID };
@@ -56,7 +56,7 @@
         }
     }
     
-    //[FBLoginView class];
+    //x[FBLoginView class];
     return YES;
 }
 
@@ -72,7 +72,7 @@
     
     NSLog(@"app state: %d" ,application.applicationState);
     
-    if ( pushNotificationType == HMPushMovieReady || HMPushMovieFailed)
+    if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
     {
         if (application.applicationState == UIApplicationStateActive)
         {

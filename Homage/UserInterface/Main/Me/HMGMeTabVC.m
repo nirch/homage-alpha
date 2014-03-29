@@ -344,7 +344,7 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
     NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
     //show only inprogress and done remakes
-    NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"(status=1 OR status=3)"];
+    NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"(status=1 OR status=3 OR status=4)"];
     
     NSPredicate *compoundPredicate
     = [NSCompoundPredicate andPredicateWithSubpredicates:@[userPredicate,statusPredicate]];

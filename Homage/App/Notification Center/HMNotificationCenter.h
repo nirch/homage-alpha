@@ -55,6 +55,9 @@
 //update GUI after user updated/switched accounts
 #define HM_REFRESH_USER_DATA @"update gui after user updated/switched accounts"
 
+//server updating client that a remake was flagged as inappropriate
+#define HM_NOTIFICATION_MARKED_AS_INAPPROPRIATE @"server updating client that a remake was flagged as inappropriate"
+
 @interface HMNotificationCenter : NSObject
 
 @end

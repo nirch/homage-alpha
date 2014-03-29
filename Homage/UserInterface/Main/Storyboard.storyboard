@@ -368,11 +368,16 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <view contentMode="scaleToFill" id="Qog-IG-6oe" userLabel="videoPlayerContainerView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="90"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xOl-jN-tkd" userLabel="moreButton">
+                                                    <rect key="frame" x="123" y="60" width="30" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="More">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="moreButtonPushed:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="CGI-6X-15b"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -383,9 +388,9 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="guiMoreButton" destination="xOl-jN-tkd" id="xMx-dg-Zr7"/>
                                             <outlet property="guiThumbImage" destination="Vaa-IJ-F0q" id="9Qq-Qx-a7z"/>
                                             <outlet property="guiUserName" destination="8zk-Pr-2hS" id="Bhs-TJ-rfE"/>
-                                            <outlet property="videoPlayerContainer" destination="Qog-IG-6oe" id="G2C-ng-haB"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -907,7 +912,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xry-Np-IlX" customClass="HMFontButton">
-                                        <rect key="frame" x="137" y="530" width="46" height="30"/>
+                                        <rect key="frame" x="137" y="504" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Cancel">
@@ -918,7 +923,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EHn-lw-3WS" customClass="HMFontButton">
-                                        <rect key="frame" x="137" y="530" width="46" height="30"/>
+                                        <rect key="frame" x="137" y="505" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Guest">
@@ -951,6 +956,13 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up or entering as a Guest you agree to our Terms of Service &amp; Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="trd-fZ-fph" userLabel="TOS label" customClass="NIAttributedLabel">
+                                        <rect key="frame" x="13" y="529" width="299" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="1" green="0.49019607840000001" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </scrollView>
@@ -969,6 +981,7 @@
                         <outlet property="guiPasswordTextField" destination="XfZ-Fw-lJk" id="psS-X7-k6b"/>
                         <outlet property="guiSignUpView" destination="29A-AE-HRd" id="TJv-Ep-htm"/>
                         <outlet property="guiSignupButton" destination="4Ml-B1-sdD" id="6NH-z7-agQ"/>
+                        <outlet property="guiTOSLabel" destination="trd-fZ-fph" id="HmC-EO-GLn"/>
                         <outletCollection property="buttonCollection" destination="4Ml-B1-sdD" id="2P0-yO-Cpk"/>
                         <outletCollection property="buttonCollection" destination="2ka-xU-4Lb" id="j6u-bK-XfI"/>
                         <outletCollection property="buttonCollection" destination="EHn-lw-3WS" id="Dp1-SI-40O"/>
@@ -1033,6 +1046,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="More" width="50" height="10"/>
         <image name="background" width="452" height="447"/>
         <image name="iconSmallXBlack" width="12" height="17"/>
         <image name="logo" width="118" height="48"/>

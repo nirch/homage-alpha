@@ -94,6 +94,10 @@
  *  @param storyID  The id of the story
  */
 -(void)refetchRemakesWithStoryID:(NSString *)storyID;
+
+
+
+-(void)markRemakeAsInappropriate:(NSDictionary *)userParams;
     
     
     
