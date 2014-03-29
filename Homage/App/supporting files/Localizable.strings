@@ -83,6 +83,7 @@
 "UNSUFFICIENT PASSWORD" = "Password must be at least 6 charecters long";
 "EMAIL_TAKEN" = "Email address already used";
 "EXISTING_FACEBOOK_USER" = "Mail address is already associated with facebook account";
+"NO_CONNECTIVITY" = "No Internet connection. plz check your internet status";
 
 "HELLO USER" = "Hello %@";
 

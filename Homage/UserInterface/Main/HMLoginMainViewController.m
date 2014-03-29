@@ -22,6 +22,7 @@
 #import "NimbusAttributedLabel.h"
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMIncorrectMailAddressFormat,
     HMMailAddressAlreadyTaken,
     HMExistingFacebookUser,
+    HMNoConnectivity,
 };
 
 
@@ -264,6 +266,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         case HMExistingFacebookUser:
             [self showErrorLabelWithString:LS(@"EXISTING_FACEBOOK_USER")];
             break;
+        case HMNoConnectivity:
+            [self showErrorLabelWithString:LS(@"NO_CONNECTIVITY")];
         default:
             break;
     }
@@ -347,6 +351,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     if (![self checkCredentials]) return;
     
+    if (!HMServer.sh.isReachable)
+    {
+        [self presentErrorLabelWithReason:HMNoConnectivity];
+        return;
+    }
+    
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
@@ -370,6 +380,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = @"guest";
+    
+    if (!HMServer.sh.isReachable)
+    {
+        [self presentErrorLabelWithReason:HMNoConnectivity];
+        return;
+    }
     
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
