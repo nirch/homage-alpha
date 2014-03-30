@@ -3,7 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>PreferenceSpecifiers</key>
-	<array/>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>APPLICATION_INFO_TITLE</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>1.0</string>
+			<key>Key</key>
+			<string>version</string>
+			<key>Title</key>
+			<string>VERSION</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
+	</array>
 	<key>StringsTable</key>
 	<string>Root</string>
 </dict>

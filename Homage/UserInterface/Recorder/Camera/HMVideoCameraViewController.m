@@ -329,7 +329,10 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 
 -(void)updateOrientation:(UIInterfaceOrientation)orientation
 {
-    self.previewLayer.connection.videoOrientation = [self avOrientationForDeviceOrientation:orientation];
+    
+    UIDeviceOrientation deviceOrientation = (UIDeviceOrientation)orientation;
+    self.previewLayer.connection.videoOrientation = [self avOrientationForDeviceOrientation:deviceOrientation];
+    
 }
 
 -(BOOL)shouldAutorotate

@@ -123,9 +123,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)initGUI
 {
     self.sideBarContainerView.hidden = YES;
-    CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-    HMGLogDebug(@"renderingBarHeight is %f" , renderingBarHeight);
-
     self.renderingContainerView.hidden = YES;
     self.loginContainerView.hidden = YES;
     self.loginContainerView.alpha = 0;
