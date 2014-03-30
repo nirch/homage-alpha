@@ -14,8 +14,8 @@
 
 @implementation UIDevice (ALSystemVersion)
 
-static const CGFloat movieBackgroundPadding = 0.f;
-static const NSTimeInterval fullscreenAnimationDuration = 0.3;
+//static const CGFloat movieBackgroundPadding = 0.f;
+//static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 + (float)iOSVersion {
     static float version = 0.f;

@@ -587,22 +587,6 @@
     }
 }
 
-#pragma mark helper functions
--(void)popViewAnimated:(BOOL)animated
-{
-    HMGLogDebug(@"top view controller is: %@" , [[self.navigationController.topViewController class] description]);
-    for (id vc in self.navigationController.viewControllers)
-    {
-        HMGLogDebug(@"vc is: %@" , [[vc class] description]);
-    }
-    id popedVC = [self.navigationController popViewControllerAnimated:animated];
-    HMGLogDebug(@"popped %@" , [[popedVC class] description]);
-    for (id vc in self.navigationController.viewControllers)
-    {
-        HMGLogDebug(@"vc is: %@" , [[vc class] description]);
-    }
-    HMGLogDebug(@"top view controller is: %@" , [[self.navigationController.topViewController class] description]);
-}
 
 #pragma mark - HMRecorderDelegate
 -(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason
