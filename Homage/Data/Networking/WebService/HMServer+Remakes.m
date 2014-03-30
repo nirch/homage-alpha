@@ -91,6 +91,15 @@
      ];
 }
 
-   
-    
+
+-(void)markRemakeAsInappropriate:(NSDictionary *)userParams
+{
+    [self postRelativeURLNamed:@"report inappropriate"
+                    parameters:userParams
+              notificationName:HM_NOTIFICATION_MARKED_AS_INAPPROPRIATE
+                          info:nil 
+                        parser:nil
+     ];
+}
+
 @end

@@ -19,6 +19,11 @@
 #import "HMFontButton.h"
 #import "HMFontLabel.h"
 #import "HMColor.h"
+#import "NimbusAttributedLabel.h"
+#import "HMTOSViewController.h"
+#import "HMPrivacyPolicyViewController.h"
+#import "HMServer+ReachabilityMonitor.h"
+
 
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {
     HMFaceBookConnect,
@@ -34,10 +39,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMIncorrectMailAddressFormat,
     HMMailAddressAlreadyTaken,
     HMExistingFacebookUser,
+    HMNoConnectivity,
 };
 
 
-@interface HMLoginMainViewController () <FBLoginViewDelegate,UITextFieldDelegate,HMIntroMovieDelegate>
+@interface HMLoginMainViewController () <FBLoginViewDelegate,UITextFieldDelegate,HMIntroMovieDelegate,NIAttributedLabelDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainerView;
@@ -51,6 +57,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (weak, nonatomic) IBOutlet UILabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+@property (weak, nonatomic) IBOutlet NIAttributedLabel *guiTOSLabel;
+
 
 @property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
 @property (strong, nonatomic) IBOutletCollection(HMFontLabel) NSArray *labelCollection;
@@ -60,6 +68,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
 @property (nonatomic) BOOL userJoinFlow;
+@property (nonatomic) UINavigationController *legalNavVC;
+@property (nonatomic) HMTOSViewController *tosVC;
+@property (nonatomic) HMPrivacyPolicyViewController *privacyVC;
 
 @property NSString *loginMethod;
 
@@ -147,6 +158,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     //TODO: hide forgot pass for now
     self.guiForgotPasswordButton.hidden = YES;
+    
+    self.guiTOSLabel.delegate = self;
+    [self.guiTOSLabel addLink:[NSURL URLWithString: @"TOS"] range:[self.guiTOSLabel.text rangeOfString:@"Terms of Service"]];
+    [self.guiTOSLabel addLink:[NSURL URLWithString: @"Privacy"] range:[self.guiTOSLabel.text rangeOfString:@"Privacy Policy"]];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
@@ -253,6 +268,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         case HMExistingFacebookUser:
             [self showErrorLabelWithString:LS(@"EXISTING_FACEBOOK_USER")];
             break;
+        case HMNoConnectivity:
+            [self showErrorLabelWithString:LS(@"NO_CONNECTIVITY")];
         default:
             break;
     }
@@ -336,6 +353,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     if (![self checkCredentials]) return;
     
+    if (!HMServer.sh.isReachable)
+    {
+        [self presentErrorLabelWithReason:HMNoConnectivity];
+        return;
+    }
+    
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
@@ -359,6 +382,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = @"guest";
+    
+    if (!HMServer.sh.isReachable)
+    {
+        [self presentErrorLabelWithReason:HMNoConnectivity];
+        return;
+    }
     
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
@@ -693,6 +722,56 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.delegate dismissLoginScreen];
     self.guiCancelButton.hidden = YES;
     
+}
+
+#pragma mark niattributedlabel delegate
+- (void)attributedLabel:(NIAttributedLabel *)attributedLabel didSelectTextCheckingResult:(NSTextCheckingResult *)result atPoint:(CGPoint)point
+{
+    NSString *selected = [result.URL absoluteString];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    
+    self.tosVC = [[HMTOSViewController alloc] init];
+    self.privacyVC = [[HMPrivacyPolicyViewController alloc] init];
+    self.legalNavVC = [[UINavigationController alloc] init];
+    
+    if ([selected isEqualToString:@"TOS"])
+    {
+        [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
+        self.tosVC.navigationItem.hidesBackButton = YES;
+        self.tosVC.navigationItem.leftBarButtonItem = doneButton;
+        UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
+        self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
+        self.tosVC.navigationItem.hidesBackButton = YES;
+        [self presentViewController:self.legalNavVC animated:YES completion:nil];
+
+    } else if ([selected isEqualToString:@"Privacy"])
+    {
+        [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
+        self.privacyVC.navigationItem.hidesBackButton = YES;
+        self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
+        UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
+        self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
+        self.privacyVC.navigationItem.hidesBackButton = YES;
+        [self presentViewController:self.legalNavVC animated:YES completion:nil];
+    }
+    
+}
+
+-(void)dismissLegalNavcontroller:(UIBarButtonItem *)sender
+{
+    [self.legalNavVC dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)showTOS:(UIBarButtonItem *)sender
+{
+    [self.legalNavVC pushViewController:self.tosVC animated:YES];
+}
+
+-(void)showPrivacy:(UIBarButtonItem *)sender
+{
+   
+    [self.legalNavVC pushViewController:self.privacyVC animated:YES];
 }
 
 @end
