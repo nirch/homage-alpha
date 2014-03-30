@@ -370,7 +370,7 @@
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xOl-jN-tkd" userLabel="moreButton">
                                                     <rect key="frame" x="123" y="60" width="30" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <state key="normal" image="More">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -525,7 +525,7 @@
                                                             <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                                                         </view>
                                                         <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xnf-kT-Sf2">
-                                                            <rect key="frame" x="0.0" y="133" width="44" height="44"/>
+                                                            <rect key="frame" x="3" y="133" width="44" height="44"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal" image="trash">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -728,21 +728,6 @@
             </objects>
             <point key="canvasLocation" x="166" y="798"/>
         </scene>
-        <!--Video PlayerVC-->
-        <scene sceneID="ce6-Tk-Wea">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C9z-GV-DEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="NfA-vz-fpl" customClass="HMVideoPlayerVC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="f4D-QH-d70">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <nil key="simulatedStatusBarMetrics"/>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="850" y="873"/>
-        </scene>
         <!--Mside Bar View Controller-->
         <scene sceneID="O9B-PB-KWL">
             <objects>
@@ -912,7 +897,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xry-Np-IlX" customClass="HMFontButton">
-                                        <rect key="frame" x="137" y="504" width="46" height="30"/>
+                                        <rect key="frame" x="136" y="485" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Cancel">
@@ -923,7 +908,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EHn-lw-3WS" customClass="HMFontButton">
-                                        <rect key="frame" x="137" y="505" width="46" height="30"/>
+                                        <rect key="frame" x="136" y="486" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Guest">
@@ -1046,7 +1031,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="More" width="50" height="10"/>
+        <image name="More" width="25" height="5"/>
         <image name="background" width="452" height="447"/>
         <image name="iconSmallXBlack" width="12" height="17"/>
         <image name="logo" width="118" height="48"/>
@@ -1054,7 +1039,7 @@
         <image name="settingsBlack" width="44" height="44"/>
         <image name="share" width="19" height="27"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
-        <image name="trash" width="28" height="38"/>
+        <image name="trash" width="19" height="25"/>
         <image name="warning" width="200" height="200"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

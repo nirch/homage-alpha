@@ -462,7 +462,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (userID)[mixpanel identify:userID];
     if (userEmail)
     {
-        //[[NSUserDefaults standardUserDefaults] setValue:userEmail forKey:@"useremail"];
         [mixpanel registerSuperProperties:@{@"email": userEmail}];
         [mixpanel.people set:@{@"user" : userEmail}];
     }
@@ -501,6 +500,16 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [user loginInContext:DB.sh.context];
     //[[NSUserDefaults standardUserDefaults] setBool:YES  forKey:@"remakesArePublic"];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
+    
+    //mixPanel analitics
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    if (userID)[mixpanel identify:userID];
+    if (user.email)
+    {
+        [mixpanel registerSuperProperties:@{@"email": user.email}];
+        [mixpanel.people set:@{@"user" : user.email}];
+    }
+    [mixpanel track:@"UserUpdate" properties:@{@"login_method" : self.loginMethod}];
     [self.delegate onUserLoginStateChange:[User current]];
     [self.delegate dismissLoginScreen];
     self.userJoinFlow = NO;
