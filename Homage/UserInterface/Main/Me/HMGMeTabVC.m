@@ -305,7 +305,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
-    NSLog(@"num of fetched objects: %d" , self.fetchedResultsController.fetchedObjects.count);
+    HMGLogDebug(@"num of fetched objects: %d" , self.fetchedResultsController.fetchedObjects.count);
     if (error) {
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
         return;

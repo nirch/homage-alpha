@@ -863,7 +863,7 @@
 -(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
-    [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
+    [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%ld" , sceneID.longValue]}];
     
     NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                    @"icon name":@"iconSceneDescription",
@@ -909,8 +909,8 @@
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
     
-    NSString *eventName = [NSString stringWithFormat:@"REFinishedScene%d" , sceneID.integerValue];
-    [[Mixpanel sharedInstance] track:eventName properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%d" , sceneID.integerValue]}];
+    NSString *eventName = [NSString stringWithFormat:@"REFinishedScene%ld" , sceneID.longValue];
+    [[Mixpanel sharedInstance] track:eventName properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%ld" , sceneID.longValue]}];
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                           info:@{@"text":nextScene.context,
