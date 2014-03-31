@@ -19,7 +19,6 @@
 #import "HMFontButton.h"
 #import "HMFontLabel.h"
 #import "HMColor.h"
-#import "NimbusAttributedLabel.h"
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
@@ -43,7 +42,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 };
 
 
-@interface HMLoginMainViewController () <FBLoginViewDelegate,UITextFieldDelegate,HMIntroMovieDelegate,NIAttributedLabelDelegate>
+@interface HMLoginMainViewController () <FBLoginViewDelegate,UITextFieldDelegate,HMIntroMovieDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainerView;
@@ -57,7 +56,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (weak, nonatomic) IBOutlet UILabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
-@property (weak, nonatomic) IBOutlet NIAttributedLabel *guiTOSLabel;
+
 
 
 @property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
@@ -110,6 +109,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(void)viewDidAppear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    self.tosVC = [[HMTOSViewController alloc] init];
+    self.privacyVC = [[HMPrivacyPolicyViewController alloc] init];
+    self.legalNavVC = [[UINavigationController alloc] init];
     [self initObservers];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -158,10 +160,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     //TODO: hide forgot pass for now
     self.guiForgotPasswordButton.hidden = YES;
-    
-    self.guiTOSLabel.delegate = self;
-    [self.guiTOSLabel addLink:[NSURL URLWithString: @"TOS"] range:[self.guiTOSLabel.text rangeOfString:@"Terms of Service"]];
-    [self.guiTOSLabel addLink:[NSURL URLWithString: @"Privacy"] range:[self.guiTOSLabel.text rangeOfString:@"Privacy Policy"]];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
@@ -731,7 +729,35 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
 }
 
-#pragma mark niattributedlabel delegate
+
+
+- (IBAction)termsOfServicePushed:(id)sender
+{
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
+    self.tosVC.navigationItem.hidesBackButton = YES;
+    self.tosVC.navigationItem.leftBarButtonItem = doneButton;
+    UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
+    self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
+    self.tosVC.navigationItem.hidesBackButton = YES;
+    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+}
+
+
+
+- (IBAction)privacyPolicyPushed:(id)sender
+{
+   UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
+    self.privacyVC.navigationItem.hidesBackButton = YES;
+    self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
+    UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
+    self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
+    self.privacyVC.navigationItem.hidesBackButton = YES;
+    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+}
+
+/*#pragma mark niattributedlabel delegate
 - (void)attributedLabel:(NIAttributedLabel *)attributedLabel didSelectTextCheckingResult:(NSTextCheckingResult *)result atPoint:(CGPoint)point
 {
     NSString *selected = [result.URL absoluteString];
@@ -763,7 +789,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [self presentViewController:self.legalNavVC animated:YES completion:nil];
     }
     
-}
+}*/
 
 -(void)dismissLegalNavcontroller:(UIBarButtonItem *)sender
 {
