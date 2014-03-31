@@ -286,8 +286,7 @@
     // and prepare to play the video.
     _timePressedPlay = [NSDate date];
     self.waitingToStartPlayingTheFile = YES;
-    NSURL *url = [NSURL URLWithString:self.videoURL];
-    HMGLogDebug(@"Trying to play video at:%@", url);
+    HMGLogDebug(@"Trying to play video at:%@", [[NSURL URLWithString:self.videoURL] description]);
     [self.videoPlayer prepareToPlay];
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];

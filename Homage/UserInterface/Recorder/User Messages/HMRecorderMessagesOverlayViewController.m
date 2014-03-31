@@ -325,7 +325,7 @@
                            @"sceneID":[self.remakerDelegate currentSceneID],
                            @"dismissOnDecision":@NO
                            };
-    [[Mixpanel sharedInstance] track:@"RERetakeLast" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%d" , [self.remakerDelegate currentSceneID].integerValue] , @"story" : [self.remakerDelegate remake].story.name}];
+    [[Mixpanel sharedInstance] track:@"RERetakeLast" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name}];
     HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
     [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
     
@@ -333,7 +333,7 @@
 
 - (IBAction)onPressedPreviewLastSceneButton:(UIButton *)sender
 {
-    [[Mixpanel sharedInstance] track:@"RESeePreview" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%d" , [self.remakerDelegate currentSceneID].integerValue] , @"story" : [self.remakerDelegate remake].story.name}];
+    [[Mixpanel sharedInstance] track:@"RESeePreview" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name}];
     Remake *remake = [self.remakerDelegate remake];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
     if (footage.rawLocalFile) {
@@ -345,7 +345,7 @@
 
 - (IBAction)onPressedOopsDontRetakeButton:(UIButton *)sender
 {
-    [[Mixpanel sharedInstance] track:@"REOopsNope" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%d" , [self.remakerDelegate currentSceneID].integerValue] , @"story" : [self.remakerDelegate remake].story.name}];
+    [[Mixpanel sharedInstance] track:@"REOopsNope" properties:@{@"sceneNum" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name}];
     
     if (self.shouldDismissOnDecision) {
         [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];

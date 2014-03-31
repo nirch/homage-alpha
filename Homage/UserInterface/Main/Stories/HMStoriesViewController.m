@@ -219,7 +219,7 @@
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
             Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
-            [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name , @"index" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
+            [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
         }        
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);

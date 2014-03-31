@@ -102,7 +102,7 @@
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserUpdated:)
-                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATE
+                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATED
                                                      object:nil];
 }
 
@@ -110,7 +110,7 @@
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UPDATE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UPDATED object:nil];
 }
 
 

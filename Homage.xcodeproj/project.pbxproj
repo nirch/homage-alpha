@@ -233,7 +233,7 @@
 		26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
-		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
+		69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
@@ -520,7 +520,7 @@
 				08455FD8189032FF0040504D /* AWSS3.framework in Frameworks */,
 				0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */,
 				08455FD5189032B90040504D /* AWSRuntime.framework in Frameworks */,
-				8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */,
+				69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1207,11 +1207,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0806FA3818828AEB007514BE /* Build configuration list for PBXNativeTarget "Homage" */;
 			buildPhases = (
-				EFAF3DD1607B400EAC51FC14 /* Check Pods Manifest.lock */,
+				D89B15CE97D34CBBA9A11AFD /* Check Pods Manifest.lock */,
 				0806FA0818828AEB007514BE /* Sources */,
 				0806FA0918828AEB007514BE /* Frameworks */,
 				0806FA0A18828AEB007514BE /* Resources */,
-				4710E0766DC645DA947CF267 /* Copy Pods Resources */,
+				B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1331,7 +1331,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4710E0766DC645DA947CF267 /* Copy Pods Resources */ = {
+		B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1346,7 +1346,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EFAF3DD1607B400EAC51FC14 /* Check Pods Manifest.lock */ = {
+		D89B15CE97D34CBBA9A11AFD /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

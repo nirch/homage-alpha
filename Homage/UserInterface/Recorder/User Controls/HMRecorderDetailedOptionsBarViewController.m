@@ -623,7 +623,7 @@
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
-    NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%d" , self.sceneID.integerValue];
+    NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%ld" , self.sceneID.longValue];
     [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID}];
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
@@ -662,7 +662,7 @@
 - (IBAction)onPressedSelectScene:(UIButton *)sender
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-    [[Mixpanel sharedInstance] track:@"REReturnToScene" properties:@{@"sceneNumber" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
+    [[Mixpanel sharedInstance] track:@"REReturnToScene" properties:@{@"sceneNumber" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
     NSInteger index = [self sceneIndexForIndexPath:indexPath];
     HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
     

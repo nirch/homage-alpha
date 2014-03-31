@@ -768,8 +768,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 }
             }
             if (frameRateSupported) {
-                device.activeVideoMinFrameDuration = CMTimeMake(1, minFPS);
-                device.activeVideoMaxFrameDuration = CMTimeMake(1, maxFPS);
+                device.activeVideoMinFrameDuration = CMTimeMake(1, (int)minFPS);
+                device.activeVideoMaxFrameDuration = CMTimeMake(1, (int)maxFPS);
                 HMGLogDebug(@"Changed to frame rate range: %d - %d", minFPS, maxFPS);
             } else {
                 HMGLogDebug(@"Frame rate range unsupported: %d - %d. Using camera defaults instead.", minFPS, maxFPS);

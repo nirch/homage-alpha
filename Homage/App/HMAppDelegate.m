@@ -70,8 +70,6 @@
     NSMutableDictionary *info = [userInfo mutableCopy];
     HMPushNotificationType pushNotificationType = [[userInfo objectForKey:@"type"] intValue];
     
-    NSLog(@"app state: %d" ,application.applicationState);
-    
     if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
     {
         if (application.applicationState == UIApplicationStateActive)

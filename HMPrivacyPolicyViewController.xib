@@ -15,10 +15,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="RRw-W9-zBU">
-                    <rect key="frame" x="0.0" y="81" width="320" height="487"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="34" width="320" height="534"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <mutableString key="text">Homage Technology Ltd. ("we" or "us") provides this Privacy Policy to inform you of our policies and procedures regarding the collection, use and disclosure of personal information we receive when you use Homage mobile App. ("App." or "Homage"). By using the Homage, you are consenting to the terms and practices described in this Policy.
+                    <string key="text">Homage Technology Ltd. ("we" or "us") provides this Privacy Policy to inform you of our policies and procedures regarding the collection, use and disclosure of personal information we receive when you use Homage mobile App. ("App." or "Homage"). By using the Homage, you are consenting to the terms and practices described in this Policy.
 We reserve the right to change this Policy. We will inform you of any such change by posting it on this page, with the effective date of any change clearly marked. You are advised to consult this Policy regularly for any changes. 
 INFORMATION COLLECTED
 
@@ -74,12 +74,12 @@ Any requests for access to your information, modification or correction of your 
 
 Last Modified: ____27/03/2014 
 © Homage Technology Ltd., 2014
-</mutableString>
+</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Umm-kX-9O3">
-                    <rect key="frame" x="9" y="63" width="303" height="21"/>
+                    <rect key="frame" x="9" y="11" width="303" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
