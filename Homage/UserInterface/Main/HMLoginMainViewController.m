@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMMailAddressAlreadyTaken,
     HMExistingFacebookUser,
     HMNoConnectivity,
+    HMUnknownError,
 };
 
 
@@ -176,7 +177,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserUpdated:)
-                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATE
+                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATED
                                                      object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -194,7 +195,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UPDATE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UPDATED object:nil];
     [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -266,6 +267,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
             break;
         case HMNoConnectivity:
             [self showErrorLabelWithString:LS(@"NO_CONNECTIVITY")];
+            break;
+        case HMUnknownError:
+            [self showErrorLabelWithString:LS(@"UNKNOWN_ERROR")];
+            break;
         default:
             break;
     }
@@ -286,6 +291,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(void)hideErrorLabel
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    if (self.guiLoginErrorLabel.hidden) return;
+    
     [UIView animateWithDuration:0.3 animations:^{
         self.guiLoginErrorLabel.alpha = 0;
     } completion:^(BOOL finished) {
@@ -331,7 +338,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } else if (self.userJoinFlow && [User current])
     {
         NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES , @"email" : [user objectForKey:@"email"]};
-        [HMServer.sh updateUserWithDictionary:FBUpdateDictionary];
+        [HMServer.sh updateUserUponJoin:FBUpdateDictionary];
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -365,7 +372,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } else if(self.userJoinFlow && [User current])
     {
         NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : [User current].isPublic , @"device" : deviceInfo};
-        [HMServer.sh updateUserWithDictionary:mailSignUpDictionary];
+        [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
     }
     
     self.guiMailTextField.text = @"";
@@ -425,11 +432,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
                 [self presentErrorLabelWithReason:HMIncorrectPassword];
                 return;
                 break;
-            case 1004:
+            case 1004: //existing fb user
                 [self presentErrorLabelWithReason:HMExistingFacebookUser];
                 return;
                 break;
             default:
+                [self presentErrorLabelWithReason:HMUnknownError];
+                return;
                 break;
         }
     }
@@ -488,6 +497,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
                 return;
                 break;
             default:
+                [self presentErrorLabelWithReason:HMUnknownError];
+                return;
                 break;
         }
     }
@@ -726,10 +737,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     [self.delegate dismissLoginScreen];
     self.guiCancelButton.hidden = YES;
-    
+    [self hideErrorLabel];
 }
-
-
 
 - (IBAction)termsOfServicePushed:(id)sender
 {

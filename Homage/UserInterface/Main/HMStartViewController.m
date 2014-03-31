@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserPreferencesUpdate:)
-                                                       name:HM_NOTIFICATION_SERVER_USER_UPDATE
+                                                       name:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
                                                      object:nil];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     NSString *shareValue = shareRemakes ? @"YES" : @"NO";
     
-    [HMServer.sh updateUserWithDictionary:@{@"user_id" : userID , @"is_public" : shareValue}];
+    [HMServer.sh updateUserPreferences:@{@"user_id" : userID , @"is_public" : shareValue}];
 }
 
 #pragma mark - Splash View

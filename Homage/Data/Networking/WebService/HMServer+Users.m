@@ -26,13 +26,23 @@
      ];
 }
 
--(void)updateUserWithDictionary:(NSDictionary *)userParams
+-(void)updateUserUponJoin:(NSDictionary *)userParams
 {
     [self putRelativeURLNamed:@"update user"
                     parameters:userParams
-              notificationName:HM_NOTIFICATION_SERVER_USER_UPDATE
+              notificationName:HM_NOTIFICATION_SERVER_USER_UPDATED
                          info:@{}
                         parser:[HMUserParser new]
+     ];
+}
+
+-(void)updateUserPreferences:(NSDictionary *)userParams
+{
+    [self putRelativeURLNamed:@"update user"
+                   parameters:userParams
+             notificationName:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
+                         info:@{}
+                       parser:[HMUserParser new]
      ];
 }
 

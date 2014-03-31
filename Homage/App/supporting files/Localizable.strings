@@ -74,7 +74,7 @@
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 
-"CAMERA_NOT_STABLE" = "Camera unstable! please keep the camera steady while shooting";
+"CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
 "CAMERA_NOT_STABLE_TITLE" = "Wow there Shaaaaaaaky...";
 
 "UNKNOWN_MAIL_ADDRESS" = "Unknown mail address";
@@ -83,13 +83,14 @@
 "UNSUFFICIENT PASSWORD" = "Password must be at least 6 charecters long";
 "EMAIL_TAKEN" = "Email address already used";
 "EXISTING_FACEBOOK_USER" = "Mail address is already associated with facebook account";
-"NO_CONNECTIVITY" = "No Internet connection. plz check your internet status";
+"NO_CONNECTIVITY" = "No Internet connection. Please check your internet status";
+"UNKNOWN_ERROR" = "Error Occurred. Please try again later";
 
 "HELLO USER" = "Hello %@";
 
 "SIGN_UP_NOW" = "Join us!";
-"ONLY_SIGN_IN_USERS_CAN_SHARE" = "Only signed in users can share remakes. plz sign in to continue";
-"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES" = "Only signed in users can publish remakes. plz sign in to continue";
+"ONLY_SIGN_IN_USERS_CAN_SHARE" = "Only signed in users can share remakes. Please sign in to continue";
+"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES" = "Only signed in users can publish remakes. Please sign in to continue";
 "NOT_NOW" = "Not now";
 "JOIN_NOW" = "Join now!";
 
