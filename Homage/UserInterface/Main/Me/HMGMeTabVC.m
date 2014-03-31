@@ -265,10 +265,10 @@
         });
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     } else {
-        [self refetchRemakesFromServer];
         Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
         [DB.sh.context deleteObject:remake];
         [remake deleteRawLocalFiles];
+        [self refetchRemakesFromServer];
     }
     
     
