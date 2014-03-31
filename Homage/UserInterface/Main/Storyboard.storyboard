@@ -687,12 +687,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="33"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done!  Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwU-c8-CZT" customClass="HMFontLabel">
-                                        <rect key="frame" x="1" y="0.0" width="319" height="35"/>
+                                        <rect key="frame" x="1" y="5" width="319" height="19"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
