@@ -105,6 +105,7 @@
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [self initRemakerState];
     [self initOptions];
+    [self initGUI];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -140,7 +141,8 @@
 #pragma mark - UI initializations
 -(void)initGUI
 {
-    self.guiSilhouetteImageView.alpha = 0;
+    //self.guiSilhouetteImageView.alpha = 0;
+    [self loadSilhouettes];
 }
 
 #pragma mark - Recorder state flow
@@ -683,10 +685,19 @@
     }
 }
 
+-(void)loadSilhouettes
+{
+    for (Scene *scene in self.remake.story.scenes)
+    {
+        [self silhouetteForScene:scene];
+    }
+}
+
 #pragma mark - Lazy loading
 -(UIImage *)silhouetteForScene:(Scene *)scene
 {
     if (scene.silhouette) return scene.silhouette;
+    
     [HMServer.sh lazyLoadImageFromURL:scene.silhouetteURL
                      placeHolderImage:nil
                      notificationName:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
