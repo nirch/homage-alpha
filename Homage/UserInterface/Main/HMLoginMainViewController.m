@@ -509,7 +509,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     NSString *userID = userInfo[@"userID"];
     User *user = [User userWithID:userID inContext:DB.sh.context];
     [user loginInContext:DB.sh.context];
-    //[[NSUserDefaults standardUserDefaults] setBool:YES  forKey:@"remakesArePublic"];
+    
+    //when a user upgrades from guest to fb or mail, his default sharing prefrence is public
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"remakesArePublic"];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     
     //mixPanel analitics

@@ -175,7 +175,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     }
     
     NSString *shareValue = shareRemakes ? @"YES" : @"NO";
-    
     [HMServer.sh updateUserPreferences:@{@"user_id" : userID , @"is_public" : shareValue}];
 }
 
