@@ -160,10 +160,10 @@
                                                      object:nil];
     
     // Observe deletion of remake
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeDeletion:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
-                                                     object:nil];
+                                                     object:nil];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -174,7 +174,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
+    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -613,11 +613,13 @@
     }];
 }
 
--(void)onRemakeDeletion:(NSNotification *)notification
+/*-(void)onRemakeDeletion:(NSNotification *)notification
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remakeID"];
+    
+    NSLog(@"story details tab - onRemakeDeletion: remakeID: %@" , remakeID);
     
     if (notification.isReportingError) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
@@ -632,11 +634,12 @@
         NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     } else {
         Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+        NSLog(@"story details tab - onRemakeDeletion: remake object id: %@" , remake.sID);
         if (remake) [DB.sh.context deleteObject:remake];
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
+}*/
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
