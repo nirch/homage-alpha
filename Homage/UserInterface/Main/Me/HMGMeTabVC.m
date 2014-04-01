@@ -662,7 +662,10 @@
     [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"Story" : self.remakeToContinueWith.story.name}];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
-    if (self.remakeToContinueWith.status.integerValue != HMGRemakeStatusDone) {
+    NSInteger remakeStatus = self.remakeToContinueWith.status.integerValue;
+    //we only want to suggest to continue a remake if a remake is not done or rendering
+    if (remakeStatus != HMGRemakeStatusDone && remakeStatus != HMGRemakeStatusRendering)
+    {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
         alertView.tag = REMAKE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
