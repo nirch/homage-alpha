@@ -99,20 +99,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     } failHandler:^{
         [self failedStartingApplication];
     }];
-    
-    /*HMAppDelegate *appDelegate = (HMAppDelegate*)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.pushNotificationFromBG)
-    {
-        [self initGUI];
-        [self initObservers];
-        [DB.sh useDocumentWithSuccessHandler:^{
-            [self startApplication];
-        } failHandler:^{
-            [self failedStartingApplication];
-        }];
-        [self meButtonPushed];
-    }*/
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated

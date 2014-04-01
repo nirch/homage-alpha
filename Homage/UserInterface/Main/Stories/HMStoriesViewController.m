@@ -44,6 +44,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self.refreshControl endRefreshing];
     [self removeObservers];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
