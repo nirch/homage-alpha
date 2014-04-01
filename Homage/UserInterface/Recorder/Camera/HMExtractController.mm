@@ -16,7 +16,9 @@
 #include "HomageLib/Homage.h"
 
 @interface HMExtractController (){
-
+    
+    CFrameBufferIos *m_fb;
+    CHomage *m_hm;
 }
 
 @property (nonatomic, readonly, weak) AVCaptureSession *session;
@@ -44,6 +46,11 @@
 {
     self = [super init];
     if (self) {
+        // TODO: Initialize CHomage here.
+        // Is CFrameBufferIos *m_fb really needed? The images are now provided in the recording output delegate.
+        // No need to get the frames in the C++ code.
+        // m_hm = new CHomage( NULL );
+        
     }
     return self;
 }
@@ -125,6 +132,9 @@
     UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
     
     // TODO: Manipulate image using the algorithm here.
+    // Need to be able to call CHomage -> Process here and pass it directly a UIImage or CMSampleBufferRef object for each frame.
+    // (no need for the C++ code to handle capturing the frames directly from the camera)
+
     
     // Append manipulated frame to disk.
     self.presentTime = CMTimeAdd(self.presentTime,self.frameTime);

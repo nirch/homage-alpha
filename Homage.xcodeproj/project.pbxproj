@@ -1671,6 +1671,12 @@
 					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
+					"-lGpw",
+					"-lImage",
+					"-lUtil",
+					"-lHomageLib",
+					"-lImageAcquisition",
+					"-lMattingLib",
 					"-ObjC",
 					"-framework",
 					Accelerate,
@@ -1737,6 +1743,12 @@
 					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
+					"-lGpw",
+					"-lImage",
+					"-lUtil",
+					"-lHomageLib",
+					"-lImageAcquisition",
+					"-lMattingLib",
 					"-ObjC",
 					"-framework",
 					Accelerate,
