@@ -62,7 +62,10 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self stopStoryMoviePlayer];
+    
+    //when switching movieplayer to full screen, viewWillDisappear is also called
+    if (!self.moviePlayer.isFullscreen) [self stopStoryMoviePlayer];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
 }
