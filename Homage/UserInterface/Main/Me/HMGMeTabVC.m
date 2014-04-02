@@ -663,8 +663,9 @@
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
     NSInteger remakeStatus = self.remakeToContinueWith.status.integerValue;
-    //we only want to suggest to continue a remake if a remake is not done or rendering
-    if (remakeStatus != HMGRemakeStatusDone && remakeStatus != HMGRemakeStatusRendering)
+    
+    //we only want to suggest to continue a remake if a remake is in user progress or timed out and we want to give him the option to send to rendering again
+    if (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout)
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
         alertView.tag = REMAKE_ALERT_VIEW_TAG;
@@ -742,7 +743,6 @@
         
         //continue with old remake
         if (buttonIndex == 1) {
-            // Present the recorder for the newly created remake.
             [self initRecorderWithRemake:self.remakeToContinueWith];
             [[Mixpanel sharedInstance] track:@"MEOldRemake" properties:@{@"story" : self.remakeToContinueWith.story.name}];
         }

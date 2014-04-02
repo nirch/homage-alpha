@@ -87,7 +87,7 @@
     for (Remake *remake in self.remakes)
     {
         NSInteger remakeStatus = remake.status.integerValue;
-        if (remake.story.sID == storyID && (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout))
+        if (remake.story.sID == storyID && (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout || remakeStatus == HMGRemakeStatusNew))
         {
             return remake;
         }

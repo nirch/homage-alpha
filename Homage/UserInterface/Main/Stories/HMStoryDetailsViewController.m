@@ -474,18 +474,24 @@
     User *user = [User current];
     self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
     
+
     if (self.oldRemakeInProgress)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            alertView.tag = REMAKE_ALERT_TAG;
-            [alertView show];
-        });
+        if (self.oldRemakeInProgress.status.integerValue == HMGRemakeStatusNew)
+        {
+            [self initRecorderWithRemake:self.oldRemakeInProgress];
+        } else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                alertView.tag = REMAKE_ALERT_TAG;
+                [alertView show];
+            });
+        }
     } else {
         [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     }
-    
 }
 
 
@@ -613,33 +619,6 @@
     }];
 }
 
-/*-(void)onRemakeDeletion:(NSNotification *)notification
-{
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSDictionary *info = notification.userInfo;
-    NSString *remakeID = info[@"remakeID"];
-    
-    NSLog(@"story details tab - onRemakeDeletion: remakeID: %@" , remakeID);
-    
-    if (notification.isReportingError) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                        message:@"Something went wrong :-(\n\nTry to delete the remake later."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil
-                              ];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
-        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
-    } else {
-        Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-        NSLog(@"story details tab - onRemakeDeletion: remake object id: %@" , remake.sID);
-        if (remake) [DB.sh.context deleteObject:remake];
-    }
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}*/
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -649,6 +628,15 @@
 }
 
 
+#pragma mark recorder init
+-(void)initRecorderWithRemake:(Remake *)remake
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    recorderVC.delegate = self;
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
 
 
 // ============

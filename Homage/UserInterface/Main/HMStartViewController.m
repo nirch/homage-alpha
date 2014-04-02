@@ -785,7 +785,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         userName = user.firstName;
     } else if (user.email)
     {
-        userName = user.email;
+        userName = [self getLoginName:user.email];
+        
     } else {
         userName = @"Guest";
     }
@@ -836,6 +837,18 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)dismissRenderingView
 {
     [self hideRenderingView];
+}
+
+-(NSString *)getLoginName:(NSString *)mailAddress
+{
+    NSString *loginName;
+    NSString *expression = @"(\\S+)@";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression options:0 error:NULL];
+    NSTextCheckingResult *match = [regex firstMatchInString:mailAddress options:0 range:NSMakeRange(0, [mailAddress length])];
+    [match rangeAtIndex:1];
+    loginName = [mailAddress substringWithRange:[match rangeAtIndex:1]];
+
+    return loginName;
 }
 
 /*#pragma mark iask buttons delegate

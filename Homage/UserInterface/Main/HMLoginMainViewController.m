@@ -373,7 +373,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
        [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
     } else if(self.userJoinFlow && [User current])
     {
-        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : [User current].isPublic , @"device" : deviceInfo};
+        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo};
         [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
     }
     
