@@ -99,18 +99,18 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
-    self.guiBGImageView.image = [self.story.thumbnail applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
-    [self.guiBGImageView addMotionEffectWithAmount:-30];
+    
+    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
+    
     self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
     self.guiDescriptionField.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
     
     //design remake button
     self.guiRemakeButton.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.guiRemakeButton.titleLabel.font.pointSize];
-    [self.guiRemakeButton setTitleColor:[HMColor.sh main2] forState:UIControlStateNormal];
     [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
     [self.guiRemakeButton.layer setBorderWidth:0.5f];
-    [self.guiRemakeButton.layer setCornerRadius:7.5f];
+    [self.guiRemakeButton.layer setCornerRadius:2.5f];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
