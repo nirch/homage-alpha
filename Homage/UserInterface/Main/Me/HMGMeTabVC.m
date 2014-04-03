@@ -344,7 +344,7 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
     
     NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
-    //show only inprogress and done remakes
+    //show only in progress and done remakes
     NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"(status=1 OR status=3 OR status=4)"];
     
     NSPredicate *compoundPredicate
@@ -765,10 +765,13 @@
         }
         if (buttonIndex == 1) {
             NSString *remakeID = self.remakeToDelete.sID;
-            [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"Story" : self.remakeToDelete.story.name}];
-            [HMServer.sh deleteRemakeWithID:remakeID];
-            //[DB.sh.context deleteObject:self.remakeToDelete];
             
+            if (self.remakeToDelete.story.name)
+            {
+              [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"Story" : self.remakeToDelete.story.name}];
+            }
+            
+            [HMServer.sh deleteRemakeWithID:remakeID];
             self.remakeToDelete = nil;
         }
     } else if (alertView.tag == SHARE_ALERT_VIEW_TAG)
