@@ -67,7 +67,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)initCameraSettings
 {
     // Extraction
-    _camFGExtraction                                = NO;
+    _camFGExtraction                                = YES;
     
     // Camera
     _camSettingsSessionPreset                       = AVCaptureSessionPresetiFrame1280x720;     // Video capture resolution

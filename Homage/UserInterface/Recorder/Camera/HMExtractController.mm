@@ -14,11 +14,14 @@
 #import "Gpw/MAC/GpwIos.h"
 #import "Gpw/TextLabel/TextLabelIos.h"
 #include "HomageLib/Homage.h"
+#import "Gpw/Vtool/Vtool.h"
+#import "MattingLib/UniformBackground/UniformBackground.h"
 
 @interface HMExtractController (){
     
     CFrameBufferIos *m_fb;
     CHomage *m_hm;
+    CUniformBackground *m_foregroundExtraction;
 }
 
 @property (nonatomic, readonly, weak) AVCaptureSession *session;
@@ -50,6 +53,11 @@
         // Is CFrameBufferIos *m_fb really needed? The images are now provided in the recording output delegate.
         // No need to get the frames in the C++ code.
         // m_hm = new CHomage( NULL );
+        
+        m_foregroundExtraction = new CUniformBackground();
+        
+        NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up" ofType:@"ctr"];
+        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 1280, 720);
         
     }
     return self;
@@ -135,10 +143,17 @@
     // Need to be able to call CHomage -> Process here and pass it directly a UIImage or CMSampleBufferRef object for each frame.
     // (no need for the C++ code to handle capturing the frames directly from the camera)
 
+    image_type *originalImage = CVtool::DecomposeUIimage(image);
+    image_type *foregroundImage;
+    
+    m_foregroundExtraction->Process(originalImage, 1, &foregroundImage);
+    image_type *greenScreenImage = imageA_set_color( originalImage, foregroundImage, 255, 0x00FFFF, NULL);
+    
+    UIImage *outputImage = CVtool::CreateUIImage(greenScreenImage);
     
     // Append manipulated frame to disk.
     self.presentTime = CMTimeAdd(self.presentTime,self.frameTime);
-    CVPixelBufferRef buffer = [HMExtractController newPixelBufferFromCGImage:image.CGImage frameSize:image.size];
+    CVPixelBufferRef buffer = [HMExtractController newPixelBufferFromCGImage:outputImage.CGImage frameSize:image.size];
     [self.pixelBufferAdaptor appendPixelBuffer:buffer withPresentationTime:self.presentTime];
     CVPixelBufferRelease(buffer);
 }
