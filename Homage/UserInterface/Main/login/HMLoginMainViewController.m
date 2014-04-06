@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (strong, nonatomic) IBOutletCollection(HMFontLabel) NSArray *labelCollection;
 
 
-@property (strong, nonatomic) IBOutlet FBLoginView *guiFBLoginView;
+
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
 @property (nonatomic) BOOL userJoinFlow;
@@ -87,20 +87,17 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.userJoinFlow = NO;
     
     //FBloginView
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info", @"email" , @"user_birthday"]];
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"email",@"user_birthday",@"basic_info"]];
     loginView.delegate = self;
-    self.guiFBLoginView = loginView;
     
-    /*// Align the button in the center horizontally
-    loginView.frame = CGRectOffset(loginView.frame,
-                                   (self.view.center.x - (loginView.frame.size.width / 2)),
-                                   5);
+    // Align the button in the center horizontally
+    loginView.frame = CGRectMake(54, 110, 212, 50);
     
     // Align the button in the center vertically
-    loginView.center = self.guiSignUpView.center;
+    //loginView.center = self.guiSignUpView.center;
     
     // Add the button to the view
-    [self.guiSignUpView addSubview:loginView];*/
+    [self.guiSignUpView addSubview:loginView];
     
     [self initGUI];
     
@@ -320,8 +317,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     NSDictionary *deviceInfo = [self getDeviceInformation];
     
-    
-    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username , @"location" : user.location};
+    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username};
     
     if ([user objectForKey:@"birthday"])
     {
@@ -330,16 +326,38 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
     }
     
-    NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES , @"email" : [user objectForKey:@"email"]};
+    if ([user objectForKey:@"location"])
+    {
+        NSMutableDictionary *temp = [FBDictionary mutableCopy];
+        [temp setValue:[user objectForKey:@"location"] forKey:@"location"];
+        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
+    }
     
+    NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
     
+    /*if ([user objectForKey:@"email"])
+    {
+        NSMutableDictionary *temp = [FBSignupDictionary mutableCopy];
+        [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
+        FBSignupDictionary = [NSDictionary dictionaryWithDictionary:temp];
+    }*/
+    
+
     if (!self.userJoinFlow)
     {
         [HMServer.sh createUserWithDictionary:FBSignupDictionary];
         NSLog(@"?????????   creating user with email: %@ ???????????????" , [user objectForKey:@"email"]);
     } else if (self.userJoinFlow && [User current])
     {
-        NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES , @"email" : [user objectForKey:@"email"]};
+        NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
+        
+        /*if ([user objectForKey:@"email"])
+        {
+            NSMutableDictionary *temp = [FBUpdateDictionary mutableCopy];
+            [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
+            FBUpdateDictionary = [NSDictionary dictionaryWithDictionary:temp];
+        }*/
+        
         [HMServer.sh updateUserUponJoin:FBUpdateDictionary];
     }
     

@@ -56,7 +56,7 @@
         }
     }
     
-    //x[FBLoginView class];
+    [FBLoginView class];
     return YES;
 }
 

@@ -450,12 +450,10 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIImage *image;
     
-    switch (status.integerValue)
+    switch (status.intValue)
     {
         case HMGRemakeStatusInProgress:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            //bgimage = [UIImage imageNamed:@"complete"];
-            //[cell.actionButton setImage:bgimage forState:UIControlStateNormal];
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
@@ -476,10 +474,6 @@
             break;
             
         case HMGRemakeStatusNew:
-            //[cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            //bgimage = [UIImage imageNamed:@"underconsruction"];
-            //[cell.actionButton setImage:bgimage forState:UIControlStateNormal];
-            
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
@@ -489,7 +483,15 @@
             break;
             
         case HMGRemakeStatusRendering:
-            //[cell.actionButton setTitle:@"R" forState:UIControlStateNormal];
+            cell.actionButton.enabled = NO;
+            [cell.actionButton setHidden:YES];
+            [cell.shareButton setHidden:YES];
+            cell.shareButton.enabled = NO;
+            cell.remakeButton.enabled = YES;
+            cell.deleteButton.enabled = YES;
+            break;
+        
+        case HMGRemakeStatusTimeout:
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];

@@ -716,7 +716,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="8Vc-zr-hXU" userLabel="Controls container">
+                            <view hidden="YES" contentMode="scaleToFill" id="8Vc-zr-hXU" userLabel="Controls container">
                                 <rect key="frame" x="0.0" y="266" width="568" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -734,7 +734,7 @@
                                 <color key="backgroundColor" white="1" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="8sR-09-4Xh" userLabel="Script view">
-                                <rect key="frame" x="0.0" y="210" width="568" height="54"/>
+                                <rect key="frame" x="0.0" y="265" width="568" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSceneScriptLighter" id="sGC-e8-i09">

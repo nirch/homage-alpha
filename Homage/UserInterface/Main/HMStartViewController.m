@@ -354,6 +354,10 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     {
         [self presentLoginScreen];
     } else {
+        
+        //make sure login screen is hidden
+        [self hideLoginScreen];
+        
         //Mixpanel analytics
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         User *user = [User current];
@@ -445,6 +449,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)presentLoginScreen
 {
+    if (self.loginContainerView.hidden == NO) return;
+    
     self.appWrapperView.hidden = YES;
     self.loginContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
@@ -455,12 +461,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)hideLoginScreen
 {
+    if (self.loginContainerView.hidden == YES) return;
+    
     self.appWrapperView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 0;
     } completion:^(BOOL finished)
      {
-         self.loginContainerView.hidden = NO;
+         self.loginContainerView.hidden = YES;
      }];
 }
 
