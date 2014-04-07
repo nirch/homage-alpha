@@ -317,11 +317,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if ([navVC.viewControllers count] > 1)
     {
-        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"backButtonBlack"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"backButtonBlack"] forState:UIControlStateNormal];
         self.guiNavButton.tag = BACK_TAG;
     } else
     {
-        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"settingsBlack"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"settingsBlack"] forState:UIControlStateNormal];
         self.guiNavButton.tag = SETTING_TAG;
     }
 }

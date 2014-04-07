@@ -135,14 +135,16 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     for (HMFontButton *button in self.buttonCollection)
     {
-        [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
     }
     
     for (HMFontLabel *label in self.labelCollection)
     {
-        [label setTextColor:[HMColor.sh textImpact]];
+        [label setTextColor:[UIColor whiteColor]];
     }
+    
+    //[self.guiSignupButton setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
     
     //text field stuff
     self.guiMailTextField.keyboardType = UIKeyboardTypeEmailAddress;

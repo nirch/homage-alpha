@@ -18,7 +18,7 @@
                     <rect key="frame" x="0.0" y="34" width="320" height="534"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <string key="text">Welcome to Homage. The following User Terms and Conditions (the "Terms") explain how you can use the Homage mobile app ("Homage" or the "App."), provided to you by Homage Technology Ltd. ("we" or "us").
+                    <mutableString key="text">Welcome to Homage. The following User Terms and Conditions (the "Terms") explain how you can use the Homage mobile app ("Homage" or the "App."), provided to you by Homage Technology Ltd. ("we" or "us").
 Please read and get acquainted with these Terms before you get started. They apply to any users who access Homage, whether by signing up as a user or by using it as a guest ("users"), including you. By using Homage, whether by signing up as a user or by using it as a guest, you agree to be bound by all of these Terms and to other terms regarding the collection and use of your information, which are set in our Privacy Policy.  
 What is Homage
 Homage is a mobile video-app that provides short video stories for its users,that allow the user to interact with the story and add video shots of themselves making the user the star of the video-clip ("Clip").
@@ -52,10 +52,17 @@ You, and any other user of Homage may and hereby encouraged to report us, throug
 
 Your Content and Property
 By using Homage, you allow Homage to help manage your data (including content, information, images and other attachments in such data) which you submit, upload, imbedded in the Clips or transmit through Homage ("User Data"). We don't gain any ownership in the User Data - you retain ownership of any intellectual property rights that you hold in the User Data. These Terms do not give us any rights to the contents of your User Data, except for the limited rights we need to provide Homage to you, as explained in these Terms and as detailed below. 
-
 You expressly agree that you shall observe all applicable laws, regulations and rules of other third party internet sites and services in forwarding, embedding or posting Clips, or links to such Clips; you shall not forward, or post any Clip or links to Clip that violates these Terms; you may not embed any Clip in any third party site if such third party site contains any Clip would violate these Terms.
+
 You further understand and agree that you are solely responsible and liable for your own content and User Data and for anything you send, modify, forward, post, copy, share, upload, download, attach, embedded in Clips or otherwise do while using Homage, and for the consequences of submitting or uploading such content or imbedding it in the Clips, including in respect of any third party intellectual property rights or moral rights in such Clips. Homage cannot accept any liability in respect of your modifications of any Clip. You shall fully indemnify Homage for any breach of the terms set forth in this paragraph.
 As a Homage user you may submit or upload content; you understand that Homage does not guarantee any confidentiality with respect to any such content submitted or uploaded; you further represent and warrant that you have (and will continue to have during your use of Homage) all necessary licenses, rights, consents, and permissions which are required to use and to enable Homage to use the User Data on or through Homage in the manner contemplated by these Terms.
+We reserve the right at all times (but will not have an obligation) to remove or refuse to distribute any Content on the Services and to suspend terminate users or reclaim usernames and profile URLs without liability to you. You may not post Content that:
+Impersonates another person or entity in a manner that does or is intended to mislead, confuse, or deceive others;
+Violates the rights of a third party, including copyright, trademark, privacy, and publicity rights;
+Is a direct and specific threat of violence to others;
+Is pornographic or sexually explicit;
+Is furtherance of illegal activities; or
+Is harassing, abusive, or constitutes spam.
 Homage does not endorse any content or any opinion, recommendation, or advice expressed therein, and we expressly disclaim any and all liability in connection with such User Data.
 By using Homage, you give us permission to take actions if you ask Homage to perform them on your User Data, for example, (i) hosting or sharing your data as you direct it to through Homage, (ii) granting limited license rights to Homage and other users of watch and rate the Clips created or shares by you (if such option was enabled by you during your registration process) (iii) using your data to plan and create shopping sprees, and (iv) creating backups of your data to ensure they are safe and accessible to you. By using Homage, you give us the permissions needed to provide you with these services, including extending that permission to trusted third parties that help us to run Homage. Please read the Privacy Policy to understand exactly what information we may share with third parties, and how. 
 Copyright Infringement
@@ -86,7 +93,7 @@ Last Modified: 27/03/2014
 © Homage Technology Ltd., 2014
 
 
-</string>
+</mutableString>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
