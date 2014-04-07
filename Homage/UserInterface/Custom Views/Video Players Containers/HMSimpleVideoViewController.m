@@ -590,10 +590,4 @@
     [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
 }
 
--(void)displayRectBounds:(CGRect)rect Name: name
-{
-    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
-}
-
-
 @end

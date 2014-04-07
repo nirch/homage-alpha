@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     //debug
     //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
     //[self.guiAppContainerView.layer setBorderWidth:2.0f];
-    //[self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
+    
 }
 
 -(void)initObservers
@@ -702,7 +702,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
             [alert show];
         });
         NSError *error = notification.userInfo[@"error"];
-        NSLog(@"error: %@" , [error localizedDescription]);
+        HMGLogError(@"error: %@" , [error localizedDescription]);
     }
 }
 
@@ -711,18 +711,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!self.guiNoConnectivityView.hidden) return;
-    
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     self.guiNoConnectivityView.hidden = NO;
     CGFloat offset = self.guiNoConnectivityView.frame.size.height;
     CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
-    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
     newAppContainerViewFrame.size.height -= offset;
     newAppContainerViewFrame.origin.y += offset;
     [UIView animateWithDuration:0.3 animations:^{
         self.guiAppContainerView.frame = newAppContainerViewFrame;
     } completion:nil];
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
@@ -731,10 +727,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (self.guiNoConnectivityView.hidden) return;
     
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     CGFloat offset = self.guiNoConnectivityView.frame.size.height;
     CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
-    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
     newAppContainerViewFrame.size.height += offset;
     newAppContainerViewFrame.origin.y -= offset;
     [UIView animateWithDuration:0.3 animations:^{
@@ -743,14 +737,9 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         if (finished)
             self.guiNoConnectivityView.hidden = YES;
     }];
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
--(void)displayRectBounds:(CGRect)rect Name: name
-{
-    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
-}
 
 #pragma mark HMVideoPlayerVC delegate
 -(void)videoPlayerStopped

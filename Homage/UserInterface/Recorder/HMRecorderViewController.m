@@ -180,7 +180,6 @@
     // The flow state machine.
     // Moves to next stage according to current state.
     //
-    NSLog(@"%ld", (long)self.recorderState);
     if (self.recorderState == HMRecorderStateJustStarted) {
         
         // 0 - HMRecorderStateJustStarted --> 1 - HMRecorderStateGeneralMessage
@@ -599,7 +598,7 @@
 -(void)onRecorderEpicFail:(NSNotification *)notification
 {
     // TODO: open error screen here
-    NSLog(@"Epic fail!");
+    
 }
 
 -(void)onRender:(NSNotification *)notification
@@ -1240,11 +1239,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self
                                                       userInfo:info];
-}
-
--(void)displayRectBounds:(CGRect)rect Name: name
-{
-    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
 @end

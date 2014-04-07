@@ -72,7 +72,7 @@
 #pragma mark - notifications handler
 -(void)onFetchedUserRemakes:(NSNotification *)notification
 {
-    NSLog(@"notification info : %@", notification.userInfo);
+    //NSLog(@"notification info : %@", notification.userInfo);
     [self.guiActivity stopAnimating];
     self.guiRefreshButton.hidden = NO;
     self.guiLabel.text = @"Fetched.";

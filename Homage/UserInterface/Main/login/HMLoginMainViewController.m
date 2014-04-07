@@ -335,28 +335,28 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
     
-    /*if ([user objectForKey:@"email"])
+    if ([user objectForKey:@"email"])
     {
         NSMutableDictionary *temp = [FBSignupDictionary mutableCopy];
         [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
         FBSignupDictionary = [NSDictionary dictionaryWithDictionary:temp];
-    }*/
+    }
     
 
     if (!self.userJoinFlow)
     {
         [HMServer.sh createUserWithDictionary:FBSignupDictionary];
-        NSLog(@"?????????   creating user with email: %@ ???????????????" , [user objectForKey:@"email"]);
+        HMGLogDebug(@"creating user with email: %@" , [user objectForKey:@"email"]);
     } else if (self.userJoinFlow && [User current])
     {
         NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
         
-        /*if ([user objectForKey:@"email"])
+        if ([user objectForKey:@"email"])
         {
             NSMutableDictionary *temp = [FBUpdateDictionary mutableCopy];
             [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
             FBUpdateDictionary = [NSDictionary dictionaryWithDictionary:temp];
-        }*/
+        }
         
         [HMServer.sh updateUserUponJoin:FBUpdateDictionary];
     }
@@ -374,13 +374,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = @"mail";
     
-    if (![self checkCredentials]) return;
-    
     if (!HMServer.sh.isReachable)
     {
         [self presentErrorLabelWithReason:HMNoConnectivity];
         return;
     }
+    
+    if (![self checkCredentials]) return;
     
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
@@ -468,6 +468,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogDebug(@"user created with userID: %@" , userID);
     
     if ([userID isEqualToString:[User current].userID]) return;
+    [self displayIntroMovieView];
     
     User *user = [User userWithID:userID inContext:DB.sh.context];
     
@@ -493,7 +494,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [mixpanel.people set:@{@"user" : userEmail}];
     }
     [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
-    [self displayIntroMovieView];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -683,15 +683,17 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 /*Implementing the loginViewShowingLoggedInUser: delegate method allows you to modify your app's UI to show a logged in experience. In the example below, we notify the user that they are logged in by changing the status:*/
 
 // Logged-in user experience
-- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-   NSLog(@"You're logged in");
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView
+{
+    
 }
 
 /*Implementing the loginViewShowingLoggedOutUser: delegate method allows you to modify your app's UI to show a logged out experience. In the example below, the user's profile picture is removed, the user's name set to blank, and the status is changed to reflect that the user is not logged in:*/
 
 // Logged-out user experience
-- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
-    NSLog(@"your are logged out");
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
+{
+
 }
 
 // Handle possible errors that can occur during login

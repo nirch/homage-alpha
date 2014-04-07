@@ -263,7 +263,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [alert show];
         });
-        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
+        HMGLogError(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     } else {
         Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
         [DB.sh.context deleteObject:remake];
@@ -792,19 +792,6 @@
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
-
-#pragma mark helper functions
--(void)displayViewBounds:(UIView *)view
-{
-    CGRect frame = view.bounds;
-    CGFloat originX = frame.origin.x;
-    CGFloat originY = frame.origin.y;
-    CGFloat width = frame.size.width;
-    CGFloat height = frame.size.height;
-    
-    NSLog(@"view bounds of cell are: origin:(%f,%f) height: %f width: %f" , originX,originY,height,width);
-    
 }
 
 -(UICollectionViewCell *)getCellFromCollectionView:(UICollectionView *)collectionView atIndex:(NSInteger)index atSection:(NSInteger)section
