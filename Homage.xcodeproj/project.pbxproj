@@ -1647,7 +1647,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"/**",
 					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1667,7 +1667,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"",
 					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1719,7 +1719,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"/**",
 					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1739,7 +1739,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"",
 					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (

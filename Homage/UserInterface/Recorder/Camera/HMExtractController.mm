@@ -8,20 +8,21 @@
 
 #import "HMExtractController.h"
 
-#import "Gpw/FrameBuffer/Mac/FrameBufferIos.h"
-#import	"ImageAcquisition/Mac/CameraAcquisitionMac.h"
-#import "Gpw/FrameLabel/FrameLabelM.h"
-#import "Gpw/MAC/GpwIos.h"
-#import "Gpw/TextLabel/TextLabelIos.h"
-#include "HomageLib/Homage.h"
-#import "Gpw/Vtool/Vtool.h"
-#import "MattingLib/UniformBackground/UniformBackground.h"
+//#import "Gpw/FrameBuffer/Mac/FrameBufferIos.h"
+//#import	"ImageAcquisition/Mac/CameraAcquisitionMac.h"
+//#import "Gpw/FrameLabel/FrameLabelM.h"
+//#import "Gpw/MAC/GpwIos.h"
+//#import "Gpw/TextLabel/TextLabelIos.h"
+//#include "HomageLib/Homage.h"
+//#import "Gpw/Vtool/Vtool.h"
+//#import "MattingLib/UniformBackground/UniformBackground.h"
 
 @interface HMExtractController (){
     
-    CFrameBufferIos *m_fb;
-    CHomage *m_hm;
-    CUniformBackground *m_foregroundExtraction;
+    int counter;
+    //CFrameBufferIos *m_fb;
+    //CHomage *m_hm;
+    //CUniformBackground *m_foregroundExtraction;
 }
 
 @property (nonatomic, readonly, weak) AVCaptureSession *session;
@@ -34,12 +35,14 @@
 @property (readonly) AVAssetWriter *assetWriter;
 @property (readonly) AVAssetWriterInput *writerInput;
 
-@property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
+//@property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
 
-@property (readonly) CHomage *h_ext;
+//@property (readonly) CHomage *h_ext;
 
-@property CMTime frameTime;
-@property CMTime presentTime;
+//@property CMTime frameTime;
+//@property CMTime presentTime;
+
+//@property CMTime lastSampleTime;
 
 @end
 
@@ -53,12 +56,6 @@
         // Is CFrameBufferIos *m_fb really needed? The images are now provided in the recording output delegate.
         // No need to get the frames in the C++ code.
         // m_hm = new CHomage( NULL );
-        
-        m_foregroundExtraction = new CUniformBackground();
-        
-        NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up" ofType:@"ctr"];
-        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 1280, 720);
-        
     }
     return self;
 }
@@ -72,7 +69,15 @@
         _extractQueue = dispatch_queue_create("ExtractionQueue", DISPATCH_QUEUE_SERIAL);
         [movieDataOutput setSampleBufferDelegate:self queue:self.extractQueue];
         [self.session addOutput:movieDataOutput];
-        self.frameTime = CMTimeMake(1,25);
+        //self.frameTime = CMTimeMake(1,25);
+        
+        /*
+        m_foregroundExtraction = new CUniformBackground();
+        
+        NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up" ofType:@"ctr"];
+        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 1280, 720);
+        */
+        counter = 0;
     }
     return self;
 }
@@ -86,7 +91,7 @@
 -(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
 {
     if (_isCurrentlyRecording) return;
-    dispatch_async(self.extractQueue, ^{
+   dispatch_async(self.extractQueue, ^{
         _isCurrentlyRecording = YES;
         NSLog(@"Start recording with FG extraction: %@", outputFileURL);
         _outputFileURL = outputFileURL;
@@ -97,22 +102,29 @@
         _assetWriter = [[AVAssetWriter alloc] initWithURL:self.outputFileURL
                                                  fileType:AVFileTypeQuickTimeMovie
                                                     error:&error];
-        
+       
+        // Output video bitrate
+        NSDictionary *codecSettings = @{
+                                       AVVideoAverageBitRateKey:@1200000
+                                       };
+       
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
-                                        AVVideoWidthKey:@1280,
-                                        AVVideoHeightKey:@720
+                                        AVVideoWidthKey:@640,
+                                        AVVideoHeightKey:@360,
+                                        AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
+                                        AVVideoCompressionPropertiesKey:codecSettings
                                         };
         
         _writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
-        _pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerInput sourcePixelBufferAttributes:nil];
+        //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerInput sourcePixelBufferAttributes:nil];
         [self.assetWriter addInput:self.writerInput];
         
         // Start writing
-        self.presentTime = CMTimeMake(0, self.frameTime.timescale);
-        [self.assetWriter startWriting];
-        [self.assetWriter startSessionAtSourceTime:kCMTimeZero];
+        //self.presentTime = CMTimeMake(0, self.frameTime.timescale);
+        //[self.assetWriter startWriting];
+        //[self.assetWriter startSessionAtSourceTime:kCMTimeZero];
     });
 }
 
@@ -123,8 +135,9 @@
         _isCurrentlyRecording = NO;
 
         // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
-        [self.writerInput markAsFinished];
-        [self.assetWriter endSessionAtSourceTime:self.presentTime];
+        NSLog(@"finishing the record");
+        //[self.writerInput markAsFinished];
+        //[self.assetWriter endSessionAtSourceTime:self.lastSampleTime];
         [self.assetWriter finishWritingWithCompletionHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.recordingDelegate captureOutput:nil didFinishRecordingToOutputFileAtURL:self.outputFileURL fromConnections:nil error:nil];
@@ -137,8 +150,19 @@
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
     if (!_isCurrentlyRecording) return;
-    UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
     
+    if (self.assetWriter.status != AVAssetWriterStatusWriting)
+    {
+        CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+        [self.assetWriter startWriting];
+        [self.assetWriter startSessionAtSourceTime:lastSampleTime];
+    }
+    
+    [self.writerInput appendSampleBuffer:sampleBuffer];
+    
+/*
+    UIImage *outputImage = [self imageFromSampleBuffer:sampleBuffer];
+
     // TODO: Manipulate image using the algorithm here.
     // Need to be able to call CHomage -> Process here and pass it directly a UIImage or CMSampleBufferRef object for each frame.
     // (no need for the C++ code to handle capturing the frames directly from the camera)
@@ -150,12 +174,13 @@
     image_type *greenScreenImage = imageA_set_color( originalImage, foregroundImage, 255, 0x00FFFF, NULL);
     
     UIImage *outputImage = CVtool::CreateUIImage(greenScreenImage);
-    
+ 
     // Append manipulated frame to disk.
     self.presentTime = CMTimeAdd(self.presentTime,self.frameTime);
-    CVPixelBufferRef buffer = [HMExtractController newPixelBufferFromCGImage:outputImage.CGImage frameSize:image.size];
+    CVPixelBufferRef buffer = [HMExtractController newPixelBufferFromCGImage:outputImage.CGImage frameSize:outputImage.size];
     [self.pixelBufferAdaptor appendPixelBuffer:buffer withPresentationTime:self.presentTime];
     CVPixelBufferRelease(buffer);
+ */
 }
 
 - (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
