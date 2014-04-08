@@ -177,8 +177,7 @@
 -(void)onRemakeCreation:(NSNotification *)notification
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    // Update UI
-    self.guiRemakeButton.enabled = YES;
+    
     [self.guiRemakeActivity stopAnimating];
     [self.guiRemakeActivity setHidden:YES];
     
@@ -190,6 +189,8 @@
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return;
     }
+    
+    self.guiRemakeButton.enabled = YES;
     [self initRecorderWithRemake:remake completion:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

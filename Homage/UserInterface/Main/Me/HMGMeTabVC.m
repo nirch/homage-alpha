@@ -648,6 +648,9 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     
+    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+    cell.remakeButton.enabled = NO;
+    
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"Story" : self.remakeToContinueWith.story.name}];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
@@ -744,8 +747,9 @@
             [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID];
             self.remakeToContinueWith = nil;
         }
+        [self.userRemakesCV reloadData];
         
-        //trash button pushed
+    //trash button pushed
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)
     {
         if (buttonIndex == 0) {
