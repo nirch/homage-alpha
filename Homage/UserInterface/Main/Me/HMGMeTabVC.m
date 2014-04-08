@@ -13,9 +13,6 @@
 #import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
 #import "HMFontLabel.h"
-//#import <InAppSettingsKit/IASKAppSettingsViewController.h>
-//#import "HMSimpleVideoViewController.h"
-//#import "HMSimpleVideoPlayerDelegate.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
@@ -26,8 +23,6 @@
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
 //HMSimpleVideoPlayerDelegate removed
 
-//@property (strong,nonatomic) IASKAppSettingsViewController *appSettingsViewController;
-//@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 @property (nonatomic) NSInteger playingMovieIndex;
@@ -296,6 +291,7 @@
 -(void)refetchRemakesFromServer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self.userRemakesCV reloadData];
     [HMServer.sh refetchRemakesForUserID:User.current.userID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -397,16 +393,6 @@
     
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    //cell border design
-    /*[cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
-    [cell.layer setBorderWidth:1.0f];
-    [cell.layer setCornerRadius:7.5f];
-    [cell.layer setShadowOffset:CGSizeMake(0, 1)];
-    [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
-    [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];*/
-    //
-    
     //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
     cell.shareButton.tag = indexPath.item;
     cell.actionButton.tag = indexPath.item;
@@ -463,7 +449,7 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            image = [UIImage imageNamed:@"play"];
+            image = [UIImage imageNamed:@"Yplay"];
             [cell.actionButton setImage:image forState:UIControlStateNormal];
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;

@@ -65,6 +65,8 @@
         [self.storyMoviePlayer play];
         self.autoStartPlayingStory = NO;
     }
+    [self initObservers];
+    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -72,8 +74,6 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiRemakeButton.enabled = YES;
-    [self initObservers];
-    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -159,11 +159,6 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                                      object:nil];
     
-    // Observe deletion of remake
-    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRemakeDeletion:)
-                                                       name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
-                                                     object:nil];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -174,7 +169,6 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
-    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -287,6 +281,16 @@
 -(void)refetchRemakesForStoryID:(NSString *)storyID
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    //we need to delete all the remakes from the local storage, cause other people might have switched their privacy policy
+    for (Remake *remake in self.fetchedResultsController.fetchedObjects)
+    {
+        if (remake)
+        {
+            [DB.sh.context deleteObject:remake];
+        }
+    }
+    
     [HMServer.sh refetchRemakesWithStoryID:storyID];
 }
 
@@ -294,6 +298,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
+    
     [self.fetchedResultsController performFetch:&error];
     if (error) {
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
@@ -323,7 +328,6 @@
     = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser]];
     
     fetchRequest.predicate = compoundPredicate;
-    //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
@@ -363,16 +367,6 @@
     
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    //cell border design
-    /*[cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
-    [cell.layer setBorderWidth:1.0f];
-    [cell.layer setCornerRadius:7.5f];
-    [cell.layer setShadowOffset:CGSizeMake(0, 1)];
-    [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
-    [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];*/
-    //
     
     cell.guiUserName.text = remake.user.userID;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;

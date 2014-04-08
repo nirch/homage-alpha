@@ -477,6 +477,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (user)
     {
         [user loginInContext:DB.sh.context];
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:[User current].isPublic.boolValue forKey:@"remakesArePublic"];
+        
         if ([[User current] isGuestUser])
         {
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];

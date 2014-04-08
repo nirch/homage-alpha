@@ -84,7 +84,7 @@
 
     for (HMFontButton *button in self.buttonCollection)
     {
-        [button setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

@@ -301,16 +301,6 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
-    //cell border design
-    /*[cell.layer setBorderColor:[HMColor.sh main2].CGColor];
-    [cell.layer setBorderWidth:1.0f];
-    [cell.layer setCornerRadius:7.5f];
-    [cell.layer setShadowOffset:CGSizeMake(0, 1)];
-    [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
-    [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];
-    //*/
-    
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.guiStoryNameLabel.text = story.name;
@@ -322,9 +312,9 @@
     cell.guiLevelOfDifficulty.image = [self getDifficultyLevelThumbForStory:story];
     
     if (story.isASelfie) {
-        cell.guiShotMode.image = [UIImage imageNamed:@"selfie"];
+        cell.guiShotMode.image = [UIImage imageNamed:@"selfie1"];
     } else {
-        cell.guiShotMode.image = [UIImage imageNamed:@"director"];
+        cell.guiShotMode.image = [UIImage imageNamed:@"director1"];
     }
     
     NSUInteger remakesNum = [story.remakes count];
@@ -340,13 +330,13 @@
     switch (story.level.integerValue)
     {
         case HMStoryLevelEasy:
-            image = [UIImage imageNamed:@"easy"];
+            image = [UIImage imageNamed:@"level1"];
             break;
         case HMStoryLevelMedium:
-            image = [UIImage imageNamed:@"medium"];
+            image = [UIImage imageNamed:@"level2"];
             break;
         case HMStoryLevelHard:
-            image = [UIImage imageNamed:@"hard"];
+            image = [UIImage imageNamed:@"level3"];
             break;
     }
     return image;
