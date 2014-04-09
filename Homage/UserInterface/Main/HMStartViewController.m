@@ -650,6 +650,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if (success)
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil];
         [self switchToTab:HMMeTab];
         if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
         {

@@ -128,6 +128,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiIntroMovieContainerView.hidden = YES;
     self.guiLoginErrorLabel.alpha = 0;
     self.guiLoginErrorLabel.hidden = YES;
+    self.guiLoginErrorLabel.text = @"";
     self.guiGuestButton.hidden = NO;
     self.guiCancelButton.hidden = YES;
     
@@ -375,6 +376,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = @"mail";
+    self.guiLoginErrorLabel.text = @"";
     
     if (!HMServer.sh.isReachable)
     {
@@ -469,36 +471,52 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     NSString *userID = userInfo[@"userID"];
     HMGLogDebug(@"user created with userID: %@" , userID);
     
-    if ([userID isEqualToString:[User current].userID]) return;
-    [self displayIntroMovieView];
-    
     User *user = [User userWithID:userID inContext:DB.sh.context];
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    if (user.userID) {
+        [mixpanel identify:userID];
+    }
+    
+    if (user.email)
+    {
+        [mixpanel registerSuperProperties:@{@"email": user.email}];
+        [mixpanel.people set:@{@"user" : user.email}];
+    }
+    
+    if ([user.userID isEqualToString:[User current].userID])
+    {
+        [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+        [self.delegate dismissLoginScreen];
+        return;
+    }
     
     if (user)
     {
         [user loginInContext:DB.sh.context];
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults] setBool:[User current].isPublic.boolValue forKey:@"remakesArePublic"];
+        [[NSUserDefaults standardUserDefaults] setBool:user.isPublic.boolValue forKey:@"remakesArePublic"];
         
-        if ([[User current] isGuestUser])
+        if (user.isGuestUser)
         {
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
         }
+        
+        if (user.isFirstUse.boolValue)
+        {
+            user.isFirstUse = @NO;
+            [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
+            [self displayIntroMovieView];
+        } else {
+            [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+            [self.delegate dismissLoginScreen];
+        }
+        
         [DB.sh save];
         [self.delegate onUserLoginStateChange:user];
     }
     
-    NSString *userEmail = user.email;
-    
-    //mixPanel analitics
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    if (userID)[mixpanel identify:userID];
-    if (userEmail)
-    {
-        [mixpanel registerSuperProperties:@{@"email": userEmail}];
-        [mixpanel.people set:@{@"user" : userEmail}];
-    }
-    [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -612,6 +630,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [self.guiSignUpView scrollRectToVisible:self.guiMailTextField.frame animated:YES];
     }
     self.guiLoginErrorLabel.hidden = YES;
+    self.guiLoginErrorLabel.text = @"";
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
