@@ -127,6 +127,7 @@
     [self.storyMoviePlayer hideMediaControls];
     self.storyMoviePlayer.videoImage = self.story.thumbnail;
     self.storyMoviePlayer.delegate = self;
+    self.storyMoviePlayer.resetStateWhenVideoEnds = YES;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -414,12 +415,12 @@
 -(void)videoPlayerDidStop
 {
     [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name}];
-    //[self closeStoryVideoPlayer];
+    
 }
+
 -(void)videoPlayerDidFinishPlaying
 {
     [[Mixpanel sharedInstance] track:@"SDFinishPlayStory" properties:@{@"story" : self.story.name}];
-    //[self closeStoryVideoPlayer];
 }
 
 -(void)videoPlayerDidExitFullScreen
