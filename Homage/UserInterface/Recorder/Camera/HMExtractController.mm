@@ -8,28 +8,25 @@
 
 #import "HMExtractController.h"
 
-//#import "Gpw/FrameBuffer/Mac/FrameBufferIos.h"
-//#import	"ImageAcquisition/Mac/CameraAcquisitionMac.h"
-//#import "Gpw/FrameLabel/FrameLabelM.h"
-//#import "Gpw/MAC/GpwIos.h"
-//#import "Gpw/TextLabel/TextLabelIos.h"
-//#include "HomageLib/Homage.h"
 #import "Gpw/Vtool/Vtool.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Image3/Image3Tool.h"
 #import "ImageType/ImageTool.h"
+#import "Utime/GpTime.h"
 
 @interface HMExtractController (){
     
     int counter;
-    //CFrameBufferIos *m_fb;
-    //CHomage *m_hm;
     CUniformBackground *m_foregroundExtraction;
     image_type *m_original_image;
     image_type *m_foreground_image;
     image_type *m_output_image;
-    image_type *m_temp_image;
-    image_type *m_temp2_image;
+    
+    gpTime_type m_gTime;
+    gpTime_type m_gTimeBuffer2image;
+    gpTime_type m_gTimeImage2Buffrt;
+    gpTime_type m_gTimeProcess;
+    gpTime_type m_gTimeAppend;
 }
 
 @property (nonatomic, readonly, weak) AVCaptureSession *session;
@@ -87,8 +84,14 @@
         m_original_image = NULL;
         m_foreground_image = NULL;
         m_output_image = NULL;
-        m_temp_image = NULL;
-        m_temp2_image = NULL;
+        
+        
+        
+        gpTime_init( &m_gTime);
+        gpTime_init( & m_gTimeBuffer2image);
+        gpTime_init( & m_gTimeImage2Buffrt);
+        gpTime_init( & m_gTimeProcess);
+        gpTime_init( & m_gTimeAppend);
 
         
         counter = 0;
@@ -159,6 +162,18 @@
                 [self.recordingDelegate captureOutput:nil didFinishRecordingToOutputFileAtURL:self.outputFileURL fromConnections:nil error:nil];
             });
         }];
+        
+        int frameProcess = gpTime_mpf( &m_gTime );
+        int buffer2image = gpTime_mpf( & m_gTimeBuffer2image);
+        int image2Buffrt = gpTime_mpf( & m_gTimeImage2Buffrt);
+        int process = gpTime_mpf( & m_gTimeProcess);
+        int append = gpTime_mpf( & m_gTimeAppend);
+        
+        NSLog(@"frameProcess: %d", frameProcess);
+        NSLog(@"buffer2image: %d", buffer2image);
+        NSLog(@"image2Buffrt: %d", image2Buffrt);
+        NSLog(@"process: %d", process);
+        NSLog(@"append: %d", append);
     });
 }
 
@@ -169,8 +184,9 @@
     
     NSLog(@"Frame: %d", counter);
     
-    if (counter % 10 == 0)
+    if (counter < 82)
     {
+        gp_time_start( &m_gTime );
         NSLog(@"Processing frame: %d", counter);
 
         
@@ -185,25 +201,17 @@
         //[self.writerInput appendSampleBuffer:sampleBuffer];
         
         // SampleBuffer to PixelBuffer
-        //CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         
         // PixelBuffer to image_type (algo image type)
-        //m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
-        
-        UIImage *originalImage = [self imageFromSampleBuffer:sampleBuffer];
-
-        // saving the UI image
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *imageName = [NSString stringWithFormat:@"original%d.jpg", counter];
-        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
-        [UIImagePNGRepresentation(originalImage) writeToFile:filePath atomically:YES];
-        
-        m_temp_image = CVtool::DecomposeUIimage(originalImage);
-        m_original_image = image3_from(m_temp_image, m_original_image);
-        image_type* temp3_image = image3_to_BGR(m_original_image, NULL);
+        gp_time_start( &m_gTimeBuffer2image );
+        m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
+        gp_time_stop( &m_gTimeBuffer2image );
         
         // Running the algo - result of the algo into m_foreground_image
-        m_foregroundExtraction->Process(temp3_image, 1, &m_foreground_image);
+        gp_time_start( &m_gTimeProcess );
+        m_foregroundExtraction->Process(m_original_image, 1, &m_foreground_image);
+
         
         // Save image to file
         /*UIImage *foregroundImage = CVtool::CreateUIImage(m_foreground_image);
@@ -211,29 +219,25 @@
         filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
         [UIImagePNGRepresentation(foregroundImage) writeToFile:filePath atomically:YES];*/
         
-        // Creating an image with green background and original foreground
-        m_temp2_image = imageA_set_color(m_original_image, m_foreground_image, 255, 0x00FF00, m_temp2_image);
-        image_type* temp4_image = image3_to_BGR(m_temp2_image, NULL);
-        m_output_image = image4_from(temp4_image,m_output_image);
+        m_output_image = imageA_set_color(m_original_image, m_foreground_image, 255, 0x00FF00, m_output_image);
+        gp_time_stop( &m_gTimeProcess );
         
         // Output image_type to PixelBuffer
-        //CVPixelBufferRef outputPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_output_image);
-        UIImage *outputImage = CVtool::CreateUIImage(m_output_image);
-       
-        // Save image to file
-        imageName = [NSString stringWithFormat:@"output%d.jpg", counter];
-        filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
-        [UIImagePNGRepresentation(outputImage) writeToFile:filePath atomically:YES];
+        gp_time_start( &m_gTimeImage2Buffrt );
+        CVPixelBufferRef outputPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_output_image);
+        gp_time_stop( &m_gTimeImage2Buffrt );
         
-        CVPixelBufferRef outputPixelBuffer = [HMExtractController newPixelBufferFromCGImage:outputImage.CGImage frameSize:outputImage.size];
-
-        
+        gp_time_start( &m_gTimeAppend );
         [self.pixelBufferAdaptor appendPixelBuffer:outputPixelBuffer withPresentationTime:lastSampleTime];
+        gp_time_stop( &m_gTimeAppend );
         CVPixelBufferRelease(outputPixelBuffer);
-        image_destroy(m_temp_image, 1);
-        image_destroy(temp3_image, 1);
-        image_destroy(temp4_image, 1);
+        //image_destroy(m_temp_image, 1);
+        //image_destroy(temp3_image, 1);
+        //image_destroy(temp4_image, 1);
+        gp_time_stop( &m_gTime );
     }
+    
+    
     
     counter = counter + 1;
 /*
