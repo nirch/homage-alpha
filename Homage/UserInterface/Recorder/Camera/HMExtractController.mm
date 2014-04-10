@@ -14,15 +14,22 @@
 //#import "Gpw/MAC/GpwIos.h"
 //#import "Gpw/TextLabel/TextLabelIos.h"
 //#include "HomageLib/Homage.h"
-//#import "Gpw/Vtool/Vtool.h"
-//#import "MattingLib/UniformBackground/UniformBackground.h"
+#import "Gpw/Vtool/Vtool.h"
+#import "MattingLib/UniformBackground/UniformBackground.h"
+#import "Image3/Image3Tool.h"
+#import "ImageType/ImageTool.h"
 
 @interface HMExtractController (){
     
     int counter;
     //CFrameBufferIos *m_fb;
     //CHomage *m_hm;
-    //CUniformBackground *m_foregroundExtraction;
+    CUniformBackground *m_foregroundExtraction;
+    image_type *m_original_image;
+    image_type *m_foreground_image;
+    image_type *m_output_image;
+    image_type *m_temp_image;
+    image_type *m_temp2_image;
 }
 
 @property (nonatomic, readonly, weak) AVCaptureSession *session;
@@ -35,7 +42,7 @@
 @property (readonly) AVAssetWriter *assetWriter;
 @property (readonly) AVAssetWriterInput *writerInput;
 
-//@property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
+@property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
 
 //@property (readonly) CHomage *h_ext;
 
@@ -71,12 +78,19 @@
         [self.session addOutput:movieDataOutput];
         //self.frameTime = CMTimeMake(1,25);
         
-        /*
+        
         m_foregroundExtraction = new CUniformBackground();
         
-        NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up" ofType:@"ctr"];
-        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 1280, 720);
-        */
+        NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up 480" ofType:@"ctr"];
+        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 480);
+        
+        m_original_image = NULL;
+        m_foreground_image = NULL;
+        m_output_image = NULL;
+        m_temp_image = NULL;
+        m_temp2_image = NULL;
+
+        
         counter = 0;
     }
     return self;
@@ -104,21 +118,21 @@
                                                     error:&error];
        
         // Output video bitrate
-        NSDictionary *codecSettings = @{
-                                       AVVideoAverageBitRateKey:@1200000
-                                       };
+        //NSDictionary *codecSettings = @{
+          //                             AVVideoAverageBitRateKey:@1200000
+            //                           };
        
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
                                         AVVideoWidthKey:@640,
-                                        AVVideoHeightKey:@360,
-                                        AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
-                                        AVVideoCompressionPropertiesKey:codecSettings
+                                        AVVideoHeightKey:@480//,
+                                        //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
+                                        //AVVideoCompressionPropertiesKey:codecSettings
                                         };
         
         _writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
-        //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerInput sourcePixelBufferAttributes:nil];
+        _pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerInput sourcePixelBufferAttributes:nil];
         [self.assetWriter addInput:self.writerInput];
         
         // Start writing
@@ -132,6 +146,8 @@
 {
     if (!_isCurrentlyRecording) return;
     dispatch_async(self.extractQueue, ^{
+        
+        NSLog(@"Finish");
         _isCurrentlyRecording = NO;
 
         // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
@@ -151,15 +167,75 @@
 {
     if (!_isCurrentlyRecording) return;
     
-    if (self.assetWriter.status != AVAssetWriterStatusWriting)
+    NSLog(@"Frame: %d", counter);
+    
+    if (counter % 10 == 0)
     {
+        NSLog(@"Processing frame: %d", counter);
+
+        
         CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
-        [self.assetWriter startWriting];
-        [self.assetWriter startSessionAtSourceTime:lastSampleTime];
+        
+        if (self.assetWriter.status != AVAssetWriterStatusWriting)
+        {
+            [self.assetWriter startWriting];
+            [self.assetWriter startSessionAtSourceTime:lastSampleTime];
+        }
+        
+        //[self.writerInput appendSampleBuffer:sampleBuffer];
+        
+        // SampleBuffer to PixelBuffer
+        //CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        
+        // PixelBuffer to image_type (algo image type)
+        //m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
+        
+        UIImage *originalImage = [self imageFromSampleBuffer:sampleBuffer];
+
+        // saving the UI image
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *imageName = [NSString stringWithFormat:@"original%d.jpg", counter];
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+        [UIImagePNGRepresentation(originalImage) writeToFile:filePath atomically:YES];
+        
+        m_temp_image = CVtool::DecomposeUIimage(originalImage);
+        m_original_image = image3_from(m_temp_image, m_original_image);
+        image_type* temp3_image = image3_to_BGR(m_original_image, NULL);
+        
+        // Running the algo - result of the algo into m_foreground_image
+        m_foregroundExtraction->Process(temp3_image, 1, &m_foreground_image);
+        
+        // Save image to file
+        /*UIImage *foregroundImage = CVtool::CreateUIImage(m_foreground_image);
+        imageName = [NSString stringWithFormat:@"foreground%d.jpg", counter];
+        filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+        [UIImagePNGRepresentation(foregroundImage) writeToFile:filePath atomically:YES];*/
+        
+        // Creating an image with green background and original foreground
+        m_temp2_image = imageA_set_color(m_original_image, m_foreground_image, 255, 0x00FF00, m_temp2_image);
+        image_type* temp4_image = image3_to_BGR(m_temp2_image, NULL);
+        m_output_image = image4_from(temp4_image,m_output_image);
+        
+        // Output image_type to PixelBuffer
+        //CVPixelBufferRef outputPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_output_image);
+        UIImage *outputImage = CVtool::CreateUIImage(m_output_image);
+       
+        // Save image to file
+        imageName = [NSString stringWithFormat:@"output%d.jpg", counter];
+        filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+        [UIImagePNGRepresentation(outputImage) writeToFile:filePath atomically:YES];
+        
+        CVPixelBufferRef outputPixelBuffer = [HMExtractController newPixelBufferFromCGImage:outputImage.CGImage frameSize:outputImage.size];
+
+        
+        [self.pixelBufferAdaptor appendPixelBuffer:outputPixelBuffer withPresentationTime:lastSampleTime];
+        CVPixelBufferRelease(outputPixelBuffer);
+        image_destroy(m_temp_image, 1);
+        image_destroy(temp3_image, 1);
+        image_destroy(temp4_image, 1);
     }
     
-    [self.writerInput appendSampleBuffer:sampleBuffer];
-    
+    counter = counter + 1;
 /*
     UIImage *outputImage = [self imageFromSampleBuffer:sampleBuffer];
 
