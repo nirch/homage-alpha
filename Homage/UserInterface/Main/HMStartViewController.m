@@ -437,8 +437,33 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
                        report.signalInfo.code, report.signalInfo.address);
             HMGLogInfo(@"crashed with exception: %@ reason: %@ stack: %@" , report.exceptionInfo.exceptionName , report.exceptionInfo.exceptionReason , report.exceptionInfo.stackFrames);
             
-            NSNumber *address = [NSNumber numberWithLongLong:report.signalInfo.address];
-            [[Mixpanel sharedInstance] track:@"AppCrash" properties:@{@"signal" : report.signalInfo.name , @"code" : report.signalInfo.code , @"address" : address , @"exceptionName" : report.exceptionInfo.exceptionName , @"exceptionReason" : report.exceptionInfo.exceptionReason , @"stackFrames" : report.exceptionInfo.stackFrames}];            
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            
+            NSDictionary *crashDict = @{};
+            
+            if (report.signalInfo)
+            {
+                NSString *signalName = report.signalInfo.name ? report.signalInfo.name : @"not available";
+                NSString *signalCode = report.signalInfo.code ? report.signalInfo.code : @"not available";
+                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : 0 ;
+                
+                crashDict = @{@"signal_name" : signalName , @"signal_code" : signalCode , @"signal_address" : address};
+            }
+            
+            if (report.exceptionInfo)
+            {
+                NSString *exceptionName = report.exceptionInfo.exceptionName ? report.exceptionInfo.exceptionName : @"not available";
+                NSString *exceptionReason = report.exceptionInfo.exceptionReason ? report.exceptionInfo.exceptionReason : @"not available";
+                NSArray  *stackFrames = report.exceptionInfo.stackFrames ? report.exceptionInfo.stackFrames : @[];
+                
+                NSMutableDictionary *temp = [crashDict mutableCopy];
+                [temp setValue:exceptionName forKey:@"exceptionName"];
+                [temp setValue:exceptionReason forKey:@"exceptionReason"];
+                [temp setValue:stackFrames forKey:@"stackFrames"];
+                crashDict = [NSDictionary dictionaryWithDictionary:temp];
+            }
+    
+            [mixpanel track:@"AppCrash" properties:crashDict];
         }
     }
     

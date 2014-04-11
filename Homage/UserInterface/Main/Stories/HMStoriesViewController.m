@@ -168,6 +168,7 @@
     UIImage *image = info[@"image"];
     
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
     if (notification.isReportingError || !image) {
         story.thumbnail = [UIImage imageNamed:@"missingThumbnail"];
     } else {
@@ -257,6 +258,7 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     // If already exists, just return it.
     if (_fetchedResultsController) return _fetchedResultsController;
     

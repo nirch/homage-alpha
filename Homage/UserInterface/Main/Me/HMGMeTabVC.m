@@ -213,7 +213,6 @@
     if (sender != self) return;
     
     NSIndexPath *indexPath = info[@"indexPath"];
-    //NSError *error = info[@"error"];
     UIImage *image = info[@"image"];
     
     HMGLogDebug(@"if the bug reproduces, indexPath is: %d" , indexPath.item);

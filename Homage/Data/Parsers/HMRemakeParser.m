@@ -71,46 +71,6 @@
 
 @end
 
-/**
-{
-    "_id" =     {
-        "$oid" = 52d69383db254512f4000002;
-    };
-    footages =     (
-                    {
-                        "processed_video_s3_key" = "Remakes/52d69383db254512f4000002/processed_scene_1.mov";
-                        "raw_video_s3_key" = "Remakes/52d69383db254512f4000002/raw_scene_1.mov";
-                        "scene_id" = 1;
-                        status = 0;
-                    },
-                    {
-                        "processed_video_s3_key" = "Remakes/52d69383db254512f4000002/processed_scene_2.mov";
-                        "raw_video_s3_key" = "Remakes/52d69383db254512f4000002/raw_scene_2.mov";
-                        "scene_id" = 2;
-                        status = 0;
-                    },
-                    {
-                        "processed_video_s3_key" = "Remakes/52d69383db254512f4000002/processed_scene_3.mov";
-                        "raw_video_s3_key" = "Remakes/52d69383db254512f4000002/raw_scene_3.mov";
-                        "scene_id" = 3;
-                        status = 0;
-                    },
-                    {
-                        "processed_video_s3_key" = "Remakes/52d69383db254512f4000002/processed_scene_4.mov";
-                        "raw_video_s3_key" = "Remakes/52d69383db254512f4000002/raw_scene_4.mov";
-                        "scene_id" = 4;
-                        status = 0;
-                    }
-                    );
-    status = 0;
-    "story_id" =     {
-        "$oid" = 52cddaf80fad07c3290001aa;
-    };
-    thumbnail = "https://s3.amazonaws.com/homageapp/Stories/StarWars/Star_Wars_Thumbnail.png";
-    "user_id" = @'test@gmail.com';
-}
-*/
-
 
 
 
