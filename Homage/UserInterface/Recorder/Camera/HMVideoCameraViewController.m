@@ -61,7 +61,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)initCameraSettings
 {
     // Camera
-    _camSettingsSessionPreset                       = AVCaptureSessionPreset1280x720;           // Video capture resolution
+    _camSettingsSessionPreset                       = AVCaptureSessionPreset640x480;           // Video capture resolution
     _camSettingsSessionPresetFrontCameraFallback    = AVCaptureSessionPreset640x480;            // If front camera can't show 720p, will try 480p.
     _camSettingsPrefferedDevicePosition             = AVCaptureDevicePositionBack;              // Preffered camera position
     _camSettingsMinFramesPerSecond                  = 25;                                       // Min fps. Set to 0, if you want to use device defaults instead.
@@ -590,7 +590,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 +(BOOL)canFlipToFrontCamera
 {
     AVCaptureDevice *videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionFront];
-    return [videoDevice supportsAVCaptureSessionPreset:AVCaptureSessionPreset1280x720];
+    return [videoDevice supportsAVCaptureSessionPreset:AVCaptureSessionPreset640x480];
 }
 
 -(void)changeCamera
