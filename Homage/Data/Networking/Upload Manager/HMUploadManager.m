@@ -162,7 +162,11 @@
         }];
     }
     
-    for (Footage *footage in footages) [self uploadFootage:footage];
+    for (Footage *footage in footages)
+    {
+        [self updateServerAboutUploadStartForFootage:footage];
+        [self uploadFootage:footage];
+    }
 }
 
 -(void)updateFootagesStateIfNotReallyCurrentlyUploading:(NSArray *)footages
@@ -259,7 +263,14 @@
 
 -(void)updateServerAboutSuccessfulUploadForFootage:(Footage *)footage
 {
-    [HMServer.sh updateFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
+    //using footage.rawLocalFile as a take unique ID
+    [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID TakeID:[footage takeID]];
+}
+
+-(void)updateServerAboutUploadStartForFootage:(Footage *)footage
+{
+    //using footage.rawLocalFile as a take unique ID
+    [HMServer.sh updateOnUploadStartFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID TakeID:[footage takeID]];
 }
 
 -(BOOL)isCurrentlyUploadingFootage:(Footage *)footage

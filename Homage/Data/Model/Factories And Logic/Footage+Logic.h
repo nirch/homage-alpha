@@ -74,4 +74,15 @@ typedef NS_ENUM(NSInteger, HMFootageReadyState) {
 */
 -(NSString *)identifier;
 
+
+///
+/**
+ *  A take specific unique identifier generated from rawLocalFile property
+ *
+ *  @return A string value of the format <remakeID>_<sceneID>
+ */
+-(NSString *)takeID;
+
+
+
 @end

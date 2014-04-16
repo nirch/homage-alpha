@@ -26,27 +26,13 @@
 
 -(void)parseStoryWithInfo:(NSDictionary *)info
 {
-    /**
-    {
-        "_id":{"$oid":"52c4341d220b10ce920001a7"},
-        "order_id":1,
-        "name":"Birthday",
-        "description":"Create a video invitation to your Birthday!",
-        "level":2,
-        "video":"https://s3.amazonaws.com/homageapp/Stories/Birthday/Birthday_Thumbnail.jpg",
-        "thumbnail":"https://s3.amazonaws.com/homageapp/Stories/Birthday/Birthday_Thumbnail.jpg",
-        "scenes":[...],
-        "texts":[...]
-    }
-     */
-    
     //
     // Parse a story.
     //
     NSString *sID = info[@"_id"][@"$oid"];
     
     Story *story = [Story storyWithID:sID inContext:self.ctx];
-    story.isActive =            @YES; // TODO: Support this when server supports it.
+    story.isActive =            [info numberForKey:@"active"];
     story.orderID =             [info numberForKey:@"order_id"];
     story.name =                [info stringForKey:@"name"];
     story.descriptionText =     [info stringForKey:@"description"];

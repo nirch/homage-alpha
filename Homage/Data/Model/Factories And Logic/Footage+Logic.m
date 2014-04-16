@@ -56,4 +56,9 @@
     return [NSString stringWithFormat:@"%@_%@", self.remake.sID, self.sceneID];
 }
 
+-(NSString *)takeID
+{
+    return [[self.rawLocalFile lastPathComponent] stringByDeletingPathExtension];
+}
+
 @end
