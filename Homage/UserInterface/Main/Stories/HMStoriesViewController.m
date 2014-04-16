@@ -319,8 +319,8 @@
         cell.guiShotMode.image = [UIImage imageNamed:@"director1"];
     }
     
-    NSUInteger remakesNum = [story.remakes count];
-    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%lu" , (unsigned long)remakesNum];
+    NSNumber *remakesNum = story.remakesNumber;
+    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%d" , remakesNum.integerValue];
     
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

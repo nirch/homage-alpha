@@ -48,6 +48,7 @@
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="orderID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="remakesNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sID" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,7 +82,7 @@
         <element name="Footage" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Remake" positionX="0" positionY="0" width="128" height="208"/>
         <element name="Scene" positionX="0" positionY="0" width="128" height="240"/>
-        <element name="Story" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="Story" positionX="0" positionY="0" width="128" height="270"/>
         <element name="Text" positionX="0" positionY="0" width="128" height="120"/>
         <element name="User" positionX="0" positionY="0" width="128" height="210"/>
     </elements>

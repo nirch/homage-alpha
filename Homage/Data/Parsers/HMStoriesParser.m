@@ -33,6 +33,7 @@
     
     Story *story = [Story storyWithID:sID inContext:self.ctx];
     story.isActive =            [info numberForKey:@"active"];
+    story.remakesNumber =       [info numberForKey:@"remakes_num"];
     story.orderID =             [info numberForKey:@"order_id"];
     story.name =                [info stringForKey:@"name"];
     story.descriptionText =     [info stringForKey:@"description"];
