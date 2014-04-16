@@ -57,12 +57,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (weak, nonatomic) IBOutlet UILabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
-
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityView;
 
 @property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
 @property (strong, nonatomic) IBOutletCollection(HMFontLabel) NSArray *labelCollection;
-
 
 
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
@@ -85,6 +83,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [super viewDidLoad];
     
     self.userJoinFlow = NO;
+    
     
     //FBloginView
     FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"email",@"user_birthday",@"basic_info"]];
@@ -161,6 +160,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     //TODO: hide forgot pass for now
     self.guiForgotPasswordButton.hidden = YES;
+    
+    //activity view
+    self.guiActivityView.hidden = YES;
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
@@ -304,73 +306,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 }
 
 
-//FBLoginView delegate
--(void)loginViewFetchedUserInfo:(FBLoginView *)loginView
-                           user:(id<FBGraphUser>)user
-{
-    if ([self isFacebookUser:self.cachedUser equalToFacebookUser:user])
-    {
-        [self.delegate dismissLoginScreen];
-        [self hideIntroMovieView];
-        return;
-    }
-    
-    self.loginMethod = @"facebook";
-    self.cachedUser = user;
-    
-    NSDictionary *deviceInfo = [self getDeviceInformation];
-    
-    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username};
-    
-    if ([user objectForKey:@"birthday"])
-    {
-        NSMutableDictionary *temp = [FBDictionary mutableCopy];
-        [temp setValue:[user objectForKey:@"birthday"] forKey:@"birthday"];
-        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
-    }
-    
-    if ([user objectForKey:@"location"])
-    {
-        NSMutableDictionary *temp = [FBDictionary mutableCopy];
-        [temp setValue:[user objectForKey:@"location"] forKey:@"location"];
-        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
-    }
-    
-    NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
-    
-    if ([user objectForKey:@"email"])
-    {
-        NSMutableDictionary *temp = [FBSignupDictionary mutableCopy];
-        [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
-        FBSignupDictionary = [NSDictionary dictionaryWithDictionary:temp];
-    }
-    
-
-    if (!self.userJoinFlow)
-    {
-        [HMServer.sh createUserWithDictionary:FBSignupDictionary];
-        HMGLogDebug(@"creating user with email: %@" , [user objectForKey:@"email"]);
-    } else if (self.userJoinFlow && [User current])
-    {
-        NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
-        
-        if ([user objectForKey:@"email"])
-        {
-            NSMutableDictionary *temp = [FBUpdateDictionary mutableCopy];
-            [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
-            FBUpdateDictionary = [NSDictionary dictionaryWithDictionary:temp];
-        }
-        
-        [HMServer.sh updateUserUponJoin:FBUpdateDictionary];
-    }
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
-
--(BOOL)isFacebookUser:(id<FBGraphUser>)firstUser equalToFacebookUser:(id<FBGraphUser>)secondUser
-{
-    return [firstUser.id isEqual:secondUser.id];
-}
 
 -(IBAction)onPressedSignUpLogin:(UIButton *)sender
 {
@@ -704,12 +639,94 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.userJoinFlow = YES;
 }
 
+#pragma mark FBLoginView delegate
+-(void)loginViewFetchedUserInfo:(FBLoginView *)loginView
+                           user:(id<FBGraphUser>)user
+{
+    
+    HMGLogInfo(@"fb login view fetched user info start");
+    [self.guiActivityView stopAnimating];
+    self.guiActivityView.hidden = YES;
+    
+    
+    if ([self isFacebookUser:self.cachedUser equalToFacebookUser:user])
+    {
+        [self.delegate dismissLoginScreen];
+        [self hideIntroMovieView];
+        return;
+    }
+    
+    self.loginMethod = @"facebook";
+    self.cachedUser = user;
+    
+    NSDictionary *deviceInfo = [self getDeviceInformation];
+    
+    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username};
+    
+    if ([user objectForKey:@"birthday"])
+    {
+        NSMutableDictionary *temp = [FBDictionary mutableCopy];
+        [temp setValue:[user objectForKey:@"birthday"] forKey:@"birthday"];
+        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
+    }
+    
+    if ([user objectForKey:@"location"])
+    {
+        NSMutableDictionary *temp = [FBDictionary mutableCopy];
+        [temp setValue:[user objectForKey:@"location"] forKey:@"location"];
+        FBDictionary = [NSDictionary dictionaryWithDictionary:temp];
+    }
+    
+    NSDictionary *FBSignupDictionary = @{@"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
+    
+    if ([user objectForKey:@"email"])
+    {
+        NSMutableDictionary *temp = [FBSignupDictionary mutableCopy];
+        [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
+        FBSignupDictionary = [NSDictionary dictionaryWithDictionary:temp];
+    }
+    
+    
+    if (!self.userJoinFlow)
+    {
+        [HMServer.sh createUserWithDictionary:FBSignupDictionary];
+        HMGLogInfo(@"requesting to create user with email: %@" , [user objectForKey:@"email"]);
+        [[Mixpanel sharedInstance] track:@"FBcreateNewUser" properties:FBSignupDictionary];
+    
+    } else if (self.userJoinFlow && [User current])
+    {
+        HMGLogInfo(@"updating guest user to registered user");
+        NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
+        
+        if ([user objectForKey:@"email"])
+        {
+            NSMutableDictionary *temp = [FBUpdateDictionary mutableCopy];
+            [temp setValue:[user objectForKey:@"email"] forKey:@"email"];
+            FBUpdateDictionary = [NSDictionary dictionaryWithDictionary:temp];
+        }
+        
+        [[Mixpanel sharedInstance] track:@"FBGuestUserUpdated" properties:FBUpdateDictionary];
+        [HMServer.sh updateUserUponJoin:FBUpdateDictionary];
+    }
+    
+    HMGLogInfo(@"fb login view fetched user info finish");
+}
+
+-(BOOL)isFacebookUser:(id<FBGraphUser>)firstUser equalToFacebookUser:(id<FBGraphUser>)secondUser
+{
+    return [firstUser.id isEqual:secondUser.id];
+}
+
+
 /*Implementing the loginViewShowingLoggedInUser: delegate method allows you to modify your app's UI to show a logged in experience. In the example below, we notify the user that they are logged in by changing the status:*/
 
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView
 {
-    
+    HMGLogInfo(@"fb login");
+    self.guiActivityView.hidden = NO;
+    [self.guiActivityView startAnimating];
+    [[Mixpanel sharedInstance] track:@"FBUserLogin" properties:@{}];
 }
 
 /*Implementing the loginViewShowingLoggedOutUser: delegate method allows you to modify your app's UI to show a logged out experience. In the example below, the user's profile picture is removed, the user's name set to blank, and the status is changed to reflect that the user is not logged in:*/
@@ -717,12 +734,20 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 // Logged-out user experience
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
 {
-
+    HMGLogInfo(@"fb logout");
+    self.guiActivityView.hidden = YES;
+    [self.guiActivityView stopAnimating];
+    [[Mixpanel sharedInstance] track:@"FBUserLogout" properties:@{}];
+    
 }
 
 // Handle possible errors that can occur during login
-- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error
+{
+    HMGLogInfo(@"got fb error");
     NSString *alertMessage, *alertTitle;
+    
+    
     
     // If the user should perform an action outside of you app to recover,
     // the SDK will provide a message for the user, you just need to surface it.
@@ -755,6 +780,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     if (alertMessage) {
+        [[Mixpanel sharedInstance] track:@"FBError" properties:@{@"title" : alertTitle , @"message" : alertMessage}];
         [[[UIAlertView alloc] initWithTitle:alertTitle
                                     message:alertMessage
                                    delegate:nil
@@ -815,39 +841,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self presentViewController:self.legalNavVC animated:YES completion:nil];
 }
 
-/*#pragma mark niattributedlabel delegate
-- (void)attributedLabel:(NIAttributedLabel *)attributedLabel didSelectTextCheckingResult:(NSTextCheckingResult *)result atPoint:(CGPoint)point
-{
-    NSString *selected = [result.URL absoluteString];
-    
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
-    
-    self.tosVC = [[HMTOSViewController alloc] init];
-    self.privacyVC = [[HMPrivacyPolicyViewController alloc] init];
-    self.legalNavVC = [[UINavigationController alloc] init];
-    
-    if ([selected isEqualToString:@"TOS"])
-    {
-        [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
-        self.tosVC.navigationItem.hidesBackButton = YES;
-        self.tosVC.navigationItem.leftBarButtonItem = doneButton;
-        UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
-        self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
-        self.tosVC.navigationItem.hidesBackButton = YES;
-        [self presentViewController:self.legalNavVC animated:YES completion:nil];
-
-    } else if ([selected isEqualToString:@"Privacy"])
-    {
-        [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
-        self.privacyVC.navigationItem.hidesBackButton = YES;
-        self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
-        UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
-        self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
-        self.privacyVC.navigationItem.hidesBackButton = YES;
-        [self presentViewController:self.legalNavVC animated:YES completion:nil];
-    }
-    
-}*/
 
 -(void)dismissLegalNavcontroller:(UIBarButtonItem *)sender
 {

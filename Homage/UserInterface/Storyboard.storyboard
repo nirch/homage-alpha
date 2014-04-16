@@ -60,7 +60,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zUe-p0-Ug6">
                                         <rect key="frame" x="5" y="15" width="44" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Ysettings">
+                                        <state key="normal" image="moreThick">
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1002,6 +1002,10 @@
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="xLt-DS-T4z">
+                                        <rect key="frame" x="149" y="442" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </scrollView>
@@ -1009,6 +1013,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="guiActivityView" destination="xLt-DS-T4z" id="4jc-k1-l94"/>
                         <outlet property="guiBGImageView" destination="2ke-zy-oEP" id="ybK-cm-szb"/>
                         <outlet property="guiCancelButton" destination="Xry-Np-IlX" id="op9-qR-52k"/>
                         <outlet property="guiForgotPasswordButton" destination="2ka-xU-4Lb" id="yPJ-3o-1zu"/>
@@ -1086,12 +1091,12 @@
         <image name="Ydelete" width="30" height="30"/>
         <image name="Ydotswhite" width="30" height="30"/>
         <image name="Yreset" width="30" height="30"/>
-        <image name="Ysettings" width="23" height="21"/>
         <image name="Yshare" width="30" height="30"/>
         <image name="background" width="452" height="447"/>
         <image name="exitblack" width="30" height="30"/>
         <image name="filmStrip" width="586" height="1023"/>
         <image name="logo" width="118" height="48"/>
+        <image name="moreThick" width="23" height="26"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
         <image name="warning" width="200" height="200"/>
     </resources>
