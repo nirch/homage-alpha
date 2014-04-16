@@ -494,6 +494,7 @@
 		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
 		F15D608D18A916BB0052779F /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		F15D608E18A916BB0052779F /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
+		F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Model102.xcdatamodel; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1637,8 +1638,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (DD2XVN763C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (DD2XVN763C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
@@ -1658,8 +1659,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (DD2XVN763C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (DD2XVN763C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
@@ -1753,9 +1754,10 @@
 		0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */,
 				0806FB33188295CD00F0EF50 /* Model.xcdatamodel */,
 			);
-			currentVersion = 0806FB33188295CD00F0EF50 /* Model.xcdatamodel */;
+			currentVersion = F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
