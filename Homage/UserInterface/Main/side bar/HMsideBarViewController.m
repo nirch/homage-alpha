@@ -123,7 +123,7 @@
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
 {
     self.guiProfilePictureView.profileID = fbProfileID;
-    self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO USER") , userName];
+    self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO_USER") , userName];
     if (![userName isEqualToString:@"Guest"])
     {
         self.guiJoinButton.hidden = YES;

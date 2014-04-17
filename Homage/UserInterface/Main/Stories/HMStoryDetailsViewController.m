@@ -102,7 +102,7 @@
     
     self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
     
-    self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
+    self.noRemakesLabel.text = LS(@"NO_REMAKES");
     self.guiDescriptionField.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
     
@@ -478,7 +478,7 @@
             [self initRecorderWithRemake:self.oldRemakeInProgress];
         } else
         {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
             dispatch_async(dispatch_get_main_queue(), ^{
                 alertView.tag = REMAKE_ALERT_TAG;
                 [alertView show];
@@ -514,7 +514,7 @@
 
 -(void)showMarkAsInappropriateAlert
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"MARK_AS_INAPPROPRIATE", nil) message:NSLocalizedString(@"MARK_AS_INAPPROPRIATE_QUESTION", nil) delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"MARK_AS_INAPPROPRIATE") message:LS(@"MARK_AS_INAPPROPRIATE_QUESTION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         alertView.tag = MARK_AS_INAPPROPRIATE_TAG;
         [alertView show];

@@ -208,7 +208,7 @@
     self.timer.tolerance = TIMER_TOLERANCE;
     self.timePassedSinceTimerBegan = 0;
     Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
-    self.guiInProgressLabel.text = [NSString stringWithFormat: NSLocalizedString(@"RENDERING_MOVIE_MESSAGE", nil) ,remake.story.name];
+    self.guiInProgressLabel.text = [NSString stringWithFormat: LS(@"RENDERING_MOVIE_MESSAGE") ,remake.story.name];
     [self showInProgressViewAnimated:YES];
     [self.guiActivityWheel startAnimating];
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
@@ -276,7 +276,7 @@
     
     [self stopTimer];
     
-    self.guiDoneLabel.text = NSLocalizedString(@"REMAKE_FAILED_CLICK", nil);
+    self.guiDoneLabel.text = LS(@"REMAKE_FAILED_CLICK");
     
     [self showDoneViewAnimated:YES];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
         shareRemakes = NO;
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"SIGN_UP_NOW", nil) message:NSLocalizedString(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES", nil) delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES") delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
         //alertView.tag = SHARE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];
@@ -274,7 +274,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         self.appTabBarController.tabBar.hidden = YES;
         if (!self.guiTabNameLabel.text)
         {
-            self.guiTabNameLabel.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
         }
         [self setNavControllersDelegate];
         

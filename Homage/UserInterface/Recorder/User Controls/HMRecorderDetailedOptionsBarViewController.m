@@ -123,11 +123,11 @@
     // Video controllers (scene & story)
     HMSimpleVideoViewController *vc;
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView];
-    self.sceneVideoVC.videoLabelText = LS(@"WATCH OUR SCENE");
+    self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
     
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView];
-    self.storyVideoVC.videoLabelText = LS(@"WATCH OUR STORY");
+    self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
     self.storyVideoVC.delegate = self;
@@ -571,10 +571,10 @@
 -(void)updateShowHideScriptButton
 {
     if (User.current.prefersToSeeScriptWhileRecording.boolValue) {
-        [self.guiShowScriptButton setTitle:LS(@"HIDE SCRIPT") forState:UIControlStateNormal];
+        [self.guiShowScriptButton setTitle: LS(@"HIDE_SCRIPT") forState:UIControlStateNormal];
         [[Mixpanel sharedInstance] track:@"REHideScript" properties:@{@"story" : self.remake.story.name}];
     } else {
-        [self.guiShowScriptButton setTitle:LS(@"SHOW SCRIPT") forState:UIControlStateNormal];
+        [self.guiShowScriptButton setTitle:LS(@"SHOW_SCRIPT") forState:UIControlStateNormal];
         [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name}];
 
     }

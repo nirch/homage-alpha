@@ -29,7 +29,7 @@
                                                                               containerView:self.guiContainerView
                                        ];
     vc.delegate = self;
-    vc.videoLabelText = LS(@"SHOW YOUR TAKE");
+    vc.videoLabelText = LS(@"SHOW_YOUR_TAKE");
     vc.videoURL = [NSString stringWithFormat:@"file://%@", self.footage.rawLocalFile];
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;

@@ -150,7 +150,7 @@
 {
     // Critical error if remake doesn't exist in local storage!
     if (!self.remake) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"Critical error")
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"CRITICAL_ERROR")
                                                         message:LS(@"Recorder missing reference to a 'REMAKE'.")
                                                        delegate:nil
                                               cancelButtonTitle:LS(@"OK")

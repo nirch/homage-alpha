@@ -109,10 +109,10 @@
     [self.userRemakesCV setBackgroundColor:[UIColor clearColor]];
     self.userRemakesCV.alwaysBounceVertical = YES;
     
-    self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
+    self.noRemakesLabel.text = LS(@"NO_REMAKES");
     [self.noRemakesLabel setHidden:YES];
     self.noRemakesLabel.textColor = [HMColor.sh textImpact];
-    self.title = NSLocalizedString(@"ME_TAB_HEADLINE_TITLE", nil);
+    self.title = LS(@"ME_TAB_HEADLINE_TITLE");
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -616,7 +616,7 @@
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.remakeToDelete = remake;
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"DELETE_REMAKE", nil) message:NSLocalizedString(@"APPROVE_DELETION", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"DELETE_REMAKE") message:LS(@"APPROVE_DELETION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
     
     alertView.tag = TRASH_ALERT_VIEW_TAG;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -659,7 +659,7 @@
     //we only want to suggest to continue a remake if a remake is in user progress or timed out and we want to give him the option to send to rendering again
     if (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
         alertView.tag = REMAKE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];
@@ -682,7 +682,7 @@
     
     if ([[User current] isGuestUser])
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"SIGN_UP_NOW", nil) message:NSLocalizedString(@"ONLY_SIGN_IN_USERS_CAN_SHARE", nil) delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
         alertView.tag = SHARE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];

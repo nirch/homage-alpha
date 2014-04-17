@@ -66,13 +66,13 @@
     [self.storiesCV addSubview:tempRefreshControl];
     self.refreshControl = tempRefreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
-    self.title = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+    self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
     HMGLogDebug(@"title is: %@" , self.title);
     
     //self.view.backgroundColor = [UIColor clearColor];
     [self.storiesCV setBackgroundColor: [UIColor clearColor]];
     self.storiesCV.alwaysBounceVertical = YES;
-    self.noStoriesLabel.text = NSLocalizedString(@"NO_STORIES", nil);
+    self.noStoriesLabel.text = LS(@"NO_STORIES");
     [self.noStoriesLabel setHidden:YES];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
