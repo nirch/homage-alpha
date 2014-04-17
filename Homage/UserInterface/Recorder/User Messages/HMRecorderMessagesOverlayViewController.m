@@ -14,6 +14,7 @@
 #import "UIImage+ImageEffects.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+Render.h"
+#import "HMServer+ReachabilityMonitor.h"
 #import "HMRecorderPreviewViewController.h"
 #import "mixpanel.h"
 
@@ -152,6 +153,11 @@
 
 #pragma mark - Observers handlers
 -(void)onRender:(NSNotification *)notification
+{
+    [self dismissActivityView];
+}
+
+-(void)dismissActivityView
 {
     [self.guiActivity stopAnimating];
     self.guiDismissButton.enabled = YES;
@@ -296,6 +302,18 @@
     if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes)
     {
         sender.enabled = NO;
+        
+        if (!HMServer.sh.isReachable)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                            message:LS(@"NO_CONNECTIVITY")                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil
+                                  ];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [alert show];
+            });
+        }
         [[Mixpanel sharedInstance] track: @"RECreateMovie"];
         [self serverCreateMovie];
         return;

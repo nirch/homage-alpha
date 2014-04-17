@@ -696,7 +696,7 @@
 -(void)shareRemake:(Remake *)remake
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSString *shareString = @"Check out the cool video i created with #HomageApp";
+    NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ :" , remake.story.name];
     [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name}];
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
