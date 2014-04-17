@@ -233,12 +233,13 @@
 		26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
-		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
+		8DDB1DBA92B94C46B42B8A08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 		F13FA5201899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 		F15D608F18A916BB0052779F /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = F15D608E18A916BB0052779F /* Remake.m */; };
+		F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = F182B6DE18F407FB00A89B79 /* close up 480.ctr */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -496,6 +497,7 @@
 		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
 		F15D608D18A916BB0052779F /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		F15D608E18A916BB0052779F /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
+		F182B6DE18F407FB00A89B79 /* close up 480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up 480.ctr"; path = "App/supporting files/close up 480.ctr"; sourceTree = "<group>"; };
 		F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = Me/HMRenderingViewControllerDelegate.h; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -591,6 +593,7 @@
 		0806FA1618828AEB007514BE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F182B6DE18F407FB00A89B79 /* close up 480.ctr */,
 				08081FB718D0A9EA00999068 /* close up.ctr */,
 				0806FA1718828AEB007514BE /* Homage-Info.plist */,
 				0806FA1B18828AEB007514BE /* main.m */,
@@ -1289,6 +1292,7 @@
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
+				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1646,9 +1650,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
@@ -1666,9 +1670,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lGpw",
@@ -1718,9 +1722,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
@@ -1738,9 +1742,9 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Debug-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Debug-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Debug-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
+					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lGpw",
