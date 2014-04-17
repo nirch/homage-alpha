@@ -12,6 +12,7 @@
 #import "AVCamPreviewView.h"
 #import "HMNotificationCenter.h"
 #import "InfoKeys.h"
+#import "HMExtractController.h"
 
 // Contexts
 static void *RecordingContext = &RecordingContext;
@@ -40,11 +41,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 @property (nonatomic) id runtimeErrorHandlingObserver;
 @property (nonatomic) CGPoint focusPoint;
 
+// Extraction
+@property (nonatomic, readonly) HMExtractController *extractController;
+@property (nonatomic, readonly) AVCaptureVideoDataOutput* videoDataOutput;
+
 // Some info about beginning and end of a recording
 @property (nonatomic) NSDictionary *lastRecordingStartInfo;
 @property (nonatomic) NSDictionary *lastRecordingStopInfo;
 
 // Camera settings
+@property (nonatomic, readonly) BOOL camFGExtraction;
 @property (nonatomic, readonly) NSString *camSettingsSessionPreset;
 @property (nonatomic, readonly) NSString *camSettingsSessionPresetFrontCameraFallback;
 @property (nonatomic, readonly) NSInteger camSettingsPrefferedDevicePosition;
@@ -60,8 +66,11 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 #pragma mark - Camera settings
 -(void)initCameraSettings
 {
+    // Extraction
+    _camFGExtraction                                = NO;
+    
     // Camera
-    _camSettingsSessionPreset                       = AVCaptureSessionPreset1280x720;           // Video capture resolution
+    _camSettingsSessionPreset                       = AVCaptureSessionPreset640x480;//AVCaptureSessionPresetiFrame1280x720;     // Video capture resolution
     _camSettingsSessionPresetFrontCameraFallback    = AVCaptureSessionPreset640x480;            // If front camera can't show 720p, will try 480p.
     _camSettingsPrefferedDevicePosition             = AVCaptureDevicePositionBack;              // Preffered camera position
     _camSettingsMinFramesPerSecond                  = 25;                                       // Min fps. Set to 0, if you want to use device defaults instead.
@@ -482,17 +491,33 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         //
         // Output!
         //
-        AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
-        if ([self.session canAddOutput:movieFileOutput])
-        {
-            [self.session addOutput:movieFileOutput];
-            AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-  
-            // Video stabilization
-            if (connection.isVideoStabilizationSupported) connection.enablesVideoStabilizationWhenAvailable = YES;
-            
-            // Set the output
-            self.movieFileOutput = movieFileOutput;
+        
+        if (self.camFGExtraction) {
+            //
+            //  Output video with FG extraction
+            //
+            AVCaptureVideoDataOutput *movieDataOutput = [AVCaptureVideoDataOutput new];
+            movieDataOutput.alwaysDiscardsLateVideoFrames = NO;
+            movieDataOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
+            if ([self.session canAddOutput:movieDataOutput]) {
+                _extractController = [[HMExtractController alloc] initWithSession:self.session movieDataOutput:movieDataOutput];
+            }
+        } else {
+            //
+            //  Output raw video
+            //
+            AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
+            if ([self.session canAddOutput:movieFileOutput])
+            {
+                [self.session addOutput:movieFileOutput];
+                AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+                
+                // Video stabilization
+                if (connection.isVideoStabilizationSupported) connection.enablesVideoStabilizationWhenAvailable = YES;
+                
+                // Set the output
+                self.movieFileOutput = movieFileOutput;
+            }
         }
         
         //
@@ -534,7 +559,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)toggleMovieRecording:(NSDictionary *)info
 {
     dispatch_async([self sessionQueue], ^{
-        if (![[self movieFileOutput] isRecording])
+        id outputController = self.extractController ? self.extractController : self.movieFileOutput;
+        
+        if (![outputController isRecording])
         {
             self.lastRecordingStartInfo = info;
             self.lockInterfaceRotation = YES;
@@ -551,6 +578,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             
             // Turning OFF flash for video recording
             [HMVideoCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
+
             
             // Lock focus on a point (currently hard coded point, should be received from the server later.
             [self focusWithMode:AVCaptureFocusModeLocked
@@ -562,18 +590,12 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             NSString *fileName = info[@"fileName"];
             NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
             HMGLogDebug(@"Output to:%@", tmpPath);
-            NSInteger numberOfConnections = self.movieFileOutput.connections.count;
-            if (numberOfConnections == 0)
-            {
-                HMGLogError(@"Failed to make any connections for recording. Are you using the simulator?");
-            } else {
-                [[self movieFileOutput] startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath] recordingDelegate:self];
-            }
+            [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath] recordingDelegate:self];
         }
         else
         {
             self.lastRecordingStopInfo = info;
-            [[self movieFileOutput] stopRecording];
+            [outputController stopRecording];
             [self resetCameraToInitialFocusSettings];
         }
     });
@@ -590,7 +612,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 +(BOOL)canFlipToFrontCamera
 {
     AVCaptureDevice *videoDevice = [HMVideoCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionFront];
-    return [videoDevice supportsAVCaptureSessionPreset:AVCaptureSessionPreset1280x720];
+    return [videoDevice supportsAVCaptureSessionPreset:AVCaptureSessionPreset640x480];//AVCaptureSessionPreset1280x720];
 }
 
 -(void)changeCamera
