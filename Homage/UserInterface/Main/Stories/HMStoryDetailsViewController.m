@@ -330,7 +330,7 @@
     = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser]];
     
     fetchRequest.predicate = compoundPredicate;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
     // Create the fetched results controller and return it.

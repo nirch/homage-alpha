@@ -2,7 +2,7 @@
 //  Remake.h
 //  Homage
 //
-//  Created by Tomer Harry on 2/10/14.
+//  Created by Yoav Caspin on 4/17/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -14,13 +14,14 @@
 @interface Remake : NSManagedObject
 
 @property (nonatomic, retain) NSDate * lastLocalUpdate;
+@property (nonatomic, retain) NSString * shareURL;
 @property (nonatomic, retain) NSString * sID;
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) id texts;
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * videoURL;
-@property (nonatomic, retain) NSString * shareURL;
+@property (nonatomic, retain) NSNumber * grade;
 @property (nonatomic, retain) NSSet *footages;
 @property (nonatomic, retain) Story *story;
 @property (nonatomic, retain) User *user;

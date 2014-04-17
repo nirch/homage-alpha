@@ -48,6 +48,7 @@
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
     remake.videoURL = [info stringForKey:@"video"];
     remake.shareURL = [info stringForKey:@"share_link"];
+    remake.grade = [info numberForKey:@"grade"] ? [info numberForKey:@"grade"] : [NSNumber numberWithInt:0];
     
     remake.lastLocalUpdate = lastLocalUpdate;
     self.parseInfo[@"remakeID"] = remakeID;

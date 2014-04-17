@@ -14,6 +14,7 @@
         <relationship name="remake" maxCount="1" deletionRule="Nullify" destinationEntity="Remake" inverseName="footages" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <entity name="Remake" representedClassName="Remake" syncable="YES">
+        <attribute name="grade" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="lastLocalUpdate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="shareURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sID" attributeType="String" indexed="YES" syncable="YES"/>
@@ -80,7 +81,7 @@
     </entity>
     <elements>
         <element name="Footage" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="Remake" positionX="0" positionY="0" width="128" height="208"/>
+        <element name="Remake" positionX="0" positionY="0" width="128" height="225"/>
         <element name="Scene" positionX="0" positionY="0" width="128" height="240"/>
         <element name="Story" positionX="0" positionY="0" width="128" height="270"/>
         <element name="Text" positionX="0" positionY="0" width="128" height="120"/>
