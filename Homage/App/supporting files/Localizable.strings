@@ -85,7 +85,7 @@
 "SCENE_TITLE" = "Scene No. %d";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
-"CAMERA_NOT_STABLE_TITLE" = "Wow there Shaaaaaaaky...";
+"CAMERA_NOT_STABLE_TITLE" = "Steady now...";
 
 "UNKNOWN_MAIL_ADDRESS" = "Unknown mail address";
 "INCORRECT_PASSWORD" = "Incorrect mail address or password";
