@@ -244,7 +244,7 @@
         //
         //  The finished scene and next scene info message.
         //
-        self.guiTextMessageTitleLabel.text = LS(@"GREAT_JOB!");
+        self.guiTextMessageTitleLabel.text = LS(@"GREAT_JOB");
         self.guiTextMessageIcon.image = [UIImage imageNamed:@"iconTrophy"];
         self.guiTextMessageLabel.text = [NSString stringWithFormat:LS(@"AT_THE_NEXT_SCENE"), info[@"text"]];
         [self.guiDismissButton setTitle:LS(@"NEXT_SCENE") forState:UIControlStateNormal];
@@ -255,7 +255,7 @@
         //
         //  The finished all scenes message + make movie button.
         //
-        self.guiTextMessageTitleLabel.text = LS(@"GREAT_JOB!");
+        self.guiTextMessageTitleLabel.text = LS(@"GREAT_JOB");
         self.guiTextMessageIcon.image = [UIImage imageNamed:@"iconTrophy"];
         self.guiTextMessageLabel.text = LS(@"NAILED_ALL_SCENES");
         [self.guiDismissButton setTitle:LS(@"CREATE_MOVIE") forState:UIControlStateNormal];

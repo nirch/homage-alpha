@@ -32,9 +32,10 @@
 #import <CrashReporter/PLCrashReporter.h>
 #import <CrashReporter/PLCrashReport.h>
 #import "HMAppDelegate.h"
-#import "HMServer+Users.h"
-#import <InAppSettingsKit/IASKAppSettingsViewController.h>
+#import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
+#import "HMServer+Users.h"
+
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
 

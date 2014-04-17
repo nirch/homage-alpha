@@ -261,7 +261,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
             [self showErrorLabelWithString:LS(@"INCORRECT_EMAIL_ADDRESS_FORMAT")];
             break;
         case HMBadPassword:
-            [self showErrorLabelWithString:LS(@"UNSUFFICIENT PASSWORD")];
+            [self showErrorLabelWithString:LS(@"UNSUFFICIENT_PASSWORD")];
              break;
         case HMMailAddressAlreadyTaken:
             [self showErrorLabelWithString:LS(@"EMAIL_TAKEN")];
