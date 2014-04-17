@@ -1650,9 +1650,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"/**",
+					"../homage-cv-app/VimGui/Lib/Release-iphoneos/**",
+					"../homage-cv-app/Core/Lib/Release-iphoneos/**",
+					"../homage-cv-app/Homage/Lib/Release-iphoneos/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
@@ -1662,24 +1662,22 @@
 					"\"${PODS_ROOT}/Headers/InAppSettingsKit\"",
 					"\"${PODS_ROOT}/Headers/Mixpanel\"",
 					"\"${PODS_ROOT}/Headers/PLCrashReporter\"",
-					"Gp_vim/VimGui/**",
-					"Gp_vim/Core/ImageLib/**",
-					"Gp_vim/Core/Util/**",
-					"Gp_vim/Homage/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Homage/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"",
+					"../homage-cv-app/VimGui/Lib/Release-iphoneos",
+					"../homage-cv-app/Core/Lib/Release-iphoneos",
+					"../homage-cv-app/Homage/Lib/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-lGpw",
-					"-lImage",
 					"-lUtil",
-					"-lHomageLib",
-					"-lImageAcquisition",
+					"-lImage",
 					"-lMattingLib",
 					"-ObjC",
 					"-framework",
@@ -1722,9 +1720,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"/**",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"/**",
+					"../homage-cv-app/VimGui/Lib/Release-iphoneos/**",
+					"../homage-cv-app/Core/Lib/Release-iphoneos/**",
+					"../homage-cv-app/Homage/Lib/Release-iphoneos/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
@@ -1734,24 +1732,22 @@
 					"\"${PODS_ROOT}/Headers/InAppSettingsKit\"",
 					"\"${PODS_ROOT}/Headers/Mixpanel\"",
 					"\"${PODS_ROOT}/Headers/PLCrashReporter\"",
-					"Gp_vim/VimGui/**",
-					"Gp_vim/Core/ImageLib/**",
-					"Gp_vim/Core/Util/**",
-					"Gp_vim/Homage/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Homage/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Gp_vim/Homage/Lib/Release-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/Core/Lib/Release-iphoneos\"",
-					"\"$(SRCROOT)/Gp_vim/VimGui/Lib/Release-iphoneos\"",
+					"../homage-cv-app/VimGui/Lib/Release-iphoneos",
+					"../homage-cv-app/Core/Lib/Release-iphoneos",
+					"../homage-cv-app/Homage/Lib/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-lGpw",
-					"-lImage",
 					"-lUtil",
-					"-lHomageLib",
-					"-lImageAcquisition",
+					"-lImage",
 					"-lMattingLib",
 					"-ObjC",
 					"-framework",
