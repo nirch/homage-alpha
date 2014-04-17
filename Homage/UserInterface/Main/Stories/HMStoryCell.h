@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiLevelOfDifficulty;
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiShotMode;
-@property (weak, nonatomic) IBOutlet UILabel *guiNumOfRemakes;
+@property (weak, nonatomic) IBOutlet HMFontLabel *guiNumOfRemakes;
 
 @end

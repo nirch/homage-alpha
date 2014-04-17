@@ -32,9 +32,10 @@
 #import <CrashReporter/PLCrashReporter.h>
 #import <CrashReporter/PLCrashReport.h>
 #import "HMAppDelegate.h"
-#import "HMServer+Users.h"
-#import <InAppSettingsKit/IASKAppSettingsViewController.h>
+#import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
+#import "HMServer+Users.h"
+
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
 
@@ -121,7 +122,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     //debug
     //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
     //[self.guiAppContainerView.layer setBorderWidth:2.0f];
-    //[self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
+    
 }
 
 -(void)initObservers
@@ -167,7 +168,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
         shareRemakes = NO;
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"SIGN_UP_NOW", nil) message:NSLocalizedString(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES", nil) delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES") delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
         //alertView.tag = SHARE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];
@@ -274,7 +275,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         self.appTabBarController.tabBar.hidden = YES;
         if (!self.guiTabNameLabel.text)
         {
-            self.guiTabNameLabel.text = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
         }
         [self setNavControllersDelegate];
         
@@ -317,11 +318,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if ([navVC.viewControllers count] > 1)
     {
-        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"backButtonBlack"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"backThick"] forState:UIControlStateNormal];
         self.guiNavButton.tag = BACK_TAG;
     } else
     {
-        [self.guiNavButton setBackgroundImage:[UIImage imageNamed:@"settingsBlack"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"moreThick"] forState:UIControlStateNormal];
         self.guiNavButton.tag = SETTING_TAG;
     }
 }
@@ -354,6 +355,10 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     {
         [self presentLoginScreen];
     } else {
+        
+        //make sure login screen is hidden
+        [self hideLoginScreen];
+        
         //Mixpanel analytics
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
         User *user = [User current];
@@ -433,8 +438,33 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
                        report.signalInfo.code, report.signalInfo.address);
             HMGLogInfo(@"crashed with exception: %@ reason: %@ stack: %@" , report.exceptionInfo.exceptionName , report.exceptionInfo.exceptionReason , report.exceptionInfo.stackFrames);
             
-            NSNumber *address = [NSNumber numberWithLongLong:report.signalInfo.address];
-            [[Mixpanel sharedInstance] track:@"AppCrash" properties:@{@"signal" : report.signalInfo.name , @"code" : report.signalInfo.code , @"address" : address , @"exceptionName" : report.exceptionInfo.exceptionName , @"exceptionReason" : report.exceptionInfo.exceptionReason , @"stackFrames" : report.exceptionInfo.stackFrames}];            
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            
+            NSDictionary *crashDict = @{};
+            
+            if (report.signalInfo)
+            {
+                NSString *signalName = report.signalInfo.name ? report.signalInfo.name : @"not available";
+                NSString *signalCode = report.signalInfo.code ? report.signalInfo.code : @"not available";
+                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : 0 ;
+                
+                crashDict = @{@"signal_name" : signalName , @"signal_code" : signalCode , @"signal_address" : address};
+            }
+            
+            if (report.exceptionInfo)
+            {
+                NSString *exceptionName = report.exceptionInfo.exceptionName ? report.exceptionInfo.exceptionName : @"not available";
+                NSString *exceptionReason = report.exceptionInfo.exceptionReason ? report.exceptionInfo.exceptionReason : @"not available";
+                NSArray  *stackFrames = report.exceptionInfo.stackFrames ? report.exceptionInfo.stackFrames : @[];
+                
+                NSMutableDictionary *temp = [crashDict mutableCopy];
+                [temp setValue:exceptionName forKey:@"exceptionName"];
+                [temp setValue:exceptionReason forKey:@"exceptionReason"];
+                [temp setValue:stackFrames forKey:@"stackFrames"];
+                crashDict = [NSDictionary dictionaryWithDictionary:temp];
+            }
+    
+            [mixpanel track:@"AppCrash" properties:crashDict];
         }
     }
     
@@ -445,6 +475,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)presentLoginScreen
 {
+    if (self.loginContainerView.hidden == NO) return;
+    
     self.appWrapperView.hidden = YES;
     self.loginContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
@@ -455,12 +487,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)hideLoginScreen
 {
+    if (self.loginContainerView.hidden == YES) return;
+    
     self.appWrapperView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 0;
     } completion:^(BOOL finished)
      {
-         self.loginContainerView.hidden = NO;
+         self.loginContainerView.hidden = YES;
      }];
 }
 
@@ -642,6 +676,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if (success)
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil];
         [self switchToTab:HMMeTab];
         if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
         {
@@ -694,7 +729,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
             [alert show];
         });
         NSError *error = notification.userInfo[@"error"];
-        NSLog(@"error: %@" , [error localizedDescription]);
+        HMGLogError(@"error: %@" , [error localizedDescription]);
     }
 }
 
@@ -703,18 +738,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!self.guiNoConnectivityView.hidden) return;
-    
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     self.guiNoConnectivityView.hidden = NO;
     CGFloat offset = self.guiNoConnectivityView.frame.size.height;
     CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
-    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
     newAppContainerViewFrame.size.height -= offset;
     newAppContainerViewFrame.origin.y += offset;
     [UIView animateWithDuration:0.3 animations:^{
         self.guiAppContainerView.frame = newAppContainerViewFrame;
     } completion:nil];
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
@@ -723,10 +754,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (self.guiNoConnectivityView.hidden) return;
     
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     CGFloat offset = self.guiNoConnectivityView.frame.size.height;
     CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
-    [self displayRectBounds:newAppContainerViewFrame Name:@"newAppContainerViewFrame"];
     newAppContainerViewFrame.size.height += offset;
     newAppContainerViewFrame.origin.y -= offset;
     [UIView animateWithDuration:0.3 animations:^{
@@ -735,14 +764,9 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         if (finished)
             self.guiNoConnectivityView.hidden = YES;
     }];
-    [self displayRectBounds:self.guiAppContainerView.frame Name:@"self.guiAppContainerView.frame"];
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
--(void)displayRectBounds:(CGRect)rect Name: name
-{
-    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
-}
 
 #pragma mark HMVideoPlayerVC delegate
 -(void)videoPlayerStopped
@@ -785,7 +809,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         userName = user.firstName;
     } else if (user.email)
     {
-        userName = user.email;
+        userName = [self getLoginName:user.email];
+        
     } else {
         userName = @"Guest";
     }
@@ -836,6 +861,18 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)dismissRenderingView
 {
     [self hideRenderingView];
+}
+
+-(NSString *)getLoginName:(NSString *)mailAddress
+{
+    NSString *loginName;
+    NSString *expression = @"(\\S+)@";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression options:0 error:NULL];
+    NSTextCheckingResult *match = [regex firstMatchInString:mailAddress options:0 range:NSMakeRange(0, [mailAddress length])];
+    [match rangeAtIndex:1];
+    loginName = [mailAddress substringWithRange:[match rangeAtIndex:1]];
+
+    return loginName;
 }
 
 /*#pragma mark iask buttons delegate

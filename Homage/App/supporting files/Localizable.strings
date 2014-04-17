@@ -5,6 +5,7 @@
 "NUM_OF_REMAKES" = "#remakes: %d";
 
 "ERROR" = "Error";
+"CRITICAL_ERROR" = "CRITICAL ERROR";
 "CANCEL" = "Cancel";
 
 //indicating that the video saving process had failed */
@@ -66,27 +67,36 @@
 "NEW_REMAKE" = "New";
 "OLD_REMAKE" = "continue";
 
-/*leave recorder alert view*/
+/*recorder*/
 "LEAVE_RECORDER_TITLE"="Leave recorder";
 "LEAVE_RECORDER_MESSAGE" = "This will close the recorder. Are you sure?";
+"WATCH_OUR_SCENE" = "WATCH OUR SCENE";
+"WATCH_OUR_STORY" = "WATCH OUR STORY";
+"HIDE_SCRIPT" = "HIDE SCRIPT";
+"SHOW_SCRIPT" = "SHOW SCRIPT";
+"GREAT_JOB" = "GREAT JOB!";
+"AT_THE_NEXT_SCENE" = "At the next scene %@";
+"NAILED_ALL_SCENES" = "You nailed all scenes. lets finish the movie";
+"CREATE_MOVIE" = "CREATE MOVIE";
+"SHOW_YOUR_TAKE" = "SHOW YOUR TAKE";
 
 /*go to next scene button*/
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
-"CAMERA_NOT_STABLE_TITLE" = "Wow there Shaaaaaaaky...";
+"CAMERA_NOT_STABLE_TITLE" = "Steady now...";
 
 "UNKNOWN_MAIL_ADDRESS" = "Unknown mail address";
 "INCORRECT_PASSWORD" = "Incorrect mail address or password";
 "INCORRECT_EMAIL_ADDRESS_FORMAT" = "incorrect email format";
-"UNSUFFICIENT PASSWORD" = "Password must be at least 6 charecters long";
+"UNSUFFICIENT_PASSWORD" = "Password must be at least 6 charecters long";
 "EMAIL_TAKEN" = "Email address already used";
 "EXISTING_FACEBOOK_USER" = "Mail address is already associated with facebook account";
 "NO_CONNECTIVITY" = "No Internet connection. Please check your internet status";
 "UNKNOWN_ERROR" = "Error Occurred. Please try again later";
 
-"HELLO USER" = "Hello %@";
+"HELLO_USER" = "Hello %@";
 
 "SIGN_UP_NOW" = "Join us!";
 "ONLY_SIGN_IN_USERS_CAN_SHARE" = "Only signed in users can share remakes. Please sign in to continue";

@@ -39,7 +39,6 @@
     if (self) {
         if (self.subviews.count>0) self.progressIndicator = self.subviews[0];
         if (self.subviews.count>1) self.eventIndicatorTemplate = self.subviews[1];
-        [self displayRectBounds:self.progressIndicator.frame Name:@"self.progressIndicator.frame from SB"];
         self.durationForStopWithAnimation = 0.2f;
         
         //debug progress bar bug
@@ -348,11 +347,6 @@
     }
     HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 
-}
-
--(void)displayRectBounds:(CGRect)rect Name: name
-{
-    NSLog(@"displaying size of: %@: origin: (%f,%f) size: (%f,%f)" , name , rect.origin.x , rect.origin.y , rect.size.height , rect.size.width);
 }
 
 @end

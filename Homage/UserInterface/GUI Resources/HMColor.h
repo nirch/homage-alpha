@@ -40,4 +40,8 @@
 /** The color of texts getting error from server when editing remake texts in the recorder */
 -(UIColor *)recorderEditTextError;
 
+//** The Color for the emphasizing lines in the sideBar
+-(UIColor *)greyLine;
+
+
 @end

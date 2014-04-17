@@ -123,11 +123,11 @@
     // Video controllers (scene & story)
     HMSimpleVideoViewController *vc;
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView];
-    self.sceneVideoVC.videoLabelText = LS(@"WATCH OUR SCENE");
+    self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
     
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView];
-    self.storyVideoVC.videoLabelText = LS(@"WATCH OUR STORY");
+    self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
     self.storyVideoVC.delegate = self;
@@ -257,9 +257,9 @@
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENING object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
-    
 }
 
 #pragma mark - Observers handlers
@@ -285,7 +285,10 @@
 {
     NSDictionary *info = notification.userInfo;
     UIImage *image = info[@"image"];
-    if (notification.isReportingError || !image) {
+    NSString *storyID = info[@"storyID"];
+    
+    if (notification.isReportingError || !image || ![storyID isEqualToString:self.remake.story.sID])
+    {
         self.remake.story.thumbnail = nil;
     } else {
         self.remake.story.thumbnail = image;
@@ -568,10 +571,10 @@
 -(void)updateShowHideScriptButton
 {
     if (User.current.prefersToSeeScriptWhileRecording.boolValue) {
-        [self.guiShowScriptButton setTitle:LS(@"HIDE SCRIPT") forState:UIControlStateNormal];
+        [self.guiShowScriptButton setTitle: LS(@"HIDE_SCRIPT") forState:UIControlStateNormal];
         [[Mixpanel sharedInstance] track:@"REHideScript" properties:@{@"story" : self.remake.story.name}];
     } else {
-        [self.guiShowScriptButton setTitle:LS(@"SHOW SCRIPT") forState:UIControlStateNormal];
+        [self.guiShowScriptButton setTitle:LS(@"SHOW_SCRIPT") forState:UIControlStateNormal];
         [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name}];
 
     }

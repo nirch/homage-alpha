@@ -65,6 +65,8 @@
         [self.storyMoviePlayer play];
         self.autoStartPlayingStory = NO;
     }
+    [self initObservers];
+    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -72,8 +74,6 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiRemakeButton.enabled = YES;
-    [self initObservers];
-    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -99,18 +99,18 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
-    self.guiBGImageView.image = [self.story.thumbnail applyBlurWithRadius:2.0 tintColor:nil saturationDeltaFactor:0.3 maskImage:nil];
-    [self.guiBGImageView addMotionEffectWithAmount:-30];
-    self.noRemakesLabel.text = NSLocalizedString(@"NO_REMAKES", nil);
+    
+    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
+    
+    self.noRemakesLabel.text = LS(@"NO_REMAKES");
     self.guiDescriptionField.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
     
     //design remake button
     self.guiRemakeButton.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.guiRemakeButton.titleLabel.font.pointSize];
-    [self.guiRemakeButton setTitleColor:[HMColor.sh main2] forState:UIControlStateNormal];
     [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
     [self.guiRemakeButton.layer setBorderWidth:0.5f];
-    [self.guiRemakeButton.layer setCornerRadius:7.5f];
+    [self.guiRemakeButton.layer setCornerRadius:2.5f];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
@@ -127,6 +127,7 @@
     [self.storyMoviePlayer hideMediaControls];
     self.storyMoviePlayer.videoImage = self.story.thumbnail;
     self.storyMoviePlayer.delegate = self;
+    self.storyMoviePlayer.resetStateWhenVideoEnds = YES;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -159,11 +160,6 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                                      object:nil];
     
-    // Observe deletion of remake
-    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRemakeDeletion:)
-                                                       name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
-                                                     object:nil];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -174,7 +170,6 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
-    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -183,8 +178,7 @@
 -(void)onRemakeCreation:(NSNotification *)notification
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    // Update UI
-    self.guiRemakeButton.enabled = YES;
+    
     [self.guiRemakeActivity stopAnimating];
     [self.guiRemakeActivity setHidden:YES];
     
@@ -196,6 +190,8 @@
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return;
     }
+    
+    self.guiRemakeButton.enabled = YES;
     [self initRecorderWithRemake:remake completion:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -287,6 +283,16 @@
 -(void)refetchRemakesForStoryID:(NSString *)storyID
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    //we need to delete all the remakes from the local storage, cause other people might have switched their privacy policy
+    for (Remake *remake in self.fetchedResultsController.fetchedObjects)
+    {
+        if (remake)
+        {
+            [DB.sh.context deleteObject:remake];
+        }
+    }
+    
     [HMServer.sh refetchRemakesWithStoryID:storyID];
 }
 
@@ -294,6 +300,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
+    
     [self.fetchedResultsController performFetch:&error];
     if (error) {
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
@@ -323,8 +330,7 @@
     = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser]];
     
     fetchRequest.predicate = compoundPredicate;
-    //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
     // Create the fetched results controller and return it.
@@ -363,16 +369,6 @@
     
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    //cell border design
-    /*[cell.layer setBorderColor:[UIColor colorWithRed:213.0/255.0f green:210.0/255.0f blue:199.0/255.0f alpha:1.0f].CGColor];
-    [cell.layer setBorderWidth:1.0f];
-    [cell.layer setCornerRadius:7.5f];
-    [cell.layer setShadowOffset:CGSizeMake(0, 1)];
-    [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
-    [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];*/
-    //
     
     cell.guiUserName.text = remake.user.userID;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
@@ -419,12 +415,12 @@
 -(void)videoPlayerDidStop
 {
     [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name}];
-    //[self closeStoryVideoPlayer];
+    
 }
+
 -(void)videoPlayerDidFinishPlaying
 {
     [[Mixpanel sharedInstance] track:@"SDFinishPlayStory" properties:@{@"story" : self.story.name}];
-    //[self closeStoryVideoPlayer];
 }
 
 -(void)videoPlayerDidExitFullScreen
@@ -474,18 +470,24 @@
     User *user = [User current];
     self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
     
+
     if (self.oldRemakeInProgress)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"CONTINUE_WITH_REMAKE", nil) message:NSLocalizedString(@"CONTINUE_OR_START_FROM_SCRATCH", nil) delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            alertView.tag = REMAKE_ALERT_TAG;
-            [alertView show];
-        });
+        if (self.oldRemakeInProgress.status.integerValue == HMGRemakeStatusNew)
+        {
+            [self initRecorderWithRemake:self.oldRemakeInProgress];
+        } else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                alertView.tag = REMAKE_ALERT_TAG;
+                [alertView show];
+            });
+        }
     } else {
         [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
     }
-    
 }
 
 
@@ -512,7 +514,7 @@
 
 -(void)showMarkAsInappropriateAlert
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"MARK_AS_INAPPROPRIATE", nil) message:NSLocalizedString(@"MARK_AS_INAPPROPRIATE_QUESTION", nil) delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"MARK_AS_INAPPROPRIATE") message:LS(@"MARK_AS_INAPPROPRIATE_QUESTION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         alertView.tag = MARK_AS_INAPPROPRIATE_TAG;
         [alertView show];
@@ -613,33 +615,6 @@
     }];
 }
 
-/*-(void)onRemakeDeletion:(NSNotification *)notification
-{
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSDictionary *info = notification.userInfo;
-    NSString *remakeID = info[@"remakeID"];
-    
-    NSLog(@"story details tab - onRemakeDeletion: remakeID: %@" , remakeID);
-    
-    if (notification.isReportingError) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                        message:@"Something went wrong :-(\n\nTry to delete the remake later."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil
-                              ];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
-        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
-    } else {
-        Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-        NSLog(@"story details tab - onRemakeDeletion: remake object id: %@" , remake.sID);
-        if (remake) [DB.sh.context deleteObject:remake];
-    }
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}*/
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -649,6 +624,15 @@
 }
 
 
+#pragma mark recorder init
+-(void)initRecorderWithRemake:(Remake *)remake
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    recorderVC.delegate = self;
+    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
 
 
 // ============

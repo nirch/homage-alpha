@@ -27,12 +27,9 @@
     if ([info boolNumberForKey:@"is_public"]) user.isPublic = [info boolNumberForKey:@"is_public"];
     if (info[@"facebook"][@"first_name"]) user.firstName = info[@"facebook"][@"first_name"];
     if (info[@"facebook"][@"id"]) user.fbID = info[@"facebook"][@"id"];
+    if (info[@"first_use"]) user.isFirstUse = info[@"first_use"];
     
     self.parseInfo[@"userID"] = userID;
-    /*if (info[@"email"]) self.parseInfo[@"email"] = info[@"email"];
-    if (info[@"is_public"]) self.parseInfo[@"is_public"] = info[@"is_public"];
-    if (info[@"facebook"][@"first_name"]) self.parseInfo[@"first_name"] = info[@"facebook"][@"first_name"];
-    if (info[@"facebook"][@"id"]) self.parseInfo[@"fbID"] = info[@"facebook"][@"id"];*/
 }
 
 @end

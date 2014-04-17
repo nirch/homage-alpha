@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Footage" representedClassName="Footage" syncable="YES">
         <attribute name="currentlyUploaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastUploadAttemptTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -78,11 +78,11 @@
         <relationship name="remakes" toMany="YES" deletionRule="Cascade" destinationEntity="Remake" inverseName="user" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Footage" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="Remake" positionX="0" positionY="0" width="128" height="208"/>
-        <element name="Scene" positionX="0" positionY="0" width="128" height="240"/>
-        <element name="Story" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="Text" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="Footage" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Remake" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Scene" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Story" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Text" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -15,12 +15,13 @@
 *  Updates the server that a footage is ready.
 *  @code
 
-[HMServer.sh updateFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
+[HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID];
 
 *  @endcode
 *  @param remakeID The remake id related to this footage.
 *  @param sceneID  The scene id number related to this footage.
 */
--(void)updateFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID;
+-(void)updateOnSuccessFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID TakeID:(NSString *)takeID;
 
+-(void)updateOnUploadStartFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID TakeID:(NSString *)takeID;
 @end

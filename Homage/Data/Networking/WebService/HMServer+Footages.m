@@ -12,17 +12,22 @@
 
 @implementation HMServer (Footages)
 
--(void)updateFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID
+-(void)updateOnSuccessFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID TakeID:(NSString *)takeID
 {
     // A simple POST request to the server
     // Example URL: http://54.204.34.168:4567/footage
     // Updates server that the footage related to this remake and scene is ready.
     [self postRelativeURLNamed:@"footage"
-                    parameters:@{@"remake_id":remakeID, @"scene_id":sceneID.stringValue}
-              notificationName:HM_NOTIFICATION_SERVER_FOOTAGE
-                          info:@{@"remakeID":remakeID,@"sceneID":sceneID}
+                    parameters:@{@"remake_id":remakeID, @"scene_id":sceneID.stringValue , @"take_id" : takeID}
+              notificationName:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_SUCCESS
+                          info:@{@"remakeID":remakeID,@"sceneID":sceneID,@"takeID":takeID}
                         parser:[HMRemakeParser new]
      ];
+}
+
+-(void)updateOnUploadStartFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID TakeID:(NSString *)takeID
+{
+    [self putRelativeURLNamed:@"footage" parameters:@{@"remake_id":remakeID, @"scene_id":sceneID.stringValue , @"take_id" : takeID} notificationName:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_START info:@{@"remakeID":remakeID,@"sceneID":sceneID,@"takeID":takeID} parser:[HMRemakeParser new]];
 }
 
 @end

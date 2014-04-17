@@ -23,7 +23,8 @@
 #define HM_NOTIFICATION_SERVER_REMAKE_DELETION      @"Server Remake Deletion"
 #define HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY    @"Server Remakes For Story"
 
-#define HM_NOTIFICATION_SERVER_FOOTAGE              @"Server Footage"
+#define HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_SUCCESS              @"Server Footage Upload Success"
+#define HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_START              @"Server Footage Upload Start"
 #define HM_NOTIFICATION_SERVER_TEXT                 @"Server Text"
 #define HM_NOTIFICATION_SERVER_RENDER               @"Server Render"
 

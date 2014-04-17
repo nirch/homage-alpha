@@ -244,9 +244,9 @@
         //
         //  The finished scene and next scene info message.
         //
-        self.guiTextMessageTitleLabel.text = LS(@"GREAT JOB!");
+        self.guiTextMessageTitleLabel.text = LS(@"GREAT_JOB");
         self.guiTextMessageIcon.image = [UIImage imageNamed:@"iconTrophy"];
-        self.guiTextMessageLabel.text = [NSString stringWithFormat:LS(@"At the next scene %@"), info[@"text"]];
+        self.guiTextMessageLabel.text = [NSString stringWithFormat:LS(@"AT_THE_NEXT_SCENE"), info[@"text"]];
         [self.guiDismissButton setTitle:LS(@"NEXT_SCENE") forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconNextScene"] forState:UIControlStateNormal];
         
@@ -255,10 +255,10 @@
         //
         //  The finished all scenes message + make movie button.
         //
-        self.guiTextMessageTitleLabel.text = LS(@"GREAT JOB!");
+        self.guiTextMessageTitleLabel.text = LS(@"GREAT_JOB");
         self.guiTextMessageIcon.image = [UIImage imageNamed:@"iconTrophy"];
-        self.guiTextMessageLabel.text = LS(@"You nailed all scenes and ready to launch a movie");
-        [self.guiDismissButton setTitle:LS(@"CREATE MOVIE") forState:UIControlStateNormal];
+        self.guiTextMessageLabel.text = LS(@"NAILED_ALL_SCENES");
+        [self.guiDismissButton setTitle:LS(@"CREATE_MOVIE") forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconCreateMovie"] forState:UIControlStateNormal];
         
     } else if (self.messageType == HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene) {

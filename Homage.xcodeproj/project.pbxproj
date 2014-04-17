@@ -10,7 +10,6 @@
 		0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA0F18828AEB007514BE /* Foundation.framework */; };
 		0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1118828AEB007514BE /* CoreGraphics.framework */; };
 		0806FA1418828AEB007514BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1318828AEB007514BE /* UIKit.framework */; };
-		0806FA1C18828AEB007514BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806FA1B18828AEB007514BE /* main.m */; };
 		0806FA2218828AEB007514BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0806FA2118828AEB007514BE /* Images.xcassets */; };
 		0806FA2918828AEB007514BE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA2818828AEB007514BE /* XCTest.framework */; };
 		0806FA2A18828AEB007514BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA0F18828AEB007514BE /* Foundation.framework */; };
@@ -151,8 +150,6 @@
 		08CDF8291896D4A200A9D235 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8211896D4A200A9D235 /* HMUploadManager.m */; };
 		08CDF82E1897F6B000A9D235 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF82D1897F6B000A9D235 /* Scene.m */; };
 		08CDF82F1897F6B000A9D235 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF82D1897F6B000A9D235 /* Scene.m */; };
-		08CDF8361897F6B000A9D235 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8351897F6B000A9D235 /* Story.m */; };
-		08CDF8371897F6B000A9D235 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8351897F6B000A9D235 /* Story.m */; };
 		08CDF83A1897F6B100A9D235 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
 		08CDF83B1897F6B100A9D235 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
 		08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
@@ -161,8 +158,6 @@
 		08D03F7E18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
 		08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */; };
 		08D03F821894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */; };
-		08D03F8418944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */; };
-		08D03F8518944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */; };
 		08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
 		08D03F89189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
 		08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F8B1894557900DEBDBC /* HMExperimentalNavigationViewController.m */; };
@@ -195,8 +190,6 @@
 		08DF23331892704300912657 /* HMStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231B1892704300912657 /* HMStoryCell.m */; };
 		08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231D1892704300912657 /* HMStoryDetailsViewController.m */; };
 		08DF23351892704300912657 /* HMStoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231D1892704300912657 /* HMStoryDetailsViewController.m */; };
-		08DF23361892704300912657 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08DF231F1892704300912657 /* Storyboard.storyboard */; };
-		08DF23371892704300912657 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08DF231F1892704300912657 /* Storyboard.storyboard */; };
 		08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */; };
 		08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */; };
 		08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */; };
@@ -215,29 +208,45 @@
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		2610133718E172A80065C72B /* HMLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2610133618E172A80065C72B /* HMLoginTests.m */; };
-		2610133B18E5840D0065C72B /* HMTOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2610133918E5840D0065C72B /* HMTOSViewController.m */; };
-		2610133C18E5840D0065C72B /* HMTOSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2610133A18E5840D0065C72B /* HMTOSViewController.xib */; };
-		2610134018E584F60065C72B /* HMPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2610133E18E584F60065C72B /* HMPrivacyPolicyViewController.m */; };
-		2610134118E584F60065C72B /* HMPrivacyPolicyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2610133F18E584F60065C72B /* HMPrivacyPolicyViewController.xib */; };
-		2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593218953656003A7B3D /* HMRenderingViewController.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
-		2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2638593E1895A99E003A7B3D /* HMsideBarViewController.m */; };
-		26457E6918D9E32D00DA43FD /* HMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26457E6818D9E32D00DA43FD /* HMSettingsViewController.m */; };
 		2648C63018D9A5760033A4C2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648C62F18D9A5760033A4C2 /* User.m */; };
+		2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3218EDA37100CA362F /* Homage-Info.plist */; };
+		2655DF3618EDA37100CA362F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF3418EDA37100CA362F /* main.m */; };
+		2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3718EDA46400CA362F /* Storyboard.storyboard */; };
+		2655DF5318EDA4D200CA362F /* HMPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */; };
+		2655DF5418EDA4D200CA362F /* HMPrivacyPolicyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF4F18EDA4D200CA362F /* HMPrivacyPolicyViewController.xib */; };
+		2655DF5518EDA4D200CA362F /* HMTOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5118EDA4D200CA362F /* HMTOSViewController.m */; };
+		2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF5218EDA4D200CA362F /* HMTOSViewController.xib */; };
+		2655DF5E18EDA50600CA362F /* HMIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */; };
+		2655DF5F18EDA50600CA362F /* HMLoginMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */; };
+		2655DF6018EDA50600CA362F /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF5D18EDA50600CA362F /* introVideo.mp4 */; };
+		2655DF6418EDA53F00CA362F /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6318EDA53F00CA362F /* HMsideBarViewController.m */; };
+		2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */; };
+		2655DF6C18EDAAE100CA362F /* HMVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */; };
+		2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
+		265B0B601900152B004BB03C /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 265B0B5F1900152B004BB03C /* Remake.m */; };
 		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
-		266CD07C18D1AAF3006ADB5C /* OnBoarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 266CD07B18D1AAF3006ADB5C /* OnBoarding.storyboard */; };
-		266CD07F18D1C1F5006ADB5C /* HMLoginMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266CD07E18D1C1F5006ADB5C /* HMLoginMainViewController.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
-		269C8AFA189971F800F28B7A /* HMIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269C8AF9189971F800F28B7A /* HMIntroMovieViewController.m */; };
-		269E8E1918ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */; };
-		269E8E1C18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */; };
-		26A239B418A96F6600980BFC /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 26A239A918A96C8700980BFC /* introVideo.mp4 */; };
+		268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
+		268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */; };
+		268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */; };
+		268341F718FFFD40002E8CB7 /* IASKSettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DE18FFFD40002E8CB7 /* IASKSettingsReader.m */; };
+		268341F818FFFD40002E8CB7 /* IASKSettingsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E018FFFD40002E8CB7 /* IASKSettingsStore.m */; };
+		268341F918FFFD40002E8CB7 /* IASKSettingsStoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E218FFFD40002E8CB7 /* IASKSettingsStoreFile.m */; };
+		268341FA18FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E418FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m */; };
+		268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E618FFFD40002E8CB7 /* IASKSpecifier.m */; };
+		268341FC18FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E918FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m */; };
+		268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EB18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m */; };
+		268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341ED18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m */; };
+		268341FF18FFFD40002E8CB7 /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EF18FFFD40002E8CB7 /* IASKSlider.m */; };
+		2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F118FFFD40002E8CB7 /* IASKSwitch.m */; };
+		2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
+		26933EA218FEB8CA001AE951 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 26933EA118FEB8CA001AE951 /* Story.m */; };
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
 		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
-		26F231A618C3A97F00E58FF4 /* HMVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F231A418C3A97F00E58FF4 /* HMVideoPlayerVC.m */; };
 		26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */; };
 		65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDinFontButton.m */; };
@@ -265,10 +274,7 @@
 		0806FA0F18828AEB007514BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0806FA1118828AEB007514BE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0806FA1318828AEB007514BE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0806FA1718828AEB007514BE /* Homage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Homage-Info.plist"; path = "App/Homage-Info.plist"; sourceTree = "<group>"; };
-		0806FA1B18828AEB007514BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = App/main.m; sourceTree = "<group>"; };
-		0806FA1D18828AEB007514BE /* Homage-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Homage-Prefix.pch"; path = "App/Homage-Prefix.pch"; sourceTree = "<group>"; };
-		0806FA2118828AEB007514BE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
+		0806FA2118828AEB007514BE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../Images.xcassets; sourceTree = "<group>"; };
 		0806FA2718828AEB007514BE /* HomageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0806FA2818828AEB007514BE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0806FA3018828AEB007514BE /* HomageTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HomageTests-Info.plist"; sourceTree = "<group>"; };
@@ -408,8 +414,6 @@
 		08CDF8231896D4A200A9D235 /* HMUploadWorkerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadWorkerProtocol.h; sourceTree = "<group>"; };
 		08CDF82C1897F6B000A9D235 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		08CDF82D1897F6B000A9D235 /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
-		08CDF8341897F6B000A9D235 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
-		08CDF8351897F6B000A9D235 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		08CDF8381897F6B100A9D235 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
 		08CDF8391897F6B100A9D235 /* Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text.m; sourceTree = "<group>"; };
 		08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageGeneralView.xib; sourceTree = "<group>"; };
@@ -417,7 +421,6 @@
 		08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMServer+ReachabilityMonitor.m"; path = "Networking/HMServer+ReachabilityMonitor.m"; sourceTree = "<group>"; };
 		08D03F7F1894295F00DEBDBC /* HMSimpleDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleDataViewController.h; sourceTree = "<group>"; };
 		08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSimpleDataViewController.m; sourceTree = "<group>"; };
-		08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HMRecorderBigVideoPlayerView.xib; path = "../../Recorder/User Controls/HMRecorderBigVideoPlayerView.xib"; sourceTree = "<group>"; };
 		08D03F86189450B800DEBDBC /* HMRecorderPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderPreviewViewController.h; sourceTree = "<group>"; };
 		08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderPreviewViewController.m; sourceTree = "<group>"; };
 		08D03F8A1894557900DEBDBC /* HMExperimentalNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMExperimentalNavigationViewController.h; sourceTree = "<group>"; };
@@ -431,7 +434,7 @@
 		08DF22FB18926E3900912657 /* HMSimpleVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSimpleVideoViewController.m; sourceTree = "<group>"; };
 		08DF22FC18926E3900912657 /* HMSimpleVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMSimpleVideoViewController.xib; sourceTree = "<group>"; };
 		08DF23061892704300912657 /* HMStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStartViewController.h; sourceTree = "<group>"; };
-		08DF23071892704300912657 /* HMStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStartViewController.m; sourceTree = "<group>"; };
+		08DF23071892704300912657 /* HMStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HMStartViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DF23081892704300912657 /* HMTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTabBarController.h; sourceTree = "<group>"; };
 		08DF23091892704300912657 /* HMTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTabBarController.m; sourceTree = "<group>"; };
 		08DF230B1892704300912657 /* HMGMeTabVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGMeTabVC.h; sourceTree = "<group>"; };
@@ -443,13 +446,12 @@
 		08DF23161892704300912657 /* HMRemakeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeCell.h; sourceTree = "<group>"; };
 		08DF23171892704300912657 /* HMRemakeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakeCell.m; sourceTree = "<group>"; };
 		08DF23181892704300912657 /* HMStoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesViewController.h; sourceTree = "<group>"; };
-		08DF23191892704300912657 /* HMStoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoriesViewController.m; sourceTree = "<group>"; };
+		08DF23191892704300912657 /* HMStoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HMStoriesViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DF231A1892704300912657 /* HMStoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryCell.h; sourceTree = "<group>"; };
 		08DF231B1892704300912657 /* HMStoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryCell.m; sourceTree = "<group>"; };
 		08DF231C1892704300912657 /* HMStoryDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryDetailsViewController.h; sourceTree = "<group>"; };
-		08DF231D1892704300912657 /* HMStoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryDetailsViewController.m; sourceTree = "<group>"; };
+		08DF231D1892704300912657 /* HMStoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HMStoryDetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DF231E1892704300912657 /* HMStoryPresenterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryPresenterProtocol.h; sourceTree = "<group>"; };
-		08DF231F1892704300912657 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = Main/Storyboard.storyboard; sourceTree = "<group>"; };
 		08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINOT-CondBold.otf"; sourceTree = "<group>"; };
 		08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINOT-Regular.otf"; sourceTree = "<group>"; };
 		08E50EC0188685E1001A8B75 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme.txt; sourceTree = "<group>"; };
@@ -466,47 +468,80 @@
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
 		2610133618E172A80065C72B /* HMLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginTests.m; sourceTree = "<group>"; };
-		2610133818E5840D0065C72B /* HMTOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTOSViewController.h; sourceTree = SOURCE_ROOT; };
-		2610133918E5840D0065C72B /* HMTOSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTOSViewController.m; sourceTree = SOURCE_ROOT; };
-		2610133A18E5840D0065C72B /* HMTOSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMTOSViewController.xib; sourceTree = SOURCE_ROOT; };
-		2610133D18E584F60065C72B /* HMPrivacyPolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMPrivacyPolicyViewController.h; sourceTree = SOURCE_ROOT; };
-		2610133E18E584F60065C72B /* HMPrivacyPolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPrivacyPolicyViewController.m; sourceTree = SOURCE_ROOT; };
-		2610133F18E584F60065C72B /* HMPrivacyPolicyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMPrivacyPolicyViewController.xib; sourceTree = SOURCE_ROOT; };
-		2638593118953656003A7B3D /* HMRenderingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewController.h; path = "../Custom Views/Time Progress Views/HMRenderingViewController.h"; sourceTree = "<group>"; };
-		2638593218953656003A7B3D /* HMRenderingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMRenderingViewController.m; path = "../Custom Views/Time Progress Views/HMRenderingViewController.m"; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
 		2638593A18955252003A7B3D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		2638593D1895A99E003A7B3D /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsideBarViewController.h; sourceTree = "<group>"; };
-		2638593E1895A99E003A7B3D /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsideBarViewController.m; sourceTree = "<group>"; };
-		263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMsideBarNavigatorDelegate.h; sourceTree = "<group>"; };
-		26457E6718D9E32D00DA43FD /* HMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSettingsViewController.h; sourceTree = "<group>"; };
-		26457E6818D9E32D00DA43FD /* HMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSettingsViewController.m; sourceTree = "<group>"; };
-		2648C62A18D996270033A4C2 /* HMLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMLoginDelegate.h; sourceTree = "<group>"; };
 		2648C62E18D9A5760033A4C2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		2648C62F18D9A5760033A4C2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		2655DF3218EDA37100CA362F /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Homage-Info.plist"; path = "App/supporting files/Homage-Info.plist"; sourceTree = "<group>"; };
+		2655DF3318EDA37100CA362F /* Homage-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "Homage-Prefix.pch"; path = "App/supporting files/Homage-Prefix.pch"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		2655DF3418EDA37100CA362F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "App/supporting files/main.m"; sourceTree = "<group>"; };
+		2655DF3718EDA46400CA362F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		2655DF4D18EDA4D200CA362F /* HMPrivacyPolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMPrivacyPolicyViewController.h; path = "Homage/UserInterface/Main/settings/settings views/HMPrivacyPolicyViewController.h"; sourceTree = SOURCE_ROOT; };
+		2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMPrivacyPolicyViewController.m; path = "Homage/UserInterface/Main/settings/settings views/HMPrivacyPolicyViewController.m"; sourceTree = SOURCE_ROOT; };
+		2655DF4F18EDA4D200CA362F /* HMPrivacyPolicyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HMPrivacyPolicyViewController.xib; path = "Homage/UserInterface/Main/settings/settings views/HMPrivacyPolicyViewController.xib"; sourceTree = SOURCE_ROOT; };
+		2655DF5018EDA4D200CA362F /* HMTOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMTOSViewController.h; path = "Homage/UserInterface/Main/settings/settings views/HMTOSViewController.h"; sourceTree = SOURCE_ROOT; };
+		2655DF5118EDA4D200CA362F /* HMTOSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMTOSViewController.m; path = "Homage/UserInterface/Main/settings/settings views/HMTOSViewController.m"; sourceTree = SOURCE_ROOT; };
+		2655DF5218EDA4D200CA362F /* HMTOSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HMTOSViewController.xib; path = "Homage/UserInterface/Main/settings/settings views/HMTOSViewController.xib"; sourceTree = SOURCE_ROOT; };
+		2655DF5718EDA50600CA362F /* HMIntroMovieDelagate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMIntroMovieDelagate.h; path = login/HMIntroMovieDelagate.h; sourceTree = "<group>"; };
+		2655DF5818EDA50600CA362F /* HMIntroMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMIntroMovieViewController.h; path = login/HMIntroMovieViewController.h; sourceTree = "<group>"; };
+		2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMIntroMovieViewController.m; path = login/HMIntroMovieViewController.m; sourceTree = "<group>"; };
+		2655DF5A18EDA50600CA362F /* HMLoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMLoginDelegate.h; path = login/HMLoginDelegate.h; sourceTree = "<group>"; };
+		2655DF5B18EDA50600CA362F /* HMLoginMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMLoginMainViewController.h; path = login/HMLoginMainViewController.h; sourceTree = "<group>"; };
+		2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMLoginMainViewController.m; path = login/HMLoginMainViewController.m; sourceTree = "<group>"; };
+		2655DF5D18EDA50600CA362F /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = introVideo.mp4; path = login/introVideo.mp4; sourceTree = "<group>"; };
+		2655DF6118EDA53F00CA362F /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMsideBarNavigatorDelegate.h; path = "side bar/HMsideBarNavigatorDelegate.h"; sourceTree = "<group>"; };
+		2655DF6218EDA53F00CA362F /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMsideBarViewController.h; path = "side bar/HMsideBarViewController.h"; sourceTree = "<group>"; };
+		2655DF6318EDA53F00CA362F /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMsideBarViewController.m; path = "side bar/HMsideBarViewController.m"; sourceTree = "<group>"; };
+		2655DF6518EDA9F600CA362F /* HMRenderingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewController.h; path = "rendering view/HMRenderingViewController.h"; sourceTree = "<group>"; };
+		2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = HMRenderingViewController.m; path = "rendering view/HMRenderingViewController.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		2655DF6718EDA9F600CA362F /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = "rendering view/HMRenderingViewControllerDelegate.h"; sourceTree = "<group>"; };
+		2655DF6918EDAAE100CA362F /* HMVideoPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerDelegate.h; sourceTree = "<group>"; };
+		2655DF6A18EDAAE100CA362F /* HMVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerVC.h; sourceTree = "<group>"; };
+		2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVideoPlayerVC.m; sourceTree = "<group>"; };
+		2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderBigVideoPlayerView.xib; sourceTree = "<group>"; };
+		265B0B5E1900152B004BB03C /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
+		265B0B5F1900152B004BB03C /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
 		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
-		266CD07B18D1AAF3006ADB5C /* OnBoarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnBoarding.storyboard; sourceTree = "<group>"; };
-		266CD07D18D1C1F5006ADB5C /* HMLoginMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLoginMainViewController.h; sourceTree = "<group>"; };
-		266CD07E18D1C1F5006ADB5C /* HMLoginMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginMainViewController.m; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
-		269C8AF8189971F800F28B7A /* HMIntroMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMIntroMovieViewController.h; sourceTree = "<group>"; };
-		269C8AF9189971F800F28B7A /* HMIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMIntroMovieViewController.m; sourceTree = "<group>"; };
-		269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMsettingsIntroMovieViewController.xib; sourceTree = SOURCE_ROOT; };
-		269E8E1A18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMsettingsIntroMovieViewController.h; sourceTree = SOURCE_ROOT; };
-		269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMsettingsIntroMovieViewController.m; sourceTree = SOURCE_ROOT; };
-		26A239A918A96C8700980BFC /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
-		26A70BB318BF82BC00CF93C1 /* HMVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerDelegate.h; sourceTree = "<group>"; };
+		268341D518FFFD40002E8CB7 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
+		268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
+		268341D718FFFD40002E8CB7 /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
+		268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsWebViewController.m; sourceTree = "<group>"; };
+		268341D918FFFD40002E8CB7 /* IASKSpecifierValuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSpecifierValuesViewController.h; sourceTree = "<group>"; };
+		268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSpecifierValuesViewController.m; sourceTree = "<group>"; };
+		268341DB18FFFD40002E8CB7 /* IASKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKViewController.h; sourceTree = "<group>"; };
+		268341DD18FFFD40002E8CB7 /* IASKSettingsReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSettingsReader.h; sourceTree = "<group>"; };
+		268341DE18FFFD40002E8CB7 /* IASKSettingsReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSettingsReader.m; sourceTree = "<group>"; };
+		268341DF18FFFD40002E8CB7 /* IASKSettingsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSettingsStore.h; sourceTree = "<group>"; };
+		268341E018FFFD40002E8CB7 /* IASKSettingsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSettingsStore.m; sourceTree = "<group>"; };
+		268341E118FFFD40002E8CB7 /* IASKSettingsStoreFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSettingsStoreFile.h; sourceTree = "<group>"; };
+		268341E218FFFD40002E8CB7 /* IASKSettingsStoreFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSettingsStoreFile.m; sourceTree = "<group>"; };
+		268341E318FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSettingsStoreUserDefaults.h; sourceTree = "<group>"; };
+		268341E418FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSettingsStoreUserDefaults.m; sourceTree = "<group>"; };
+		268341E518FFFD40002E8CB7 /* IASKSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSpecifier.h; sourceTree = "<group>"; };
+		268341E618FFFD40002E8CB7 /* IASKSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSpecifier.m; sourceTree = "<group>"; };
+		268341E818FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKPSSliderSpecifierViewCell.h; sourceTree = "<group>"; };
+		268341E918FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKPSSliderSpecifierViewCell.m; sourceTree = "<group>"; };
+		268341EA18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKPSTextFieldSpecifierViewCell.h; sourceTree = "<group>"; };
+		268341EB18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKPSTextFieldSpecifierViewCell.m; sourceTree = "<group>"; };
+		268341EC18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKPSTitleValueSpecifierViewCell.h; sourceTree = "<group>"; };
+		268341ED18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKPSTitleValueSpecifierViewCell.m; sourceTree = "<group>"; };
+		268341EE18FFFD40002E8CB7 /* IASKSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSlider.h; sourceTree = "<group>"; };
+		268341EF18FFFD40002E8CB7 /* IASKSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSlider.m; sourceTree = "<group>"; };
+		268341F018FFFD40002E8CB7 /* IASKSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSwitch.h; sourceTree = "<group>"; };
+		268341F118FFFD40002E8CB7 /* IASKSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSwitch.m; sourceTree = "<group>"; };
+		268341F218FFFD40002E8CB7 /* IASKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKTextField.h; sourceTree = "<group>"; };
+		268341F318FFFD40002E8CB7 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
+		26933EA018FEB8CA001AE951 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
+		26933EA118FEB8CA001AE951 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
 		26B498A918B5FD7100026401 /* HMMotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMotionDetector.m; sourceTree = "<group>"; };
 		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		26B498AD18B60D4A00026401 /* HMMotionDetectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMMotionDetectorDelegate.h; sourceTree = "<group>"; };
 		26B498AE18BA4A8D00026401 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		26E37B4E189C2F980018A6CB /* HMIntroMovieDelagate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMIntroMovieDelagate.h; sourceTree = "<group>"; };
-		26F231A418C3A97F00E58FF4 /* HMVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVideoPlayerVC.m; sourceTree = "<group>"; };
-		26F231A518C3A97F00E58FF4 /* HMVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerVC.h; sourceTree = "<group>"; };
 		26FB16A018C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFullScreenVideoPlayerViewController.h; sourceTree = "<group>"; };
 		26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFullScreenVideoPlayerViewController.m; sourceTree = "<group>"; };
 		65C10D8E18A265DC00A65917 /* HMDinFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDinFontLabel.m; sourceTree = "<group>"; };
@@ -688,8 +723,7 @@
 		0806FB2F188294CE00F0EF50 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
-				08DF231F1892704300912657 /* Storyboard.storyboard */,
-				0806FA2118828AEB007514BE /* Images.xcassets */,
+				2655DF3718EDA46400CA362F /* Storyboard.storyboard */,
 				08B9586C189138EF00BCCF8C /* GUI Resources */,
 				08DF23051892704300912657 /* Main */,
 				08455FDE1890458E0040504D /* Recorder */,
@@ -893,16 +927,16 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				265B0B5E1900152B004BB03C /* Remake.h */,
+				265B0B5F1900152B004BB03C /* Remake.m */,
+				26933EA018FEB8CA001AE951 /* Story.h */,
+				26933EA118FEB8CA001AE951 /* Story.m */,
 				2648C62E18D9A5760033A4C2 /* User.h */,
 				2648C62F18D9A5760033A4C2 /* User.m */,
-				F15D608D18A916BB0052779F /* Remake.h */,
-				F15D608E18A916BB0052779F /* Remake.m */,
 				08D1C3C7189B09A200C18AB0 /* Footage.h */,
 				08D1C3C8189B09A200C18AB0 /* Footage.m */,
 				08CDF8381897F6B100A9D235 /* Text.h */,
 				08CDF8391897F6B100A9D235 /* Text.m */,
-				08CDF8341897F6B000A9D235 /* Story.h */,
-				08CDF8351897F6B000A9D235 /* Story.m */,
 				08CDF82C1897F6B000A9D235 /* Scene.h */,
 				08CDF82D1897F6B000A9D235 /* Scene.m */,
 			);
@@ -1000,6 +1034,7 @@
 		08B9586C189138EF00BCCF8C /* GUI Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0806FA2118828AEB007514BE /* Images.xcassets */,
 				08B958741891394400BCCF8C /* Colors.plist */,
 				08B9586E189138EF00BCCF8C /* HMColor.h */,
 				08B9586F189138EF00BCCF8C /* HMColor.m */,
@@ -1065,7 +1100,10 @@
 		08DF22F518926E3900912657 /* Video Players Containers */ = {
 			isa = PBXGroup;
 			children = (
-				08D03F8318944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib */,
+				2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */,
+				2655DF6918EDAAE100CA362F /* HMVideoPlayerDelegate.h */,
+				2655DF6A18EDAAE100CA362F /* HMVideoPlayerVC.h */,
+				2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */,
 				08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */,
 				08DF22FC18926E3900912657 /* HMSimpleVideoViewController.xib */,
 				267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */,
@@ -1087,10 +1125,10 @@
 				08DF23071892704300912657 /* HMStartViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
-				26A239A818A963CA00980BFC /* on boarding */,
+				26A239A818A963CA00980BFC /* login */,
 				2638594118964F28003A7B3D /* settings */,
-				2638593C1895A979003A7B3D /* sideBar */,
-				2638593418953866003A7B3D /* renderingProgressBar */,
+				2638593C1895A979003A7B3D /* side bar */,
+				2638593418953866003A7B3D /* rendering view */,
 				08DF230A1892704300912657 /* Me */,
 				08DF23151892704300912657 /* Stories */,
 			);
@@ -1113,15 +1151,13 @@
 		08DF23111892704300912657 /* settings views */ = {
 			isa = PBXGroup;
 			children = (
-				269E8E1818ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib */,
-				269E8E1A18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.h */,
-				269E8E1B18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m */,
-				2610133818E5840D0065C72B /* HMTOSViewController.h */,
-				2610133918E5840D0065C72B /* HMTOSViewController.m */,
-				2610133A18E5840D0065C72B /* HMTOSViewController.xib */,
-				2610133D18E584F60065C72B /* HMPrivacyPolicyViewController.h */,
-				2610133E18E584F60065C72B /* HMPrivacyPolicyViewController.m */,
-				2610133F18E584F60065C72B /* HMPrivacyPolicyViewController.xib */,
+				268341D318FFFD40002E8CB7 /* InAppSettingsKit */,
+				2655DF4D18EDA4D200CA362F /* HMPrivacyPolicyViewController.h */,
+				2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */,
+				2655DF4F18EDA4D200CA362F /* HMPrivacyPolicyViewController.xib */,
+				2655DF5018EDA4D200CA362F /* HMTOSViewController.h */,
+				2655DF5118EDA4D200CA362F /* HMTOSViewController.m */,
+				2655DF5218EDA4D200CA362F /* HMTOSViewController.xib */,
 			);
 			name = "settings views";
 			path = "Me/settings views";
@@ -1130,9 +1166,6 @@
 		08DF23151892704300912657 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
-				26F231A418C3A97F00E58FF4 /* HMVideoPlayerVC.m */,
-				26F231A518C3A97F00E58FF4 /* HMVideoPlayerVC.h */,
-				26A70BB318BF82BC00CF93C1 /* HMVideoPlayerDelegate.h */,
 				08DF23161892704300912657 /* HMRemakeCell.h */,
 				08DF23171892704300912657 /* HMRemakeCell.m */,
 				08DF23181892704300912657 /* HMStoriesViewController.h */,
@@ -1184,49 +1217,107 @@
 			path = Round;
 			sourceTree = "<group>";
 		};
-		2638593418953866003A7B3D /* renderingProgressBar */ = {
+		2638593418953866003A7B3D /* rendering view */ = {
 			isa = PBXGroup;
 			children = (
-				F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */,
-				2638593118953656003A7B3D /* HMRenderingViewController.h */,
-				2638593218953656003A7B3D /* HMRenderingViewController.m */,
+				2655DF6518EDA9F600CA362F /* HMRenderingViewController.h */,
+				2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */,
+				2655DF6718EDA9F600CA362F /* HMRenderingViewControllerDelegate.h */,
 			);
-			name = renderingProgressBar;
+			name = "rendering view";
 			sourceTree = "<group>";
 		};
-		2638593C1895A979003A7B3D /* sideBar */ = {
+		2638593C1895A979003A7B3D /* side bar */ = {
 			isa = PBXGroup;
 			children = (
-				2638593D1895A99E003A7B3D /* HMsideBarViewController.h */,
-				2638593E1895A99E003A7B3D /* HMsideBarViewController.m */,
-				263859401895AA09003A7B3D /* HMsideBarNavigatorDelegate.h */,
+				2655DF6118EDA53F00CA362F /* HMsideBarNavigatorDelegate.h */,
+				2655DF6218EDA53F00CA362F /* HMsideBarViewController.h */,
+				2655DF6318EDA53F00CA362F /* HMsideBarViewController.m */,
 			);
-			name = sideBar;
+			name = "side bar";
 			sourceTree = "<group>";
 		};
 		2638594118964F28003A7B3D /* settings */ = {
 			isa = PBXGroup;
 			children = (
 				08DF23111892704300912657 /* settings views */,
-				26457E6718D9E32D00DA43FD /* HMSettingsViewController.h */,
-				26457E6818D9E32D00DA43FD /* HMSettingsViewController.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
 		};
-		26A239A818A963CA00980BFC /* on boarding */ = {
+		268341D318FFFD40002E8CB7 /* InAppSettingsKit */ = {
 			isa = PBXGroup;
 			children = (
-				269C8AF8189971F800F28B7A /* HMIntroMovieViewController.h */,
-				269C8AF9189971F800F28B7A /* HMIntroMovieViewController.m */,
-				26E37B4E189C2F980018A6CB /* HMIntroMovieDelagate.h */,
-				26A239A918A96C8700980BFC /* introVideo.mp4 */,
-				266CD07B18D1AAF3006ADB5C /* OnBoarding.storyboard */,
-				266CD07D18D1C1F5006ADB5C /* HMLoginMainViewController.h */,
-				266CD07E18D1C1F5006ADB5C /* HMLoginMainViewController.m */,
-				2648C62A18D996270033A4C2 /* HMLoginDelegate.h */,
+				268341D418FFFD40002E8CB7 /* Controllers */,
+				268341DC18FFFD40002E8CB7 /* Models */,
+				268341E718FFFD40002E8CB7 /* Views */,
 			);
-			name = "on boarding";
+			name = InAppSettingsKit;
+			path = Homage/UserInterface/Main/settings/InAppSettingsKit;
+			sourceTree = SOURCE_ROOT;
+		};
+		268341D418FFFD40002E8CB7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				268341D518FFFD40002E8CB7 /* IASKAppSettingsViewController.h */,
+				268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */,
+				268341D718FFFD40002E8CB7 /* IASKAppSettingsWebViewController.h */,
+				268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */,
+				268341D918FFFD40002E8CB7 /* IASKSpecifierValuesViewController.h */,
+				268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */,
+				268341DB18FFFD40002E8CB7 /* IASKViewController.h */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		268341DC18FFFD40002E8CB7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				268341DD18FFFD40002E8CB7 /* IASKSettingsReader.h */,
+				268341DE18FFFD40002E8CB7 /* IASKSettingsReader.m */,
+				268341DF18FFFD40002E8CB7 /* IASKSettingsStore.h */,
+				268341E018FFFD40002E8CB7 /* IASKSettingsStore.m */,
+				268341E118FFFD40002E8CB7 /* IASKSettingsStoreFile.h */,
+				268341E218FFFD40002E8CB7 /* IASKSettingsStoreFile.m */,
+				268341E318FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.h */,
+				268341E418FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m */,
+				268341E518FFFD40002E8CB7 /* IASKSpecifier.h */,
+				268341E618FFFD40002E8CB7 /* IASKSpecifier.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		268341E718FFFD40002E8CB7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				268341E818FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.h */,
+				268341E918FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m */,
+				268341EA18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.h */,
+				268341EB18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m */,
+				268341EC18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.h */,
+				268341ED18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m */,
+				268341EE18FFFD40002E8CB7 /* IASKSlider.h */,
+				268341EF18FFFD40002E8CB7 /* IASKSlider.m */,
+				268341F018FFFD40002E8CB7 /* IASKSwitch.h */,
+				268341F118FFFD40002E8CB7 /* IASKSwitch.m */,
+				268341F218FFFD40002E8CB7 /* IASKTextField.h */,
+				268341F318FFFD40002E8CB7 /* IASKTextField.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		26A239A818A963CA00980BFC /* login */ = {
+			isa = PBXGroup;
+			children = (
+				2655DF5718EDA50600CA362F /* HMIntroMovieDelagate.h */,
+				2655DF5818EDA50600CA362F /* HMIntroMovieViewController.h */,
+				2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */,
+				2655DF5A18EDA50600CA362F /* HMLoginDelegate.h */,
+				2655DF5B18EDA50600CA362F /* HMLoginMainViewController.h */,
+				2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */,
+				2655DF5D18EDA50600CA362F /* introVideo.mp4 */,
+			);
+			name = login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1310,28 +1401,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26A239B418A96F6600980BFC /* introVideo.mp4 in Resources */,
-				2610134118E584F60065C72B /* HMPrivacyPolicyViewController.xib in Resources */,
 				08B958751891394400BCCF8C /* Colors.plist in Resources */,
 				08081FB818D0A9EA00999068 /* close up.ctr in Resources */,
 				08DF23361892704300912657 /* Storyboard.storyboard in Resources */,
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
+				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
 				26385938189550DC003A7B3D /* InfoPlist.strings in Resources */,
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
-				2610133C18E5840D0065C72B /* HMTOSViewController.xib in Resources */,
+				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				2638593B18955252003A7B3D /* Settings.bundle in Resources */,
+				2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */,
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
-				269E8E1918ACF97D009B0CCE /* HMsettingsIntroMovieViewController.xib in Resources */,
-				08D03F8418944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
+				2655DF5418EDA4D200CA362F /* HMPrivacyPolicyViewController.xib in Resources */,
+				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
+				2655DF6018EDA50600CA362F /* introVideo.mp4 in Resources */,
 				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
-				266CD07C18D1AAF3006ADB5C /* OnBoarding.storyboard in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
@@ -1350,7 +1441,6 @@
 				084560001890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				0884566318848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
-				08D03F8518944FE300DEBDBC /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				08DF22FE18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				08DF230418926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
@@ -1403,13 +1493,14 @@
 				F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */,
 				08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */,
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
+				268341FF18FFFD40002E8CB7 /* IASKSlider.m in Sources */,
 				08DF230118926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
 				08E50ECF1886994A001A8B75 /* HMRoundButton.m in Sources */,
 				08B958A2189167D800BCCF8C /* User+Logic.m in Sources */,
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
-				2638593318953656003A7B3D /* HMRenderingViewController.m in Sources */,
+				2655DF6418EDA53F00CA362F /* HMsideBarViewController.m in Sources */,
+				2655DF6C18EDAAE100CA362F /* HMVideoPlayerVC.m in Sources */,
 				085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
-				08CDF8361897F6B000A9D235 /* Story.m in Sources */,
 				65C10D9318A265DC00A65917 /* HMDinFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
 				08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */,
@@ -1417,27 +1508,29 @@
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				2648C63018D9A5760033A4C2 /* User.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,
-				26F231A618C3A97F00E58FF4 /* HMVideoPlayerVC.m in Sources */,
+				268341F718FFFD40002E8CB7 /* IASKSettingsReader.m in Sources */,
 				084560071890458E0040504D /* HMWhileRecordingOverlayViewController.m in Sources */,
-				2638593F1895A99E003A7B3D /* HMsideBarViewController.m in Sources */,
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,
 				0845600D1890537C0040504D /* HMServer+Footages.m in Sources */,
 				08DF23221892704300912657 /* HMTabBarController.m in Sources */,
+				265B0B601900152B004BB03C /* Remake.m in Sources */,
 				08CDF83A1897F6B100A9D235 /* Text.m in Sources */,
+				268341FA18FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
 				08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				08DF23281892704300912657 /* HMUserRemakesViewController.m in Sources */,
+				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
+				268341F818FFFD40002E8CB7 /* IASKSettingsStore.m in Sources */,
 				08B95872189138EF00BCCF8C /* HMColor.m in Sources */,
 				086D94A1188701EA0086C565 /* HMServer+Remakes.m in Sources */,
 				084E53351891E6C100D96258 /* HMRecorderEditingTextCell.m in Sources */,
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
+				268341FC18FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m in Sources */,
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
 				08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */,
-				2610134018E584F60065C72B /* HMPrivacyPolicyViewController.m in Sources */,
-				F15D608F18A916BB0052779F /* Remake.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,
 				08DF232E1892704300912657 /* HMRemakeCell.m in Sources */,
@@ -1445,37 +1538,42 @@
 				2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */,
 				08455FF71890458E0040504D /* AVCamPreviewView.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
-				269C8AFA189971F800F28B7A /* HMIntroMovieViewController.m in Sources */,
 				26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */,
 				08455FF91890458E0040504D /* HMVideoCameraViewController.m in Sources */,
 				08455FFB1890458E0040504D /* HMRecorderViewController.m in Sources */,
+				2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */,
 				08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */,
 				084E532E1891D84800D96258 /* HMRecorderEditTextsViewController.m in Sources */,
 				08845673188494D300B94267 /* HMTestSliceViewController.m in Sources */,
 				086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				08DF23241892704300912657 /* HMGMeTabVC.m in Sources */,
+				2655DF3618EDA37100CA362F /* main.m in Sources */,
 				08B958921891678600BCCF8C /* User+Factory.m in Sources */,
 				08B95896189167A000BCCF8C /* Remake+Logic.m in Sources */,
+				2655DF5E18EDA50600CA362F /* HMIntroMovieViewController.m in Sources */,
 				084E53311891E3D100D96258 /* HMSceneCell.m in Sources */,
 				08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */,
 				086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */,
 				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
-				26457E6918D9E32D00DA43FD /* HMSettingsViewController.m in Sources */,
+				2655DF5318EDA4D200CA362F /* HMPrivacyPolicyViewController.m in Sources */,
 				08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */,
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
 				F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */,
+				2655DF5F18EDA50600CA362F /* HMLoginMainViewController.m in Sources */,
 				08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */,
 				08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
 				08DF23301892704300912657 /* HMStoriesViewController.m in Sources */,
 				08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
+				26933EA218FEB8CA001AE951 /* Story.m in Sources */,
 				08CDF82E1897F6B000A9D235 /* Scene.m in Sources */,
+				268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
 				084560051890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
-				0806FA1C18828AEB007514BE /* main.m in Sources */,
+				268341F918FFFD40002E8CB7 /* IASKSettingsStoreFile.m in Sources */,
 				086D93CF1886C8BB0086C565 /* HMParser.m in Sources */,
 				08B9589E189167C700BCCF8C /* Scene+Logic.m in Sources */,
 				08DF23201892704300912657 /* HMStartViewController.m in Sources */,
@@ -1484,19 +1582,21 @@
 				08B9586A1891377400BCCF8C /* NSString+Utilities.m in Sources */,
 				08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,
 				08E50EC618868AEF001A8B75 /* HMFontLabel.m in Sources */,
+				2655DF5518EDA4D200CA362F /* HMTOSViewController.m in Sources */,
 				086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */,
 				084E533D18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
-				266CD07F18D1C1F5006ADB5C /* HMLoginMainViewController.m in Sources */,
-				2610133B18E5840D0065C72B /* HMTOSViewController.m in Sources */,
 				08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
-				269E8E1C18ACF9DD009B0CCE /* HMsettingsIntroMovieViewController.m in Sources */,
 				65C10D9218A265DC00A65917 /* HMDinFontLabel.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				084E53411892240100D96258 /* HMServer+Render.m in Sources */,
+				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
+				268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */,
+				268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */,
+				2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */,
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
 				084E5339189209D700D96258 /* HMServer+Texts.m in Sources */,
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
@@ -1538,7 +1638,6 @@
 				08845674188494D300B94267 /* HMTestSliceViewController.m in Sources */,
 				08DF23331892704300912657 /* HMStoryCell.m in Sources */,
 				08DF23311892704300912657 /* HMStoriesViewController.m in Sources */,
-				08CDF8371897F6B000A9D235 /* Story.m in Sources */,
 				086D93D21886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				086D94A2188701EA0086C565 /* HMServer+Remakes.m in Sources */,
 				0840FF831885356A00A6EF5E /* DB.m in Sources */,
@@ -1693,8 +1792,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (DD2XVN763C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (DD2XVN763C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
@@ -1763,8 +1862,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (DD2XVN763C)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (DD2XVN763C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
@@ -1907,9 +2006,10 @@
 		0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */,
 				0806FB33188295CD00F0EF50 /* Model.xcdatamodel */,
 			);
-			currentVersion = 0806FB33188295CD00F0EF50 /* Model.xcdatamodel */;
+			currentVersion = F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

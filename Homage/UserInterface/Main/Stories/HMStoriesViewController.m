@@ -66,13 +66,13 @@
     [self.storiesCV addSubview:tempRefreshControl];
     self.refreshControl = tempRefreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
-    self.title = NSLocalizedString(@"STORIES_TAB_HEADLINE_TITLE", nil);
+    self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
     HMGLogDebug(@"title is: %@" , self.title);
     
     //self.view.backgroundColor = [UIColor clearColor];
     [self.storiesCV setBackgroundColor: [UIColor clearColor]];
     self.storiesCV.alwaysBounceVertical = YES;
-    self.noStoriesLabel.text = NSLocalizedString(@"NO_STORIES", nil);
+    self.noStoriesLabel.text = LS(@"NO_STORIES");
     [self.noStoriesLabel setHidden:YES];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -155,7 +155,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [alert show];
         });
-        NSLog(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
+        HMGLogError(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -168,6 +168,7 @@
     UIImage *image = info[@"image"];
     
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
     if (notification.isReportingError || !image) {
         story.thumbnail = [UIImage imageNamed:@"missingThumbnail"];
     } else {
@@ -257,6 +258,7 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     // If already exists, just return it.
     if (_fetchedResultsController) return _fetchedResultsController;
     
@@ -301,16 +303,6 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
-    //cell border design
-    /*[cell.layer setBorderColor:[HMColor.sh main2].CGColor];
-    [cell.layer setBorderWidth:1.0f];
-    [cell.layer setCornerRadius:7.5f];
-    [cell.layer setShadowOffset:CGSizeMake(0, 1)];
-    [cell.layer setShadowColor:[[UIColor darkGrayColor] CGColor]];
-    [cell.layer setShadowRadius:8.0];
-    [cell.layer setShadowOpacity:0.8];
-    //*/
-    
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.guiStoryNameLabel.text = story.name;
@@ -322,13 +314,13 @@
     cell.guiLevelOfDifficulty.image = [self getDifficultyLevelThumbForStory:story];
     
     if (story.isASelfie) {
-        cell.guiShotMode.image = [UIImage imageNamed:@"selfie"];
+        cell.guiShotMode.image = [UIImage imageNamed:@"selfie1"];
     } else {
-        cell.guiShotMode.image = [UIImage imageNamed:@"director"];
+        cell.guiShotMode.image = [UIImage imageNamed:@"director1"];
     }
     
-    NSUInteger remakesNum = [story.remakes count];
-    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%lu" , (unsigned long)remakesNum];
+    NSNumber *remakesNum = story.remakesNumber;
+    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%d" , remakesNum.integerValue];
     
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -340,13 +332,13 @@
     switch (story.level.integerValue)
     {
         case HMStoryLevelEasy:
-            image = [UIImage imageNamed:@"easy"];
+            image = [UIImage imageNamed:@"level1"];
             break;
         case HMStoryLevelMedium:
-            image = [UIImage imageNamed:@"medium"];
+            image = [UIImage imageNamed:@"level2"];
             break;
         case HMStoryLevelHard:
-            image = [UIImage imageNamed:@"hard"];
+            image = [UIImage imageNamed:@"level3"];
             break;
     }
     return image;

@@ -64,6 +64,7 @@
 -(UIColor *)main2                  {return [self colorNamed:@"main2"];}
 -(UIColor *)text                   {return [self colorNamed:@"text"];}
 -(UIColor *)textImpact             {return [self colorNamed:@"textImpact"];}
+-(UIColor *)greyLine               {return [self colorNamed:@"greyLine"];}
 
 #pragma mark - Colors: Recorder specific
 -(UIColor *)recorderTableCellBackground                         {return [self colorNamed:@"recorderTableCellBackground"];}
