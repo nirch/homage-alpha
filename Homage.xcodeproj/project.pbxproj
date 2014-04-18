@@ -255,7 +255,6 @@
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 		F13FA5201899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
-		F15D608F18A916BB0052779F /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = F15D608E18A916BB0052779F /* Remake.m */; };
 		F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = F182B6DE18F407FB00A89B79 /* close up 480.ctr */; };
 /* End PBXBuildFile section */
 
@@ -553,10 +552,8 @@
 		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
 		F13FA51D1899497F0026EA5F /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
 		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
-		F15D608D18A916BB0052779F /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
-		F15D608E18A916BB0052779F /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		F182B6DE18F407FB00A89B79 /* close up 480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up 480.ctr"; path = "App/supporting files/close up 480.ctr"; sourceTree = "<group>"; };
-		F1F3E02218969FBC0058725A /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = Me/HMRenderingViewControllerDelegate.h; sourceTree = "<group>"; };
+		F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model102.xcdatamodel; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -653,9 +650,9 @@
 			children = (
 				F182B6DE18F407FB00A89B79 /* close up 480.ctr */,
 				08081FB718D0A9EA00999068 /* close up.ctr */,
-				0806FA1718828AEB007514BE /* Homage-Info.plist */,
-				0806FA1B18828AEB007514BE /* main.m */,
-				0806FA1D18828AEB007514BE /* Homage-Prefix.pch */,
+				2655DF3218EDA37100CA362F /* Homage-Info.plist */,
+				2655DF3318EDA37100CA362F /* Homage-Prefix.pch */,
+				2655DF3418EDA37100CA362F /* main.m */,
 				26385936189550DC003A7B3D /* InfoPlist.strings */,
 				26385937189550DC003A7B3D /* Localizable.strings */,
 			);
@@ -1331,7 +1328,7 @@
 				0806FA0818828AEB007514BE /* Sources */,
 				0806FA0918828AEB007514BE /* Frameworks */,
 				0806FA0A18828AEB007514BE /* Resources */,
-				B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */,
+				B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */,                
 			);
 			buildRules = (
 			);
@@ -1371,7 +1368,7 @@
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
-						DevelopmentTeam = 3HVGM4BBZC;
+						DevelopmentTeam = 56F7YSPHC5;
 					};
 					0806FA2618828AEB007514BE = {
 						TestTargetID = 0806FA0B18828AEB007514BE;
@@ -1403,7 +1400,6 @@
 			files = (
 				08B958751891394400BCCF8C /* Colors.plist in Resources */,
 				08081FB818D0A9EA00999068 /* close up.ctr in Resources */,
-				08DF23361892704300912657 /* Storyboard.storyboard in Resources */,
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
@@ -1434,7 +1430,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				08B958761891394400BCCF8C /* Colors.plist in Resources */,
-				08DF23371892704300912657 /* Storyboard.storyboard in Resources */,
 				08081FB918D0A9EA00999068 /* close up.ctr in Resources */,
 				081237961882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
@@ -1600,6 +1595,8 @@
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
 				084E5339189209D700D96258 /* HMServer+Texts.m in Sources */,
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
+				268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
+				2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1802,7 +1799,7 @@
 					"../homage-cv-app/Homage/Lib/Release-iphoneos/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
+				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/Headers\"",
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
@@ -1814,7 +1811,7 @@
 					"../homage-cv-app/Core/Util/**",
 					"../homage-cv-app/Homage/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/supporting files/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../homage-cv-app/VimGui/Lib/Release-iphoneos",
@@ -1872,7 +1869,7 @@
 					"../homage-cv-app/Homage/Lib/Release-iphoneos/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Homage/App/Homage-Prefix.pch";
+				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/Headers\"",
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
@@ -1884,7 +1881,7 @@
 					"../homage-cv-app/Core/Util/**",
 					"../homage-cv-app/Homage/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/Homage-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/supporting files/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../homage-cv-app/VimGui/Lib/Release-iphoneos",
