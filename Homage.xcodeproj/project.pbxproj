@@ -1328,7 +1328,7 @@
 				0806FA0818828AEB007514BE /* Sources */,
 				0806FA0918828AEB007514BE /* Frameworks */,
 				0806FA0A18828AEB007514BE /* Resources */,
-				B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */,                
+				B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
