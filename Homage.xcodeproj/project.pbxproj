@@ -226,7 +226,6 @@
 		2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */; };
 		2655DF6C18EDAAE100CA362F /* HMVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */; };
 		2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
-		265B0B601900152B004BB03C /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 265B0B5F1900152B004BB03C /* Remake.m */; };
 		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
@@ -244,6 +243,7 @@
 		2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F118FFFD40002E8CB7 /* IASKSwitch.m */; };
 		2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
 		26933EA218FEB8CA001AE951 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 26933EA118FEB8CA001AE951 /* Story.m */; };
+		2699AE8A1903F512004093AE /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699AE891903F512004093AE /* Remake.m */; };
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
 		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
@@ -500,8 +500,6 @@
 		2655DF6A18EDAAE100CA362F /* HMVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerVC.h; sourceTree = "<group>"; };
 		2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVideoPlayerVC.m; sourceTree = "<group>"; };
 		2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderBigVideoPlayerView.xib; sourceTree = "<group>"; };
-		265B0B5E1900152B004BB03C /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
-		265B0B5F1900152B004BB03C /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
 		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
@@ -536,6 +534,8 @@
 		268341F318FFFD40002E8CB7 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		26933EA018FEB8CA001AE951 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		26933EA118FEB8CA001AE951 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
+		2699AE881903F512004093AE /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
+		2699AE891903F512004093AE /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
 		26B498A918B5FD7100026401 /* HMMotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMotionDetector.m; sourceTree = "<group>"; };
 		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -924,8 +924,8 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				265B0B5E1900152B004BB03C /* Remake.h */,
-				265B0B5F1900152B004BB03C /* Remake.m */,
+				2699AE881903F512004093AE /* Remake.h */,
+				2699AE891903F512004093AE /* Remake.m */,
 				26933EA018FEB8CA001AE951 /* Story.h */,
 				26933EA118FEB8CA001AE951 /* Story.m */,
 				2648C62E18D9A5760033A4C2 /* User.h */,
@@ -1508,7 +1508,6 @@
 				08ACB7B3188C6B9500C0EE27 /* HMFontButton.m in Sources */,
 				0845600D1890537C0040504D /* HMServer+Footages.m in Sources */,
 				08DF23221892704300912657 /* HMTabBarController.m in Sources */,
-				265B0B601900152B004BB03C /* Remake.m in Sources */,
 				08CDF83A1897F6B100A9D235 /* Text.m in Sources */,
 				268341FA18FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
@@ -1526,6 +1525,7 @@
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
 				08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */,
+				2699AE8A1903F512004093AE /* Remake.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,
 				08DF232E1892704300912657 /* HMRemakeCell.m in Sources */,

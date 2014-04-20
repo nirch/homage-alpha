@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Footage" representedClassName="Footage" syncable="YES">
         <attribute name="currentlyUploaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastUploadAttemptTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -14,11 +14,13 @@
         <relationship name="remake" maxCount="1" deletionRule="Nullify" destinationEntity="Remake" inverseName="footages" inverseEntity="Remake" syncable="YES"/>
     </entity>
     <entity name="Remake" representedClassName="Remake" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="grade" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="lastLocalUpdate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="shareURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sID" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="stillPublic" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="texts" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,7 +83,7 @@
     </entity>
     <elements>
         <element name="Footage" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="Remake" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="Remake" positionX="0" positionY="0" width="128" height="255"/>
         <element name="Scene" positionX="0" positionY="0" width="128" height="240"/>
         <element name="Story" positionX="0" positionY="0" width="128" height="270"/>
         <element name="Text" positionX="0" positionY="0" width="128" height="120"/>

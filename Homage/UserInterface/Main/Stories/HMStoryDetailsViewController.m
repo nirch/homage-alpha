@@ -33,7 +33,6 @@
 @property (nonatomic, strong) HMVideoPlayerVC *remakeMoviePlayer;
 @property (nonatomic) Remake *flaggedRemake;
 
-
 @end
 
 @implementation HMStoryDetailsViewController
@@ -52,13 +51,14 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
 	[self initGUI];
+    [self initContent];
+    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self initContent];
     [self.guiRemakeActivity setHidden:YES];
     if (self.autoStartPlayingStory)
     {
@@ -66,7 +66,6 @@
         self.autoStartPlayingStory = NO;
     }
     [self initObservers];
-    [self refetchRemakesForStoryID:self.story.sID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -214,6 +213,7 @@
         });
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
     } else {
+        [self cleanPrivateRemakes];
         [self refreshFromLocalStorage];
     }
     
@@ -230,12 +230,12 @@
     id sender = info[@"sender"];
     if (sender != self) return;
     
-    NSIndexPath *indexPath = info[@"indexPath"];
-    //NSError *error = info[@"error"];
-    UIImage *image = info[@"image"];
+    NSString *remakeID = info[@"remakeID"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    if (!remake) return;
     
-    HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSIndexPath *indexPath = info[@"indexPath"];
+    UIImage *image = info[@"image"];
     
     if (notification.isReportingError ) {
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
@@ -260,7 +260,6 @@
     
     cell.guiUserName.text = remake.user.userID;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 
@@ -284,16 +283,20 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
-    //we need to delete all the remakes from the local storage, cause other people might have switched their privacy policy
+    //when we will get the new refetch from the server, we will have all the still public remakes in hand. the remake parser will put this flag up again, and this way we'll know the remakes we should delete from the DB
+    [self markCurrentRemakesAsNonPublic];
+    [HMServer.sh refetchRemakesWithStoryID:storyID];
+}
+
+-(void)markCurrentRemakesAsNonPublic
+{
     for (Remake *remake in self.fetchedResultsController.fetchedObjects)
     {
         if (remake)
         {
-            [DB.sh.context deleteObject:remake];
+            remake.stillPublic = @NO;
         }
     }
-    
-    [HMServer.sh refetchRemakesWithStoryID:storyID];
 }
 
 -(void)refreshFromLocalStorage
@@ -306,9 +309,18 @@
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
         return;
     }
+    
     [self.remakesCV reloadData];
     [self handleNoRemakes];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)cleanPrivateRemakes
+{
+    for (Remake *remake in self.fetchedResultsController.fetchedObjects)
+    {
+        if (!remake.stillPublic.boolValue) [DB.sh.context deleteObject:remake];
+    }
 }
 
 #pragma mark - NSFetchedResultsController
@@ -330,7 +342,7 @@
     = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser]];
     
     fetchRequest.predicate = compoundPredicate;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
     // Create the fetched results controller and return it.
@@ -384,7 +396,7 @@
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self}
+                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}
          ];
     }
 }

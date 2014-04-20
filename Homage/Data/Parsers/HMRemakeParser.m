@@ -37,7 +37,6 @@
         userID = [info stringForKey:@"user_id"];
     }
 
-    NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     Story *story = [Story storyWithID:storyID inContext:self.ctx];
     User *user = [User userWithID:userID inContext:self.ctx];
     
@@ -49,8 +48,18 @@
     remake.videoURL = [info stringForKey:@"video"];
     remake.shareURL = [info stringForKey:@"share_link"];
     remake.grade = [info numberForKey:@"grade"] ? [info numberForKey:@"grade"] : [NSNumber numberWithInt:0];
-    
+    remake.stillPublic = @YES;
+   
+    NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     remake.lastLocalUpdate = lastLocalUpdate;
+    
+    //"created_at" = "2014-03-09 14:30:13 UTC"
+    NSString *createdAtString = [info stringForKey:@"created_at"];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss ' UTC'"];
+    NSDate *createdAt = [dateFormat dateFromString:createdAtString];
+    remake.createdAt = createdAt;
+    
     self.parseInfo[@"remakeID"] = remakeID;
     
     for (NSDictionary *footageInfo in info[@"footages"]) {
