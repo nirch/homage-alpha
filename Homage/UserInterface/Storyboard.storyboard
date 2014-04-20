@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Mko-4Y-5oJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Mko-4Y-5oJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -58,9 +58,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zUe-p0-Ug6">
-                                        <rect key="frame" x="5" y="15" width="44" height="44"/>
+                                        <rect key="frame" x="12" y="22" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="moreThick">
+                                        <state key="normal" image="settings">
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1096,7 +1096,7 @@
         <image name="exitblack" width="30" height="30"/>
         <image name="filmStrip" width="586" height="1023"/>
         <image name="logo" width="118" height="48"/>
-        <image name="moreThick" width="23" height="26"/>
+        <image name="settings" width="30" height="30"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
         <image name="warning" width="200" height="200"/>
     </resources>
