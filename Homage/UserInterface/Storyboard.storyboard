@@ -690,7 +690,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fcH-Ks-RJd" userLabel="close button">
                                         <rect key="frame" x="289" y="4" width="27" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="exitblack">
+                                        <state key="normal" image="closeBlack">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1093,7 +1093,7 @@
         <image name="Yreset" width="30" height="30"/>
         <image name="Yshare" width="30" height="30"/>
         <image name="background" width="452" height="447"/>
-        <image name="exitblack" width="30" height="30"/>
+        <image name="closeBlack" width="30" height="30"/>
         <image name="filmStrip" width="586" height="1023"/>
         <image name="logo" width="118" height="48"/>
         <image name="settings" width="30" height="30"/>
