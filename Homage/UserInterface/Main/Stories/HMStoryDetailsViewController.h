@@ -8,16 +8,17 @@
 
 #import "HMStoryPresenterProtocol.h"
 #import "DB.h"
-#import "HMFontLabel.h"
+#import "HMAvenirBookFontLabel.h"
 #import "HMSimpleVideoViewController.h"
+#import "HMAvenirBookFontButton.h"
 
 @interface HMStoryDetailsViewController : UIViewController<
     HMStoryPresenterProtocol,NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
-@property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;
-@property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiDescriptionBG;
 @property (weak, nonatomic) IBOutlet UITextView *guiDescriptionField;
 @property (weak, nonatomic) IBOutlet UIView *guiStoryMovieContainer;

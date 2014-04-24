@@ -88,7 +88,9 @@
     CLEAR_CACHE_CHECK(scene,silhouetteURL,silhouette,@"silhouette"); // clear scene.thumbnail if url changed
     scene.silhouetteURL =           [info stringForKey:@"silhouette"];
     
-    scene.isSelfie =                [info boolNumberForKey:@"selfie"];
+    //at the moment, all the scenes are selfie enabled
+    scene.isSelfie =                @YES;
+    //orig: scene.isSelfie =                [info boolNumberForKey:@"selfie"];
     
     scene.focusPointX =             [info numberForKey:@"focus_point_x"];
     scene.focusPointY =             [info numberForKey:@"focus_point_y"];

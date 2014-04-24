@@ -117,7 +117,7 @@
     // If user requested to stop the recording, also force the timer to stop.
     NSDictionary *info = notification.userInfo;
     NSInteger recordStopReason = [info[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
-    if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable) {
+    if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable || recordStopReason == HMRecordingStopReasonAppWentToBackground) {
         [self.guiTimeProgressView stop];
     }
 }

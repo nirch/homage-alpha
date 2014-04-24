@@ -14,7 +14,7 @@
 #import "HMServer+Remakes.h"
 #import "HMsideBarNavigatorDelegate.h"
 #import "HMsideBarViewController.h"
-#import "HMFontLabel.h"
+#import "HMAvenirBookFontLabel.h"
 #import "HMColor.h"
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
@@ -26,7 +26,7 @@
 #import "HMGMeTabVC.h"
 #import "HMStoriesViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
-#import "HMDinFontLabel.h"
+#import "HMDINOTCondBoldFontLabel.h"
 #import "HMVideoPlayerVC.h"
 #import "HMVideoPlayerDelegate.h"
 #import <CrashReporter/PLCrashReporter.h>
@@ -54,11 +54,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak,nonatomic) HMsideBarViewController *sideBarVC;
 @property (weak,nonatomic) HMLoginMainViewController *loginVC;
 @property (atomic, readonly) NSDate *launchDateTime;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiTabNameLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiTabNameLabel;
 @property (weak,nonatomic) Story *loginStory;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
-@property (weak, nonatomic) IBOutlet HMDinFontLabel *guiNoConnectivityLabel;
+@property (weak, nonatomic) IBOutlet HMDINOTCondBoldFontLabel *guiNoConnectivityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 @property (nonatomic) NSInteger selectedTab;

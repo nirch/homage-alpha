@@ -35,7 +35,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiMicrophoneUnauthorizedLabel;
 
 
-
 // Table of scenes
 @property (weak, nonatomic) IBOutlet UITableView *guiTableView;
 @property (weak, nonatomic) IBOutlet UIView *guiTableHeaderView;
@@ -246,7 +245,13 @@
                                                    selector:@selector(onPressedCancelCountdownButton:)
                                                        name:HM_NOTIFICATION_CAMERA_NOT_STABLE
                                                      object:nil];
-
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onPressedCancelCountdownButton:)
+                                                       name:HM_APP_WILL_RESIGN_ACTIVE
+                                                     object:nil];
+    
+    
 }
 
 -(void)removeObservers
@@ -260,6 +265,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
+    [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -638,6 +644,11 @@
 }
 
 - (IBAction)onPressedCancelCountdownButton:(UIButton *)sender
+{
+    [self cancelCountdown];
+}
+
+-(void)cancelCountdown
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
     [self.guiRoundCountdownLabal cancel];

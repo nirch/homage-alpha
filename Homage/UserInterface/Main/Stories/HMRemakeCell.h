@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HMFontLabel.h"
+#import "HMAvenirBookFontLabel.h"
 
 @interface HMRemakeCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiUserName;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiUserName;
 @property (weak, nonatomic) IBOutlet UIButton *guiMoreButton;
 
 @end

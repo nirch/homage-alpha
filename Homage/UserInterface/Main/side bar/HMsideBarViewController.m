@@ -10,25 +10,26 @@
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
 #import "HMColor.h"
-#import "HMFontButton.h"
-#import "HMFontLabel.h"
+#import "HMAvenirBookFontButton.h"
+#import "HMAvenirBookFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface HMsideBarViewController ()
 
-@property (weak, nonatomic) IBOutlet HMFontButton *storiesButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *settingsButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *meButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *howToButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *storiesButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *settingsButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *meButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *howToButton;
+@property (weak,nonatomic)  UIButton *selectedButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
-@property (weak, nonatomic) IBOutlet HMFontLabel *guiHelloUserLabel;
-@property (weak, nonatomic) IBOutlet HMFontButton *guiJoinButton;
-@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *tabButtonCollection;
-@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *loginActionsButtonCollection;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiHelloUserLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiJoinButton;
+@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *tabButtonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *loginActionsButtonCollection;
 
-@property (weak, nonatomic) IBOutlet HMFontButton *guiLogoutButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiLogoutButton;
 
 
 @end
@@ -58,7 +59,7 @@
     
     [self.guiHelloUserLabel setTextColor:[HMColor.sh textImpact]];
     
-    for (HMFontButton *button in self.tabButtonCollection)
+    for (HMAvenirBookFontButton *button in self.tabButtonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
@@ -72,9 +73,11 @@
         bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
         
         [button.layer addSublayer:bottomBorder];
+        
+        [self selectButton:self.storiesButton];
     }
     
-    for (HMFontButton *button in self.loginActionsButtonCollection)
+    for (HMAvenirBookFontButton *button in self.loginActionsButtonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
@@ -88,18 +91,21 @@
 
 - (IBAction)storiesButtonPushed:(id)sender
 {
+    [self selectButton:sender];
     if ([self.delegate respondsToSelector:@selector(storiesButtonPushed)])
         [self.delegate storiesButtonPushed];
 }
 
 - (IBAction)meButtonPushed:(id)sender
 {
+    [self selectButton:sender];
     if ([self.delegate respondsToSelector:@selector(meButtonPushed)])
         [self.delegate meButtonPushed];
 }
 
 - (IBAction)settingsButtonPushed:(id)sender
 {
+    [self selectButton:sender];
     if ([self.delegate respondsToSelector:@selector(settingsButtonPushed)])
         [self.delegate settingsButtonPushed];
 }
@@ -110,12 +116,23 @@
         [self.delegate howToButtonPushed];
 }
 
-- (IBAction)logoutButtonPushed:(HMFontButton *)sender
+-(void)selectButton:(UIButton *)sender
+{
+    [UIView animateWithDuration:0.1 animations:
+     ^{
+         [self.selectedButton setBackgroundColor:[UIColor clearColor]];
+         [sender setBackgroundColor:[[HMColor.sh textImpact] colorWithAlphaComponent:0.6]];
+     }];
+    
+    self.selectedButton = sender;
+}
+
+- (IBAction)logoutButtonPushed:(HMAvenirBookFontButton *)sender
 {
     [self.delegate logoutPushed];
 }
 
-- (IBAction)joinButtonPushed:(HMFontButton *)sender
+- (IBAction)joinButtonPushed:(HMAvenirBookFontButton *)sender
 {
     [self.delegate joinButtonPushed];
 }

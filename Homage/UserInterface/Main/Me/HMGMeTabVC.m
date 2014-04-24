@@ -12,7 +12,7 @@
 #import "HMServer+Remakes.h"
 #import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
-#import "HMFontLabel.h"
+#import "HMAvenirBookFontLabel.h"
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
@@ -31,7 +31,7 @@
 @property (weak,nonatomic) Remake *remakeToDelete;
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
-@property (weak, nonatomic) IBOutlet HMFontLabel *noRemakesLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 
 @end

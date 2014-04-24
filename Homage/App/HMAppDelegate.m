@@ -14,6 +14,7 @@
 #import "DB.h"
 #import "HMNotificationCenter.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <Crashlytics/Crashlytics.h>
 
 
 @implementation HMAppDelegate
@@ -28,6 +29,8 @@
                                                                            UIRemoteNotificationTypeAlert
                                                                            )
      ];
+    
+    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     
     #ifndef DEBUG
          [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
@@ -108,6 +111,7 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_APP_WILL_RESIGN_ACTIVE object:nil userInfo:nil];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -120,6 +124,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_APP_WILL_ENTER_FOREGROUND object:nil userInfo:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -144,8 +149,5 @@
     
     return wasHandled;
 }
-
-
-
 
 @end

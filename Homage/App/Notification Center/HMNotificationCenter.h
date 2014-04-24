@@ -60,6 +60,10 @@
 //server updating client that a remake was flagged as inappropriate
 #define HM_NOTIFICATION_MARKED_AS_INAPPROPRIATE @"server updating client that a remake was flagged as inappropriate"
 
+//app delegate
+#define HM_APP_WILL_RESIGN_ACTIVE @"app delegate: application will resign active called"
+#define HM_APP_WILL_ENTER_FOREGROUND @"app delegate: application will enter background called"
+
 @interface HMNotificationCenter : NSObject
 
 @end

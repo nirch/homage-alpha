@@ -16,12 +16,13 @@
 #import "HMIntroMovieViewController.h"
 #import "HMIntroMovieDelagate.h"
 #import "UIImage+ImageEffects.h"
-#import "HMFontButton.h"
-#import "HMFontLabel.h"
+#import "HMAvenirBookFontButton.h"
+#import "HMAvenirBookFontLabel.h"
 #import "HMColor.h"
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import <Crashlytics/Crashlytics.h>
 
 
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {
@@ -47,20 +48,20 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainerView;
-@property (weak, nonatomic) IBOutlet HMFontButton *guiSignupButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *guiLoginButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *guiGuestButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *guiForgotPasswordButton;
-@property (weak, nonatomic) IBOutlet HMFontButton *guiCancelButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiSignupButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiLoginButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiGuestButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiForgotPasswordButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiCancelButton;
 @property (weak, nonatomic) IBOutlet UITextField *guiMailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *guiPasswordTextField;
-@property (weak, nonatomic) IBOutlet UILabel *guiLoginErrorLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityView;
 
-@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
-@property (strong, nonatomic) IBOutletCollection(HMFontLabel) NSArray *labelCollection;
+@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontLabel) NSArray *labelCollection;
 
 
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
@@ -133,13 +134,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
     
-    for (HMFontButton *button in self.buttonCollection)
+    for (HMAvenirBookFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
     }
     
-    for (HMFontLabel *label in self.labelCollection)
+    for (HMAvenirBookFontLabel *label in self.labelCollection)
     {
         [label setTextColor:[UIColor whiteColor]];
     }

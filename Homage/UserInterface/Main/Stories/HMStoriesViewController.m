@@ -20,7 +20,7 @@
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *storiesCV;
-@property (weak, nonatomic) IBOutlet HMFontLabel *noStoriesLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noStoriesLabel;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 @property (weak,nonatomic) Story *introStory;
 

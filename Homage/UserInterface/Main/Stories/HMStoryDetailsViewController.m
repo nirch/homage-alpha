@@ -106,7 +106,6 @@
     [self initStoryMoviePlayer];
     
     //design remake button
-    self.guiRemakeButton.titleLabel.font = [UIFont fontWithName:@"DINOT-Regular" size:self.guiRemakeButton.titleLabel.font.pointSize];
     [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
     [self.guiRemakeButton.layer setBorderWidth:0.5f];
     [self.guiRemakeButton.layer setCornerRadius:2.5f];

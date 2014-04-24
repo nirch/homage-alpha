@@ -394,24 +394,6 @@
                                                        name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
                                                      object:nil];
 
-    // TODO: Remove this comment (orientation hack)
-    /*
-    // Notification about the camera used (front)
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRecorderUsingFrontCamera:)
-                                                       name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA
-                                                     object:nil];
-    */
-    
-    // TODO: Remove this comment (orientation hack)
-    /*
-    // Notification about the camera used (back)
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRecorderUsingBackCamera:)
-                                                       name:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA
-                                                     object:nil];
-    */
-    
     // Handle recording errors by showing the FAIL message
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRecorderEpicFail:)
@@ -429,6 +411,12 @@
                                                    selector:@selector(onCameraNotStable:)
                                                        name:HM_NOTIFICATION_CAMERA_NOT_STABLE
                                                      object:nil];
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onAppMovedToBackground:)
+                                                       name:HM_APP_WILL_RESIGN_ACTIVE
+                                                     object:nil];
+    
+    
 
 }
 
@@ -1236,6 +1224,14 @@
 -(void)onCameraNotStable:(NSNotification *)notification
 {
     NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonCameraNotStable)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                                                        object:self
+                                                      userInfo:info];
+}
+
+-(void)onAppMovedToBackground:(NSNotification *)notification
+{
+    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonAppWentToBackground)};
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self
                                                       userInfo:info];

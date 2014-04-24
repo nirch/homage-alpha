@@ -7,8 +7,8 @@
 //
 
 #import "HMIntroMovieViewController.h"
-#import "HMFontLabel.h"
-#import "HMFontButton.h"
+#import "HMAvenirBookFontLabel.h"
+#import "HMAvenirBookFontButton.h"
 #import "DB.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+Users.h"
@@ -26,12 +26,12 @@
 @interface HMIntroMovieViewController () <UITextFieldDelegate>
 
 
-@property (weak, nonatomic) IBOutlet UIButton *guiIntroSkipButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiShootFirstStoryButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiIntroSkipButton;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiShootFirstStoryButton;
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
 @property (strong,nonatomic) MPMoviePlayerController *moviePlayer;
 
-@property (strong, nonatomic) IBOutletCollection(HMFontButton) NSArray *buttonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
 
 
 @end
@@ -82,7 +82,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
 
-    for (HMFontButton *button in self.buttonCollection)
+    for (HMAvenirBookFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];

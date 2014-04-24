@@ -269,6 +269,11 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                  selector:@selector(onCanceledCountdownNeedToResetCameraSettings:)
                      name:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING
                    object:nil];
+    
+    [nc addUniqueObserver:self
+                 selector:@selector(onAppDidEnterForeground:)
+                     name:HM_APP_WILL_ENTER_FOREGROUND
+                   object:nil];
 
 }
 
@@ -280,6 +285,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_FLIP_CAMERA object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
+    [nc removeObserver:self name:HM_APP_WILL_ENTER_FOREGROUND object:nil];
 }
 
 #pragma mark - Reveal
@@ -387,7 +393,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         AVCaptureDevice *currentVideoDevice = [[self videoDeviceInput] device];
         AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
         if (currentPosition == AVCaptureDevicePositionFront) {
-            [self changeCamera];
+            [self refreshCameraFeedWithFlip:YES];
         }
         return;
     }
@@ -395,7 +401,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     //
     // Front and back allowed. Flip it.
     //
-    [self changeCamera];
+    [self refreshCameraFeedWithFlip:YES];
 }
 
 -(void)onStartedCountdownNeedToFocusOnPoint:(NSNotification *)notification
@@ -615,7 +621,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     return [videoDevice supportsAVCaptureSessionPreset:AVCaptureSessionPreset640x480];//AVCaptureSessionPreset1280x720];
 }
 
--(void)changeCamera
+-(void)refreshCameraFeedWithFlip:(BOOL)flip
 {
     UIView *tempView = [[UIView alloc] init];
     tempView.frame = self.previewView.superview.frame;
@@ -637,17 +643,35 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
         AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
         //1605
-        switch (currentPosition)
+        
+        if (flip)
         {
-            case AVCaptureDevicePositionUnspecified:
-                preferredPosition = AVCaptureDevicePositionBack;
-                break;
-            case AVCaptureDevicePositionBack:
-                preferredPosition = AVCaptureDevicePositionFront;
-                break;
-            case AVCaptureDevicePositionFront:
-                preferredPosition = AVCaptureDevicePositionBack;
-                break;
+            switch (currentPosition)
+            {
+                case AVCaptureDevicePositionUnspecified:
+                    preferredPosition = AVCaptureDevicePositionBack;
+                    break;
+                case AVCaptureDevicePositionBack:
+                    preferredPosition = AVCaptureDevicePositionFront;
+                    break;
+                case AVCaptureDevicePositionFront:
+                    preferredPosition = AVCaptureDevicePositionBack;
+                    break;
+            }
+        } else {
+            switch (currentPosition)
+            {
+                case AVCaptureDevicePositionUnspecified:
+                    preferredPosition = AVCaptureDevicePositionBack;
+                    break;
+                case AVCaptureDevicePositionBack:
+                    preferredPosition = AVCaptureDevicePositionBack;
+                    break;
+                case AVCaptureDevicePositionFront:
+                    preferredPosition = AVCaptureDevicePositionFront;
+                    break;
+            }
+            
         }
         
         NSError *error;
@@ -892,5 +916,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     }];
 }
 
+-(void)onAppDidEnterForeground:(NSNotification *)notification
+{
+    [self refreshCameraFeedWithFlip:NO];
+}
 
 @end
