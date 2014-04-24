@@ -553,6 +553,7 @@
 		65C10D9018A265DC00A65917 /* HMDINOTCondBoldFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTCondBoldFontButton.h; sourceTree = "<group>"; };
 		65C10D9118A265DC00A65917 /* HMDINOTCondBoldFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTCondBoldFontLabel.h; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		F12571C819054883001255A2 /* Model104.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Model104.xcdatamodel; sourceTree = "<group>"; };
 		F13FA5191899447F0026EA5F /* HMServer+Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Users.h"; sourceTree = "<group>"; };
 		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
 		F13FA51D1899497F0026EA5F /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
@@ -2037,10 +2038,11 @@
 		0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F12571C819054883001255A2 /* Model104.xcdatamodel */,
 				F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */,
 				0806FB33188295CD00F0EF50 /* Model.xcdatamodel */,
 			);
-			currentVersion = F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */;
+			currentVersion = F12571C819054883001255A2 /* Model104.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
