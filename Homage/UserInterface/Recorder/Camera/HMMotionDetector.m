@@ -84,19 +84,19 @@
 
 -(BOOL)isCameraStable:(CMDeviceMotion *)deviceMotion withAttitude:(BOOL)attitude withRotationRate:(BOOL)rotation withAcceleration:(BOOL)accleration
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     BOOL cameraStable = YES;
 
         if (attitude && ![self isAttitudeStableForRoll:deviceMotion.attitude.roll pitch:deviceMotion.attitude.pitch yaw:deviceMotion.attitude.yaw]) cameraStable=NO;
         if (rotation && ![self isCameraStableInRotationForX:deviceMotion.rotationRate.x Y:deviceMotion.rotationRate.y Z:deviceMotion.rotationRate.z]) cameraStable = NO;
         if (accleration && ![self isCameraStableInAccelerationForX:deviceMotion.userAcceleration.x Y:deviceMotion.userAcceleration.y Z:deviceMotion.userAcceleration.z]) cameraStable = NO;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return cameraStable;
 }
 
 -(BOOL)isAttitudeStableForRoll:(double)roll pitch:(double)pitch yaw:(double)yaw
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     double rollDelta = fabs(roll - self.prevAttitudeRoll);
     double pitchDelta = fabs(pitch - self.prevAttitudePitch);
     double yawDelta = fabs(yaw - self.prevAttitudeYaw);
@@ -104,14 +104,14 @@
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return YES;
 }
 
 -(BOOL)isCameraStableInRotationForX:(double)x Y:(double)y Z:(double)z
 {
     
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     double deltaX = fabs(x - self.prevRotationRateX);
     double deltaY = fabs(y - self.prevRotationRateY);
     double deltaZ = fabs(z - self.prevRotationRateZ);
@@ -119,14 +119,14 @@
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
     return YES;
 }
 
 -(BOOL)isCameraStableInAccelerationForX:(double)x Y:(double)y Z:(double)z
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     double deltaX = fabs(x - self.prevAccelerationX);
     double deltaY = fabs(y - self.prevAccelerationY);
     double deltaZ = fabs(z - self.prevAccelerationZ);
@@ -134,7 +134,7 @@
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    //HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return YES;
 }
 

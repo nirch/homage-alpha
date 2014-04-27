@@ -122,16 +122,17 @@
        
         // Output video bitrate
         //NSDictionary *codecSettings = @{
-          //                             AVVideoAverageBitRateKey:@1200000
-            //                           };
+        //                               AVVideoAverageBitRateKey:@3000000
+        //                               };
        
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
                                         AVVideoWidthKey:@640,
                                         AVVideoHeightKey:@480//,
-                                        //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
                                         //AVVideoCompressionPropertiesKey:codecSettings
+                                        //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
+                                        
                                         };
         
         _writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
@@ -184,12 +185,12 @@
     
     NSLog(@"Frame: %d", counter);
     
+    
     if (counter < 82)
     {
         gp_time_start( &m_gTime );
         NSLog(@"Processing frame: %d", counter);
 
-        
         CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
         
         if (self.assetWriter.status != AVAssetWriterStatusWriting)
@@ -211,15 +212,16 @@
         // Running the algo - result of the algo into m_foreground_image
         gp_time_start( &m_gTimeProcess );
         m_foregroundExtraction->Process(m_original_image, 1, &m_foreground_image);
-
+        
         
         // Save image to file
-        /*UIImage *foregroundImage = CVtool::CreateUIImage(m_foreground_image);
-        imageName = [NSString stringWithFormat:@"foreground%d.jpg", counter];
-        filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
-        [UIImagePNGRepresentation(foregroundImage) writeToFile:filePath atomically:YES];*/
+        //UIImage *foregroundImage = CVtool::CreateUIImage(m_foreground_image);
+        //imageName = [NSString stringWithFormat:@"foreground%d.jpg", counter];
+        //filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+        //[UIImagePNGRepresentation(foregroundImage) writeToFile:filePath atomically:YES];
         
-        m_output_image = imageA_set_color(m_original_image, m_foreground_image, 255, 0x00FF00, m_output_image);
+        //m_output_image = imageA_set_color(m_original_image, m_foreground_image, 255, 0x00FF00, m_output_image);
+        m_output_image = imageA_set_colorN(m_original_image, m_foreground_image, 0x00FF00, m_output_image);
         gp_time_stop( &m_gTimeProcess );
         
         // Output image_type to PixelBuffer
@@ -261,6 +263,18 @@
     [self.pixelBufferAdaptor appendPixelBuffer:buffer withPresentationTime:self.presentTime];
     CVPixelBufferRelease(buffer);
  */
+    
+/*
+    // Just appending the sample buffer to the writer (with no manipulation)
+    if (self.assetWriter.status != AVAssetWriterStatusWriting)
+    {
+        CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+        [self.assetWriter startWriting];
+        [self.assetWriter startSessionAtSourceTime:lastSampleTime];
+    }
+    
+    [self.writerInput appendSampleBuffer:sampleBuffer];
+*/
 }
 
 - (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer

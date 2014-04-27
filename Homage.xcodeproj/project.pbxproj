@@ -1825,12 +1825,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
-					"../homage-cv-app/VimGui/Lib/Release-iphoneos/**",
-					"../homage-cv-app/Core/Lib/Release-iphoneos/**",
-					"../homage-cv-app/Homage/Lib/Release-iphoneos/**",
-					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
@@ -1847,10 +1846,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/supporting files/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
-					"../homage-cv-app/VimGui/Lib/Release-iphoneos",
-					"../homage-cv-app/Core/Lib/Release-iphoneos",
-					"../homage-cv-app/Homage/Lib/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-lGpw",
@@ -1896,12 +1895,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
-					"../homage-cv-app/VimGui/Lib/Release-iphoneos/**",
-					"../homage-cv-app/Core/Lib/Release-iphoneos/**",
-					"../homage-cv-app/Homage/Lib/Release-iphoneos/**",
-					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
@@ -1918,10 +1916,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Homage/App/supporting files/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
-					"../homage-cv-app/VimGui/Lib/Release-iphoneos",
-					"../homage-cv-app/Core/Lib/Release-iphoneos",
-					"../homage-cv-app/Homage/Lib/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-lGpw",
