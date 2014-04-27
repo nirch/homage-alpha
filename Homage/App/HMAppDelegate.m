@@ -30,11 +30,11 @@
                                                                            )
      ];
     
-    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
-    
     #ifndef DEBUG
          [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
+    
+    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     
     self.pushNotificationFromBG = nil;
     

@@ -22,7 +22,7 @@
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
-#import <Crashlytics/Crashlytics.h>
+
 
 
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {

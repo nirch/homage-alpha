@@ -35,6 +35,7 @@
 #import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
 #import "HMServer+Users.h"
+#import <Crashlytics/Crashlytics.h>
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
