@@ -75,7 +75,6 @@
         [self.session addOutput:movieDataOutput];
         //self.frameTime = CMTimeMake(1,25);
         
-        
         m_foregroundExtraction = new CUniformBackground();
         
         NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up 480" ofType:@"ctr"];
@@ -121,16 +120,16 @@
                                                     error:&error];
        
         // Output video bitrate
-        //NSDictionary *codecSettings = @{
-        //                               AVVideoAverageBitRateKey:@3000000
-        //                               };
+        NSDictionary *codecSettings = @{
+                                       AVVideoAverageBitRateKey:@2000000
+                                       };
        
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
                                         AVVideoWidthKey:@640,
-                                        AVVideoHeightKey:@480//,
-                                        //AVVideoCompressionPropertiesKey:codecSettings
+                                        AVVideoHeightKey:@480,
+                                        AVVideoCompressionPropertiesKey:codecSettings
                                         //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
                                         
                                         };
@@ -183,6 +182,17 @@
 {
     if (!_isCurrentlyRecording) return;
     
+    // Just appending the sample buffer to the writer (with no manipulation)
+    if (self.assetWriter.status != AVAssetWriterStatusWriting)
+    {
+        CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+        [self.assetWriter startWriting];
+        [self.assetWriter startSessionAtSourceTime:lastSampleTime];
+    }
+    
+    [self.writerInput appendSampleBuffer:sampleBuffer];
+
+    /*
     NSLog(@"Frame: %d", counter);
     
     
@@ -242,6 +252,7 @@
     
     
     counter = counter + 1;
+    */
 /*
     UIImage *outputImage = [self imageFromSampleBuffer:sampleBuffer];
 
@@ -264,17 +275,8 @@
     CVPixelBufferRelease(buffer);
  */
     
-/*
-    // Just appending the sample buffer to the writer (with no manipulation)
-    if (self.assetWriter.status != AVAssetWriterStatusWriting)
-    {
-        CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
-        [self.assetWriter startWriting];
-        [self.assetWriter startSessionAtSourceTime:lastSampleTime];
-    }
-    
-    [self.writerInput appendSampleBuffer:sampleBuffer];
-*/
+
+
 }
 
 - (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
