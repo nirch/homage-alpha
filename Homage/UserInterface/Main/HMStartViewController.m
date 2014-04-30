@@ -36,6 +36,7 @@
 #import "HMLoginMainViewController.h"
 #import "HMServer+Users.h"
 #import <Crashlytics/Crashlytics.h>
+#import <AVFoundation/AVAudioPlayer.h>
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
@@ -64,6 +65,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 @property (nonatomic) NSInteger selectedTab;
 @property (nonatomic) BOOL justStarted;
+
 
 
 #define SETTING_TAG 1
@@ -228,6 +230,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 - (IBAction)sideBarButtonPushed:(UIButton *)sender
 {
+
     [[Mixpanel sharedInstance] track:@"SideBarPushed"];
     if (sender.tag == SETTING_TAG) {
         if (self.sideBarContainerView.hidden == YES) {
@@ -351,6 +354,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     // Dismiss the splash screen.
     [self dismissSplashScreen];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"appLaunch"];
     
     if (![User current])
     {
@@ -361,12 +366,12 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         [self hideLoginScreen];
         
         //Mixpanel analytics
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        
         User *user = [User current];
-        [mixpanel identify:user.userID];
+        //[mixpanel identify:user.userID];
     
         if (user.email) {
-            [mixpanel registerSuperProperties:@{@"email": user.email}];
+            [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id":user.userID}];
             [mixpanel.people set:@{@"user" : user.email}];
         }
         
@@ -595,6 +600,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     self.moviePlayer = videoPlayerController;
     [self presentViewController:videoPlayerController animated:YES completion:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
+    
 }
 
 

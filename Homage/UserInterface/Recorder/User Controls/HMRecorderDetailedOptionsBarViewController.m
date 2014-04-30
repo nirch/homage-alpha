@@ -72,6 +72,9 @@
 //THE HAND!!!
 @property (weak, nonatomic) IBOutlet UIImageView *guiPointingHand;
 
+//audio player
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+
 
 
 @end
@@ -636,7 +639,16 @@
     [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID}];
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
-
+    
+    //play countdown sound
+    NSError *error;
+    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown3" ofType:@"wav"]];
+    self.audioPlayer = [[AVAudioPlayer alloc]
+                        initWithContentsOfURL:cinemaCountdownURL error:&error];
+    NSLog(@"error: %@" , error);
+    [self.audioPlayer prepareToPlay];
+    [self.audioPlayer play];
+    
     Scene *scene = [self.remake.story findSceneWithID:self.sceneID];
     CGPoint focusPoint = scene.focusCGPoint;
     NSDictionary *userInfo = @{HM_INFO_FOCUS_POINT:@[@(focusPoint.x),@(focusPoint.y)]};

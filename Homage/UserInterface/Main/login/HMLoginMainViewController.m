@@ -411,13 +411,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    if (user.userID) {
+    /*if (user.userID) {
         [mixpanel identify:userID];
-    }
+    }*/
     
     if (user.email)
     {
-        [mixpanel registerSuperProperties:@{@"email": user.email}];
+        [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id": user.userID}];
         [mixpanel.people set:@{@"user" : user.email}];
     }
     

@@ -346,7 +346,7 @@
     = [NSCompoundPredicate andPredicateWithSubpredicates:@[userPredicate,statusPredicate]];
     
     fetchRequest.predicate = compoundPredicate;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
 
