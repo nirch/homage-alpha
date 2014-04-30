@@ -14,6 +14,7 @@
 #import "ImageType/ImageTool.h"
 #import "Utime/GpTime.h"
 #import "HMRecorderChildInterface.h"
+#import "HMNotificationCenter.h"
 
 
 @interface HMExtractController (){
@@ -36,13 +37,13 @@
 
 @property (nonatomic, readonly) dispatch_queue_t extractQueue;
 @property (readonly) BOOL isCurrentlyRecording;
-@property (readonly) BOOL isCountdown;
 @property (readonly) NSURL *outputFileURL;
 
 @property (readonly) AVAssetWriter *assetWriter;
 @property (readonly) AVAssetWriterInput *writerInput;
 
 @property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
+@property (nonatomic) NSInteger extractCounter;
 
 //@property (readonly) CHomage *h_ext;
 
@@ -54,6 +55,9 @@
 @end
 
 @implementation HMExtractController
+
+#define EXTRACT_TH 0
+#define EXTRACT_TIMER_INTERVAL 25
 
 -(id)init
 {
@@ -73,7 +77,7 @@
     if (self) {
         _session = session;
         _isCurrentlyRecording = NO;
-        _isCountdown = NO;
+        _extractCounter = 0;
         _extractQueue = dispatch_queue_create("ExtractionQueue", DISPATCH_QUEUE_SERIAL);
         [movieDataOutput setSampleBufferDelegate:self queue:self.extractQueue];
         [self.session addOutput:movieDataOutput];
@@ -95,31 +99,10 @@
         gpTime_init( & m_gTimeImage2Buffrt);
         gpTime_init( & m_gTimeProcess);
         gpTime_init( & m_gTimeAppend);
-
-        [self initObservers];
         
         counter = 0;
     }
     return self;
-}
-
--(void)initObservers
-{
-    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
-    //
-    // Countdown started. Will focus camera on a specific point.
-    //
-    [nc addObserver:self
-                 selector:@selector(onStartedCountdown:)
-                     name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING
-                   object:nil];
-
-}
-
--(void)onStartedCountdown:(NSNotification *)notification
-{
-    _isCountdown = YES;
 }
 
 
@@ -205,16 +188,28 @@
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
-    if (_isCountdown)
+    
+    //detect bad background
+    if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && !_isCurrentlyRecording)
     {
         // SampleBuffer to PixelBuffer
         CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-
+        
         m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
         int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
         NSLog(@"Process Background result =  %d", result);
-        _isCountdown = NO;
+        NSLog(@"TICK TOCK");
+        
+        if (result < EXTRACT_TH)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
+        } else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND object:self];
+        }
     }
+    
+    self.extractCounter++;
     
     if (!_isCurrentlyRecording) return;
     

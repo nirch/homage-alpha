@@ -20,6 +20,7 @@
 #import "HMAnimationsFX.h"
 #import "mixpanel.h"
 #import "HMMotionDetector.h"
+#import "HMAvenirBookFontLabel.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -32,7 +33,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiReachability;
-@property (weak, nonatomic) IBOutlet UILabel *guiMicrophoneUnauthorizedLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiMicrophoneUnauthorizedLabel;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiBadBGLabel;
 
 
 // Table of scenes
@@ -136,6 +138,9 @@
     
     // Countdown delegate
     self.guiRoundCountdownLabal.delegate = self;
+    
+    //bad BG label
+    self.guiBadBGLabel.hidden = YES;
 }
 
 -(void)initGUIOnceAfterFirstAppearance
@@ -235,6 +240,19 @@
                      name:HM_NOTIFICATION_UPLOAD_PROGRESS
                    object:nil];
     
+    //observe bad background
+    [nc addUniqueObserver:self
+                 selector:@selector(onBadBackGroundDetected:)
+                     name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
+                   object:nil];
+    
+    //observe good background
+    [nc addUniqueObserver:self
+                 selector:@selector(onGoodBackGroundDetected:)
+                     name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
+                   object:nil];
+    
+    
     
     
     // Observe reachability status changes
@@ -269,6 +287,9 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND object:nil];
+    
 }
 
 #pragma mark - Observers handlers
@@ -788,6 +809,24 @@
         [[Mixpanel sharedInstance] track:@"REStopOurStory"];
     }
 
+}
+
+-(void)onBadBackGroundDetected:(NSNotification *)notification
+{
+    if (!self.guiBadBGLabel.hidden) return;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.guiBadBGLabel.hidden = NO;
+    });
+    
+    NSLog(@"displaying label !!!!!!!!!!!!!!!!!!!!!!!");
+}
+
+-(void)onGoodBackGroundDetected:(NSNotification *)notification
+{
+    if (self.guiBadBGLabel.hidden) return;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.guiBadBGLabel.hidden = YES;
+    });
 }
 
 //make comment should you want to hide status bar

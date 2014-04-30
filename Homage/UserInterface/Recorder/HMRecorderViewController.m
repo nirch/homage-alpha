@@ -411,6 +411,14 @@
                                                    selector:@selector(onCameraNotStable:)
                                                        name:HM_NOTIFICATION_CAMERA_NOT_STABLE
                                                      object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onBadBackgroundDetected:) name:HM_CAMERA_BAD_BACKGROUND object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onGoodBackgroundDetected:) name:HM_CAMERA_GOOD_BACKGROUND object:nil];
+    
+    
+    
+    
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onAppMovedToBackground:)
                                                        name:HM_APP_WILL_RESIGN_ACTIVE
@@ -430,6 +438,8 @@
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_EPIC_FAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_RENDER object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
+    [nc removeObserver:self name:HM_CAMERA_BAD_BACKGROUND object:nil];
+    [nc removeObserver:self name:HM_CAMERA_GOOD_BACKGROUND object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -1228,6 +1238,20 @@
                                                         object:self
                                                       userInfo:info];
 }
+
+-(void)onBadBackgroundDetected:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
+                                                        object:self];
+}
+
+
+-(void)onGoodBackgroundDetected:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
+                                                        object:self];
+}
+
 
 -(void)onAppMovedToBackground:(NSNotification *)notification
 {

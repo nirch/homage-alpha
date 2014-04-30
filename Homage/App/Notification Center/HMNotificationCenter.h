@@ -47,6 +47,10 @@
 #define HM_NOTIFICATION_RECORDER_FINISHED           @"Recoder was dismissed"
 
 #define HM_NOTIFICATION_CAMERA_NOT_STABLE           @"Camera not stable"
+#define HM_CAMERA_BAD_BACKGROUND @"camera bad background"
+#define HM_CAMERA_GOOD_BACKGROUND @"camera good background"
+#define HM_NOTIFICATION_RECORDER_BAD_BACKGROUND @"recorder bad background"
+#define HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND @"recorder good background"
 
 //push notifications
 #define HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS @"push notification when user's movie is ready or failed to render"
