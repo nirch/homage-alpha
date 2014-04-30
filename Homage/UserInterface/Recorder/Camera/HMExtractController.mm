@@ -13,6 +13,8 @@
 #import "Image3/Image3Tool.h"
 #import "ImageType/ImageTool.h"
 #import "Utime/GpTime.h"
+#import "HMRecorderChildInterface.h"
+
 
 @interface HMExtractController (){
     
@@ -34,6 +36,7 @@
 
 @property (nonatomic, readonly) dispatch_queue_t extractQueue;
 @property (readonly) BOOL isCurrentlyRecording;
+@property (readonly) BOOL isCountdown;
 @property (readonly) NSURL *outputFileURL;
 
 @property (readonly) AVAssetWriter *assetWriter;
@@ -70,6 +73,7 @@
     if (self) {
         _session = session;
         _isCurrentlyRecording = NO;
+        _isCountdown = NO;
         _extractQueue = dispatch_queue_create("ExtractionQueue", DISPATCH_QUEUE_SERIAL);
         [movieDataOutput setSampleBufferDelegate:self queue:self.extractQueue];
         [self.session addOutput:movieDataOutput];
@@ -92,11 +96,32 @@
         gpTime_init( & m_gTimeProcess);
         gpTime_init( & m_gTimeAppend);
 
+        [self initObservers];
         
         counter = 0;
     }
     return self;
 }
+
+-(void)initObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    //
+    // Countdown started. Will focus camera on a specific point.
+    //
+    [nc addObserver:self
+                 selector:@selector(onStartedCountdown:)
+                     name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING
+                   object:nil];
+
+}
+
+-(void)onStartedCountdown:(NSNotification *)notification
+{
+    _isCountdown = YES;
+}
+
 
 #pragma mark - Recording
 -(BOOL)isRecording
@@ -180,6 +205,17 @@
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
+    if (_isCountdown)
+    {
+        // SampleBuffer to PixelBuffer
+        CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+
+        m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
+        int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+        NSLog(@"Process Background result =  %d", result);
+        _isCountdown = NO;
+    }
+    
     if (!_isCurrentlyRecording) return;
     
     // Just appending the sample buffer to the writer (with no manipulation)
