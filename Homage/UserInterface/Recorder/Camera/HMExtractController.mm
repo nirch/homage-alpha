@@ -92,8 +92,6 @@
         m_foreground_image = NULL;
         m_output_image = NULL;
         
-        
-        
         gpTime_init( &m_gTime);
         gpTime_init( & m_gTimeBuffer2image);
         gpTime_init( & m_gTimeImage2Buffrt);
@@ -197,8 +195,17 @@
         
         m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
         int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+        
+        /*//test - save pics
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+        NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
+        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
+        
+        UIImage *bgImage = [self imageFromSampleBuffer:sampleBuffer];
+        [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];*/
+        
         NSLog(@"Process Background result =  %d", result);
-        NSLog(@"TICK TOCK");
         
         if (result < EXTRACT_TH)
         {
@@ -222,91 +229,6 @@
     }
     
     [self.writerInput appendSampleBuffer:sampleBuffer];
-
-    /*
-    NSLog(@"Frame: %d", counter);
-    
-    
-    if (counter < 82)
-    {
-        gp_time_start( &m_gTime );
-        NSLog(@"Processing frame: %d", counter);
-
-        CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
-        
-        if (self.assetWriter.status != AVAssetWriterStatusWriting)
-        {
-            [self.assetWriter startWriting];
-            [self.assetWriter startSessionAtSourceTime:lastSampleTime];
-        }
-        
-        //[self.writerInput appendSampleBuffer:sampleBuffer];
-        
-        // SampleBuffer to PixelBuffer
-        CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        
-        // PixelBuffer to image_type (algo image type)
-        gp_time_start( &m_gTimeBuffer2image );
-        m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
-        gp_time_stop( &m_gTimeBuffer2image );
-        
-        // Running the algo - result of the algo into m_foreground_image
-        gp_time_start( &m_gTimeProcess );
-        m_foregroundExtraction->Process(m_original_image, 1, &m_foreground_image);
-        
-        
-        // Save image to file
-        //UIImage *foregroundImage = CVtool::CreateUIImage(m_foreground_image);
-        //imageName = [NSString stringWithFormat:@"foreground%d.jpg", counter];
-        //filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
-        //[UIImagePNGRepresentation(foregroundImage) writeToFile:filePath atomically:YES];
-        
-        //m_output_image = imageA_set_color(m_original_image, m_foreground_image, 255, 0x00FF00, m_output_image);
-        m_output_image = imageA_set_colorN(m_original_image, m_foreground_image, 0x00FF00, m_output_image);
-        gp_time_stop( &m_gTimeProcess );
-        
-        // Output image_type to PixelBuffer
-        gp_time_start( &m_gTimeImage2Buffrt );
-        CVPixelBufferRef outputPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_output_image);
-        gp_time_stop( &m_gTimeImage2Buffrt );
-        
-        gp_time_start( &m_gTimeAppend );
-        [self.pixelBufferAdaptor appendPixelBuffer:outputPixelBuffer withPresentationTime:lastSampleTime];
-        gp_time_stop( &m_gTimeAppend );
-        CVPixelBufferRelease(outputPixelBuffer);
-        //image_destroy(m_temp_image, 1);
-        //image_destroy(temp3_image, 1);
-        //image_destroy(temp4_image, 1);
-        gp_time_stop( &m_gTime );
-    }
-    
-    
-    
-    counter = counter + 1;
-    */
-/*
-    UIImage *outputImage = [self imageFromSampleBuffer:sampleBuffer];
-
-    // TODO: Manipulate image using the algorithm here.
-    // Need to be able to call CHomage -> Process here and pass it directly a UIImage or CMSampleBufferRef object for each frame.
-    // (no need for the C++ code to handle capturing the frames directly from the camera)
-
-    image_type *originalImage = CVtool::DecomposeUIimage(image);
-    image_type *foregroundImage;
-    
-    m_foregroundExtraction->Process(originalImage, 1, &foregroundImage);
-    image_type *greenScreenImage = imageA_set_color( originalImage, foregroundImage, 255, 0x00FFFF, NULL);
-    
-    UIImage *outputImage = CVtool::CreateUIImage(greenScreenImage);
- 
-    // Append manipulated frame to disk.
-    self.presentTime = CMTimeAdd(self.presentTime,self.frameTime);
-    CVPixelBufferRef buffer = [HMExtractController newPixelBufferFromCGImage:outputImage.CGImage frameSize:outputImage.size];
-    [self.pixelBufferAdaptor appendPixelBuffer:buffer withPresentationTime:self.presentTime];
-    CVPixelBufferRelease(buffer);
- */
-    
-
 
 }
 

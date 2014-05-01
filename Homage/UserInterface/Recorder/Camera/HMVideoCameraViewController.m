@@ -67,7 +67,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)initCameraSettings
 {
     // Extraction
-    _camFGExtraction                                = YES;
+    _camFGExtraction                                = NO;
     
     // Camera
     _camSettingsSessionPreset                       = AVCaptureSessionPreset640x480;//AVCaptureSessionPresetiFrame1280x720;     // Video capture resolution
@@ -585,7 +585,6 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             // Turning OFF flash for video recording
             [HMVideoCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
 
-            
             // Lock focus on a point (currently hard coded point, should be received from the server later.
             [self focusWithMode:AVCaptureFocusModeLocked
                  exposeWithMode:AVCaptureExposureModeLocked

@@ -663,7 +663,7 @@
     
     //play countdown sound
     NSError *error;
-    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown3" ofType:@"wav"]];
+    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown5" ofType:@"wav"]];
     self.audioPlayer = [[AVAudioPlayer alloc]
                         initWithContentsOfURL:cinemaCountdownURL error:&error];
     NSLog(@"error: %@" , error);
@@ -687,6 +687,9 @@
     [self.guiRoundCountdownLabal cancel];
     [[Mixpanel sharedInstance] track:@"RECancelRecord"];
     self.guiCountdownContainer.hidden = YES;
+    [self.audioPlayer stop];
+    
+    
 }
 
 - (IBAction)onPressedSceneDirectionButton:(id)sender
