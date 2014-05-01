@@ -10,10 +10,10 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface HMExtractController : NSObject <
-    AVCaptureVideoDataOutputSampleBufferDelegate
+    AVCaptureVideoDataOutputSampleBufferDelegate,AVCaptureAudioDataOutputSampleBufferDelegate
 >
 
--(id)initWithSession:(AVCaptureSession *)session movieDataOutput:(AVCaptureVideoDataOutput *)movieDataOutput;
+-(id)initWithSession:(AVCaptureSession *)session movieDataOutput:(AVCaptureVideoDataOutput *)movieDataOutput audioDataOutput:(AVCaptureAudioDataOutput *)audioDataOutput;
 
 #pragma mark - Recording
 -(BOOL)isRecording;

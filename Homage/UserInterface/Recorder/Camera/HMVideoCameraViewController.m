@@ -43,7 +43,6 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 
 // Extraction
 @property (nonatomic, readonly) HMExtractController *extractController;
-@property (nonatomic, readonly) AVCaptureVideoDataOutput* videoDataOutput;
 
 // Some info about beginning and end of a recording
 @property (nonatomic) NSDictionary *lastRecordingStartInfo;
@@ -67,7 +66,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)initCameraSettings
 {
     // Extraction
-    _camFGExtraction                                = NO;
+    _camFGExtraction                                = YES;
     
     // Camera
     _camSettingsSessionPreset                       = AVCaptureSessionPreset640x480;//AVCaptureSessionPresetiFrame1280x720;     // Video capture resolution
@@ -376,13 +375,13 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)onShouldStartRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
-    [self toggleMovieRecording:info];
+    [self toggleMovieRecording:info Start:YES];
 }
 
 -(void)onShouldStopRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
-    [self toggleMovieRecording:info];
+    [self toggleMovieRecording:info Start:NO];
 }
 
 -(void)onFlipCamera:(NSNotification *)notification
@@ -505,8 +504,11 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             AVCaptureVideoDataOutput *movieDataOutput = [AVCaptureVideoDataOutput new];
             movieDataOutput.alwaysDiscardsLateVideoFrames = NO;
             movieDataOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
-            if ([self.session canAddOutput:movieDataOutput]) {
-                _extractController = [[HMExtractController alloc] initWithSession:self.session movieDataOutput:movieDataOutput];
+            
+            AVCaptureAudioDataOutput *audioDataOutput = [AVCaptureAudioDataOutput new];
+
+            if ([self.session canAddOutput:movieDataOutput] && [self.session canAddOutput:audioDataOutput]) {
+                _extractController = [[HMExtractController alloc] initWithSession:self.session movieDataOutput:movieDataOutput audioDataOutput:audioDataOutput];
             }
         } else {
             //
@@ -562,12 +564,13 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
      ];
 }
 
--(void)toggleMovieRecording:(NSDictionary *)info
+-(void)toggleMovieRecording:(NSDictionary *)info Start:(BOOL)start
 {
     dispatch_async([self sessionQueue], ^{
         id outputController = self.extractController ? self.extractController : self.movieFileOutput;
         
-        if (![outputController isRecording])
+        if (start)
+        //if (![outputController isRecording])
         {
             self.lastRecordingStartInfo = info;
             self.lockInterfaceRotation = YES;

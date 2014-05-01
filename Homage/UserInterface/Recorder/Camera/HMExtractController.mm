@@ -40,7 +40,11 @@
 @property (readonly) NSURL *outputFileURL;
 
 @property (readonly) AVAssetWriter *assetWriter;
-@property (readonly) AVAssetWriterInput *writerInput;
+@property (readonly) AVAssetWriterInput *writerVideoInput;
+@property (readonly) AVAssetWriterInput *writerAudioInput;
+
+@property (readonly,nonatomic) AVCaptureVideoDataOutput *movieDataOutput;
+@property (readonly,nonatomic) AVCaptureAudioDataOutput *audioDataOutput;
 
 @property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
 @property (nonatomic) NSInteger extractCounter;
@@ -71,7 +75,7 @@
     return self;
 }
 
--(id)initWithSession:(AVCaptureSession *)session movieDataOutput:(AVCaptureVideoDataOutput *)movieDataOutput;
+-(id)initWithSession:(AVCaptureSession *)session movieDataOutput:(AVCaptureVideoDataOutput *)movieDataOutput audioDataOutput:(AVCaptureAudioDataOutput *)audioDataOutput
 {
     self = [super init];
     if (self) {
@@ -79,8 +83,15 @@
         _isCurrentlyRecording = NO;
         _extractCounter = 0;
         _extractQueue = dispatch_queue_create("ExtractionQueue", DISPATCH_QUEUE_SERIAL);
+        _movieDataOutput = movieDataOutput;
+        _audioDataOutput = audioDataOutput;
+        
         [movieDataOutput setSampleBufferDelegate:self queue:self.extractQueue];
+        [audioDataOutput setSampleBufferDelegate:self queue:self.extractQueue];
+        
         [self.session addOutput:movieDataOutput];
+        [self.session addOutput:audioDataOutput];
+        
         //self.frameTime = CMTimeMake(1,25);
         
         m_foregroundExtraction = new CUniformBackground();
@@ -139,11 +150,14 @@
                                         //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
                                         
                                         };
-        
-        _writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
-        _pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerInput sourcePixelBufferAttributes:nil];
-        [self.assetWriter addInput:self.writerInput];
-        
+       
+       _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
+       //_writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
+       _writerAudioInput = nil;
+      
+       //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerVideoInput sourcePixelBufferAttributes:nil];
+       [self.assetWriter addInput:self.writerVideoInput];
+       
         // Start writing
         //self.presentTime = CMTimeMake(0, self.frameTime.timescale);
         //[self.assetWriter startWriting];
@@ -188,51 +202,107 @@
 {
     
     //detect bad background
-    if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && !_isCurrentlyRecording)
+    if (captureOutput == _movieDataOutput)
     {
-        // SampleBuffer to PixelBuffer
-        CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        
-        m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
-        int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
-        
-        /*//test - save pics
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-        NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
-        NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-        
-        UIImage *bgImage = [self imageFromSampleBuffer:sampleBuffer];
-        [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];*/
-        
-        NSLog(@"Process Background result =  %d", result);
-        
-        if (result < EXTRACT_TH)
+        if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && !_isCurrentlyRecording)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
-        } else
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND object:self];
+            // SampleBuffer to PixelBuffer
+            CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+            
+            m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
+            int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+            
+            /*//test - save pics
+             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+             NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+             NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
+             NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
+             
+             UIImage *bgImage = [self imageFromSampleBuffer:sampleBuffer];
+             [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];*/
+            
+            NSLog(@"Process Background result =  %d", result);
+            
+            if (result < EXTRACT_TH)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
+            } else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND object:self];
+            }
         }
+        
+        self.extractCounter++;
     }
-    
-    self.extractCounter++;
     
     if (!_isCurrentlyRecording) return;
     
     // Just appending the sample buffer to the writer (with no manipulation)
     if (self.assetWriter.status != AVAssetWriterStatusWriting)
     {
+        
+        if (captureOutput != _audioDataOutput) return;
+        
+        if (!self.writerAudioInput)
+        {
+            [self initAudioInput:CMSampleBufferGetFormatDescription(sampleBuffer)];
+        }
+        
         CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
         [self.assetWriter startWriting];
         [self.assetWriter startSessionAtSourceTime:lastSampleTime];
     }
     
-    [self.writerInput appendSampleBuffer:sampleBuffer];
+    if (captureOutput == _movieDataOutput) [self.writerVideoInput appendSampleBuffer:sampleBuffer];
+    if (captureOutput == _audioDataOutput)
+    {
+        [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+    }
 
 }
 
-- (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
+-(void)initAudioInput:(CMFormatDescriptionRef)currentFormatDescription
+{
+    const AudioStreamBasicDescription *currentASBD = CMAudioFormatDescriptionGetStreamBasicDescription(currentFormatDescription);
+    
+    size_t aclSize = 0;
+    
+    const AudioChannelLayout *currentChannelLayout = CMAudioFormatDescriptionGetChannelLayout(currentFormatDescription, &aclSize);
+    
+    NSData *currentChannelLayoutData = nil;
+    
+    
+    // AVChannelLayoutKey must be specified, but if we don't know any better give an empty data and let AVAssetWriter decide.
+    
+    if ( currentChannelLayout && aclSize > 0 )
+        
+        currentChannelLayoutData = [NSData dataWithBytes:currentChannelLayout length:aclSize];
+    
+    else
+        
+        currentChannelLayoutData = [NSData data];
+    
+    
+    NSDictionary *audioCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              
+                                              [NSNumber numberWithInteger:kAudioFormatMPEG4AAC], AVFormatIDKey,
+                                              
+                                              [NSNumber numberWithFloat:currentASBD->mSampleRate], AVSampleRateKey,
+                                              
+                                              [NSNumber numberWithInt:64000], AVEncoderBitRatePerChannelKey,
+                                              
+                                              [NSNumber numberWithInteger:currentASBD->mChannelsPerFrame], AVNumberOfChannelsKey,
+                                              
+                                              currentChannelLayoutData, AVChannelLayoutKey,
+                                              
+                                              nil];
+    _writerAudioInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings: audioCompressionSettings];
+    _writerAudioInput.expectsMediaDataInRealTime = YES;
+    [self.assetWriter addInput:self.writerAudioInput];
+    
+}
+
+- (UIImage *)imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
 {
     // Get a CMSampleBuffer's Core Video image buffer for the media data
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
