@@ -39,6 +39,7 @@
 
 #define REMAKE_ALERT_TAG 100
 #define MARK_AS_INAPPROPRIATE_TAG 200
+#define HM_EXCLUDE_GRADE -1
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize story = _story;
@@ -337,8 +338,10 @@
     
     NSPredicate *notSameUser = [NSPredicate predicateWithFormat:@"user!=%@" , [User current]];
     
+    NSPredicate *hidePredicate = [NSPredicate predicateWithFormat:@"grade!=%d" , HM_EXCLUDE_GRADE];
+    
     NSPredicate *compoundPredicate
-    = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser]];
+    = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser,hidePredicate]];
     
     fetchRequest.predicate = compoundPredicate;
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
