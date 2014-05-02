@@ -28,10 +28,11 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
-@property (weak, nonatomic) IBOutlet UIView *guiUpperScreenContainer;
+
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
 @property (nonatomic, strong) HMVideoPlayerVC *remakeMoviePlayer;
 @property (nonatomic) Remake *flaggedRemake;
+
 
 @end
 
@@ -100,7 +101,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
     
-    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
+    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
     
     self.noRemakesLabel.text = LS(@"NO_REMAKES");
     self.guiDescriptionField.text = self.story.descriptionText;

@@ -37,6 +37,7 @@
 #import "HMServer+Users.h"
 #import <Crashlytics/Crashlytics.h>
 #import <AVFoundation/AVAudioPlayer.h>
+#import "UIImage+ImageEffects.h"
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
@@ -48,6 +49,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 };
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
+@property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
+
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
 @property (weak, nonatomic) IBOutlet UIView *loginContainerView;
@@ -113,6 +116,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)initGUI
 {
+    self.guiAppBGImageView.image = [self.guiAppBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
+    
     self.sideBarContainerView.hidden = YES;
     self.renderingContainerView.hidden = YES;
     self.loginContainerView.hidden = YES;
@@ -120,6 +125,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     self.guiNoConnectivityView.hidden = YES;
     self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
+    self.guiTabNameLabel.textColor = [UIColor whiteColor];
     
     self.selectedTab = HMStoriesTab;
     
@@ -597,8 +603,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     self.moviePlayer = videoPlayerController;
     [self presentViewController:videoPlayerController animated:YES completion:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    
-    
 }
 
 
