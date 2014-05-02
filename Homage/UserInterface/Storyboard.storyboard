@@ -142,6 +142,7 @@
                         <outlet property="guiActivity" destination="R2K-xF-bXS" id="ZKF-1h-oIw"/>
                         <outlet property="guiAppContainerView" destination="cJv-hE-5uF" id="3Sn-Ar-WzE"/>
                         <outlet property="guiBGImage" destination="cRg-QS-yh6" id="pRm-DC-evB"/>
+                        <outlet property="guiHomageLogo" destination="CBu-6p-rcs" id="WAC-fN-3CG"/>
                         <outlet property="guiNavButton" destination="zUe-p0-Ug6" id="a8W-kJ-pMb"/>
                         <outlet property="guiNoConnectivityLabel" destination="IDg-TI-8JI" id="78F-9E-wfy"/>
                         <outlet property="guiNoConnectivityView" destination="BGe-RC-PIs" id="uVW-lK-Tz6"/>

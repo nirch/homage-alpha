@@ -663,7 +663,7 @@
     
     //play countdown sound
     NSError *error;
-    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown5" ofType:@"wav"]];
+    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown_oneLast" ofType:@"wav"]];
     self.audioPlayer = [[AVAudioPlayer alloc]
                         initWithContentsOfURL:cinemaCountdownURL error:&error];
     NSLog(@"error: %@" , error);

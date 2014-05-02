@@ -57,6 +57,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak,nonatomic) HMLoginMainViewController *loginVC;
 @property (atomic, readonly) NSDate *launchDateTime;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiTabNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *guiHomageLogo;
 @property (weak,nonatomic) Story *loginStory;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
@@ -275,12 +276,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if ([segue.identifier isEqualToString:@"appSegue"]) {
         self.appTabBarController = segue.destinationViewController;
-        self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+        self.guiTabNameLabel.hidden = YES;
         self.appTabBarController.tabBar.hidden = YES;
-        if (!self.guiTabNameLabel.text)
-        {
-            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
-        }
         [self setNavControllersDelegate];
         
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
@@ -612,6 +609,13 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     self.appTabBarController.selectedIndex = toIndex;
     self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
+    
+    if (self.guiTabNameLabel.text)
+    {
+        self.guiHomageLogo.hidden = YES;
+        self.guiTabNameLabel.hidden = NO;
+    }
+    
     self.selectedTab = toIndex;
 }
 

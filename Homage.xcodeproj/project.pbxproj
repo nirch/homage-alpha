@@ -228,9 +228,6 @@
 		2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
 		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
 		266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 266F62A3190E9521003774C5 /* introVideo.mp4 */; };
-		266F62A9190F9A00003774C5 /* cinemaCountdown2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 266F62A7190F9A00003774C5 /* cinemaCountdown2.wav */; };
-		266F62AA190F9A00003774C5 /* cinemaCountdown1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 266F62A8190F9A00003774C5 /* cinemaCountdown1.wav */; };
-		266F62AC190FA0AF003774C5 /* cinemaCountdown3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 266F62AB190FA0AF003774C5 /* cinemaCountdown3.wav */; };
 		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
 		268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */; };
@@ -246,6 +243,8 @@
 		268341FF18FFFD40002E8CB7 /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EF18FFFD40002E8CB7 /* IASKSlider.m */; };
 		2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F118FFFD40002E8CB7 /* IASKSwitch.m */; };
 		2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
+		26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */; };
+		26897A7D1913A3960030A8B5 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */; };
 		269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */ = {isa = PBXBuildFile; fileRef = 269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */; };
 		26933EA218FEB8CA001AE951 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 26933EA118FEB8CA001AE951 /* Story.m */; };
 		2699AE8A1903F512004093AE /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699AE891903F512004093AE /* Remake.m */; };
@@ -510,9 +509,6 @@
 		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
 		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
 		266F62A3190E9521003774C5 /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = introVideo.mp4; path = mediaResources/introVideo.mp4; sourceTree = "<group>"; };
-		266F62A7190F9A00003774C5 /* cinemaCountdown2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown2.wav; path = mediaResources/cinemaCountdown2.wav; sourceTree = "<group>"; };
-		266F62A8190F9A00003774C5 /* cinemaCountdown1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown1.wav; path = mediaResources/cinemaCountdown1.wav; sourceTree = "<group>"; };
-		266F62AB190FA0AF003774C5 /* cinemaCountdown3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown3.wav; path = mediaResources/cinemaCountdown3.wav; sourceTree = "<group>"; };
 		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
 		268341D518FFFD40002E8CB7 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
@@ -543,6 +539,8 @@
 		268341F118FFFD40002E8CB7 /* IASKSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSwitch.m; sourceTree = "<group>"; };
 		268341F218FFFD40002E8CB7 /* IASKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKTextField.h; sourceTree = "<group>"; };
 		268341F318FFFD40002E8CB7 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
+		26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "cinemaCountdown6(with_tail).wav"; path = "mediaResources/cinemaCountdown6(with_tail).wav"; sourceTree = "<group>"; };
+		26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown_oneLast.wav; path = mediaResources/cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
 		269264631908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMDINOTRegularFontButton+colorEffectes.h"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.h"; sourceTree = "<group>"; };
 		269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMDINOTRegularFontButton+colorEffectes.m"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.m"; sourceTree = "<group>"; };
 		26933EA018FEB8CA001AE951 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
@@ -1265,12 +1263,11 @@
 		266F62A2190E950E003774C5 /* media resources */ = {
 			isa = PBXGroup;
 			children = (
+				26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */,
+				26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */,
 				266F62A3190E9521003774C5 /* introVideo.mp4 */,
 				26DE49A91912552D00BC2B0B /* cinemaCountdown5.wav */,
 				26DE49A71912548F00BC2B0B /* cinemaCountdown4.wav */,
-				266F62AB190FA0AF003774C5 /* cinemaCountdown3.wav */,
-				266F62A7190F9A00003774C5 /* cinemaCountdown2.wav */,
-				266F62A8190F9A00003774C5 /* cinemaCountdown1.wav */,
 			);
 			name = "media resources";
 			sourceTree = "<group>";
@@ -1442,7 +1439,7 @@
 			files = (
 				26DE49A81912548F00BC2B0B /* cinemaCountdown4.wav in Resources */,
 				08B958751891394400BCCF8C /* Colors.plist in Resources */,
-				266F62A9190F9A00003774C5 /* cinemaCountdown2.wav in Resources */,
+				26897A7D1913A3960030A8B5 /* cinemaCountdown_oneLast.wav in Resources */,
 				08081FB818D0A9EA00999068 /* close up.ctr in Resources */,
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */,
@@ -1453,17 +1450,16 @@
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
-				266F62AC190FA0AF003774C5 /* cinemaCountdown3.wav in Resources */,
 				2638593B18955252003A7B3D /* Settings.bundle in Resources */,
 				2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */,
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
-				266F62AA190F9A00003774C5 /* cinemaCountdown1.wav in Resources */,
 				26DE49AA1912552D00BC2B0B /* cinemaCountdown5.wav in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				2655DF5418EDA4D200CA362F /* HMPrivacyPolicyViewController.xib in Resources */,
 				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
+				26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
