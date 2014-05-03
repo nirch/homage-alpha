@@ -458,7 +458,7 @@
     
     [self refreshInfo];
     [self.guiTableView reloadData];
-    [self updateShowHideScriptButton];
+    [self updateShowHideScriptButtonWithReport:NO];
     [self updateTableHeader];
 }
 
@@ -598,14 +598,15 @@
     }
 }
 
--(void)updateShowHideScriptButton
+-(void)updateShowHideScriptButtonWithReport:(BOOL)report
 {
     if (User.current.prefersToSeeScriptWhileRecording.boolValue) {
         [self.guiShowScriptButton setTitle: LS(@"HIDE_SCRIPT") forState:UIControlStateNormal];
         [[Mixpanel sharedInstance] track:@"REHideScript" properties:@{@"story" : self.remake.story.name}];
     } else {
         [self.guiShowScriptButton setTitle:LS(@"SHOW_SCRIPT") forState:UIControlStateNormal];
-        [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name}];
+        
+        if (report) [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name}];
 
     }
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeScriptToggle info:nil];
@@ -701,7 +702,7 @@
 - (IBAction)onPressedToggleShowingScriptButton:(id)sender
 {
     [self toggleUserPreferenceToShowingOrHidingScriptWhileRecording];
-    [self updateShowHideScriptButton];
+    [self updateShowHideScriptButtonWithReport:YES];
 }
 
 - (IBAction)onPressedCreateMovieButton:(id)sender

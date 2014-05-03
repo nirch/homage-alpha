@@ -106,7 +106,28 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self done];
+    //[self done];
+    [self.videoPlayer stop];
+    self.videoView.guiPlayPauseButton.selected = NO;
+    if (self.isFullscreen) {
+        [self setFullScreen:NO animated:YES];
+    }
+    
+    if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.hidden = NO;
+    
+    self.videoView.guiPlayButton.hidden = NO;
+    self.videoView.guiLoadActivity.alpha = 1;
+    self.videoView.guiControlsContainer.hidden = YES;
+    [self.videoView.guiLoadActivity stopAnimating];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.videoPlayer.view.alpha = 0;
+        self.videoView.guiVideoThumb.alpha = 1;
+        self.videoView.guiPlayButton.alpha = 1;
+        if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.alpha = 1;
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
