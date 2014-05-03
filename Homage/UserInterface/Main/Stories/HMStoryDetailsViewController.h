@@ -12,11 +12,14 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMAvenirBookFontButton.h"
 #import "HMDINOTCondBoldFontButton.h"
+#import "AMBlurView.h"
 
 @interface HMStoryDetailsViewController : UIViewController<
     HMStoryPresenterProtocol,NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+
 @property (weak, nonatomic) IBOutlet HMDINOTCondBoldFontButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;

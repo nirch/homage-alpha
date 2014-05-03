@@ -22,7 +22,7 @@
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
-
+#import "AMBlurView.h"
 
 
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {
@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityView;
 
 @property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
@@ -132,12 +133,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiGuestButton.hidden = NO;
     self.guiCancelButton.hidden = YES;
     
-    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
+    //self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
+    [[AMBlurView new] insertIntoView:self.guiBlurredView];
     
     for (HMAvenirBookFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont fontWithName:@"DINOT-regular" size:button.titleLabel.font.pointSize];
     }
     
     for (HMAvenirBookFontLabel *label in self.labelCollection)

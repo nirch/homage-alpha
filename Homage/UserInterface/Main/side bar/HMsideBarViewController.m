@@ -13,6 +13,8 @@
 #import "HMAvenirBookFontButton.h"
 #import "HMAvenirBookFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "AMBlurView.h"
+
 
 @interface HMsideBarViewController ()
 
@@ -22,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *howToButton;
 @property (weak,nonatomic)  UIButton *selectedButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
+@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+
 
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiHelloUserLabel;
@@ -55,7 +59,8 @@
 -(void)initGUI
 {
 
-    self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] saturationDeltaFactor:0.3 maskImage:nil];
+    //self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] saturationDeltaFactor:0.3 maskImage:nil];
+    [[AMBlurView new] insertIntoView:self.guiBlurredView];
     
     [self.guiHelloUserLabel setTextColor:[HMColor.sh textImpact]];
     
@@ -121,7 +126,7 @@
     [UIView animateWithDuration:0.1 animations:
      ^{
          [self.selectedButton setBackgroundColor:[UIColor clearColor]];
-         [sender setBackgroundColor:[[HMColor.sh textImpact] colorWithAlphaComponent:0.6]];
+         [sender setBackgroundColor:[[HMColor.sh textImpact] colorWithAlphaComponent:0.5]];
      }];
     
     self.selectedButton = sender;

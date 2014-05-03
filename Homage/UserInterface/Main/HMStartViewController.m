@@ -38,6 +38,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import "UIImage+ImageEffects.h"
+#import "AMBlurView.h"
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
@@ -50,6 +51,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
+@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+@property (weak, nonatomic) IBOutlet UIView *guiAppHideView;
 
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
@@ -117,8 +120,10 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)initGUI
 {
 
-    self.guiAppBGImageView.image = [self.guiAppBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
+    //self.guiAppBGImageView.image = [self.guiAppBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
     
+    [[AMBlurView new] insertIntoView:self.guiBlurredView];
+        
     self.sideBarContainerView.hidden = YES;
     self.renderingContainerView.hidden = YES;
     self.loginContainerView.hidden = YES;
@@ -129,6 +134,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     self.guiTabNameLabel.textColor = [UIColor whiteColor];
     
     self.selectedTab = HMStoriesTab;
+    
+    self.guiAppHideView.hidden = YES;
     
     //debug
     //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
@@ -263,9 +270,13 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)showSideBar
 {
     self.sideBarContainerView.hidden = NO;
+    self.guiAppHideView.alpha = 0;
+    self.guiAppHideView.hidden = NO;
+    [self.guiAppContainerView setUserInteractionEnabled:NO];
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
         self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
+        self.guiAppHideView.alpha = 1;
     } completion:nil];
 
 }
@@ -274,8 +285,14 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     [UIView animateWithDuration:0.3 animations:^{
         self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
+        self.guiAppHideView.alpha = 0;
         } completion:^(BOOL finished){
-            if (finished) self.sideBarContainerView.hidden = YES;
+            if (finished)
+            {
+                self.sideBarContainerView.hidden = YES;
+                self.guiAppHideView.hidden = YES;
+                [self.guiAppContainerView setUserInteractionEnabled:YES];
+            }
         }];
 }
 
@@ -502,6 +519,9 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     if (self.loginContainerView.hidden == YES) return;
     
     self.appWrapperView.hidden = NO;
+    
+    [self switchToTab:HMStoriesTab];
+    
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 0;
     } completion:^(BOOL finished)
