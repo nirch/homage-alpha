@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak,nonatomic) HMsideBarViewController *sideBarVC;
 @property (weak,nonatomic) HMLoginMainViewController *loginVC;
 @property (atomic, readonly) NSDate *launchDateTime;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiTabNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiTabNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiHomageLogo;
 @property (weak,nonatomic) Story *loginStory;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
@@ -116,6 +116,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)initGUI
 {
+
     self.guiAppBGImageView.image = [self.guiAppBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
     
     self.sideBarContainerView.hidden = YES;
@@ -282,7 +283,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if ([segue.identifier isEqualToString:@"appSegue"]) {
         self.appTabBarController = segue.destinationViewController;
-        self.guiTabNameLabel.hidden = YES;
+        self.guiTabNameLabel.hidden = NO;
         self.appTabBarController.tabBar.hidden = YES;
         [self setNavControllersDelegate];
         
@@ -325,11 +326,11 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 {
     if ([navVC.viewControllers count] > 1)
     {
-        [self.guiNavButton setImage:[UIImage imageNamed:@"back2"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"back2white"] forState:UIControlStateNormal];
         self.guiNavButton.tag = BACK_TAG;
     } else
     {
-        [self.guiNavButton setImage:[UIImage imageNamed:@"more3"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"more3white"] forState:UIControlStateNormal];
         self.guiNavButton.tag = SETTING_TAG;
     }
 }
@@ -387,6 +388,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         {
             //NSDictionary *info = myDelegate.pushNotificationFromBG;
             [self switchToTab:HMMeTab];
+        } else {
+            [self switchToTab:HMStoriesTab];
         }
         
         /*
@@ -612,13 +615,22 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     if (self.selectedTab == HMSettingsTab) [self updateUserPreferences];
     
     self.appTabBarController.selectedIndex = toIndex;
-    self.guiTabNameLabel.text = self.appTabBarController.selectedViewController.title;
     
-    if (self.guiTabNameLabel.text)
-    {
-        self.guiHomageLogo.hidden = YES;
-        self.guiTabNameLabel.hidden = NO;
+    switch (toIndex) {
+        case HMStoriesTab:
+            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
+            break;
+        case HMMeTab:
+            self.guiTabNameLabel.text = LS(@"ME_TAB_HEADLINE_TITLE");
+            break;
+        case HMSettingsTab:
+            self.guiTabNameLabel.text = LS(@"SETTINGS_TAB_HEADLINE TITLE");
+            break;
+        default:
+            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
+            break;
     }
+    
     
     self.selectedTab = toIndex;
 }

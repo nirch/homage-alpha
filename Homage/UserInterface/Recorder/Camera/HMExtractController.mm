@@ -48,6 +48,8 @@
 
 @property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
 @property (nonatomic) NSInteger extractCounter;
+@property (nonatomic) BOOL frontCamera;
+@property (nonatomic) UIDeviceOrientation deviceOrientaion;
 
 //@property (readonly) CHomage *h_ext;
 
@@ -121,6 +123,23 @@
     return _isCurrentlyRecording;
 }
 
+-(void)setupExtractorientationWithDeviceOrientation:(UIDeviceOrientation)orientation frontCamera:(BOOL)front
+{
+    self.deviceOrientaion = orientation;
+    self.frontCamera = front;
+}
+
+-(BOOL)shouldFlipVideo
+{
+    if (!self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeLeft) return NO;
+    if (self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeLeft) return YES;
+    if (self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeRight)
+        return NO;
+    if (!self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeRight)
+        return YES;
+    return NO;
+}
+
 -(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
 {
     if (_isCurrentlyRecording) return;
@@ -152,8 +171,9 @@
                                         };
        
        _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
-       //_writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
-       _writerAudioInput = nil;
+       
+       if ([self shouldFlipVideo]) _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
+        _writerAudioInput = nil;
       
        //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerVideoInput sourcePixelBufferAttributes:nil];
        [self.assetWriter addInput:self.writerVideoInput];

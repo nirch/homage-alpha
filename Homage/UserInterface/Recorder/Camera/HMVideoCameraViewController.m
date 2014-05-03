@@ -316,14 +316,46 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
      Simple casting of UIDeviceOrientation to AVCaptureVideoOrientation may cause videos to be "upside down".
      Return AVCaptureVideoOrientationLandscapeRight by default (also when device is face up / face down).
      */
+    
+    /*UIDeviceOrientationLandscapeLeft: The device is in landscape mode, with the device held upright and the home button on the right side.
+    
+      UIDeviceOrientationLandscapeRight: The device is in landscape mode, with the device held upright and the home button on the left side.*/
+    
+     
     AVCaptureVideoOrientation result;
     
     // Never regard portrait as interesting, and map the flipped enums to each other (a silly apple inconsistency).
-    if ( deviceOrientation == UIDeviceOrientationLandscapeLeft )
+    
+    
+    //case 1 - landscape left + back camera
+    if ([self isBackCamera] && deviceOrientation == UIDeviceOrientationLandscapeLeft)
+    {
+       result = AVCaptureVideoOrientationLandscapeRight;
+    }
+    
+    //case2 - landscape left + front camera
+    if ([self isFrontCamera] && deviceOrientation == UIDeviceOrientationLandscapeLeft)
+    {
+        result = AVCaptureVideoOrientationLandscapeRight;
+    }
+    
+    //case3 = landscape right + back camera
+    if ([self isBackCamera] && deviceOrientation == UIDeviceOrientationLandscapeRight)
+    {
+       result = AVCaptureVideoOrientationLandscapeLeft;
+    }
+    
+    //case4 = landscape right + front camera
+    if ([self isFrontCamera] && deviceOrientation == UIDeviceOrientationLandscapeRight)
+    {
+       result = AVCaptureVideoOrientationLandscapeLeft;
+    }
+    
+    /*if ( deviceOrientation == UIDeviceOrientationLandscapeLeft )
     result = AVCaptureVideoOrientationLandscapeRight;
     else if ( deviceOrientation == UIDeviceOrientationLandscapeRight )
     result = AVCaptureVideoOrientationLandscapeLeft;
-    else result = AVCaptureVideoOrientationLandscapeRight;
+    else result = AVCaptureVideoOrientationLandscapeRight;*/
     
     return result;
 }
@@ -598,6 +630,14 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             NSString *fileName = info[@"fileName"];
             NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
             HMGLogDebug(@"Output to:%@", tmpPath);
+            
+            if (outputController == self.extractController)
+            {
+                UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+                BOOL frontCamera = [self isFrontCamera];
+                [self.extractController setupExtractorientationWithDeviceOrientation:orientation frontCamera:frontCamera];
+            }
+            
             [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath] recordingDelegate:self];
         }
         else
@@ -614,6 +654,14 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     AVCaptureDevice *currentVideoDevice = self.videoDeviceInput.device;
     AVCaptureDevicePosition position = currentVideoDevice.position;
     if (position == AVCaptureDevicePositionFront) return YES;
+    return NO;
+}
+
+-(BOOL)isBackCamera
+{
+    AVCaptureDevice *currentVideoDevice = self.videoDeviceInput.device;
+    AVCaptureDevicePosition position = currentVideoDevice.position;
+    if (position == AVCaptureDevicePositionBack) return YES;
     return NO;
 }
 
