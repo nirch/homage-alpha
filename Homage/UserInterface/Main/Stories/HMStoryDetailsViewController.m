@@ -61,7 +61,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self.guiRemakeActivity setHidden:YES];
+    self.guiRemakeActivity.hidden = YES;
     if (self.autoStartPlayingStory)
     {
         [self.storyMoviePlayer play];
@@ -81,7 +81,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self.guiRemakeActivity setHidden:YES];
+    self.guiRemakeActivity.hidden = YES;
     [self.guiRemakeActivity stopAnimating];
     [self removeObservers];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -104,13 +104,9 @@
     self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
     
     self.noRemakesLabel.text = LS(@"NO_REMAKES");
+    self.guiDescriptionField.font = [UIFont fontWithName:@"Avenir Book" size:self.guiDescriptionField.font.pointSize];
     self.guiDescriptionField.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
-    
-    //design remake button
-    [self.guiRemakeButton.layer setBorderColor:[HMColor.sh main2].CGColor];
-    [self.guiRemakeButton.layer setBorderWidth:0.5f];
-    [self.guiRemakeButton.layer setCornerRadius:2.5f];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
@@ -180,7 +176,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     [self.guiRemakeActivity stopAnimating];
-    [self.guiRemakeActivity setHidden:YES];
+    self.guiRemakeActivity.hidden = YES;
     
     // Get the new remake object.
     NSString *remakeID = notification.userInfo[@"remakeID"];
@@ -478,7 +474,7 @@
 - (IBAction)onPressedRemakeButton:(UIButton *)sender
 {
     self.guiRemakeButton.enabled = NO;
-    [self.guiRemakeActivity setHidden:NO];
+    self.guiRemakeActivity.hidden = NO;
     [self.guiRemakeActivity startAnimating];
     [self.storyMoviePlayer done];
     
@@ -563,7 +559,7 @@
         switch (buttonIndex)
         {
             case 0:
-                [self.guiRemakeActivity setHidden:YES];
+                self.guiRemakeActivity.hidden = YES;
                 [self.guiRemakeActivity stopAnimating];
                 self.guiRemakeButton.enabled = YES;
                 break;

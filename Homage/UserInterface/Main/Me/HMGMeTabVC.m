@@ -386,6 +386,7 @@
 }
 
 
+
 - (void)updateCell:(HMGUserRemakeCVCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
@@ -448,7 +449,7 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            image = [UIImage imageNamed:@"Yplay"];
+            image = [UIImage imageNamed:@"iconPlayButton"];
             [cell.actionButton setImage:image forState:UIControlStateNormal];
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;
@@ -700,9 +701,14 @@
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ , #%@HomageApp :" , storyNameWithoutSpaces , storyNameWithoutSpaces];
-    [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name}];
+    
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
+        if (completed) {
+            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name , @"share_method" : activityType}];
+        }
+    };
     [activityViewController setValue:shareString forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
