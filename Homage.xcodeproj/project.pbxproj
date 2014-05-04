@@ -211,6 +211,7 @@
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
+		2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2639DD7E1916E84700440745 /* Default-568h@2x.png */; };
 		2648C63018D9A5760033A4C2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648C62F18D9A5760033A4C2 /* User.m */; };
 		2650DED8190D45D900CA306C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2650DED7190D45D900CA306C /* Crashlytics.framework */; };
 		2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3218EDA37100CA362F /* Homage-Info.plist */; };
@@ -477,6 +478,7 @@
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
 		2638593A18955252003A7B3D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		2639DD7E1916E84700440745 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2648C62E18D9A5760033A4C2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		2648C62F18D9A5760033A4C2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		2650DED7190D45D900CA306C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 		0806FA0318828AEB007514BE = {
 			isa = PBXGroup;
 			children = (
+				2639DD7E1916E84700440745 /* Default-568h@2x.png */,
 				0806FA1518828AEB007514BE /* Homage */,
 				0806FA2E18828AEB007514BE /* HomageTests */,
 				0806FA0E18828AEB007514BE /* Frameworks */,
@@ -1443,6 +1446,7 @@
 				08081FB818D0A9EA00999068 /* close up.ctr in Resources */,
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */,
+				2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,

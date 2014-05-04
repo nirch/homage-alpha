@@ -82,7 +82,7 @@
 "SHOW_YOUR_TAKE" = "SHOW YOUR TAKE";
 
 /*go to next scene button*/
-"NEXT_SCENE" = "Next Scene!";
+"NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
