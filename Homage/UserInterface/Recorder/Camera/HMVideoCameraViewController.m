@@ -293,6 +293,22 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [nc removeObserver:self name:HM_APP_WILL_ENTER_FOREGROUND object:nil];
 }
 
+-(void)removeStopObserver
+{
+     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
+}
+
+-(void)addStopOserver
+{
+    
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addUniqueObserver:self
+                 selector:@selector(onShouldStopRecording:)
+                     name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                   object:nil];
+}
+
 #pragma mark - Reveal
 // Reveal slowly to prevent "flasing effect" of the preview
 -(void)revealCameraPreviewAnimated:(BOOL)animated
@@ -388,12 +404,15 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)onShouldStartRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
+    //stop observer should be called only once and can be triggered from multiple sources
+    [self addStopOserver];
     [self toggleMovieRecording:info Start:YES];
 }
 
 -(void)onShouldStopRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
+    [self removeStopObserver];
     [self toggleMovieRecording:info Start:NO];
 }
 

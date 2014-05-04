@@ -192,6 +192,7 @@
 
 -(void)stopRecording
 {
+    NSLog(@"extract controller - called stop recording");
     if (!_isCurrentlyRecording) return;
     dispatch_async(self.extractQueue, ^{
         
@@ -200,7 +201,7 @@
 
         // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
         NSLog(@"finishing the record");
-        NSLog(@"asset writer status is: %d" , self.assetWriter.status);
+        NSLog(@"stop recording - asset writer status is: %d" , self.assetWriter.status);
         [self.writerAudioInput markAsFinished];
         [self.writerVideoInput markAsFinished];
         //[self.assetWriter endSessionAtSourceTime:self.lastSampleTime];
@@ -280,6 +281,7 @@
         [self.assetWriter startSessionAtSourceTime:lastSampleTime];
     }
     
+    NSLog(@"while recording - asset writer status: %d" , _assetWriter.status);
     if (captureOutput == _movieDataOutput) [self.writerVideoInput appendSampleBuffer:sampleBuffer];
     if (captureOutput == _audioDataOutput)
     {
