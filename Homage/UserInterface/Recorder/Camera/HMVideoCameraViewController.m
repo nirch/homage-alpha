@@ -105,6 +105,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     [self initAVObservers];
     [self initAppObservers];
+    [self refreshCameraFeedWithFlip:NO];
 }
 
 //

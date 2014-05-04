@@ -195,7 +195,8 @@
 
         // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
         NSLog(@"finishing the record");
-        //[self.writerInput markAsFinished];
+        [self.writerAudioInput markAsFinished];
+        [self.writerVideoInput markAsFinished];
         //[self.assetWriter endSessionAtSourceTime:self.lastSampleTime];
         [self.assetWriter finishWritingWithCompletionHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
