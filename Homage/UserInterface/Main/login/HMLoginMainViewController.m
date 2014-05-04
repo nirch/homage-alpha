@@ -112,6 +112,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.privacyVC = [[HMPrivacyPolicyViewController alloc] init];
     self.legalNavVC = [[UINavigationController alloc] init];
     [self initObservers];
+    self.guiLoginErrorLabel.alpha = 0;
+    self.guiLoginErrorLabel.hidden = YES;
+    self.guiLoginErrorLabel.text = @"";
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 

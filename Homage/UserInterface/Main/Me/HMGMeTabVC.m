@@ -449,7 +449,7 @@
             break;
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            image = [UIImage imageNamed:@"iconPlayButton"];
+            image = [UIImage imageNamed:@"play1white"];
             [cell.actionButton setImage:image forState:UIControlStateNormal];
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;
