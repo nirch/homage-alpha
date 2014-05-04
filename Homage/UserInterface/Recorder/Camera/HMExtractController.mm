@@ -156,16 +156,16 @@
                                                     error:&error];
        
         // Output video bitrate
-        NSDictionary *codecSettings = @{
-                                       AVVideoAverageBitRateKey:@2000000
-                                       };
+        /*NSDictionary *codecSettings = @{
+                                       AVVideoAverageBitRateKey:@3000000
+                                       };*/
        
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
                                         AVVideoWidthKey:@640,
-                                        AVVideoHeightKey:@480,
-                                        AVVideoCompressionPropertiesKey:codecSettings
+                                        AVVideoHeightKey:@480
+                                        //AVVideoCompressionPropertiesKey:codecSettings
                                         //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
                                         
                                         };
