@@ -34,6 +34,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 @property (nonatomic) AVCaptureDeviceInput *audioDeviceInput;
 @property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 
+@property (nonatomic) AVCaptureAudioDataOutput *audioDataOutput;
+@property (nonatomic) AVCaptureVideoDataOutput *movieDataOutput;
+
 // Utilities.
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
 @property (nonatomic, getter = isDeviceAuthorized) BOOL deviceAuthorized;
@@ -511,14 +514,14 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             //
             //  Output video with FG extraction
             //
-            AVCaptureVideoDataOutput *movieDataOutput = [AVCaptureVideoDataOutput new];
-            movieDataOutput.alwaysDiscardsLateVideoFrames = NO;
-            movieDataOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
+            _movieDataOutput = [AVCaptureVideoDataOutput new];
+            _movieDataOutput.alwaysDiscardsLateVideoFrames = NO;
+            _movieDataOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
             
-            AVCaptureAudioDataOutput *audioDataOutput = [AVCaptureAudioDataOutput new];
+            _audioDataOutput = [AVCaptureAudioDataOutput new];
 
-            if ([self.session canAddOutput:movieDataOutput] && [self.session canAddOutput:audioDataOutput]) {
-                _extractController = [[HMExtractController alloc] initWithSession:self.session movieDataOutput:movieDataOutput audioDataOutput:audioDataOutput];
+            if ([self.session canAddOutput:_movieDataOutput] && [self.session canAddOutput:_audioDataOutput]) {
+                _extractController = [[HMExtractController alloc] initWithSession:self.session movieDataOutput:_movieDataOutput audioDataOutput:_audioDataOutput];
             }
         } else {
             //
@@ -954,7 +957,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     if (_camFGExtraction && self.extractController) {
         [self.session removeInput:self.videoDeviceInput];
         [self.session removeInput:self.audioDeviceInput];
-        [self.session removeOutput:self.movieFileOutput];
+        [self.session removeOutput:self.movieDataOutput];
+        [self.session removeOutput:self.audioDataOutput];
     }
 }
 

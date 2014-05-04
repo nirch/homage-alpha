@@ -92,7 +92,12 @@
         [audioDataOutput setSampleBufferDelegate:self queue:self.extractQueue];
         
         [self.session addOutput:movieDataOutput];
-        [self.session addOutput:audioDataOutput];
+        
+        if ([self.session canAddOutput:audioDataOutput]) {
+            [self.session addOutput:audioDataOutput];
+        } else {
+            NSLog(@"can't add audio output");
+        }
         
         //self.frameTime = CMTimeMake(1,25);
         
@@ -195,6 +200,7 @@
 
         // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
         NSLog(@"finishing the record");
+        NSLog(@"asset writer status is: %d" , self.assetWriter.status);
         [self.writerAudioInput markAsFinished];
         [self.writerVideoInput markAsFinished];
         //[self.assetWriter endSessionAtSourceTime:self.lastSampleTime];
