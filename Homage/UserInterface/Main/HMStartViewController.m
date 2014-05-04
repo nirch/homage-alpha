@@ -246,7 +246,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 - (IBAction)sideBarButtonPushed:(UIButton *)sender
 {
 
-    [[Mixpanel sharedInstance] track:@"SideBarPushed"];
+    //[[Mixpanel sharedInstance] track:@"SideBarPushed"];
     if (sender.tag == SETTING_TAG) {
         if (self.sideBarContainerView.hidden == YES) {
             //need to show the sideBar
