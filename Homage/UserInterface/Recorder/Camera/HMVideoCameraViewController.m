@@ -31,6 +31,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 @property (nonatomic) AVCaptureSession *session;
 @property (nonatomic) AVCaptureDevice *videoDevice;
 @property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
+@property (nonatomic) AVCaptureDeviceInput *audioDeviceInput;
 @property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 
 // Utilities.
@@ -96,6 +97,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [self slowReveal];
 }
 
+
 //
 // When the view will appear, add observers for recording states and set a runtime error handler (restarts on errors).
 //
@@ -120,6 +122,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     [self removeAVObservers];
     [self removeAppObservers];
+    if (_camFGExtraction && self.extractController) [self releaseCameraIO];
 }
 
 #pragma mark - Silly effects
@@ -488,16 +491,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         // Audio Device
         //
         AVCaptureDevice *audioDevice = [[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] firstObject];
-        AVCaptureDeviceInput *audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
+        self.audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
         
         if (error)
         {
             HMGLogError(@"%@", error);
         }
         
-        if ([self.session canAddInput:audioDeviceInput])
+        if ([self.session canAddInput:self.audioDeviceInput])
         {
-            [self.session addInput:audioDeviceInput];
+            [self.session addInput:self.audioDeviceInput];
         }
         
         //
@@ -944,6 +947,13 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)onAppDidEnterForeground:(NSNotification *)notification
 {
     [self refreshCameraFeedWithFlip:NO];
+}
+
+-(void)releaseCameraIO
+{
+    [self.session removeInput:self.videoDeviceInput];
+    [self.session removeInput:self.audioDeviceInput];
+    [self.session removeOutput:self.movieFileOutput];
 }
 
 @end
