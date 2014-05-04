@@ -65,6 +65,7 @@
 @property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
 @property (weak, nonatomic, readonly) HMRecorderEditTextsViewController *editingTextsVC;
 @property (weak, nonatomic, readonly) HMRecorderTutorialViewController *tutorialVC;
+@property (weak, nonatomic, readonly) HMVideoCameraViewController *videoCameraVC;
 
 // UI State
 @property (nonatomic, readonly) BOOL detailedOptionsOpened;
@@ -126,6 +127,11 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self removeObservers];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.videoCameraVC releaseCameraIO];
 }
 
 -(void)dealloc
@@ -740,6 +746,8 @@
         _editingTextsVC = segue.destinationViewController;
     } else if ([segue.identifier isEqualToString:@"tutorial screen segue"]) {
         _tutorialVC = segue.destinationViewController;
+    } else if ([segue.identifier isEqualToString:@"video camera containment segue"]) {
+        _videoCameraVC = segue.destinationViewController;
     }
 }
 

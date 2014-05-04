@@ -122,7 +122,6 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     [self removeAVObservers];
     [self removeAppObservers];
-    if (_camFGExtraction && self.extractController) [self releaseCameraIO];
 }
 
 #pragma mark - Silly effects
@@ -951,9 +950,11 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 
 -(void)releaseCameraIO
 {
-    [self.session removeInput:self.videoDeviceInput];
-    [self.session removeInput:self.audioDeviceInput];
-    [self.session removeOutput:self.movieFileOutput];
+    if (_camFGExtraction && self.extractController) {
+        [self.session removeInput:self.videoDeviceInput];
+        [self.session removeInput:self.audioDeviceInput];
+        [self.session removeOutput:self.movieFileOutput];
+    }
 }
 
 @end
