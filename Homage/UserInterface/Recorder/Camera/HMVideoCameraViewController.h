@@ -14,5 +14,6 @@
 
 +(BOOL)canFlipToFrontCamera;
 -(void)releaseCameraIO;
+-(void)attachCameraIO;
 
 @end

@@ -633,9 +633,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             
             if (outputController == self.extractController)
             {
-                UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+                UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
                 BOOL frontCamera = [self isFrontCamera];
-                [self.extractController setupExtractorientationWithDeviceOrientation:orientation frontCamera:frontCamera];
+                [self.extractController setupExtractorientationWithDeviceOrientation:interfaceOrientation frontCamera:frontCamera];
             }
             
             [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath] recordingDelegate:self];
@@ -970,6 +970,17 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     [self refreshCameraFeedWithFlip:NO];
 }
+
+-(void)attachCameraIO
+{
+    if (_camFGExtraction && self.extractController && self.session.inputs.count == 0) {
+        [self.session addInput:self.videoDeviceInput];
+        [self.session addInput:self.audioDeviceInput];
+        [self.session addOutput:self.movieDataOutput];
+        [self.session addOutput:self.audioDataOutput];
+    }
+}
+
 
 -(void)releaseCameraIO
 {

@@ -49,7 +49,7 @@
 @property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
 @property (nonatomic) NSInteger extractCounter;
 @property (nonatomic) BOOL frontCamera;
-@property (nonatomic) UIDeviceOrientation deviceOrientaion;
+@property (nonatomic) UIInterfaceOrientation interfaceOrientaion;
 
 //@property (readonly) CHomage *h_ext;
 
@@ -128,19 +128,19 @@
     return _isCurrentlyRecording;
 }
 
--(void)setupExtractorientationWithDeviceOrientation:(UIDeviceOrientation)orientation frontCamera:(BOOL)front
+-(void)setupExtractorientationWithDeviceOrientation:(UIInterfaceOrientation)orientation frontCamera:(BOOL)front
 {
-    self.deviceOrientaion = orientation;
+    self.interfaceOrientaion = orientation;
     self.frontCamera = front;
 }
 
 -(BOOL)shouldFlipVideo
 {
-    if (!self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeLeft) return NO;
-    if (self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeLeft) return YES;
-    if (self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeRight)
+    if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return NO;
+    if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return YES;
+    if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
         return NO;
-    if (!self.frontCamera && self.deviceOrientaion == UIDeviceOrientationLandscapeRight)
+    if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
         return YES;
     return NO;
 }
@@ -161,18 +161,18 @@
                                                     error:&error];
        
         // Output video bitrate
-        /*NSDictionary *codecSettings = @{
+        NSDictionary *codecSettings = @{
                                        AVVideoAverageBitRateKey:@3000000
-                                       };*/
+                                       };
        
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
                                         AVVideoWidthKey:@640,
-                                        AVVideoHeightKey:@480
-                                        //AVVideoCompressionPropertiesKey:codecSettings
+                                        AVVideoHeightKey:@480,
+                                        AVVideoCompressionPropertiesKey:codecSettings
                                         //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
-                                        
+
                                         };
        
        _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
@@ -192,16 +192,12 @@
 
 -(void)stopRecording
 {
-    NSLog(@"extract controller - called stop recording");
     if (!_isCurrentlyRecording) return;
     dispatch_async(self.extractQueue, ^{
         
-        NSLog(@"Finish");
         _isCurrentlyRecording = NO;
 
         // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
-        NSLog(@"finishing the record");
-        NSLog(@"stop recording - asset writer status is: %d" , self.assetWriter.status);
         [self.writerAudioInput markAsFinished];
         [self.writerVideoInput markAsFinished];
         //[self.assetWriter endSessionAtSourceTime:self.lastSampleTime];
@@ -249,8 +245,6 @@
              UIImage *bgImage = [self imageFromSampleBuffer:sampleBuffer];
              [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];*/
             
-            NSLog(@"Process Background result =  %d", result);
-            
             if (result < EXTRACT_TH)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
@@ -281,9 +275,10 @@
         [self.assetWriter startSessionAtSourceTime:lastSampleTime];
     }
     
-    NSLog(@"while recording - asset writer status: %d" , _assetWriter.status);
-    if (captureOutput == _movieDataOutput) [self.writerVideoInput appendSampleBuffer:sampleBuffer];
-    if (captureOutput == _audioDataOutput)
+    if (captureOutput == _movieDataOutput) {
+        [self.writerVideoInput appendSampleBuffer:sampleBuffer];
+    }
+    else if (captureOutput == _audioDataOutput)
     {
         [self.writerAudioInput appendSampleBuffer:sampleBuffer];
     }

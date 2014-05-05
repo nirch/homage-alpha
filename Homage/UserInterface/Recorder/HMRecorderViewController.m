@@ -112,6 +112,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self initObservers];
+    [self.videoCameraVC attachCameraIO];
 
 /*
     // ----------------------------------
