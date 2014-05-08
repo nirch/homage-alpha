@@ -290,6 +290,7 @@
 {
     [self.guiActivity startAnimating];
     Remake *remake = [self.remakerDelegate remake];
+    [[Mixpanel sharedInstance] track: @"RECreateMovie" properties:@{@"story" : remake.story.name}];
     [HMServer.sh renderRemakeWithID:remake.sID];
 }
 
@@ -314,7 +315,6 @@
                 [alert show];
             });
         }
-        [[Mixpanel sharedInstance] track: @"RECreateMovie"];
         [self serverCreateMovie];
         return;
     } else if (self.messageType == HMRecorderMessagesTypeSceneContext)

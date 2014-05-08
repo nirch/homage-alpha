@@ -658,7 +658,7 @@
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
     NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%ld" , self.sceneID.longValue];
-    [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID}];
+    [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID , @"story" : self.remake.story.name}];
     self.guiCountdownContainer.hidden = NO;
     [self.guiRoundCountdownLabal startTicking];
     

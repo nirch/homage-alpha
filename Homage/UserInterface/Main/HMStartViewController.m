@@ -394,6 +394,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         if (user.email) {
             [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id":user.userID}];
             [mixpanel.people set:@{@"user" : user.email}];
+        } else {
+            [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];
         }
         
         [mixpanel track:@"userLogin"];
