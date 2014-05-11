@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>host</key>
-	<string>homage-server-app-test-nuskncpdiu.elasticbeanstalk.com</string>
+	<string>homage-server-app-dev.elasticbeanstalk.com</string>
 	<key>protocol</key>
 	<string>http</string>
 	<key>port</key>
