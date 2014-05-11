@@ -413,50 +413,38 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     User *user = [User userWithID:userID inContext:DB.sh.context];
     
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    // This makes the current ID (an auto-generated GUID)
+    // and 'joe@example.com' interchangeable distinct ids.
     
-    /*if (user.userID) {
-        [mixpanel identify:userID];
-    }*/
+    //[mixpanel createAlias:user.userID
+      //      forDistinctID:mixpanel.distinctId];
     
-    if (user.email)
+    // You must call identify if you haven't already
+    // (e.g., when your app launches).
+    //[mixpanel identify:mixpanel.distinctId];
+    
+    //IMPORTANT !!!! this must be called before changing the user isfirstuse property further on!
+    [self registerLoginAnalyticsForUser:user];
+    
+    [user loginInContext:DB.sh.context];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
+    [[NSUserDefaults standardUserDefaults] setBool:user.isPublic.boolValue forKey:@"remakesArePublic"];
+    
+    if (user.isGuestUser)
     {
-        [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id": user.userID}];
-        [mixpanel.people set:@{@"user" : user.email}];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
     }
     
-    if ([user.userID isEqualToString:[User current].userID])
+    if (user.isFirstUse.boolValue)
     {
-        [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+        user.isFirstUse = @NO;
+        [self displayIntroMovieView];
+    } else {
         [self.delegate dismissLoginScreen];
-        return;
     }
     
-    if (user)
-    {
-        [user loginInContext:DB.sh.context];
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults] setBool:user.isPublic.boolValue forKey:@"remakesArePublic"];
-        
-        if (user.isGuestUser)
-        {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
-        }
-        
-        if (user.isFirstUse.boolValue)
-        {
-            user.isFirstUse = @NO;
-            [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
-            [self displayIntroMovieView];
-        } else {
-            [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
-            [self.delegate dismissLoginScreen];
-        }
-        
-        [DB.sh save];
-        [self.delegate onUserLoginStateChange:user];
-    }
-    
+    [DB.sh save];
+    [self.delegate onUserLoginStateChange:user];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -489,22 +477,40 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
     User *user = [User userWithID:userID inContext:DB.sh.context];
-    [user loginInContext:DB.sh.context];
+    
+    //mixpanel analitics
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    //this is a case where a user got a user id as guest, signed up with any non guest signup method, and then got a previous user id from previous uses
+    if (![user.userID isEqualToString:[User current].userID])
+    {
+        [mixpanel createAlias:user.userID
+                forDistinctID:[User current].userID];
+        [mixpanel identify:user.userID];
+    }
+    
+    if (user.email)
+    {
+        [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id": user.userID}];
+        [mixpanel.people set:@{@"user" : user.email}];
+        
+        //this excludes us from being tracked on mixpanel
+        if ([self shouldExcludethisAdressFromMixpanelData:user.email])
+        {
+            [mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
+        }
+    } else {
+        [mixpanel registerSuperProperties:@{@"email" : @"unknown" , @"homage_id" : user.userID}];
+        [mixpanel.people set:@{@"user" : user.email, @"homage_id":user.userID}];
+    }
+    [mixpanel track:@"UserUpdate" properties:@{@"login_method" : self.loginMethod}];
     
     //when a user upgrades from guest to fb or mail, his default sharing prefrence is public
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"remakesArePublic"];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     
-    //mixPanel analitics
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    if (userID)[mixpanel identify:userID];
-    if (user.email)
-    {
-        [mixpanel registerSuperProperties:@{@"email": user.email}];
-        [mixpanel.people set:@{@"user" : user.email}];
-    }
-    [mixpanel track:@"UserUpdate" properties:@{@"login_method" : self.loginMethod}];
+    [user loginInContext:DB.sh.context];
     [self.delegate onUserLoginStateChange:[User current]];
     [self.delegate dismissLoginScreen];
     self.userJoinFlow = NO;
@@ -731,7 +737,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogInfo(@"fb login");
     self.guiActivityView.hidden = NO;
     [self.guiActivityView startAnimating];
-    [[Mixpanel sharedInstance] track:@"FBUserLogin" properties:@{}];
 }
 
 /*Implementing the loginViewShowingLoggedOutUser: delegate method allows you to modify your app's UI to show a logged out experience. In the example below, the user's profile picture is removed, the user's name set to blank, and the status is changed to reflect that the user is not logged in:*/
@@ -742,8 +747,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogInfo(@"fb logout");
     self.guiActivityView.hidden = YES;
     [self.guiActivityView stopAnimating];
-    [[Mixpanel sharedInstance] track:@"FBUserLogout" properties:@{}];
-    
 }
 
 // Handle possible errors that can occur during login
@@ -751,8 +754,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogInfo(@"got fb error");
     NSString *alertMessage, *alertTitle;
-    
-    
     
     // If the user should perform an action outside of you app to recover,
     // the SDK will provide a message for the user, you just need to surface it.
@@ -861,6 +862,52 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
    
     [self.legalNavVC pushViewController:self.privacyVC animated:YES];
+}
+
+-(void)registerLoginAnalyticsForUser:(User *)user
+{
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:user.userID];
+    
+    if (user.email)
+    {
+        [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id":user.userID}];
+        [mixpanel.people set:@{@"user" : user.email ,@"homage_id":user.userID}];
+        
+        //this excludes us from being tracked on mixpanel
+        if ([self shouldExcludethisAdressFromMixpanelData:user.email])
+        {
+            [mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
+        }
+    } else {
+        [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];
+        [mixpanel.people set:@{@"user" : @"guest" ,@"homage_id":user.userID}];
+    }
+    
+    //TODO: this should not be neeeded. verify for sure if it can be removed completly
+    if ([user.userID isEqualToString:[User current].userID])
+    {
+        [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+        [self.delegate dismissLoginScreen];
+        return;
+    }
+    
+    if (user.isFirstUse.boolValue)
+    {
+        [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
+    } else {
+        [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+    }
+}
+
+-(BOOL)shouldExcludethisAdressFromMixpanelData:(NSString *)email_address
+{
+    for (NSString *toBeExcludedMail in @[@"yoavcaspin@gmail.com",@"nir@homage.it",@"tomer@homage.it",@"yoav@homage.it",@"nirh2@yahoo.com",@"nir.channes@gmail.com",@"ranpeer@gmail.com",@"tomer.harry@gmail.com",@"hiorit@gmail.com",@"ari1822@gmail.com",@"ari@temple.edu"])
+    {
+        if ([email_address isEqualToString:toBeExcludedMail]) return YES;
+    }
+    
+    return NO;
 }
 
 @end

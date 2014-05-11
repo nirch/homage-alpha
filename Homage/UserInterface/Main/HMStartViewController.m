@@ -389,16 +389,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         //Mixpanel analytics
         
         User *user = [User current];
-        //[mixpanel identify:user.userID];
-    
-        if (user.email) {
-            [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id":user.userID}];
-            [mixpanel.people set:@{@"user" : user.email}];
-        } else {
-            [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];
-        }
-        
-        [mixpanel track:@"userLogin"];
+        [self.loginVC registerLoginAnalyticsForUser:user];
         
         [self onUserLoginStateChange:user];
         
@@ -410,14 +401,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         } else {
             [self switchToTab:HMStoriesTab];
         }
-        
-        /*
-        // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
-        if ([[User current].userID isEqualToString:@"ranpeer@gmail.com"])
-        {
-            [[HMServer sh] ranHack];
-        }
-        */
     }
     
     [self reportCrashesIfExist];
