@@ -149,7 +149,107 @@
 -(void)initGUI
 {
     //self.guiSilhouetteImageView.alpha = 0;
+    
+    /*
+    CGRect silohuetteFrame = self.guiSilhouetteImageView.frame;
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    CGFloat newSilhoetteWidth = screenSize.width > screenSize.height ? screenSize.width : screenSize.height;
+    CGFloat newSilhoetteHeight = newSilhoetteWidth / (16.0f / 9.0f);
+    
+    silohuetteFrame.size = CGSizeMake(newSilhoetteWidth, newSilhoetteHeight);
+    self.guiSilhouetteImageView.frame = silohuetteFrame;
+    
+    CGRect newSilohuetteFrame = self.guiSilhouetteImageView.frame;
+    NSLog(@"newSilhouette width: %f", newSilohuetteFrame.size.width);
+    NSLog(@"newSilhouette height: %f", newSilohuetteFrame.size.height);
+    NSLog(@"newSilhouette x: %f", newSilohuetteFrame.origin.x);
+    NSLog(@"newSilhouette y: %f", newSilohuetteFrame.origin.y);
+    
+    CGRect cameraPreviewFrame = self.videoCameraVC.previewView.superview.frame;
+    cameraPreviewFrame.size = newSilohuetteFrame.size;
+    self.videoCameraVC.previewView.frame = cameraPreviewFrame;
+
+    NSLog(@"cameraPreviewFrame width: %f", cameraPreviewFrame.size.width);
+    NSLog(@"cameraPreviewFrame height: %f", cameraPreviewFrame.size.height);
+    NSLog(@"cameraPreviewFrame x: %f", cameraPreviewFrame.origin.x);
+    NSLog(@"cameraPreviewFrame y: %f", cameraPreviewFrame.origin.y);
+    */
+
+    CGRect silohuetteBounds = self.guiSilhouetteImageView.bounds;
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    CGFloat newSilhoetteWidth = screenSize.width > screenSize.height ? screenSize.width : screenSize.height;
+    CGFloat newSilhoetteHeight = newSilhoetteWidth / (16.0f / 9.0f);
+    
+    silohuetteBounds.size = CGSizeMake(newSilhoetteWidth, newSilhoetteHeight);
+    self.guiSilhouetteImageView.bounds = silohuetteBounds;
+    
+    CGRect newSilohuetteBounds = self.guiSilhouetteImageView.bounds;
+    NSLog(@"newSilhouette width: %f", newSilohuetteBounds.size.width);
+    NSLog(@"newSilhouette height: %f", newSilohuetteBounds.size.height);
+    NSLog(@"newSilhouette x: %f", newSilohuetteBounds.origin.x);
+    NSLog(@"newSilhouette y: %f", newSilohuetteBounds.origin.y);
+    
+    NSLog(@"%@ frame: origin:(%f,%f) size(%f %f)" , @"guiSilhouetteImageView" , self.guiSilhouetteImageView.frame.origin.x , self.guiSilhouetteImageView.frame.origin.y , self.guiSilhouetteImageView.frame.size.width , self.guiSilhouetteImageView.frame.size.height);
+
+    
+    /*
+    CGRect cameraPreviewBounds = self.videoCameraVC.previewView.bounds;
+    cameraPreviewBounds.size = newSilohuetteBounds.size;
+    self.videoCameraVC.previewView.bounds = cameraPreviewBounds;
+    */
+
+    CGRect cameraPreviewFrame;
+    cameraPreviewFrame.size = newSilohuetteBounds.size;
+    cameraPreviewFrame.origin = CGPointMake(0.0f, 25.0f);
+    self.videoCameraVC.previewView.superview.frame = cameraPreviewFrame;
+    self.videoCameraVC.previewView.superview.autoresizingMask = UIViewAutoresizingNone;
+    
+    NSLog(@"%@ frame: origin:(%f,%f) size(%f %f)" , @"previewView" , self.videoCameraVC.previewView.frame.origin.x , self.videoCameraVC.previewView.frame.origin.y , self.videoCameraVC.previewView.frame.size.width , self.videoCameraVC.previewView.frame.size.height);
+    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , @"previewView" , self.videoCameraVC.previewView.bounds.origin.x , self.videoCameraVC.previewView.bounds.origin.y , self.videoCameraVC.previewView.bounds.size.width , self.videoCameraVC.previewView.bounds.size.height);
+    
+    NSLog(@"%@ frame: origin:(%f,%f) size(%f %f)" , @"previewView.superview" , self.videoCameraVC.previewView.superview.frame.origin.x , self.videoCameraVC.previewView.superview.frame.origin.y , self.videoCameraVC.previewView.superview.frame.size.width , self.videoCameraVC.previewView.superview.frame.size.height);
+    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , @"previewView.superview" , self.videoCameraVC.previewView.superview.bounds.origin.x , self.videoCameraVC.previewView.superview.bounds.origin.y , self.videoCameraVC.previewView.superview.bounds.size.width , self.videoCameraVC.previewView.superview.bounds.size.height);
+    
+    
+    
+    //self.videoCameraVC.previewView.autoresizingMask = UIViewAutoresizingNone;
+
+    
+    /*
+    CGRect cameraPreviewFrame = self.videoCameraVC.previewView.frame;
+    
+    NSLog(@"cameraPreview width: %f", cameraPreviewFrame.size.width);
+    NSLog(@"cameraPreview height: %f", cameraPreviewFrame.size.height);
+    NSLog(@"cameraPreview x: %f", cameraPreviewFrame.origin.x);
+    NSLog(@"cameraPreview y: %f", cameraPreviewFrame.origin.y);
+    
+    CGRect cameraPreviewSuperViewBounds = self.videoCameraVC.previewView.superview.bounds;
+    cameraPreviewSuperViewBounds.size = newSilohuetteBounds.size;
+    self.videoCameraVC.previewView.superview.bounds = cameraPreviewSuperViewBounds;
+    
+    NSLog(@"cameraPreviewSuperView width: %f", cameraPreviewSuperViewBounds.size.width);
+    NSLog(@"cameraPreviewSuperView height: %f", cameraPreviewSuperViewBounds.size.height);
+    NSLog(@"cameraPreviewSuperView x: %f", cameraPreviewSuperViewBounds.origin.x);
+    NSLog(@"cameraPreviewSuperView y: %f", cameraPreviewSuperViewBounds.origin.y);
+    
+    cameraPreviewFrame = self.videoCameraVC.previewView.frame;
+    
+    NSLog(@"cameraPreview width: %f", cameraPreviewFrame.size.width);
+    NSLog(@"cameraPreview height: %f", cameraPreviewFrame.size.height);
+    NSLog(@"cameraPreview x: %f", cameraPreviewFrame.origin.x);
+    NSLog(@"cameraPreview y: %f", cameraPreviewFrame.origin.y);
+     */
+    
+    
+    /*CGRect cameraPreviewLayerFrame = self.videoCameraVC.previewView.layer.frame;
+    cameraPreviewLayerFrame.size = newSilohuetteFrame.size;
+    self.videoCameraVC.previewView.layer.frame = cameraPreviewLayerFrame;*/
+
     [self loadSilhouettes];
+    
+    
 }
 
 #pragma mark - Recorder state flow
