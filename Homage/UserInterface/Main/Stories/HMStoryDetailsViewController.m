@@ -115,10 +115,9 @@
 
 -(void)initStoryMoviePlayer
 {
-
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMSimpleVideoViewController *vc;
-    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer];
+    self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer rotationSensitive:YES];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
     [self.storyMoviePlayer hideVideoLabel];
     [self.storyMoviePlayer hideMediaControls];

@@ -89,7 +89,7 @@
 -(void)initMoviePlayer
 {
     HMSimpleVideoViewController *vc;
-    self.moviePlayerVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer];
+    self.moviePlayerVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
     self.moviePlayerVC.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]] absoluteString];
     //[self.videoView hideVideoLabel];
     //[self.videoView hideMediaControls];

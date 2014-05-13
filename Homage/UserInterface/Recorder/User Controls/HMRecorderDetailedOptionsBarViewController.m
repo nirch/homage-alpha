@@ -126,11 +126,11 @@
 {
     // Video controllers (scene & story)
     HMSimpleVideoViewController *vc;
-    _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView];
+    _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
     self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
     
-    _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView];
+    _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
     self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;

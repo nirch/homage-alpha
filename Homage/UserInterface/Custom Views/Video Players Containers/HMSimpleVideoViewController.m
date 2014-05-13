@@ -50,8 +50,11 @@
 @property (nonatomic, readonly) UIView *movieTempFullscreenBackgroundView;
 @property (nonatomic, readonly) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
+@property (atomic) BOOL isPlaying;
+@property (atomic) BOOL rotationSensitive;
 @property (nonatomic, readonly) BOOL shouldDisplayVideoLabel; // YES by default
 @property (nonatomic, readonly) NSDate *timePressedPlay;
+
 
 @end
 
@@ -59,24 +62,27 @@
 
 @synthesize videoPlayer = _videoPlayer;
 
--(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView;
+-(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView rotationSensitive:(BOOL)rotate;
 {
-    self = [self initWithNibNamed:@"HMSimpleVideoViewController" inParentVC:parentVC containerView:containerView];
+    self = [self initWithNibNamed:@"HMSimpleVideoViewController" inParentVC:parentVC containerView:containerView rotationSensitive:(BOOL)rotate];
     if (self) {
+        
     }
     return self;
 }
 
--(id)initWithNibNamed:(NSString *)nibName inParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView
+-(id)initWithNibNamed:(NSString *)nibName inParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView rotationSensitive:(BOOL)rotate
 {
     self = [super initWithNibName:nibName bundle:nil];
     if (self) {
         [parentVC addChildViewController:self];
         _containerView = containerView;
+        _rotationSensitive = rotate;
         _isFullscreen = NO;
         [self.containerView addSubview:self.view];
         _shouldDisplayVideoLabel = YES;
         _videoView = (HMSimpleVideoView *)self.view;
+        [self displayRect:@"self.videoView.frame" BoundsOf:self.videoView.frame];
         _movieTempFullscreenBackgroundView = [[UIView alloc] init];
     }
     return self;
@@ -92,10 +98,15 @@
     [super viewWillAppear:animated];
     self.view.frame = self.containerView.bounds;
     self.containerView.clipsToBounds = YES;
-    [self initObservers];
     [self fixLayout];
+    [self initObservers];
+   
     self.videoPlayer.view.alpha = 0;
     self.videoView.guiVideoThumb.alpha = 1;
+    
+    [self displayRect:@"self.view.frame" BoundsOf:self.view.frame];
+    [self displayRect:@"self.videoPlayer.view.frame" BoundsOf:self.videoPlayer.view.frame];
+    [self displayRect:@"self.videoView.frame" BoundsOf:self.videoView.frame];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -110,7 +121,8 @@
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
     if (self.isFullscreen) {
-        [self setFullScreen:NO animated:YES];
+        UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
     }
     
     if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.hidden = NO;
@@ -160,13 +172,13 @@
                      name:MPMoviePlayerDidExitFullscreenNotification
                    object:self.videoPlayer];
     
-    [nc addUniqueObserver:self
-                 selector:@selector(onDeviceOrientationChanged:)
-                     name:UIDeviceOrientationDidChangeNotification
-                   object:nil];
-    
-    
-    
+    if (self.rotationSensitive)
+    {
+        [nc addUniqueObserver:self
+                     selector:@selector(onDeviceOrientationChanged)
+                         name:UIDeviceOrientationDidChangeNotification
+                       object:nil];
+    }
 
 }
 
@@ -177,7 +189,10 @@
     [nc removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerDidExitFullscreenNotification object:self.videoPlayer];
-    [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    if (self.rotationSensitive)
+    {
+        [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 #pragma mark - Observers handlers
@@ -219,6 +234,7 @@
 -(void)_startToPlayTheActualVideo
 {
     self.waitingToStartPlayingTheFile = NO;
+    self.isPlaying = YES;
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
@@ -226,6 +242,9 @@
         self.videoView.backgroundColor = [UIColor clearColor];
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
+        [self printViewProperties:self.view name:@"self.view.frame"];
+        [self printViewProperties:self.videoView name:@"self.videoView.frame"];
+        [self printViewProperties:self.videoPlayer.view name:@"self.videoPlayer.view.frame"];
     } completion:^(BOOL finished) {
         [self.videoPlayer play];
     }];
@@ -320,6 +339,11 @@
     _timePressedPlay = [NSDate date];
     self.waitingToStartPlayingTheFile = YES;
     HMGLogDebug(@"Trying to play video at:%@", [[NSURL URLWithString:self.videoURL] description]);
+    [self printViewProperties:self.view name:@"self.view"];
+    [self printViewProperties:self.videoView name:@"self.videoView"];
+    [self printViewProperties:self.videoPlayer.view name:@"self.videoPlayer.view"];
+    [self printViewProperties:self.videoView.guiVideoContainer name:@"self.videoView.guiVideoContainer"];
+    [self.videoView.guiVideoContainer addSubview:self.videoPlayer.view];
     [self.videoPlayer prepareToPlay];
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
@@ -328,11 +352,13 @@
 
 -(void)done
 {
+    self.isPlaying = NO;
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
     if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop)]) [self.delegate videoPlayerDidStop];
     if (self.isFullscreen) {
-        [self setFullScreen:NO animated:YES];
+        UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
     }
 
     if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.hidden = NO;
@@ -399,10 +425,16 @@
 
 -(void)setFullScreen
 {
-    [self setFullScreen:YES animated:YES];
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    [self setFullScreenForOrientation:orientation];
 }
 
-- (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated {
+-(void)setFullScreenForOrientation:(UIInterfaceOrientation)orientation
+{
+    [self setFullScreen:YES animated:YES forOrientation:orientation];
+}
+
+- (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated forOrientation:(UIInterfaceOrientation)orientation {
     _isFullscreen = fullscreen;
     CGFloat fullscreenAnimationDuration = 0.4;
     if (fullscreen) {
@@ -422,7 +454,8 @@
             self.movieTempFullscreenBackgroundView.alpha = 1.f;
         } completion:^(BOOL finished) {
             [self.movieTempFullscreenBackgroundView addSubview:self.view];
-            UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+            //UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+            UIInterfaceOrientation currentOrientation = orientation;
             [self rotateMoviePlayerForOrientation:currentOrientation animated:NO completion:^{
                 [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
                     self.view.alpha = 1.f;
@@ -462,10 +495,12 @@
 {
     //[self displayRectBounds:self.view.frame Name:@"view.frame"];
     self.view.frame = self.containerView.bounds;
+    self.videoView.frame = self.containerView.bounds;
     [self displayRect:@"self.containerView.bounds" BoundsOf:self.containerView.bounds];
     //TODO: verify with aviv if this is the correct fix
-    if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
-    self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
+    //if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
+    self.videoPlayer.view.frame = self.containerView.bounds;
+    [self displayRect:@"self.videoPlayer.view.frame" BoundsOf:self.videoPlayer.view.frame];
 }
 
 -(void)setFrame:(CGRect)frame
@@ -501,27 +536,36 @@
     });
 }
 
--(void)onDeviceOrientationChanged:(NSNotification *)notification
+-(void)onDeviceOrientationChanged
 {
-    /*UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (!self.waitingToStartPlayingTheFile && !self.isPlaying) return;
+    
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     NSLog(@"device orientation is now: %d" , [[UIDevice currentDevice] orientation]);
     
     dispatch_async(dispatch_get_main_queue(), ^{
     switch (orientation) {
         case UIDeviceOrientationLandscapeLeft:
-            [self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+            [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
+            //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
             break;
+        case UIDeviceOrientationLandscapeRight:
+            [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeLeft];
+            //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+            break;
+        case UIDeviceOrientationPortrait:
+            [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
         default:
             break;
     }
-    });*/
+    });
 }
 
 
 -(void)updateScalingModeForOrientation:(UIInterfaceOrientation)orientation
 {
     if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        _videoPlayer.scalingMode = MPMovieScalingModeAspectFill;
+        _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
     } else {
         _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
     }
@@ -551,7 +595,7 @@
             case UIInterfaceOrientationLandscapeRight:
             angle = M_PI_2;
             backgroundFrame = CGRectMake(-movieBackgroundPadding, -movieBackgroundPadding, windowSize.height + movieBackgroundPadding*2, windowSize.width + movieBackgroundPadding*2);
-            movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.height - movieBackgroundPadding*2, backgroundFrame.size.width - movieBackgroundPadding*2);
+            movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, windowSize.height - movieBackgroundPadding*2, windowSize.width - movieBackgroundPadding*2);
             break;
             case UIInterfaceOrientationPortrait:
         default:
@@ -636,7 +680,8 @@
 
 - (IBAction)onPressedFullScreenButton:(id)sender
 {
-    [self setFullScreen:!self.isFullscreen animated:YES];
+    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    [self setFullScreen:!self.isFullscreen animated:YES forOrientation:currentOrientation];
 }
 
 - (IBAction)onPressedToggleControls:(id)sender
@@ -647,6 +692,12 @@
 - (IBAction)onMovedSlider:(UISlider *)sender
 {
     [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
+}
+
+-(void)printViewProperties:(UIView *)view name:(NSString *)name
+{
+    [self displayRect:name BoundsOf:view.frame];
+    NSLog(@"%@ alpha: %f hidden: %hhd" , name ,  view.alpha , view.hidden);
 }
 
 -(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect

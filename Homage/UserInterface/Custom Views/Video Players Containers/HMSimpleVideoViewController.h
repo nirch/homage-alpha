@@ -66,7 +66,7 @@
  *
  *  @return a new instance HMSimpleVideoViewController.
  */
--(id)initWithNibNamed:(NSString *)nibName inParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView;
+-(id)initWithNibNamed:(NSString *)nibName inParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView rotationSensitive:(BOOL)rotate;
 
 ///
 /**
@@ -77,7 +77,7 @@
  *
  *  @return a new instance HMSimpleVideoViewController.
  */
--(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView;
+-(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView rotationSensitive:(BOOL)rotate;
 
 #pragma mark - Methods
 ///
@@ -161,7 +161,7 @@
 
 ///
 /**
- *  sets the movie player frame
+ *  sets the movie thumbnail image
  */
 -(void)setFrame:(CGRect)frame;
 

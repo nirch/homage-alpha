@@ -39,9 +39,10 @@
 #import <AVFoundation/AVAudioPlayer.h>
 #import "UIImage+ImageEffects.h"
 #import "AMBlurView.h"
+#import "HMSimpleVideoViewController.h"
 
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 
 typedef NS_ENUM(NSInteger, HMAppTab) {
     HMStoriesTab,
@@ -53,6 +54,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppHideView;
+@property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
 
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
@@ -602,13 +604,32 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)initIntroMoviePlayer
 {
+    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMVideoPlayerVC *videoPlayerController = [[HMVideoPlayerVC alloc] init];
+    
+    UIView *view;
+    self.guiVideoContainer = view = [[UIView alloc] initWithFrame:self.view.frame];
+    self.guiVideoContainer.backgroundColor = [UIColor clearColor];
+    
+    [self.view addSubview:self.guiVideoContainer];
+    [self.view bringSubviewToFront:self.guiVideoContainer];
+    
+    HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
+    vc.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]] absoluteString];
+    [vc hideVideoLabel];
+    //[self.videoView hideMediaControls];
+    
+    vc.videoImage = [UIImage imageNamed:@"missingThumbnail"];
+    vc.delegate = self;
+    vc.resetStateWhenVideoEnds = YES;
+    [vc play];
+    
+    /*HMVideoPlayerVC *videoPlayerController = [[HMVideoPlayerVC alloc] init];
     videoPlayerController.delegate = self;
     NSURL *videoURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]];
     videoPlayerController.videoURL = videoURL;
     self.moviePlayer = videoPlayerController;
-    [self presentViewController:videoPlayerController animated:YES completion:nil];
+    [self presentViewController:videoPlayerController animated:YES completion:nil];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -914,5 +935,27 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 		[alert show];
     }
 }*/
+
+-(void)videoPlayerDidStop
+{
+    [self.guiVideoContainer removeFromSuperview];
+}
+
+-(void)videoPlayerDidFinishPlaying
+{
+    
+}
+
+-(void)videoPlayerWillPlay
+{
+    
+}
+
+-(void)videoPlayerDidExitFullScreen
+{
+    
+}
+
+
 
 @end

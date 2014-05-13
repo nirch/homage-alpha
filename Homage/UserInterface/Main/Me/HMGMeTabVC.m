@@ -18,9 +18,10 @@
 #import "mixPanel.h"
 #import "HMVideoPlayerVC.h"
 #import "HMVideoPlayerDelegate.h"
+#import "HMSimpleVideoViewController.h"
 
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 //HMSimpleVideoPlayerDelegate removed
 
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
@@ -33,6 +34,7 @@
 @property (weak,nonatomic) Remake *remakeToShare;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
+@property (nonatomic,weak) UIView *guiVideoContainer;
 
 @end
 
@@ -545,22 +547,31 @@
     }
     
     self.playingMovieIndex = indexPath.item;
-    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
-    videoPlayerVC.delegate = self;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
-    self.moviePlayer = videoPlayerVC;
-    [self presentViewController:videoPlayerVC animated:YES completion:nil];
-    
-    //old code for playing movie inside cell
-    /*HMSimpleVideoViewController *vc;
-     self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
-     self.moviePlayer.delegate = self;
-     self.moviePlayer.videoURL = videoURL;
-     [self configureCellForMoviePlaying:cell active:YES];
-     [self.moviePlayer play];
-     [self.moviePlayer setScalingMode:@"aspect fit"];*/
+    [self initVideoPlayerWithURL:[NSURL URLWithString:remake.videoURL]];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)initVideoPlayerWithURL:(NSURL *)url
+{
+    UIView *view;
+    self.guiVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
+    self.guiVideoContainer.backgroundColor = [UIColor clearColor];
+    
+    [self.view addSubview:self.guiVideoContainer];
+    [self.view bringSubviewToFront:self.guiVideoContainer];
+    [self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
+    
+    HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
+    vc.videoURL = [url absoluteString];
+    [vc hideVideoLabel];
+    //[self.videoView hideMediaControls];
+    
+    vc.videoImage = [UIImage imageNamed:@"missingThumbnail"];
+    vc.delegate = self;
+    vc.resetStateWhenVideoEnds = YES;
+    [vc play];
+    [vc setFullScreen];
 }
 
 -(void)configureCellForMoviePlaying:(HMGUserRemakeCVCell *)cell active:(BOOL)active
@@ -585,6 +596,7 @@
 -(void)videoPlayerDidStop
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self.guiVideoContainer removeFromSuperview];
     if (self.playingMovieIndex != -1)
         [self closeCurrentlyPlayingMovie];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -841,12 +853,21 @@
 }
 
 
+
+
 // ============
 // Rewind segue
 // ============
 -(IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
 {
     //self.view.backgroundColor = [UIColor clearColor];
+}
+
+-(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
+{
+    CGSize size = rect.size;
+    CGPoint origin = rect.origin;
+    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
 }
 
 @end

@@ -26,7 +26,7 @@
     
     HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMRecorderBigVideoPlayerView"
                                                                                  inParentVC:self
-                                                                              containerView:self.guiContainerView
+                                                                              containerView:self.guiContainerView rotationSensitive:NO
                                        ];
     vc.delegate = self;
     vc.videoLabelText = LS(@"SHOW_YOUR_TAKE");
