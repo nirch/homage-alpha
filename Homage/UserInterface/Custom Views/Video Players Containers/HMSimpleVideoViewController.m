@@ -159,6 +159,14 @@
                  selector:@selector(onMoviePlayerDidExitFullscreen:)
                      name:MPMoviePlayerDidExitFullscreenNotification
                    object:self.videoPlayer];
+    
+    [nc addUniqueObserver:self
+                 selector:@selector(onDeviceOrientationChanged:)
+                     name:UIDeviceOrientationDidChangeNotification
+                   object:nil];
+    
+    
+    
 
 }
 
@@ -169,6 +177,7 @@
     [nc removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerDidExitFullscreenNotification object:self.videoPlayer];
+    [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -266,6 +275,7 @@
     if (_videoPlayer) return _videoPlayer;
     _videoPlayer = [[MPMoviePlayerController alloc] init];
     _videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
+    [self displayRect:@"self.videoView.guiVideoContainer.bounds" BoundsOf:self.videoView.guiVideoContainer.bounds];
     _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
     _videoPlayer.controlStyle = MPMovieControlStyleNone;
     _videoPlayer.shouldAutoplay = NO;
@@ -452,9 +462,18 @@
 {
     //[self displayRectBounds:self.view.frame Name:@"view.frame"];
     self.view.frame = self.containerView.bounds;
+    [self displayRect:@"self.containerView.bounds" BoundsOf:self.containerView.bounds];
     //TODO: verify with aviv if this is the correct fix
     if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
     self.videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
+}
+
+-(void)setFrame:(CGRect)frame
+{
+    self.containerView.frame = frame;
+    self.containerView.layer.borderColor = [UIColor redColor].CGColor;
+    self.containerView.layer.borderWidth = 2.0;
+    //[self fixLayout];
 }
 
 - (void)moviePlayerWillMoveFromWindow {
@@ -481,6 +500,23 @@
         [self updateScalingModeForOrientation:toInterfaceOrientation];
     });
 }
+
+-(void)onDeviceOrientationChanged:(NSNotification *)notification
+{
+    /*UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    NSLog(@"device orientation is now: %d" , [[UIDevice currentDevice] orientation]);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    switch (orientation) {
+        case UIDeviceOrientationLandscapeLeft:
+            [self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+            break;
+        default:
+            break;
+    }
+    });*/
+}
+
 
 -(void)updateScalingModeForOrientation:(UIInterfaceOrientation)orientation
 {
@@ -611,6 +647,13 @@
 - (IBAction)onMovedSlider:(UISlider *)sender
 {
     [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
+}
+
+-(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
+{
+    CGSize size = rect.size;
+    CGPoint origin = rect.origin;
+    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
 }
 
 @end

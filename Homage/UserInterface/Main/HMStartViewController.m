@@ -555,7 +555,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
-
 }
 
 -(void)storiesButtonPushed

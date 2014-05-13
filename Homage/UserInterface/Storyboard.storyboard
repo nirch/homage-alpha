@@ -422,7 +422,7 @@
                             </collectionView>
                             <view contentMode="scaleToFill" id="ZjV-7o-L6U" userLabel="storyMovieContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Kth-YP-vBm" customClass="HMDINOTCondBoldFontButton">

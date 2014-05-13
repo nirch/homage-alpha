@@ -208,6 +208,7 @@
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		2610133718E172A80065C72B /* HMLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2610133618E172A80065C72B /* HMLoginTests.m */; };
+		2615B557191FA0E0007F5FC0 /* HMTestVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2615B556191FA0E0007F5FC0 /* HMTestVideoViewController.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
@@ -246,6 +247,26 @@
 		2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
 		26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */; };
 		26897A7D1913A3960030A8B5 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */; };
+		268EBAA4191FDD9B00B81F7B /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 268EBA8C191FDD9B00B81F7B /* ALAirplayView.m */; };
+		268EBAA5191FDD9B00B81F7B /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 268EBA8E191FDD9B00B81F7B /* ALButton.m */; };
+		268EBAA6191FDD9B00B81F7B /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268EBA90191FDD9B00B81F7B /* ALMoviePlayerController.m */; };
+		268EBAA7191FDD9B00B81F7B /* ALMoviePlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 268EBA92191FDD9B00B81F7B /* ALMoviePlayerControls.m */; };
+		268EBAA8191FDD9B00B81F7B /* movieBackward.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA94191FDD9B00B81F7B /* movieBackward.png */; };
+		268EBAA9191FDD9B00B81F7B /* movieBackward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA95191FDD9B00B81F7B /* movieBackward@2x.png */; };
+		268EBAAA191FDD9B00B81F7B /* movieBackwardSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA96191FDD9B00B81F7B /* movieBackwardSelected.png */; };
+		268EBAAB191FDD9B00B81F7B /* movieBackwardSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA97191FDD9B00B81F7B /* movieBackwardSelected@2x.png */; };
+		268EBAAC191FDD9B00B81F7B /* movieEndFullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA98191FDD9B00B81F7B /* movieEndFullscreen.png */; };
+		268EBAAD191FDD9B00B81F7B /* movieEndFullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA99191FDD9B00B81F7B /* movieEndFullscreen@2x.png */; };
+		268EBAAE191FDD9B00B81F7B /* movieForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA9A191FDD9B00B81F7B /* movieForward.png */; };
+		268EBAAF191FDD9B00B81F7B /* movieForward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA9B191FDD9B00B81F7B /* movieForward@2x.png */; };
+		268EBAB0191FDD9B00B81F7B /* movieForwardSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA9C191FDD9B00B81F7B /* movieForwardSelected.png */; };
+		268EBAB1191FDD9B00B81F7B /* movieForwardSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA9D191FDD9B00B81F7B /* movieForwardSelected@2x.png */; };
+		268EBAB2191FDD9B00B81F7B /* movieFullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA9E191FDD9B00B81F7B /* movieFullscreen.png */; };
+		268EBAB3191FDD9B00B81F7B /* movieFullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBA9F191FDD9B00B81F7B /* movieFullscreen@2x.png */; };
+		268EBAB4191FDD9B00B81F7B /* moviePause.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBAA0191FDD9B00B81F7B /* moviePause.png */; };
+		268EBAB5191FDD9B00B81F7B /* moviePause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBAA1191FDD9B00B81F7B /* moviePause@2x.png */; };
+		268EBAB6191FDD9B00B81F7B /* moviePlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBAA2191FDD9B00B81F7B /* moviePlay.png */; };
+		268EBAB7191FDD9B00B81F7B /* moviePlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 268EBAA3191FDD9B00B81F7B /* moviePlay@2x.png */; };
 		269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */ = {isa = PBXBuildFile; fileRef = 269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */; };
 		26933EA218FEB8CA001AE951 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 26933EA118FEB8CA001AE951 /* Story.m */; };
 		2699AE8A1903F512004093AE /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699AE891903F512004093AE /* Remake.m */; };
@@ -474,6 +495,8 @@
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
 		2610133618E172A80065C72B /* HMLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginTests.m; sourceTree = "<group>"; };
+		2615B555191FA0E0007F5FC0 /* HMTestVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTestVideoViewController.h; sourceTree = "<group>"; };
+		2615B556191FA0E0007F5FC0 /* HMTestVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTestVideoViewController.m; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
@@ -543,6 +566,30 @@
 		268341F318FFFD40002E8CB7 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "cinemaCountdown6(with_tail).wav"; path = "mediaResources/cinemaCountdown6(with_tail).wav"; sourceTree = "<group>"; };
 		26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown_oneLast.wav; path = mediaResources/cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
+		268EBA8B191FDD9B00B81F7B /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
+		268EBA8C191FDD9B00B81F7B /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
+		268EBA8D191FDD9B00B81F7B /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
+		268EBA8E191FDD9B00B81F7B /* ALButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALButton.m; sourceTree = "<group>"; };
+		268EBA8F191FDD9B00B81F7B /* ALMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMoviePlayerController.h; sourceTree = "<group>"; };
+		268EBA90191FDD9B00B81F7B /* ALMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMoviePlayerController.m; sourceTree = "<group>"; };
+		268EBA91191FDD9B00B81F7B /* ALMoviePlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMoviePlayerControls.h; sourceTree = "<group>"; };
+		268EBA92191FDD9B00B81F7B /* ALMoviePlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMoviePlayerControls.m; sourceTree = "<group>"; };
+		268EBA94191FDD9B00B81F7B /* movieBackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieBackward.png; sourceTree = "<group>"; };
+		268EBA95191FDD9B00B81F7B /* movieBackward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieBackward@2x.png"; sourceTree = "<group>"; };
+		268EBA96191FDD9B00B81F7B /* movieBackwardSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieBackwardSelected.png; sourceTree = "<group>"; };
+		268EBA97191FDD9B00B81F7B /* movieBackwardSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieBackwardSelected@2x.png"; sourceTree = "<group>"; };
+		268EBA98191FDD9B00B81F7B /* movieEndFullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieEndFullscreen.png; sourceTree = "<group>"; };
+		268EBA99191FDD9B00B81F7B /* movieEndFullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieEndFullscreen@2x.png"; sourceTree = "<group>"; };
+		268EBA9A191FDD9B00B81F7B /* movieForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieForward.png; sourceTree = "<group>"; };
+		268EBA9B191FDD9B00B81F7B /* movieForward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieForward@2x.png"; sourceTree = "<group>"; };
+		268EBA9C191FDD9B00B81F7B /* movieForwardSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieForwardSelected.png; sourceTree = "<group>"; };
+		268EBA9D191FDD9B00B81F7B /* movieForwardSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieForwardSelected@2x.png"; sourceTree = "<group>"; };
+		268EBA9E191FDD9B00B81F7B /* movieFullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieFullscreen.png; sourceTree = "<group>"; };
+		268EBA9F191FDD9B00B81F7B /* movieFullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieFullscreen@2x.png"; sourceTree = "<group>"; };
+		268EBAA0191FDD9B00B81F7B /* moviePause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moviePause.png; sourceTree = "<group>"; };
+		268EBAA1191FDD9B00B81F7B /* moviePause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePause@2x.png"; sourceTree = "<group>"; };
+		268EBAA2191FDD9B00B81F7B /* moviePlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moviePlay.png; sourceTree = "<group>"; };
+		268EBAA3191FDD9B00B81F7B /* moviePlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePlay@2x.png"; sourceTree = "<group>"; };
 		269264631908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMDINOTRegularFontButton+colorEffectes.h"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.h"; sourceTree = "<group>"; };
 		269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMDINOTRegularFontButton+colorEffectes.m"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.m"; sourceTree = "<group>"; };
 		26933EA018FEB8CA001AE951 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
@@ -659,6 +706,7 @@
 				08E50EC0188685E1001A8B75 /* Readme.txt */,
 				0806FB281882944D00F0EF50 /* App */,
 				0806FB2F188294CE00F0EF50 /* UserInterface */,
+				2615B558191FB932007F5FC0 /* utilities */,
 				0806FB2C1882947E00F0EF50 /* Data */,
 			);
 			path = Homage;
@@ -1000,6 +1048,8 @@
 				08845672188494D300B94267 /* HMTestSliceViewController.m */,
 				08D03F7F1894295F00DEBDBC /* HMSimpleDataViewController.h */,
 				08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */,
+				2615B555191FA0E0007F5FC0 /* HMTestVideoViewController.h */,
+				2615B556191FA0E0007F5FC0 /* HMTestVideoViewController.m */,
 			);
 			path = Experimental;
 			sourceTree = "<group>";
@@ -1235,6 +1285,15 @@
 			path = Round;
 			sourceTree = "<group>";
 		};
+		2615B558191FB932007F5FC0 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				268EBA8A191FDD9B00B81F7B /* ALMoviePlayerController */,
+			);
+			name = utilities;
+			path = UserInterface;
+			sourceTree = "<group>";
+		};
 		2638593418953866003A7B3D /* rendering view */ = {
 			isa = PBXGroup;
 			children = (
@@ -1334,6 +1393,46 @@
 				268341F318FFFD40002E8CB7 /* IASKTextField.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		268EBA8A191FDD9B00B81F7B /* ALMoviePlayerController */ = {
+			isa = PBXGroup;
+			children = (
+				268EBA8B191FDD9B00B81F7B /* ALAirplayView.h */,
+				268EBA8C191FDD9B00B81F7B /* ALAirplayView.m */,
+				268EBA8D191FDD9B00B81F7B /* ALButton.h */,
+				268EBA8E191FDD9B00B81F7B /* ALButton.m */,
+				268EBA8F191FDD9B00B81F7B /* ALMoviePlayerController.h */,
+				268EBA90191FDD9B00B81F7B /* ALMoviePlayerController.m */,
+				268EBA91191FDD9B00B81F7B /* ALMoviePlayerControls.h */,
+				268EBA92191FDD9B00B81F7B /* ALMoviePlayerControls.m */,
+				268EBA93191FDD9B00B81F7B /* Images */,
+			);
+			name = ALMoviePlayerController;
+			path = utilities/ALMoviePlayerController;
+			sourceTree = "<group>";
+		};
+		268EBA93191FDD9B00B81F7B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				268EBA94191FDD9B00B81F7B /* movieBackward.png */,
+				268EBA95191FDD9B00B81F7B /* movieBackward@2x.png */,
+				268EBA96191FDD9B00B81F7B /* movieBackwardSelected.png */,
+				268EBA97191FDD9B00B81F7B /* movieBackwardSelected@2x.png */,
+				268EBA98191FDD9B00B81F7B /* movieEndFullscreen.png */,
+				268EBA99191FDD9B00B81F7B /* movieEndFullscreen@2x.png */,
+				268EBA9A191FDD9B00B81F7B /* movieForward.png */,
+				268EBA9B191FDD9B00B81F7B /* movieForward@2x.png */,
+				268EBA9C191FDD9B00B81F7B /* movieForwardSelected.png */,
+				268EBA9D191FDD9B00B81F7B /* movieForwardSelected@2x.png */,
+				268EBA9E191FDD9B00B81F7B /* movieFullscreen.png */,
+				268EBA9F191FDD9B00B81F7B /* movieFullscreen@2x.png */,
+				268EBAA0191FDD9B00B81F7B /* moviePause.png */,
+				268EBAA1191FDD9B00B81F7B /* moviePause@2x.png */,
+				268EBAA2191FDD9B00B81F7B /* moviePlay.png */,
+				268EBAA3191FDD9B00B81F7B /* moviePlay@2x.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		269264661908F88C009567AA /* buttons */ = {
@@ -1441,33 +1540,49 @@
 			buildActionMask = 2147483647;
 			files = (
 				26DE49A81912548F00BC2B0B /* cinemaCountdown4.wav in Resources */,
+				268EBAAC191FDD9B00B81F7B /* movieEndFullscreen.png in Resources */,
 				08B958751891394400BCCF8C /* Colors.plist in Resources */,
 				26897A7D1913A3960030A8B5 /* cinemaCountdown_oneLast.wav in Resources */,
+				268EBAB5191FDD9B00B81F7B /* moviePause@2x.png in Resources */,
 				08081FB818D0A9EA00999068 /* close up.ctr in Resources */,
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */,
+				268EBAB0191FDD9B00B81F7B /* movieForwardSelected.png in Resources */,
 				2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */,
+				268EBAB2191FDD9B00B81F7B /* movieFullscreen.png in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
+				268EBAA9191FDD9B00B81F7B /* movieBackward@2x.png in Resources */,
+				268EBAA8191FDD9B00B81F7B /* movieBackward.png in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
+				268EBAB7191FDD9B00B81F7B /* moviePlay@2x.png in Resources */,
 				26385938189550DC003A7B3D /* InfoPlist.strings in Resources */,
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
+				268EBAAF191FDD9B00B81F7B /* movieForward@2x.png in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				2638593B18955252003A7B3D /* Settings.bundle in Resources */,
 				2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */,
+				268EBAAB191FDD9B00B81F7B /* movieBackwardSelected@2x.png in Resources */,
+				268EBAB1191FDD9B00B81F7B /* movieForwardSelected@2x.png in Resources */,
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
 				26DE49AA1912552D00BC2B0B /* cinemaCountdown5.wav in Resources */,
+				268EBAAA191FDD9B00B81F7B /* movieBackwardSelected.png in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
+				268EBAAE191FDD9B00B81F7B /* movieForward.png in Resources */,
+				268EBAB3191FDD9B00B81F7B /* movieFullscreen@2x.png in Resources */,
 				0884566218848D0E00B94267 /* ExperimentalStoryboard.storyboard in Resources */,
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				2655DF5418EDA4D200CA362F /* HMPrivacyPolicyViewController.xib in Resources */,
+				268EBAAD191FDD9B00B81F7B /* movieEndFullscreen@2x.png in Resources */,
 				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
+				268EBAB4191FDD9B00B81F7B /* moviePause.png in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
+				268EBAB6191FDD9B00B81F7B /* moviePlay.png in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1567,11 +1682,13 @@
 				084560071890458E0040504D /* HMWhileRecordingOverlayViewController.m in Sources */,
 				08ACB7B3188C6B9500C0EE27 /* HMAvenirBookFontButton.m in Sources */,
 				0845600D1890537C0040504D /* HMServer+Footages.m in Sources */,
+				268EBAA6191FDD9B00B81F7B /* ALMoviePlayerController.m in Sources */,
 				08DF23221892704300912657 /* HMTabBarController.m in Sources */,
 				08CDF83A1897F6B100A9D235 /* Text.m in Sources */,
 				268341FA18FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
 				08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
+				268EBAA7191FDD9B00B81F7B /* ALMoviePlayerControls.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				08DF23281892704300912657 /* HMUserRemakesViewController.m in Sources */,
 				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
@@ -1624,6 +1741,7 @@
 				08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				26933EA218FEB8CA001AE951 /* Story.m in Sources */,
+				2615B557191FA0E0007F5FC0 /* HMTestVideoViewController.m in Sources */,
 				08CDF82E1897F6B000A9D235 /* Scene.m in Sources */,
 				268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
@@ -1634,6 +1752,8 @@
 				08B9589E189167C700BCCF8C /* Scene+Logic.m in Sources */,
 				08DF23201892704300912657 /* HMStartViewController.m in Sources */,
 				0806FB2B1882944D00F0EF50 /* HMAppDelegate.m in Sources */,
+				268EBAA5191FDD9B00B81F7B /* ALButton.m in Sources */,
+				268EBAA4191FDD9B00B81F7B /* ALAirplayView.m in Sources */,
 				08B958901891678600BCCF8C /* Text+Factory.m in Sources */,
 				08B9586A1891377400BCCF8C /* NSString+Utilities.m in Sources */,
 				08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,

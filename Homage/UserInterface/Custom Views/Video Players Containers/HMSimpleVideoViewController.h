@@ -159,4 +159,10 @@
  */
 -(void)setVideoImage:(UIImage *)videoImage;
 
+///
+/**
+ *  sets the movie player frame
+ */
+-(void)setFrame:(CGRect)frame;
+
 @end

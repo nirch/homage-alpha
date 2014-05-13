@@ -887,7 +887,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     //TODO: this should not be neeeded. verify for sure if it can be removed completly
     if ([user.userID isEqualToString:[User current].userID])
     {
-        [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+        //TODO: fix self.loginMethod
+        //[mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+        [mixpanel track:@"UserLogin"];
         [self.delegate dismissLoginScreen];
         return;
     }

@@ -706,7 +706,7 @@
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         if (completed) {
-            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name , @"share_method" : activityType}];
+            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType}];
         }
     };
     [activityViewController setValue:shareString forKey:@"subject"];
