@@ -609,7 +609,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
     UIView *view;
     self.guiVideoContainer = view = [[UIView alloc] initWithFrame:self.view.frame];
-    self.guiVideoContainer.backgroundColor = [UIColor clearColor];
+    self.guiVideoContainer.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:self.guiVideoContainer];
     [self.view bringSubviewToFront:self.guiVideoContainer];
@@ -619,7 +619,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     [vc hideVideoLabel];
     //[self.videoView hideMediaControls];
     
-    vc.videoImage = [UIImage imageNamed:@"missingThumbnail"];
     vc.delegate = self;
     vc.resetStateWhenVideoEnds = YES;
     [vc play];
@@ -936,7 +935,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     }
 }*/
 
--(void)videoPlayerDidStop
+-(void)videoPlayerDidStop:(id)sender
 {
     [self.guiVideoContainer removeFromSuperview];
 }

@@ -54,6 +54,8 @@
  */
 @property (nonatomic) BOOL resetStateWhenVideoEnds;
 
+
+
 #pragma mark - Initializations with nibs
 
 ///
@@ -146,6 +148,13 @@
  *  checks if the moviePlayer is playing
  */
 -(BOOL)isInAction;
+
+
+///
+/**
+ *  checks if the moviePlayer is playing
+ */
+-(BOOL)videoPlayerIsPlaying;
 
 ///
 /**

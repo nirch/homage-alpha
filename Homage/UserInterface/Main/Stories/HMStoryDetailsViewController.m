@@ -27,10 +27,11 @@
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
+@property (strong,nonatomic) HMSimpleVideoViewController *remakeMoviePlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
 
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
-@property (nonatomic, strong) HMVideoPlayerVC *remakeMoviePlayer;
+@property (weak,nonatomic) UIView *guiRemakeVideoContainer;
 @property (nonatomic) Remake *flaggedRemake;
 
 
@@ -405,11 +406,7 @@
     HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.playingRemakeIndex = indexPath.item;
-    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc] init];
-    videoPlayerVC.delegate = self;
-    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
-    self.remakeMoviePlayer = videoPlayerVC;
-    [self presentViewController:videoPlayerVC animated:YES completion:nil];
+    [self initVideoPlayerWithURL:[NSURL URLWithString:remake.videoURL]];
 }
 
 -(void)handleNoRemakes
@@ -423,10 +420,14 @@
 
 #pragma mark HMSimpleVideoPlayerDelegate
 
--(void)videoPlayerDidStop
+-(void)videoPlayerDidStop:(id)sender
 {
     [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name}];
     
+    if (sender == self.remakeMoviePlayer)
+    {
+        [self.guiRemakeVideoContainer removeFromSuperview];
+    }
 }
 
 -(void)videoPlayerDidFinishPlaying
@@ -444,6 +445,18 @@
     [[Mixpanel sharedInstance] track:@"SDStartPlayStory" properties:@{@"story" : self.story.name}];
 }
 
+-(void)videoPlayerWasFired
+{
+    if ([self.storyMoviePlayer isInAction])
+    {
+        [self.storyMoviePlayer done];
+    }
+    if ([self.remakeMoviePlayer isInAction])
+    {
+        [self.remakeMoviePlayer done];
+    }
+}
+
 -(void)closeRemakeVideoPlayer
 {
     self.playingRemakeIndex = -1;
@@ -454,18 +467,26 @@
     [self.storyMoviePlayer done];
 }
 
-#
-#pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerFinishedPlaying
-{
-    [self.remakeMoviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"SDFinishWatchRemake"];
-}
 
--(void)videoPlayerStopped
+-(void)initVideoPlayerWithURL:(NSURL *)url
 {
-    [self.remakeMoviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"SDStopPlayRemake"];
+    UIView *view;
+    self.guiRemakeVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
+    self.guiRemakeVideoContainer.backgroundColor = [UIColor blackColor];
+    
+    [self.view addSubview:self.guiRemakeVideoContainer];
+    [self.view bringSubviewToFront:self.guiRemakeVideoContainer];
+    //[self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
+    
+    self.remakeMoviePlayer = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiRemakeVideoContainer rotationSensitive:YES];
+    self.remakeMoviePlayer.videoURL = [url absoluteString];
+    [self.remakeMoviePlayer hideVideoLabel];
+    //[self.videoView hideMediaControls];
+    
+    self.remakeMoviePlayer.delegate = self;
+    self.remakeMoviePlayer.resetStateWhenVideoEnds = YES;
+    [self.remakeMoviePlayer play];
+    [self.remakeMoviePlayer setFullScreen];
 }
 
 

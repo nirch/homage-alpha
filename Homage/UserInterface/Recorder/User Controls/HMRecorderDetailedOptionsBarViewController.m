@@ -803,7 +803,7 @@
     }
 }
 
--(void)videoPlayerDidStop
+-(void)videoPlayerDidStop:(id)sender
 {
     if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
     {

@@ -60,7 +60,7 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
--(void)videoPlayerDidStop
+-(void)videoPlayerDidStop:(id)sender
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;

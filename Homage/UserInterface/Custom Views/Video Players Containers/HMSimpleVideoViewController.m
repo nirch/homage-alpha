@@ -51,6 +51,8 @@
 @property (nonatomic, readonly) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
 @property (atomic) BOOL isPlaying;
+
+
 @property (atomic) BOOL rotationSensitive;
 @property (nonatomic, readonly) BOOL shouldDisplayVideoLabel; // YES by default
 @property (nonatomic, readonly) NSDate *timePressedPlay;
@@ -234,7 +236,6 @@
 -(void)_startToPlayTheActualVideo
 {
     self.waitingToStartPlayingTheFile = NO;
-    self.isPlaying = YES;
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
@@ -324,6 +325,8 @@
 
 -(void)play
 {
+    if ([self.delegate respondsToSelector:@selector(videoPlayerWasFired)]) [self.delegate videoPlayerWasFired];
+    self.waitingToStartPlayingTheFile = YES;
     [self updateUIToPlayVideoState];
     dispatch_async(dispatch_get_main_queue(), ^{
         // The UI / interface command to play the video.
@@ -337,7 +340,6 @@
     // Telling the video player what the url is,
     // and prepare to play the video.
     _timePressedPlay = [NSDate date];
-    self.waitingToStartPlayingTheFile = YES;
     HMGLogDebug(@"Trying to play video at:%@", [[NSURL URLWithString:self.videoURL] description]);
     [self printViewProperties:self.view name:@"self.view"];
     [self printViewProperties:self.videoView name:@"self.videoView"];
@@ -348,6 +350,7 @@
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
+    self.isPlaying = YES;
 }
 
 -(void)done
@@ -355,7 +358,7 @@
     self.isPlaying = NO;
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
-    if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop)]) [self.delegate videoPlayerDidStop];
+    if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop:)]) [self.delegate videoPlayerDidStop:self];
     if (self.isFullscreen) {
         UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
         [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
@@ -431,7 +434,7 @@
 
 -(void)setFullScreenForOrientation:(UIInterfaceOrientation)orientation
 {
-    [self setFullScreen:YES animated:YES forOrientation:orientation];
+    [self setFullScreen:YES animated:NO forOrientation:orientation];
 }
 
 - (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated forOrientation:(UIInterfaceOrientation)orientation {
@@ -554,7 +557,13 @@
             //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
             break;
         case UIDeviceOrientationPortrait:
-            [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
+            if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
+            {
+                [self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:YES completion:nil];
+                
+            } else {
+                [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
+            }
         default:
             break;
     }
@@ -631,13 +640,7 @@
 
 -(BOOL)isInAction
 {
-    if (self.videoPlayer.playbackState != MPMoviePlaybackStateStopped)
-    {
-        return YES;
-    } else
-    {
-        return  NO;
-    }
+    return (self.isPlaying || self.waitingToStartPlayingTheFile);
 }
 
 -(void)setScalingMode:(NSString *)scale

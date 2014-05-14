@@ -556,7 +556,7 @@
 {
     UIView *view;
     self.guiVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
-    self.guiVideoContainer.backgroundColor = [UIColor clearColor];
+    self.guiVideoContainer.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:self.guiVideoContainer];
     [self.view bringSubviewToFront:self.guiVideoContainer];
@@ -567,7 +567,6 @@
     [vc hideVideoLabel];
     //[self.videoView hideMediaControls];
     
-    vc.videoImage = [UIImage imageNamed:@"missingThumbnail"];
     vc.delegate = self;
     vc.resetStateWhenVideoEnds = YES;
     [vc play];
@@ -593,7 +592,7 @@
 }
 
 //HMSimpleVideoPlayerDelegate delegate function
--(void)videoPlayerDidStop
+-(void)videoPlayerDidStop:(id)sender
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.guiVideoContainer removeFromSuperview];
