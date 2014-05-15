@@ -32,6 +32,9 @@
 #define HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE         @"Recorder Raw Footage Available"
 #define HM_NOTIFICATION_RECORDER_EPIC_FAIL                          @"Recorder Epic Fail"
 
+#define HM_DISABLE_BG_DETECTION @"recorder asks to disable motion detection"
+#define HM_ENABLE_BG_DETECTION  @"recorder asks to enable motion detection"
+
 @protocol HMRecorderChildInterface <NSObject>
 
 @optional

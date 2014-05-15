@@ -341,10 +341,6 @@
     // and prepare to play the video.
     _timePressedPlay = [NSDate date];
     HMGLogDebug(@"Trying to play video at:%@", [[NSURL URLWithString:self.videoURL] description]);
-    [self printViewProperties:self.view name:@"self.view"];
-    [self printViewProperties:self.videoView name:@"self.videoView"];
-    [self printViewProperties:self.videoPlayer.view name:@"self.videoPlayer.view"];
-    [self printViewProperties:self.videoView.guiVideoContainer name:@"self.videoView.guiVideoContainer"];
     [self.videoView.guiVideoContainer addSubview:self.videoPlayer.view];
     [self.videoPlayer prepareToPlay];
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
@@ -356,6 +352,7 @@
 -(void)done
 {
     self.isPlaying = NO;
+    self.waitingToStartPlayingTheFile = NO;
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
     if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop:)]) [self.delegate videoPlayerDidStop:self];
@@ -499,11 +496,10 @@
     //[self displayRectBounds:self.view.frame Name:@"view.frame"];
     self.view.frame = self.containerView.bounds;
     self.videoView.frame = self.containerView.bounds;
-    [self displayRect:@"self.containerView.bounds" BoundsOf:self.containerView.bounds];
     //TODO: verify with aviv if this is the correct fix
     //if (self.videoView.guiVideoContainer.bounds.size.width != 0 && self.videoView.guiVideoContainer.bounds.size.height != 0)
     self.videoPlayer.view.frame = self.containerView.bounds;
-    [self displayRect:@"self.videoPlayer.view.frame" BoundsOf:self.videoPlayer.view.frame];
+    
 }
 
 -(void)setFrame:(CGRect)frame
@@ -515,6 +511,11 @@
 }
 
 - (void)moviePlayerWillMoveFromWindow {
+    
+    if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
+    {
+       [self done]; 
+    }
     
     if (![self.containerView.subviews containsObject:self.view]) {
         [self.containerView addSubview:self.view];
@@ -559,10 +560,10 @@
         case UIDeviceOrientationPortrait:
             if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
             {
-                [self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:YES completion:nil];
+                [self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:NO completion:nil];
                 
             } else {
-                [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
+                [self setFullScreen:NO animated:NO forOrientation:UIInterfaceOrientationPortrait];
             }
         default:
             break;

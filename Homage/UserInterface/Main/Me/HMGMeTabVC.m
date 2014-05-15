@@ -214,11 +214,12 @@
     id sender = info[@"sender"];
     if (sender != self) return;
     
+    NSString *remakeID = info[@"remakeID"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    if (!remake) return;
+    
     NSIndexPath *indexPath = info[@"indexPath"];
     UIImage *image = info[@"image"];
-    
-    HMGLogDebug(@"if the bug reproduces, indexPath is: %d" , indexPath.item);
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if (notification.isReportingError ) {
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
@@ -415,7 +416,7 @@
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self}
+                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}
          ];
     }
     
@@ -627,6 +628,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.remakeToDelete = remake;
+    HMGLogDebug(@"about the delete remake: %@" , remake.sID);
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"DELETE_REMAKE") message:LS(@"APPROVE_DELETION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
     

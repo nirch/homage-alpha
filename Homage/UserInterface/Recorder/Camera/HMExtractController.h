@@ -17,6 +17,8 @@
 
 #pragma mark - Recording
 -(BOOL)isRecording;
+-(void)enableBackgroundDetection;
+-(void)disableBackgroundDetection;
 -(void)setupExtractorientationWithDeviceOrientation:(UIInterfaceOrientation)orientation frontCamera:(BOOL)Front;
 -(void)startRecordingToOutputFileURL:(NSURL*)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate;
 -(void)stopRecording;

@@ -242,18 +242,20 @@
     
     //observe bad background
     [nc addUniqueObserver:self
-                 selector:@selector(onBadBackGroundDetected:)
+                 selector:@selector(showBadBackgroundLabel)
                      name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
                    object:nil];
     
     //observe good background
     [nc addUniqueObserver:self
-                 selector:@selector(onGoodBackGroundDetected:)
+                 selector:@selector(hideBadBackgroundLabel)
                      name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
                    object:nil];
     
-    
-    
+    [nc addUniqueObserver:self
+                 selector:@selector(hideBadBackgroundLabel)
+                     name:HM_DISABLE_BG_DETECTION
+                   object:nil];
     
     // Observe reachability status changes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -289,6 +291,8 @@
     [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND object:nil];
+    [nc removeObserver:self name:HM_DISABLE_BG_DETECTION object:nil];
+    
     
 }
 
@@ -657,6 +661,7 @@
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
+    [self postDisableBGdetectionNotification];
     NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%ld" , self.sceneID.longValue];
     [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID , @"story" : self.remake.story.name}];
     self.guiCountdownContainer.hidden = NO;
@@ -686,6 +691,8 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
     [self.guiRoundCountdownLabal cancel];
+    [HMMotionDetector.sh stopWithNotification:NO];
+    [self postEnableBGDetectionNotification];
     [[Mixpanel sharedInstance] track:@"RECancelRecord"];
     self.guiCountdownContainer.hidden = YES;
     [self.audioPlayer stop];
@@ -815,17 +822,15 @@
 
 }
 
--(void)onBadBackGroundDetected:(NSNotification *)notification
+-(void)showBadBackgroundLabel
 {
     if (!self.guiBadBGLabel.hidden) return;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.guiBadBGLabel.hidden = NO;
     });
-    
-    NSLog(@"displaying label !!!!!!!!!!!!!!!!!!!!!!!");
 }
 
--(void)onGoodBackGroundDetected:(NSNotification *)notification
+-(void)hideBadBackgroundLabel
 {
     if (self.guiBadBGLabel.hidden) return;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -837,6 +842,16 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+-(void)postDisableBGdetectionNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_DISABLE_BG_DETECTION object:self];
+}
+
+-(void)postEnableBGDetectionNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_ENABLE_BG_DETECTION object:self];
 }
 
 
