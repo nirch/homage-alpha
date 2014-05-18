@@ -119,7 +119,8 @@
         
         counter = 0;
         
-        [self initObservers];
+        //[self initObservers];
+        self.backgroundDetectionEnabled = YES;
     }
     return self;
 }

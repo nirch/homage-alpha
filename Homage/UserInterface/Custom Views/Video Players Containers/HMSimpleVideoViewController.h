@@ -149,13 +149,6 @@
  */
 -(BOOL)isInAction;
 
-
-///
-/**
- *  checks if the moviePlayer is playing
- */
--(BOOL)videoPlayerIsPlaying;
-
 ///
 /**
  *  sets the movie scaling mode. currently implemented: "aspect fit"

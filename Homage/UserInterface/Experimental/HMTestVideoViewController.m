@@ -9,12 +9,10 @@
 #import "HMTestVideoViewController.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMSimpleVideoPlayerDelegate.h"
-#import "ALMoviePlayerController.h"
 
-@interface HMTestVideoViewController () <HMSimpleVideoPlayerDelegate,ALMoviePlayerControllerDelegate>
+@interface HMTestVideoViewController () <HMSimpleVideoPlayerDelegate>
 
 @property (strong,nonatomic) HMSimpleVideoViewController *moviePlayerVC;
-@property (strong,nonatomic) ALMoviePlayerController *moviePlayer;
 @property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
 @property (nonatomic) CGRect defaultFrame;
 
@@ -105,82 +103,10 @@
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
-{
-    
-    UIDeviceOrientation currentOrientation = [[UIDevice currentDevice] orientation];
-    
-    switch (currentOrientation)
-    {
-        case UIDeviceOrientationPortrait:
-            [self configureViewForOrientation:currentOrientation];
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-            [self configureViewForOrientation:currentOrientation];
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            [self configureViewForOrientation:currentOrientation];
-            break;
-        default:
-            break;
-    }
-    return UIInterfaceOrientationMaskPortrait;
-}
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     //[self configureViewForOrientation:toInterfaceOrientation];
-}
-
-//IMPORTANT!
-- (void)moviePlayerWillMoveFromWindow {
-    //movie player must be readded to this view upon exiting fullscreen mode.
-    if (![self.view.subviews containsObject:self.moviePlayer.view])
-        [self.view addSubview:self.moviePlayer.view];
-    
-    //you MUST use [ALMoviePlayerController setFrame:] to adjust frame, NOT [ALMoviePlayerController.view setFrame:]
-    [self.moviePlayer setFrame:self.defaultFrame];
-}
-
-- (void)configureViewForOrientation:(UIDeviceOrientation)orientation {
-    
-    [self displayRect:@"self.moviePlayerVC.view.frame before" BoundsOf:self.moviePlayerVC.view.frame];
-    
-    switch (orientation)
-    {
-        case UIDeviceOrientationPortrait:
-            self.defaultFrame = CGRectMake(0, 50, 320 , 180);
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-            self.defaultFrame = CGRectMake(0, 0, self.view.frame.size.width , self.view.frame.size.height);
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            self.defaultFrame = CGRectMake(0, 0, self.view.frame.size.width , self.view.frame.size.height);
-            break;
-        default:
-            self.defaultFrame = CGRectMake(0, 50, 320 , 180);
-            break;
-    }
-    
-    /*if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        videoWidth = 700.f;
-        videoHeight = 535.f;
-    } else {
-        videoWidth = self.view.frame.size.width;
-        videoHeight = 220.f;
-    }*/
-    
-    //calulate the frame on every rotation, so when we're returning from fullscreen mode we'll know where to position the movie player
-    
-    //self.defaultFrame = CGRectMake(self.view.frame.size.width/2 - videoWidth/2, self.view.frame.size.height/2 - videoHeight/2, videoWidth, videoHeight);
-    
-    //only manage the movie player frame when it's not in fullscreen. when in fullscreen, the frame is automatically managed
-    if (self.moviePlayer.isFullscreen)
-        return;
-    
-    //you MUST use [ALMoviePlayerController setFrame:] to adjust frame, NOT [ALMoviePlayerController.view setFrame:]
-    [self.moviePlayerVC setFrame:self.defaultFrame];
-    [self displayRect:@"self.moviePlayerVC.view.frame after" BoundsOf:self.moviePlayerVC.view.frame];
 }
 
 

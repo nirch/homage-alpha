@@ -115,16 +115,8 @@
 {
     [self initObservers];
     [self.videoCameraVC attachCameraIO];
-    [self postEnableBGDetectionNotification];
-
-/*
-    // ----------------------------------
-    // Hack forcing orientation.
-    // TODO: Remove this hack ASAP.
-    _allowedOrientations = UIInterfaceOrientationMaskLandscapeRight;
-    objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeRight );
-    // ----------------------------------
-*/
+    //bg detection is enabled by default
+    //[self postEnableBGDetectionNotification];
 }
 
 
@@ -994,8 +986,10 @@
 {
     if (self.detailedOptionsOpened) {
         [self closeDetailedOptionsAnimated:animated];
+        [self postEnableBGDetectionNotification];
     } else {
         [self openDetailedOptionsAnimated:animated];
+        [self postDisableBGdetectionNotification];
         //THE HAND!!
         self.showHand = NO;
     }
@@ -1278,12 +1272,14 @@
 
 -(void)postDisableBGdetectionNotification
 {
-   [[NSNotificationCenter defaultCenter] postNotificationName:HM_DISABLE_BG_DETECTION object:self];
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:HM_DISABLE_BG_DETECTION object:self];
 }
 
 -(void)postEnableBGDetectionNotification
 {
-   [[NSNotificationCenter defaultCenter] postNotificationName:HM_ENABLE_BG_DETECTION object:self];
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:HM_ENABLE_BG_DETECTION object:self];
 }
 
 @end

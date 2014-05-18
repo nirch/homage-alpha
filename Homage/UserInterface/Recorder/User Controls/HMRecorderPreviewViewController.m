@@ -60,7 +60,7 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
--(void)videoPlayerDidStop:(id)sender
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;

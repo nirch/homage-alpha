@@ -20,6 +20,7 @@
 #import "IASKSettingsStore.h"
 #import "IASKViewController.h"
 #import "IASKSpecifier.h"
+#import "IASKSettingsReader.h"
 
 @class IASKSettingsReader;
 @class IASKAppSettingsViewController;

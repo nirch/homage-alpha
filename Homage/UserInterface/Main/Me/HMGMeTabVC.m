@@ -16,7 +16,6 @@
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
-#import "HMVideoPlayerVC.h"
 #import "HMVideoPlayerDelegate.h"
 #import "HMSimpleVideoViewController.h"
 
@@ -33,7 +32,6 @@
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
-@property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 @property (nonatomic,weak) UIView *guiVideoContainer;
 
 @end
@@ -592,15 +590,6 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
-//HMSimpleVideoPlayerDelegate delegate function
--(void)videoPlayerDidStop:(id)sender
-{
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self.guiVideoContainer removeFromSuperview];
-    if (self.playingMovieIndex != -1)
-        [self closeCurrentlyPlayingMovie];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
 
 -(void)closeCurrentlyPlayingMovie
 {
@@ -840,21 +829,36 @@
     }];
 }
 
-#pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerFinishedPlaying
+#pragma mark HMSimpleVideoViewController delegate
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self.guiVideoContainer removeFromSuperview];
+    if (self.playingMovieIndex != -1)
+        [self closeCurrentlyPlayingMovie];
+    [[Mixpanel sharedInstance] track:@"MEStopWatchRemake" properties:@{@"time_watched" : playbackTime}];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)videoPlayerStopped
+-(void)videoPlayerDidFinishPlaying
 {
-    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"MEStopWatchRemake"];
+   [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
 }
 
+-(void)videoPlayerWillPlay
+{
+    
+}
 
+-(void)videoPlayerDidExitFullScreen
+{
+    
+}
 
+-(void)videoPlayerWasFired
+{
+    
+}
 
 // ============
 // Rewind segue

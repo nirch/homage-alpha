@@ -20,9 +20,8 @@
 #import "Mixpanel.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMSimpleDataViewController.h"
-#import "HMVideoPlayerVC.h"
 
-@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,HMVideoPlayerDelegate,UIActionSheetDelegate>
+@interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
@@ -420,9 +419,9 @@
 
 #pragma mark HMSimpleVideoPlayerDelegate
 
--(void)videoPlayerDidStop:(id)sender
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name}];
+    [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name , @"time_watched" : playbackTime}];
     
     if (sender == self.remakeMoviePlayer)
     {

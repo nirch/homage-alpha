@@ -56,6 +56,7 @@
 @property (atomic) BOOL rotationSensitive;
 @property (nonatomic, readonly) BOOL shouldDisplayVideoLabel; // YES by default
 @property (nonatomic, readonly) NSDate *timePressedPlay;
+@property (nonatomic) NSTimeInterval currentPlaybackTime;
 
 
 @end
@@ -105,10 +106,6 @@
    
     self.videoPlayer.view.alpha = 0;
     self.videoView.guiVideoThumb.alpha = 1;
-    
-    [self displayRect:@"self.view.frame" BoundsOf:self.view.frame];
-    [self displayRect:@"self.videoPlayer.view.frame" BoundsOf:self.videoPlayer.view.frame];
-    [self displayRect:@"self.videoView.frame" BoundsOf:self.videoView.frame];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -174,6 +171,11 @@
                      name:MPMoviePlayerDidExitFullscreenNotification
                    object:self.videoPlayer];
     
+    [nc addUniqueObserver:self
+                 selector:@selector(onMovieDurationAvailable:)
+                     name:MPMovieDurationAvailableNotification
+                   object:self.videoPlayer];
+    
     if (self.rotationSensitive)
     {
         [nc addUniqueObserver:self
@@ -191,6 +193,7 @@
     [nc removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.videoPlayer];
     [nc removeObserver:self name:MPMoviePlayerDidExitFullscreenNotification object:self.videoPlayer];
+    [nc removeObserver:self name:MPMovieDurationAvailableNotification object:self.videoPlayer];
     if (self.rotationSensitive)
     {
         [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -207,8 +210,29 @@
 
 -(void)onMoviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
-    if (self.resetStateWhenVideoEnds) [self done];
-    if ([self.delegate respondsToSelector:@selector(videoPlayerDidFinishPlaying)]) [self.delegate videoPlayerDidFinishPlaying];
+    
+    if (self.videoPlayer.duration != 0 && self.currentPlaybackTime >= (self.videoPlayer.duration - 5))
+    {
+        //the user watched the movie almost all the way
+        if ([self.delegate respondsToSelector:@selector(videoPlayerDidFinishPlaying)])
+        {
+            [self.delegate videoPlayerDidFinishPlaying];
+        }
+        if (self.resetStateWhenVideoEnds) [self done];
+        
+    } else
+    {
+        //the user stopped the movie in the middle
+        if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop:afterDuration:)])
+        {
+            NSString *playbackTimeString = [NSString stringWithFormat:@"%f" , self.currentPlaybackTime];
+            [self.delegate videoPlayerDidStop:self afterDuration:playbackTimeString];
+        }
+        [self done];
+        
+    }
+    
+    self.currentPlaybackTime = 0;
 }
 
 -(void)onMoviePlayerPlaybackStateDidChange:(NSNotification *)notification
@@ -223,6 +247,8 @@
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
     }
+    
+    self.currentPlaybackTime = self.videoPlayer.currentPlaybackTime;
 }
 
 -(void)onMoviePlayerDidExitFullscreen:(NSNotification *)notification
@@ -295,7 +321,6 @@
     if (_videoPlayer) return _videoPlayer;
     _videoPlayer = [[MPMoviePlayerController alloc] init];
     _videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
-    [self displayRect:@"self.videoView.guiVideoContainer.bounds" BoundsOf:self.videoView.guiVideoContainer.bounds];
     _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
     _videoPlayer.controlStyle = MPMovieControlStyleNone;
     _videoPlayer.shouldAutoplay = NO;
@@ -355,7 +380,6 @@
     self.waitingToStartPlayingTheFile = NO;
     [self.videoPlayer stop];
     self.videoView.guiPlayPauseButton.selected = NO;
-    if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop:)]) [self.delegate videoPlayerDidStop:self];
     if (self.isFullscreen) {
         UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
         [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
@@ -709,6 +733,11 @@
     CGSize size = rect.size;
     CGPoint origin = rect.origin;
     NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
+}
+
+-(void)onMovieDurationAvailable:(NSNotification *)notification
+{
+    HMGLogDebug(@"duration for movie receicved: %f" , self.videoPlayer.duration);
 }
 
 @end

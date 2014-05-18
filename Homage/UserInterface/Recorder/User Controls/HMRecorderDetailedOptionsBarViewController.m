@@ -617,6 +617,28 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
+-(void)videoPlayerWillPlay
+{
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REPlayOurScene"];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+        [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
+    }
+}
+
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
+{
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REStopOurScene" properties:@{@"time_watched" : playbackTime}];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+        [[Mixpanel sharedInstance] track:@"REStopOurStory" properties:@{@"time_watched" : playbackTime}];
+    }    
+}
+
 -(void)videoPlayerDidFinishPlaying
 {
     [self.sceneVideoVC done];
@@ -630,6 +652,7 @@
         [[Mixpanel sharedInstance] track:@"REfinishOurStory"];
     }
 }
+
 
 #pragma mark - IB Actions
 // ===========
@@ -799,28 +822,6 @@
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
 
--(void)videoPlayerWillPlay
-{
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REPlayOurScene"];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-       [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
-    }
-}
-
--(void)videoPlayerDidStop:(id)sender
-{
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REStopOurScene"];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-        [[Mixpanel sharedInstance] track:@"REStopOurStory"];
-    }
-
-}
 
 -(void)showBadBackgroundLabel
 {

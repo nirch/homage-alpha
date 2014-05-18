@@ -27,7 +27,6 @@
 #import "HMStoriesViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMDINOTCondBoldFontLabel.h"
-#import "HMVideoPlayerVC.h"
 #import "HMVideoPlayerDelegate.h"
 #import <CrashReporter/PLCrashReporter.h>
 #import <CrashReporter/PLCrashReport.h>
@@ -71,7 +70,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 @property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
 @property (weak, nonatomic) IBOutlet HMDINOTCondBoldFontLabel *guiNoConnectivityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
-@property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
 @property (nonatomic) NSInteger selectedTab;
 @property (nonatomic) BOOL justStarted;
 
@@ -172,6 +170,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
                                                    selector:@selector(onUserJoin:)
                                                        name:HM_NOTIFICATION_USER_JOIN
                                                      object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(settingsDidChange:) name:kIASKAppSettingChanged object:nil];
 
     
 }
@@ -305,6 +305,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         self.guiTabNameLabel.hidden = NO;
         self.appTabBarController.tabBar.hidden = YES;
         [self setNavControllersDelegate];
+        //[self setSettingsVCdelegate];
         
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
@@ -331,6 +332,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
        {
            UINavigationController *navVC = (UINavigationController *)vc;
            navVC.delegate = self;
+           
+           
        }
    }
 
@@ -635,9 +638,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)switchToTab:(NSInteger)toIndex
 {
-    //check is user changes prepferences in Settings
-    if (self.selectedTab == HMSettingsTab) [self updateUserPreferences];
-    
     self.appTabBarController.selectedIndex = toIndex;
     
     switch (toIndex) {
@@ -654,7 +654,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
             self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
             break;
     }
-    
     
     self.selectedTab = toIndex;
 }
@@ -820,19 +819,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 }
 
 
-#pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerStopped
-{
-    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"stopIntroStory"];
-}
 
--(void)videoPlayerFinishedPlaying
-{
-    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil]
-    ;
-    [[Mixpanel sharedInstance] track:@"finishIntroStory "];
-}
 
 #pragma mark push notifications handler
 -(void)onUserMovieFinishedRendering:(NSNotification *)notification
@@ -927,22 +914,22 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     return loginName;
 }
 
-/*#pragma mark iask buttons delegate
-- (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForSpecifier:(IASKSpecifier*)specifier {
-	if ([specifier.key isEqualToString:@"loginStateButton"]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"loginStateButton" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-    }
-}*/
+-(void)settingsDidChange:(NSNotification *)notification
+{
+    [self updateUserPreferences];
+}
 
--(void)videoPlayerDidStop:(id)sender
+#pragma mark HMSimpleVideoViewController delegate
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
     [self.guiVideoContainer removeFromSuperview];
+    [[Mixpanel sharedInstance] track:@"stopIntroStory" properties:@{@"time_watched" : playbackTime}];
+    
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
-    
+    [[Mixpanel sharedInstance] track:@"finishIntroStory"];
 }
 
 -(void)videoPlayerWillPlay
@@ -955,6 +942,9 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
 }
 
-
+-(void)videoPlayerWasFired
+{
+    
+}
 
 @end
