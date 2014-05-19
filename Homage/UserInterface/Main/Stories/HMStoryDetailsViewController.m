@@ -247,12 +247,17 @@
     // Reveal the image
     HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
     cell.guiThumbImage.alpha = 0;
+    cell.guiMoreButton.alpha = 1;
     cell.guiThumbImage.image = remake.thumbnail;
-    cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    CGAffineTransform transform = CGAffineTransformMakeScale(0.8, 0.8);
+    cell.guiThumbImage.transform = transform;
+    cell.guiMoreButton.transform = transform;
     
     [UIView animateWithDuration:0.7 animations:^{
         cell.guiThumbImage.alpha = 1;
+        cell.guiMoreButton.alpha = 1;
         cell.guiThumbImage.transform = CGAffineTransformIdentity;
+        cell.guiMoreButton.transform = CGAffineTransformIdentity;
     }];
     
     cell.guiUserName.text = remake.user.userID;
@@ -389,8 +394,10 @@
     if (remake.thumbnail) {
         cell.guiThumbImage.image = remake.thumbnail;
         cell.guiThumbImage.alpha = 1;
+        cell.guiMoreButton.alpha = 1;
     } else {
         cell.guiThumbImage.alpha = 0;
+        cell.guiMoreButton.alpha = 0;
         cell.guiThumbImage.image = nil;
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil

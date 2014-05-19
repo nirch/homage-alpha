@@ -115,8 +115,7 @@
 {
     [self initObservers];
     [self.videoCameraVC attachCameraIO];
-    //bg detection is enabled by default
-    //[self postEnableBGDetectionNotification];
+    [self postEnableBGDetectionNotification];
 }
 
 

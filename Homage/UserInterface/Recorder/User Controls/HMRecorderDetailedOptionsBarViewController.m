@@ -688,9 +688,18 @@
     NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%ld" , self.sceneID.longValue];
     [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID , @"story" : self.remake.story.name}];
     self.guiCountdownContainer.hidden = NO;
+
+    [self playCountdownSound];
     [self.guiRoundCountdownLabal startTicking];
     
-    //play countdown sound
+    Scene *scene = [self.remake.story findSceneWithID:self.sceneID];
+    CGPoint focusPoint = scene.focusCGPoint;
+    NSDictionary *userInfo = @{HM_INFO_FOCUS_POINT:@[@(focusPoint.x),@(focusPoint.y)]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil userInfo:userInfo];
+}
+
+-(void)playCountdownSound
+{
     NSError *error;
     NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown_oneLast" ofType:@"wav"]];
     self.audioPlayer = [[AVAudioPlayer alloc]
@@ -698,11 +707,6 @@
     NSLog(@"error: %@" , error);
     [self.audioPlayer prepareToPlay];
     [self.audioPlayer play];
-    
-    Scene *scene = [self.remake.story findSceneWithID:self.sceneID];
-    CGPoint focusPoint = scene.focusCGPoint;
-    NSDictionary *userInfo = @{HM_INFO_FOCUS_POINT:@[@(focusPoint.x),@(focusPoint.y)]};
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil userInfo:userInfo];
 }
 
 - (IBAction)onPressedCancelCountdownButton:(UIButton *)sender

@@ -119,7 +119,7 @@
         
         counter = 0;
         
-        //[self initObservers];
+        [self initObservers];
         self.backgroundDetectionEnabled = YES;
     }
     return self;
@@ -136,6 +136,19 @@
                                                    selector:@selector(enableBackgroundDetection)
                                                        name:HM_ENABLE_BG_DETECTION
                                                      object:nil];
+}
+
+
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_DISABLE_BG_DETECTION object:nil];
+    [nc removeObserver:self name:HM_ENABLE_BG_DETECTION object:nil];
+}
+
+-(void)dealloc
+{
+    [self removeObservers];
 }
 
 

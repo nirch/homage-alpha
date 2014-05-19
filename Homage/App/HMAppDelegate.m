@@ -15,11 +15,14 @@
 #import "HMNotificationCenter.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Crashlytics/Crashlytics.h>
+#import <Appirater/Appirater.h>
 
 
 @implementation HMAppDelegate
 
 #define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
+#define FB_APP_ID @"447743458659084"
+#define APPLE_ID @"851746600"
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -61,7 +64,16 @@
         }
     }
     
+    [Appirater setAppId:APPLE_ID];
+    [Appirater setDaysUntilPrompt:1];
+    [Appirater setUsesUntilPrompt:10];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater setDebug:NO];
+    [Appirater appLaunched:YES];
+    
     [FBLoginView class];
+    
     return YES;
 }
 
@@ -127,11 +139,14 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_APP_WILL_ENTER_FOREGROUND object:nil userInfo:nil];
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [HMServer.sh startMonitoringReachability];    
+    [HMServer.sh startMonitoringReachability];
+    [FBSettings setDefaultAppID:FB_APP_ID];
+    [FBAppEvents activateApp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
