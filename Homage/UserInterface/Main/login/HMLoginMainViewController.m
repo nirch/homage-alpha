@@ -88,7 +88,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     
     //FBloginView
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"email",@"user_birthday",@"basic_info"]];
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"email",@"user_birthday",@"public_profile"]];
     loginView.delegate = self;
     
     // Align the button in the center horizontally
@@ -672,7 +672,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     NSDictionary *deviceInfo = [self getDeviceInformation];
     
-    NSDictionary *FBDictionary = @{@"id" : user.id , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link , @"username" : user.username};
+    NSDictionary *FBDictionary = @{@"id" : user.objectID , @"name" : user.name , @"first_name" : user.first_name , @"last_name" : user.last_name , @"link" : user.link};
     
     if ([user objectForKey:@"birthday"])
     {

@@ -3,5 +3,5 @@ link_with 'Homage', 'HomageTests'
 pod 'AFNetworking',     '~> 2.0.3'
 pod 'Mixpanel',                     :inhibit_warnings => true
 pod 'PLCrashReporter' , '1.2-rc4'
-pod 'Facebook-iOS-SDK', '3.13'
+pod 'Facebook-iOS-SDK', '~> 3.14'
 
