@@ -750,11 +750,15 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             
             [[self session] addInput:videoDeviceInput];
             [self setVideoDeviceInput:videoDeviceInput];
+            [self updateFPS];
         }
         else
         {
             if ([[self session] canAddInput:[self videoDeviceInput]])
+            {
                 [[self session] addInput:[self videoDeviceInput]];
+                [self updateFPS];
+            }
         }
         
         [[self session] commitConfiguration];
@@ -870,6 +874,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             } else {
                 HMGLogDebug(@"Frame rate range unsupported: %d - %d. Using camera defaults instead.", minFPS, maxFPS);
             }
+            
+            [device unlockForConfiguration];
         } else {
             HMGLogError(@"%@", error);
         }
