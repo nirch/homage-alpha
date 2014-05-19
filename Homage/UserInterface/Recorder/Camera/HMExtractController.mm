@@ -37,6 +37,7 @@
 
 @property (nonatomic, readonly) dispatch_queue_t extractQueue;
 @property (readonly) BOOL isCurrentlyRecording;
+@property (nonatomic) BOOL backgroundDetectionEnabled;
 @property (readonly) NSURL *outputFileURL;
 
 @property (readonly) AVAssetWriter *assetWriter;
@@ -117,8 +118,24 @@
         gpTime_init( & m_gTimeAppend);
         
         counter = 0;
+        
+        //[self initObservers];
+        self.backgroundDetectionEnabled = YES;
     }
     return self;
+}
+
+-(void)initObservers
+{
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(disableBackgroundDetection)
+                                                       name:HM_DISABLE_BG_DETECTION
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(enableBackgroundDetection)
+                                                       name:HM_ENABLE_BG_DETECTION
+                                                     object:nil];
 }
 
 
@@ -228,7 +245,7 @@
     //detect bad background
     if (captureOutput == _movieDataOutput)
     {
-        if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && !_isCurrentlyRecording)
+        if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && self.backgroundDetectionEnabled)
         {
             // SampleBuffer to PixelBuffer
             CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
@@ -399,6 +416,17 @@
     CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
     
     return pxbuffer;
+}
+
+-(void)enableBackgroundDetection
+{
+    self.backgroundDetectionEnabled = YES;
+}
+
+
+-(void)disableBackgroundDetection;
+{
+    self.backgroundDetectionEnabled = NO;
 }
 
 @end

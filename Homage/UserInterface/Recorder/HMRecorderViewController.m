@@ -115,15 +115,8 @@
 {
     [self initObservers];
     [self.videoCameraVC attachCameraIO];
-
-/*
-    // ----------------------------------
-    // Hack forcing orientation.
-    // TODO: Remove this hack ASAP.
-    _allowedOrientations = UIInterfaceOrientationMaskLandscapeRight;
-    objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeRight );
-    // ----------------------------------
-*/
+    //bg detection is enabled by default
+    //[self postEnableBGDetectionNotification];
 }
 
 
@@ -798,6 +791,7 @@
             self.guiMessagesOverlayContainer.transform = [self minimizedSceneDirectionTransform];
         } completion:^(BOOL finished) {
             self.guiMessagesOverlayContainer.hidden = YES;
+            [self postEnableBGDetectionNotification];
             // Check the recorder state and advance it if needed.
             if (advancingState) [self advanceState];
         }];
@@ -809,6 +803,7 @@
         self.guiMessagesOverlayContainer.transform = defaultTransform;
     } completion:^(BOOL finished) {
         self.guiMessagesOverlayContainer.hidden = YES;
+        [self postEnableBGDetectionNotification];
         // Check the recorder state and advance it if needed.
         if (advancingState) [self advanceState];
     }];
@@ -928,6 +923,7 @@
     // Show animated
     //
     self.guiMessagesOverlayContainer.hidden = NO;
+    [self postDisableBGdetectionNotification];
     self.guiMessagesOverlayContainer.transform = CGAffineTransformMakeScale(1.2, 1.2);
     double animationDuration = 0.3; // default value
     
@@ -990,8 +986,10 @@
 {
     if (self.detailedOptionsOpened) {
         [self closeDetailedOptionsAnimated:animated];
+        [self postEnableBGDetectionNotification];
     } else {
         [self openDetailedOptionsAnimated:animated];
+        [self postDisableBGdetectionNotification];
         //THE HAND!!
         self.showHand = NO;
     }
@@ -1270,6 +1268,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self
                                                       userInfo:info];
+}
+
+-(void)postDisableBGdetectionNotification
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:HM_DISABLE_BG_DETECTION object:self];
+}
+
+-(void)postEnableBGDetectionNotification
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:HM_ENABLE_BG_DETECTION object:self];
 }
 
 @end

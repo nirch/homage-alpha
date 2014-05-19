@@ -26,7 +26,7 @@
     
     HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMRecorderBigVideoPlayerView"
                                                                                  inParentVC:self
-                                                                              containerView:self.guiContainerView
+                                                                              containerView:self.guiContainerView rotationSensitive:NO
                                        ];
     vc.delegate = self;
     vc.videoLabelText = LS(@"SHOW_YOUR_TAKE");
@@ -60,7 +60,7 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
--(void)videoPlayerDidStop
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;

@@ -126,11 +126,11 @@
 {
     // Video controllers (scene & story)
     HMSimpleVideoViewController *vc;
-    _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView];
+    _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
     self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
     
-    _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView];
+    _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
     self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
@@ -242,18 +242,20 @@
     
     //observe bad background
     [nc addUniqueObserver:self
-                 selector:@selector(onBadBackGroundDetected:)
+                 selector:@selector(showBadBackgroundLabel)
                      name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
                    object:nil];
     
     //observe good background
     [nc addUniqueObserver:self
-                 selector:@selector(onGoodBackGroundDetected:)
+                 selector:@selector(hideBadBackgroundLabel)
                      name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
                    object:nil];
     
-    
-    
+    [nc addUniqueObserver:self
+                 selector:@selector(hideBadBackgroundLabel)
+                     name:HM_DISABLE_BG_DETECTION
+                   object:nil];
     
     // Observe reachability status changes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -289,6 +291,8 @@
     [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND object:nil];
+    [nc removeObserver:self name:HM_DISABLE_BG_DETECTION object:nil];
+    
     
 }
 
@@ -613,6 +617,28 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
+-(void)videoPlayerWillPlay
+{
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REPlayOurScene"];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+        [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
+    }
+}
+
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
+{
+    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
+    {
+        [[Mixpanel sharedInstance] track:@"REStopOurScene" properties:@{@"time_watched" : playbackTime}];
+    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
+    {
+        [[Mixpanel sharedInstance] track:@"REStopOurStory" properties:@{@"time_watched" : playbackTime}];
+    }    
+}
+
 -(void)videoPlayerDidFinishPlaying
 {
     [self.sceneVideoVC done];
@@ -626,6 +652,7 @@
         [[Mixpanel sharedInstance] track:@"REfinishOurStory"];
     }
 }
+
 
 #pragma mark - IB Actions
 // ===========
@@ -657,6 +684,7 @@
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
+    [self postDisableBGdetectionNotification];
     NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%ld" , self.sceneID.longValue];
     [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID , @"story" : self.remake.story.name}];
     self.guiCountdownContainer.hidden = NO;
@@ -686,6 +714,8 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
     [self.guiRoundCountdownLabal cancel];
+    [HMMotionDetector.sh stopWithNotification:NO];
+    [self postEnableBGDetectionNotification];
     [[Mixpanel sharedInstance] track:@"RECancelRecord"];
     self.guiCountdownContainer.hidden = YES;
     [self.audioPlayer stop];
@@ -792,40 +822,16 @@
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
 
--(void)videoPlayerWillPlay
-{
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REPlayOurScene"];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-       [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
-    }
-}
 
--(void)videoPlayerDidStop
-{
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REStopOurScene"];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-        [[Mixpanel sharedInstance] track:@"REStopOurStory"];
-    }
-
-}
-
--(void)onBadBackGroundDetected:(NSNotification *)notification
+-(void)showBadBackgroundLabel
 {
     if (!self.guiBadBGLabel.hidden) return;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.guiBadBGLabel.hidden = NO;
     });
-    
-    NSLog(@"displaying label !!!!!!!!!!!!!!!!!!!!!!!");
 }
 
--(void)onGoodBackGroundDetected:(NSNotification *)notification
+-(void)hideBadBackgroundLabel
 {
     if (self.guiBadBGLabel.hidden) return;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -837,6 +843,16 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+-(void)postDisableBGdetectionNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_DISABLE_BG_DETECTION object:self];
+}
+
+-(void)postEnableBGDetectionNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_ENABLE_BG_DETECTION object:self];
 }
 
 

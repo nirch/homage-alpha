@@ -16,11 +16,11 @@
 #import "HMRecorderViewController.h"
 #import "HMColor.h"
 #import "mixPanel.h"
-#import "HMVideoPlayerVC.h"
 #import "HMVideoPlayerDelegate.h"
+#import "HMSimpleVideoViewController.h"
 
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate>
+@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 //HMSimpleVideoPlayerDelegate removed
 
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
@@ -32,7 +32,7 @@
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
-@property (nonatomic, strong) HMVideoPlayerVC *moviePlayer;
+@property (nonatomic,weak) UIView *guiVideoContainer;
 
 @end
 
@@ -212,11 +212,12 @@
     id sender = info[@"sender"];
     if (sender != self) return;
     
+    NSString *remakeID = info[@"remakeID"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    if (!remake) return;
+    
     NSIndexPath *indexPath = info[@"indexPath"];
     UIImage *image = info[@"image"];
-    
-    HMGLogDebug(@"if the bug reproduces, indexPath is: %d" , indexPath.item);
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if (notification.isReportingError ) {
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
@@ -413,7 +414,7 @@
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self}
+                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}
          ];
     }
     
@@ -545,22 +546,30 @@
     }
     
     self.playingMovieIndex = indexPath.item;
-    HMVideoPlayerVC *videoPlayerVC = [[HMVideoPlayerVC alloc ] init];
-    videoPlayerVC.delegate = self;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    videoPlayerVC.videoURL = [NSURL URLWithString:remake.videoURL];
-    self.moviePlayer = videoPlayerVC;
-    [self presentViewController:videoPlayerVC animated:YES completion:nil];
-    
-    //old code for playing movie inside cell
-    /*HMSimpleVideoViewController *vc;
-     self.moviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithNibNamed:@"HMMeVideoPlayer" inParentVC:self containerView:cell.moviePlaceHolder];
-     self.moviePlayer.delegate = self;
-     self.moviePlayer.videoURL = videoURL;
-     [self configureCellForMoviePlaying:cell active:YES];
-     [self.moviePlayer play];
-     [self.moviePlayer setScalingMode:@"aspect fit"];*/
+    [self initVideoPlayerWithURL:[NSURL URLWithString:remake.videoURL]];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)initVideoPlayerWithURL:(NSURL *)url
+{
+    UIView *view;
+    self.guiVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
+    self.guiVideoContainer.backgroundColor = [UIColor blackColor];
+    
+    [self.view addSubview:self.guiVideoContainer];
+    [self.view bringSubviewToFront:self.guiVideoContainer];
+    [self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
+    
+    HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
+    vc.videoURL = [url absoluteString];
+    [vc hideVideoLabel];
+    //[self.videoView hideMediaControls];
+    
+    vc.delegate = self;
+    vc.resetStateWhenVideoEnds = YES;
+    [vc play];
+    [vc setFullScreen];
 }
 
 -(void)configureCellForMoviePlaying:(HMGUserRemakeCVCell *)cell active:(BOOL)active
@@ -581,14 +590,6 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
-//HMSimpleVideoPlayerDelegate delegate function
--(void)videoPlayerDidStop
-{
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    if (self.playingMovieIndex != -1)
-        [self closeCurrentlyPlayingMovie];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
 
 -(void)closeCurrentlyPlayingMovie
 {
@@ -616,6 +617,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.remakeToDelete = remake;
+    HMGLogDebug(@"about the delete remake: %@" , remake.sID);
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"DELETE_REMAKE") message:LS(@"APPROVE_DELETION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
     
@@ -706,7 +708,7 @@
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         if (completed) {
-            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"Story" : remake.story.name , @"share_method" : activityType}];
+            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType}];
         }
     };
     [activityViewController setValue:shareString forKey:@"subject"];
@@ -827,19 +829,36 @@
     }];
 }
 
-#pragma mark HMVideoPlayerVC delegate
--(void)videoPlayerFinishedPlaying
+#pragma mark HMSimpleVideoViewController delegate
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self.guiVideoContainer removeFromSuperview];
+    if (self.playingMovieIndex != -1)
+        [self closeCurrentlyPlayingMovie];
+    [[Mixpanel sharedInstance] track:@"MEStopWatchRemake" properties:@{@"time_watched" : playbackTime}];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)videoPlayerStopped
+-(void)videoPlayerDidFinishPlaying
 {
-    [self.moviePlayer dismissViewControllerAnimated:YES completion:nil];
-    [[Mixpanel sharedInstance] track:@"MEStopWatchRemake"];
+   [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
 }
 
+-(void)videoPlayerWillPlay
+{
+    
+}
+
+-(void)videoPlayerDidExitFullScreen
+{
+    
+}
+
+-(void)videoPlayerWasFired
+{
+    
+}
 
 // ============
 // Rewind segue
@@ -847,6 +866,13 @@
 -(IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
 {
     //self.view.backgroundColor = [UIColor clearColor];
+}
+
+-(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
+{
+    CGSize size = rect.size;
+    CGPoint origin = rect.origin;
+    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
 }
 
 @end

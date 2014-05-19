@@ -208,6 +208,7 @@
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		2610133718E172A80065C72B /* HMLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2610133618E172A80065C72B /* HMLoginTests.m */; };
+		2615B557191FA0E0007F5FC0 /* HMTestVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2615B556191FA0E0007F5FC0 /* HMTestVideoViewController.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
@@ -225,11 +226,9 @@
 		2655DF5F18EDA50600CA362F /* HMLoginMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */; };
 		2655DF6418EDA53F00CA362F /* HMsideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6318EDA53F00CA362F /* HMsideBarViewController.m */; };
 		2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */; };
-		2655DF6C18EDAAE100CA362F /* HMVideoPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */; };
 		2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
 		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
 		266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 266F62A3190E9521003774C5 /* introVideo.mp4 */; };
-		267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */; };
 		268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
 		268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */; };
 		268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */; };
@@ -254,7 +253,6 @@
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
 		26DE49A81912548F00BC2B0B /* cinemaCountdown4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26DE49A71912548F00BC2B0B /* cinemaCountdown4.wav */; };
 		26DE49AA1912552D00BC2B0B /* cinemaCountdown5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26DE49A91912552D00BC2B0B /* cinemaCountdown5.wav */; };
-		26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */; };
 		65C10D9218A265DC00A65917 /* HMDINOTCondBoldFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDINOTCondBoldFontLabel.m */; };
 		65C10D9318A265DC00A65917 /* HMDINOTCondBoldFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDINOTCondBoldFontButton.m */; };
 		69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
@@ -474,6 +472,8 @@
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
 		2610133618E172A80065C72B /* HMLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginTests.m; sourceTree = "<group>"; };
+		2615B555191FA0E0007F5FC0 /* HMTestVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTestVideoViewController.h; sourceTree = "<group>"; };
+		2615B556191FA0E0007F5FC0 /* HMTestVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTestVideoViewController.m; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
@@ -505,13 +505,10 @@
 		2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = HMRenderingViewController.m; path = "rendering view/HMRenderingViewController.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2655DF6718EDA9F600CA362F /* HMRenderingViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMRenderingViewControllerDelegate.h; path = "rendering view/HMRenderingViewControllerDelegate.h"; sourceTree = "<group>"; };
 		2655DF6918EDAAE100CA362F /* HMVideoPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerDelegate.h; sourceTree = "<group>"; };
-		2655DF6A18EDAAE100CA362F /* HMVideoPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoPlayerVC.h; sourceTree = "<group>"; };
-		2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVideoPlayerVC.m; sourceTree = "<group>"; };
 		2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderBigVideoPlayerView.xib; sourceTree = "<group>"; };
 		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
 		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
 		266F62A3190E9521003774C5 /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = introVideo.mp4; path = mediaResources/introVideo.mp4; sourceTree = "<group>"; };
-		267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMFullScreenVideoPlayerPortrait.xib; sourceTree = "<group>"; };
 		268341D518FFFD40002E8CB7 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		268341D718FFFD40002E8CB7 /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -556,8 +553,6 @@
 		26B498AE18BA4A8D00026401 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		26DE49A71912548F00BC2B0B /* cinemaCountdown4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown4.wav; path = mediaResources/cinemaCountdown4.wav; sourceTree = "<group>"; };
 		26DE49A91912552D00BC2B0B /* cinemaCountdown5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown5.wav; path = mediaResources/cinemaCountdown5.wav; sourceTree = "<group>"; };
-		26FB16A018C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFullScreenVideoPlayerViewController.h; sourceTree = "<group>"; };
-		26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFullScreenVideoPlayerViewController.m; sourceTree = "<group>"; };
 		65C10D8E18A265DC00A65917 /* HMDINOTCondBoldFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDINOTCondBoldFontLabel.m; sourceTree = "<group>"; };
 		65C10D8F18A265DC00A65917 /* HMDINOTCondBoldFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDINOTCondBoldFontButton.m; sourceTree = "<group>"; };
 		65C10D9018A265DC00A65917 /* HMDINOTCondBoldFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTCondBoldFontButton.h; sourceTree = "<group>"; };
@@ -659,6 +654,7 @@
 				08E50EC0188685E1001A8B75 /* Readme.txt */,
 				0806FB281882944D00F0EF50 /* App */,
 				0806FB2F188294CE00F0EF50 /* UserInterface */,
+				2615B558191FB932007F5FC0 /* utilities */,
 				0806FB2C1882947E00F0EF50 /* Data */,
 			);
 			path = Homage;
@@ -1000,6 +996,8 @@
 				08845672188494D300B94267 /* HMTestSliceViewController.m */,
 				08D03F7F1894295F00DEBDBC /* HMSimpleDataViewController.h */,
 				08D03F801894295F00DEBDBC /* HMSimpleDataViewController.m */,
+				2615B555191FA0E0007F5FC0 /* HMTestVideoViewController.h */,
+				2615B556191FA0E0007F5FC0 /* HMTestVideoViewController.m */,
 			);
 			path = Experimental;
 			sourceTree = "<group>";
@@ -1120,18 +1118,13 @@
 			children = (
 				2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */,
 				2655DF6918EDAAE100CA362F /* HMVideoPlayerDelegate.h */,
-				2655DF6A18EDAAE100CA362F /* HMVideoPlayerVC.h */,
-				2655DF6B18EDAAE100CA362F /* HMVideoPlayerVC.m */,
 				08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */,
 				08DF22FC18926E3900912657 /* HMSimpleVideoViewController.xib */,
-				267F523F189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib */,
 				2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */,
 				08DF22F818926E3900912657 /* HMSimpleVideoView.h */,
 				08DF22F918926E3900912657 /* HMSimpleVideoView.m */,
 				08DF22FA18926E3900912657 /* HMSimpleVideoViewController.h */,
 				08DF22FB18926E3900912657 /* HMSimpleVideoViewController.m */,
-				26FB16A018C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.h */,
-				26FB16A118C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m */,
 			);
 			path = "Video Players Containers";
 			sourceTree = "<group>";
@@ -1233,6 +1226,14 @@
 				08ACB7D2188D293E00C0EE27 /* HMRoundCountdownLabel.m */,
 			);
 			path = Round;
+			sourceTree = "<group>";
+		};
+		2615B558191FB932007F5FC0 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = utilities;
+			path = UserInterface;
 			sourceTree = "<group>";
 		};
 		2638593418953866003A7B3D /* rendering view */ = {
@@ -1465,7 +1466,6 @@
 				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
-				267F5240189903E200B8A17A /* HMFullScreenVideoPlayerPortrait.xib in Resources */,
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
@@ -1554,7 +1554,6 @@
 				08B958A2189167D800BCCF8C /* User+Logic.m in Sources */,
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				2655DF6418EDA53F00CA362F /* HMsideBarViewController.m in Sources */,
-				2655DF6C18EDAAE100CA362F /* HMVideoPlayerVC.m in Sources */,
 				085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
 				65C10D9318A265DC00A65917 /* HMDINOTCondBoldFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
@@ -1593,7 +1592,6 @@
 				2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */,
 				08455FF71890458E0040504D /* AVCamPreviewView.m in Sources */,
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
-				26FB16A218C38B62009E5F8A /* HMFullScreenVideoPlayerViewController.m in Sources */,
 				08455FF91890458E0040504D /* HMVideoCameraViewController.m in Sources */,
 				08455FFB1890458E0040504D /* HMRecorderViewController.m in Sources */,
 				2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */,
@@ -1624,6 +1622,7 @@
 				08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				26933EA218FEB8CA001AE951 /* Story.m in Sources */,
+				2615B557191FA0E0007F5FC0 /* HMTestVideoViewController.m in Sources */,
 				08CDF82E1897F6B000A9D235 /* Scene.m in Sources */,
 				268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
