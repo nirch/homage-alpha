@@ -75,6 +75,7 @@
 @property (nonatomic, readonly) BOOL frontCameraAllowed;
 @property (nonatomic, readonly) NSUInteger allowedOrientations;
 @property (nonatomic) BOOL flagForDebugging;
+@property (nonatomic) BOOL stopRecordingFired;
 
 // Some physics animations
 @property (nonatomic, readonly) UIDynamicAnimator *animator;
@@ -471,8 +472,13 @@
 -(void)onStartRecording:(NSNotification *)notification
 {
     _lockedAutoRotation = YES;
-    //[HMMotionDetector.sh start];
+    _stopRecordingFired = NO;
     
+    [self presentRecordingUI];
+}
+
+-(void)presentRecordingUI
+{
     [self hideDetailsOptionsAnimated:YES];
 
     self.guiDismissButton.enabled = NO;
@@ -498,16 +504,22 @@
         self.guiWhileRecordingOverlay.transform = CGAffineTransformIdentity;
         
     } completion:^(BOOL finished) {
-        self.guiSilhouetteImageView.hidden = YES;
-        self.guiDetailedOptionsBarContainer.hidden = YES;
-        self.guiWhileRecordingOverlay.hidden = NO;
+        if (_stopRecordingFired)
+        {
+            [self presentRecorderIdleUI];
+        } else {
+            self.guiSilhouetteImageView.hidden = YES;
+            self.guiDetailedOptionsBarContainer.hidden = YES;
+            self.guiWhileRecordingOverlay.hidden = NO;
+        }
+        
     }];
-
 }
 
 -(void)onStopRecording:(NSNotification *)notification
 {
     _lockedAutoRotation = NO;
+    _stopRecordingFired = YES;
     HMRecordingStopReason stoppedReason = [notification.userInfo[HM_INFO_KEY_RECORDING_STOP_REASON] integerValue];
     if (stoppedReason == HMRecordingStopReasonEndedSuccessfully) {
         [HMMotionDetector.sh stopWithNotification:NO];
@@ -522,18 +534,18 @@
                                                      @"ok button text":LS(@"OK_GOT_IT"),
                                                      }
          ];
-        [self dismissWhileRecordingUI];
+        [self presentRecorderIdleUI];
     
     } else {
-        [self dismissWhileRecordingUI];
+        [self presentRecorderIdleUI];
     }
 }
 
--(void)dismissWhileRecordingUI
+-(void)presentRecorderIdleUI
 {
     self.guiSilhouetteImageView.hidden = NO;
     self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
-    self.guiDetailedOptionsBarContainer.hidden = NO;
+    [self closeDetailedOptionsAnimated:NO];
     
     self.guiDismissButton.enabled = YES;
     self.guiDismissButton.hidden = NO;
@@ -543,10 +555,6 @@
     self.guiSceneDirectionButton.enabled = YES;
     self.guiSceneDirectionButton.hidden = NO;
     
-    
-    //[self displayRectBounds:self.guiDetailedOptionsBarContainer.frame Name:@"guiDetailedOptionsBarContainer"];
-    [self closeDetailedOptionsAnimated:YES]; // Show in closed state.
-    //[self displayRectBounds:self.guiDetailedOptionsBarContainer.frame Name:@"guiDetailedOptionsBarContainer"];
     [UIView animateWithDuration:0.2 animations:^{
         
         // Fade in silhouette image
@@ -590,7 +598,7 @@
     [HMUploadManager.sh checkForUploadsWithPrioritizedFootages:@[footage]];
 
     // Move along to the next state.
-    [self dismissWhileRecordingUI];
+    [self presentRecorderIdleUI];
     [self advanceState];
 }
 
@@ -1053,8 +1061,14 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.guiDetailedOptionsBarContainer.transform = OPTIONS_BAR_TRANSFORM_HIDDEN;
     } completion:^(BOOL finished) {
-        self.guiDetailedOptionsBarContainer.hidden = YES;
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSED object:nil userInfo:@{@"animated":@(animated)}];
+        
+        if (_stopRecordingFired)
+        {
+            [self presentRecorderIdleUI];
+        } else {
+            self.guiDetailedOptionsBarContainer.hidden = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_CLOSED object:nil userInfo:@{@"animated":@(animated)}];
+        }
     }];
 }
 
@@ -1279,6 +1293,13 @@
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:HM_ENABLE_BG_DETECTION object:self];
+}
+
+-(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
+{
+    CGSize size = rect.size;
+    CGPoint origin = rect.origin;
+    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
 }
 
 @end
