@@ -81,9 +81,6 @@
     //no movie is playing. nothing should happen
     if (self.playingMovieIndex == -1) return;
     
-    HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
-    [self closeMovieInCell:otherRemakeCell];
-    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -420,14 +417,6 @@
     
     cell.storyNameLabel.text = remake.story.name;
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
-    
-    if (self.playingMovieIndex == indexPath.item)
-    {
-        [self configureCellForMoviePlaying:cell active:YES];
-    } else {
-        [self configureCellForMoviePlaying:cell active:NO];
-    }
-    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -539,11 +528,11 @@
 {
     
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    if (self.playingMovieIndex != -1) //another movie is being played in another cell
+    /*if (self.playingMovieIndex != -1) //another movie is being played in another cell
     {
         HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
         [self closeMovieInCell:otherRemakeCell];
-    }
+    }*/
     
     self.playingMovieIndex = indexPath.item;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -559,7 +548,6 @@
     
     [self.view addSubview:self.guiVideoContainer];
     [self.view bringSubviewToFront:self.guiVideoContainer];
-    [self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
     
     HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
     vc.videoURL = [url absoluteString];
@@ -678,9 +666,7 @@
 {
     
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if ([[User current] isGuestUser])

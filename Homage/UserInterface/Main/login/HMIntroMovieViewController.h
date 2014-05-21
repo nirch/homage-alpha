@@ -13,7 +13,7 @@
 
 @property (nonatomic) id<HMIntroMovieDelegate> delegate;
 
--(void)initStoryMoviePlayer;
+-(void)initIntroMoviePlayer;
 -(void)stopStoryMoviePlayer;
 
 @end

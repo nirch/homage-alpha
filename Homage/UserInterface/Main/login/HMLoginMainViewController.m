@@ -527,7 +527,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
      } completion:^(BOOL finished)
      {
          self.guiSignUpView.hidden = YES;
-         [self.introMovieController initStoryMoviePlayer];
+         [self.introMovieController initIntroMoviePlayer];
      }];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

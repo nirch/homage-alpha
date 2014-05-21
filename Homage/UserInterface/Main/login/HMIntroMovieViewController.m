@@ -18,18 +18,20 @@
 #import "UIImage+ImageEffects.h"
 #import "Mixpanel.h"
 #import "HMColor.h"
+#import "HMSimpleVideoViewController.h"
 @import MediaPlayer;
 @import AVFoundation;
 
 
 
-@interface HMIntroMovieViewController () <UITextFieldDelegate>
+@interface HMIntroMovieViewController () <UITextFieldDelegate,HMSimpleVideoPlayerDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIButton *guiIntroSkipButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiShootFirstStoryButton;
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
 @property (strong,nonatomic) MPMoviePlayerController *moviePlayer;
+@property (strong,nonatomic) HMSimpleVideoViewController *moviePlayerVC;
 
 @property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
 
@@ -86,14 +88,25 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)initStoryMoviePlayer
+-(void)initIntroMoviePlayer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
 
-    self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]]];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMSimpleVideoViewController *vc;
+    self.moviePlayerVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiIntroMovieContainer rotationSensitive:YES];
+    self.moviePlayerVC.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]] absoluteString];
+    [self.moviePlayerVC hideVideoLabel];
+    [self.moviePlayerVC hideMediaControls];
+    self.moviePlayerVC.videoImage = [UIImage imageNamed:@"introMovieThumbnail"];
+    self.moviePlayerVC.delegate = self;
+    self.moviePlayerVC.resetStateWhenVideoEnds = YES;
+    [self.moviePlayerVC play];
+    
+    /*self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]]];
     [self.moviePlayer.view setFrame:self.guiIntroMovieContainer.frame];
     [self.moviePlayer play];
-    [self.view addSubview:self.moviePlayer.view];
+    [self.view addSubview:self.moviePlayer.view];*/
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -139,6 +152,17 @@
 {
     return UIInterfaceOrientationMaskPortrait;
     
+}
+
+#pragma mark HMSimpleVideoViewController delegate
+-(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
+{
+    [[Mixpanel sharedInstance] track:@"stopIntroStory" properties:@{@"time_watched" : playbackTime}];
+}
+
+-(void)videoPlayerDidFinishPlaying
+{
+    [[Mixpanel sharedInstance] track:@"finishIntroStory"];
 }
 
 @end
