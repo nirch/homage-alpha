@@ -160,18 +160,21 @@
     
     // Point for 16:9 ratio in a way that the view will be in the center of the screen
     CGFloat ratio_16_9_x = 0.0f;
-    CGFloat ratio_16_9_y = (screenLandscapeHeight - ratio_16_9_height) / 2.0f;
+    CGFloat ratio_16_9_y = (screenLandscapeHeight - ratio_16_9_height) / 2.0f; // 0.0f
+    
+    CGRect ratio_16_9_rect = CGRectMake(ratio_16_9_x, ratio_16_9_y, ratio_16_9_width, ratio_16_9_height);
     
     // Updating the size of the silhouette image view to be in a 16:9 ratio
     CGRect silhouetteImageViewBounds = self.guiSilhouetteImageView.bounds;
     silhouetteImageViewBounds.size = ratio_16_9;
     self.guiSilhouetteImageView.bounds = silhouetteImageViewBounds;
+    //self.guiSilhouetteImageView.frame = ratio_16_9_rect;
+    //self.guiSilhouetteImageView.autoresizingMask = UIViewAutoresizingNone;
     
     // Updating the camera preview frame to be in a 16:9 ratio
-    CGRect cameraPreviewFrame = CGRectMake(ratio_16_9_x, ratio_16_9_y, ratio_16_9_width, ratio_16_9_height);
+    CGRect cameraPreviewFrame = ratio_16_9_rect;
     self.videoCameraVC.previewView.superview.frame = cameraPreviewFrame;
     self.videoCameraVC.previewView.superview.autoresizingMask = UIViewAutoresizingNone;
-
 
     [self loadSilhouettes];
 }
