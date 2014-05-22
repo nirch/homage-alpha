@@ -394,6 +394,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         //Mixpanel analytics
         
         User *user = [User current];
+        [HMServer.sh updateServerContext:user.userID];
         [self.loginVC registerLoginAnalyticsForUser:user];
         
         [self onUserLoginStateChange:user];
@@ -520,24 +521,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
      }];
 }
 
-
-/*-(void)debug
-{
-    // Hardcoded user for development (until LOGIN screens are implemented)
-    
-    if (![User current])
-    {
-        //NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"useremail"];
-        if (!userName)
-        {
-            userName = @"yoav@homage.it";
-            //[[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"useremail"];
-        }
-        User *user = [User userWithID:userName inContext:DB.sh.context];
-        [user loginInContext:DB.sh.context];
-        [DB.sh save];
-    }
-}*/
 
 -(void)failedStartingApplication
 {

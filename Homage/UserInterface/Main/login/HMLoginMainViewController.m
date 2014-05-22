@@ -427,6 +427,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self registerLoginAnalyticsForUser:user];
     
     [user loginInContext:DB.sh.context];
+    [HMServer.sh updateServerContext:user.userID];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     [[NSUserDefaults standardUserDefaults] setBool:user.isPublic.boolValue forKey:@"remakesArePublic"];
     
@@ -511,6 +512,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     
     [user loginInContext:DB.sh.context];
+    [HMServer.sh updateServerContext:user.userID];
     [self.delegate onUserLoginStateChange:[User current]];
     [self.delegate dismissLoginScreen];
     self.userJoinFlow = NO;

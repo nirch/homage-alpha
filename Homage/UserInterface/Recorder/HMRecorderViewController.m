@@ -145,6 +145,7 @@
 {
     //self.guiSilhouetteImageView.alpha = 0;
     [self loadSilhouettes];
+    //[self loadContours];
 }
 
 #pragma mark - Recorder state flow
@@ -699,6 +700,14 @@
     }
 }
 
+/*-(void)loadContours
+{
+   for (Scene *scene in self.remake.story.scenes)
+   {
+       [self contourFileForScene:scene];
+   }
+}*/
+
 #pragma mark - Lazy loading
 -(UIImage *)silhouetteForScene:(Scene *)scene
 {
@@ -711,6 +720,19 @@
      ];
     return nil;
 }
+
+/*-(NSString *)contourFileForScene:(Scene *)scene
+{
+    NSURL *contourURL = scene.contourURL;
+    
+    if ([Contour findWithURL:contourURL])
+    {
+        return [Contour findWithURL:contourURL];
+    } else
+    {
+        
+    }
+}*/
 
 #pragma mark - Orientations
 -(BOOL)shouldAutorotate

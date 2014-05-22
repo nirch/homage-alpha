@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) NSDictionary *cfg;
 @property (strong, nonatomic, readonly) NSURL *serverURL;
+@property (strong,nonatomic) NSDictionary *context;
+@property (strong,nonatomic) NSString *appVersionInfo;
 
 
 @end
@@ -46,6 +48,7 @@
     self = [super init];
     if (self) {
         [self loadCFG];
+        [self loadAppDetails];
         [self initSessionManager];
     }
     return self;
@@ -87,6 +90,29 @@
     return relativeURL;
 }
 
+#pragma mark - provide server woth request context
+-(void)updateServerContext:(NSString *)userID
+{
+    self.context = @{@"user_id" : userID , @"version" : self.appVersionInfo};
+}
+
+-(void)loadAppDetails
+{
+    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString * versionBuildString = [NSString stringWithFormat:@"Version: %@ (%@)", appVersionString, appBuildString];
+    self.appVersionInfo = versionBuildString;
+    self.context = @{@"version" : self.appVersionInfo};
+}
+
+-(NSDictionary *)addAppDetailsToDictionary:(NSDictionary *)dict
+{
+    NSMutableDictionary *tmpDict = [[NSMutableDictionary alloc] initWithDictionary:dict];
+    [tmpDict setValue:self.context forKey:@"app_info"];
+    NSDictionary *newDict = [NSDictionary dictionaryWithDictionary:tmpDict];
+    return newDict;
+}
+
 #pragma mark - Server CFG
 -(void)loadCFG
 {
@@ -124,6 +150,9 @@
                       info:(NSDictionary *)info
                     parser:(HMParser *)parser
 {
+    
+    
+    
     [self getRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
               parameters:(NSDictionary *)parameters
         notificationName:(NSString *)notificationName
@@ -142,6 +171,8 @@
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
     
+    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
+    
     //
     // send GET Request to server
     //
@@ -149,7 +180,7 @@
     HMGLogDebug(@"GET request:%@/%@", self.session.baseURL, relativeURL);
     [self chooseSerializerForParser:parser];
     
-    [self.session GET:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session GET:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
 
         //
         // Successful response from server.
@@ -219,13 +250,14 @@
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
     
+    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
     // send POST Request to server
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"POST request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
-    [self.session POST:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session POST:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
 
         //
         // Successful response from server.
@@ -296,13 +328,14 @@
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
     
+    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
     // send DELETE Request to server
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"DELETE request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
-    [self.session DELETE:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session DELETE:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
         
         //
         // Successful response from server.
@@ -371,14 +404,14 @@
                 parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
-    
+    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
     // send PUT Request to server
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"PUT request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
-    [self.session PUT:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session PUT:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
         
         //
         // Successful response from server.
@@ -423,24 +456,5 @@
         
     }];
 }
-
-/*
-// TODO: REMOVE!!!!!!!!!!!!!!!!!!!!
--(void)ranHack
-{
-    // Ran always uses the Test server!!!!
-    NSString *port = self.cfg[@"port"];
-    NSString *protocol = self.cfg[@"protocol"];
-    NSString *host = self.cfg[@"host"];
-    
-    if (port) {
-        _serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@", protocol, host, port]];
-    } else {
-        _serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", protocol, host]];
-    }
-    
-    [self initSessionManager];
-}
-*/
 
 @end
