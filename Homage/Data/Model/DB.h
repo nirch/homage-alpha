@@ -30,6 +30,7 @@
 #import "Footage+Factory.h"
 #import "Footage+Logic.h"
 
+#import "Contour+Factory.h"
 
 @interface DB : NSObject
 

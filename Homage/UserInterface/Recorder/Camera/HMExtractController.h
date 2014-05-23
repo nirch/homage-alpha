@@ -15,6 +15,8 @@
 
 -(id)initWithSession:(AVCaptureSession *)session movieDataOutput:(AVCaptureVideoDataOutput *)movieDataOutput audioDataOutput:(AVCaptureAudioDataOutput *)audioDataOutput;
 
+-(void)updateContour:(NSString *)contourFile;
+
 #pragma mark - Recording
 -(BOOL)isRecording;
 -(void)enableBackgroundDetection;

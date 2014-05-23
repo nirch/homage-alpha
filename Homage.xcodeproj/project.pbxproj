@@ -213,6 +213,8 @@
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
 		2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2639DD7E1916E84700440745 /* Default-568h@2x.png */; };
+		263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C4483192E6BA400AD82EC /* Contour+Factory.m */; };
+		263C448D192F4E5E00AD82EC /* Contour.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C448C192F4E5E00AD82EC /* Contour.m */; };
 		2648C63018D9A5760033A4C2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648C62F18D9A5760033A4C2 /* User.m */; };
 		2650DED8190D45D900CA306C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2650DED7190D45D900CA306C /* Crashlytics.framework */; };
 		2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3218EDA37100CA362F /* Homage-Info.plist */; };
@@ -479,6 +481,10 @@
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
 		2638593A18955252003A7B3D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2639DD7E1916E84700440745 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		263C4482192E6BA400AD82EC /* Contour+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contour+Factory.h"; sourceTree = "<group>"; };
+		263C4483192E6BA400AD82EC /* Contour+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contour+Factory.m"; sourceTree = "<group>"; };
+		263C448B192F4E5E00AD82EC /* Contour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contour.h; sourceTree = "<group>"; };
+		263C448C192F4E5E00AD82EC /* Contour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contour.m; sourceTree = "<group>"; };
 		2648C62E18D9A5760033A4C2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		2648C62F18D9A5760033A4C2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		2650DED7190D45D900CA306C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -940,6 +946,8 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				263C448B192F4E5E00AD82EC /* Contour.h */,
+				263C448C192F4E5E00AD82EC /* Contour.m */,
 				2699AE881903F512004093AE /* Remake.h */,
 				2699AE891903F512004093AE /* Remake.m */,
 				26933EA018FEB8CA001AE951 /* Story.h */,
@@ -1085,6 +1093,8 @@
 				08B958871891678600BCCF8C /* User+Factory.m */,
 				08B958A0189167D800BCCF8C /* User+Logic.h */,
 				08B958A1189167D800BCCF8C /* User+Logic.m */,
+				263C4482192E6BA400AD82EC /* Contour+Factory.h */,
+				263C4483192E6BA400AD82EC /* Contour+Factory.m */,
 			);
 			path = "Factories And Logic";
 			sourceTree = "<group>";
@@ -1596,6 +1606,7 @@
 				08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */,
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
+				263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
 				F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */,
 				269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */,
@@ -1622,6 +1633,7 @@
 				08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,
 				08E50EC618868AEF001A8B75 /* HMAvenirBookFontLabel.m in Sources */,
 				2655DF5518EDA4D200CA362F /* HMTOSViewController.m in Sources */,
+				263C448D192F4E5E00AD82EC /* Contour.m in Sources */,
 				086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */,
 				084E533D18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,

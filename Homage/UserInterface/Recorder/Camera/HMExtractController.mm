@@ -51,6 +51,7 @@
 @property (nonatomic) NSInteger extractCounter;
 @property (nonatomic) BOOL frontCamera;
 @property (nonatomic) UIInterfaceOrientation interfaceOrientaion;
+@property (nonatomic) NSString *contourFile;
 
 //@property (readonly) CHomage *h_ext;
 
@@ -104,7 +105,15 @@
         
         m_foregroundExtraction = new CUniformBackground();
         
-        NSString *contourFile = [[NSBundle mainBundle] pathForResource:@"close up 480" ofType:@"ctr"];
+        NSString *contourFile;
+        if (_contourFile)
+        {
+            contourFile = _contourFile;
+        } else
+        {
+            contourFile = [[NSBundle mainBundle] pathForResource:@"close up 480" ofType:@"ctr"];
+        }
+    
         m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 480);
         
         m_original_image = NULL;
@@ -123,6 +132,12 @@
         self.backgroundDetectionEnabled = YES;
     }
     return self;
+}
+
+-(void)updateContour:(NSString *)contourFile
+{
+    _contourFile = contourFile;
+    m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 480);
 }
 
 -(void)initObservers

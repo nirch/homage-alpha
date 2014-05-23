@@ -15,5 +15,6 @@
 +(BOOL)canFlipToFrontCamera;
 -(void)releaseCameraIO;
 -(void)attachCameraIO;
+-(void)updateContour:(NSString *)contourlocalURL;
 
 @end

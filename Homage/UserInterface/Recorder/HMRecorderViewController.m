@@ -378,6 +378,13 @@
                                                        name:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
                                                      object:nil];
     
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onContourFileDownloaded:)
+                                                       name:HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED
+                                                     object:nil];
+    
+    
+    
     // Observe started recording
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onStartRecording:)
@@ -469,6 +476,26 @@
         }];
     }
 }
+
+-(void)onContourFileDownloaded:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *localURL = info[@"local_URL"];
+    NSString *remoteURL = info[@"remote_URL"];
+    
+    Contour *contour = [Contour ContourWitRemoteURL:remoteURL inContext:DB.sh.context];
+    Scene *scene = [Scene sceneWithID:info[@"sceneID"] story:self.remake.story inContext:DB.sh.context];
+    contour.localURL = localURL;
+    
+    if (notification.isReportingError || !localURL)
+    {
+        scene.contourLocalURL = nil;
+    } else
+    {
+        scene.contourLocalURL = contour.localURL;
+    }
+    
+    if (scene.contourLocalURL) [_videoCameraVC updateContour:scene.contourLocalURL];}
 
 -(void)onStartRecording:(NSNotification *)notification
 {
@@ -620,48 +647,6 @@
     [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
 }
 
-/*
--(void)onRecorderUsingFrontCamera:(NSNotification *)notificaiton
-{
-
-    // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
-    // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
-    // It will just transform the whole view upside down when using the front camera.
-    // TODO: remove this hack ASAP.
-    //CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI/2*3);
-    //self.view.transform =transform;
-    _allowedOrientations = UIInterfaceOrientationMaskLandscapeLeft;
-    
-    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)){
-        if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
-        {
-            objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeLeft );
-        }
-    }
-
-}
-*/
-
-/*
--(void)onRecorderUsingBackCamera:(NSNotification *)notification
-{
-    // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
-    // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
-    // It will just transform the whole view upside down when using the front camera.
-    // TODO: remove this hack ASAP.
-    //CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI/2);
-    //self.view.transform =transform;
-    _allowedOrientations = UIInterfaceOrientationMaskLandscapeRight;
-    
-    if(UIDeviceOrientationIsLandscape(self.interfaceOrientation)){
-        if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)])
-        {
-            objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationLandscapeRight );
-        }
-    }
-}
-*/
-
 #pragma mark - Scenes selection
 -(void)updateUIForSceneID:(NSNumber *)sceneID
 {
@@ -685,6 +670,10 @@
     self.guiSilhouetteImageView.hidden = NO;
     self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
     
+    //update video camera controller with proper contour file
+    NSString *contourFileLocalURL = [self contourFileForScene:scene];
+    if (contourFileLocalURL) [_videoCameraVC updateContour:contourFileLocalURL];
+    
     if (scene.script && scene.script.length>0) {
         self.guiScriptLabel.text = scene.script;
     } else {
@@ -700,13 +689,13 @@
     }
 }
 
-/*-(void)loadContours
+-(void)loadContours
 {
    for (Scene *scene in self.remake.story.scenes)
    {
        [self contourFileForScene:scene];
    }
-}*/
+}
 
 #pragma mark - Lazy loading
 -(UIImage *)silhouetteForScene:(Scene *)scene
@@ -721,18 +710,26 @@
     return nil;
 }
 
-/*-(NSString *)contourFileForScene:(Scene *)scene
+-(NSString *)contourFileForScene:(Scene *)scene
 {
-    NSURL *contourURL = scene.contourURL;
-    
-    if ([Contour findWithURL:contourURL])
+    NSString *contourURL = scene.contourRemoteURL;
+    if (!contourURL)
     {
-        return [Contour findWithURL:contourURL];
+        HMGLogError(@"contour url came back empty. check why");
+        return nil;
+    }
+    
+    Contour *contour = [Contour findWithRemoteURL:contourURL inContext: DB.sh.context];
+    
+    if (contour)
+    {
+        return contour.localURL;
     } else
     {
-        
+        [HMServer.sh downloadFileFromURL:contourURL notificationName:HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED info:@{@"sceneID":scene.sID}];
+        return nil;
     }
-}*/
+}
 
 #pragma mark - Orientations
 -(BOOL)shouldAutorotate

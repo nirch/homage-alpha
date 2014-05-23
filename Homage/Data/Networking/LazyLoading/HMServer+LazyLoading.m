@@ -51,7 +51,7 @@
 }
 
 -(void)downloadFileFromURL:(NSString *)url
-          notificationName:(NSNotification *)notificationName
+          notificationName:(NSString *)notificationName
                       info:(NSDictionary *)info
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -59,12 +59,28 @@
     
     NSURL *URL = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSMutableDictionary *moreInfo = [info mutableCopy];
     
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        NSLog(@"File downloaded to: %@", filePath);
+        if (error)
+        {
+            //
+            // Failed loading image from server
+            //
+            HMGLogDebug(@"Failed lazy Loading image from URL:%@ %@", request.URL, error.localizedDescription);
+            [moreInfo addEntriesFromDictionary:@{@"error":error}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
+            return;
+        }
+        
+        HMGLogDebug(@"file downloaded to: " , [filePath absoluteString]);
+        [moreInfo addEntriesFromDictionary:@{@"local_URL" : [filePath absoluteString]}];
+        [moreInfo addEntriesFromDictionary:@{@"remote_URL" : url}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
+    
     }];
     [downloadTask resume];
 }

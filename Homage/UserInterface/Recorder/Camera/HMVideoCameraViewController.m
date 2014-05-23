@@ -998,4 +998,12 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     }
 }
 
+-(void)updateContour:(NSString *)contourlocalURL
+{
+    if (_camFGExtraction)
+    {
+        [self.extractController updateContour:contourlocalURL];
+    }
+}
+
 @end
