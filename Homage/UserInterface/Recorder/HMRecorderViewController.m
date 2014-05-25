@@ -495,7 +495,12 @@
         scene.contourLocalURL = contour.localURL;
     }
     
-    if (scene.contourLocalURL) [_videoCameraVC updateContour:scene.contourLocalURL];}
+    if (scene.contourLocalURL && scene.sID == self.currentSceneID)
+    {
+        [_videoCameraVC updateContour:scene.contourLocalURL];
+    }
+
+}
 
 -(void)onStartRecording:(NSNotification *)notification
 {

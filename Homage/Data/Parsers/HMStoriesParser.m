@@ -82,8 +82,8 @@
     scene.duration =                [info decimalNumberForKey:@"duration"];
     scene.videoURL =                [info stringForKey:@"video"];
     
-    CLEAR_CACHE_CHECK(scene,contourRemoteURL,contourLocalURL,@"remote_url"); // clear scene.contourLocalURL if remote url changed
-    scene.contourRemoteURL =        [info stringForKey:@"remote_url"];
+    CLEAR_CACHE_CHECK(scene,contourRemoteURL,contourLocalURL,@"contour_remote"); // clear scene.contourLocalURL if remote url changed
+    scene.contourRemoteURL =        [info stringForKey:@"contour_remote"];
     
     CLEAR_CACHE_CHECK(scene,thumbnailURL,thumbnail,@"thumbnail"); // clear scene.thumbnail if url changed
     scene.thumbnailURL =            [info stringForKey:@"thumbnail"];
