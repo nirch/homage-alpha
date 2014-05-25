@@ -569,7 +569,7 @@
 		F13FA51A1899447F0026EA5F /* HMServer+Users.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Users.m"; sourceTree = "<group>"; };
 		F13FA51D1899497F0026EA5F /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
 		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
-		F15EE53A1932370400593636 /* Model110.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Model110.xcdatamodel; sourceTree = "<group>"; };
+		F15EE53A1932370400593636 /* Model110.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model110.xcdatamodel; sourceTree = "<group>"; };
 		F182B6DE18F407FB00A89B79 /* close up 480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up 480.ctr"; path = "App/supporting files/close up 480.ctr"; sourceTree = "<group>"; };
 		F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model102.xcdatamodel; sourceTree = "<group>"; };
 		FAD11164F7B54A6387FC390E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
