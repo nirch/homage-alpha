@@ -23,7 +23,6 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 >
 
 // For use in the storyboards.
-@property (nonatomic, weak) IBOutlet AVCamPreviewView *previewView;
 @property (nonatomic, weak) AVCaptureVideoPreviewLayer *previewLayer;
 
 // Session management.
@@ -73,7 +72,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     _camFGExtraction                                = YES;
     
     // Camera
-    _camSettingsSessionPreset                       = AVCaptureSessionPreset640x480;//AVCaptureSessionPresetiFrame1280x720;     // Video capture resolution
+    _camSettingsSessionPreset                       = AVCaptureSessionPreset1280x720;     // Video capture resolution
     _camSettingsSessionPresetFrontCameraFallback    = AVCaptureSessionPreset640x480;            // If front camera can't show 720p, will try 480p.
     _camSettingsPrefferedDevicePosition             = AVCaptureDevicePositionBack;              // Preffered camera position
     _camSettingsMinFramesPerSecond                  = 25;                                       // Min fps. Set to 0, if you want to use device defaults instead.

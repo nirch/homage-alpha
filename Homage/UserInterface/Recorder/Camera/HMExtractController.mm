@@ -210,14 +210,19 @@
                                        AVVideoAverageBitRateKey:@3000000
                                        };
        
+        NSString *scalingMode = AVVideoScalingModeResizeAspect;
+        if (self.session.sessionPreset == AVCaptureSessionPreset640x480)
+        {
+            scalingMode = AVVideoScalingModeResizeAspectFill;
+        }
+
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
                                         AVVideoWidthKey:@640,
-                                        AVVideoHeightKey:@480,
-                                        AVVideoCompressionPropertiesKey:codecSettings
-                                        //AVVideoScalingModeKey:AVVideoScalingModeResizeAspectFill,
-
+                                        AVVideoHeightKey:@360,
+                                        AVVideoCompressionPropertiesKey:codecSettings,
+                                        AVVideoScalingModeKey:scalingMode
                                         };
        
        _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
