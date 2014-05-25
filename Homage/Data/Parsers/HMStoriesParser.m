@@ -33,12 +33,6 @@
     
     Story *story = [Story storyWithID:sID inContext:self.ctx];
     
-    //debug
-    if ([info stringForKey:@"active_from"])
-    {
-        NSLog(@"story name: %@" , story.name);
-    }
-    
     NSString *firstVersionActive = [info stringForKey:@"active_from"] ? [info stringForKey:@"active_from"] : nil;
     NSString *lastVersionActive =  [info stringForKey:@"active_until"] ? [info stringForKey:@"active_until"] : nil;
     
