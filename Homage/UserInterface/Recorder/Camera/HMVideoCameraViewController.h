@@ -9,8 +9,13 @@
 @class AVCaptureSession;
 
 #import "HMRecorderChildInterface.h"
+#import "AVCamPreviewView.h"
+
 
 @interface HMVideoCameraViewController : UIViewController
+
+@property (nonatomic, weak) IBOutlet AVCamPreviewView *previewView;
+
 
 +(BOOL)canFlipToFrontCamera;
 -(void)releaseCameraIO;
