@@ -54,4 +54,44 @@
     return self.isSelfie.boolValue;
 }
 
+-(NSNumber *)isActiveInCurrentVersionFirstVersion:(NSString *)firstVersionActive LastVersionActive:(NSString *)lastVersionActive
+{
+    if (firstVersionActive == nil) return @NO;
+    
+    NSString *currentAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    NSComparisonResult result = [currentAppVersion compare:firstVersionActive options:NSNumericSearch];
+    
+    if (( result == NSOrderedDescending || result == NSOrderedSame) && lastVersionActive == nil)
+    {
+        // firstVersionActive <= currentAppVersion and lastVersionActive == nil
+        return @YES;
+    }
+    
+    NSComparisonResult lowerBorderResult = [currentAppVersion compare:firstVersionActive options:NSNumericSearch];
+    NSComparisonResult upperBorderResult = [lastVersionActive compare:currentAppVersion options:NSNumericSearch];
+    
+    if ((lowerBorderResult == NSOrderedDescending || lowerBorderResult == NSOrderedSame) && (upperBorderResult == NSOrderedDescending || upperBorderResult == NSOrderedSame)) {
+        // firstVersionActive <= currentAppVersion <= lastVersionActive
+        return @YES;
+    }
+        
+    if ([firstVersionActive compare:currentAppVersion options:NSNumericSearch] == NSOrderedDescending)
+    {
+        //currentAppVersion < firstVersionActive
+        return @NO;
+    }
+        
+    if ([currentAppVersion compare:lastVersionActive options:NSNumericSearch] == NSOrderedDescending)
+    {
+        // lastVersionActive < currentAppVersion
+        return @NO;
+    }
+    
+    //unknown - DEBUG
+    HMGLogDebug(@"firstVersionActive: %@ , currentAppVersion: %@ lastVersionActive: %@" , firstVersionActive , currentAppVersion , lastVersionActive);
+    return @NO;
+    
+}
+
 @end

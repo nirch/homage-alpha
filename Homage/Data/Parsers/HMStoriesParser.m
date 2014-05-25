@@ -32,7 +32,17 @@
     NSString *sID = info[@"_id"][@"$oid"];
     
     Story *story = [Story storyWithID:sID inContext:self.ctx];
-    story.isActive =            [info numberForKey:@"active"];
+    
+    //debug
+    if ([info stringForKey:@"active_from"])
+    {
+        NSLog(@"story name: %@" , story.name);
+    }
+    
+    NSString *firstVersionActive = [info stringForKey:@"active_from"] ? [info stringForKey:@"active_from"] : nil;
+    NSString *lastVersionActive =  [info stringForKey:@"active_until"] ? [info stringForKey:@"active_until"] : nil;
+    
+    story.isActive =            [story isActiveInCurrentVersionFirstVersion:firstVersionActive LastVersionActive:lastVersionActive];
     story.remakesNumber =       [info numberForKey:@"remakes_num"];
     story.orderID =             [info numberForKey:@"order_id"];
     story.name =                [info stringForKey:@"name"];

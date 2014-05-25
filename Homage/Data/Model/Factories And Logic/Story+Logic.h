@@ -67,4 +67,12 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 */
 -(BOOL)isADirector;
 
+///
+/**
+ *  gets two app version, and see if the current version is in the middle. if so - story is active
+ *
+ *  @return BOOL value indicating if the story is active
+ */
+-(NSNumber *)isActiveInCurrentVersionFirstVersion:(NSString *)firstVersionActive LastVersionActive:(NSString *)lastVersionActive;
+
 @end
