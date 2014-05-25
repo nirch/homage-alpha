@@ -18,6 +18,7 @@
 @property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (strong,nonatomic) NSDictionary *context;
 @property (strong,nonatomic) NSString *appVersionInfo;
+@property (strong,nonatomic) NSString *appBuildInfo;
 
 
 @end
@@ -93,16 +94,16 @@
 #pragma mark - provide server woth request context
 -(void)updateServerContext:(NSString *)userID
 {
-    self.context = @{@"user_id" : userID , @"version" : self.appVersionInfo};
+    self.context = @{@"user_id" : userID , @"version" : self.appVersionInfo , @"build" : self.appBuildInfo};
 }
 
 -(void)loadAppDetails
 {
     NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString * versionBuildString = [NSString stringWithFormat:@"Version: %@ (%@)", appVersionString, appBuildString];
-    self.appVersionInfo = versionBuildString;
-    self.context = @{@"version" : self.appVersionInfo};
+    self.appBuildInfo = appBuildString;
+    self.appVersionInfo = appVersionString;
+    self.context = @{@"version" : self.appVersionInfo , @"build" : self.appBuildInfo};
 }
 
 -(NSDictionary *)addAppDetailsToDictionary:(NSDictionary *)dict
