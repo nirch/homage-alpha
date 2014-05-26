@@ -85,7 +85,6 @@
         [self.containerView addSubview:self.view];
         _shouldDisplayVideoLabel = YES;
         _videoView = (HMSimpleVideoView *)self.view;
-        [self displayRect:@"self.videoView.frame" BoundsOf:self.videoView.frame];
         _movieTempFullscreenBackgroundView = [[UIView alloc] init];
     }
     return self;

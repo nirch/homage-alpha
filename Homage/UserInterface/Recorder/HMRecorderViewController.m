@@ -103,7 +103,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"RemakeID" : self.remake.sID , @"story" : self.remake.story.name}];
                                                         

@@ -930,4 +930,9 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 @end
