@@ -524,7 +524,7 @@
         }
     } else {
         [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
-        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
     }
 }
 
@@ -598,7 +598,7 @@
                 [[Mixpanel sharedInstance] track:@"SDNewRemakeOld" properties:@{@"story" : self.story.name}];
                 NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
                 [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
-                [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID];
+                [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
                 self.oldRemakeInProgress = nil;
         }
     } else if (alertView.tag == MARK_AS_INAPPROPRIATE_TAG)

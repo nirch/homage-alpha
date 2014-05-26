@@ -13,16 +13,16 @@
 
 @implementation HMServer (Remakes)
 
--(void)createRemakeForStoryWithID:(NSString *)storyID forUserID:(NSString *)userID
+-(void)createRemakeForStoryWithID:(NSString *)storyID forUserID:(NSString *)userID withResolution:(NSString *)resolution
 {
     // A simple POST request to the server
     // Example URL: http://54.204.34.168:4567/remake
     // Creates a new remake for the given story and user.
     // Returns (JSON) with the info about the new remake.
     [self postRelativeURLNamed:@"new remake"
-                    parameters:@{@"story_id":storyID, @"user_id":userID}
+                    parameters:@{@"story_id":storyID, @"user_id":userID , @"resolution":resolution}
              notificationName:HM_NOTIFICATION_SERVER_REMAKE_CREATION
-                          info:@{@"userID":userID}
+                          info:@{@"userID":userID , @"resolution":resolution}
                        parser:[HMRemakeParser new]
      ];
 }

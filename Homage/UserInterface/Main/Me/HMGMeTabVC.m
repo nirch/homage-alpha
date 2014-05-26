@@ -656,7 +656,7 @@
             [alertView show];
         });
     } else {
-        [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID];
+        [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
     }
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -740,7 +740,7 @@
             NSString *remakeIDToDelete = self.remakeToContinueWith.sID;
             [[Mixpanel sharedInstance] track:@"MENewRemakeWithOld" properties:@{@"story" : self.remakeToContinueWith.story.name}];
             [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
-            [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID];
+            [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
             self.remakeToContinueWith = nil;
         }
         [self.userRemakesCV reloadData];

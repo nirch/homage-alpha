@@ -727,7 +727,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(BOOL)isFacebookUser:(id<FBGraphUser>)firstUser equalToFacebookUser:(id<FBGraphUser>)secondUser
 {
-    return [firstUser.id isEqual:secondUser.id];
+    return [firstUser.objectID isEqual:secondUser.objectID];
 }
 
 

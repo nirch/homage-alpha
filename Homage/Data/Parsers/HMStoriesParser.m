@@ -86,14 +86,37 @@
     scene.duration =                [info decimalNumberForKey:@"duration"];
     scene.videoURL =                [info stringForKey:@"video"];
     
-    CLEAR_CACHE_CHECK(scene,contourRemoteURL,contourLocalURL,@"contour_remote"); // clear scene.contourLocalURL if remote url changed
-    scene.contourRemoteURL =        [info stringForKey:@"contour_remote"];
+    if (info[@"contours"])
+    {
+        //new mongo configueration
+        NSDictionary *resolutions = info[@"contours"];
+        NSDictionary *resolution = resolutions[@"360"];
+        NSString *contourNewRemoteURL = resolution[@"contour_remote"];
+        if (![contourNewRemoteURL isEqualToString:scene.contourRemoteURL]) scene.contourLocalURL = nil;
+        scene.contourRemoteURL = contourNewRemoteURL;
+    } else
+    {
+        //old mongo configuration
+        CLEAR_CACHE_CHECK(scene,contourRemoteURL,contourLocalURL,@"contour_remote"); // clear scene.contourLocalURL if remote url changed
+        scene.contourRemoteURL =        [info stringForKey:@"contour_remote"];
+    }
     
     CLEAR_CACHE_CHECK(scene,thumbnailURL,thumbnail,@"thumbnail"); // clear scene.thumbnail if url changed
     scene.thumbnailURL =            [info stringForKey:@"thumbnail"];
     
-    CLEAR_CACHE_CHECK(scene,silhouetteURL,silhouette,@"silhouette"); // clear scene.thumbnail if url changed
-    scene.silhouetteURL =           [info stringForKey:@"silhouette"];
+    if (info[@"silhouettes"])
+    {
+        //new mongo configuration
+        NSDictionary *silhouettes = info[@"silhouettes"];
+        NSString *silhouetteNewURL = [silhouettes stringForKey:@"360"];
+        if (![silhouetteNewURL isEqualToString:scene.silhouetteURL]) scene.silhouette = nil;
+        scene.silhouetteURL = silhouetteNewURL;
+    } else
+    {
+        //old mongo configuration
+        CLEAR_CACHE_CHECK(scene,silhouetteURL,silhouette,@"silhouette"); // clear scene.thumbnail if url changed
+        scene.silhouetteURL =           [info stringForKey:@"silhouette"];
+    }
     
     //at the moment, all the scenes are selfie enabled
     scene.isSelfie =                @YES;

@@ -203,7 +203,7 @@
 {
     NSInteger index = [self.guiPickerView selectedRowInComponent:0];
     Story *story = self.stories[index];
-    [HMServer.sh createRemakeForStoryWithID:story.sID forUserID:User.current.userID];
+    [HMServer.sh createRemakeForStoryWithID:story.sID forUserID:User.current.userID withResolution:@"360"];
 }
 
 - (IBAction)onPressedDebug:(id)sender
