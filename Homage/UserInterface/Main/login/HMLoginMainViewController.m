@@ -538,7 +538,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiSignUpView.hidden = NO;
-    [self.introMovieController stopStoryMoviePlayer];
     [UIView animateWithDuration:0.3 animations:^
     {
         self.guiIntroMovieContainerView.alpha = 0;
