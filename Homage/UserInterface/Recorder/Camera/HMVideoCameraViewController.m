@@ -582,6 +582,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     // Focus on a point
     [self focusWithMode:AVCaptureFocusModeAutoFocus
          exposeWithMode:AVCaptureExposureModeAutoExpose
+        whiteBalanceWithMode:AVCaptureWhiteBalanceModeAutoWhiteBalance
           atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
      ];
 }
@@ -591,6 +592,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     // Return to continues auto focus
     [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus
          exposeWithMode:AVCaptureExposureModeContinuousAutoExposure
+        whiteBalanceWithMode:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance
           atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
      ];
 }
@@ -622,6 +624,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             // Lock focus on a point (currently hard coded point, should be received from the server later.
             [self focusWithMode:AVCaptureFocusModeLocked
                  exposeWithMode:AVCaptureExposureModeLocked
+                whiteBalanceWithMode:AVCaptureWhiteBalanceModeLocked
                   atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
              ];
             
@@ -776,13 +779,15 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 - (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
-    [self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+    [self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose         whiteBalanceWithMode:AVCaptureWhiteBalanceModeAutoWhiteBalance
+          atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
 }
 
 -(void)subjectAreaDidChange:(NSNotification *)notification
 {
     CGPoint devicePoint = CGPointMake(.5, .5);
-    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure         whiteBalanceWithMode:AVCaptureWhiteBalanceModeAutoWhiteBalance
+          atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
 }
 
 #pragma mark File Output Delegate
@@ -881,7 +886,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     });
 }
 
-- (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange
+- (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode whiteBalanceWithMode:(AVCaptureWhiteBalanceMode)whiteBalanceMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange
 {
     dispatch_async([self sessionQueue], ^{
         AVCaptureDevice *device = [[self videoDeviceInput] device];
@@ -897,6 +902,10 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
             {
                 [device setExposureMode:exposureMode];
                 [device setExposurePointOfInterest:point];
+            }
+            if ([device isWhiteBalanceModeSupported:whiteBalanceMode])
+            {
+                [device setWhiteBalanceMode:whiteBalanceMode];
             }
             [device setSubjectAreaChangeMonitoringEnabled:monitorSubjectAreaChange];
             [device unlockForConfiguration];
