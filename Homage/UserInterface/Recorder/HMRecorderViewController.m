@@ -104,7 +104,7 @@
 {
     [super viewDidLoad];
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
-    [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"RemakeID" : self.remake.sID , @"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
                                                         
     [self initRemakerState];
     [self initOptions];
@@ -290,7 +290,10 @@
     // will select the last scene for this remake instead.
     //
     _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
-    if (!self.currentSceneID) _currentSceneID = [self.remake lastSceneID];
+    if (!self.currentSceneID)
+    {
+       _currentSceneID = [self.remake lastSceneID];
+    }
     [self updateUIForSceneID:self.currentSceneID];
     
     // Just started. Show general message.
@@ -639,6 +642,11 @@
     NSString *rawMoviePath = info[@"rawMoviePath"];
     NSNumber *sceneID = info[@"sceneID"];
     
+    if (!sceneID)
+    {
+        HMGLogError(@"sceneID is missing");
+    }
+    
     if (![remakeID isEqualToString:self.remake.sID]) {
         // If happens, something went wrong is the timing. Maybe a leak of an old recorder?
         HMGLogError(@"Why is the remake ID (%@) on onNewRawFootageFileAvailable different than the current one? (%@)", remakeID, self.remake.sID);
@@ -681,8 +689,13 @@
 #pragma mark - Scenes selection
 -(void)updateUIForSceneID:(NSNumber *)sceneID
 {
+    if (!sceneID)
+    {
+      sceneID = [self.remake lastSceneID];
+    }
+    
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
-
+    
     if (scene.isSelfie.boolValue && [HMVideoCameraViewController canFlipToFrontCamera]) {
         _frontCameraAllowed = YES;
     } else {

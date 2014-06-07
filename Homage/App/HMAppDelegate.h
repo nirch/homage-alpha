@@ -9,6 +9,7 @@
 typedef NS_ENUM(NSInteger, HMPushNotificationType) {
     HMPushMovieReady,
     HMPushMovieFailed,
+    HMPushNewStory,
 };
 
 @interface HMAppDelegate : UIResponder <UIApplicationDelegate>

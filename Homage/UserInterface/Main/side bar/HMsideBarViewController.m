@@ -14,7 +14,7 @@
 #import "HMAvenirBookFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AMBlurView.h"
-
+#import "Mixpanel.h"
 
 @interface HMsideBarViewController ()
 
@@ -97,6 +97,7 @@
 - (IBAction)storiesButtonPushed:(id)sender
 {
     [self selectButton:sender];
+    [[Mixpanel sharedInstance] track:@"UserPressedStoriesTab"];
     if ([self.delegate respondsToSelector:@selector(storiesButtonPushed)])
         [self.delegate storiesButtonPushed];
 }
@@ -104,6 +105,7 @@
 - (IBAction)meButtonPushed:(id)sender
 {
     [self selectButton:sender];
+    [[Mixpanel sharedInstance] track:@"UserPressedmeTab"];
     if ([self.delegate respondsToSelector:@selector(meButtonPushed)])
         [self.delegate meButtonPushed];
 }
@@ -111,12 +113,14 @@
 - (IBAction)settingsButtonPushed:(id)sender
 {
     [self selectButton:sender];
+    [[Mixpanel sharedInstance] track:@"UserPressedSettingsTab"];
     if ([self.delegate respondsToSelector:@selector(settingsButtonPushed)])
         [self.delegate settingsButtonPushed];
 }
 
 - (IBAction)HowToPushed:(UIButton *)sender
 {
+    [[Mixpanel sharedInstance] track:@"UserPressedIntroStoryTab"];
     if ([self.delegate respondsToSelector:@selector(howToButtonPushed)])
         [self.delegate howToButtonPushed];
 }

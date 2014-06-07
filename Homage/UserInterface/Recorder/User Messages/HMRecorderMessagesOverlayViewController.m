@@ -208,7 +208,7 @@
             } completion:nil];
         });*/
         
-        [[Mixpanel sharedInstance] track:@"REGeneralScreenEntry"];
+        //[[Mixpanel sharedInstance] track:@"REGeneralScreenEntry"];
         self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
         double delayInSeconds = 1.0;

@@ -145,12 +145,12 @@
 #pragma mark HMSimpleVideoViewController delegate
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [[Mixpanel sharedInstance] track:@"stopIntroStory" properties:@{@"time_watched" : playbackTime}];
+    [[Mixpanel sharedInstance] track:@"LoginStopIntroStory" properties:@{@"time_watched" : playbackTime}];
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
-    [[Mixpanel sharedInstance] track:@"finishIntroStory"];
+    [[Mixpanel sharedInstance] track:@"LoginFinishIntroStory"];
 }
 
 @end

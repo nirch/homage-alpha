@@ -49,11 +49,17 @@
         if (notificationInfo) {
             
             HMPushNotificationType pushNotificationType = [[notificationInfo objectForKey:@"type"] intValue];
-            
+        
             if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
             {
                 NSString *remakeID = [notificationInfo objectForKey:@"remake_id"];
-                self.pushNotificationFromBG = @{@"remake_id" : remakeID };
+                self.pushNotificationFromBG = @{@"remake_id" : remakeID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
+            }
+            
+            if ( pushNotificationType == HMPushNewStory )
+            {
+                NSString *storyID = [notificationInfo objectForKey:@"story_id"];
+                self.pushNotificationFromBG = @{@"story_id" : storyID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
             }
             
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.

@@ -250,6 +250,8 @@
 		269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */ = {isa = PBXBuildFile; fileRef = 269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */; };
 		26933EA218FEB8CA001AE951 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 26933EA118FEB8CA001AE951 /* Story.m */; };
 		2699AE8A1903F512004093AE /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699AE891903F512004093AE /* Remake.m */; };
+		2699F7381941E50C00E1A01A /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699F7361941E50C00E1A01A /* JBWhatsAppActivity.m */; };
+		2699F7391941E50C00E1A01A /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699F7371941E50C00E1A01A /* whatsapp@2x.png */; };
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
 		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
@@ -552,6 +554,9 @@
 		26933EA118FEB8CA001AE951 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		2699AE881903F512004093AE /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		2699AE891903F512004093AE /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
+		2699F7351941E50C00E1A01A /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWhatsAppActivity.h; sourceTree = "<group>"; };
+		2699F7361941E50C00E1A01A /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWhatsAppActivity.m; sourceTree = "<group>"; };
+		2699F7371941E50C00E1A01A /* whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whatsapp@2x.png"; sourceTree = "<group>"; };
 		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
 		26B498A918B5FD7100026401 /* HMMotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMotionDetector.m; sourceTree = "<group>"; };
 		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -1242,6 +1247,7 @@
 		2615B558191FB932007F5FC0 /* utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2699F7341941E50C00E1A01A /* whatsapp share */,
 			);
 			name = utilities;
 			path = UserInterface;
@@ -1357,6 +1363,17 @@
 			name = buttons;
 			sourceTree = "<group>";
 		};
+		2699F7341941E50C00E1A01A /* whatsapp share */ = {
+			isa = PBXGroup;
+			children = (
+				2699F7351941E50C00E1A01A /* JBWhatsAppActivity.h */,
+				2699F7361941E50C00E1A01A /* JBWhatsAppActivity.m */,
+				2699F7371941E50C00E1A01A /* whatsapp@2x.png */,
+			);
+			name = "whatsapp share";
+			path = "utilities/whatsapp share";
+			sourceTree = "<group>";
+		};
 		26A239A818A963CA00980BFC /* login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1458,6 +1475,7 @@
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */,
 				2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */,
+				2699F7391941E50C00E1A01A /* whatsapp@2x.png in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
@@ -1644,6 +1662,7 @@
 				65C10D9218A265DC00A65917 /* HMDINOTCondBoldFontLabel.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				084E53411892240100D96258 /* HMServer+Render.m in Sources */,
+				2699F7381941E50C00E1A01A /* JBWhatsAppActivity.m in Sources */,
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */,
