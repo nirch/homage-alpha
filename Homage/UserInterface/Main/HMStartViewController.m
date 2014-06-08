@@ -162,6 +162,12 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
                                                      object:[[UIApplication sharedApplication] delegate]];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onNewStoryAvailable:)
+                                                       name:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY
+                                                     object:[[UIApplication sharedApplication] delegate]];
+    
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserPreferencesUpdate:)
                                                        name:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
                                                      object:nil];
@@ -828,6 +834,20 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     {
         [self switchToTab:HMMeTab];
     }
+}
+
+-(void)onNewStoryAvailable:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *storyID = info[@"story_id"];
+    NSNumber *appState = info[@"app_state"];
+    
+    if (appState.intValue == UIApplicationStateInactive)
+    {
+        [self showStoryDetailsScreenForStoryID:storyID];
+        [self switchToTab:HMStoriesTab];
+    }
+    
 }
 
 -(void)onUserLoginStateChange:(User *)user

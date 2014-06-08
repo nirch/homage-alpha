@@ -93,17 +93,18 @@
     NSMutableDictionary *info = [userInfo mutableCopy];
     HMPushNotificationType pushNotificationType = [[userInfo objectForKey:@"type"] intValue];
     
+    //the app can be active or inactive but still not in the background
+    if (application.applicationState == UIApplicationStateActive)
+    {
+        [info setObject:[NSNumber numberWithInt:UIApplicationStateActive] forKey:@"app_state"];
+    } else if (application.applicationState == UIApplicationStateInactive)
+    {
+        [info setObject:[NSNumber numberWithInt:UIApplicationStateInactive] forKey:@"app_state"];
+        
+    }
+    
     if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
     {
-        if (application.applicationState == UIApplicationStateActive)
-        {
-            [info setObject:[NSNumber numberWithInt:UIApplicationStateActive] forKey:@"app_state"];
-        } else if (application.applicationState == UIApplicationStateInactive)
-        {
-            [info setObject:[NSNumber numberWithInt:UIApplicationStateInactive] forKey:@"app_state"];
-            
-        }
-        
         if (pushNotificationType == HMPushMovieReady)
         {
             [info setObject:[NSNumber numberWithBool:YES] forKey:@"success"];
@@ -114,6 +115,14 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS object:self userInfo:info];
     }
+    
+    if (pushNotificationType == HMPushNewStory)
+    {
+        NSString *storyID = [userInfo objectForKey:@"story_id"];
+        [info setObject:storyID forKey:@"story_id"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY object:self userInfo:info];
+    }
+    
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken

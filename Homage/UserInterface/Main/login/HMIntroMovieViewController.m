@@ -80,9 +80,7 @@
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -152,5 +150,11 @@
 {
     [[Mixpanel sharedInstance] track:@"LoginFinishIntroStory"];
 }
+
+-(void)stopMoviePlayer
+{
+    [self.moviePlayerVC done];
+}
+
 
 @end

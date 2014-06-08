@@ -688,19 +688,20 @@
     
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ , #%@HomageApp :" , storyNameWithoutSpaces , storyNameWithoutSpaces];
+    NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ , #%@HomageApp : \n%@" , storyNameWithoutSpaces , storyNameWithoutSpaces , remake.shareURL];
     
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:shareString forABID:nil];
 
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , whatsappMsg, nil];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, whatsappMsg, remake.thumbnail, nil];
+    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         if (completed) {
             [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType}];
         }
     };
     [activityViewController setValue:shareString forKey:@"subject"];
-    activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self presentViewController:activityViewController animated:YES completion:^{}];

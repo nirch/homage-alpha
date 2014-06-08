@@ -214,6 +214,7 @@
         
         //user is going to shoot intro movie
         if (self.preRequestedStory) {
+            story = self.preRequestedStory;
             vc.story = self.preRequestedStory;
             self.preRequestedStory = nil;
         //user selected a story from the collection view

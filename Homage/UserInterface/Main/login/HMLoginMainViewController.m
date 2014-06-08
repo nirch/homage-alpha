@@ -545,6 +545,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } completion:^(BOOL finished)
     {
         self.guiIntroMovieContainerView.hidden = YES;
+        [self.introMovieController stopMoviePlayer];
     }];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

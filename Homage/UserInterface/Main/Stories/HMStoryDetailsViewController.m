@@ -101,7 +101,6 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
     
-    //self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
     [[AMBlurView new] insertIntoView:self.guiBlurredView];
     
     self.noRemakesLabel.text = LS(@"NO_REMAKES");
