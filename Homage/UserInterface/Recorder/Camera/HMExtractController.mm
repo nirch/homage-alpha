@@ -50,6 +50,7 @@
 @property (readonly) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
 @property (nonatomic) NSInteger extractCounter;
 @property (nonatomic) BOOL frontCamera;
+@property (nonatomic) BOOL micEnabled;
 @property (nonatomic) UIInterfaceOrientation interfaceOrientaion;
 @property (nonatomic) NSString *contourFile;
 
@@ -230,6 +231,11 @@
        if ([self shouldFlipVideo]) _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
         _writerAudioInput = nil;
       
+       // Checking if the mic is enabled or not
+       [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL response){
+           self.micEnabled = response;
+       }];
+
        //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerVideoInput sourcePixelBufferAttributes:nil];
        [self.assetWriter addInput:self.writerVideoInput];
        
@@ -313,9 +319,9 @@
     if (self.assetWriter.status != AVAssetWriterStatusWriting)
     {
         
-        if (captureOutput != _audioDataOutput) return;
+        if (self.micEnabled && captureOutput != _audioDataOutput) return;
         
-        if (!self.writerAudioInput)
+        if (self.micEnabled && !self.writerAudioInput)
         {
             [self initAudioInput:CMSampleBufferGetFormatDescription(sampleBuffer)];
         }
