@@ -140,6 +140,7 @@
     m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 480);
 }
 
+
 -(void)initObservers
 {
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -178,6 +179,20 @@
     self.interfaceOrientaion = orientation;
     self.frontCamera = front;
 }
+
+-(void)updateForegroundExtractorForOrientation:(UIInterfaceOrientation)orientation andCameraDirection:(BOOL)front
+{
+    self.interfaceOrientaion = orientation;
+    self.frontCamera = front;
+    if ([self shouldFlipVideo])
+    {
+        m_foregroundExtraction->SetFlip(1);
+    } else
+    {
+        m_foregroundExtraction->SetFlip(0);
+    }
+}
+
 
 -(BOOL)shouldFlipVideo
 {

@@ -1041,7 +1041,7 @@
     <resources>
         <image name="HelpScreenBackground" width="568" height="320"/>
         <image name="TutorialNextButton" width="97" height="48"/>
-        <image name="iconBackgroundGood" width="30" height="30"/>
+        <image name="iconBackgroundGood" width="46" height="46"/>
         <image name="iconCameraFlip" width="47" height="47"/>
         <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>
