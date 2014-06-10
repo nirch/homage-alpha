@@ -65,7 +65,7 @@
 @implementation HMExtractController
 
 #define EXTRACT_TH 0
-#define EXTRACT_TIMER_INTERVAL 25
+#define EXTRACT_TIMER_INTERVAL 13 //25 is 1 sec interval, 13~0.5 sec
 
 -(id)init
 {

@@ -93,6 +93,17 @@
                                     <action selector="onPressedSceneDirectionButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="8Af-xY-jHP"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ru5-Jm-nvF" userLabel="background status icon">
+                                <rect key="frame" x="0.0" y="108" width="46" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="iconBackgroundGood">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedBGStatusButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="ZV2-av-Jp9"/>
+                                </connections>
+                            </button>
                             <containerView hidden="YES" contentMode="scaleToFill" id="KHc-rN-Ccn" userLabel="Texts editing container">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,6 +147,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="guiBackgroundStatusButton" destination="ru5-Jm-nvF" id="y3Y-wE-1Me"/>
                         <outlet property="guiCameraContainer" destination="GSx-cf-uRp" id="peA-4x-gRP"/>
                         <outlet property="guiCameraSwitchingButton" destination="JxT-FD-7FR" id="O46-iA-7t3"/>
                         <outlet property="guiDetailedOptionsBarContainer" destination="aFe-rO-lqD" id="Iy4-ai-kOK"/>
@@ -1029,6 +1041,7 @@
     <resources>
         <image name="HelpScreenBackground" width="568" height="320"/>
         <image name="TutorialNextButton" width="97" height="48"/>
+        <image name="iconBackgroundGood" width="30" height="30"/>
         <image name="iconCameraFlip" width="47" height="47"/>
         <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>
