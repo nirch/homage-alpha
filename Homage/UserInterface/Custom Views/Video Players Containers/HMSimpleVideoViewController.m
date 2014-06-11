@@ -86,6 +86,7 @@
         _shouldDisplayVideoLabel = YES;
         _videoView = (HMSimpleVideoView *)self.view;
         _movieTempFullscreenBackgroundView = [[UIView alloc] init];
+        [_movieTempFullscreenBackgroundView setBackgroundColor:[UIColor blackColor]];
     }
     return self;
 }
@@ -460,7 +461,7 @@
 
 -(void)setFullScreenForOrientation:(UIInterfaceOrientation)orientation
 {
-    [self setFullScreen:YES animated:NO forOrientation:orientation];
+    [self setFullScreen:YES animated:YES forOrientation:orientation];
 }
 
 - (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated forOrientation:(UIInterfaceOrientation)orientation {
@@ -477,7 +478,7 @@
         }
         [keyWindow addSubview:self.movieTempFullscreenBackgroundView];
         
-        self.movieTempFullscreenBackgroundView.alpha = 0.f;
+        //self.movieTempFullscreenBackgroundView.alpha = 0.f;
         [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
             self.view.alpha = 0.f;
             self.movieTempFullscreenBackgroundView.alpha = 1.f;
@@ -486,15 +487,18 @@
             //UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
             UIInterfaceOrientation currentOrientation = orientation;
             [self rotateMoviePlayerForOrientation:currentOrientation animated:NO completion:^{
+                self.videoView.frame = self.movieTempFullscreenBackgroundView.bounds;
+                self.videoView.guiVideoContainer.frame = self.videoView.bounds;
+                self.videoPlayer.view.frame = self.movieTempFullscreenBackgroundView.bounds;
                 [UIView animateWithDuration:animated ? fullscreenAnimationDuration : 0.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
                     self.view.alpha = 1.f;
                 } completion:^(BOOL finished) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerDidEnterFullscreenNotification object:nil];
 //                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationWillChange:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
 
-                    self.videoView.frame = self.movieTempFullscreenBackgroundView.bounds;
+                    /*self.videoView.frame = self.movieTempFullscreenBackgroundView.bounds;
                     self.videoView.guiVideoContainer.frame = self.videoView.bounds;
-                    self.videoPlayer.view.frame = self.movieTempFullscreenBackgroundView.bounds;
+                    self.videoPlayer.view.frame = self.movieTempFullscreenBackgroundView.bounds;*/
 
                 
                 }];
@@ -589,10 +593,10 @@
         case UIDeviceOrientationPortrait:
             if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
             {
-                [self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:NO completion:nil];
-                
+                [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
+                //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:NO completion:nil];
             } else {
-                [self setFullScreen:NO animated:NO forOrientation:UIInterfaceOrientationPortrait];
+                [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
             }
         default:
             break;
