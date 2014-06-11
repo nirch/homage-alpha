@@ -227,7 +227,7 @@
             NSString *playbackTimeString = [NSString stringWithFormat:@"%f" , self.currentPlaybackTime];
             [self.delegate videoPlayerDidStop:self afterDuration:playbackTimeString];
         }
-        [self done];
+        //[self done];
         
     }
     
@@ -241,7 +241,13 @@
         [self.videoView.guiLoadActivity stopAnimating];
         self.videoView.guiPlayPauseButton.selected = YES;
         self.videoView.guiVideoSlider.hidden = YES;
+    } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePaused) {
+        [self.videoView.guiLoadActivity startAnimating];
+        self.videoView.guiPlayPauseButton.selected = NO;
+        self.videoView.guiVideoSlider.hidden = NO;
+        self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
     } else {
+        [self.videoView.guiLoadActivity stopAnimating];
         self.videoView.guiPlayPauseButton.selected = NO;
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
