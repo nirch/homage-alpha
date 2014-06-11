@@ -16,7 +16,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Appirater/Appirater.h>
-
+#import <Appsee/Appsee.h>
 
 @implementation HMAppDelegate
 
@@ -35,10 +35,15 @@
                                                                            )
      ];
     
+   
     #ifndef DEBUG
-         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        [Appsee start:@"128117df897b4508a2b68550ca52b354"];
+    #else 
+        [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
     #endif
     
+    //crashlytics crash reporting
     [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     
     self.pushNotificationFromBG = nil;
@@ -70,6 +75,7 @@
         }
     }
     
+    //appirater - library for app rating popup
     [Appirater setAppId:APPLE_ID];
     [Appirater setDaysUntilPrompt:1];
     [Appirater setUsesUntilPrompt:10];
@@ -77,7 +83,7 @@
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
     [Appirater appLaunched:YES];
-    
+
     [FBLoginView class];
     
     return YES;

@@ -564,6 +564,7 @@
     self.guiDismissButton.enabled = NO;
     self.guiCameraSwitchingButton.enabled = NO;
     self.guiSceneDirectionButton.enabled = NO;
+    self.guiBackgroundStatusButton.enabled = NO;
 
     self.guiWhileRecordingOverlay.hidden = NO;
     self.guiWhileRecordingOverlay.alpha = 0;
@@ -578,6 +579,7 @@
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiDismissButton.alpha = 0;
         self.guiSceneDirectionButton.alpha = 0;
+        self.guiBackgroundStatusButton.alpha = 0;
         
         // Fade in "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 1;
@@ -635,6 +637,9 @@
     self.guiSceneDirectionButton.enabled = YES;
     self.guiSceneDirectionButton.hidden = NO;
     
+    self.guiBackgroundStatusButton.enabled = YES;
+    self.guiBackgroundStatusButton.hidden = NO;
+    
     [UIView animateWithDuration:0.2 animations:^{
         
         // Fade in silhouette image
@@ -644,6 +649,7 @@
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
         self.guiSceneDirectionButton.alpha = 1;
+        self.guiBackgroundStatusButton.alpha = 1;
         
         // Fade out "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 0;
@@ -775,6 +781,7 @@
 -(NSString *)contourFileForScene:(Scene *)scene
 {
     NSString *contourURL = scene.contourRemoteURL;
+    HMGLogDebug(@"scene remote url is: %@" , contourURL);
     if (!contourURL)
     {
         HMGLogError(@"contour url came back empty. check why");
@@ -1176,10 +1183,13 @@
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
     self.guiSceneDirectionButton.hidden = NO;
+    self.guiBackgroundStatusButton.hidden = NO;
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
         self.guiSceneDirectionButton.alpha = 1;
+        self.guiBackgroundStatusButton.alpha = 1;
     } completion:^(BOOL finished) {
     }];
 }
@@ -1190,10 +1200,13 @@
         self.guiDismissButton.alpha = 0;
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiSceneDirectionButton.alpha = 0;
+        self.guiBackgroundStatusButton.alpha = 0;
+        
     } completion:^(BOOL finished) {
         self.guiDismissButton.hidden = YES;
         self.guiSceneDirectionButton.hidden = YES;
         self.guiCameraSwitchingButton.hidden = YES;
+        self.guiBackgroundStatusButton.hidden = YES;
     }];
 }
 

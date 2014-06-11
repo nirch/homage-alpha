@@ -253,6 +253,8 @@
 		2699F7391941E50C00E1A01A /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699F7371941E50C00E1A01A /* whatsapp@2x.png */; };
 		269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
 		26A0277C1946FBE70040C3C0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A0277B1946FBE70040C3C0 /* User.m */; };
+		26B448F31947E25700BC6317 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F21947E25700BC6317 /* Appsee.framework */; };
+		26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F41947E28800BC6317 /* SystemConfiguration.framework */; };
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
 		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
@@ -559,6 +561,8 @@
 		269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageBigImageView.xib; sourceTree = "<group>"; };
 		26A0277A1946FBE70040C3C0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		26A0277B1946FBE70040C3C0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		26B448F21947E25700BC6317 /* Appsee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Appsee.framework; sourceTree = "<group>"; };
+		26B448F41947E28800BC6317 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
 		26B498A918B5FD7100026401 /* HMMotionDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMotionDetector.m; sourceTree = "<group>"; };
 		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -587,6 +591,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */,
 				08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */,
 				0838E8DE18D04E4600222997 /* AVFoundation.framework in Frameworks */,
 				2650DED8190D45D900CA306C /* Crashlytics.framework in Frameworks */,
@@ -599,6 +604,7 @@
 				08455FD8189032FF0040504D /* AWSS3.framework in Frameworks */,
 				0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */,
 				08455FD5189032B90040504D /* AWSRuntime.framework in Frameworks */,
+				26B448F31947E25700BC6317 /* Appsee.framework in Frameworks */,
 				69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,6 +649,8 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				26B448F41947E28800BC6317 /* SystemConfiguration.framework */,
+				26B448F21947E25700BC6317 /* Appsee.framework */,
 				2650DED7190D45D900CA306C /* Crashlytics.framework */,
 				08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */,
 				0838E8DD18D04E4600222997 /* AVFoundation.framework */,

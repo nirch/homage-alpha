@@ -301,14 +301,14 @@
             m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
             int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
             
-            /*//test - save pics
-             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            //test - save pics
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
              NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
              NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
              NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
              
              UIImage *bgImage = [self imageFromSampleBuffer:sampleBuffer];
-             [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];*/
+            [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
             
             if (result < EXTRACT_TH)
             {
