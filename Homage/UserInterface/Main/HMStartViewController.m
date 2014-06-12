@@ -43,12 +43,6 @@
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 
-typedef NS_ENUM(NSInteger, HMAppTab) {
-    HMStoriesTab,
-    HMMeTab,
-    HMSettingsTab,
-};
-
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
@@ -76,7 +70,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 
 #define SETTING_TAG 1
-#define BACK_TAG 2
+#define BACK_TAG    2
 
 @end
 
@@ -652,6 +646,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     }
     
     self.selectedTab = toIndex;
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_MAIN_SWITCHED_TAB object:self userInfo:@{@"tab" : [NSNumber numberWithInt:toIndex]}];
+    
 }
 
 -(void)closeSideBar

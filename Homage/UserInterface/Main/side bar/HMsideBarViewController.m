@@ -15,6 +15,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AMBlurView.h"
 #import "Mixpanel.h"
+#import "HMNotificationCenter.h"
+#import "NSNotificationCenter+Utils.h"
 
 @interface HMsideBarViewController ()
 
@@ -49,11 +51,31 @@
     return self;
 }
 
-- (void)viewDidLoad
+-(void)viewDidLoad
 {
     [super viewDidLoad];
     [self initGUI];
 	// Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self initObservers];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self removeObservers];
+}
+
+-(void)initObservers
+{
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onSwitchedTab:) name:HM_MAIN_SWITCHED_TAB object:nil];
+}
+
+-(void)removeObservers
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_MAIN_SWITCHED_TAB object:nil];
 }
 
 -(void)initGUI
@@ -134,6 +156,27 @@
      }];
     
     self.selectedButton = sender;
+}
+
+-(void)onSwitchedTab:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSNumber *tabIndex = info[@"tab"];
+    NSInteger tabIndexInt = tabIndex.integerValue;
+    
+    switch (tabIndexInt) {
+        case HMStoriesTab:
+            [self storiesButtonPushed:self.storiesButton];
+            break;
+        case HMMeTab:
+            [self meButtonPushed:self.meButton];
+            break;
+        case HMSettingsTab:
+            [self settingsButtonPushed:self.settingsButton];
+            break;
+        default:
+            break;
+    }
 }
 
 - (IBAction)logoutButtonPushed:(HMAvenirBookFontButton *)sender

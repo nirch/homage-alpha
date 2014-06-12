@@ -70,6 +70,9 @@
 #define HM_APP_WILL_RESIGN_ACTIVE @"app delegate: application will resign active called"
 #define HM_APP_WILL_ENTER_FOREGROUND @"app delegate: application will enter background called"
 
+//start VC
+#define HM_MAIN_SWITCHED_TAB @"switching to different tab"
+
 @interface HMNotificationCenter : NSObject
 
 @end

@@ -10,6 +10,13 @@
 #import "HMsideBarNavigatorDelegate.h"
 
 @interface HMsideBarViewController : UIViewController
+
+typedef NS_ENUM(NSInteger, HMAppTab) {
+    HMStoriesTab,
+    HMMeTab,
+    HMSettingsTab,
+};
+
 @property id<HMsideBarNavigatorDelegate> delegate;
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID;
 
