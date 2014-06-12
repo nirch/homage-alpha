@@ -111,16 +111,17 @@
         
         m_foregroundExtraction = new CUniformBackground();
         
-        NSString *contourFile;
+        
         if (_contourFile)
         {
-            contourFile = _contourFile;
+            NSLog(@"contour file is: %@" , _contourFile);
+            m_foregroundExtraction->ReadMask((char*)_contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+            self.backgroundDetectionEnabled = YES;
         } else
         {
-            contourFile = [[NSBundle mainBundle] pathForResource:@"close up 480" ofType:@"ctr"];
+            self.backgroundDetectionEnabled = NO;
         }
-    
-        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+        
         
         m_original_image = NULL;
         m_foreground_image = NULL;
@@ -135,7 +136,6 @@
         counter = 0;
         
         [self initObservers];
-        self.backgroundDetectionEnabled = YES;
     }
     return self;
 }
@@ -143,7 +143,9 @@
 -(void)updateContour:(NSString *)contourFile
 {
     _contourFile = contourFile;
+    NSLog(@"contour file is: %@" , _contourFile);
     m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+    self.backgroundDetectionEnabled = YES;
 }
 
 
@@ -322,7 +324,7 @@
             
             int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
             
-            /*
+            
             //test - save pics
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
@@ -334,7 +336,7 @@
             image_type *background_image = image4_from(fixRGB, NULL);
             UIImage *bgImage = CVtool::CreateUIImage(background_image);
             [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
-            */
+            
                          
             if (result < EXTRACT_TH)
             {

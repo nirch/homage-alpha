@@ -646,8 +646,7 @@
     }
     
     self.selectedTab = toIndex;
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_MAIN_SWITCHED_TAB object:self userInfo:@{@"tab" : [NSNumber numberWithInt:toIndex]}];
-    
+
 }
 
 -(void)closeSideBar
@@ -721,6 +720,7 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil];
         [self switchToTab:HMMeTab];
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_MAIN_SWITCHED_TAB object:self userInfo:@{@"tab" : [NSNumber numberWithInt:HMMeTab]}];
         if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
         {
             HMGMeTabVC *vc = (HMGMeTabVC *)self.appTabBarController.selectedViewController;
