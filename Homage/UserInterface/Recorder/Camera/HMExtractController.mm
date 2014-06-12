@@ -67,7 +67,7 @@
 @implementation HMExtractController
 
 #define EXTRACT_TH 0
-#define EXTRACT_TIMER_INTERVAL 25
+#define EXTRACT_TIMER_INTERVAL 13 //25 is 1 sec interval, 13~0.5 sec
 
 #define OUTPUT_WIDTH 640
 #define OUTPUT_HEIGHT 360
@@ -145,6 +145,7 @@
     m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
 }
 
+
 -(void)initObservers
 {
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -183,6 +184,20 @@
     self.interfaceOrientaion = orientation;
     self.frontCamera = front;
 }
+
+-(void)updateForegroundExtractorForOrientation:(UIInterfaceOrientation)orientation andCameraDirection:(BOOL)front
+{
+    self.interfaceOrientaion = orientation;
+    self.frontCamera = front;
+    if ([self shouldFlipVideo])
+    {
+        m_foregroundExtraction->SetFlip(1);
+    } else
+    {
+        m_foregroundExtraction->SetFlip(0);
+    }
+}
+
 
 -(BOOL)shouldFlipVideo
 {

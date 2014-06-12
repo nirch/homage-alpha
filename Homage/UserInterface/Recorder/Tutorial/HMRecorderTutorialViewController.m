@@ -57,6 +57,11 @@
     [self hideAllAnimated:NO];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+
+}
+
 -(void)initGUI
 {
     self.labels = @[self.guiSceneDurationLabel,
@@ -201,7 +206,5 @@
 {
     return YES;
 }
-
-
 
 @end

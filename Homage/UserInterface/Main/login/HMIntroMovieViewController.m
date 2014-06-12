@@ -80,9 +80,7 @@
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-
-    
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -145,12 +143,18 @@
 #pragma mark HMSimpleVideoViewController delegate
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [[Mixpanel sharedInstance] track:@"stopIntroStory" properties:@{@"time_watched" : playbackTime}];
+    [[Mixpanel sharedInstance] track:@"LoginStopIntroStory" properties:@{@"time_watched" : playbackTime}];
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
-    [[Mixpanel sharedInstance] track:@"finishIntroStory"];
+    [[Mixpanel sharedInstance] track:@"LoginFinishIntroStory"];
 }
+
+-(void)stopMoviePlayer
+{
+    [self.moviePlayerVC done];
+}
+
 
 @end

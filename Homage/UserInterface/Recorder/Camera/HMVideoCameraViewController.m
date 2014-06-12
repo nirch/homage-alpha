@@ -369,6 +369,17 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     }];
 }
 
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if (self.extractController)
+    {
+        UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
+        BOOL frontCamera = [self isFrontCamera];
+        [self.extractController updateForegroundExtractorForOrientation:interfaceOrientation andCameraDirection:frontCamera];
+    }
+}
+
+
 -(void)updateOrientation:(UIInterfaceOrientation)orientation
 {
     
@@ -771,6 +782,14 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA object:nil];
             } else {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA object:nil];
+            }
+            
+            //update the foreground extractor that we changed orientaion or camera feed
+            if (self.extractController)
+            {
+                UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
+                BOOL frontCamera = [self isFrontCamera];
+                [self.extractController updateForegroundExtractorForOrientation:interfaceOrientation andCameraDirection:frontCamera];
             }
         });
     });

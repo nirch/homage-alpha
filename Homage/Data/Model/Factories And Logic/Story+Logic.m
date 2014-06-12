@@ -20,7 +20,21 @@
 
 -(Scene *)findSceneWithID:(NSNumber *)sID
 {
+    
+    if (!sID)
+    {
+        HMGLogError(@"got Wrong scene number");
+        return nil;
+    }
+    
     for (Scene *scene in self.scenes) {
+        
+        if (!scene.sID)
+        {
+            HMGLogError(@"one of the scenes is empty");
+            return nil;
+        }
+        
         if ([scene.sID isEqualToNumber:sID]) return scene;
     }
     return nil;

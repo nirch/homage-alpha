@@ -240,6 +240,7 @@
                      name:HM_NOTIFICATION_UPLOAD_PROGRESS
                    object:nil];
     
+    //uncomment if we want to display "bad background label" in the menu bar
     //observe bad background
     [nc addUniqueObserver:self
                  selector:@selector(showBadBackgroundLabel)

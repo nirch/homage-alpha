@@ -28,12 +28,16 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiGeneralMessageSwipeUpIcon;
 @property (weak, nonatomic) IBOutlet UIButton *guiGeneralMessageOKButton;
 
-
 @property (weak, nonatomic) IBOutlet UIView *guiTextMessageContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *guiTextMessageIcon;
 @property (weak, nonatomic) IBOutlet UILabel *guiTextMessageTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiTextMessageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiDismissButton;
+
+@property (strong, nonatomic) IBOutlet UIView *guiBigImageViewContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *guiBigImageViewImage;
+@property (weak, nonatomic) IBOutlet UILabel *guiBigImageTextLabel;
+@property (weak, nonatomic) IBOutlet UIButton *guiBigImagedismissButton;
 
 @property (weak, nonatomic) IBOutlet UIView *guiFinishedSceneButtonsContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiFinishedSceneRetakeButton;
@@ -90,12 +94,17 @@
     commonMessageView.hidden = YES;
     [self.view addSubview:commonMessageView];
     
-    
     UIView *areYouSureMessageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageRetakeAreYouSureView" owner:self options:nil][0];
     areYouSureMessageView.frame = self.view.bounds;
     areYouSureMessageView.backgroundColor = [UIColor clearColor];
     areYouSureMessageView.hidden = YES;
     [self.view addSubview:areYouSureMessageView];
+    
+    UIView *bigImageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageBigImageView" owner:self options:nil][0];
+    bigImageView.frame = self.view.bounds;
+    bigImageView.backgroundColor = [UIColor clearColor];
+    bigImageView.hidden = YES;
+    [self.view addSubview:bigImageView];
 }
 
 
@@ -184,7 +193,9 @@
     //THE HAND!!!
     //self.guiGeneralMessageSwipeUpIcon.hidden = messageType != HMRecorderMessagesTypeGeneral;
     self.guiGeneralMessageSwipeUpIcon.hidden = messageType == HMRecorderMessagesTypeGeneral;
-    self.guiTextMessageContainer.hidden = messageType == HMRecorderMessagesTypeGeneral;
+    self.guiTextMessageContainer.hidden = messageType == HMRecorderMessagesTypeGeneral || messageType == HMRecorderMessagesTypeBigImage;
+    self.guiBigImageViewContainer.hidden = messageType != HMRecorderMessagesTypeBigImage;
+    
     self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene && messageType != HMRecorderMessagesTypeFinishedAllScenes ;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     
@@ -208,13 +219,13 @@
             } completion:nil];
         });*/
         
-        [[Mixpanel sharedInstance] track:@"REGeneralScreenEntry"];
+        //[[Mixpanel sharedInstance] track:@"REGeneralScreenEntry"];
         self.guiGeneralMessageOKButton.alpha = 0;
         HMGLogDebug(@"alpha started");
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.1 animations:^{
                 self.guiGeneralMessageOKButton.alpha = 1;
             }];
         });
@@ -240,11 +251,29 @@
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.1 animations:^{
                 self.guiDismissButton.alpha = 1;
             }];
         });
         
+    } else if (self.messageType == HMRecorderMessagesTypeBigImage) {
+        
+        self.guiBigImageTextLabel.text = info[@"text"];
+        NSString *iconName = info[@"icon name"];
+        self.guiBigImageViewImage.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"badBackground"];
+        [self.guiDismissButton setTitle:info[@"ok button text"] forState:UIControlStateNormal];
+        [self.guiDismissButton setImage:[UIImage imageNamed:@"iconGotIt"] forState:UIControlStateNormal];
+    
+        self.guiBigImagedismissButton.alpha = 0;
+        HMGLogDebug(@"alpha started");
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [UIView animateWithDuration:0.1 animations:^{
+                self.guiBigImagedismissButton.alpha = 1;
+            }];
+        });
+
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         
         //
@@ -322,15 +351,28 @@
         [[Mixpanel sharedInstance] track: @"RESceneDescriptionDone"];
         [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized scene direction":@YES}];
         return;
+    } else if (self.messageType == HMRecorderMessagesTypeBigImage)
+    {
+        //[[Mixpanel sharedInstance] track: @"RESceneDescriptionDone"];
+        [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized background status":@YES}];
+        return;
     }
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
 }
 
 - (IBAction)onPressedDismissAndDontShowIntroMessageAgainButton:(UIButton *)sender
 {
-    [[Mixpanel sharedInstance] track:@"REDontShowAgain"];
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
     User.current.skipRecorderTutorial = @YES;
+    [DB.sh save];
+}
+
+
+- (IBAction)onPressedDismissAndDontShowBadBackgroundPopoup:(UIButton *)sender
+{
+    [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized background status":@YES}];
+    User.current.disableBadBackgroundPopup = @YES;
+    sender.hidden = YES;
     [DB.sh save];
 }
 

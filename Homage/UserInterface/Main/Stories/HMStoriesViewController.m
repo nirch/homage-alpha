@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *storiesCV;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noStoriesLabel;
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
-@property (weak,nonatomic) Story *introStory;
+@property (weak,nonatomic) Story *preRequestedStory;
 
 @end
 
@@ -210,19 +210,22 @@
         id<HMStoryPresenterProtocol>vc = (id<HMStoryPresenterProtocol>)segue.destinationViewController;
         
         vc.autoStartPlayingStory = YES;
+        Story *story;
         
         //user is going to shoot intro movie
-        if (self.introStory) {
-            vc.story = self.introStory;
-            self.introStory = nil;
-            [[Mixpanel sharedInstance] track:@"ShootIntroStory"];
+        if (self.preRequestedStory) {
+            story = self.preRequestedStory;
+            vc.story = self.preRequestedStory;
+            self.preRequestedStory = nil;
         //user selected a story from the collection view
         } else {
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
-            Story *story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+            story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
             [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
-        }        
+        }
+        
+        [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name}];
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
     }
@@ -367,10 +370,9 @@
     return nil;
 }
 
--(void)prepareToShootIntroStory
+-(void)showStoryDetailedScreenForStory:(NSString *)storyID
 {
-    NSString *storyID = @DIVE_SCHOOL;
-    self.introStory = [Story storyWithID:storyID inContext:DB.sh.context];
+    self.preRequestedStory = [Story storyWithID:storyID inContext:DB.sh.context];
     [self performSegueWithIdentifier:@"story details segue" sender:nil];
 }
 

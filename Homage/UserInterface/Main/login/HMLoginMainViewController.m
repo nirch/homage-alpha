@@ -493,7 +493,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (user.email)
     {
         [mixpanel registerSuperProperties:@{@"email": user.email , @"homage_id": user.userID}];
-        [mixpanel.people set:@{@"user" : user.email}];
+        [mixpanel.people set:@{@"user" : user.email , @"homage_id":user.userID}];
         
         //this excludes us from being tracked on mixpanel
         if ([self shouldExcludethisAdressFromMixpanelData:user.email])
@@ -502,7 +502,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         }
     } else {
         [mixpanel registerSuperProperties:@{@"email" : @"unknown" , @"homage_id" : user.userID}];
-        [mixpanel.people set:@{@"user" : user.email, @"homage_id":user.userID}];
+        [mixpanel.people set:@{@"homage_id":user.userID}];
     }
     [mixpanel track:@"UserUpdate" properties:@{@"login_method" : self.loginMethod}];
     
@@ -545,6 +545,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } completion:^(BOOL finished)
     {
         self.guiIntroMovieContainerView.hidden = YES;
+        [self.introMovieController stopMoviePlayer];
     }];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

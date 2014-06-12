@@ -12,6 +12,6 @@
     NSFetchedResultsControllerDelegate
 >
 
--(void)prepareToShootIntroStory;
+-(void)showStoryDetailedScreenForStory:(NSString *)storyID;
 
 @end

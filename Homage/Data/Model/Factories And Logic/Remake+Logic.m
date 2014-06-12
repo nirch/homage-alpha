@@ -68,6 +68,7 @@
         HMFootageReadyState state = [readyStates[i] integerValue];
         if (state == HMFootageReadyStateReadyForFirstRetake) {
             Scene *scene = self.story.scenesOrdered[i];
+            HMGLogDebug(@"scene.sID: %d" , scene.sID.intValue);
             return scene.sID;
         }
     }

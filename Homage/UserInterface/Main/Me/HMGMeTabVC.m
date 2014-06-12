@@ -18,6 +18,7 @@
 #import "mixPanel.h"
 #import "HMVideoPlayerDelegate.h"
 #import "HMSimpleVideoViewController.h"
+#import "JBWhatsAppActivity.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -505,7 +506,7 @@
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
-            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"Story" : remake.story.name}];
+            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remakeID" : remake.sID}];
             [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
             break;
         case HMGRemakeStatusInProgress:
@@ -642,7 +643,6 @@
     cell.remakeButton.enabled = NO;
     
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"Story" : self.remakeToContinueWith.story.name}];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
     NSInteger remakeStatus = self.remakeToContinueWith.status.integerValue;
@@ -688,17 +688,20 @@
     
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ , #%@HomageApp :" , storyNameWithoutSpaces , storyNameWithoutSpaces];
+    NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ , #%@HomageApp : \n%@" , storyNameWithoutSpaces , storyNameWithoutSpaces , remake.shareURL];
     
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, remake.thumbnail,remake.shareURL , nil];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:shareString forABID:nil];
+
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, whatsappMsg, remake.thumbnail, nil];
+    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         if (completed) {
             [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType}];
         }
     };
     [activityViewController setValue:shareString forKey:@"subject"];
-    activityViewController.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self presentViewController:activityViewController animated:YES completion:^{}];
@@ -727,18 +730,18 @@
         
         if (buttonIndex == 0)
         {
-            
+           //cancel
         }
         
         //continue with old remake
         if (buttonIndex == 1) {
             [self initRecorderWithRemake:self.remakeToContinueWith];
-            [[Mixpanel sharedInstance] track:@"MEOldRemake" properties:@{@"story" : self.remakeToContinueWith.story.name}];
+            [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"story" : self.remakeToContinueWith.story.name , @"remakeID" : self.remakeToContinueWith.sID , @"continue_with_old_remake" : @"yes"}];
         }
         //start new remake
         if (buttonIndex == 2) {
             NSString *remakeIDToDelete = self.remakeToContinueWith.sID;
-            [[Mixpanel sharedInstance] track:@"MENewRemakeWithOld" properties:@{@"story" : self.remakeToContinueWith.story.name}];
+            [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"story" : self.remakeToContinueWith.story.name , @"remakeID" : self.remakeToContinueWith.sID , @"continue_with_old_remake" : @"no"}];
             [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
             [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
             self.remakeToContinueWith = nil;
@@ -756,7 +759,7 @@
             
             if (self.remakeToDelete.story.name)
             {
-              [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"Story" : self.remakeToDelete.story.name}];
+              [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : self.remakeToDelete.story.name}];
             }
             
             [HMServer.sh deleteRemakeWithID:remakeID];

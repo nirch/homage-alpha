@@ -14,4 +14,5 @@
 -(void)onLoginPressedSkip;
 -(void)onLoginPressedShootFirstStory;
 
+
 @end

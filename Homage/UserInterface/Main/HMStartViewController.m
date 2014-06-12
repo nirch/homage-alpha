@@ -162,6 +162,12 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
                                                      object:[[UIApplication sharedApplication] delegate]];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onNewStoryAvailable:)
+                                                       name:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY
+                                                     object:[[UIApplication sharedApplication] delegate]];
+    
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserPreferencesUpdate:)
                                                        name:HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE
                                                      object:nil];
@@ -332,8 +338,6 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
        {
            UINavigationController *navVC = (UINavigationController *)vc;
            navVC.delegate = self;
-           
-           
        }
    }
 
@@ -357,7 +361,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     }
 }
 
--(void)showIntroStory
+-(void)showStoryDetailsScreenForStoryID:(NSString *)storyID
 {
     UINavigationController *navVC;
     UIViewController *vc = self.appTabBarController.selectedViewController;
@@ -367,9 +371,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     }
     
     HMStoriesViewController *storyVC = (HMStoriesViewController *)[navVC.viewControllers objectAtIndex:0];
-    [storyVC prepareToShootIntroStory];
-    
-
+    [storyVC showStoryDetailedScreenForStory:storyID];
 }
 
 #pragma mark - Application start
@@ -399,14 +401,26 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
         
         [self onUserLoginStateChange:user];
         
+        //handle push notification from background
         HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
         if (myDelegate.pushNotificationFromBG)
         {
-            //NSDictionary *info = myDelegate.pushNotificationFromBG;
-            [self switchToTab:HMMeTab];
-        } else {
-            [self switchToTab:HMStoriesTab];
+            NSDictionary *info = myDelegate.pushNotificationFromBG;
+            NSNumber *notificationType = info[@"type"];
+            
+            if ( notificationType.integerValue == HMPushMovieReady )
+            {
+              [self switchToTab:HMMeTab];
+            } else if ( notificationType.integerValue == HMPushNewStory)
+            {
+                NSString *storyID = info[@"story_id"];
+                [self showStoryDetailsScreenForStoryID:storyID];
+                [self switchToTab:HMStoriesTab];
+            } else {
+                [self switchToTab:HMStoriesTab];
+            }
         }
+        
     }
     
     [self reportCrashesIfExist];
@@ -547,9 +561,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)storiesButtonPushed
 {
-    [[Mixpanel sharedInstance] track:@"SBPressStories"];
-    
     [self switchToTab:HMStoriesTab];
+    [[Mixpanel sharedInstance] track:@"appMoveToStoriesTab"];
     UIViewController *VC = self.appTabBarController.selectedViewController;
     if ([VC isKindOfClass:[UINavigationController class]])
     {
@@ -566,7 +579,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)meButtonPushed
 {
-    [[Mixpanel sharedInstance] track:@"SBPressMe"];
+    [[Mixpanel sharedInstance] track:@"appMoveToMeTab"];
     if (self.appTabBarController.selectedIndex != 1)
         [self switchToTab:HMMeTab];
     [self closeSideBar];
@@ -575,7 +588,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)settingsButtonPushed
 {
-    [[Mixpanel sharedInstance] track:@"SBPressSettings"];
+    [[Mixpanel sharedInstance] track:@"appMoveToSettingsTab"];
     if (self.appTabBarController.selectedIndex != 2)
         [self switchToTab:HMSettingsTab];
     [self closeSideBar];
@@ -583,7 +596,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 
 -(void)howToButtonPushed
 {
-    [[Mixpanel sharedInstance] track:@"playIntroStory "];
+    [[Mixpanel sharedInstance] track:@"appWillPlayIntroMovie"];
     [self initIntroMoviePlayer];
     [self closeSideBar];
 }
@@ -823,6 +836,20 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     }
 }
 
+-(void)onNewStoryAvailable:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *storyID = info[@"story_id"];
+    NSNumber *appState = info[@"app_state"];
+    
+    if (appState.intValue == UIApplicationStateInactive)
+    {
+        [self showStoryDetailsScreenForStoryID:storyID];
+        [self switchToTab:HMStoriesTab];
+    }
+    
+}
+
 -(void)onUserLoginStateChange:(User *)user
 {
     NSString *userName;
@@ -906,13 +933,13 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
     [self.guiVideoContainer removeFromSuperview];
-    [[Mixpanel sharedInstance] track:@"stopIntroStory" properties:@{@"time_watched" : playbackTime}];
+    [[Mixpanel sharedInstance] track:@"SettingsStopIntroStory" properties:@{@"time_watched" : playbackTime}];
     
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
-    [[Mixpanel sharedInstance] track:@"finishIntroStory"];
+    [[Mixpanel sharedInstance] track:@"SettingsFinishIntroStory"];
 }
 
 -(void)videoPlayerWillPlay

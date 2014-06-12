@@ -21,9 +21,10 @@
 -(BOOL)isRecording;
 -(void)enableBackgroundDetection;
 -(void)disableBackgroundDetection;
--(void)setupExtractorientationWithDeviceOrientation:(UIInterfaceOrientation)orientation frontCamera:(BOOL)Front;
+-(void)setupExtractorientationWithDeviceOrientation:(UIInterfaceOrientation)orientation frontCamera:(BOOL)front;
 -(void)startRecordingToOutputFileURL:(NSURL*)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate;
 -(void)stopRecording;
+-(void)updateForegroundExtractorForOrientation:(UIInterfaceOrientation)orientation andCameraDirection:(BOOL)front;
 
 
 @end

@@ -101,7 +101,6 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.title = self.story.name;
     
-    //self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
     [[AMBlurView new] insertIntoView:self.guiBlurredView];
     
     self.noRemakesLabel.text = LS(@"NO_REMAKES");
@@ -409,8 +408,8 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"remakeID" : remake.sID}];
     self.playingRemakeIndex = indexPath.item;
     [self initVideoPlayerWithURL:[NSURL URLWithString:remake.videoURL]];
 }
@@ -428,7 +427,7 @@
 
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"story" : self.story.name , @"time_watched" : playbackTime}];
+    [[Mixpanel sharedInstance] track:@"SDStopWatchingVideo" properties:@{@"time_watched" : playbackTime}];
     
     if (sender == self.remakeMoviePlayer)
     {
@@ -438,17 +437,20 @@
 
 -(void)videoPlayerDidFinishPlaying
 {
-    [[Mixpanel sharedInstance] track:@"SDFinishPlayStory" properties:@{@"story" : self.story.name}];
+    [[Mixpanel sharedInstance] track:@"SDVideoPlayerFinished"];
 }
 
 -(void)videoPlayerDidExitFullScreen
 {
-    [[Mixpanel sharedInstance] track:@"SDExitFullScreen" properties:@{@"story" : self.story.name}];
+    [[Mixpanel sharedInstance] track:@"SDVideoPlayerExitFullScreen"];
 }
 
 -(void)videoPlayerWillPlay
 {
-    [[Mixpanel sharedInstance] track:@"SDStartPlayStory" properties:@{@"story" : self.story.name}];
+    if ([self.storyMoviePlayer isInAction])
+    {
+      [[Mixpanel sharedInstance] track:@"SDStartPlayStory" properties:@{@"story" : self.story.name}];
+    }
 }
 
 -(void)videoPlayerWasFired
@@ -613,20 +615,23 @@
     }
 }
 
+/* 
 #pragma mark segue
+ 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     //HMRemakeCell *cell = (HMRemakeCell *)sender;
     
     if ([segue.identifier isEqualToString:@"remakeVideoPlayerSegue"]) {
-        /*HMSimpleVideoViewController *vc = segue.destinationViewController;
+        HMSimpleVideoViewController *vc = segue.destinationViewController;
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell.tag inSection:0];
         Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"story" : self.story.name , @"remakeNum" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
-        vc.videoURL = remake.videoURL];*/
+        vc.videoURL = remake.videoURL];
     }
 }
-
+ 
+*/
 
 #pragma mark - HMRecorderDelegate
 -(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason

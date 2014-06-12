@@ -47,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiTextsEditingContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiMessagesOverlayContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiSceneDirectionButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiBackgroundStatusButton;
 @property (weak, nonatomic) IBOutlet UIView *guiHelperScreenContainer;
 
 
@@ -83,6 +84,9 @@
 //THE HAND!!!
 @property (nonatomic,readwrite) BOOL showHand;
 
+@property (nonatomic) NSInteger backgroundStatusCounter;
+@property (nonatomic) BOOL      backgroundAlertDisplaying;
+
 @end
 
 @implementation HMRecorderViewController
@@ -90,6 +94,9 @@
 @synthesize remake = _remake;
 @synthesize currentSceneID = _currentSceneID;
 
+#define GOOD_BACKGROUND_TH   3
+#define BAD_BACKGROUND_TH   -2
+#define BAD_BACKGROUND_PRESENT_POPUP_TH -15
 
 +(HMRecorderViewController *)recorderForRemake:(Remake *)remake
 {
@@ -104,7 +111,7 @@
 {
     [super viewDidLoad];
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
-    [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"RemakeID" : self.remake.sID , @"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
                                                         
     [self initRemakerState];
     [self initOptions];
@@ -171,7 +178,12 @@
     self.videoCameraVC.previewView.superview.autoresizingMask = UIViewAutoresizingNone;
 
     [self loadSilhouettes];
+    
+    self.backgroundStatusCounter = 0;
+    
     //[self loadContours];
+
+    //[self.guiBackgroundStatusButton setImage:goodBackground forState:UIControlStateNormal];
 }
 
 #pragma mark - Recorder state flow
@@ -290,7 +302,10 @@
     // will select the last scene for this remake instead.
     //
     _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
-    if (!self.currentSceneID) _currentSceneID = [self.remake lastSceneID];
+    if (!self.currentSceneID)
+    {
+       _currentSceneID = [self.remake lastSceneID];
+    }
     [self updateUIForSceneID:self.currentSceneID];
     
     // Just started. Show general message.
@@ -321,6 +336,7 @@
     _recorderState = HMRecorderStateHelpScreens;
     //TODO: uncomment line below
     self.guiHelperScreenContainer.hidden = NO;
+    [self postDisableBGdetectionNotification];
     self.guiHelperScreenContainer.alpha = 0;
     [UIView animateWithDuration:0.3 animations:^{
         self.guiHelperScreenContainer.alpha = 1;
@@ -448,12 +464,15 @@
                                                        name:HM_NOTIFICATION_CAMERA_NOT_STABLE
                                                      object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onBadBackgroundDetected:) name:HM_CAMERA_BAD_BACKGROUND object:nil];
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onBadBackgroundDetected:)
+                                                       name:HM_CAMERA_BAD_BACKGROUND
+                                                     object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onGoodBackgroundDetected:) name:HM_CAMERA_GOOD_BACKGROUND object:nil];
-    
-    
-    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onGoodBackgroundDetected:)
+                                                       name:HM_CAMERA_GOOD_BACKGROUND
+                                                     object:nil];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onAppMovedToBackground:)
@@ -533,6 +552,8 @@
     _lockedAutoRotation = YES;
     _stopRecordingFired = NO;
     
+    [[Mixpanel sharedInstance] track:@"REStartRecording" properties:@{@"bad_background" : [NSNumber numberWithBool:self.backgroundAlertDisplaying]}];
+    
     [self presentRecordingUI];
 }
 
@@ -543,6 +564,7 @@
     self.guiDismissButton.enabled = NO;
     self.guiCameraSwitchingButton.enabled = NO;
     self.guiSceneDirectionButton.enabled = NO;
+    self.guiBackgroundStatusButton.enabled = NO;
 
     self.guiWhileRecordingOverlay.hidden = NO;
     self.guiWhileRecordingOverlay.alpha = 0;
@@ -557,6 +579,7 @@
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiDismissButton.alpha = 0;
         self.guiSceneDirectionButton.alpha = 0;
+        self.guiBackgroundStatusButton.alpha = 0;
         
         // Fade in "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 1;
@@ -614,6 +637,9 @@
     self.guiSceneDirectionButton.enabled = YES;
     self.guiSceneDirectionButton.hidden = NO;
     
+    self.guiBackgroundStatusButton.enabled = YES;
+    self.guiBackgroundStatusButton.hidden = NO;
+    
     [UIView animateWithDuration:0.2 animations:^{
         
         // Fade in silhouette image
@@ -623,6 +649,7 @@
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
         self.guiSceneDirectionButton.alpha = 1;
+        self.guiBackgroundStatusButton.alpha = 1;
         
         // Fade out "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 0;
@@ -638,6 +665,11 @@
     NSString *remakeID = info[@"remakeID"];
     NSString *rawMoviePath = info[@"rawMoviePath"];
     NSNumber *sceneID = info[@"sceneID"];
+    
+    if (!sceneID)
+    {
+        HMGLogError(@"sceneID is missing");
+    }
     
     if (![remakeID isEqualToString:self.remake.sID]) {
         // If happens, something went wrong is the timing. Maybe a leak of an old recorder?
@@ -681,8 +713,13 @@
 #pragma mark - Scenes selection
 -(void)updateUIForSceneID:(NSNumber *)sceneID
 {
+    if (!sceneID)
+    {
+      sceneID = [self.remake lastSceneID];
+    }
+    
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
-
+    
     if (scene.isSelfie.boolValue && [HMVideoCameraViewController canFlipToFrontCamera]) {
         _frontCameraAllowed = YES;
     } else {
@@ -744,6 +781,7 @@
 -(NSString *)contourFileForScene:(Scene *)scene
 {
     NSString *contourURL = scene.contourRemoteURL;
+    HMGLogDebug(@"scene remote url is: %@" , contourURL);
     if (!contourURL)
     {
         HMGLogError(@"contour url came back empty. check why");
@@ -837,6 +875,7 @@
             self.guiHelperScreenContainer.alpha = 0;
         } completion:^(BOOL finished) {
             self.guiHelperScreenContainer.hidden = YES;
+            [self postEnableBGDetectionNotification];
             // Check the recorder state and advance it if needed.
             if (advancingState) [self advanceState];
         }];
@@ -845,7 +884,19 @@
     
     if (info[@"minimized scene direction"]) {
         [UIView animateWithDuration:0.2 animations:^{
-            self.guiMessagesOverlayContainer.transform = [self minimizedSceneDirectionTransform];
+            self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiSceneDirectionButton];
+        } completion:^(BOOL finished) {
+            self.guiMessagesOverlayContainer.hidden = YES;
+            [self postEnableBGDetectionNotification];
+            // Check the recorder state and advance it if needed.
+            if (advancingState) [self advanceState];
+        }];
+        return;
+    }
+    
+    if (info[@"minimized background status"]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiBackgroundStatusButton];
         } completion:^(BOOL finished) {
             self.guiMessagesOverlayContainer.hidden = YES;
             [self postEnableBGDetectionNotification];
@@ -866,9 +917,9 @@
     }];
 }
 
--(CGAffineTransform)minimizedSceneDirectionTransform
+-(CGAffineTransform)minimizedButtonTransform:(UIButton *)button
 {
-    CGPoint dc = self.guiSceneDirectionButton.center;
+    CGPoint dc = button.center;
     CGPoint sc = self.guiMessagesOverlayContainer.center;
     
     double scaleX = 0.01;
@@ -970,7 +1021,6 @@
      ];
 }
 
-
 #pragma mark - Sort this out
 -(void)revealMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
@@ -986,7 +1036,12 @@
     
     if (info[@"minimized scene direction"]) {
         animationDuration = 0.2;
-        self.guiMessagesOverlayContainer.transform = [self minimizedSceneDirectionTransform];
+        self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiSceneDirectionButton];
+    }
+    
+    if (info[@"minimized background status"]) {
+        animationDuration = 0.2;
+        self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiBackgroundStatusButton];
     }
     
     [UIView animateWithDuration:animationDuration animations:^{
@@ -1128,10 +1183,13 @@
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
     self.guiSceneDirectionButton.hidden = NO;
+    self.guiBackgroundStatusButton.hidden = NO;
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
         self.guiSceneDirectionButton.alpha = 1;
+        self.guiBackgroundStatusButton.alpha = 1;
     } completion:^(BOOL finished) {
     }];
 }
@@ -1142,10 +1200,13 @@
         self.guiDismissButton.alpha = 0;
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiSceneDirectionButton.alpha = 0;
+        self.guiBackgroundStatusButton.alpha = 0;
+        
     } completion:^(BOOL finished) {
         self.guiDismissButton.hidden = YES;
         self.guiSceneDirectionButton.hidden = YES;
         self.guiCameraSwitchingButton.hidden = YES;
+        self.guiBackgroundStatusButton.hidden = YES;
     }];
 }
 
@@ -1211,6 +1272,33 @@
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
     [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:NO info:@{@"blur alpha":@0.85,@"minimized scene direction":@YES}];
+}
+
+
+- (IBAction)onPressedBGStatusButton:(id)sender
+{
+    
+    [self presentBadBackgroundAlert];
+    
+}
+
+-(void)presentBadBackgroundAlert
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                   @"icon name":@"badBackground",
+                                                                                   @"text":LS(@"BAD_BACKGROUND_ADVICE"),
+                                                                                   @"ok button text":LS(@"OK_GOT_IT"),
+                                                                                   
+                                                                                   @"blur alpha":@0.85,
+                                                                                   @"minimized background status":@YES
+                                                                                   
+                                                                                   }];
+    [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeBigImage
+                       checkNextStateOnDismiss:NO
+                                          info:allInfo
+     ];
+    });
 }
 
 
@@ -1315,13 +1403,43 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
                                                         object:self];
-}
+    
+    if (self.backgroundStatusCounter <= BAD_BACKGROUND_TH)
+    {
+        if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH && [User.current.disableBadBackgroundPopup isEqualToNumber:@NO])
+        {
+            [self presentBadBackgroundAlert];
+            self.backgroundStatusCounter = 0;
+        }
+        self.backgroundStatusCounter--;
+        
+        if (self.backgroundAlertDisplaying) return;
+        [self setBGStatusButtonCrossfade:YES];
+        self.backgroundAlertDisplaying = YES;
+        return;
+    }
+    
+    if (self.backgroundStatusCounter > 0) self.backgroundStatusCounter = 0;
+    self.backgroundStatusCounter--;
 
+}
 
 -(void)onGoodBackgroundDetected:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
                                                         object:self];
+    
+    if (self.backgroundStatusCounter >= GOOD_BACKGROUND_TH)
+    {
+        if (!self.backgroundAlertDisplaying) return;
+        [self setBGStatusButtonCrossfade:NO];
+        self.backgroundAlertDisplaying = NO;
+        return;
+    }
+    
+    if (self.backgroundStatusCounter < 0) self.backgroundStatusCounter = 0;
+    self.backgroundStatusCounter++;
+    
 }
 
 
@@ -1350,6 +1468,32 @@
     CGSize size = rect.size;
     CGPoint origin = rect.origin;
     NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
+}
+
+-(void)setBGStatusButtonCrossfade:(BOOL)activate
+{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    if (activate)
+    {
+        [self.guiBackgroundStatusButton setImage:[UIImage imageNamed:@"iconBackgroundBad"] forState:UIControlStateNormal];
+        CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"contents"];
+        crossFade.duration = 0.5;
+        UIImage *goodBackground = [UIImage imageNamed:@"iconBackgroundGood"];
+        UIImage *badBackground = [UIImage imageNamed:@"iconBackgroundBad"];
+        crossFade.fromValue = (id)(badBackground.CGImage);
+        crossFade.toValue = (id)(goodBackground.CGImage);
+        crossFade.removedOnCompletion = NO;
+        crossFade.autoreverses = YES;
+        crossFade.repeatCount = HUGE_VALF;
+        crossFade.fillMode = kCAFillModeForwards;
+        [self.guiBackgroundStatusButton.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
+    } else
+    {
+        [self.guiBackgroundStatusButton.imageView.layer removeAllAnimations];
+        [self.guiBackgroundStatusButton setImage:[UIImage imageNamed:@"iconBackgroundGood"] forState:UIControlStateNormal];
+    }
+    });
 }
 
 @end

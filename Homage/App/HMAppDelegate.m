@@ -16,7 +16,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Appirater/Appirater.h>
-
+#import <Appsee/Appsee.h>
 
 @implementation HMAppDelegate
 
@@ -35,10 +35,15 @@
                                                                            )
      ];
     
+   
     #ifndef DEBUG
-         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        [Appsee start:@"128117df897b4508a2b68550ca52b354"];
+    #else 
+        [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
     #endif
     
+    //crashlytics crash reporting
     [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     
     self.pushNotificationFromBG = nil;
@@ -49,11 +54,17 @@
         if (notificationInfo) {
             
             HMPushNotificationType pushNotificationType = [[notificationInfo objectForKey:@"type"] intValue];
-            
+        
             if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
             {
                 NSString *remakeID = [notificationInfo objectForKey:@"remake_id"];
-                self.pushNotificationFromBG = @{@"remake_id" : remakeID };
+                self.pushNotificationFromBG = @{@"remake_id" : remakeID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
+            }
+            
+            if ( pushNotificationType == HMPushNewStory )
+            {
+                NSString *storyID = [notificationInfo objectForKey:@"story_id"];
+                self.pushNotificationFromBG = @{@"story_id" : storyID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
             }
             
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
@@ -64,6 +75,7 @@
         }
     }
     
+    //appirater - library for app rating popup
     [Appirater setAppId:APPLE_ID];
     [Appirater setDaysUntilPrompt:1];
     [Appirater setUsesUntilPrompt:10];
@@ -71,7 +83,7 @@
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
     [Appirater appLaunched:YES];
-    
+
     [FBLoginView class];
     
     return YES;
@@ -87,17 +99,18 @@
     NSMutableDictionary *info = [userInfo mutableCopy];
     HMPushNotificationType pushNotificationType = [[userInfo objectForKey:@"type"] intValue];
     
+    //the app can be active or inactive but still not in the background
+    if (application.applicationState == UIApplicationStateActive)
+    {
+        [info setObject:[NSNumber numberWithInt:UIApplicationStateActive] forKey:@"app_state"];
+    } else if (application.applicationState == UIApplicationStateInactive)
+    {
+        [info setObject:[NSNumber numberWithInt:UIApplicationStateInactive] forKey:@"app_state"];
+        
+    }
+    
     if ( pushNotificationType == HMPushMovieReady || pushNotificationType == HMPushMovieFailed)
     {
-        if (application.applicationState == UIApplicationStateActive)
-        {
-            [info setObject:[NSNumber numberWithInt:UIApplicationStateActive] forKey:@"app_state"];
-        } else if (application.applicationState == UIApplicationStateInactive)
-        {
-            [info setObject:[NSNumber numberWithInt:UIApplicationStateInactive] forKey:@"app_state"];
-            
-        }
-        
         if (pushNotificationType == HMPushMovieReady)
         {
             [info setObject:[NSNumber numberWithBool:YES] forKey:@"success"];
@@ -108,6 +121,14 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS object:self userInfo:info];
     }
+    
+    if (pushNotificationType == HMPushNewStory)
+    {
+        NSString *storyID = [userInfo objectForKey:@"story_id"];
+        [info setObject:storyID forKey:@"story_id"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY object:self userInfo:info];
+    }
+    
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
