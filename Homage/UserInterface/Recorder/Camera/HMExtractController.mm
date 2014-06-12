@@ -12,6 +12,7 @@
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Image3/Image3Tool.h"
 #import "ImageType/ImageTool.h"
+#import "ImageMark/ImageMark.h"
 #import "Utime/GpTime.h"
 #import "HMRecorderChildInterface.h"
 #import "HMNotificationCenter.h"
@@ -68,6 +69,9 @@
 #define EXTRACT_TH 0
 #define EXTRACT_TIMER_INTERVAL 25
 
+#define OUTPUT_WIDTH 640
+#define OUTPUT_HEIGHT 360
+
 -(id)init
 {
     self = [super init];
@@ -115,7 +119,7 @@
             contourFile = [[NSBundle mainBundle] pathForResource:@"close up 480" ofType:@"ctr"];
         }
     
-        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 480);
+        m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
         
         m_original_image = NULL;
         m_foreground_image = NULL;
@@ -138,7 +142,7 @@
 -(void)updateContour:(NSString *)contourFile
 {
     _contourFile = contourFile;
-    m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 480);
+    m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
 }
 
 -(void)initObservers
@@ -220,8 +224,8 @@
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
-                                        AVVideoWidthKey:@640,
-                                        AVVideoHeightKey:@360,
+                                        AVVideoWidthKey:@OUTPUT_WIDTH,
+                                        AVVideoHeightKey:@OUTPUT_HEIGHT,
                                         AVVideoCompressionPropertiesKey:codecSettings,
                                         AVVideoScalingModeKey:scalingMode
                                         };
@@ -289,18 +293,33 @@
             // SampleBuffer to PixelBuffer
             CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
             
-            m_original_image = CVtool::CVPixelBufferRef_to_image(originalPixelBuffer, m_original_image);
+            if (self.session.sessionPreset == AVCaptureSessionPreset640x480)
+            {
+                int x = 0;
+                int y = (480 - OUTPUT_HEIGHT) / 2;
+                m_original_image = CVtool::CVPixelBufferRef_to_image_crop(originalPixelBuffer, x, y, OUTPUT_WIDTH, OUTPUT_HEIGHT, m_original_image);
+            }
+            else // assuming this is 720X1280
+            {
+                m_original_image = CVtool::CVPixelBufferRef_to_image_sample2(originalPixelBuffer, m_original_image);
+            }            
+            
             int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
             
-            /*//test - save pics
-             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-             NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-             NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
-             NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-             
-             UIImage *bgImage = [self imageFromSampleBuffer:sampleBuffer];
-             [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];*/
+            /*
+            //test - save pics
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+            NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
+            NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
             
+            //CVPixelBufferRef pixelBufferToSave = CVtool::CVPixelBufferRef_from_image(m_original_image);
+            image_type *fixRGB = image3_to_BGR(m_original_image, NULL);
+            image_type *background_image = image4_from(fixRGB, NULL);
+            UIImage *bgImage = CVtool::CreateUIImage(background_image);
+            [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
+            */
+             
             if (result < EXTRACT_TH)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
@@ -386,6 +405,12 @@
 {
     // Get a CMSampleBuffer's Core Video image buffer for the media data
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+
+    return [self imageFromImageBuffer:imageBuffer];
+}
+
+- (UIImage *)imageFromImageBuffer:(CVImageBufferRef) imageBuffer
+{
     // Lock the base address of the pixel buffer
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     
@@ -421,6 +446,7 @@
     
     return (image);
 }
+
 
 // Creating a CVPixelBuffer from a CGImage
 +(CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image frameSize:(CGSize)frameSize
