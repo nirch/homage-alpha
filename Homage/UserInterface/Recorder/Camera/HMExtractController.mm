@@ -334,7 +334,7 @@
             UIImage *bgImage = CVtool::CreateUIImage(background_image);
             [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
             */
-             
+                         
             if (result < EXTRACT_TH)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
