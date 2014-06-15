@@ -130,6 +130,7 @@
     self.videoView.guiLoadActivity.alpha = 1;
     self.videoView.guiControlsContainer.hidden = YES;
     [self.videoView.guiLoadActivity stopAnimating];
+    self.videoView.guiLoadActivity.hidden = YES;
     
     [UIView animateWithDuration:0.5 animations:^{
         self.videoPlayer.view.alpha = 0;
@@ -240,15 +241,18 @@
     if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
         self.videoPlayer.view.alpha = 1;
         [self.videoView.guiLoadActivity stopAnimating];
+        self.videoView.guiLoadActivity.hidden = YES;
         self.videoView.guiPlayPauseButton.selected = YES;
         self.videoView.guiVideoSlider.hidden = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePaused) {
+        self.videoView.guiLoadActivity.hidden = NO;
         [self.videoView.guiLoadActivity startAnimating];
         self.videoView.guiPlayPauseButton.selected = NO;
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
     } else {
         [self.videoView.guiLoadActivity stopAnimating];
+        self.videoView.guiLoadActivity.hidden = YES;
         self.videoView.guiPlayPauseButton.selected = NO;
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
@@ -271,7 +275,8 @@
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
-        //self.videoView.guiLoadActivity.alpha = 0;
+        [self.videoView.guiLoadActivity stopAnimating];
+        self.videoView.guiLoadActivity.hidden = YES;
         self.videoView.backgroundColor = [UIColor clearColor];
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
@@ -307,6 +312,7 @@
 
 -(void)updateUIToPlayVideoState
 {
+    self.videoView.guiLoadActivity.hidden = NO;
     [self.videoView.guiLoadActivity startAnimating];
     self.videoView.guiPlayPauseButton.selected = YES;
     [UIView animateWithDuration:0.3 animations:^{
@@ -398,6 +404,7 @@
     self.videoView.guiLoadActivity.alpha = 1;
     self.videoView.guiControlsContainer.hidden = YES;
     [self.videoView.guiLoadActivity stopAnimating];
+    self.videoView.guiLoadActivity.hidden = YES;
     
     [UIView animateWithDuration:0.5 animations:^{
         self.videoPlayer.view.alpha = 0;

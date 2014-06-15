@@ -259,8 +259,9 @@
         HMGLogError(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     } else {
         Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-        [DB.sh.context deleteObject:remake];
         [remake deleteRawLocalFiles];
+        [DB.sh.context deleteObject:remake];
+        [DB.sh save];
         [self refetchRemakesFromServer];
     }
     
@@ -289,7 +290,7 @@
 -(void)refetchRemakesFromServer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self.userRemakesCV reloadData];
+    [self refreshFromLocalStorage];
     [HMServer.sh refetchRemakesForUserID:User.current.userID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

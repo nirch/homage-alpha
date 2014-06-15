@@ -121,6 +121,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(void)viewWillDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self.guiActivityView stopAnimating];
+    self.guiActivityView.hidden = YES;
     [self removeObservers];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -168,6 +170,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     //activity view
     self.guiActivityView.hidden = YES;
+    [self.guiActivityView stopAnimating];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 
@@ -658,8 +661,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     
     HMGLogInfo(@"fb login view fetched user info start");
-    [self.guiActivityView stopAnimating];
-    self.guiActivityView.hidden = YES;
+    //[self.guiActivityView stopAnimating];
+    //self.guiActivityView.hidden = YES;
     
     
     if ([self isFacebookUser:self.cachedUser equalToFacebookUser:user])
