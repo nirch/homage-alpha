@@ -86,6 +86,14 @@
 -(void)cancelAllUploads;
 
 
+///
+/**
+ *   upload file from a specific file path to S3
+ *
+ */
+-(void)uploadFile:(NSString *)localFilePath;
+
+
 
 
 @end

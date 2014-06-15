@@ -16,6 +16,7 @@
 #import "Utime/GpTime.h"
 #import "HMRecorderChildInterface.h"
 #import "HMNotificationCenter.h"
+#import "HMUploadManager.h"
 
 
 
@@ -68,6 +69,7 @@
 @implementation HMExtractController
 
 #define EXTRACT_TH 0
+#define EXTRACT_EXCEPTION 9
 #define EXTRACT_TIMER_INTERVAL 13 //25 is 1 sec interval, 13~0.5 sec
 
 #define OUTPUT_WIDTH 640
@@ -324,23 +326,14 @@
             
             int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
             
-            
-            //test - save pics
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-            NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , result];
-            NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-            
-            //CVPixelBufferRef pixelBufferToSave = CVtool::CVPixelBufferRef_from_image(m_original_image);
-            image_type *fixRGB = image3_to_BGR(m_original_image, NULL);
-            image_type *background_image = image4_from(fixRGB, NULL);
-            UIImage *bgImage = CVtool::CreateUIImage(background_image);
-            [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
-            
-                         
             if (result < EXTRACT_TH)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
+                //if (result == EXTRACT_EXCEPTION)
+                //{
+                    [self reportBackgroundExceptionToServer];
+                //}
+                
             } else
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND object:self];
@@ -376,6 +369,23 @@
         [self.writerAudioInput appendSampleBuffer:sampleBuffer];
     }
 
+}
+
+-(void)reportBackgroundExceptionToServer
+{
+    //test - save pics
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , EXTRACT_EXCEPTION];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
+    
+    //CVPixelBufferRef pixelBufferToSave = CVtool::CVPixelBufferRef_from_image(m_original_image);
+    image_type *fixRGB = image3_to_BGR(m_original_image, NULL);
+    image_type *background_image = image4_from(fixRGB, NULL);
+    UIImage *bgImage = CVtool::CreateUIImage(background_image);
+    [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
+    
+    [HMUploadManager.sh uploadFile:dataPath];
 }
 
 -(void)initAudioInput:(CMFormatDescriptionRef)currentFormatDescription

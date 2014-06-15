@@ -188,6 +188,13 @@
     });
 }
 
+-(void)uploadFile:(NSString *)localFilePath
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self _uploadFile:localFilePath];
+    });
+}
+
 -(void)_uploadFootage:(Footage *)footage
 {
     // No workers, no new jobs can be done.
@@ -202,6 +209,18 @@
     // Let the work begin.
     footage.lastUploadAttemptTime = [NSDate date];
     [self putWorkerToWork:worker onFootage:footage];
+}
+
+-(void)_uploadFile:(NSString *)localFilePath
+{
+    //no workers available
+    if (self.idleWorkersPool.count==0) return;
+    
+    // Kick a lazy worker and send it to work.
+    id<HMUploadWorkerProtocol>worker = [self popIdleWorker];
+    if (!worker) return;
+    
+    [self putWorkerToWork:worker onFile:localFilePath];
 }
 
 -(void)cancelUploadForFootage:(Footage *)footage
@@ -251,6 +270,26 @@
     }
 }
 
+-(void)putWorkerToWork:(id<HMUploadWorkerProtocol>)worker onFile:(NSString *)localFilePath
+{
+    NSString *destinationPath = @"Temp/ProcessBackgroundException/";
+    NSString *fileName = [localFilePath lastPathComponent];
+    NSString *destination = [destinationPath stringByAppendingString:fileName];
+
+    HMGLogDebug(@"Uploading new file to %@" , destination);
+    
+    [worker newJobWithID:[[NSUUID UUID] UUIDString]
+                  source:localFilePath
+             destination:destination];
+    
+    if ([worker startWorking]) {
+        self.busyWorkers[worker.jobID] = worker;
+    } else {
+        // Failed. Put the worker back in the pool.
+        [self.idleWorkersPool addObject:worker];
+    }
+}
+
 -(void)putWorkerToRest:(id<HMUploadWorkerProtocol>)worker
 {
     Footage *footage = self.footagesByJobID[worker.jobID];
@@ -285,6 +324,13 @@
     id<HMUploadWorkerProtocol>aWorker = (id<HMUploadWorkerProtocol>)worker;
     
     Footage *footage = self.footagesByJobID[aWorker.jobID];
+    
+    //TODO: make this nicer
+    if (!footage)
+    {
+        //probably a file
+        return;
+    }
     
     // We are not interested in canceled jobs. The rawLocalFile and the source uploaded, must be the same.
     if (![footage.rawLocalFile isEqualToString:aWorker.source]) return;
