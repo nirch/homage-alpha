@@ -324,7 +324,7 @@
             
             int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
             
-            
+            /*
             //test - save pics
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
@@ -336,7 +336,7 @@
             image_type *background_image = image4_from(fixRGB, NULL);
             UIImage *bgImage = CVtool::CreateUIImage(background_image);
             [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
-            
+            */
                          
             if (result < EXTRACT_TH)
             {
