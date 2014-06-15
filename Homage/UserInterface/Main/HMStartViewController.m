@@ -474,7 +474,7 @@
             {
                 NSString *signalName = report.signalInfo.name ? report.signalInfo.name : @"not available";
                 NSString *signalCode = report.signalInfo.code ? report.signalInfo.code : @"not available";
-                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : 0 ;
+                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : @0 ;
                 
                 crashDict = @{@"signal_name" : signalName , @"signal_code" : signalCode , @"signal_address" : address};
             }
