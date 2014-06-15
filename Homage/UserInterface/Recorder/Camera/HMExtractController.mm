@@ -375,12 +375,13 @@
 
 -(void)reportBackgroundExceptionToServer
 {
-    //test - save pics
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-    NSString *path = [NSString stringWithFormat:@"/%ld-%d.jpg" , (long)self.extractCounter , EXTRACT_EXCEPTION];
+    NSString *contourName = [self.contourFile lastPathComponent];
+   
+    NSString *path = [NSString stringWithFormat:@"/%ld-%d-%@.jpg" , (long)self.extractCounter , EXTRACT_EXCEPTION , contourName];
     NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-    
+
     //CVPixelBufferRef pixelBufferToSave = CVtool::CVPixelBufferRef_from_image(m_original_image);
     image_type *fixRGB = image3_to_BGR(m_original_image, NULL);
     image_type *background_image = image4_from(fixRGB, NULL);

@@ -255,7 +255,7 @@
     [worker setUserInfo:[NSMutableDictionary dictionaryWithDictionary:@{
                                                                         HM_INFO_REMAKE_ID:footage.remake,
                                                                         HM_INFO_SCENE_ID:footage.sceneID,
-                                                                        HM_INFO_FOOTAGE_IDENTIFIER:footage.identifier,
+                                                                        HM_INFO_FOOTAGE_IDENTIFIER:footage.identifier, @"type" : @"footage"
                                                                         }]
      ];
     
@@ -281,6 +281,8 @@
     [worker newJobWithID:[[NSUUID UUID] UUIDString]
                   source:localFilePath
              destination:destination];
+    
+    [worker setUserInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"type" : @"file"}]];
     
     if ([worker startWorking]) {
         self.busyWorkers[worker.jobID] = worker;
@@ -358,6 +360,14 @@
 
 -(void)worker:(id)worker reportingProgress:(double)progress info:(NSDictionary *)info
 {
+    
+    NSString *type = [[worker userInfo] objectForKey:@"type"];
+    
+    if ([type isEqualToString:@"file"])
+    {
+        return;
+    }
+    
     //
     // Notify about the progress made
     //
