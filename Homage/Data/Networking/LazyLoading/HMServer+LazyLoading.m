@@ -77,7 +77,7 @@
         }
         
         HMGLogDebug(@"file downloaded to: " , [filePath absoluteString]);
-        [moreInfo addEntriesFromDictionary:@{@"local_URL" : [filePath absoluteString]}];
+        [moreInfo addEntriesFromDictionary:@{@"local_URL" : [filePath path]}];
         [moreInfo addEntriesFromDictionary:@{@"remote_URL" : url}];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
     
