@@ -242,7 +242,7 @@
     
     //uncomment if we want to display "bad background label" in the menu bar
     //observe bad background
-    [nc addUniqueObserver:self
+    /*[nc addUniqueObserver:self
                  selector:@selector(showBadBackgroundLabel)
                      name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
                    object:nil];
@@ -256,7 +256,7 @@
     [nc addUniqueObserver:self
                  selector:@selector(hideBadBackgroundLabel)
                      name:HM_DISABLE_BG_DETECTION
-                   object:nil];
+                   object:nil];*/
     
     // Observe reachability status changes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -290,9 +290,9 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
+    /*[nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND object:nil];
-    [nc removeObserver:self name:HM_DISABLE_BG_DETECTION object:nil];
+    [nc removeObserver:self name:HM_DISABLE_BG_DETECTION object:nil];*/
     
     
 }
