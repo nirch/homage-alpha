@@ -391,6 +391,8 @@
     image_type *background_image = image4_from(fixRGB, NULL);
     UIImage *bgImage = CVtool::CreateUIImage(background_image);
     [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
+    image_destroy(fixRGB, 1);
+    image_destroy(background_image, 1);
     
     [HMUploadManager.sh uploadFile:dataPath];
     [[Mixpanel sharedInstance] track:@"process_background_exception" properties:@{@"local_path" : dataPath}];
