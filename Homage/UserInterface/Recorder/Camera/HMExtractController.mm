@@ -17,6 +17,7 @@
 #import "HMRecorderChildInterface.h"
 #import "HMNotificationCenter.h"
 #import "HMUploadManager.h"
+#import "Mixpanel.h"
 
 
 
@@ -329,10 +330,11 @@
             if (result < EXTRACT_TH)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
-                //if (result == EXTRACT_EXCEPTION)
-                //{
+                if (result == EXTRACT_EXCEPTION)
+                {
                     [self reportBackgroundExceptionToServer];
-                //}
+                    
+                }
                 
             } else
             {
@@ -386,6 +388,7 @@
     [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
     
     [HMUploadManager.sh uploadFile:dataPath];
+    [[Mixpanel sharedInstance] track:@"process_background_exception" properties:@{@"local_path" : dataPath}];
 }
 
 -(void)initAudioInput:(CMFormatDescriptionRef)currentFormatDescription
