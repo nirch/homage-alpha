@@ -309,7 +309,7 @@
     //detect bad background
     if (captureOutput == _movieDataOutput)
     {
-        if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && self.backgroundDetectionEnabled)
+        if (self.extractCounter % EXTRACT_TIMER_INTERVAL == 0 && self.backgroundDetectionEnabled && self.contourFile)
         {
             // SampleBuffer to PixelBuffer
             CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
@@ -383,6 +383,38 @@
     else if (captureOutput == _audioDataOutput)
     {
         [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+    }
+
+}
+
+-(void)handleBackgroundDetectionForSampleBuffer:(CMSampleBufferRef)sampleBuffer
+{
+    // SampleBuffer to PixelBuffer
+    CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    
+    if (self.session.sessionPreset == AVCaptureSessionPreset640x480)
+    {
+        int x = 0;
+        int y = (480 - OUTPUT_HEIGHT) / 2;
+        m_original_image = CVtool::CVPixelBufferRef_to_image_crop(originalPixelBuffer, x, y, OUTPUT_WIDTH, OUTPUT_HEIGHT, m_original_image);
+    }
+    else // assuming this is 720X1280
+    {
+        m_original_image = CVtool::CVPixelBufferRef_to_image_sample2(originalPixelBuffer, m_original_image);
+    }
+    
+    int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+    if (result < EXTRACT_TH)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
+        if (result == EXTRACT_EXCEPTION)
+        {
+            [self reportBackgroundExceptionToServer];
+            
+        }
+    } else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND object:self];
     }
 
 }

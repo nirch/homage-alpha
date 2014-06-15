@@ -1406,7 +1406,7 @@
     
     if (self.backgroundStatusCounter <= BAD_BACKGROUND_TH)
     {
-        if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH && [User.current.disableBadBackgroundPopup isEqualToNumber:@NO])
+        if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH && ![User.current.disableBadBackgroundPopup isEqualToNumber:@YES])
         {
             [self presentBadBackgroundAlert];
             self.backgroundStatusCounter = 0;

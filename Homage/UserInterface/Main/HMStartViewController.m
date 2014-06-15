@@ -160,6 +160,10 @@
                                                        name:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY
                                                      object:[[UIApplication sharedApplication] delegate]];
     
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onGeneralMessageReceived:)
+                                                       name:HM_NOTIFICATION_PUSH_NOTIFICATION_GENERAL_MESSAGE
+                                                     object:[[UIApplication sharedApplication] delegate]];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserPreferencesUpdate:)
@@ -413,8 +417,7 @@
             } else {
                 [self switchToTab:HMStoriesTab];
             }
-        }
-        
+        }        
     }
     
     [self reportCrashesIfExist];
@@ -810,9 +813,6 @@
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
-
-
-
 #pragma mark push notifications handler
 -(void)onUserMovieFinishedRendering:(NSNotification *)notification
 {
@@ -844,6 +844,17 @@
         [self switchToTab:HMStoriesTab];
     }
     
+}
+
+-(void)onGeneralMessageReceived:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSNumber *appState = info[@"app_state"];
+    
+    if (appState.intValue == UIApplicationStateInactive)
+    {
+        [self switchToTab:HMStoriesTab];
+    }
 }
 
 -(void)onUserLoginStateChange:(User *)user

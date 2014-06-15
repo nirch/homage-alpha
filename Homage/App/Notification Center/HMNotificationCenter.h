@@ -56,6 +56,7 @@
 //push notifications
 #define HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS @"push notification when user's movie is ready or failed to render"
 #define HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY @"new story available on Homage"
+#define HM_NOTIFICATION_PUSH_NOTIFICATION_GENERAL_MESSAGE @"general message"
 
 //user requests to join (currently from me tab while sharing)
 #define HM_NOTIFICATION_USER_JOIN @"user requests to join"

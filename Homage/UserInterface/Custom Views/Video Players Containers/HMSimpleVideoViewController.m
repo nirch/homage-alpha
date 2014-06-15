@@ -271,7 +271,7 @@
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
-        self.videoView.guiLoadActivity.alpha = 0;
+        //self.videoView.guiLoadActivity.alpha = 0;
         self.videoView.backgroundColor = [UIColor clearColor];
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
@@ -358,6 +358,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(videoPlayerWasFired)]) [self.delegate videoPlayerWasFired];
     self.waitingToStartPlayingTheFile = YES;
+    self.videoPlayer.shouldAutoplay = YES;
     [self updateUIToPlayVideoState];
     dispatch_async(dispatch_get_main_queue(), ^{
         // The UI / interface command to play the video.

@@ -67,6 +67,11 @@
                 self.pushNotificationFromBG = @{@"story_id" : storyID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
             }
             
+            if (pushNotificationType == HMGeneralMessage)
+            {
+                self.pushNotificationFromBG = @{@"type" : [NSNumber numberWithInt:pushNotificationType]};
+            }
+            
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
             // IMPORTANT!!!!!:
             // Remmember that your app was just launched, you will have to initialize stuff first, before navigating to the screen you want.
@@ -127,6 +132,11 @@
         NSString *storyID = [userInfo objectForKey:@"story_id"];
         [info setObject:storyID forKey:@"story_id"];
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY object:self userInfo:info];
+    }
+    
+    if (pushNotificationType == HMGeneralMessage)
+    {
+       [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_GENERAL_MESSAGE object:self userInfo:info];
     }
     
 }
