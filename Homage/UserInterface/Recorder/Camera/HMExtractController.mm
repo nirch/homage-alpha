@@ -118,8 +118,15 @@
         if (_contourFile)
         {
             NSLog(@"contour file is: %@" , _contourFile);
-            m_foregroundExtraction->ReadMask((char*)_contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
-            self.backgroundDetectionEnabled = YES;
+            int result = m_foregroundExtraction->ReadMask((char*)_contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+            if (result == -1)
+            {
+                NSLog(@"unable to read contour file! debug this");
+                [[Mixpanel sharedInstance] track:@"unable_to_open_file" properties:@{@"contour_path" : _contourFile}];
+                _contourFile = nil;
+            } else {
+                self.backgroundDetectionEnabled = YES;
+            }
         } else
         {
             self.backgroundDetectionEnabled = NO;
@@ -147,7 +154,13 @@
 {
     _contourFile = contourFile;
     NSLog(@"contour file is: %@" , _contourFile);
-    m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+    int result = m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+    if (result == -1)
+    {
+        NSLog(@"unable to read contour file! debug this");
+        [[Mixpanel sharedInstance] track:@"unable_to_open_file" properties:@{@"contour_path" : contourFile}];
+        _contourFile = nil;
+    }
     //self.backgroundDetectionEnabled = YES;
 }
 

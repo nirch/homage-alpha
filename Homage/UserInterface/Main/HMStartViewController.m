@@ -603,6 +603,20 @@
     
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
+    if (![HMServer.sh isReachable])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection"
+                                                        message:@"Check Your connection and try again."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
+        return;
+    }
+    
     UIView *view;
     self.guiVideoContainer = view = [[UIView alloc] initWithFrame:self.view.frame];
     self.guiVideoContainer.backgroundColor = [UIColor blackColor];

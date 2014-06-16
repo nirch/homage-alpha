@@ -11,6 +11,7 @@
 
 #import "HMSimpleVideoViewController.h"
 #import "HMNotificationCenter.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @implementation UIDevice (ALSystemVersion)
 
@@ -280,9 +281,9 @@
         self.videoView.backgroundColor = [UIColor clearColor];
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
-        [self printViewProperties:self.view name:@"self.view.frame"];
-        [self printViewProperties:self.videoView name:@"self.videoView.frame"];
-        [self printViewProperties:self.videoPlayer.view name:@"self.videoPlayer.view.frame"];
+        //[self printViewProperties:self.view name:@"self.view.frame"];
+        //[self printViewProperties:self.videoView name:@"self.videoView.frame"];
+        //[self printViewProperties:self.videoPlayer.view name:@"self.videoPlayer.view.frame"];
     } completion:^(BOOL finished) {
         [self.videoPlayer play];
     }];
@@ -362,6 +363,22 @@
 
 -(void)play
 {
+    
+    if (![HMServer.sh isReachable])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection"
+                                                        message:@"Check Your connection and try again."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
+        return;
+    }
+    
+    
     if ([self.delegate respondsToSelector:@selector(videoPlayerWasFired)]) [self.delegate videoPlayerWasFired];
     self.waitingToStartPlayingTheFile = YES;
     self.videoPlayer.shouldAutoplay = YES;
@@ -491,6 +508,9 @@
             self.view.alpha = 0.f;
             self.movieTempFullscreenBackgroundView.alpha = 1.f;
         } completion:^(BOOL finished) {
+            //HMGLogDebug(@" ===================== printing view properties ======================== ");
+            //[self printViewProperties:self.movieTempFullscreenBackgroundView name:@"movieTempFullscreenBackgroundView"];
+            //[self printViewProperties:self.view name:@"self.view"];
             [self.movieTempFullscreenBackgroundView addSubview:self.view];
             //UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
             UIInterfaceOrientation currentOrientation = orientation;
@@ -742,14 +762,14 @@
 -(void)printViewProperties:(UIView *)view name:(NSString *)name
 {
     [self displayRect:name BoundsOf:view.frame];
-    NSLog(@"%@ alpha: %f hidden: %hhd" , name ,  view.alpha , view.hidden);
+    HMGLogDebug(@"%@ alpha: %f hidden: %hhd" , name ,  view.alpha , view.hidden);
 }
 
 -(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
 {
     CGSize size = rect.size;
     CGPoint origin = rect.origin;
-    NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
+    HMGLogDebug(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
 }
 
 -(void)onMovieDurationAvailable:(NSNotification *)notification

@@ -795,7 +795,7 @@
     
     Contour *contour = [Contour findWithRemoteURL:contourURL inContext: DB.sh.context];
     
-    if (contour)
+    if (contour && [[NSFileManager defaultManager] fileExistsAtPath:contour.localURL])
     {
         return contour.localURL;
     } else
