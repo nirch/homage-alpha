@@ -148,7 +148,7 @@
     _contourFile = contourFile;
     NSLog(@"contour file is: %@" , _contourFile);
     m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
-    self.backgroundDetectionEnabled = YES;
+    //self.backgroundDetectionEnabled = YES;
 }
 
 

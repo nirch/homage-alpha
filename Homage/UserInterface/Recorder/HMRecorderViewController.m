@@ -112,7 +112,8 @@
     [super viewDidLoad];
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
-                                                        
+                        
+    [self postEnableBGDetectionNotification];
     [self initRemakerState];
     [self initOptions];
     [self initGUI];
@@ -122,13 +123,17 @@
 {
     [self initObservers];
     [self.videoCameraVC attachCameraIO];
-    [self postEnableBGDetectionNotification];
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self removeObservers];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
