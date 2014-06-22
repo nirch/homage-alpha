@@ -230,6 +230,10 @@
 		2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
 		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
 		266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 266F62A3190E9521003774C5 /* introVideo.mp4 */; };
+		267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A640219532030003DFFEA /* JBWhatsAppActivity.m */; };
+		267A640519532030003DFFEA /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 267A640319532030003DFFEA /* whatsapp@2x.png */; };
+		267A64D519532275003DFFEA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267A64D419532275003DFFEA /* Security.framework */; };
+		267A64DB19559F3D003DFFEA /* HMGoogleAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A64DA19559F3D003DFFEA /* HMGoogleAPI.m */; };
 		268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
 		268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */; };
 		268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */; };
@@ -249,8 +253,6 @@
 		269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */ = {isa = PBXBuildFile; fileRef = 269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */; };
 		26933EA218FEB8CA001AE951 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 26933EA118FEB8CA001AE951 /* Story.m */; };
 		2699AE8A1903F512004093AE /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699AE891903F512004093AE /* Remake.m */; };
-		2699F7381941E50C00E1A01A /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699F7361941E50C00E1A01A /* JBWhatsAppActivity.m */; };
-		2699F7391941E50C00E1A01A /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699F7371941E50C00E1A01A /* whatsapp@2x.png */; };
 		269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
 		26A0277C1946FBE70040C3C0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A0277B1946FBE70040C3C0 /* User.m */; };
 		26B448F31947E25700BC6317 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F21947E25700BC6317 /* Appsee.framework */; };
@@ -518,6 +520,12 @@
 		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
 		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
 		266F62A3190E9521003774C5 /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = introVideo.mp4; path = mediaResources/introVideo.mp4; sourceTree = "<group>"; };
+		267A640119532030003DFFEA /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JBWhatsAppActivity.h; path = "Homage/utilities/whatsapp share/JBWhatsAppActivity.h"; sourceTree = SOURCE_ROOT; };
+		267A640219532030003DFFEA /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JBWhatsAppActivity.m; path = "Homage/utilities/whatsapp share/JBWhatsAppActivity.m"; sourceTree = SOURCE_ROOT; };
+		267A640319532030003DFFEA /* whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whatsapp@2x.png"; path = "Homage/utilities/whatsapp share/whatsapp@2x.png"; sourceTree = SOURCE_ROOT; };
+		267A64D419532275003DFFEA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		267A64D919559F3D003DFFEA /* HMGoogleAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMGoogleAPI.h; path = Networking/HMGoogleAPI.h; sourceTree = "<group>"; };
+		267A64DA19559F3D003DFFEA /* HMGoogleAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMGoogleAPI.m; path = Networking/HMGoogleAPI.m; sourceTree = "<group>"; };
 		268341D518FFFD40002E8CB7 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		268341D718FFFD40002E8CB7 /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -555,9 +563,6 @@
 		26933EA118FEB8CA001AE951 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		2699AE881903F512004093AE /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		2699AE891903F512004093AE /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
-		2699F7351941E50C00E1A01A /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWhatsAppActivity.h; sourceTree = "<group>"; };
-		2699F7361941E50C00E1A01A /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWhatsAppActivity.m; sourceTree = "<group>"; };
-		2699F7371941E50C00E1A01A /* whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whatsapp@2x.png"; sourceTree = "<group>"; };
 		269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageBigImageView.xib; sourceTree = "<group>"; };
 		26A0277A1946FBE70040C3C0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		26A0277B1946FBE70040C3C0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
@@ -591,6 +596,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				267A64D519532275003DFFEA /* Security.framework in Frameworks */,
 				26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */,
 				08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */,
 				0838E8DE18D04E4600222997 /* AVFoundation.framework in Frameworks */,
@@ -649,6 +655,7 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				267A64D419532275003DFFEA /* Security.framework */,
 				26B448F41947E28800BC6317 /* SystemConfiguration.framework */,
 				26B448F21947E25700BC6317 /* Appsee.framework */,
 				2650DED7190D45D900CA306C /* Crashlytics.framework */,
@@ -774,6 +781,8 @@
 				081237941882CB6100DA5D23 /* ServerCFG.plist */,
 				081237D11882DA3D00DA5D23 /* HMServer.h */,
 				081237D21882DA3D00DA5D23 /* HMServer.m */,
+				267A64D919559F3D003DFFEA /* HMGoogleAPI.h */,
+				267A64DA19559F3D003DFFEA /* HMGoogleAPI.m */,
 				08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */,
 				08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */,
 				086D94A5188702130086C565 /* LazyLoading */,
@@ -1377,9 +1386,9 @@
 		2699F7341941E50C00E1A01A /* whatsapp share */ = {
 			isa = PBXGroup;
 			children = (
-				2699F7351941E50C00E1A01A /* JBWhatsAppActivity.h */,
-				2699F7361941E50C00E1A01A /* JBWhatsAppActivity.m */,
-				2699F7371941E50C00E1A01A /* whatsapp@2x.png */,
+				267A640119532030003DFFEA /* JBWhatsAppActivity.h */,
+				267A640219532030003DFFEA /* JBWhatsAppActivity.m */,
+				267A640319532030003DFFEA /* whatsapp@2x.png */,
 			);
 			name = "whatsapp share";
 			path = "utilities/whatsapp share";
@@ -1487,7 +1496,6 @@
 				266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */,
 				269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */,
 				2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */,
-				2699F7391941E50C00E1A01A /* whatsapp@2x.png in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
@@ -1509,6 +1517,7 @@
 				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
+				267A640519532030003DFFEA /* whatsapp@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1582,6 +1591,7 @@
 				085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
 				65C10D9318A265DC00A65917 /* HMDINOTCondBoldFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
+				267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */,
 				08D03F811894295F00DEBDBC /* HMSimpleDataViewController.m in Sources */,
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
@@ -1646,6 +1656,7 @@
 				08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
 				08DF23301892704300912657 /* HMStoriesViewController.m in Sources */,
 				08D03F8C1894557900DEBDBC /* HMExperimentalNavigationViewController.m in Sources */,
+				267A64DB19559F3D003DFFEA /* HMGoogleAPI.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				26933EA218FEB8CA001AE951 /* Story.m in Sources */,
 				2615B557191FA0E0007F5FC0 /* HMTestVideoViewController.m in Sources */,
@@ -1674,7 +1685,6 @@
 				65C10D9218A265DC00A65917 /* HMDINOTCondBoldFontLabel.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				084E53411892240100D96258 /* HMServer+Render.m in Sources */,
-				2699F7381941E50C00E1A01A /* JBWhatsAppActivity.m in Sources */,
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */,

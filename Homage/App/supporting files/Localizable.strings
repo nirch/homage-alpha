@@ -106,6 +106,9 @@
 "NOT_NOW" = "Not now";
 "JOIN_NOW" = "Join now!";
 
+//share activity
+"CHECK_THIS_VIDEO" = "Look, I just bacame the star of #%@ : \n %@ \n \n Get Homage at: \n %@" ;
+
 /*remake options menu*/
 "OPTIONS" = "Options";
 "MARK_AS_INAPPROPRIATE" = "Mark as inappropriate";

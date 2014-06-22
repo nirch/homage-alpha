@@ -19,6 +19,7 @@
 #import "HMVideoPlayerDelegate.h"
 #import "HMSimpleVideoViewController.h"
 #import "JBWhatsAppActivity.h"
+#import "HMGoogleAPI.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -42,6 +43,8 @@
 #define REMAKE_ALERT_VIEW_TAG 100
 #define TRASH_ALERT_VIEW_TAG  200
 #define SHARE_ALERT_VIEW_TAG  300
+
+#define HOMAGE_APPSTORE_LINK @"https://itunes.apple.com/us/app/homage/id851746600?l=iw&ls=1&mt=8"
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -153,7 +156,12 @@
                                                    selector:@selector(refreshRemakes)
                                                        name:HM_REFRESH_USER_DATA
                                                      object:nil];
-
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onShortenURLReceived:)
+                                                       name:HM_SHORT_URL
+                                                     object:nil];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
@@ -167,6 +175,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
+    [nc removeObserver:self name:HM_SHORT_URL object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -686,13 +695,44 @@
 -(void)shareRemake:(Remake *)remake
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [[HMGoogleAPI sharedInstance] shortenURL:remake.shareURL info:@{@"remake_id" :remake.sID}];
+}
+
+-(void)onShortenURLReceived:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    
+    NSString *remakeShareURL;
+    
+    if (info[@"error"])
+    {
+        HMGLogWarning(@"error reported on URL shortening. will share long url. error description: %@" , info[@"error"]);
+    }
+    
+    if (!info[@"remake_id"])
+    {
+        HMGLogWarning(@"did not receive remake_id");
+        return;
+    }
+    
+    NSString *remakeID = info[@"remake_id"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *downloadLink = HOMAGE_APPSTORE_LINK;
     
-    NSString *shareString = [NSString stringWithFormat:@"Check out this video i created with #HomageApp \n\n #%@ , #%@HomageApp : \n%@" , storyNameWithoutSpaces , storyNameWithoutSpaces , remake.shareURL];
+    
+    if (info[@"short_url"])
+    {
+        remakeShareURL = info[@"short_url"];
+    } else {
+        remakeShareURL = remake.shareURL; //this is the long URL in case shortening failed
+    }
+    
+    NSString *shareString = [NSString stringWithFormat:LS(@"CHECK_THIS_VIDEO") , storyNameWithoutSpaces , remakeShareURL, downloadLink];
     
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:shareString forABID:nil];
-
+    
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, whatsappMsg, remake.thumbnail, nil];
     NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
@@ -701,6 +741,7 @@
             [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType}];
         }
     };
+    
     [activityViewController setValue:shareString forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

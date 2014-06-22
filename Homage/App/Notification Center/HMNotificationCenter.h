@@ -74,6 +74,9 @@
 //start VC
 #define HM_MAIN_SWITCHED_TAB @"switching to different tab"
 
+//GOOGLE API
+#define HM_SHORT_URL @"request response for URL shortening"
+
 @interface HMNotificationCenter : NSObject
 
 @end

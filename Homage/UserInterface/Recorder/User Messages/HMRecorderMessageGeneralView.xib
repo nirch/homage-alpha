@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorialSilhouette" id="DIj-iP-exS">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorialSilhouette1" id="DIj-iP-exS">
                     <rect key="frame" x="0.0" y="0.0" width="568" height="319"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
@@ -102,6 +102,6 @@
         <image name="iconGotIt" width="45" height="45"/>
         <image name="iconSwipeUp" width="29" height="43"/>
         <image name="iconUpArrowSmall" width="24" height="10"/>
-        <image name="tutorialSilhouette" width="568" height="320"/>
+        <image name="tutorialSilhouette1" width="568" height="320"/>
     </resources>
 </document>

@@ -305,7 +305,7 @@
     }];
 }
 
-#pragma mark - POST requests
+#pragma mark - DELETE requests
 // The most basic DELETE request
 -(void)deleteRelativeURLNamed:(NSString *)relativeURLName
                    parameters:(NSDictionary *)parameters
