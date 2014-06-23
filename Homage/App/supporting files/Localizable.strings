@@ -14,7 +14,7 @@
 "OK" = "OK";
 "OK_GOT_IT" = "OK, Got it";
 
-"VIDEO_SAVED" = "Video Saved;";
+"VIDEO_SAVED" = "Video Saved";
 
 /* tell the user that the pictures was saved to the photo album */
 "SAVED_TO_PHOTO_ALBUM" = "Saved To Photo Album";
@@ -107,7 +107,12 @@
 "JOIN_NOW" = "Join now!";
 
 //share activity
-"CHECK_THIS_VIDEO" = "Look, I just bacame the star of #%@ : \n %@ \n \n Get Homage at: \n %@" ;
+"DEFAULT_SHARE_MSG_SUBJECT" = "Check my awesome video \"%@\" : \n";
+
+"SHARE_MSG_BODY" = "%@: \n %@ \n\n Keep calm and get Homage at: \n %@ \n";
+"DEFUALT_SHARE_MSG_BODY" = "Check my video \"%@\": \n\n %@ \n\n Keep calm and get Homage at: \n %@ \n";
+
+"SHARE_MSG_BODY_HASHTAGS" = "#Homage #Homage%@ #%@";
 
 /*remake options menu*/
 "OPTIONS" = "Options";

@@ -44,7 +44,7 @@
     story.level =               [info numberForKey:@"level"];
     story.videoURL =            [info stringForKey:@"video"];
     story.thumbnailURL =        [info stringForKey:@"thumbnail"];
-    
+    story.shareMessage = [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
     
     // Parse the scenes of this story.
     BOOL allScenesAreSelfie = YES;

@@ -378,6 +378,11 @@
     // Notify that the app has started (it already has the local storage available).
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     
+    //update correct version number in settings
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"version"];
+    
+    
     // Dismiss the splash screen.
     [self dismissSplashScreen];
     Mixpanel *mixpanel = [Mixpanel sharedInstance];

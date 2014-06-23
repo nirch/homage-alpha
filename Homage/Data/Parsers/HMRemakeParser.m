@@ -49,7 +49,7 @@
     remake.shareURL = [info stringForKey:@"share_link"];
     remake.grade = [info numberForKey:@"grade"] ? [info numberForKey:@"grade"] : [NSNumber numberWithInt:0];
     remake.stillPublic = @YES;
-   
+    
     NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     remake.lastLocalUpdate = lastLocalUpdate;
     

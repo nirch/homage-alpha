@@ -20,6 +20,7 @@
 #import "HMSimpleVideoViewController.h"
 #import "JBWhatsAppActivity.h"
 #import "HMGoogleAPI.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -162,6 +163,11 @@
                                                        name:HM_SHORT_URL
                                                      object:nil];
     
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onReachabilityStatusChange:)
+                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                     object:nil];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
 }
@@ -176,6 +182,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
     [nc removeObserver:self name:HM_SHORT_URL object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -294,6 +301,18 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    [self setActionsEnabled:HMServer.sh.isReachable];
+}
+
+-(void)setActionsEnabled:(BOOL)enabled
+{
+    for (UICollectionViewCell *cell in [self.userRemakesCV visibleCells])
+    {
+        [cell setUserInteractionEnabled:enabled];
+    }
+}
 
 #pragma mark - Refresh my remakes
 -(void)refetchRemakesFromServer
@@ -720,8 +739,7 @@
     
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *downloadLink = HOMAGE_APPSTORE_LINK;
-    
-    
+
     if (info[@"short_url"])
     {
         remakeShareURL = info[@"short_url"];
@@ -729,11 +747,23 @@
         remakeShareURL = remake.shareURL; //this is the long URL in case shortening failed
     }
     
-    NSString *shareString = [NSString stringWithFormat:LS(@"CHECK_THIS_VIDEO") , storyNameWithoutSpaces , remakeShareURL, downloadLink];
+    NSString *generalShareSubject;
+    NSString *whatsAppShareString;
+    if (remake.story.shareMessage)
+    {
+        generalShareSubject = remake.story.shareMessage;
+        whatsAppShareString = [NSString stringWithFormat:LS(@"SHARE_MSG_BODY") ,remake.story.shareMessage , remakeShareURL, downloadLink];
+    } else
+    {
+        generalShareSubject = [NSString stringWithFormat:LS(@"DEFAULT_SHARE_MSG_SUBJECT") , remake.story.name];
+        whatsAppShareString = [NSString stringWithFormat:LS(@"DEFUALT_SHARE_MSG_BODY") , remake.story.name , remakeShareURL, downloadLink];
+    }
     
-    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:shareString forABID:nil];
+    NSString *generalShareBody = [whatsAppShareString stringByAppendingString:[NSString stringWithFormat:LS(@"SHARE_MSG_BODY_HASHTAGS") , storyNameWithoutSpaces, storyNameWithoutSpaces]];
     
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, whatsappMsg, remake.thumbnail, nil];
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:whatsAppShareString forABID:nil];
+    
+    NSArray *activityItems = [NSArray arrayWithObjects: generalShareBody, whatsappMsg, remake.thumbnail, nil];
     NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
@@ -742,7 +772,7 @@
         }
     };
     
-    [activityViewController setValue:shareString forKey:@"subject"];
+    [activityViewController setValue:generalShareSubject forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     dispatch_async(dispatch_get_main_queue(), ^{
