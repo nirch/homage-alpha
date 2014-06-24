@@ -61,11 +61,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiHomageLogo;
 @property (weak,nonatomic) Story *loginStory;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
-@property (weak, nonatomic) IBOutlet UIView *guiAppContainerView;
-@property (weak, nonatomic) IBOutlet HMDINOTCondBoldFontLabel *guiNoConnectivityLabel;
+@property (weak, nonatomic) IBOutlet UIView *guiAppMainView;
+@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiNoConnectivityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (nonatomic) NSInteger selectedTab;
 @property (nonatomic) BOOL justStarted;
+@property (nonatomic) NSInteger appEnabled;
 
 
 
@@ -124,12 +125,14 @@
     self.loginContainerView.alpha = 0;
     
     self.guiNoConnectivityView.hidden = YES;
-    self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
+    //self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
     self.guiTabNameLabel.textColor = [UIColor whiteColor];
     
     self.selectedTab = HMStoriesTab;
     
+    self.appEnabled = 0; // counter. if == 0, app should be enabled
     self.guiAppHideView.hidden = YES;
+    
     
     //debug
     //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
@@ -273,31 +276,111 @@
     }
 }
 
+
+-(void)hideMainApp
+{
+    if ([self isMainAppHidden]) return;
+    
+    self.guiAppHideView.alpha = 0;
+    self.guiAppHideView.hidden = NO;
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        self.guiAppHideView.alpha = 1;
+    } completion:nil];
+    
+}
+
+-(void)showMainApp
+{
+    if (![self isMainAppHidden]) return;
+
+    [UIView animateWithDuration:0.1 animations:^{
+        self.guiAppHideView.alpha = 0;
+    } completion:^(BOOL finished){
+        if (finished)
+        {
+            self.guiAppHideView.hidden = YES;
+        }}];
+}
+
+-(BOOL)isMainAppHidden
+{
+    return !self.guiAppHideView.hidden;
+}
+
+-(BOOL)isSideBarHidden
+{
+    return self.sideBarContainerView.hidden;
+}
+
+-(BOOL)isNoConnectivityViewHidden
+{
+    return self.guiNoConnectivityView.hidden;
+}
+
+
+-(void)showNoConnectivity
+{
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    if (!self.guiNoConnectivityView.hidden) return;
+    self.guiNoConnectivityView.hidden = NO;
+    CGFloat offset = self.guiNoConnectivityView.frame.size.height;
+    CGRect newAppContainerViewFrame = self.guiAppMainView.frame;
+    newAppContainerViewFrame.size.height -= offset;
+    newAppContainerViewFrame.origin.y += offset;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiAppMainView.frame = newAppContainerViewFrame;
+        [self hideMainApp];
+    } completion:nil];
+    
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+}
+
+-(void)hideNoConnectivity
+{
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+    if (self.guiNoConnectivityView.hidden) return;
+    
+    CGFloat offset = self.guiNoConnectivityView.frame.size.height;
+    CGRect newAppContainerViewFrame = self.guiAppMainView.frame;
+    newAppContainerViewFrame.size.height += offset;
+    newAppContainerViewFrame.origin.y -= offset;
+
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiAppMainView.frame = newAppContainerViewFrame;
+        if ([self isSideBarHidden]) [self showMainApp];
+    } completion:^(BOOL finished){
+        if (finished)
+        {
+            self.guiNoConnectivityView.hidden = YES;
+        }
+    }];
+    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
+}
+
+
 -(void)showSideBar
 {
     self.sideBarContainerView.hidden = NO;
-    self.guiAppHideView.alpha = 0;
-    self.guiAppHideView.hidden = NO;
-    [self.guiAppContainerView setUserInteractionEnabled:NO];
+    
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
         self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
-        self.guiAppHideView.alpha = 1;
+        [self hideMainApp];
+        
     } completion:nil];
-
 }
 
 -(void)hideSideBar
 {
     [UIView animateWithDuration:0.3 animations:^{
         self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
-        self.guiAppHideView.alpha = 0;
+        if ([self isNoConnectivityViewHidden]) [self showMainApp];
         } completion:^(BOOL finished){
             if (finished)
             {
                 self.sideBarContainerView.hidden = YES;
-                self.guiAppHideView.hidden = YES;
-                [self.guiAppContainerView setUserInteractionEnabled:YES];
             }
         }];
 }
@@ -515,6 +598,7 @@
     
     self.appWrapperView.hidden = YES;
     self.loginContainerView.hidden = NO;
+    [self.loginVC onPresentLoginCalled];
     [UIView animateWithDuration:0.3 animations:^{
         self.loginContainerView.alpha = 1;
     } completion:nil];
@@ -540,7 +624,7 @@
 
 -(void)failedStartingApplication
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Critical error"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"CRITICAL_ERROR")
                                                     message:@"Failed launching application."
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
@@ -610,15 +694,6 @@
     
     if (![HMServer.sh isReachable])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection"
-                                                        message:@"Check Your connection and try again."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil
-                              ];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
         return;
     }
     
@@ -786,7 +861,7 @@
         HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
         HMGLogError(@"error details is: %@" , notification.reportedError.localizedDescription);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
-                                                        message:@"Failed updating preferences.\n\nTry again later."
+                                                        message:@"Failed updating preferences.\n\nTry again in a few moments."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -799,38 +874,6 @@
 }
 
 
--(void)showNoConnectivity
-{
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
-    if (!self.guiNoConnectivityView.hidden) return;
-    self.guiNoConnectivityView.hidden = NO;
-    CGFloat offset = self.guiNoConnectivityView.frame.size.height;
-    CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
-    newAppContainerViewFrame.size.height -= offset;
-    newAppContainerViewFrame.origin.y += offset;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.guiAppContainerView.frame = newAppContainerViewFrame;
-    } completion:nil];
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
-}
-
--(void)hideNoConnectivity
-{
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
-    if (self.guiNoConnectivityView.hidden) return;
-    
-    CGFloat offset = self.guiNoConnectivityView.frame.size.height;
-    CGRect newAppContainerViewFrame = self.guiAppContainerView.frame;
-    newAppContainerViewFrame.size.height += offset;
-    newAppContainerViewFrame.origin.y -= offset;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.guiAppContainerView.frame = newAppContainerViewFrame;
-    } completion:^(BOOL finished){
-        if (finished)
-            self.guiNoConnectivityView.hidden = YES;
-    }];
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
-}
 
 #pragma mark push notifications handler
 -(void)onUserMovieFinishedRendering:(NSNotification *)notification

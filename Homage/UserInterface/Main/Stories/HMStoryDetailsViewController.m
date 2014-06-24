@@ -19,7 +19,7 @@
 #import "HMColor.h"
 #import "Mixpanel.h"
 #import "HMSimpleVideoPlayerDelegate.h"
-#import "HMSimpleDataViewController.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -83,6 +83,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiRemakeActivity.hidden = YES;
     [self.guiRemakeActivity stopAnimating];
+    [self.storyMoviePlayer done];
     [self removeObservers];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -90,7 +91,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self.storyMoviePlayer done];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -155,6 +156,11 @@
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                                      object:nil];
     
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onReachabilityStatusChange:)
+                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                     object:nil];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -165,6 +171,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -180,7 +187,7 @@
     // Get the new remake object.
     NSString *remakeID = notification.userInfo[@"remakeID"];
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    if (notification.isReportingError || !remake) {
+    if ((notification.isReportingError && HMServer.sh.isReachable) || !remake) {
         [self remakeCreationFailMessage];
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return;
@@ -197,7 +204,7 @@
     // Backend notifies that local storage was updated with remakes.
     //
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    if (notification.isReportingError) {
+    if (notification.isReportingError && HMServer.sh.isReachable ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
                                                         message:@"Something went wrong :-(\n\nTry to refresh later."
                                                        delegate:nil
@@ -261,6 +268,24 @@
     
     cell.guiUserName.text = remake.user.userID;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    [self setActionsEnabled:HMServer.sh.isReachable];
+}
+
+-(void)setActionsEnabled:(BOOL)enabled
+{
+    
+    
+    [self.guiRemakeButton setEnabled:NO];
+    
+    //disable remake CV
+    for (UICollectionViewCell *cell in [self.remakesCV visibleCells])
+    {
+        [cell setUserInteractionEnabled:enabled];
+    }
 }
 
 

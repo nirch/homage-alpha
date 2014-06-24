@@ -17,6 +17,7 @@
 #import "Mixpanel.h"
 #import "HMNotificationCenter.h"
 #import "NSNotificationCenter+Utils.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @interface HMsideBarViewController ()
 
@@ -71,11 +72,17 @@
 -(void)initObservers
 {
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onSwitchedTab:) name:HM_MAIN_SWITCHED_TAB object:nil];
+    
+    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onReachabilityStatusChange:)
+                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                     object:nil];*/
 }
 
 -(void)removeObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_MAIN_SWITCHED_TAB object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
 }
 
 -(void)initGUI
@@ -114,6 +121,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    for (UIButton *button in self.loginActionsButtonCollection)
+    {
+        //[button setEnabled:HMServer.sh.isReachable];
+        button.enabled = HMServer.sh.isReachable;
+    }
 }
 
 - (IBAction)storiesButtonPushed:(id)sender

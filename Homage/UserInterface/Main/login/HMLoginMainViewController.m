@@ -917,4 +917,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     return NO;
 }
 
+-(void)onPresentLoginCalled
+{
+    self.guiLoginErrorLabel.text = @"";
+}
+
 @end

@@ -333,7 +333,7 @@
     {
         sender.enabled = NO;
         
-        if (!HMServer.sh.isReachable)
+        /*if (!HMServer.sh.isReachable)
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
                                                             message:LS(@"NO_CONNECTIVITY")                                                           delegate:nil
@@ -343,7 +343,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [alert show];
             });
-        }
+        }*/
+        
         [self serverCreateMovie];
         return;
     } else if (self.messageType == HMRecorderMessagesTypeSceneContext)

@@ -20,4 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeMovieButton;
 @property (weak, nonatomic) IBOutlet UILabel *storyNameLabel;
 
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *actionButtonCollection;
+
+
 @end

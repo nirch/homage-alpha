@@ -32,8 +32,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *guiReachability;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiMicrophoneUnauthorizedLabel;
+@property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
+
+
+//deprecated. set GUI outlet if you need to debug background detection
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiBadBGLabel;
 
 
@@ -76,8 +79,6 @@
 
 //audio player
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
-
-
 
 @end
 
@@ -411,12 +412,12 @@
 {
     _sceneID = notification.userInfo[@"sceneID"];
     [self updateUIForSceneID:self.sceneID];
-    self.guiReachability.hidden = HMServer.sh.isReachable;
+    self.guiNoConnectivityView.hidden = HMServer.sh.isReachable;
 }
 
 -(void)onReachabilityStatusChange:(NSNotification *)notification
 {
-    self.guiReachability.hidden = HMServer.sh.isReachable;
+    self.guiNoConnectivityView.hidden = HMServer.sh.isReachable;
 }
 
 -(void)onUploadProgress:(NSNotification *)notification

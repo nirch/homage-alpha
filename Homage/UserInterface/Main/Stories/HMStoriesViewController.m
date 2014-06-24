@@ -15,6 +15,7 @@
 #import "HMGLog.h"
 #import "HMColor.h"
 #import "Mixpanel.h"
+#import "HMServer+ReachabilityMonitor.h"
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -109,6 +110,12 @@
                                                    selector:@selector(onStoryThumbnailLoaded:)
                                                        name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                                      object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onReachabilityStatusChange:)
+                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                     object:nil];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -118,6 +125,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
 }
 
 
@@ -145,9 +153,9 @@
 
     // A simple example:
     // in case you want to update the UI when the notification is reporting that something went wrong (with a request to the server, for example).
-    if (notification.isReportingError) {
+    if (notification.isReportingError && HMServer.sh.isReachable ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                        message:@"Something went wrong :-(\n\nTry to reload the stories later."
+                                                        message:@"Something went wrong :-(\n\nTry to refresh feed in a few moements."
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
@@ -196,6 +204,19 @@
     [[Mixpanel sharedInstance] track:@"UserPulledRefresh"];
     [self refetchStoriesFromServer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    [self setActionsEnabled:HMServer.sh.isReachable];
+}
+
+-(void)setActionsEnabled:(BOOL)enabled
+{
+    for (UICollectionViewCell *cell in [self.storiesCV visibleCells])
+    {
+        [cell setUserInteractionEnabled:enabled];
+    }
 }
 
 #pragma mark - Navigation

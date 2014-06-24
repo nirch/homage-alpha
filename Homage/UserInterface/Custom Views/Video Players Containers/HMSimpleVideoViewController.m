@@ -59,6 +59,8 @@
 @property (nonatomic, readonly) NSDate *timePressedPlay;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 
+@property (nonatomic) UIDeviceOrientation fromRotation;
+
 
 @end
 
@@ -366,15 +368,6 @@
     
     if (![HMServer.sh isReachable])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection"
-                                                        message:@"Check Your connection and try again."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil
-                              ];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
         return;
     }
     
@@ -626,6 +619,7 @@
             } else {
                 [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
             }
+        
         default:
             break;
     }

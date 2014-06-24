@@ -20,7 +20,7 @@
                                     <segue destination="2Bz-2S-I1k" kind="embed" identifier="sideBarSegue" id="Nzu-KS-bh7"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" id="oj9-Vs-QHV" userLabel="app view">
+                            <view contentMode="scaleToFill" id="oj9-Vs-QHV" userLabel="app wrapper view">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -34,22 +34,22 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="BGe-RC-PIs" userLabel="no connectivity View">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="30"/>
+                                        <rect key="frame" x="0.0" y="60" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" id="vUV-gb-yMF">
-                                                <rect key="frame" x="9" y="3" width="25" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Connectivity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMDINOTCondBoldFontLabel">
-                                                <rect key="frame" x="51" y="3" width="259" height="25"/>
+                                                <rect key="frame" x="44" y="3" width="25" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            </imageView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMAvenirBookFontLabel">
+                                                <rect key="frame" x="81" y="3" width="163" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PcV-Lk-RmR" customClass="HMDINOTCondBoldFontLabel">
                                         <rect key="frame" x="139" y="21" width="90" height="30"/>
@@ -72,18 +72,25 @@
                                             <action selector="sideBarButtonPushed:" destination="Mko-4Y-5oJ" eventType="touchUpInside" id="nE2-8C-cFJ"/>
                                         </connections>
                                     </button>
-                                    <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cJv-hE-5uF">
-                                        <rect key="frame" x="0.0" y="60" width="320" height="507"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <segue destination="4NA-z5-ECn" kind="embed" identifier="appSegue" id="vLf-mZ-Wrr"/>
-                                        </connections>
-                                    </containerView>
-                                    <view contentMode="scaleToFill" id="asv-cY-1eK" userLabel="app hide view">
+                                    <view contentMode="scaleToFill" id="9mk-cg-4a4" userLabel="app main view">
                                         <rect key="frame" x="0.0" y="60" width="320" height="508"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                        <subviews>
+                                            <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cJv-hE-5uF" userLabel="app main Container View">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <segue destination="4NA-z5-ECn" kind="embed" identifier="appSegue" id="vLf-mZ-Wrr"/>
+                                                </connections>
+                                            </containerView>
+                                            <view contentMode="scaleToFill" id="asv-cY-1eK" userLabel="app main hide view">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
@@ -118,7 +125,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homageLogo" id="mzJ-7G-0nr">
-                                        <rect key="frame" x="20" y="39" width="165" height="74"/>
+                                        <rect key="frame" x="20" y="38" width="165" height="74"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's YOUR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9bm-AI-VPM" customClass="HMDINOTCondBoldFontLabel">
@@ -156,8 +163,8 @@
                         <outlet property="appWrapperView" destination="oj9-Vs-QHV" id="3Jj-gS-xwd"/>
                         <outlet property="guiActivity" destination="R2K-xF-bXS" id="ZKF-1h-oIw"/>
                         <outlet property="guiAppBGImageView" destination="BKF-jb-Ydy" id="q0u-aQ-RDX"/>
-                        <outlet property="guiAppContainerView" destination="cJv-hE-5uF" id="3Sn-Ar-WzE"/>
                         <outlet property="guiAppHideView" destination="asv-cY-1eK" id="9CD-aR-YQb"/>
+                        <outlet property="guiAppMainView" destination="9mk-cg-4a4" id="fe4-Vz-WfP"/>
                         <outlet property="guiBGImage" destination="cRg-QS-yh6" id="pRm-DC-evB"/>
                         <outlet property="guiBlurredView" destination="Osm-im-Hz3" id="lIa-tp-2f6"/>
                         <outlet property="guiNavButton" destination="zUe-p0-Ug6" id="a8W-kJ-pMb"/>
@@ -213,7 +220,7 @@
             <objects>
                 <viewController id="S0E-NA-ZBh" customClass="HMStoriesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aJq-J2-KtP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C7L-Hb-oGt" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
@@ -224,7 +231,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="HkM-dd-oCy">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Krx-vD-xcq">
@@ -330,15 +337,15 @@
             <objects>
                 <viewController id="ZiT-ur-2sF" customClass="HMStoryDetailsViewController" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="eWi-Fh-V73">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appBGImage" id="WAG-sV-gWP">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="569"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="XOR-HK-8eC">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="569"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -358,7 +365,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="n4c-ID-VSQ">
-                                <rect key="frame" x="0.0" y="235" width="320" height="266"/>
+                                <rect key="frame" x="0.0" y="235" width="320" height="267"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="50" maxX="0.0" maxY="0.0"/>
@@ -479,7 +486,7 @@
             <objects>
                 <viewController autoresizesArchivedViewToFullSize="NO" id="k3P-hU-fx4" customClass="HMGMeTabVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkI-Xu-gGA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nBO-G7-mhb" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
@@ -490,7 +497,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="70" contentMode="scaleAspectFit" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="zSo-Xw-45U">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Bs7-l7-LoP">
@@ -603,6 +610,7 @@
                                             <outlet property="remakeButton" destination="zVP-Pe-Sxq" id="3EJ-ei-Kxt"/>
                                             <outlet property="shareButton" destination="M0A-XO-3Ed" id="Xvy-86-MlX"/>
                                             <outlet property="storyNameLabel" destination="PBd-7c-2kj" id="K1c-MX-zit"/>
+                                            <outletCollection property="actionButtonCollection" destination="xnf-kT-Sf2" id="fhq-7u-dY9"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -631,7 +639,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="IASKSettingsVC" id="XFG-dN-vcB" customClass="IASKAppSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lFB-2o-nc1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>

@@ -16,5 +16,4 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiTextLabel2;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
-
 @end

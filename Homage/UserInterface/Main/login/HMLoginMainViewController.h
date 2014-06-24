@@ -15,6 +15,7 @@
 +(HMLoginMainViewController *)instantiateLoginScreen;
 -(void)onUserLogout;
 -(void)onUserJoin;
+-(void)onPresentLoginCalled;
 -(void)registerLoginAnalyticsForUser:(User *)user;
 
 

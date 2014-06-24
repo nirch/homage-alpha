@@ -575,10 +575,6 @@
                                         <rect key="frame" x="284" y="0.0" width="284" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSwipeUp" id="6la-ur-1NE">
-                                                <rect key="frame" x="210" y="4" width="33" height="48"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconUpArrowSmall" id="e4Y-rA-xzv">
                                                 <rect key="frame" x="242" y="10" width="42" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -593,22 +589,29 @@
                                                     <action selector="onPressedOpenButton:" destination="m2k-fx-mZd" eventType="touchUpInside" id="Pzo-Ss-1AO"/>
                                                 </connections>
                                             </button>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" id="iN6-gZ-YWh">
-                                                <rect key="frame" x="128" y="12" width="28" height="28"/>
+                                            <view contentMode="scaleToFill" id="SmQ-On-bze" userLabel="no connectivity view">
+                                                <rect key="frame" x="41" y="0.0" width="202" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" id="iN6-gZ-YWh">
+                                                        <rect key="frame" x="31" y="7" width="20" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6xv-vc-0LF" customClass="HMAvenirBookFontLabel">
+                                                        <rect key="frame" x="20" y="0.0" width="164" height="35"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <color key="textColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
                                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Microphone unauthorized in privacy settings" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bv2-vc-Da0" customClass="HMAvenirBookFontLabel">
-                                                <rect key="frame" x="59" y="10" width="166" height="35"/>
+                                                <rect key="frame" x="65" y="27" width="166" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use solid color background" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jqh-c3-WlR" customClass="HMAvenirBookFontLabel">
-                                                <rect key="frame" x="64" y="4" width="148" height="41"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" red="1" green="0.49019607840000001" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -683,7 +686,6 @@
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="guiBadBGLabel" destination="jqh-c3-WlR" id="pNd-d4-DOz"/>
                         <outlet property="guiCloseButton" destination="DFL-bL-apN" id="vPP-yr-lIS"/>
                         <outlet property="guiCountdownContainer" destination="cwP-eK-oSv" id="YCL-Ot-T3I"/>
                         <outlet property="guiCurrentSceneDurationLabel" destination="XEA-tI-Pxu" id="Ct7-w4-Q7T"/>
@@ -691,10 +693,9 @@
                         <outlet property="guiLessDetailsBar" destination="ncI-xc-Aml" id="Ouz-GT-L7i"/>
                         <outlet property="guiMicrophoneUnauthorizedLabel" destination="Bv2-vc-Da0" id="puA-he-kdA"/>
                         <outlet property="guiMoreDetailsBar" destination="NcZ-Uk-buY" id="n6c-D3-Irr"/>
+                        <outlet property="guiNoConnectivityView" destination="SmQ-On-bze" id="LF4-cG-baq"/>
                         <outlet property="guiOriginalTakesPageControl" destination="0b6-7A-Qyl" id="Wza-0c-NUy"/>
                         <outlet property="guiOriginalTakesVideosScrollView" destination="1VQ-4a-tOr" id="bp9-9T-LSf"/>
-                        <outlet property="guiPointingHand" destination="6la-ur-1NE" id="c4N-4e-cYi"/>
-                        <outlet property="guiReachability" destination="iN6-gZ-YWh" id="pLG-4w-SOr"/>
                         <outlet property="guiRecordButton" destination="8MZ-0V-BOY" id="Mht-8b-Nt4"/>
                         <outlet property="guiRoundCountdownLabal" destination="nid-Yd-ydR" id="LGT-FE-4RU"/>
                         <outlet property="guiSceneDirectionButton" destination="yOn-9D-33I" id="aOo-Pb-e5o"/>
@@ -1057,7 +1058,6 @@
         <image name="iconSceneScript" width="22" height="20"/>
         <image name="iconSceneScriptLighter" width="22" height="20"/>
         <image name="iconSmallClock" width="20" height="20"/>
-        <image name="iconSwipeUp" width="29" height="43"/>
         <image name="iconUpArrowSmall" width="24" height="10"/>
         <image name="textPlate" width="375" height="14"/>
         <image name="wifi" width="64" height="50"/>

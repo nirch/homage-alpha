@@ -163,10 +163,10 @@
                                                        name:HM_SHORT_URL
                                                      object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onReachabilityStatusChange:)
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:nil];
+                                                     object:nil];*/
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
@@ -182,7 +182,7 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
     [nc removeObserver:self name:HM_SHORT_URL object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -193,9 +193,9 @@
     // Backend notifies that local storage was updated with remakes.
     //
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    if (notification.isReportingError) {
+    if (notification.isReportingError && HMServer.sh.isReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                        message:@"Something went wrong :-(\n\nTry to refresh later."
+                                                        message:@"Something went wrong. \n\nTry to refresh in a few moments."
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
@@ -262,9 +262,9 @@
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remakeID"];
     
-    if (notification.isReportingError) {
+    if (notification.isReportingError && HMServer.sh.isReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                        message:@"Something went wrong :-(\n\nTry to delete the remake later."
+                                                        message:@"Something went wrong.\n\nTry to delete the remake in a few moments."
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
@@ -291,7 +291,7 @@
     // Get the new remake object.
     NSString *remakeID = notification.userInfo[@"remakeID"];
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    if (notification.isReportingError || !remake) {
+    if ((notification.isReportingError && HMServer.sh.isReachable) || !remake ) {
         [self remakeCreationFailMessage];
         
     }
@@ -308,9 +308,13 @@
 
 -(void)setActionsEnabled:(BOOL)enabled
 {
-    for (UICollectionViewCell *cell in [self.userRemakesCV visibleCells])
+    for (HMGUserRemakeCVCell *cell in [self.userRemakesCV visibleCells])
     {
-        [cell setUserInteractionEnabled:enabled];
+        //[cell setUserInteractionEnabled:enabled];
+        for (UIButton *button in cell.actionButtonCollection)
+        {
+            button.enabled = NO;
+        }
     }
 }
 
@@ -651,7 +655,7 @@
 -(void)remakeCreationFailMessage
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
-                                                    message:@"Failed creating remake.\n\nTry again later."
+                                                    message:@"Failed creating remake.\n\nTry again in a few moments."
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
