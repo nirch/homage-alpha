@@ -59,7 +59,8 @@
 @property (nonatomic, readonly) NSDate *timePressedPlay;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 
-@property (nonatomic) UIDeviceOrientation fromRotation;
+@property (nonatomic) BOOL playPortrait;
+@property (nonatomic) UIDeviceOrientation previousOrientation;
 
 
 @end
@@ -109,12 +110,34 @@
    
     self.videoPlayer.view.alpha = 0;
     self.videoView.guiVideoThumb.alpha = 1;
+    
+    self.playPortrait = [self shouldPlayPortrait];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
+}
+
+-(BOOL)shouldPlayPortrait
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    switch (orientation) {
+        case UIDeviceOrientationFaceUp:
+            return YES;
+            break;
+        case UIDeviceOrientationFaceDown:
+            return YES;
+            break;
+        case UIDeviceOrientationPortrait:
+            return YES;
+        case UIDeviceOrientationPortraitUpsideDown:
+            return YES;
+            break;
+        default:
+            return NO;
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -604,14 +627,25 @@
     dispatch_async(dispatch_get_main_queue(), ^{
     switch (orientation) {
         case UIDeviceOrientationLandscapeLeft:
-            [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
-            //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+            if (self.playPortrait)
+            {
+                [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
+                //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+            }
+            self.playPortrait = NO;
+            self.previousOrientation = orientation;
             break;
         case UIDeviceOrientationLandscapeRight:
+            if (self.playPortrait)
+            {
             [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeLeft];
             //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+            }
+            self.playPortrait = NO;
+            self.previousOrientation = orientation;
             break;
         case UIDeviceOrientationPortrait:
+            if (self.playPortrait) return;
             if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
             {
                 [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
@@ -619,8 +653,18 @@
             } else {
                 [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
             }
-        
+            self.previousOrientation = orientation;
+            self.playPortrait = YES;
+            break;
         default:
+            if (self.previousOrientation == UIDeviceOrientationPortrait || self.previousOrientation == UIDeviceOrientationFaceDown || self.previousOrientation == UIDeviceOrientationFaceUp)
+            {
+                self.playPortrait = YES;
+            } else
+            {
+                self.playPortrait = NO;
+            }
+            self.previousOrientation = orientation;
             break;
     }
     });

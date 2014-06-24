@@ -856,7 +856,7 @@
 -(void)onUserPreferencesUpdate:(NSNotification *)notification
 {
     
-    if (notification.isReportingError)
+    if (notification.isReportingError && HMServer.sh.isReachable)
     {
         HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
         HMGLogError(@"error details is: %@" , notification.reportedError.localizedDescription);
