@@ -74,7 +74,7 @@
                                     </button>
                                     <view contentMode="scaleToFill" id="9mk-cg-4a4" userLabel="app main view">
                                         <rect key="frame" x="0.0" y="60" width="320" height="508"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <containerView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="cJv-hE-5uF" userLabel="app main Container View">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
