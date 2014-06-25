@@ -92,12 +92,19 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <view contentMode="scaleToFill" id="KwL-k7-u0O" userLabel="disableAppInteractionView">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Fvj-3u-F3C" appends="YES" id="xk0-ai-JSf"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Sia-Zy-ZGY" appends="YES" id="1rX-JO-5ev"/>
-                                    <outletCollection property="gestureRecognizers" destination="iaH-O3-Nun" appends="YES" id="QYg-3e-qIn"/>
+                                    <outletCollection property="gestureRecognizers" destination="sqr-LT-Nw6" appends="YES" id="xsd-3i-y8U"/>
                                 </connections>
                             </view>
                             <containerView autoresizesSubviews="NO" contentMode="scaleToFill" id="fIN-2a-57r" userLabel="renderBar container View">
@@ -164,7 +171,9 @@
                         <outlet property="guiActivity" destination="R2K-xF-bXS" id="ZKF-1h-oIw"/>
                         <outlet property="guiAppBGImageView" destination="BKF-jb-Ydy" id="q0u-aQ-RDX"/>
                         <outlet property="guiAppHideView" destination="asv-cY-1eK" id="9CD-aR-YQb"/>
+                        <outlet property="guiAppMainPanGestureRecognizer" destination="sqr-LT-Nw6" id="6QT-Cw-rTZ"/>
                         <outlet property="guiAppMainView" destination="9mk-cg-4a4" id="fe4-Vz-WfP"/>
+                        <outlet property="guiAppWrapperHideView" destination="KwL-k7-u0O" id="FtT-N4-3ac"/>
                         <outlet property="guiBGImage" destination="cRg-QS-yh6" id="pRm-DC-evB"/>
                         <outlet property="guiBlurredView" destination="Osm-im-Hz3" id="lIa-tp-2f6"/>
                         <outlet property="guiNavButton" destination="zUe-p0-Ug6" id="a8W-kJ-pMb"/>
@@ -180,16 +189,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hza-mr-33u" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="Sia-Zy-ZGY">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="sqr-LT-Nw6">
                     <connections>
-                        <action selector="onSwipeToHideSideBar:" destination="Mko-4Y-5oJ" id="vUj-xr-iQt"/>
+                        <action selector="onAppPan:" destination="Mko-4Y-5oJ" id="bNA-uU-HAo"/>
                     </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="iaH-O3-Nun">
+                </panGestureRecognizer>
+                <tapGestureRecognizer id="Fvj-3u-F3C">
                     <connections>
-                        <action selector="onSwipeToShowSideBar:" destination="Mko-4Y-5oJ" id="2k0-WY-KHM"/>
+                        <action selector="onMainAppViewTappedWhileHidden:" destination="Mko-4Y-5oJ" id="EjI-48-CuI"/>
                     </connections>
-                </swipeGestureRecognizer>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="166" y="122"/>
         </scene>
@@ -803,11 +812,11 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appBGImage" id="FOC-5M-B1B">
                                 <rect key="frame" x="0.0" y="0.0" width="250" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="5As-YG-1Ce" userLabel="blurred view">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="250" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="VHz-PL-kef" userLabel="title view">

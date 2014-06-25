@@ -41,9 +41,10 @@
 #import "HMSimpleVideoViewController.h"
 
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
+@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
+@property (weak, nonatomic) IBOutlet UIView *guiAppWrapperHideView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppHideView;
@@ -68,6 +69,12 @@
 @property (nonatomic) BOOL justStarted;
 @property (nonatomic) NSInteger appEnabled;
 
+@property (nonatomic) CGFloat startPanX;
+@property (nonatomic) CGFloat startPanY;
+@property (nonatomic) BOOL sideBarVisible;
+
+
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *guiAppMainPanGestureRecognizer;
 
 
 #define SETTING_TAG 1
@@ -119,7 +126,7 @@
     
     [[AMBlurView new] insertIntoView:self.guiBlurredView];
         
-    self.sideBarContainerView.hidden = YES;
+    self.guiAppWrapperHideView.hidden = YES;
     self.renderingContainerView.hidden = YES;
     self.loginContainerView.hidden = YES;
     self.loginContainerView.alpha = 0;
@@ -133,6 +140,10 @@
     self.appEnabled = 0; // counter. if == 0, app should be enabled
     self.guiAppHideView.hidden = YES;
     
+    UIPanGestureRecognizer *panRecognizer = self.guiAppMainPanGestureRecognizer;
+    [panRecognizer setMinimumNumberOfTouches:1];
+	[panRecognizer setMaximumNumberOfTouches:1];
+	[panRecognizer setDelegate:self];
     
     //debug
     //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
@@ -257,12 +268,10 @@
 
     //[[Mixpanel sharedInstance] track:@"SideBarPushed"];
     if (sender.tag == SETTING_TAG) {
-        if (self.sideBarContainerView.hidden == YES) {
-            //need to show the sideBar
+        if (!self.sideBarVisible)
+        {
             [self showSideBar];
-            
         } else {
-            //need to hide the side bar
             [self hideSideBar];
         }
     } else if (sender.tag == BACK_TAG)
@@ -360,29 +369,83 @@
 }
 
 
+
+- (IBAction)onAppPan:(id)sender
+{
+    [[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
+    
+    UIView *panningView = [sender view];
+    
+    CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
+    
+    NSLog(@"translated point in self.view is (%f,%f)" , translatedPoint.x , translatedPoint.y);
+
+    if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan)
+    {
+		self.startPanX = panningView.frame.origin.x;
+		self.startPanY = panningView.frame.origin.y;
+        NSLog(@"start XY: (%f,%f)" , self.startPanX , self.startPanY);
+	}
+    
+    translatedPoint = CGPointMake(self.startPanX+translatedPoint.x, self.startPanY);
+    //NSLog(@"translated point after pan delta in self.view is (%f,%f)" , translatedPoint.x , translatedPoint.y);
+    
+    if (translatedPoint.x < 0)
+    {
+        //do nothing
+    } else if (translatedPoint.x >= 0 && translatedPoint.x <= self.sideBarContainerView.frame.size.width)
+    {
+        [panningView setFrame:CGRectMake(translatedPoint.x, translatedPoint.y, panningView.frame.size.width, panningView.frame.size.height)];
+    } else
+    {
+        //do nothing
+    }
+    
+    if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+        if (panningView.frame.origin.x < ceilf((self.sideBarContainerView.frame.size.width / 2)))
+        {
+            [self showMainAppView];
+        } else {
+            [self showSideBar];
+        }
+    }
+}
+
+
+-(void)showMainAppView
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        //CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
+        [self.appWrapperView setFrame:CGRectMake(0, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
+        //self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
+    } completion:nil];
+    
+    self.guiAppWrapperHideView.hidden = YES;
+    self.sideBarVisible = NO;
+}
+
 -(void)showSideBar
 {
-    self.sideBarContainerView.hidden = NO;
-    
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
-        self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth,0);
-        [self hideMainApp];
-        
+        //self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth-currentAppWrapperCenterX,0);
+        [self.appWrapperView setFrame:CGRectMake(sideBarWidth, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
     } completion:nil];
+    
+    self.guiAppWrapperHideView.hidden = NO;
+    self.sideBarVisible = YES;
 }
 
 -(void)hideSideBar
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
-        if ([self isNoConnectivityViewHidden]) [self showMainApp];
-        } completion:^(BOOL finished){
-            if (finished)
-            {
-                self.sideBarContainerView.hidden = YES;
-            }
-        }];
+    if (!self.sideBarVisible) return;
+    [self showMainAppView];
+}
+
+
+- (IBAction)onMainAppViewTappedWhileHidden:(id)sender
+{
+    [self showMainAppView];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -659,7 +722,7 @@
         }
     }
   
-    [self closeSideBar];
+    [self showMainAppView];
     
 }
 
@@ -668,7 +731,7 @@
     [[Mixpanel sharedInstance] track:@"appMoveToMeTab"];
     if (self.appTabBarController.selectedIndex != 1)
         [self switchToTab:HMMeTab];
-    [self closeSideBar];
+    [self showMainAppView];
     
 }
 
@@ -677,14 +740,14 @@
     [[Mixpanel sharedInstance] track:@"appMoveToSettingsTab"];
     if (self.appTabBarController.selectedIndex != 2)
         [self switchToTab:HMSettingsTab];
-    [self closeSideBar];
+    [self showMainAppView];
 }
 
 -(void)howToButtonPushed
 {
     [[Mixpanel sharedInstance] track:@"appWillPlayIntroMovie"];
     [self initIntroMoviePlayer];
-    [self closeSideBar];
+    [self showMainAppView];
 }
 
 -(void)initIntroMoviePlayer
@@ -744,23 +807,6 @@
     
     self.selectedTab = toIndex;
 
-}
-
--(void)closeSideBar
-{
-    if (self.sideBarContainerView.hidden == NO)
-        [self hideSideBar];
-}
-
-
-- (IBAction)onSwipeToShowSideBar:(UISwipeGestureRecognizer *)sender
-{
-    if (self.sideBarContainerView.hidden == YES) [self showSideBar];
-}
-
-- (IBAction)onSwipeToHideSideBar:(UISwipeGestureRecognizer *)sender
-{
-    [self hideSideBar];
 }
 
 -(void)showRenderingView
@@ -948,7 +994,7 @@
 {
     [[User current] logoutInContext:DB.sh.context];
     [self presentLoginScreen];
-    [self hideSideBar];
+    [self showMainAppView];
     [self hideRenderingView];
     [self switchToTab:HMStoriesTab];
     [self.loginVC onUserLogout];
@@ -968,7 +1014,7 @@
 {
     [self.loginVC onUserJoin];
     [self presentLoginScreen];
-    [self hideSideBar];
+    [self showMainAppView];
 }
 
 -(void)dismissLoginScreen

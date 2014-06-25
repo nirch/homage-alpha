@@ -645,7 +645,11 @@
             self.previousOrientation = orientation;
             break;
         case UIDeviceOrientationPortrait:
-            if (self.playPortrait) return;
+            if (self.playPortrait)
+            {
+                self.previousOrientation = orientation;
+                break;
+            }
             if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
             {
                 [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
