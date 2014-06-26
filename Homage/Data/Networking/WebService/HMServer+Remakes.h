@@ -77,9 +77,6 @@
  */
 -(void)deleteRemakeWithID:(NSString *)remakeID;
 
-
-    
-    
 ///
 /**
  *  A GET request to the server requesting info about remakes related to a user.

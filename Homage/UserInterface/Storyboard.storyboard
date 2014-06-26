@@ -824,14 +824,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yhk-LX-8UH" userLabel="hello user Label" customClass="HMDINOTCondBoldFontLabel">
-                                        <rect key="frame" x="20" y="18" width="165" height="21"/>
+                                        <rect key="frame" x="20" y="15" width="165" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hfQ-pw-J8P" customClass="HMAvenirBookFontButton">
-                                        <rect key="frame" x="15" y="34" width="61" height="30"/>
+                                        <rect key="frame" x="15" y="29" width="61" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="join now">
@@ -843,7 +843,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o3r-9s-FMS" customClass="HMAvenirBookFontButton">
-                                        <rect key="frame" x="17" y="34" width="44" height="30"/>
+                                        <rect key="frame" x="17" y="29" width="44" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="logout">
@@ -855,7 +855,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" id="0hW-jc-Mh0" customClass="FBProfilePictureView">
-                                        <rect key="frame" x="199" y="16" width="40" height="40"/>
+                                        <rect key="frame" x="199" y="15" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>

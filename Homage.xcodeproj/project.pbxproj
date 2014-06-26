@@ -172,8 +172,6 @@
 		08DF23251892704300912657 /* HMGMeTabVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230C1892704300912657 /* HMGMeTabVC.m */; };
 		08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */; };
 		08DF23271892704300912657 /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */; };
-		08DF23281892704300912657 /* HMUserRemakesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23101892704300912657 /* HMUserRemakesViewController.m */; };
-		08DF23291892704300912657 /* HMUserRemakesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23101892704300912657 /* HMUserRemakesViewController.m */; };
 		08DF232E1892704300912657 /* HMRemakeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23171892704300912657 /* HMRemakeCell.m */; };
 		08DF232F1892704300912657 /* HMRemakeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23171892704300912657 /* HMRemakeCell.m */; };
 		08DF23301892704300912657 /* HMStoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23191892704300912657 /* HMStoriesViewController.m */; };
@@ -438,8 +436,6 @@
 		08DF230C1892704300912657 /* HMGMeTabVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGMeTabVC.m; sourceTree = "<group>"; };
 		08DF230D1892704300912657 /* HMGUserRemakeCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGUserRemakeCVCell.h; sourceTree = "<group>"; };
 		08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGUserRemakeCVCell.m; sourceTree = "<group>"; };
-		08DF230F1892704300912657 /* HMUserRemakesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserRemakesViewController.h; sourceTree = "<group>"; };
-		08DF23101892704300912657 /* HMUserRemakesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserRemakesViewController.m; sourceTree = "<group>"; };
 		08DF23161892704300912657 /* HMRemakeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeCell.h; sourceTree = "<group>"; };
 		08DF23171892704300912657 /* HMRemakeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakeCell.m; sourceTree = "<group>"; };
 		08DF23181892704300912657 /* HMStoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesViewController.h; sourceTree = "<group>"; };
@@ -1155,8 +1151,6 @@
 				08DF230C1892704300912657 /* HMGMeTabVC.m */,
 				08DF230D1892704300912657 /* HMGUserRemakeCVCell.h */,
 				08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */,
-				08DF230F1892704300912657 /* HMUserRemakesViewController.h */,
-				08DF23101892704300912657 /* HMUserRemakesViewController.m */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -1570,7 +1564,6 @@
 				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
 				08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
-				08DF23281892704300912657 /* HMUserRemakesViewController.m in Sources */,
 				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
 				268341F818FFFD40002E8CB7 /* IASKSettingsStore.m in Sources */,
@@ -1685,7 +1678,6 @@
 				08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */,
 				08CDF8271896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
 				08081FB618D083DA00999068 /* HMExtractController.mm in Sources */,
-				08DF23291892704300912657 /* HMUserRemakesViewController.m in Sources */,
 				084E533E18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				08DF23271892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				08DF23231892704300912657 /* HMTabBarController.m in Sources */,

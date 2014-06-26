@@ -378,13 +378,13 @@
     
     CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
     
-    NSLog(@"translated point in self.view is (%f,%f)" , translatedPoint.x , translatedPoint.y);
+    //NSLog(@"translated point in self.view is (%f,%f)" , translatedPoint.x , translatedPoint.y);
 
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan)
     {
 		self.startPanX = panningView.frame.origin.x;
 		self.startPanY = panningView.frame.origin.y;
-        NSLog(@"start XY: (%f,%f)" , self.startPanX , self.startPanY);
+        //NSLog(@"start XY: (%f,%f)" , self.startPanX , self.startPanY);
 	}
     
     translatedPoint = CGPointMake(self.startPanX+translatedPoint.x, self.startPanY);

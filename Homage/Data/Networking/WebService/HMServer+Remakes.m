@@ -86,7 +86,7 @@
     [self deleteRelativeURL:relativeURL
                  parameters:nil
            notificationName:HM_NOTIFICATION_SERVER_REMAKE_DELETION
-                       info:@{@"remakeID":remakeID}
+                       info:@{@"remakeID" : remakeID}
                      parser:nil
      ];
 }

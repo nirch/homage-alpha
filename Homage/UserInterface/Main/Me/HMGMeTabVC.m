@@ -21,6 +21,7 @@
 #import "JBWhatsAppActivity.h"
 #import "HMGoogleAPI.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "NSDictionary+TypeSafeValues.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -31,11 +32,15 @@
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSString *currentFetchedResultsUser;
-@property (weak,nonatomic) Remake *remakeToDelete;
+@property (nonatomic) NSDictionary *remakeToDeleteInfo;
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (nonatomic,weak) UIView *guiVideoContainer;
+
+@property (nonatomic) NSMutableArray *objectChanges;
+@property (nonatomic) NSMutableArray *sectionChanges;
+
 
 @end
 
@@ -57,7 +62,12 @@
     //[self.refreshControl beginRefreshing];
     [self initGUI];
     [self initContent];
+    
     self.playingMovieIndex = -1;
+    
+    _sectionChanges = [NSMutableArray array];
+    _objectChanges = [NSMutableArray array];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     
     
@@ -278,10 +288,8 @@
         [remake deleteRawLocalFiles];
         [DB.sh.context deleteObject:remake];
         [DB.sh save];
-        [self refetchRemakesFromServer];
     }
-    
-    
+        
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -424,14 +432,14 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
+
     //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
-    cell.shareButton.tag = indexPath.item;
+    /*cell.shareButton.tag = indexPath.item;
     cell.actionButton.tag = indexPath.item;
     cell.remakeButton.tag = indexPath.item;
     cell.closeMovieButton.tag = indexPath.item;
     cell.deleteButton.tag = indexPath.item;
-    cell.tag = indexPath.item;
+    cell.tag = indexPath.item;*/
     //
     
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
@@ -453,7 +461,6 @@
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
-
 
 -(void)updateUIOfRemakeCell:(HMGUserRemakeCVCell *)cell withStatus:(NSNumber *)status
 {
@@ -531,11 +538,15 @@
 - (IBAction)actionButtonPushed:(UIButton *)sender
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
+    if (!cell) return;
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
-    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
@@ -634,11 +645,13 @@
 #pragma mark remaking
 - (IBAction)deleteRemake:(UIButton *)sender
 {
-    
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    self.remakeToDelete = remake;
+    self.remakeToDeleteInfo = @{@"remake_id" : remake.sID};
     HMGLogDebug(@"about the delete remake: %@" , remake.sID);
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"DELETE_REMAKE") message:LS(@"APPROVE_DELETION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
@@ -649,6 +662,18 @@
     });
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
+-(HMGUserRemakeCVCell *)getParentCollectionViewCellOfButton:(UIButton *)button
+{
+    //TODO: this is only the current hirarchy in the hmguserCVcell!
+    id cell = button.superview.superview.superview;
+    if (![cell isKindOfClass:[HMGUserRemakeCVCell class]])
+    {
+        HMGLogError(@"button super view is not a collection view cell!");
+        return nil;
+    }
+    return cell;
 }
 
 
@@ -669,10 +694,12 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self closeCurrentlyPlayingMovie];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    
-    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+    if (!cell) return;
+ 
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
     cell.remakeButton.enabled = NO;
     
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -699,7 +726,10 @@
 {
     
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+    if (!cell) return;
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if ([[User current] isGuestUser])
@@ -828,18 +858,19 @@
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)
     {
         if (buttonIndex == 0) {
-            self.remakeToDelete = nil;
+            self.remakeToDeleteInfo = nil;
         }
         if (buttonIndex == 1) {
-            NSString *remakeID = self.remakeToDelete.sID;
+            NSString *remakeID = self.remakeToDeleteInfo[@"remake_id"];
+            Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
             
-            if (self.remakeToDelete.story.name)
+            if (remake.story.name)
             {
-              [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : self.remakeToDelete.story.name}];
+                [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
             }
             
             [HMServer.sh deleteRemakeWithID:remakeID];
-            self.remakeToDelete = nil;
+            self.remakeToDeleteInfo = nil;
         }
     } else if (alertView.tag == SHARE_ALERT_VIEW_TAG)
     {
@@ -923,6 +954,155 @@
 -(void)videoPlayerWasFired
 {
     
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    NSMutableDictionary *change = [NSMutableDictionary new];
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            change[@(type)] = newIndexPath;
+            break;
+        case NSFetchedResultsChangeDelete:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeUpdate:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeMove:
+            change[@(type)] = @[indexPath, newIndexPath];
+            break;
+    }
+    [_objectChanges addObject:change];}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    NSMutableDictionary *change = [NSMutableDictionary new];
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            change[@(type)] = @(sectionIndex);
+            break;
+        case NSFetchedResultsChangeDelete:
+            change[@(type)] = @(sectionIndex);
+            break;
+    }
+    
+    [_sectionChanges addObject:change];
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+    {
+        if ([_sectionChanges count] > 0)
+        {
+            [self.userRemakesCV performBatchUpdates:^{
+                
+                for (NSDictionary *change in _sectionChanges)
+                {
+                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                        
+                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                        switch (type)
+                        {
+                            case NSFetchedResultsChangeInsert:
+                                [self.userRemakesCV insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                                break;
+                            case NSFetchedResultsChangeDelete:
+                                [self.userRemakesCV deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                                break;
+                            case NSFetchedResultsChangeUpdate:
+                                [self.userRemakesCV reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                                break;
+                        }
+                    }];
+                }
+            } completion:nil];
+        }
+        
+        if ([_objectChanges count] > 0 && [_sectionChanges count] == 0)
+        {
+            
+            if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.userRemakesCV.window == nil) {
+                // This is to prevent a bug in UICollectionView from occurring.
+                // The bug presents itself when inserting the first object or deleting the last object in a collection view.
+                // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure
+                // This code should be removed once the bug has been fixed, it is tracked in OpenRadar
+                // http://openradar.appspot.com/12954582
+                [self.userRemakesCV reloadData];
+                
+            } else {
+                
+                [self.userRemakesCV performBatchUpdates:^{
+                    
+                    for (NSDictionary *change in _objectChanges)
+                    {
+                        [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                            
+                            NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                            //NSError *error;
+                            switch (type)
+                            {
+                                case NSFetchedResultsChangeInsert:
+                                    [self.userRemakesCV insertItemsAtIndexPaths:@[obj]];
+                                    break;
+                                case NSFetchedResultsChangeDelete:
+                                {
+                                    [self.userRemakesCV deleteItemsAtIndexPaths:@[obj]];
+                                    break;
+                                }
+                                case NSFetchedResultsChangeUpdate:
+                                    [self.userRemakesCV reloadItemsAtIndexPaths:@[obj]];
+                                    break;
+                                case NSFetchedResultsChangeMove:
+                                    [self.userRemakesCV moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                                    break;
+                            }
+                        }];
+                    }
+                } completion:nil];
+            }
+        }
+        
+        [_sectionChanges removeAllObjects];
+        [_objectChanges removeAllObjects];
+}
+
+- (BOOL)shouldReloadCollectionViewToPreventKnownIssue {
+    __block BOOL shouldReload = NO;
+    for (NSDictionary *change in self.objectChanges) {
+        [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+            NSIndexPath *indexPath = obj;
+            switch (type) {
+                case NSFetchedResultsChangeInsert:
+                    if ([self.userRemakesCV numberOfItemsInSection:indexPath.section] == 0) {
+                        shouldReload = YES;
+                    } else {
+                        shouldReload = NO;
+                    }
+                    break;
+                case NSFetchedResultsChangeDelete:
+                    if ([self.userRemakesCV numberOfItemsInSection:indexPath.section] == 1) {
+                        shouldReload = YES;
+                    } else {
+                        shouldReload = NO;
+                    }
+                    break;
+                case NSFetchedResultsChangeUpdate:
+                    shouldReload = NO;
+                    break;
+                case NSFetchedResultsChangeMove:
+                    shouldReload = NO;
+                    break;
+            }
+        }];
+    }
+    
+    return shouldReload;
 }
 
 // ============
