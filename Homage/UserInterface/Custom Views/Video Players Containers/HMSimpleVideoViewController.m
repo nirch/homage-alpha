@@ -144,8 +144,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    //[self done];
-    [self.videoPlayer stop];
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    [self done];
     [self removeObservers];
     self.videoView.guiPlayPauseButton.selected = NO;
     if (self.isFullscreen) {
@@ -169,6 +169,8 @@
     } completion:^(BOOL finished) {
         
     }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -306,6 +308,11 @@
 
 -(void)_startToPlayTheActualVideo
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    if (!self.waitingToStartPlayingTheFile)
+    {
+        return;
+    }
     self.waitingToStartPlayingTheFile = NO;
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
@@ -315,12 +322,14 @@
         self.videoView.backgroundColor = [UIColor clearColor];
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
-        //[self printViewProperties:self.view name:@"self.view.frame"];
-        //[self printViewProperties:self.videoView name:@"self.videoView.frame"];
-        //[self printViewProperties:self.videoPlayer.view name:@"self.videoPlayer.view.frame"];
     } completion:^(BOOL finished) {
-        [self.videoPlayer play];
+        if (self.waitingToStartPlayingTheFile == YES)
+        {
+            [self.videoPlayer play];
+            self.waitingToStartPlayingTheFile = NO;
+        }
     }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
@@ -431,6 +440,7 @@
 
 -(void)done
 {
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.isPlaying = NO;
     self.waitingToStartPlayingTheFile = NO;
     [self.videoPlayer stop];
@@ -455,7 +465,10 @@
         if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.alpha = 1;
     } completion:^(BOOL finished) {
         
-    }];}
+    }];
+    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+}
+
 
 
 
