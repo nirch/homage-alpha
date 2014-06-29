@@ -62,6 +62,7 @@
     //[self.refreshControl beginRefreshing];
     [self initGUI];
     [self initContent];
+    [self initPermanentObservers];
     
     self.playingMovieIndex = -1;
     
@@ -78,7 +79,7 @@
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[Mixpanel sharedInstance] track:@"MEEnterTab"];
     [self initObservers];
-    [self refetchRemakesFromServer];
+    [self refreshFromLocalStorage];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -132,19 +133,32 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refreshFromLocalStorage];
+    [self refetchRemakesFromServer];
+    //[self.userRemakesCV reloadData];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
--(void)initObservers
+
+-(void)initPermanentObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    //app notifying "me" tab that a user had chnaged, and need to show a different feed
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(refreshRemakes)
+                                                       name:HM_REFRESH_USER_DATA
+                                                     object:nil];
     
     // Observe refetching of remakes
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakesRefetched:)
                                                        name:HM_NOTIFICATION_SERVER_USER_REMAKES
                                                      object:nil];
+}
+-(void)initObservers
+{
+    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
+    
     
     // Observe lazy loading thumbnails
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -161,11 +175,6 @@
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeCreation:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
-                                                     object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(refreshRemakes)
-                                                       name:HM_REFRESH_USER_DATA
                                                      object:nil];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -186,11 +195,11 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_REMAKES object:nil];
+    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_REMAKES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
-    [nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
+    //[nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
     [nc removeObserver:self name:HM_SHORT_URL object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -216,14 +225,30 @@
         
         HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
     } else {
-        [self refreshFromLocalStorage];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.userRemakesCV.hidden = NO;
+            [self refreshFromLocalStorage];
+            //[self.userRemakesCV reloadData];
+            [self.refreshControl endRefreshing];
+            
+            //TODO: this is a fix for a ui bug in refresh control. try to fix this
+            if (self.userRemakesCV.contentOffset.y != 0)
+            {
+                [self.userRemakesCV setContentOffset:CGPointMake(0,0) animated:YES];
+            }
+            
+            NSLog(@"collection view content insets: (%f %f %f %f);" , self.userRemakesCV.contentInset.top ,self.userRemakesCV.contentInset.bottom, self.userRemakesCV.contentInset.left, self.userRemakesCV.contentInset.right);
+            NSLog(@"collection view content insets: (%f %f);" , self.userRemakesCV.contentOffset.x , self.userRemakesCV.contentOffset.y);
+            
+        });
     }
-    [self.refreshControl endRefreshing];
+    
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)refreshRemakes
 {
+    self.userRemakesCV.hidden = YES;
     [self refetchRemakesFromServer];
 }
 
@@ -330,7 +355,11 @@
 -(void)refetchRemakesFromServer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [self refreshFromLocalStorage];
+    NSInteger remakesnumber = self.fetchedResultsController.fetchedObjects.count;
+    /*if (remakesnumber != 0)
+    {
+        [self.userRemakesCV scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }*/
     [HMServer.sh refetchRemakesForUserID:User.current.userID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -347,8 +376,8 @@
     }
     dispatch_async(dispatch_get_main_queue(), ^
                    {
-                       [self.userRemakesCV reloadData];
                        [self handleNoRemakes];
+                       [self.userRemakesCV reloadData];
                    });
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -369,13 +398,14 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // If already exists, just return it.
-    if (_fetchedResultsController && [self.currentFetchedResultsUser isEqualToString:[User current].userID]) {
+    NSString *currentUserID = [User current].userID;
+    if (_fetchedResultsController && [self.currentFetchedResultsUser isEqualToString:currentUserID]) {
         HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return _fetchedResultsController;
     }
     
     // Define fetch request.
-    self.currentFetchedResultsUser = [User current].userID;
+    self.currentFetchedResultsUser = currentUserID;
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
     
     NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"user=%@", [User current]];
@@ -852,7 +882,7 @@
             [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
             self.remakeToContinueWith = nil;
         }
-        [self.userRemakesCV reloadData];
+        //[self.userRemakesCV reloadData];
         
     //trash button pushed
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)

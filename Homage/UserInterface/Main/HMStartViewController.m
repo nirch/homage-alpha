@@ -358,7 +358,7 @@
 
     [UIView animateWithDuration:0.3 animations:^{
         self.guiAppMainView.frame = newAppContainerViewFrame;
-        if ([self isSideBarHidden]) [self showMainApp];
+        [self showMainApp];
     } completion:^(BOOL finished){
         if (finished)
         {
@@ -367,7 +367,6 @@
     }];
     HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
-
 
 
 - (IBAction)onAppPan:(id)sender
@@ -861,20 +860,15 @@
 {
     if (success)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil];
-        [self switchToTab:HMMeTab];
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_MAIN_SWITCHED_TAB object:self userInfo:@{@"tab" : [NSNumber numberWithInt:HMMeTab]}];
-        if ([self.appTabBarController.selectedViewController isKindOfClass: [HMGMeTabVC class]])
-        {
-            HMGMeTabVC *vc = (HMGMeTabVC *)self.appTabBarController.selectedViewController;
-            [vc refreshFromLocalStorage];
-            [vc refetchRemakesFromServer];
-        }
+        UINavigationController *tabNavController = (UINavigationController *)self.appTabBarController.selectedViewController;
+        HMGMeTabVC *vc = (HMGMeTabVC *)[tabNavController.viewControllers objectAtIndex:0];
+        [vc refetchRemakesFromServer];
+        [self switchToTab:HMMeTab];
     }
     
     [self hideRenderingView];
 }
-
 
 -(void)onRemakeFinishedSuccesfuly:(NSNotification *)notification
 {

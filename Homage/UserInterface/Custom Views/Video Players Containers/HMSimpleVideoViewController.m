@@ -144,6 +144,7 @@
 {
     //[self done];
     [self.videoPlayer stop];
+    [self removeObservers];
     self.videoView.guiPlayPauseButton.selected = NO;
     if (self.isFullscreen) {
         UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -171,7 +172,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self removeObservers];
+    
 }
 
 #pragma mark - Observers

@@ -199,7 +199,8 @@
     self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene && messageType != HMRecorderMessagesTypeFinishedAllScenes ;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     
-    self.guiBlurredView.alpha = info[@"blur alpha"] ? [info[@"blur alpha"] doubleValue] : 1;
+    self.guiBlurredView.alpha = 1;
+    //self.guiBlurredView.alpha = info[@"blur alpha"] ? [info[@"blur alpha"] doubleValue] : 1;
     
     //THE HAND!!
     if (self.messageType == HMRecorderMessagesTypeGeneral) {
@@ -220,15 +221,15 @@
         });*/
         
         //[[Mixpanel sharedInstance] track:@"REGeneralScreenEntry"];
-        self.guiGeneralMessageOKButton.alpha = 0;
-        HMGLogDebug(@"alpha started");
+        self.guiGeneralMessageOKButton.alpha = 1;
+        /*HMGLogDebug(@"alpha started");
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [UIView animateWithDuration:0.1 animations:^{
                 self.guiGeneralMessageOKButton.alpha = 1;
             }];
-        });
+        });*/
         
         
        
@@ -246,15 +247,15 @@
         NSString *iconName = info[@"icon name"];
         self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
         
-        self.guiDismissButton.alpha = 0;
-        HMGLogDebug(@"alpha started");
+        self.guiDismissButton.alpha = 1;
+        /*HMGLogDebug(@"alpha started");
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [UIView animateWithDuration:0.1 animations:^{
                 self.guiDismissButton.alpha = 1;
             }];
-        });
+        });*/
         
     } else if (self.messageType == HMRecorderMessagesTypeBigImage) {
         
@@ -264,15 +265,15 @@
         [self.guiDismissButton setTitle:info[@"ok button text"] forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconGotIt"] forState:UIControlStateNormal];
     
-        self.guiBigImagedismissButton.alpha = 0;
-        HMGLogDebug(@"alpha started");
+        self.guiBigImagedismissButton.alpha = 1;
+        /*HMGLogDebug(@"alpha started");
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [UIView animateWithDuration:0.1 animations:^{
                 self.guiBigImagedismissButton.alpha = 1;
             }];
-        });
+        });*/
 
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         

@@ -512,11 +512,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     //when a user upgrades from guest to fb or mail, his default sharing prefrence is public
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"remakesArePublic"];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     
     [user loginInContext:DB.sh.context];
     [HMServer.sh updateServerContext:user.userID];
     [self.delegate onUserLoginStateChange:[User current]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     [self.delegate dismissLoginScreen];
     self.userJoinFlow = NO;
 }

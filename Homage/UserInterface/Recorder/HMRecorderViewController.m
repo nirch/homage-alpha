@@ -1013,7 +1013,7 @@
     
     NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                    @"icon name":@"iconSceneDescription",
-                                                                                   //@"title":scene.story.name.uppercaseString,
+                                                                                   
                                                                                    @"title":[NSString stringWithFormat:LS(@"SCENE_TITLE") , sceneID.integerValue],
                                                                                    @"text":scene.context,
                                                                                    @"ok button text":LS(@"NEXT_SCENE"),
