@@ -13,6 +13,8 @@
 
 "OK" = "OK";
 "OK_GOT_IT" = "OK, Got it";
+"SORRY" = "Sorry!";
+"STORY_NOT_AVAILABLE" = "This story is no longer available. if you loved it, do tell us about it in the feedback section (->Settings)";
 
 "VIDEO_SAVED" = "Video Saved";
 

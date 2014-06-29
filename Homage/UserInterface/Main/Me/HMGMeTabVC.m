@@ -735,6 +735,15 @@
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
     
+    if (!self.remakeToContinueWith.story.isActive.boolValue)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SORRY") message:LS(@"STORY_NOT_AVAILABLE") delegate:self cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+        return;
+    }
+    
     NSInteger remakeStatus = self.remakeToContinueWith.status.integerValue;
     
     //we only want to suggest to continue a remake if a remake is in user progress or timed out and we want to give him the option to send to rendering again
