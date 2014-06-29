@@ -61,7 +61,7 @@
 
 @property (nonatomic) BOOL playPortrait;
 @property (nonatomic) UIDeviceOrientation previousOrientation;
-
+@property (nonatomic) BOOL userPaused;
 
 @end
 
@@ -110,6 +110,8 @@
    
     self.videoPlayer.view.alpha = 0;
     self.videoView.guiVideoThumb.alpha = 1;
+    
+    self.userPaused = NO;
     
     self.playPortrait = [self shouldPlayPortrait];
 }
@@ -272,8 +274,14 @@
         self.videoView.guiPlayPauseButton.selected = YES;
         self.videoView.guiVideoSlider.hidden = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePaused) {
-        self.videoView.guiLoadActivity.hidden = NO;
-        [self.videoView.guiLoadActivity startAnimating];
+
+        if (!self.userPaused)
+        {
+            self.videoView.guiLoadActivity.hidden = NO;
+            [self.videoView.guiLoadActivity startAnimating];
+        }         
+        self.userPaused = NO;
+        
         self.videoView.guiPlayPauseButton.selected = NO;
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
@@ -781,6 +789,7 @@
         [self.videoPlayer play];
         self.videoView.guiPlayPauseButton.selected = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
+        self.userPaused = YES;
         [self.videoPlayer pause];
         self.videoView.guiPlayPauseButton.selected = NO;
     }
