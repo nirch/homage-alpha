@@ -547,7 +547,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal" image="Yreset">
                                                                 <color key="titleColor" red="1" green="0.44389514829999999" blue="0.13661929859999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <color key="titleShadowColor" red="0.31813570153487042" green="0.5714285714285714" blue="0.26740172259325284" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="remakeButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="gyo-Z3-gO1"/>
@@ -588,7 +588,7 @@
                                                                 <action selector="deleteRemake:" destination="k3P-hU-fx4" eventType="touchUpInside" id="fin-Bb-XCH"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="M0A-XO-3Ed">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="M0A-XO-3Ed">
                                                             <rect key="frame" x="275" y="130" width="44" height="44"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal" image="Yshare">

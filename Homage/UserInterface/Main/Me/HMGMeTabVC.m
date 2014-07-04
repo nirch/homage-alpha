@@ -355,11 +355,6 @@
 -(void)refetchRemakesFromServer
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    NSInteger remakesnumber = self.fetchedResultsController.fetchedObjects.count;
-    /*if (remakesnumber != 0)
-    {
-        [self.userRemakesCV scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-    }*/
     [HMServer.sh refetchRemakesForUserID:User.current.userID];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -518,6 +513,12 @@
             cell.shareButton.enabled = YES;
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
+            
+            //test
+            //[cell.shareButton.layer setShadowOpacity:1];
+            //[cell.shareButton.layer setShadowOffset:CGSizeMake(2,2)];
+            //[cell.shareButton.layer setShadowColor:[UIColor blackColor].CGColor];
+                        
             break;
             
         case HMGRemakeStatusNew:

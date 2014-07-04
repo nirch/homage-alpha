@@ -39,6 +39,7 @@
 #import "UIImage+ImageEffects.h"
 #import "AMBlurView.h"
 #import "HMSimpleVideoViewController.h"
+#import "HMServer+Stories.h"
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
@@ -173,6 +174,11 @@
                                                    selector:@selector(onNewStoryAvailable:)
                                                        name:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY
                                                      object:[[UIApplication sharedApplication] delegate]];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onNewStoryFetched:)
+                                                       name:HM_NOTIFICATION_SERVER_NEW_STORY_FETCHED
+                                                     object:HMServer.sh];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onGeneralMessageReceived:)
@@ -504,7 +510,7 @@
     }
 }
 
--(void)showStoryDetailsScreenForStoryID:(NSString *)storyID
+-(void)_showStoryDetailsScreenForStoryID:(NSString *)storyID
 {
     UINavigationController *navVC;
     UIViewController *vc = self.appTabBarController.selectedViewController;
@@ -514,6 +520,7 @@
     }
     
     HMStoriesViewController *storyVC = (HMStoriesViewController *)[navVC.viewControllers objectAtIndex:0];
+    [HMServer.sh refetchStoryWithStoryID:storyID];
     [storyVC showStoryDetailedScreenForStory:storyID];
 }
 
@@ -562,7 +569,7 @@
             } else if ( notificationType.integerValue == HMPushNewStory)
             {
                 NSString *storyID = info[@"story_id"];
-                [self showStoryDetailsScreenForStoryID:storyID];
+                [HMServer.sh refetchStoryWithStoryID:storyID];
                 [self switchToTab:HMStoriesTab];
             } else {
                 [self switchToTab:HMStoriesTab];
@@ -942,11 +949,21 @@
     
     if (appState.intValue == UIApplicationStateInactive)
     {
-        [self showStoryDetailsScreenForStoryID:storyID];
+        [HMServer.sh refetchStoryWithStoryID:storyID];
         [self switchToTab:HMStoriesTab];
     }
     
 }
+
+-(void)onNewStoryFetched:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *storyID = info[@"story_id"];
+    [self _showStoryDetailsScreenForStoryID:storyID];
+
+}
+
+
 
 -(void)onGeneralMessageReceived:(NSNotification *)notification
 {

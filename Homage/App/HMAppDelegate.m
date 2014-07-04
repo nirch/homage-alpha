@@ -41,6 +41,8 @@
         [Appsee start:@"128117df897b4508a2b68550ca52b354"];
     #else 
         [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
+        //TODO:remove before releasing D_E_B_U_G!
+        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
     //crashlytics crash reporting
@@ -59,17 +61,20 @@
             {
                 NSString *remakeID = [notificationInfo objectForKey:@"remake_id"];
                 self.pushNotificationFromBG = @{@"remake_id" : remakeID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
+                [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"movie ready" , @"app_status" : @"closed"}];
             }
             
             if ( pushNotificationType == HMPushNewStory )
             {
                 NSString *storyID = [notificationInfo objectForKey:@"story_id"];
                 self.pushNotificationFromBG = @{@"story_id" : storyID , @"type" : [NSNumber numberWithInt:pushNotificationType]};
+                [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"new story available" , @"story_id" : storyID , @"app_status" : @"closed"}];
             }
             
             if (pushNotificationType == HMGeneralMessage)
             {
                 self.pushNotificationFromBG = @{@"type" : [NSNumber numberWithInt:pushNotificationType]};
+                 [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"general meesage" , @"app_status" : @"closed"}];
             }
             
             // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
@@ -125,6 +130,8 @@
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS object:self userInfo:info];
+         [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"movie ready" , @"app_status" : @"background"}];
+        
     }
     
     if (pushNotificationType == HMPushNewStory)
@@ -132,11 +139,13 @@
         NSString *storyID = [userInfo objectForKey:@"story_id"];
         [info setObject:storyID forKey:@"story_id"];
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_NEW_STORY object:self userInfo:info];
+        [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"new story available" , @"story_id" : storyID , @"app_status" : @"background"}];
     }
     
     if (pushNotificationType == HMGeneralMessage)
     {
        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_PUSH_NOTIFICATION_GENERAL_MESSAGE object:self userInfo:info];
+        [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"general meesage" , @"app_status" : @"background"}];
     }
     
 }
@@ -195,7 +204,6 @@
     BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
     
     // You can add your app-specific url handling code here if needed
-    
     return wasHandled;
 }
 

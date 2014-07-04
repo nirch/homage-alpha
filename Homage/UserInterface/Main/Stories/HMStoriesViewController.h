@@ -13,5 +13,6 @@
 >
 
 -(void)showStoryDetailedScreenForStory:(NSString *)storyID;
+-(void)refetchStoriesFromServer;
 
 @end

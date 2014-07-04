@@ -33,6 +33,7 @@
 
 // Reachability
 #define HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE @"Server Reachability Status Change"
+#define HM_NOTIFICATION_SERVER_NEW_STORY_FETCHED @"story object for the new story available"
 
 // Uploads
 #define HM_NOTIFICATION_UPLOAD_PROGRESS             @"Upload Progress"

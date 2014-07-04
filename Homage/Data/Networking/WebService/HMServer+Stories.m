@@ -26,4 +26,10 @@
      ];
 }
 
+-(void)refetchStoryWithStoryID:(NSString *)storyID
+{
+    [self getRelativeURL:@"story" parameters:@{@"story_id" : storyID} notificationName:HM_NOTIFICATION_SERVER_NEW_STORY_FETCHED info:nil parser:[HMStoriesParser new]
+     ];
+}
+
 @end

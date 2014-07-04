@@ -123,7 +123,7 @@
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
+    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
 }
@@ -394,7 +394,22 @@
 -(void)showStoryDetailedScreenForStory:(NSString *)storyID
 {
     self.preRequestedStory = [Story storyWithID:storyID inContext:DB.sh.context];
-    [self performSegueWithIdentifier:@"story details segue" sender:nil];
+    if (!self.preRequestedStory.videoURL)
+    {
+        HMGLogError(@"story %@ video not available" , storyID);
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                        message:@"Something went wrong. \n\nTry to refresh in a few moments."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
+    } else {
+        [self performSegueWithIdentifier:@"story details segue" sender:nil];
+    }
 }
 
 @end

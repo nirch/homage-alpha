@@ -20,5 +20,6 @@
  *  @endcode
  */
 -(void)refetchStories;
+-(void)refetchStoryWithStoryID:(NSString *)storyID;
 
 @end
