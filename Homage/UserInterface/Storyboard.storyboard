@@ -37,12 +37,12 @@
                                         <rect key="frame" x="0.0" y="60" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" id="vUV-gb-yMF">
-                                                <rect key="frame" x="44" y="3" width="25" height="25"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnectivity" id="vUV-gb-yMF">
+                                                <rect key="frame" x="51" y="3" width="25" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMAvenirBookFontLabel">
-                                                <rect key="frame" x="81" y="3" width="163" height="25"/>
+                                                <rect key="frame" x="87" y="3" width="163" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
@@ -1194,8 +1194,8 @@
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconSceneDescription" width="46" height="36"/>
         <image name="more3white" width="30" height="30"/>
+        <image name="noConnectivity" width="60" height="60"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
-        <image name="warning" width="200" height="200"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

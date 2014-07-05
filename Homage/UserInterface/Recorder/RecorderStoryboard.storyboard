@@ -593,7 +593,7 @@
                                                 <rect key="frame" x="41" y="0.0" width="202" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" id="iN6-gZ-YWh">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnectivity" id="iN6-gZ-YWh">
                                                         <rect key="frame" x="31" y="7" width="20" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -1059,8 +1059,8 @@
         <image name="iconSceneScriptLighter" width="22" height="20"/>
         <image name="iconSmallClock" width="20" height="20"/>
         <image name="iconUpArrowSmall" width="24" height="10"/>
+        <image name="noConnectivity" width="60" height="60"/>
         <image name="textPlate" width="375" height="14"/>
-        <image name="wifi" width="64" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -16,6 +16,8 @@
 	<string>80</string>
 	<key>urls</key>
 	<dict>
+		<key>story</key>
+		<string>story</string>
 		<key>report inappropriate</key>
 		<string>remake/report</string>
 		<key>update user</key>

@@ -14,5 +14,6 @@
 
 -(void)showStoryDetailedScreenForStory:(NSString *)storyID;
 -(void)refetchStoriesFromServer;
+-(void)refreshFromLocalStorage;
 
 @end

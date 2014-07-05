@@ -85,7 +85,7 @@
 
 @implementation HMStartViewController
 
-- (void)viewDidLoad
+-(void)viewDidLoad
 {
     [super viewDidLoad];
 
@@ -178,7 +178,7 @@
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onNewStoryFetched:)
                                                        name:HM_NOTIFICATION_SERVER_NEW_STORY_FETCHED
-                                                     object:HMServer.sh];
+                                                     object:nil];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onGeneralMessageReceived:)
@@ -520,7 +520,7 @@
     }
     
     HMStoriesViewController *storyVC = (HMStoriesViewController *)[navVC.viewControllers objectAtIndex:0];
-    [HMServer.sh refetchStoryWithStoryID:storyID];
+    [storyVC refreshFromLocalStorage];
     [storyVC showStoryDetailedScreenForStory:storyID];
 }
 

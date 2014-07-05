@@ -19,6 +19,7 @@
  *  The HMSimpleVideoView containing the custom UI for the video player.
  */
 @property (nonatomic, weak, readonly) HMSimpleVideoView *videoView;
+@property (nonatomic) BOOL shouldAutoPlay;
 
 ///
 /**

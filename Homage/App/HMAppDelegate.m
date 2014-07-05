@@ -41,8 +41,6 @@
         [Appsee start:@"128117df897b4508a2b68550ca52b354"];
     #else 
         [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
-        //TODO:remove before releasing D_E_B_U_G!
-        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     #endif
     
     //crashlytics crash reporting

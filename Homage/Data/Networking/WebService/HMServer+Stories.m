@@ -7,6 +7,7 @@
 //
 
 #import "HMServer+Stories.h"
+#import "HMStoryParser.h"
 #import "HMStoriesParser.h"
 #import "HMNotificationCenter.h"
 
@@ -28,8 +29,15 @@
 
 -(void)refetchStoryWithStoryID:(NSString *)storyID
 {
-    [self getRelativeURL:@"story" parameters:@{@"story_id" : storyID} notificationName:HM_NOTIFICATION_SERVER_NEW_STORY_FETCHED info:nil parser:[HMStoriesParser new]
+    
+    NSString *relativeURL = [self relativeURLNamed:@"story" withSuffix:storyID];
+    [self getRelativeURL:relativeURL
+              parameters:nil
+        notificationName:HM_NOTIFICATION_SERVER_NEW_STORY_FETCHED
+                    info:@{@"story_id":storyID}
+                  parser:[HMStoryParser new]
      ];
+    
 }
 
 @end

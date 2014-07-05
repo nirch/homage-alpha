@@ -7,6 +7,7 @@
 //
 
 #import "HMStoriesParser.h"
+#import "HMStoryParser.h"
 
 @implementation HMStoriesParser
 
@@ -17,11 +18,10 @@
     // Iterate all stories info
     NSArray *stories = self.objectToParse;
     for (NSDictionary *storyInfo in stories) {
-        [self parseStoryWithInfo:storyInfo];
+        HMStoryParser *storyParser = [HMStoryParser new];
+        storyParser.objectToParse = storyInfo;
+        [storyParser parse];
     }
-    
-    // Mark for saving.
-    [DB.sh save];
 }
 
 -(void)parseStoryWithInfo:(NSDictionary *)info

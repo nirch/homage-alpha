@@ -65,6 +65,7 @@
     if (self.autoStartPlayingStory)
     {
         [self.storyMoviePlayer play];
+        self.storyMoviePlayer.shouldAutoPlay = YES;
         self.autoStartPlayingStory = NO;
     }
     [self initObservers];

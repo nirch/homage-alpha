@@ -240,6 +240,7 @@
 		26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */; };
 		26897A7D1913A3960030A8B5 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */; };
 		269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */ = {isa = PBXBuildFile; fileRef = 269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */; };
+		269409681968786500EC4726 /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 269409671968786500EC4726 /* HMStoryParser.m */; };
 		2695512A1958335E0017FDC1 /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 269551291958335E0017FDC1 /* Remake.m */; };
 		2695512D1958335F0017FDC1 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 2695512C1958335F0017FDC1 /* Story.m */; };
 		269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
@@ -537,6 +538,8 @@
 		26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown_oneLast.wav; path = mediaResources/cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
 		269264631908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMDINOTRegularFontButton+colorEffectes.h"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.h"; sourceTree = "<group>"; };
 		269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMDINOTRegularFontButton+colorEffectes.m"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.m"; sourceTree = "<group>"; };
+		269409661968786500EC4726 /* HMStoryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryParser.h; sourceTree = "<group>"; };
+		269409671968786500EC4726 /* HMStoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryParser.m; sourceTree = "<group>"; };
 		269551241958260C0017FDC1 /* Model130.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model130.xcdatamodel; sourceTree = "<group>"; };
 		269551281958335E0017FDC1 /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		269551291958335E0017FDC1 /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
@@ -943,6 +946,8 @@
 				086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */,
 				F13FA51D1899497F0026EA5F /* HMUserParser.h */,
 				F13FA51E1899497F0026EA5F /* HMUserParser.m */,
+				269409661968786500EC4726 /* HMStoryParser.h */,
+				269409671968786500EC4726 /* HMStoryParser.m */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -1550,6 +1555,7 @@
 				65C10D9318A265DC00A65917 /* HMDINOTCondBoldFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
 				267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */,
+				269409681968786500EC4726 /* HMStoryParser.m in Sources */,
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,

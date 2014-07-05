@@ -114,6 +114,12 @@
     self.userPaused = NO;
     
     self.playPortrait = [self shouldPlayPortrait];
+    
+    if (self.shouldAutoPlay)
+    {
+        [self play];
+        self.shouldAutoPlay = NO;
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -313,7 +319,6 @@
     {
         return;
     }
-    self.waitingToStartPlayingTheFile = NO;
     NSTimeInterval animationDuration = 0.4;
     [UIView animateWithDuration:animationDuration animations:^{
         self.videoView.guiVideoThumb.alpha = 0;
@@ -323,7 +328,7 @@
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
     } completion:^(BOOL finished) {
-        if (self.waitingToStartPlayingTheFile == YES)
+        if (self.waitingToStartPlayingTheFile)
         {
             [self.videoPlayer play];
             self.waitingToStartPlayingTheFile = NO;
@@ -415,7 +420,6 @@
     
     if ([self.delegate respondsToSelector:@selector(videoPlayerWasFired)]) [self.delegate videoPlayerWasFired];
     self.waitingToStartPlayingTheFile = YES;
-    self.videoPlayer.shouldAutoplay = YES;
     [self updateUIToPlayVideoState];
     dispatch_async(dispatch_get_main_queue(), ^{
         // The UI / interface command to play the video.
@@ -799,7 +803,7 @@
     MPMoviePlaybackState state = self.videoPlayer.playbackState;
     
     if (state == MPMoviePlaybackStateStopped || state == MPMoviePlaybackStatePaused) {
-        [self.videoPlayer play];
+        [self playVideo];
         self.videoView.guiPlayPauseButton.selected = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
         self.userPaused = YES;
