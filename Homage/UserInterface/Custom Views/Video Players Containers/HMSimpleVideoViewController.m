@@ -420,6 +420,7 @@
     
     if ([self.delegate respondsToSelector:@selector(videoPlayerWasFired)]) [self.delegate videoPlayerWasFired];
     self.waitingToStartPlayingTheFile = YES;
+    self.videoPlayer.shouldAutoplay = YES;
     [self updateUIToPlayVideoState];
     dispatch_async(dispatch_get_main_queue(), ^{
         // The UI / interface command to play the video.
@@ -803,7 +804,7 @@
     MPMoviePlaybackState state = self.videoPlayer.playbackState;
     
     if (state == MPMoviePlaybackStateStopped || state == MPMoviePlaybackStatePaused) {
-        [self playVideo];
+        [self.videoPlayer play];
         self.videoView.guiPlayPauseButton.selected = YES;
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
         self.userPaused = YES;
