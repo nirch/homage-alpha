@@ -222,7 +222,6 @@
     }
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification
@@ -453,11 +452,13 @@
 
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    [[Mixpanel sharedInstance] track:@"SDStopWatchingVideo" properties:@{@"time_watched" : playbackTime}];
-    
     if (sender == self.remakeMoviePlayer)
     {
         [self.guiRemakeVideoContainer removeFromSuperview];
+        [[Mixpanel sharedInstance] track:@"SDStopWatchingRemake" properties:@{@"time_watched" : playbackTime}];
+    } else if (sender == self.storyMoviePlayer)
+    {
+       [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"time_watched" : playbackTime}];
     }
 }
 
@@ -637,6 +638,7 @@
                 break;
             case 1:
                 [self markAsInapppropriate];
+                
         }
     }
 }

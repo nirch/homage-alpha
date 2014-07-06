@@ -1060,11 +1060,11 @@
 {
     [self.guiVideoContainer removeFromSuperview];
     [[Mixpanel sharedInstance] track:@"SettingsStopIntroStory" properties:@{@"time_watched" : playbackTime}];
-    
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
+    [self.guiVideoContainer removeFromSuperview];
     [[Mixpanel sharedInstance] track:@"SettingsFinishIntroStory"];
 }
 
