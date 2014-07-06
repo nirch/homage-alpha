@@ -265,6 +265,7 @@
                                         };
        
        _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
+       _writerVideoInput.expectsMediaDataInRealTime = YES;
        
        if ([self shouldFlipVideo]) _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
         _writerAudioInput = nil;
@@ -349,11 +350,27 @@
     }
     
     if (captureOutput == _movieDataOutput) {
-        [self.writerVideoInput appendSampleBuffer:sampleBuffer];
+        if (self.writerVideoInput.readyForMoreMediaData)
+        {
+            [self.writerVideoInput appendSampleBuffer:sampleBuffer];
+        }
+        else
+        {
+            NSDictionary *errorDictionary = @{@"message": @"writerVideoInput NOT readyForMoreMediaData", @"file": self.outputFileURL.lastPathComponent};
+            [[Mixpanel sharedInstance] track:@"ErrWriterInput" properties:errorDictionary];
+        }
     }
     else if (captureOutput == _audioDataOutput)
     {
-        [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+        if (self.writerAudioInput.readyForMoreMediaData)
+        {
+            [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+        }
+        else
+        {
+            NSDictionary *errorDictionary = @{@"message": @"writerAudioInput NOT readyForMoreMediaData", @"file": self.outputFileURL.lastPathComponent};
+            [[Mixpanel sharedInstance] track:@"ErrWriterInput" properties:errorDictionary];
+        }
     }
 
 }
