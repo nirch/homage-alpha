@@ -250,7 +250,7 @@
 -(void)onMoviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
     
-    if (self.videoPlayer.duration != 0 && self.currentPlaybackTime >= (self.videoPlayer.duration - 5))
+    if (self.videoPlayer.duration != 0 && self.currentPlaybackTime >= (self.videoPlayer.duration - 1))
     {
         //the user watched the movie almost all the way
         if ([self.delegate respondsToSelector:@selector(videoPlayerDidFinishPlaying)])
@@ -539,6 +539,7 @@
     CGFloat fullscreenAnimationDuration = 0.4;
     if (fullscreen) {
         [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerWillEnterFullscreenNotification object:nil];
+        
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         if (!keyWindow) {
             keyWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
@@ -567,13 +568,7 @@
                     self.view.alpha = 1.f;
                 } completion:^(BOOL finished) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerDidEnterFullscreenNotification object:nil];
-//                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationWillChange:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
 
-                    /*self.videoView.frame = self.movieTempFullscreenBackgroundView.bounds;
-                    self.videoView.guiVideoContainer.frame = self.videoView.bounds;
-                    self.videoPlayer.view.frame = self.movieTempFullscreenBackgroundView.bounds;*/
-
-                
                 }];
             }];
         }];

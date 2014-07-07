@@ -9,6 +9,7 @@
 #import "HMRecorderPreviewViewController.h"
 #import "HMSimpleVideoViewController.h"
 #import "DB.h"
+#import "Mixpanel.h"
 
 @interface HMRecorderPreviewViewController ()
 
@@ -64,6 +65,7 @@
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;
+    [[Mixpanel sharedInstance] track:@"REStopWatchPreviewMovie" properties:@{@"time_watched" : playbackTime}];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -71,6 +73,7 @@
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;
+    [[Mixpanel sharedInstance] track:@"REFinishWatchPreviewMovie"];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

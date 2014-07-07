@@ -557,7 +557,6 @@
     }
 }
 
-
 - (IBAction)moreButtonPushed:(UIButton *)sender
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
@@ -568,13 +567,14 @@
     [actionSheet showInView:self.view];
 }
 
-
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-   switch (buttonIndex)
+    switch (buttonIndex)
     {
         case 0:
             [self showMarkAsInappropriateAlert];
+            break;
+        default:
             break;
     }
 }
@@ -638,7 +638,7 @@
                 break;
             case 1:
                 [self markAsInapppropriate];
-                
+                break;
         }
     }
 }

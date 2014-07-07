@@ -91,7 +91,7 @@
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
     [Appirater appLaunched:YES];
-
+    
     [FBLoginView class];
     
     return YES;
