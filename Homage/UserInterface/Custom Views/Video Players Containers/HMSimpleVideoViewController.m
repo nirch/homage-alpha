@@ -49,7 +49,7 @@
 @property (nonatomic, readonly) BOOL isFullscreen;
 @property (nonatomic, readonly, weak) UIView *containerView;
 @property (nonatomic, readonly) UIView *movieTempFullscreenBackgroundView;
-@property (nonatomic, readonly) MPMoviePlayerController *videoPlayer;
+@property (strong, nonatomic) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
 @property (atomic) BOOL isPlaying;
 
@@ -315,7 +315,7 @@
 -(void)_startToPlayTheActualVideo
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    if (!self.waitingToStartPlayingTheFile)
+    if (self.waitingToStartPlayingTheFile == NO)
     {
         return;
     }
@@ -328,7 +328,7 @@
         self.videoPlayer.backgroundView.backgroundColor = [UIColor clearColor];
         self.videoView.alpha = 1;
     } completion:^(BOOL finished) {
-        if (self.waitingToStartPlayingTheFile)
+        if (self.waitingToStartPlayingTheFile == YES)
         {
             [self.videoPlayer play];
             self.waitingToStartPlayingTheFile = NO;
