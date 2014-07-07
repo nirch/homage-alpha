@@ -842,7 +842,7 @@
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         if (completed) {
-            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType}];
+            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remakeID}];
         }
     };
     
