@@ -49,7 +49,7 @@
 @property (nonatomic, readonly) BOOL isFullscreen;
 @property (nonatomic, readonly, weak) UIView *containerView;
 @property (nonatomic, readonly) UIView *movieTempFullscreenBackgroundView;
-@property (strong, nonatomic) MPMoviePlayerController *videoPlayer;
+@property (nonatomic) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
 @property (atomic) BOOL isPlaying;
 
@@ -152,6 +152,7 @@
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self done];
+    self.videoPlayer = nil;
     [self removeObservers];
     self.videoView.guiPlayPauseButton.selected = NO;
     if (self.isFullscreen) {
@@ -331,6 +332,7 @@
         if (self.waitingToStartPlayingTheFile == YES)
         {
             [self.videoPlayer play];
+            HMGLogDebug(@"============== Video player: starting to play video ============");
             self.waitingToStartPlayingTheFile = NO;
         }
     }];
@@ -380,7 +382,7 @@
 -(MPMoviePlayerController *)videoPlayer
 {
     if (_videoPlayer) return _videoPlayer;
-    _videoPlayer = [[MPMoviePlayerController alloc] init];
+    _videoPlayer =[[MPMoviePlayerController alloc] init];
     _videoPlayer.view.frame = self.videoView.guiVideoContainer.bounds;
     _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
     _videoPlayer.controlStyle = MPMovieControlStyleNone;
