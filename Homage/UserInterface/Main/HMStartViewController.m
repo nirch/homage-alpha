@@ -40,6 +40,7 @@
 #import "AMBlurView.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMServer+Stories.h"
+#import "HMServer+analytics.h"
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
@@ -779,6 +780,9 @@
     //[self.videoView hideMediaControls];
     
     vc.delegate = self;
+    vc.originatingScreen = @"how_to_screen";
+    vc.entityType = HMIntroMovie;
+    vc.entityID = @"none";
     vc.resetStateWhenVideoEnds = YES;
     [vc play];
     
@@ -868,10 +872,10 @@
     if (success)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_MAIN_SWITCHED_TAB object:self userInfo:@{@"tab" : [NSNumber numberWithInt:HMMeTab]}];
-        UINavigationController *tabNavController = (UINavigationController *)self.appTabBarController.selectedViewController;
-        HMGMeTabVC *vc = (HMGMeTabVC *)[tabNavController.viewControllers objectAtIndex:0];
-        [vc refetchRemakesFromServer];
+        //UINavigationController *tabNavController = (UINavigationController *)self.appTabBarController.selectedViewController;
+        //HMGMeTabVC *vc = (HMGMeTabVC *)[tabNavController.viewControllers objectAtIndex:0];
         [self switchToTab:HMMeTab];
+        //[vc refetchRemakesFromServer];
     }
     
     [self hideRenderingView];
@@ -1003,6 +1007,9 @@
 
 -(void)logoutPushed
 {
+    
+    HMAppDelegate *myDelagate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [HMServer.sh reportSession:myDelagate.currentSessionHomageID endForUser:[User current].userID];
     [[User current] logoutInContext:DB.sh.context];
     [self presentLoginScreen];
     [self showMainAppView];
@@ -1056,32 +1063,16 @@
 }
 
 #pragma mark HMSimpleVideoViewController delegate
--(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
+-(void)videoPlayerDidStop
 {
     [self.guiVideoContainer removeFromSuperview];
-    [[Mixpanel sharedInstance] track:@"SettingsStopIntroStory" properties:@{@"time_watched" : playbackTime}];
 }
 
 -(void)videoPlayerDidFinishPlaying
 {
     [self.guiVideoContainer removeFromSuperview];
-    [[Mixpanel sharedInstance] track:@"SettingsFinishIntroStory"];
 }
 
--(void)videoPlayerWillPlay
-{
-    
-}
-
--(void)videoPlayerDidExitFullScreen
-{
-    
-}
-
--(void)videoPlayerWasFired
-{
-    
-}
 
 - (BOOL)prefersStatusBarHidden
 {

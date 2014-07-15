@@ -19,6 +19,7 @@
 #import "Mixpanel.h"
 #import "HMColor.h"
 #import "HMSimpleVideoViewController.h"
+#import "HMServer+analytics.h"
 @import MediaPlayer;
 @import AVFoundation;
 
@@ -97,6 +98,9 @@
     self.moviePlayerVC.videoImage = [UIImage imageNamed:@"introMovieThumbnail"];
     self.moviePlayerVC.delegate = self;
     self.moviePlayerVC.resetStateWhenVideoEnds = YES;
+    self.moviePlayerVC.originatingScreen = @"intro_screen";
+    self.moviePlayerVC.entityType = HMIntroMovie;
+    self.moviePlayerVC.entityID = @"none";
     [self.moviePlayerVC play];
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -141,15 +145,6 @@
 }
 
 #pragma mark HMSimpleVideoViewController delegate
--(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
-{
-    [[Mixpanel sharedInstance] track:@"LoginStopIntroStory" properties:@{@"time_watched" : playbackTime}];
-}
-
--(void)videoPlayerDidFinishPlaying
-{
-    [[Mixpanel sharedInstance] track:@"LoginFinishIntroStory"];
-}
 
 -(void)stopMoviePlayer
 {

@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "HMNotificationCenter.h"
 #import "HMServer+Users.h"
+#import "HMServer+analytics.h"
 #import "DB.h"
 #import "Mixpanel.h"
 #import "HMAppDelegate.h"
@@ -115,6 +116,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiLoginErrorLabel.alpha = 0;
     self.guiLoginErrorLabel.hidden = YES;
     self.guiLoginErrorLabel.text = @"";
+    [self resetTextFields];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -124,6 +126,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.guiActivityView stopAnimating];
     self.guiActivityView.hidden = YES;
     [self removeObservers];
+    [self resetTextFields];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -342,8 +345,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
     }
     
-    self.guiMailTextField.text = @"";
-    self.guiPasswordTextField.text = @"";
+    [self resetTextFields];
 
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -370,6 +372,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self hideIntroMovieView];
+    [self resetTextFields];
     [self.delegate dismissLoginScreen];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -378,6 +381,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self hideIntroMovieView];
+    [self resetTextFields];
     [self.delegate dismissLoginScreen];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -890,11 +894,15 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     //TODO: this should not be neeeded. verify for sure if it can be removed completly
+    HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+    
     if ([user.userID isEqualToString:[User current].userID])
     {
         //TODO: fix self.loginMethod
         //[mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
-        [mixpanel track:@"UserLogin"];
+        [mixpanel track:@"UserLogin" properties:@{@"login_mathod" : @"same"}];
+        [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
         [self.delegate dismissLoginScreen];
         return;
     }
@@ -905,11 +913,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } else {
         [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
     }
+    
+    
+    [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
 }
 
 -(BOOL)shouldExcludethisAdressFromMixpanelData:(NSString *)email_address
 {
-    for (NSString *toBeExcludedMail in @[@"yoavcaspin@gmail.com",@"nir@homage.it",@"tomer@homage.it",@"yoav@homage.it",@"nirh2@yahoo.com",@"nir.channes@gmail.com",@"ranpeer@gmail.com",@"tomer.harry@gmail.com",@"hiorit@gmail.com",@"ari1822@gmail.com",@"ari@temple.edu"])
+    for (NSString *toBeExcludedMail in @[@"yoavcaspin@gmail.com",@"nir@homage.it",@"tomer@homage.it",@"yoav@homage.it",@"nirh2@yahoo.com",@"nir.channes@gmail.com",@"ranpeer@gmail.com",@"tomer.harry@gmail.com",@"hiorit@gmail.com"])
     {
         if ([email_address isEqualToString:toBeExcludedMail]) return YES;
     }
@@ -917,9 +928,15 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     return NO;
 }
 
+-(void)resetTextFields
+{
+    self.guiMailTextField.text = @"";
+    self.guiPasswordTextField.text = @"";
+}
+
 -(void)onPresentLoginCalled
 {
-    self.guiLoginErrorLabel.text = @"";
+    [self resetTextFields];
 }
 
 @end

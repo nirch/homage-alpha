@@ -22,6 +22,7 @@
 #import "HMGoogleAPI.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "NSDictionary+TypeSafeValues.h"
+#import "HMServer+analytics.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -237,8 +238,8 @@
                 [self.userRemakesCV setContentOffset:CGPointMake(0,0) animated:YES];
             }
             
-            NSLog(@"collection view content insets: (%f %f %f %f);" , self.userRemakesCV.contentInset.top ,self.userRemakesCV.contentInset.bottom, self.userRemakesCV.contentInset.left, self.userRemakesCV.contentInset.right);
-            NSLog(@"collection view content insets: (%f %f);" , self.userRemakesCV.contentOffset.x , self.userRemakesCV.contentOffset.y);
+            //NSLog(@"collection view content insets: (%f %f %f %f);" , self.userRemakesCV.contentInset.top ,self.userRemakesCV.contentInset.bottom, self.userRemakesCV.contentInset.left, self.userRemakesCV.contentInset.right);
+            //NSLog(@"collection view content insets: (%f %f);" , self.userRemakesCV.contentOffset.x , self.userRemakesCV.contentOffset.y);
             
         });
     }
@@ -612,11 +613,11 @@
     
     self.playingMovieIndex = indexPath.item;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self initVideoPlayerWithURL:[NSURL URLWithString:remake.videoURL]];
+    [self initVideoPlayerWithRemake:remake];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)initVideoPlayerWithURL:(NSURL *)url
+-(void)initVideoPlayerWithRemake:(Remake *)remake
 {
     UIView *view;
     self.guiVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
@@ -626,11 +627,14 @@
     [self.view bringSubviewToFront:self.guiVideoContainer];
     
     HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
-    vc.videoURL = [url absoluteString];
+    vc.videoURL = remake.videoURL;
+    vc.entityType = HMRemake;
+    vc.entityID = remake.sID;
     [vc hideVideoLabel];
     //[self.videoView hideMediaControls];
     
     vc.delegate = self;
+    vc.originatingScreen = @"me_tab";
     vc.resetStateWhenVideoEnds = YES;
     [vc play];
     [vc setFullScreen];
@@ -843,6 +847,9 @@
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         if (completed) {
             [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remakeID}];
+            NSNumber *shareMethod = [self getShareMethod:activityType];
+            [HMServer.sh reportRemakeShare:remakeID forUserID:[User current].userID shareMethod:shareMethod];
+            
         }
     };
     
@@ -937,10 +944,30 @@
     return cell;
 }
 
-- (void)didReceiveMemoryWarning
+-(void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSNumber *)getShareMethod:(NSString *)activityType
+{
+    if ([activityType isEqualToString:@"com.apple.UIKit.activity.CopyToPasteboard"])
+        return [NSNumber numberWithInt:HMShareMethodCopyToPasteboard];
+    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToFacebook"])
+        return [NSNumber numberWithInt:HMShareMethodPostToFacebook];
+    //TODO:: get whatsapp activity name from iphone
+    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWhatsApp"])
+        return [NSNumber numberWithInt:HMShareMethodPostToWhatsApp];
+    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Mail"])
+        return [NSNumber numberWithInt:HMShareMethodEmail];
+    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Message"])
+        return [NSNumber numberWithInt:HMShareMethodMessage];
+    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWeibo"])
+        return [NSNumber numberWithInt:HMShareMethodPostToWeibo];
+    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToTwitter"])
+        return [NSNumber numberWithInt:HMShareMethodPostToTwitter];
+    else return [NSNumber numberWithInt:999];
 }
 
 #pragma mark - HMRecorderDelegate
@@ -966,13 +993,12 @@
 }
 
 #pragma mark HMSimpleVideoViewController delegate
--(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
+-(void)videoPlayerDidStop
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.guiVideoContainer removeFromSuperview];
     if (self.playingMovieIndex != -1)
         [self closeCurrentlyPlayingMovie];
-    [[Mixpanel sharedInstance] track:@"MEStopWatchRemake" properties:@{@"time_watched" : playbackTime}];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
@@ -980,22 +1006,6 @@
 {
    [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
 }
-
--(void)videoPlayerWillPlay
-{
-    
-}
-
--(void)videoPlayerDidExitFullScreen
-{
-    
-}
-
--(void)videoPlayerWasFired
-{
-    
-}
-
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     

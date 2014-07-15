@@ -557,6 +557,17 @@
     _lockedAutoRotation = YES;
     _stopRecordingFired = NO;
     
+    
+    NSDictionary *info = @{@"remake_id" : self.remake.sID , @"story" : self.remake.story.name , @"scene_id" : self.currentSceneID};
+    if (self.backgroundAlertDisplaying)
+    {
+        [[Mixpanel sharedInstance] track:@"REShootSceneWithBadBackground" properties:info];
+    } else
+    {
+        [[Mixpanel sharedInstance] track:@"REShootSceneWithGoodBackground" properties:info];
+    }
+    
+    
     [[Mixpanel sharedInstance] track:@"REStartRecording" properties:@{@"bad_background" : [NSNumber numberWithBool:self.backgroundAlertDisplaying]}];
     
     [self presentRecordingUI];

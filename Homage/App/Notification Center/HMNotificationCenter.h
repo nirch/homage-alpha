@@ -78,6 +78,13 @@
 //GOOGLE API
 #define HM_SHORT_URL @"request response for URL shortening"
 
+//HOMAGE_SERVER_ANALYTICS
+#define HM_NOTIFICATION_SERVER_SHARE_REMAKE       @"remake shared"
+#define HM_NOTIFICATION_SERVER_REMAKE_VIEW        @"remake viewed"
+#define HM_NOTIFICATION_SERVER_STORY_VIEW         @"story viewed"
+#define HM_NOTIFICATION_SERVER_USER_BEGIN_SESSION @"user begin session"
+#define HM_NOTIFICATION_SERVER_USER_END_SESSION   @"user end session"
+
 @interface HMNotificationCenter : NSObject
 
 @end

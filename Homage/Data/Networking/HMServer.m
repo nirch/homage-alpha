@@ -235,10 +235,17 @@
                        info:(NSDictionary *)info
                      parser:(HMParser *)parser
 {
+    
+    NSMutableDictionary *moreInfo = [info mutableCopy];
+    if (!moreInfo[@"attempts_count"])
+    {
+        moreInfo[@"attempts_count"] = [NSNumber numberWithInt:1];
+    }
+    
     [self postRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
                parameters:(NSDictionary *)parameters
          notificationName:(NSString *)notificationName
-                     info:(NSDictionary *)info
+                     info:(NSDictionary *)moreInfo
                    parser:(HMParser *)parser];
 }
 
@@ -250,6 +257,8 @@
                 parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
+    int attmeptsCount = [moreInfo[@"attempts_count"] intValue];
+    [moreInfo removeObjectForKey:@"attempts_counts"];
     
     NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
@@ -297,11 +306,21 @@
         //
         // Failed request.
         //
-        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-        
-        [moreInfo addEntriesFromDictionary:@{@"error":error}];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
-        
+        if (attmeptsCount > 1)
+        {
+            [moreInfo addEntriesFromDictionary:@{@"attempts_count":[NSNumber numberWithInt:attmeptsCount-1]}];
+            [self postRelativeURL:relativeURL
+                       parameters:parameters
+                 notificationName:notificationName
+                             info:moreInfo
+                           parser:parser];
+        } else
+        {
+            HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+            
+            [moreInfo addEntriesFromDictionary:@{@"error":error}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
+        }
     }];
 }
 

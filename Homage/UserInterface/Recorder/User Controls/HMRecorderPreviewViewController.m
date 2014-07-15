@@ -61,11 +61,10 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
--(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
+-(void)videoPlayerDidStop
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;
-    [[Mixpanel sharedInstance] track:@"REStopWatchPreviewMovie" properties:@{@"time_watched" : playbackTime}];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

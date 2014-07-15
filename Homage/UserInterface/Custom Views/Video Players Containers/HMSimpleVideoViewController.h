@@ -20,6 +20,9 @@
  */
 @property (nonatomic, weak, readonly) HMSimpleVideoView *videoView;
 @property (nonatomic) BOOL shouldAutoPlay;
+@property (nonatomic) NSString *originatingScreen;
+@property (nonatomic) NSInteger entityType;
+@property (nonatomic) NSString *entityID;
 
 ///
 /**

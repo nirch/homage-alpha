@@ -9,10 +9,11 @@
 @protocol HMSimpleVideoPlayerDelegate <NSObject>
 
 @optional
--(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime;
--(void)videoPlayerDidFinishPlaying;
+
+-(void)videoPlayerWasFired;
 -(void)videoPlayerWillPlay;
 -(void)videoPlayerDidExitFullScreen;
--(void)videoPlayerWasFired;
+-(void)videoPlayerDidStop;
+-(void)videoPlayerDidFinishPlaying;
 
 @end

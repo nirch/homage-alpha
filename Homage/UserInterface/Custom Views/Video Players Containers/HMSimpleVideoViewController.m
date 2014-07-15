@@ -12,6 +12,9 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "Mixpanel.h"
+#import "HMServer+analytics.h"
+#import "DB.h"
 
 @implementation UIDevice (ALSystemVersion)
 
@@ -52,6 +55,7 @@
 @property (nonatomic) MPMoviePlayerController *videoPlayer;
 @property (atomic) BOOL waitingToStartPlayingTheFile;
 @property (atomic) BOOL isPlaying;
+@property (nonatomic) NSString* viewID;
 
 
 @property (atomic) BOOL rotationSensitive;
@@ -250,6 +254,7 @@
 -(void)onMoviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
     
+    NSString *playbackTimeString = [NSString stringWithFormat:@"%f" , self.currentPlaybackTime];
     if (self.videoPlayer.duration != 0 && self.currentPlaybackTime >= (self.videoPlayer.duration - 1))
     {
         //the user watched the movie almost all the way
@@ -257,19 +262,24 @@
         {
             [self.delegate videoPlayerDidFinishPlaying];
         }
+        [[Mixpanel sharedInstance] track:@"finish_playing_video" properties:@{@"playing_entity":[NSNumber numberWithInteger:self.entityType] , @"entity_id":self.entityID , @"total_duration":[NSString stringWithFormat:@"%f" ,self.videoPlayer.duration]}];
         if (self.resetStateWhenVideoEnds) [self done];
         
     } else
     {
-        //the user stopped the movie in the middle
-        if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop:afterDuration:)])
-        {
-            NSString *playbackTimeString = [NSString stringWithFormat:@"%f" , self.currentPlaybackTime];
-            [self.delegate videoPlayerDidStop:self afterDuration:playbackTimeString];
-        }
-        //[self done];
+         //the user stopped the movie in the middle
+        [[Mixpanel sharedInstance] track:@"stop_playing_video" properties:@{@"playing_entity":[NSNumber numberWithInteger:self.entityType] , @"entity_id":self.entityID , @"playing_time":playbackTimeString , @"total_duration":[NSString stringWithFormat:@"%f" ,self.videoPlayer.duration]}];
         
+        if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop)])
+        {
+            [self.delegate videoPlayerDidStop];
+        }
     }
+    
+    NSNumber *playbackTime = [NSNumber numberWithDouble:self.currentPlaybackTime];
+    NSNumber *totalDuration = [NSNumber numberWithDouble:self.videoPlayer.duration];
+    
+    [HMServer.sh reportVideoStopWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID forDuration:playbackTime outOfTotalDuration:totalDuration];
     
     self.currentPlaybackTime = 0;
 }
@@ -442,6 +452,9 @@
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
+    [[Mixpanel sharedInstance] track:@"start_play_video" properties:@{@"playing_entity":[NSNumber numberWithInteger:self.entityType] , @"entity_id":self.entityID}];
+    self.viewID = [HMServer.sh generateBSONID];
+    [HMServer.sh reportVideoStartWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID];
     self.isPlaying = YES;
 }
 

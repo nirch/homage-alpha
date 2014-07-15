@@ -21,6 +21,7 @@
 #import "mixpanel.h"
 #import "HMMotionDetector.h"
 #import "HMAvenirBookFontLabel.h"
+#import "HMServer+analytics.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -130,12 +131,18 @@
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
     self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
+    self.sceneVideoVC.originatingScreen = @"detailed_recorder_menu";
+    self.sceneVideoVC.entityType = HMScene;
+    self.sceneVideoVC.entityID = @"none";
     
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
     self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
     self.storyVideoVC.delegate = self;
+    self.storyVideoVC.originatingScreen = @"detailed_recorder_menu";
+    self.storyVideoVC.entityType = HMStory;
+    self.storyVideoVC.entityID = self.remake.story.sID;
     
     // Countdown delegate
     self.guiRoundCountdownLabal.delegate = self;
@@ -619,7 +626,7 @@
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
--(void)videoPlayerWillPlay
+/*-(void)videoPlayerWillPlay
 {
     if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
     {
@@ -628,31 +635,13 @@
     {
         [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
     }
-}
+}*/
 
--(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
-{
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REStopOurScene" properties:@{@"time_watched" : playbackTime}];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-        [[Mixpanel sharedInstance] track:@"REStopOurStory" properties:@{@"time_watched" : playbackTime}];
-    }    
-}
 
 -(void)videoPlayerDidFinishPlaying
 {
     [self.sceneVideoVC done];
     [self.storyVideoVC done];
-    
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REfinishOurScene"];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-        [[Mixpanel sharedInstance] track:@"REfinishOurStory"];
-    }
 }
 
 

@@ -18,5 +18,6 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) NSDictionary *pushNotificationFromBG;
 @property (nonatomic) NSData *pushToken;
+@property (nonatomic) NSString *currentSessionHomageID;
 
 @end

@@ -219,6 +219,8 @@
 		2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
 		2660C2A818DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */; };
 		266F62A5190E9521003774C5 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 266F62A3190E9521003774C5 /* introVideo.mp4 */; };
+		2675065C1972B4F000A2214F /* HMServer+analytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2675065B1972B4F000A2214F /* HMServer+analytics.m */; };
+		2675065F1972E77300A2214F /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2675065E1972E77300A2214F /* BSONIdGenerator.m */; };
 		267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A640219532030003DFFEA /* JBWhatsAppActivity.m */; };
 		267A640519532030003DFFEA /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 267A640319532030003DFFEA /* whatsapp@2x.png */; };
 		267A64D519532275003DFFEA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267A64D419532275003DFFEA /* Security.framework */; };
@@ -239,12 +241,12 @@
 		2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
 		26897A791913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */; };
 		26897A7D1913A3960030A8B5 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */; };
+		268A380C1974AE1F0016C59C /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A380B1974AE1F0016C59C /* Remake.m */; };
+		268A380F1974AE650016C59C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A380E1974AE650016C59C /* User.m */; };
 		269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */ = {isa = PBXBuildFile; fileRef = 269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */; };
 		269409681968786500EC4726 /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 269409671968786500EC4726 /* HMStoryParser.m */; };
-		2695512A1958335E0017FDC1 /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 269551291958335E0017FDC1 /* Remake.m */; };
 		2695512D1958335F0017FDC1 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 2695512C1958335F0017FDC1 /* Story.m */; };
 		269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
-		26A0277C1946FBE70040C3C0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A0277B1946FBE70040C3C0 /* User.m */; };
 		26B448F31947E25700BC6317 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F21947E25700BC6317 /* Appsee.framework */; };
 		26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F41947E28800BC6317 /* SystemConfiguration.framework */; };
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
@@ -499,6 +501,10 @@
 		2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMJSONResponseSerializerWithData.h; path = Networking/HMJSONResponseSerializerWithData.h; sourceTree = "<group>"; };
 		2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMJSONResponseSerializerWithData.m; path = Networking/HMJSONResponseSerializerWithData.m; sourceTree = "<group>"; };
 		266F62A3190E9521003774C5 /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = introVideo.mp4; path = mediaResources/introVideo.mp4; sourceTree = "<group>"; };
+		2675065A1972B4F000A2214F /* HMServer+analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+analytics.h"; sourceTree = "<group>"; };
+		2675065B1972B4F000A2214F /* HMServer+analytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+analytics.m"; sourceTree = "<group>"; };
+		2675065D1972E77300A2214F /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
+		2675065E1972E77300A2214F /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
 		267A640119532030003DFFEA /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JBWhatsAppActivity.h; path = "Homage/utilities/whatsapp share/JBWhatsAppActivity.h"; sourceTree = SOURCE_ROOT; };
 		267A640219532030003DFFEA /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JBWhatsAppActivity.m; path = "Homage/utilities/whatsapp share/JBWhatsAppActivity.m"; sourceTree = SOURCE_ROOT; };
 		267A640319532030003DFFEA /* whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whatsapp@2x.png"; path = "Homage/utilities/whatsapp share/whatsapp@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -536,18 +542,18 @@
 		268341F318FFFD40002E8CB7 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		26897A781913A1F90030A8B5 /* cinemaCountdown6(with_tail).wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "cinemaCountdown6(with_tail).wav"; path = "mediaResources/cinemaCountdown6(with_tail).wav"; sourceTree = "<group>"; };
 		26897A7C1913A3960030A8B5 /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cinemaCountdown_oneLast.wav; path = mediaResources/cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
+		268A380A1974AE1F0016C59C /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
+		268A380B1974AE1F0016C59C /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
+		268A380D1974AE650016C59C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		268A380E1974AE650016C59C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		269264631908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMDINOTRegularFontButton+colorEffectes.h"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.h"; sourceTree = "<group>"; };
 		269264641908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMDINOTRegularFontButton+colorEffectes.m"; path = "buttons/HMDINOTRegularFontButton+colorEffectes.m"; sourceTree = "<group>"; };
 		269409661968786500EC4726 /* HMStoryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryParser.h; sourceTree = "<group>"; };
 		269409671968786500EC4726 /* HMStoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryParser.m; sourceTree = "<group>"; };
 		269551241958260C0017FDC1 /* Model130.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model130.xcdatamodel; sourceTree = "<group>"; };
-		269551281958335E0017FDC1 /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
-		269551291958335E0017FDC1 /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		2695512B1958335F0017FDC1 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		2695512C1958335F0017FDC1 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageBigImageView.xib; sourceTree = "<group>"; };
-		26A0277A1946FBE70040C3C0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		26A0277B1946FBE70040C3C0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		26B448F21947E25700BC6317 /* Appsee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Appsee.framework; sourceTree = "<group>"; };
 		26B448F41947E28800BC6317 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		26B498A818B5FD7100026401 /* HMMotionDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMotionDetector.h; sourceTree = "<group>"; };
@@ -759,6 +765,8 @@
 		0806FB381882A5B800F0EF50 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				2675065D1972E77300A2214F /* BSONIdGenerator.h */,
+				2675065E1972E77300A2214F /* BSONIdGenerator.m */,
 				081237941882CB6100DA5D23 /* ServerCFG.plist */,
 				081237D11882DA3D00DA5D23 /* HMServer.h */,
 				081237D21882DA3D00DA5D23 /* HMServer.m */,
@@ -955,12 +963,12 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				268A380D1974AE650016C59C /* User.h */,
+				268A380E1974AE650016C59C /* User.m */,
+				268A380A1974AE1F0016C59C /* Remake.h */,
+				268A380B1974AE1F0016C59C /* Remake.m */,
 				2695512B1958335F0017FDC1 /* Story.h */,
 				2695512C1958335F0017FDC1 /* Story.m */,
-				269551281958335E0017FDC1 /* Remake.h */,
-				269551291958335E0017FDC1 /* Remake.m */,
-				26A0277A1946FBE70040C3C0 /* User.h */,
-				26A0277B1946FBE70040C3C0 /* User.m */,
 				263C448B192F4E5E00AD82EC /* Contour.h */,
 				263C448C192F4E5E00AD82EC /* Contour.m */,
 				08D1C3C7189B09A200C18AB0 /* Footage.h */,
@@ -988,6 +996,8 @@
 				084E53401892240100D96258 /* HMServer+Render.m */,
 				F13FA5191899447F0026EA5F /* HMServer+Users.h */,
 				F13FA51A1899447F0026EA5F /* HMServer+Users.m */,
+				2675065A1972B4F000A2214F /* HMServer+analytics.h */,
+				2675065B1972B4F000A2214F /* HMServer+analytics.m */,
 			);
 			name = WebService;
 			path = Networking/WebService;
@@ -1578,7 +1588,6 @@
 				084E53351891E6C100D96258 /* HMRecorderEditingTextCell.m in Sources */,
 				0840FF821885356A00A6EF5E /* DB.m in Sources */,
 				268341FC18FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m in Sources */,
-				26A0277C1946FBE70040C3C0 /* User.m in Sources */,
 				081237D31882DA3D00DA5D23 /* HMServer.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
 				08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */,
@@ -1609,7 +1618,6 @@
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
 				263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */,
-				2695512A1958335E0017FDC1 /* Remake.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
 				F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */,
 				269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */,
@@ -1623,6 +1631,7 @@
 				268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
 				084560051890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
+				2675065C1972B4F000A2214F /* HMServer+analytics.m in Sources */,
 				0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
 				268341F918FFFD40002E8CB7 /* IASKSettingsStoreFile.m in Sources */,
 				086D93CF1886C8BB0086C565 /* HMParser.m in Sources */,
@@ -1640,6 +1649,7 @@
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */,
+				268A380C1974AE1F0016C59C /* Remake.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				65C10D9218A265DC00A65917 /* HMDINOTCondBoldFontLabel.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
@@ -1651,6 +1661,8 @@
 				2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */,
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
 				084E5339189209D700D96258 /* HMServer+Texts.m in Sources */,
+				2675065F1972E77300A2214F /* BSONIdGenerator.m in Sources */,
+				268A380F1974AE650016C59C /* User.m in Sources */,
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
 				268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */,

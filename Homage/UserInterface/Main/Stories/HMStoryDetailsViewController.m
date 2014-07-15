@@ -20,6 +20,7 @@
 #import "Mixpanel.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "HMServer+analytics.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -64,7 +65,6 @@
     self.guiRemakeActivity.hidden = YES;
     if (self.autoStartPlayingStory)
     {
-        [self.storyMoviePlayer play];
         self.storyMoviePlayer.shouldAutoPlay = YES;
         self.autoStartPlayingStory = NO;
     }
@@ -124,6 +124,9 @@
     [self.storyMoviePlayer hideMediaControls];
     self.storyMoviePlayer.videoImage = self.story.thumbnail;
     self.storyMoviePlayer.delegate = self;
+    self.storyMoviePlayer.originatingScreen = @"story_details";
+    self.storyMoviePlayer.entityType = HMStory;
+    self.storyMoviePlayer.entityID = self.story.sID;
     self.storyMoviePlayer.resetStateWhenVideoEnds = YES;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -434,9 +437,9 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"remakeID" : remake.sID}];
+    [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"remakeID" : remake.sID , @"story" : remake.story.name}];
     self.playingRemakeIndex = indexPath.item;
-    [self initVideoPlayerWithURL:[NSURL URLWithString:remake.videoURL]];
+    [self initVideoPlayerWithRemake:remake];
 }
 
 -(void)handleNoRemakes
@@ -452,13 +455,9 @@
 
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    if (sender == self.remakeMoviePlayer)
+    if (self.remakeMoviePlayer.entityType == HMRemake)
     {
         [self.guiRemakeVideoContainer removeFromSuperview];
-        [[Mixpanel sharedInstance] track:@"SDStopWatchingRemake" properties:@{@"time_watched" : playbackTime}];
-    } else if (sender == self.storyMoviePlayer)
-    {
-       [[Mixpanel sharedInstance] track:@"SDStopWatchingStory" properties:@{@"time_watched" : playbackTime}];
     }
 }
 
@@ -474,10 +473,10 @@
 
 -(void)videoPlayerWillPlay
 {
-    if ([self.storyMoviePlayer isInAction])
+    /*if ([self.storyMoviePlayer isInAction])
     {
       [[Mixpanel sharedInstance] track:@"SDStartPlayStory" properties:@{@"story" : self.story.name}];
-    }
+    }*/
 }
 
 -(void)videoPlayerWasFired
@@ -503,7 +502,7 @@
 }
 
 
--(void)initVideoPlayerWithURL:(NSURL *)url
+-(void)initVideoPlayerWithRemake:(Remake *)remake
 {
     UIView *view;
     self.guiRemakeVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
@@ -514,11 +513,14 @@
     //[self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
     
     self.remakeMoviePlayer = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiRemakeVideoContainer rotationSensitive:YES];
-    self.remakeMoviePlayer.videoURL = [url absoluteString];
+    self.remakeMoviePlayer.videoURL = remake.videoURL;
     [self.remakeMoviePlayer hideVideoLabel];
     //[self.videoView hideMediaControls];
     
     self.remakeMoviePlayer.delegate = self;
+    self.remakeMoviePlayer.originatingScreen = @"story_details";
+    self.remakeMoviePlayer.entityType = HMRemake;
+    self.remakeMoviePlayer.entityID = remake.sID;
     self.remakeMoviePlayer.resetStateWhenVideoEnds = YES;
     [self.remakeMoviePlayer play];
     [self.remakeMoviePlayer setFullScreen];

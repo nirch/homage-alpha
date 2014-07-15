@@ -2,7 +2,7 @@
 //  User.m
 //  Homage
 //
-//  Created by Yoav Caspin on 6/10/14.
+//  Created by Yoav Caspin on 7/15/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 
 @implementation User
 
+@dynamic disableBadBackgroundPopup;
 @dynamic email;
 @dynamic fbID;
 @dynamic firstName;
@@ -22,7 +23,6 @@
 @dynamic prefersToSeeScriptWhileRecording;
 @dynamic skipRecorderTutorial;
 @dynamic userID;
-@dynamic disableBadBackgroundPopup;
 @dynamic remakes;
 
 @end

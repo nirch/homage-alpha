@@ -16,6 +16,16 @@
 	<string>80</string>
 	<key>urls</key>
 	<dict>
+		<key>user session end</key>
+		<string>user/end</string>
+		<key>user session start</key>
+		<string>user/begin</string>
+		<key>view remake</key>
+		<string>remake/view</string>
+		<key>view story</key>
+		<string>story/view</string>
+		<key>share remake</key>
+		<string>remake/share</string>
 		<key>story</key>
 		<string>story</string>
 		<key>report inappropriate</key>

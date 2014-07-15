@@ -10,6 +10,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
+#import "HMServer+analytics.h"
 #import "Mixpanel.h"
 #import "DB.h"
 #import "HMNotificationCenter.h"
@@ -172,6 +173,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [HMServer.sh stopMonitoringReachability];
+    if (self.currentSessionHomageID) [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
