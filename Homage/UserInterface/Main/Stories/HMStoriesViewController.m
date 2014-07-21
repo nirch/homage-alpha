@@ -238,15 +238,16 @@
             story = self.preRequestedStory;
             vc.story = self.preRequestedStory;
             self.preRequestedStory = nil;
+            [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name}];
         //user selected a story from the collection view
         } else {
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
             story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
-            [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
+            [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"story" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
         }
         
-        [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"storyName" : story.name}];
+        
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
     }

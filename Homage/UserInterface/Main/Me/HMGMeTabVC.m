@@ -582,7 +582,7 @@
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
-            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remakeID" : remake.sID}];
+            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
             [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
             break;
         case HMGRemakeStatusInProgress:
@@ -889,12 +889,12 @@
         //continue with old remake
         if (buttonIndex == 1) {
             [self initRecorderWithRemake:self.remakeToContinueWith];
-            [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"story" : self.remakeToContinueWith.story.name , @"remakeID" : self.remakeToContinueWith.sID , @"continue_with_old_remake" : @"yes"}];
+            [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"story" : self.remakeToContinueWith.story.name , @"remake_id" : self.remakeToContinueWith.sID , @"continue_with_old_remake" : @"yes"}];
         }
         //start new remake
         if (buttonIndex == 2) {
             NSString *remakeIDToDelete = self.remakeToContinueWith.sID;
-            [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"story" : self.remakeToContinueWith.story.name , @"remakeID" : self.remakeToContinueWith.sID , @"continue_with_old_remake" : @"no"}];
+            [[Mixpanel sharedInstance] track:@"MEDoRemake" properties:@{@"story" : self.remakeToContinueWith.story.name , @"remake_id" : self.remakeToContinueWith.sID , @"continue_with_old_remake" : @"no"}];
             [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
             [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
             self.remakeToContinueWith = nil;
@@ -1002,10 +1002,6 @@
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
--(void)videoPlayerDidFinishPlaying
-{
-   [[Mixpanel sharedInstance] track:@"MEFinishWatchRemake"];
-}
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     

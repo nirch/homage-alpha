@@ -568,7 +568,7 @@
     }
     
     
-    [[Mixpanel sharedInstance] track:@"REStartRecording" properties:@{@"bad_background" : [NSNumber numberWithBool:self.backgroundAlertDisplaying]}];
+    [[Mixpanel sharedInstance] track:@"REStartRecording" properties:@{@"bad_background" : [NSNumber numberWithBool:self.backgroundAlertDisplaying], @"remake_id" : self.remake.sID , @"story" : self.remake.story.name , @"scene_id" : self.currentSceneID}];
     
     [self presentRecordingUI];
 }
@@ -1020,7 +1020,7 @@
 -(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
-    [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%ld" , sceneID.longValue]}];
+    [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name ,@"remake_id": self.remake.sID, @"scene_id" : [NSString stringWithFormat:@"%ld" , sceneID.longValue]}];
     
     NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                    @"icon name":@"iconSceneDescription",
@@ -1072,7 +1072,7 @@
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
     
     NSString *eventName = [NSString stringWithFormat:@"REFinishedScene%ld" , sceneID.longValue];
-    [[Mixpanel sharedInstance] track:eventName properties:@{@"story" : self.remake.story.name , @"sceneNum" : [NSString stringWithFormat:@"%ld" , sceneID.longValue]}];
+    [[Mixpanel sharedInstance] track:eventName properties:@{@"story" : self.remake.story.name , @"scene_id" : [NSString stringWithFormat:@"%ld" , sceneID.longValue], @"remake_id" : self.remake.sID}];
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
                                           info:@{@"text":nextScene.context,
@@ -1149,7 +1149,7 @@
 {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"optionsBarOpen" properties:@{
-                                                   @"useremail" : [User current].userID, @"story" : self.remake.story.name}];
+                                                   @"remake_id" : self.remake.sID, @"story" : self.remake.story.name}];
     [self hideTopButtons];
     [self showTopScriptViewIfUserPreffered];
     
@@ -1332,7 +1332,7 @@
 
 - (IBAction)onPressedFlipCameraButton:(UIButton *)sender
 {
-    [[Mixpanel sharedInstance] track:@"REFlipCamera" properties:@{@"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"REFlipCamera" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     [self flipCamera];
 }
 
@@ -1402,7 +1402,7 @@
     
     //leave recorder
     if (buttonIndex == 1) {
-        [[Mixpanel sharedInstance] track:@"UserClosedRecorder"];
+        [[Mixpanel sharedInstance] track:@"UserClosedRecorder" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
         [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
     }
 }

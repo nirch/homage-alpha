@@ -187,7 +187,7 @@
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *success = self.renderingEnded ? @"YES" : @"NO";
-    [[Mixpanel sharedInstance] track:@"hitRenderButton" properties:@{@"remakeSuccessful" : success}];
+    [[Mixpanel sharedInstance] track:@"hit_movie_done_rendering_button" properties:@{@"remake_successful" : success}];
     [self.delegate renderDoneClickedWithSuccess:self.renderingEnded];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }

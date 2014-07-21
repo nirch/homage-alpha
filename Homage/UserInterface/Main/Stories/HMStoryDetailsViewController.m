@@ -437,7 +437,6 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"remakeID" : remake.sID , @"story" : remake.story.name}];
     self.playingRemakeIndex = indexPath.item;
     [self initVideoPlayerWithRemake:remake];
 }
@@ -461,23 +460,6 @@
     }
 }
 
--(void)videoPlayerDidFinishPlaying
-{
-    [[Mixpanel sharedInstance] track:@"SDVideoPlayerFinished"];
-}
-
--(void)videoPlayerDidExitFullScreen
-{
-    [[Mixpanel sharedInstance] track:@"SDVideoPlayerExitFullScreen"];
-}
-
--(void)videoPlayerWillPlay
-{
-    /*if ([self.storyMoviePlayer isInAction])
-    {
-      [[Mixpanel sharedInstance] track:@"SDStartPlayStory" properties:@{@"story" : self.story.name}];
-    }*/
-}
 
 -(void)videoPlayerWasFired
 {
@@ -645,23 +627,6 @@
     }
 }
 
-/* 
-#pragma mark segue
- 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    //HMRemakeCell *cell = (HMRemakeCell *)sender;
-    
-    if ([segue.identifier isEqualToString:@"remakeVideoPlayerSegue"]) {
-        HMSimpleVideoViewController *vc = segue.destinationViewController;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:cell.tag inSection:0];
-        Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [[Mixpanel sharedInstance] track:@"SDStartPlayRemake" properties:@{@"story" : self.story.name , @"remakeNum" : [NSString stringWithFormat:@"%d" , indexPath.item]}];
-        vc.videoURL = remake.videoURL];
-    }
-}
- 
-*/
 
 #pragma mark - HMRecorderDelegate
 -(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason

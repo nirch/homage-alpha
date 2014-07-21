@@ -615,28 +615,17 @@
 {
     if (User.current.prefersToSeeScriptWhileRecording.boolValue) {
         [self.guiShowScriptButton setTitle: LS(@"HIDE_SCRIPT") forState:UIControlStateNormal];
-        [[Mixpanel sharedInstance] track:@"REHideScript" properties:@{@"story" : self.remake.story.name}];
+        [[Mixpanel sharedInstance] track:@"REHideScript" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     } else {
         [self.guiShowScriptButton setTitle:LS(@"SHOW_SCRIPT") forState:UIControlStateNormal];
         
-        if (report) [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name}];
+        if (report) [[Mixpanel sharedInstance] track:@"REShowScript" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
 
     }
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeScriptToggle info:nil];
 }
 
 #pragma mark - HMSimpleVideoPlayerDelegate
-/*-(void)videoPlayerWillPlay
-{
-    if (self.guiOriginalTakesPageControl.currentPage == 0) //our scene
-    {
-        [[Mixpanel sharedInstance] track:@"REPlayOurScene"];
-    } else if (self.guiOriginalTakesPageControl.currentPage == 1) //our story
-    {
-        [[Mixpanel sharedInstance] track:@"REPlayOurStory"];
-    }
-}*/
-
 
 -(void)videoPlayerDidFinishPlaying
 {
@@ -658,7 +647,7 @@
 {
     //THE HAND!!!
     self.guiPointingHand.hidden = YES;
-    [[Mixpanel sharedInstance] track:@"REexpandMenu"];
+    [[Mixpanel sharedInstance] track:@"REexpandMenu" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     [self.remakerDelegate toggleOptions];
 }
 
@@ -677,7 +666,7 @@
     [HMMotionDetector.sh start];
     [self postDisableBGdetectionNotification];
     NSString *eventName = [NSString stringWithFormat:@"REHitRecordScene%ld" , self.sceneID.longValue];
-    [[Mixpanel sharedInstance] track:eventName properties:@{@"sceneNumber" : self.sceneID , @"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:eventName properties:@{@"scene_id" : self.sceneID , @"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     self.guiCountdownContainer.hidden = NO;
 
     [self playCountdownSound];
@@ -711,7 +700,7 @@
     [self.guiRoundCountdownLabal cancel];
     [HMMotionDetector.sh stopWithNotification:NO];
     [self postEnableBGDetectionNotification];
-    [[Mixpanel sharedInstance] track:@"RECancelRecord"];
+    [[Mixpanel sharedInstance] track:@"RECancelRecord" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     self.guiCountdownContainer.hidden = YES;
     [self.audioPlayer stop];
     
@@ -720,7 +709,7 @@
 
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
-    [[Mixpanel sharedInstance] track:@"REMenuSceneDirection" properties:@{@"story" : self.remake.story.name}];
+    [[Mixpanel sharedInstance] track:@"REMenuSceneDirection" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     [self.remakerDelegate showSceneContextMessageForSceneID:self.sceneID checkNextStateOnDismiss:NO info:nil];
 }
 
@@ -738,7 +727,7 @@
 - (IBAction)onPressedSelectScene:(UIButton *)sender
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-    [[Mixpanel sharedInstance] track:@"REReturnToScene" properties:@{@"sceneNumber" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
+    [[Mixpanel sharedInstance] track:@"REReturnToScene" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item], @"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     NSInteger index = [self sceneIndexForIndexPath:indexPath];
     HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
     

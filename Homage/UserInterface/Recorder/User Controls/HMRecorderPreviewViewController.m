@@ -72,7 +72,6 @@
 {
     if (self.alreadyDismissed) return;
     self.alreadyDismissed = YES;
-    [[Mixpanel sharedInstance] track:@"REFinishWatchPreviewMovie"];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
