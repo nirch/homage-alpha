@@ -40,5 +40,6 @@ typedef NS_ENUM(NSInteger, HMShareMethod) {
 -(void)reportVideoStopWithViewID:(NSString *)viewID forEntity:(NSInteger)entityType withID:(NSString *)entityID forUserID:(NSString *)userID forDuration:(NSNumber *)playbackTime outOfTotalDuration:(NSNumber *)videoDuration;
 -(void)reportSession:(NSString *)sessionID beginForUser:(NSString *)userID;
 -(void)reportSession:(NSString *)sessionID endForUser:(NSString *)userID;
+-(void)reportSession:(NSString *)sessionID updateForUser:(NSString *)userID;
 
 @end

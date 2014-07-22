@@ -555,6 +555,7 @@
         [HMServer.sh updateServerContext:user.userID];
         [self.loginVC registerLoginAnalyticsForUser:user];
         
+        
         [self onUserLoginStateChange:user];
         
         //handle push notification from background
@@ -575,7 +576,9 @@
             } else {
                 [self switchToTab:HMStoriesTab];
             }
-        }        
+        }
+        myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+        [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
     }
     
     [self reportCrashesIfExist];

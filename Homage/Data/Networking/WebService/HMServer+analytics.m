@@ -84,4 +84,10 @@
     
 }
 
+-(void)reportSession:(NSString *)sessionID updateForUser:(NSString *)userID
+{
+    [self postRelativeURLNamed:@"user session update" parameters:@{@"session_id":sessionID, @"user_id":userID} notificationName:HM_NOTIFICATION_SERVER_USER_END_SESSION info:@{@"userID":userID, @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]} parser:nil];
+    
+}
+
 @end

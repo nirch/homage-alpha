@@ -68,10 +68,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
-@property (nonatomic) BOOL userJoinFlow;
 @property (nonatomic) UINavigationController *legalNavVC;
 @property (nonatomic) HMTOSViewController *tosVC;
 @property (nonatomic) HMPrivacyPolicyViewController *privacyVC;
+@property (nonatomic) HMAppDelegate *myAppDelegate;
+
 
 @property NSString *loginMethod;
 
@@ -84,9 +85,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
     [super viewDidLoad];
-    
-    self.userJoinFlow = NO;
-    
+    self.myAppDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.myAppDelegate.userJoinFlow = NO;
     
     //FBloginView
     FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"email",@"user_birthday",@"public_profile"]];
@@ -336,10 +336,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
     
-    if (!self.userJoinFlow)
+    if (!self.myAppDelegate.userJoinFlow)
     {
        [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
-    } else if(self.userJoinFlow && [User current])
+    } else if(self.myAppDelegate.userJoinFlow && [User current])
     {
         NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo};
         [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
@@ -432,7 +432,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     //IMPORTANT !!!! this must be called before changing the user isfirstuse property further on!
     [self registerLoginAnalyticsForUser:user];
-    
+    self.myAppDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+    [HMServer.sh reportSession:self.myAppDelegate.currentSessionHomageID beginForUser:user.userID];
     [user loginInContext:DB.sh.context];
     [HMServer.sh updateServerContext:user.userID];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
@@ -495,6 +496,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [mixpanel createAlias:user.userID
                 forDistinctID:[User current].userID];
         [mixpanel identify:user.userID];
+        [HMServer.sh reportSession:self.myAppDelegate.currentSessionHomageID updateForUser:user.userID];
     }
     
     if (user.email)
@@ -521,8 +523,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [HMServer.sh updateServerContext:user.userID];
     [self.delegate onUserLoginStateChange:[User current]];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
+    
     [self.delegate dismissLoginScreen];
-    self.userJoinFlow = NO;
+    self.myAppDelegate.userJoinFlow = NO;
 }
 
 -(void)displayIntroMovieView
@@ -612,8 +615,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     NSDictionary *deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString]};
     
-    HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSData *pushToken = myDelegate.pushToken;
+    NSData *pushToken = self.myAppDelegate.pushToken;
     
     if (pushToken)
     {
@@ -656,7 +658,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     self.guiGuestButton.hidden = YES;
     self.guiCancelButton.hidden = NO;
-    self.userJoinFlow = YES;
+    self.myAppDelegate.userJoinFlow = YES;
 }
 
 #pragma mark FBLoginView delegate
@@ -707,13 +709,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     
-    if (!self.userJoinFlow)
+    if (!self.myAppDelegate.userJoinFlow)
     {
         [HMServer.sh createUserWithDictionary:FBSignupDictionary];
         HMGLogInfo(@"requesting to create user with email: %@" , [user objectForKey:@"email"]);
         [[Mixpanel sharedInstance] track:@"FBcreateNewUser" properties:FBSignupDictionary];
     
-    } else if (self.userJoinFlow && [User current])
+    } else if (self.myAppDelegate.userJoinFlow && [User current])
     {
         HMGLogInfo(@"updating guest user to registered user");
         NSDictionary *FBUpdateDictionary = @{@"user_id" : [User current].userID , @"facebook" : FBDictionary , @"device" : deviceInfo , @"is_public" : @YES};
@@ -828,6 +830,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.delegate dismissLoginScreen];
     self.guiCancelButton.hidden = YES;
     [self hideErrorLabel];
+    self.myAppDelegate.userJoinFlow = NO;
 }
 
 - (IBAction)termsOfServicePushed:(id)sender
@@ -894,15 +897,13 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     //TODO: this should not be neeeded. verify for sure if it can be removed completly
-    HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
-    myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+    
     
     if ([user.userID isEqualToString:[User current].userID])
     {
         //TODO: fix self.loginMethod
         //[mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
         [mixpanel track:@"UserLogin" properties:@{@"login_mathod" : @"same"}];
-        [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
         [self.delegate dismissLoginScreen];
         return;
     }
@@ -913,9 +914,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } else {
         [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
     }
-    
-    
-    [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
 }
 
 -(BOOL)shouldExcludethisAdressFromMixpanelData:(NSString *)email_address

@@ -92,7 +92,7 @@
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
     [Appirater appLaunched:YES];
-    
+    self.userJoinFlow = NO;
     [FBLoginView class];
     
     return YES;
@@ -173,7 +173,11 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [HMServer.sh stopMonitoringReachability];
-    if (self.currentSessionHomageID) [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
+    if (!self.currentSessionHomageID) return;
+    if (!self.userJoinFlow && [User current])
+    {
+        [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -186,6 +190,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [HMServer.sh startMonitoringReachability];
+    if (!self.userJoinFlow && [User current])
+    {
+        self.currentSessionHomageID = [HMServer.sh generateBSONID];
+        [HMServer.sh reportSession:self.currentSessionHomageID beginForUser:[User current].userID];
+    }
     [FBSettings setDefaultAppID:FB_APP_ID];
     [FBAppEvents activateApp];
 }
@@ -193,6 +202,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    if (self.currentSessionHomageID)
+    {
+        [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
+    }
+  
 }
 
 - (BOOL)application:(UIApplication *)application
