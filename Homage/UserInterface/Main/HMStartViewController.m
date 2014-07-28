@@ -578,7 +578,7 @@
             }
         }
         myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
-        [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
+        //[HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
     }
     
     [self reportCrashesIfExist];
