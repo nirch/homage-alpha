@@ -118,7 +118,7 @@
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [[Mixpanel sharedInstance] track:@"HitShootFirst"];
+    [[Mixpanel sharedInstance] track:@"pushed lets create"];
     [self.moviePlayerVC done];
     [self.delegate onLoginPressedShootFirstStory];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
