@@ -577,8 +577,13 @@
                 [self switchToTab:HMStoriesTab];
             }
         }
-        myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
-        //[HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
+        
+        if (!myDelegate.sessionStartFlag)
+        {
+            myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+            [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
+            myDelegate.sessionStartFlag = YES;
+        }
     }
     
     [self reportCrashesIfExist];
@@ -1013,6 +1018,7 @@
     
     HMAppDelegate *myDelagate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
     [HMServer.sh reportSession:myDelagate.currentSessionHomageID endForUser:[User current].userID];
+    myDelagate.sessionStartFlag = NO;
     [[User current] logoutInContext:DB.sh.context];
     [self presentLoginScreen];
     [self showMainAppView];

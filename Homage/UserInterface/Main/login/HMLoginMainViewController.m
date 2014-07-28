@@ -432,8 +432,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     //IMPORTANT !!!! this must be called before changing the user isfirstuse property further on!
     [self registerLoginAnalyticsForUser:user];
-    self.myAppDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
-    [HMServer.sh reportSession:self.myAppDelegate.currentSessionHomageID beginForUser:user.userID];
+    
+    if (!self.myAppDelegate.sessionStartFlag)
+    {
+        self.myAppDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+        [HMServer.sh reportSession:self.myAppDelegate.currentSessionHomageID beginForUser:user.userID];
+        self.myAppDelegate.sessionStartFlag = YES;
+    }
+    
     [user loginInContext:DB.sh.context];
     [HMServer.sh updateServerContext:user.userID];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];

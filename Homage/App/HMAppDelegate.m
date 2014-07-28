@@ -169,6 +169,7 @@
     if (!self.userJoinFlow && [User current])
     {
         [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
+        self.sessionStartFlag = NO;
     }
     [[Mixpanel sharedInstance] track:@"AppMovedToBackGround"];
 }
@@ -192,8 +193,13 @@
     [HMServer.sh startMonitoringReachability];
     if (!self.userJoinFlow && [User current])
     {
-        self.currentSessionHomageID = [HMServer.sh generateBSONID];
-        [HMServer.sh reportSession:self.currentSessionHomageID beginForUser:[User current].userID];
+        
+        if (!self.sessionStartFlag)
+        {
+            self.currentSessionHomageID = [HMServer.sh generateBSONID];
+            [HMServer.sh reportSession:self.currentSessionHomageID beginForUser:[User current].userID];
+            self.sessionStartFlag = YES;
+        }
     }
     [FBSettings setDefaultAppID:FB_APP_ID];
     [FBAppEvents activateApp];
@@ -205,6 +211,7 @@
     if (self.currentSessionHomageID)
     {
         [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
+        self.sessionStartFlag = NO;
     }
   
 }

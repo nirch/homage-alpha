@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 @property (nonatomic) NSDictionary *pushNotificationFromBG;
 @property (nonatomic) NSData *pushToken;
 @property (strong, nonatomic) NSString *currentSessionHomageID;
+@property (nonatomic) BOOL sessionStartFlag;
 @property (nonatomic) BOOL userJoinFlow;
 
 @end
