@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, HMEntityType) {
     HMRemake,
     HMIntroMovie,
     HMScene,
+    HMPreview,
 };
 
 typedef NS_ENUM(NSInteger, HMShareMethod) {
