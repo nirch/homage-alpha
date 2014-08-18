@@ -393,7 +393,7 @@
 
 - (IBAction)onPressedPreviewLastSceneButton:(UIButton *)sender
 {
-    [[Mixpanel sharedInstance] track:@"RESeePreview" properties:@{@"scene_nunber" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
+    [[Mixpanel sharedInstance] track:@"RESeePreview" properties:@{@"scene_number" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
     Remake *remake = [self.remakerDelegate remake];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
     if (footage.rawLocalFile) {
@@ -445,7 +445,7 @@
    
     
     Remake *remake = [self.remakerDelegate remake];
-    [mixpanel track:@"RecorderPreview" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
+    [mixpanel track:@"RESeePreview" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
     if (footage.rawLocalFile) {
         [self performSegueWithIdentifier:@"see preview segue" sender:nil];

@@ -29,8 +29,9 @@
 typedef NS_ENUM(NSInteger, HMMethodOfLogin) {
     HMFaceBookConnect,
     HMMailConnect,
-    HMGuest,
+    HMGuestConnect,
     HMTwitterConnect,
+    HMSameConnect,
 };
 
 typedef NS_ENUM(NSInteger, HMLoginError) {
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (nonatomic) HMAppDelegate *myAppDelegate;
 
 
-@property NSString *loginMethod;
+@property NSInteger loginMethod;
 
 @end
 
@@ -321,7 +322,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(IBAction)onPressedSignUpLogin:(UIButton *)sender
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    self.loginMethod = @"mail";
+    self.loginMethod = HMMailConnect;
     self.guiLoginErrorLabel.text = @"";
     
     if (!HMServer.sh.isReachable)
@@ -353,7 +354,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 - (IBAction)onPressedGuest:(UIButton *)sender
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    self.loginMethod = @"guest";
+    self.loginMethod = HMGuestConnect;
     
     if (!HMServer.sh.isReachable)
     {
@@ -519,7 +520,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [mixpanel registerSuperProperties:@{@"email" : @"unknown" , @"homage_id" : user.userID}];
         [mixpanel.people set:@{@"homage_id":user.userID}];
     }
-    [mixpanel track:@"UserUpdate" properties:@{@"login_method" : self.loginMethod}];
+    [mixpanel track:@"UserUpdate" properties:@{@"login_method" : [NSNumber numberWithInteger:self.loginMethod]}];
     
     //when a user upgrades from guest to fb or mail, his default sharing prefrence is public
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"remakesArePublic"];
@@ -643,7 +644,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)onUserLogout
 {
-    if ([self.loginMethod isEqualToString: @"facebook"])
+    if (self.loginMethod == HMFaceBookConnect)
     {
         if (FBSession.activeSession.state == FBSessionStateOpen
             || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
@@ -684,7 +685,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         return;
     }
     
-    self.loginMethod = @"facebook";
+    self.loginMethod = HMFaceBookConnect;
     self.cachedUser = user;
     
     NSDictionary *deviceInfo = [self getDeviceInformation];
@@ -719,7 +720,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     {
         [HMServer.sh createUserWithDictionary:FBSignupDictionary];
         HMGLogInfo(@"requesting to create user with email: %@" , [user objectForKey:@"email"]);
-        [[Mixpanel sharedInstance] track:@"FBcreateNewUser" properties:FBSignupDictionary];
+        //[[Mixpanel sharedInstance] track:@"FBcreateNewUser" properties:FBSignupDictionary];
     
     } else if (self.myAppDelegate.userJoinFlow && [User current])
     {
@@ -733,7 +734,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
             FBUpdateDictionary = [NSDictionary dictionaryWithDictionary:temp];
         }
         
-        [[Mixpanel sharedInstance] track:@"FBGuestUserUpdated" properties:FBUpdateDictionary];
+        //[[Mixpanel sharedInstance] track:@"FBGuestUserUpdated" properties:FBUpdateDictionary];
         [HMServer.sh updateUserUponJoin:FBUpdateDictionary];
     }
     
@@ -895,30 +896,28 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         //this excludes us from being tracked on mixpanel
         if ([self shouldExcludethisAdressFromMixpanelData:user.email])
         {
-            [mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
+            //TODO: remove comment
+            //[mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
         }
     } else {
         [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];
         [mixpanel.people set:@{@"user" : @"guest" ,@"homage_id":user.userID}];
     }
     
-    //TODO: this should not be neeeded. verify for sure if it can be removed completly
-    
-    
     if ([user.userID isEqualToString:[User current].userID])
     {
         //TODO: fix self.loginMethod
         //[mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
-        [mixpanel track:@"UserLogin" properties:@{@"login_mathod" : @"same"}];
+        [mixpanel track:@"UserLogin" properties:@{@"login_mathod" : [NSNumber numberWithInteger:HMSameConnect]}];
         [self.delegate dismissLoginScreen];
         return;
     }
     
     if (user.isFirstUse.boolValue)
     {
-        [mixpanel track:@"UserSignup" properties:@{@"login_method" : self.loginMethod}];
+        [mixpanel track:@"UserSignup" properties:@{@"login_method" : [NSNumber numberWithInteger:self.loginMethod]}];
     } else {
-        [mixpanel track:@"UserLogin" properties:@{@"login_method" : self.loginMethod}];
+        [mixpanel track:@"UserLogin" properties:@{@"login_method" : [NSNumber numberWithInteger:self.loginMethod]}];
     }
 }
 

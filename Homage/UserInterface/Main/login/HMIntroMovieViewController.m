@@ -98,8 +98,8 @@
     self.moviePlayerVC.videoImage = [UIImage imageNamed:@"introMovieThumbnail"];
     self.moviePlayerVC.delegate = self;
     self.moviePlayerVC.resetStateWhenVideoEnds = YES;
-    self.moviePlayerVC.originatingScreen = @"intro_screen";
-    self.moviePlayerVC.entityType = HMIntroMovie;
+    self.moviePlayerVC.originatingScreen = [NSNumber numberWithInteger:HMWelcomeScreen];
+    self.moviePlayerVC.entityType = [NSNumber numberWithInteger:HMIntroMovie];
     self.moviePlayerVC.entityID = @"none";
     [self.moviePlayerVC play];
     

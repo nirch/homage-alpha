@@ -788,8 +788,8 @@
     //[self.videoView hideMediaControls];
     
     vc.delegate = self;
-    vc.originatingScreen = @"how_to_screen";
-    vc.entityType = HMIntroMovie;
+    vc.originatingScreen = [NSNumber numberWithInteger:HMHowTo];
+    vc.entityType = [NSNumber numberWithInteger:HMIntroMovie];
     vc.entityID = @"none";
     vc.resetStateWhenVideoEnds = YES;
     [vc play];

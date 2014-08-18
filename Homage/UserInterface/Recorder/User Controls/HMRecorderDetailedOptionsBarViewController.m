@@ -131,8 +131,8 @@
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
     self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
-    self.sceneVideoVC.originatingScreen = @"detailed_recorder_menu";
-    self.sceneVideoVC.entityType = HMScene;
+    self.sceneVideoVC.originatingScreen = [NSNumber numberWithInteger:HMRecorderMenu];
+    self.sceneVideoVC.entityType = [NSNumber numberWithInteger:HMScene];
     self.sceneVideoVC.entityID = @"none";
     
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
@@ -140,8 +140,8 @@
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
     self.storyVideoVC.delegate = self;
-    self.storyVideoVC.originatingScreen = @"detailed_recorder_menu";
-    self.storyVideoVC.entityType = HMStory;
+    self.storyVideoVC.originatingScreen = [NSNumber numberWithInteger:HMRecorderMenu];
+    self.storyVideoVC.entityType = [NSNumber numberWithInteger:HMStory];
     self.storyVideoVC.entityID = self.remake.story.sID;
     
     // Countdown delegate

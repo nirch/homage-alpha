@@ -34,10 +34,19 @@ typedef NS_ENUM(NSInteger, HMShareMethod) {
     HMShareMethodPostToTwitter,
 };
 
+typedef NS_ENUM(NSInteger, HMOrigScreen) {
+    HMStoryDetails,
+    HMMyStories,
+    HMWelcomeScreen,
+    HMHowTo,
+    HMRecorderPreview,
+    HMRecorderMenu,
+};
+
 -(NSString *)generateBSONID;
 -(void)reportRemakeShare:(NSString *)remakeID forUserID:(NSString *)userID shareMethod:(NSNumber *)shareMethod;
--(void)reportVideoStartWithViewID:(NSString *)viewID forEntity:(NSInteger)entityType withID:(NSString *)entityID forUserID:(NSString *)userID;
--(void)reportVideoStopWithViewID:(NSString *)viewID forEntity:(NSInteger)entityType withID:(NSString *)entityID forUserID:(NSString *)userID forDuration:(NSNumber *)playbackTime outOfTotalDuration:(NSNumber *)videoDuration;
+-(void)reportVideoStartWithViewID:(NSString *)viewID forEntity:(NSNumber *)entityType withID:(NSString *)entityID forUserID:(NSString *)userID fromOriginatingScreen:(NSNumber *)originatingScreen;
+-(void)reportVideoStopWithViewID:(NSString *)viewID forEntity:(NSNumber *)entityType withID:(NSString *)entityID forUserID:(NSString *)userID forDuration:(NSNumber *)playbackTime outOfTotalDuration:(NSNumber *)videoDuration fromOriginatingScreen:(NSNumber *)originatingScreen;
 -(void)reportSession:(NSString *)sessionID beginForUser:(NSString *)userID;
 -(void)reportSession:(NSString *)sessionID endForUser:(NSString *)userID;
 -(void)reportSession:(NSString *)sessionID updateForUser:(NSString *)userID;

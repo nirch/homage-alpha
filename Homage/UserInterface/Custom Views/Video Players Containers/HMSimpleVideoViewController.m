@@ -262,13 +262,17 @@
         {
             [self.delegate videoPlayerDidFinishPlaying];
         }
-        [[Mixpanel sharedInstance] track:@"finish_playing_video" properties:@{@"playing_entity":[NSNumber numberWithInteger:self.entityType] , @"entity_id":self.entityID , @"total_duration":[NSString stringWithFormat:@"%f" ,self.videoPlayer.duration]}];
+        
+        if (self.entityType && self.entityID && self.originatingScreen) {
+            [[Mixpanel sharedInstance] track:@"finish_playing_video" properties:@{@"playing_entity":self.entityType , @"entity_id":self.entityID , @"total_duration":[NSString stringWithFormat:@"%f" ,self.videoPlayer.duration], @"originating_screen":self.originatingScreen}];
+        }
         if (self.resetStateWhenVideoEnds) [self done];
         
-    } else
-    {
+    } else {
          //the user stopped the movie in the middle
-        [[Mixpanel sharedInstance] track:@"stop_playing_video" properties:@{@"playing_entity":[NSNumber numberWithInteger:self.entityType] , @"entity_id":self.entityID , @"playing_time":playbackTimeString , @"total_duration":[NSString stringWithFormat:@"%f" ,self.videoPlayer.duration]}];
+        if (self.entityType && self.entityID ) {
+            [[Mixpanel sharedInstance] track:@"stop_playing_video" properties:@{@"playing_entity":self.entityType , @"entity_id":self.entityID , @"playing_time":playbackTimeString , @"total_duration":[NSString stringWithFormat:@"%f" ,self.videoPlayer.duration], @"originating_screen":self.originatingScreen}];
+        }
         
         if ([self.delegate respondsToSelector:@selector(videoPlayerDidStop)])
         {
@@ -279,7 +283,9 @@
     NSNumber *playbackTime = [NSNumber numberWithDouble:self.currentPlaybackTime];
     NSNumber *totalDuration = [NSNumber numberWithDouble:self.videoPlayer.duration];
     
-    [HMServer.sh reportVideoStopWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID forDuration:playbackTime outOfTotalDuration:totalDuration];
+    if (self.viewID && self.entityID && self.entityType && self.originatingScreen) {
+        [HMServer.sh reportVideoStopWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID forDuration:playbackTime outOfTotalDuration:totalDuration fromOriginatingScreen:self.originatingScreen];
+    }
     
     self.currentPlaybackTime = 0;
 }
@@ -452,9 +458,13 @@
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
-    [[Mixpanel sharedInstance] track:@"start_play_video" properties:@{@"playing_entity":[NSNumber numberWithInteger:self.entityType] , @"entity_id":self.entityID}];
-    self.viewID = [HMServer.sh generateBSONID];
-    [HMServer.sh reportVideoStartWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID];
+    
+    if (self.entityID && self.entityType && self.originatingScreen != nil) {
+        [[Mixpanel sharedInstance] track:@"start_play_video" properties:@{@"playing_entity":self.entityType, @"entity_id":self.entityID, @"originating_screen":self.originatingScreen}];
+        self.viewID = [HMServer.sh generateBSONID];
+        [HMServer.sh reportVideoStartWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID fromOriginatingScreen:self.originatingScreen];
+    }
+
     self.isPlaying = YES;
 }
 

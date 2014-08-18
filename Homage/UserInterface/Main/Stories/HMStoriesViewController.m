@@ -201,7 +201,7 @@
 -(void)onPulledToRefetch
 {
     HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [[Mixpanel sharedInstance] track:@"UserPulledRefresh"];
+    [[Mixpanel sharedInstance] track:@"UserRefreshStories"];
     [self refetchStoriesFromServer];
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
@@ -346,7 +346,7 @@
     }
     
     NSNumber *remakesNum = story.remakesNumber;
-    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%d" , remakesNum.integerValue];
+    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%ld" , (long)remakesNum.integerValue];
     
     
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);

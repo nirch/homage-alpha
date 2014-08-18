@@ -29,20 +29,20 @@
      ];
 }
 
--(void)reportVideoStartWithViewID:(NSString *)viewID forEntity:(NSInteger)entityType withID:(NSString *)entityID forUserID:(NSString *)userID
+-(void)reportVideoStartWithViewID:(NSString *)viewID forEntity:(NSNumber *)entityType withID:(NSString *)entityID forUserID:(NSString *)userID fromOriginatingScreen:(NSNumber *)originatingScreen
 {
-    if (entityType == HMStory)
+    if (entityType.intValue == HMStory)
     {
         [self postRelativeURLNamed:@"view story"
-                        parameters:@{@"view_id":viewID, @"story_id":entityID, @"user_id":userID ,@"playback_event":[NSNumber numberWithInt:HMPlaybackEventStart]}
+                        parameters:@{@"view_id":viewID, @"story_id":entityID, @"user_id":userID ,@"playback_event":[NSNumber numberWithInt:HMPlaybackEventStart], @"originating_screen":originatingScreen}
                   notificationName:HM_NOTIFICATION_SERVER_STORY_VIEW
                               info:@{@"story_id":entityID, @"userID":userID , @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]}
                             parser:nil
          ];
-    } else if (entityType == HMRemake)
+    } else if (entityType.intValue == HMRemake)
     {
         [self postRelativeURLNamed:@"view remake"
-                        parameters:@{@"view_id":viewID, @"remake_id":entityID, @"user_id":userID, @"playback_event":[NSNumber numberWithInt:HMPlaybackEventStart]}
+                        parameters:@{@"view_id":viewID, @"remake_id":entityID, @"user_id":userID, @"playback_event":[NSNumber numberWithInt:HMPlaybackEventStart], @"originating_screen":originatingScreen}
                   notificationName:HM_NOTIFICATION_SERVER_REMAKE_VIEW
                               info:@{@"remake_id":entityID, @"userID":userID , @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]}
                             parser:nil
@@ -50,26 +50,24 @@
     }
 }
 
--(void)reportVideoStopWithViewID:(NSString *)viewID forEntity:(NSInteger)entityType withID:(NSString *)entityID forUserID:(NSString *)userID forDuration:(NSNumber *)playbackTime outOfTotalDuration:(NSNumber *)videoDuration
+-(void)reportVideoStopWithViewID:(NSString *)viewID forEntity:(NSNumber *)entityType withID:(NSString *)entityID forUserID:(NSString *)userID forDuration:(NSNumber *)playbackTime outOfTotalDuration:(NSNumber *)videoDuration fromOriginatingScreen:(NSNumber *)originatingScreen
 {
-    if (entityType == HMStory)
+    if (entityType.intValue == HMStory)
     {
         [self postRelativeURLNamed:@"view story"
-                        parameters:@{@"view_id":viewID, @"story_id":entityID, @"user_id":userID ,@"playback_duration":playbackTime, @"total_duration":videoDuration, @"playback_event":[NSNumber numberWithInt:HMPlaybackEventStop]}
+                        parameters:@{@"view_id":viewID, @"story_id":entityID, @"user_id":userID ,@"playback_duration":playbackTime, @"total_duration":videoDuration, @"playback_event":[NSNumber numberWithInt:HMPlaybackEventStop], @"originating_screen":originatingScreen}
                   notificationName:HM_NOTIFICATION_SERVER_STORY_VIEW
                               info:@{@"story_id":entityID, @"userID":userID , @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]}
                             parser:nil
          ];
-    } else if (entityType == HMRemake)
+    } else if (entityType.intValue == HMRemake)
     {
         [self postRelativeURLNamed:@"view remake"
-                        parameters:@{@"view_id":viewID, @"remake_id":entityID, @"user_id":userID ,@"playback_duration":playbackTime, @"total_duration":videoDuration,@"playback_event":[NSNumber numberWithInt:HMPlaybackEventStop]}
+                        parameters:@{@"view_id":viewID, @"remake_id":entityID, @"user_id":userID ,@"playback_duration":playbackTime, @"total_duration":videoDuration,@"playback_event":[NSNumber numberWithInt:HMPlaybackEventStop],@"originating_screen":originatingScreen}
                   notificationName:HM_NOTIFICATION_SERVER_REMAKE_VIEW
                               info:@{@"remake_id":entityID, @"userID":userID , @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]}
                             parser:nil
-         ];
-
-        
+         ];        
     }
 }
 
@@ -86,7 +84,7 @@
 
 -(void)reportSession:(NSString *)sessionID updateForUser:(NSString *)userID
 {
-    [self postRelativeURLNamed:@"user session update" parameters:@{@"session_id":sessionID, @"user_id":userID} notificationName:HM_NOTIFICATION_SERVER_USER_END_SESSION info:@{@"userID":userID, @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]} parser:nil];
+    [self postRelativeURLNamed:@"user session update" parameters:@{@"session_id":sessionID, @"user_id":userID} notificationName:HM_NOTIFICATION_SERVER_USER_UPDATE_SESSION info:@{@"userID":userID, @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]} parser:nil];
     
 }
 

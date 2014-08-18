@@ -628,13 +628,12 @@
     
     HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
     vc.videoURL = remake.videoURL;
-    vc.entityType = HMRemake;
+    vc.entityType = [NSNumber numberWithInteger:HMRemake];
+    vc.originatingScreen = [NSNumber numberWithInteger:HMMyStories];
     vc.entityID = remake.sID;
     [vc hideVideoLabel];
     //[self.videoView hideMediaControls];
-    
     vc.delegate = self;
-    vc.originatingScreen = @"me_tab";
     vc.resetStateWhenVideoEnds = YES;
     [vc play];
     [vc setFullScreen];

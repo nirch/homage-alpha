@@ -124,8 +124,8 @@
     [self.storyMoviePlayer hideMediaControls];
     self.storyMoviePlayer.videoImage = self.story.thumbnail;
     self.storyMoviePlayer.delegate = self;
-    self.storyMoviePlayer.originatingScreen = @"story_details";
-    self.storyMoviePlayer.entityType = HMStory;
+    self.storyMoviePlayer.originatingScreen = [NSNumber numberWithInteger:HMStoryDetails];
+    self.storyMoviePlayer.entityType = [NSNumber numberWithInteger:HMStory];
     self.storyMoviePlayer.entityID = self.story.sID;
     self.storyMoviePlayer.resetStateWhenVideoEnds = YES;
     HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
@@ -454,7 +454,7 @@
 
 -(void)videoPlayerDidStop:(id)sender afterDuration:(NSString *)playbackTime
 {
-    if (self.remakeMoviePlayer.entityType == HMRemake)
+    if (self.remakeMoviePlayer.entityType.intValue == HMRemake)
     {
         [self.guiRemakeVideoContainer removeFromSuperview];
     }
@@ -500,8 +500,8 @@
     //[self.videoView hideMediaControls];
     
     self.remakeMoviePlayer.delegate = self;
-    self.remakeMoviePlayer.originatingScreen = @"story_details";
-    self.remakeMoviePlayer.entityType = HMRemake;
+    self.remakeMoviePlayer.originatingScreen = [NSNumber numberWithInteger:HMStoryDetails];
+    self.remakeMoviePlayer.entityType = [NSNumber numberWithInteger:HMRemake];
     self.remakeMoviePlayer.entityID = remake.sID;
     self.remakeMoviePlayer.resetStateWhenVideoEnds = YES;
     [self.remakeMoviePlayer play];
@@ -605,10 +605,10 @@
                 break;
             case 1:
                 [self initRecorderWithRemake:self.oldRemakeInProgress completion:nil];
-                [[Mixpanel sharedInstance] track:@"SDOldRemake" properties:@{@"story" : self.story.name}];
+                [[Mixpanel sharedInstance] track:@"doOldRemake" properties:@{@"story" : self.story.name}];
                 break;
             case 2:
-                [[Mixpanel sharedInstance] track:@"SDNewRemakeOld" properties:@{@"story" : self.story.name}];
+                [[Mixpanel sharedInstance] track:@"doNewRemakeOld" properties:@{@"story" : self.story.name}];
                 NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
                 [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
                 [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];

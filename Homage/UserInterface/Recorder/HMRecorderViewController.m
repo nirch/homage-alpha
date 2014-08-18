@@ -1147,9 +1147,7 @@
 
 -(void)openDetailedOptionsAnimated:(BOOL)animated
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"optionsBarOpen" properties:@{
-                                                   @"remake_id" : self.remake.sID, @"story" : self.remake.story.name}];
+
     [self hideTopButtons];
     [self showTopScriptViewIfUserPreffered];
     

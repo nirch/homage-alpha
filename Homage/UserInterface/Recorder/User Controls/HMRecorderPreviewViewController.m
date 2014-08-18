@@ -10,6 +10,7 @@
 #import "HMSimpleVideoViewController.h"
 #import "DB.h"
 #import "Mixpanel.h"
+#import "HMServer+analytics.h"
 
 @interface HMRecorderPreviewViewController ()
 
@@ -34,6 +35,9 @@
     vc.videoURL = [NSString stringWithFormat:@"file://%@", self.footage.rawLocalFile];
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
+    vc.originatingScreen = [NSNumber numberWithInteger:HMRecorderPreview];
+    vc.entityType = [NSNumber numberWithInteger:HMScene];
+    vc.entityID = @"none";
     [vc extractThumbFromVideo];
 
     self.videoVC = vc;
