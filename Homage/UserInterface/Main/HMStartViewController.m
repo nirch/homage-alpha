@@ -552,7 +552,7 @@
         //Mixpanel analytics
         
         User *user = [User current];
-        [HMServer.sh updateServerContext:user.userID];
+        [HMServer.sh updateServerWithCurrentUser:user.userID];
         [self.loginVC registerLoginAnalyticsForUser:user];
         
         

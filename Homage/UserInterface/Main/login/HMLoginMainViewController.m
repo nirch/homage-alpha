@@ -442,7 +442,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     [user loginInContext:DB.sh.context];
-    [HMServer.sh updateServerContext:user.userID];
+    [HMServer.sh updateServerWithCurrentUser:user.userID];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     [[NSUserDefaults standardUserDefaults] setBool:user.isPublic.boolValue forKey:@"remakesArePublic"];
     
@@ -527,7 +527,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     
     [user loginInContext:DB.sh.context];
-    [HMServer.sh updateServerContext:user.userID];
+    [HMServer.sh updateServerWithCurrentUser:user.userID];
     [self.delegate onUserLoginStateChange:[User current]];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     
@@ -897,7 +897,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         if ([self shouldExcludethisAdressFromMixpanelData:user.email])
         {
             //TODO: remove comment
-            //[mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
+            [mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
         }
     } else {
         [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];

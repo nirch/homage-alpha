@@ -19,7 +19,7 @@
 @property (strong,nonatomic) NSDictionary *context;
 @property (strong,nonatomic) NSString *appVersionInfo;
 @property (strong,nonatomic) NSString *appBuildInfo;
-
+@property (strong,nonatomic) NSString *currentUserID;
 
 @end
 
@@ -59,6 +59,10 @@
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     _session = [[AFHTTPSessionManager alloc] initWithBaseURL:self.serverURL sessionConfiguration:configuration];
+    
+    self.session.responseSerializer = [HMJSONResponseSerializerWithData new];
+    self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
+
 }
 
 -(void)testUploadManager
@@ -73,6 +77,15 @@
 //    } else {
 //        self.session.responseSerializer = [AFHTTPResponseSerializer new];
 //    }
+    
+    self.session.requestSerializer = [AFHTTPRequestSerializer new];
+    [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
+    [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
+    
+    if (self.currentUserID) {
+         [self.session.requestSerializer setValue:self.currentUserID forHTTPHeaderField:@"USER_ID"];
+    }
+    
     self.session.responseSerializer = [HMJSONResponseSerializerWithData new];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
 }
@@ -92,9 +105,9 @@
 }
 
 #pragma mark - provide server woth request context
--(void)updateServerContext:(NSString *)userID
+-(void)updateServerWithCurrentUser:(NSString *)userID
 {
-    self.context = @{@"user_id" : userID , @"version" : self.appVersionInfo , @"build" : self.appBuildInfo};
+    self.currentUserID = userID;
 }
 
 -(void)loadAppDetails
@@ -103,7 +116,6 @@
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     self.appBuildInfo = appBuildString;
     self.appVersionInfo = appVersionString;
-    self.context = @{@"version" : self.appVersionInfo , @"build" : self.appBuildInfo};
 }
 
 -(NSDictionary *)addAppDetailsToDictionary:(NSDictionary *)dict
@@ -172,8 +184,6 @@
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
     
-    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
-    
     //
     // send GET Request to server
     //
@@ -181,7 +191,7 @@
     HMGLogDebug(@"GET request:%@/%@", self.session.baseURL, relativeURL);
     [self chooseSerializerForParser:parser];
     
-    [self.session GET:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session GET:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
         //
         // Successful response from server.
@@ -260,14 +270,13 @@
     int attmeptsCount = [moreInfo[@"attempts_count"] intValue];
     [moreInfo removeObjectForKey:@"attempts_counts"];
     
-    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
     // send POST Request to server
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"POST request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
-    [self.session POST:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session POST:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
         //
         // Successful response from server.
@@ -348,14 +357,13 @@
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
     
-    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
     // send DELETE Request to server
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"DELETE request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
-    [self.session DELETE:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session DELETE:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         //
         // Successful response from server.
@@ -424,14 +432,13 @@
                 parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
-    NSDictionary *moreParams = [self addAppDetailsToDictionary:parameters];
     //
     // send PUT Request to server
     //
     NSDate *requestDateTime = [NSDate date];
     HMGLogDebug(@"PUT request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
-    [self.session PUT:relativeURL parameters:moreParams success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.session PUT:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
         //
         // Successful response from server.
