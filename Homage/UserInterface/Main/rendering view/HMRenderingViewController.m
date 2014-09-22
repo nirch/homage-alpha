@@ -31,56 +31,44 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return self;
 }
 
 - (void)viewDidLoad
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
-    HMGLogDebug(@"%s", __PRETTY_FUNCTION__);
     
     [self initGUI];
     [self initObservers];
 
     self.timer = nil;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiDoneRenderingView.alpha = 0;
     self.guiDoneRenderingView.hidden = YES;
     self.guiInProgressView.alpha = 1;
     self.guiInProgressView.hidden = NO;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Observe remake status
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeStatusNotification:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE
                                                      object:nil];
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers handlers
 -(void)onRemakeStatusNotification:(NSNotification *)notification
 {
-    
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Checking the status of the remake
     
     // TODO: Get the String of the remakeID key as a constant from the notification center
@@ -136,7 +124,7 @@
         });
 
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)showDoneViewAnimated:(BOOL)animated
@@ -185,16 +173,12 @@
 }
 
 - (IBAction)movieDoneTapped:(UITapGestureRecognizer *)sender {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *success = self.renderingEnded ? @"YES" : @"NO";
     [[Mixpanel sharedInstance] track:@"hit_movie_done_rendering_button" properties:@{@"remake_successful" : success}];
     [self.delegate renderDoneClickedWithSuccess:self.renderingEnded];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (void)renderStartedWithRemakeID:(NSString *)remakeID {
-    
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     
     // if we have a running timer, then we need to invalidate it
     if ([self.timer isValid])
@@ -211,12 +195,10 @@
     self.guiInProgressLabel.text = [NSString stringWithFormat: LS(@"RENDERING_MOVIE_MESSAGE") ,remake.story.name];
     [self showInProgressViewAnimated:YES];
     [self.guiActivityWheel startAnimating];
-    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 - (void)checkRemakeStatus:(NSTimer *)timer
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // When the timer is fired, calling the server to get the status of the remake
     
     if (self.timePassedSinceTimerBegan > PROGRESS_BAR_DURATION)
@@ -231,18 +213,6 @@
     HMGLogDebug(@"time passed since firing: %d" , self.timePassedSinceTimerBegan);
     NSString *remakeID = [timer.userInfo valueForKey:REMAKE_ID_KEY];
     [[HMServer sh] refetchRemakeWithID:remakeID];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    [super didReceiveMemoryWarning];
-    
-    HMGLogWarning(@"%s received memory warning", __PRETTY_FUNCTION__);
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)stopTimer
@@ -271,7 +241,6 @@
 
 -(void)renderingTimeout
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGLogWarning(@"Progress Bar finished, but the remake isn't ready yet");
     
     [self stopTimer];
@@ -279,7 +248,6 @@
     self.guiDoneLabel.text = LS(@"REMAKE_FAILED_CLICK");
     
     [self showDoneViewAnimated:YES];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)closeButtonPushed:(id)sender

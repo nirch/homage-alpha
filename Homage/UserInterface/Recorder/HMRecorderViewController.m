@@ -1396,8 +1396,6 @@
 #pragma mark UITextView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     //leave recorder
     if (buttonIndex == 1) {
         [[Mixpanel sharedInstance] track:@"UserClosedRecorder" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];

@@ -51,17 +51,17 @@
 #pragma mark lifecycle related
 -(void)viewDidLoad
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     [super viewDidLoad];
 	[self initGUI];
     [self initContent];
     [self refetchRemakesForStoryID:self.story.sID];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     self.guiRemakeActivity.hidden = YES;
     if (self.autoStartPlayingStory)
     {
@@ -69,38 +69,38 @@
         self.autoStartPlayingStory = NO;
     }
     [self initObservers];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     self.guiRemakeButton.enabled = YES;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     self.guiRemakeActivity.hidden = YES;
     [self.guiRemakeActivity stopAnimating];
     [self.storyMoviePlayer done];
     [self removeObservers];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
+    
 }
 
 #pragma mark initializations
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     self.title = self.story.name;
     
     [[AMBlurView new] insertIntoView:self.guiBlurredView];
@@ -110,13 +110,13 @@
     self.guiDescriptionField.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     
 }
 
 -(void)initStoryMoviePlayer
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     HMSimpleVideoViewController *vc;
     self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer rotationSensitive:YES];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
@@ -128,20 +128,20 @@
     self.storyMoviePlayer.entityType = [NSNumber numberWithInteger:HMStory];
     self.storyMoviePlayer.entityID = self.story.sID;
     self.storyMoviePlayer.resetStateWhenVideoEnds = YES;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)initContent
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     [self refreshFromLocalStorage];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     // Observe remake creation
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeCreation:)
@@ -165,25 +165,25 @@
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
                                                      object:nil];
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)removeObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 
 #pragma mark - Observers handlers
 -(void)onRemakeCreation:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     
     [self.guiRemakeActivity stopAnimating];
     self.guiRemakeActivity.hidden = YES;
@@ -193,13 +193,13 @@
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     if ((notification.isReportingError && HMServer.sh.isReachable) || !remake) {
         [self remakeCreationFailMessage];
-        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+        
         return;
     }
     
     self.guiRemakeButton.enabled = YES;
     [self initRecorderWithRemake:remake completion:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)onRemakesRefetched:(NSNotification *)notification
@@ -207,7 +207,7 @@
     //
     // Backend notifies that local storage was updated with remakes.
     //
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     if (notification.isReportingError && HMServer.sh.isReachable ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
                                                         message:@"Something went wrong :-(\n\nTry to refresh later."
@@ -218,18 +218,18 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [alert show];
         });
-        HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
+        HMGLogError(@">>> error in story details onRemakesRefetched %@", notification.reportedError.localizedDescription);
     } else {
         [self cleanPrivateRemakes];
         [self refreshFromLocalStorage];
     }
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     NSDictionary *info = notification.userInfo;
     
     //need to check if this notification came from the same sender
@@ -244,7 +244,7 @@
     UIImage *image = info[@"image"];
     
     if (notification.isReportingError ) {
-        HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
+        HMGLogError(@">>> error in story details onRemakeThumbnailLoaded: %@", notification.reportedError.localizedDescription);
         remake.thumbnail = [UIImage imageNamed:@"errorThumbnail"];
     } else {
         remake.thumbnail = image;
@@ -270,7 +270,7 @@
     }];
     
     cell.guiUserName.text = remake.user.userID;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)onReachabilityStatusChange:(NSNotification *)notification
@@ -295,7 +295,7 @@
 #pragma mark - Alerts
 -(void)remakeCreationFailMessage
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
                                                     message:@"Failed creating remake.\n\nTry again later."
                                                    delegate:self
@@ -310,7 +310,7 @@
 
 -(void)refetchRemakesForStoryID:(NSString *)storyID
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     
     //when we will get the new refetch from the server, we will have all the still public remakes in hand. the remake parser will put this flag up again, and this way we'll know the remakes we should delete from the DB
     [self markCurrentRemakesAsNonPublic];
@@ -330,7 +330,7 @@
 
 -(void)refreshFromLocalStorage
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     NSError *error;
     
     [self.fetchedResultsController performFetch:&error];
@@ -341,7 +341,7 @@
     
     [self.remakesCV reloadData];
     [self handleNoRemakes];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)cleanPrivateRemakes
@@ -356,7 +356,7 @@
 // Lazy instantiation of the fetched results controller.
 -(NSFetchedResultsController *)fetchedResultsController
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     // If already exists, just return it.
     if (_fetchedResultsController) return _fetchedResultsController;
     
@@ -380,7 +380,7 @@
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     return _fetchedResultsController;
 }
 
@@ -388,7 +388,6 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    HMGLogDebug(@"%s started and finished" , __PRETTY_FUNCTION__);
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
     return self.fetchedResultsController.fetchedObjects.count;
     
@@ -397,20 +396,17 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     HMRemakeCell *cell = [self.remakesCV dequeueReusableCellWithReuseIdentifier:@"RemakeCell"
                                                                               forIndexPath:indexPath];
     [self updateCell:cell forIndexPath:indexPath];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     return cell;
 }
 
 
 - (void)updateCell:(HMRemakeCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
-    HMGLogDebug(@"the bug is in %s" , __PRETTY_FUNCTION__);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.guiUserName.text = remake.user.userID;
@@ -592,7 +588,7 @@
 #pragma mark UIAlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     
     if (alertView.tag == REMAKE_ALERT_TAG)
     {
@@ -665,11 +661,11 @@
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
     recorderVC.delegate = self;
     if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 

@@ -189,8 +189,14 @@
 
 - (NSString *)platformSuffixForInterfaceIdiom:(UIUserInterfaceIdiom) interfaceIdiom {
     switch (interfaceIdiom) {
-        case UIUserInterfaceIdiomPad: return @"~ipad";
-        case UIUserInterfaceIdiomPhone: return @"~iphone";
+        case UIUserInterfaceIdiomPad:
+            return @"~ipad";
+            
+        case UIUserInterfaceIdiomPhone:
+            return @"~iphone";
+            
+        default:
+            return @"";
     }
 }
 

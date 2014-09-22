@@ -42,54 +42,36 @@
 
 - (void)viewDidLoad
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     [self initGUI];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     //when switching movieplayer to full screen, viewWillDisappear is also called
     [self.moviePlayerVC done];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initIntroMoviePlayer
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMSimpleVideoViewController *vc;
     self.moviePlayerVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiIntroMovieContainer rotationSensitive:YES];
     self.moviePlayerVC.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]] absoluteString];
@@ -102,35 +84,25 @@
     self.moviePlayerVC.entityType = [NSNumber numberWithInteger:HMIntroMovie];
     self.moviePlayerVC.entityID = @"none";
     [self.moviePlayerVC play];
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 - (IBAction)onPressedSkipButton:(UIButton *)sender {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[Mixpanel sharedInstance] track:@"HitSkipButton"];
     [self.moviePlayerVC done];
     [self.delegate onLoginPressedSkip];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)onPressedShootFirstMovie:(UIButton *)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[Mixpanel sharedInstance] track:@"pushed lets create"];
     [self.moviePlayerVC done];
     [self.delegate onLoginPressedShootFirstStory];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 - (void)didReceiveMemoryWarning
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(BOOL)shouldAutorotate
@@ -145,7 +117,6 @@
 }
 
 #pragma mark HMSimpleVideoViewController delegate
-
 -(void)stopMoviePlayer
 {
     [self.moviePlayerVC done];

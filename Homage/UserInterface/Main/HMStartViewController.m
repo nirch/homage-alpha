@@ -337,7 +337,6 @@
 
 -(void)showNoConnectivity
 {
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (!self.guiNoConnectivityView.hidden) return;
     self.guiNoConnectivityView.hidden = NO;
     CGFloat offset = self.guiNoConnectivityView.frame.size.height;
@@ -349,13 +348,10 @@
         self.guiAppMainView.frame = newAppContainerViewFrame;
         [self hideMainApp];
     } completion:nil];
-    
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
 -(void)hideNoConnectivity
 {
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
     if (self.guiNoConnectivityView.hidden) return;
     
     CGFloat offset = self.guiNoConnectivityView.frame.size.height;
@@ -372,7 +368,6 @@
             self.guiNoConnectivityView.hidden = YES;
         }
     }];
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
 }
 
 
@@ -767,9 +762,6 @@
 
 -(void)initIntroMoviePlayer
 {
-    
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     if (![HMServer.sh isReachable])
     {
         return;
@@ -800,7 +792,6 @@
     videoPlayerController.videoURL = videoURL;
     self.moviePlayer = videoPlayerController;
     [self presentViewController:videoPlayerController animated:YES completion:nil];*/
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
@@ -829,8 +820,6 @@
 
 -(void)showRenderingView
 {
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
-    
     if (!self.renderingContainerView.hidden) return;
     
     self.renderingContainerView.hidden = NO;
@@ -845,14 +834,10 @@
         //self.appWrapperView.layer.borderColor = [[UIColor yellowColor] CGColor];
         //self.appWrapperView.layer.borderWidth = 3.0f;
     } completion:nil];
-    
-    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(void)hideRenderingView
 {
-    HMGLogDebug(@"%s started", __PRETTY_FUNCTION__);
-    
     if (self.renderingContainerView.hidden) return;
     
     CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
@@ -866,7 +851,6 @@
         if (finished)
         self.renderingContainerView.hidden = YES;
     }];
-    HMGLogDebug(@"%s finished", __PRETTY_FUNCTION__);
 }
 
 -(BOOL)isRenderingViewShowing
@@ -917,7 +901,6 @@
     
     if (notification.isReportingError && HMServer.sh.isReachable)
     {
-        HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
         HMGLogError(@"error details is: %@" , notification.reportedError.localizedDescription);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
                                                         message:@"Failed updating preferences.\n\nTry again in a few moments."

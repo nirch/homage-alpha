@@ -83,8 +83,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 - (void)viewDidLoad
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     [super viewDidLoad];
     self.myAppDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
     self.myAppDelegate.userJoinFlow = NO;
@@ -103,13 +101,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.guiSignUpView addSubview:loginView];
     
     [self initGUI];
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.tosVC = [[HMTOSViewController alloc] init];
     self.privacyVC = [[HMPrivacyPolicyViewController alloc] init];
     self.legalNavVC = [[UINavigationController alloc] init];
@@ -118,22 +113,19 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiLoginErrorLabel.hidden = YES;
     self.guiLoginErrorLabel.text = @"";
     [self resetTextFields];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.guiActivityView stopAnimating];
     self.guiActivityView.hidden = YES;
     [self removeObservers];
     [self resetTextFields];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+
 }
 
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiIntroMovieContainerView.alpha = 0;
     self.guiIntroMovieContainerView.hidden = YES;
     self.guiLoginErrorLabel.alpha = 0;
@@ -175,14 +167,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     //activity view
     self.guiActivityView.hidden = YES;
     [self.guiActivityView stopAnimating];
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 -(void)initObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Observe creation of user
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserCreated:)
@@ -201,24 +189,20 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)removeObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UPDATED object:nil];
     [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 -(BOOL)checkCredentials
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSString *emailAddress = self.guiMailTextField.text;
     
     /*
@@ -234,7 +218,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (!isMailCorrectFormat)
     {
         [self presentErrorLabelWithReason:HMIncorrectMailAddressFormat];
-        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
     
@@ -243,25 +226,19 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     if (!isPasswordCorrectFormat)
     {
         [self presentErrorLabelWithReason:HMBadPassword];
-        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return NO;
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    
     return YES;
 }
 
 -(BOOL)validatePassword:(NSString *)password
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if ([password length] < 4) return NO;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return YES;
 }
 
 -(void)presentErrorLabelWithReason:(NSInteger)reason
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     switch (reason) {
         case HMUnknownMailAddress:
             [self showErrorLabelWithString:LS(@"UNKNOWN_MAIL_ADDRESS")];
@@ -290,23 +267,19 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         default:
             break;
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)showErrorLabelWithString:(NSString *)errorString
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.guiLoginErrorLabel.hidden = NO;
     self.guiLoginErrorLabel.text = errorString;
     [UIView animateWithDuration:0.3 animations:^{
         self.guiLoginErrorLabel.alpha = 1;
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)hideErrorLabel
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (self.guiLoginErrorLabel.hidden) return;
     
     [UIView animateWithDuration:0.3 animations:^{
@@ -314,14 +287,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     } completion:^(BOOL finished) {
         self.guiLoginErrorLabel.hidden = YES;
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 
 -(IBAction)onPressedSignUpLogin:(UIButton *)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = HMMailConnect;
     self.guiLoginErrorLabel.text = @"";
     
@@ -347,13 +318,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     [self resetTextFields];
-
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 - (IBAction)onPressedGuest:(UIButton *)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.loginMethod = HMGuestConnect;
     
     if (!HMServer.sh.isReachable)
@@ -366,32 +334,25 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *guestDictionary = @{@"is_public" : @NO , @"device" : deviceInfo};
     [HMServer.sh createUserWithDictionary:guestDictionary];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onLoginPressedSkip
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self hideIntroMovieView];
     [self resetTextFields];
     [self.delegate dismissLoginScreen];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onLoginPressedShootFirstStory
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self hideIntroMovieView];
     [self resetTextFields];
     [self.delegate dismissLoginScreen];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 -(void)onUserCreated:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-
     if (notification.isReportingError)
     {
         NSDictionary *userInfo = notification.userInfo;
@@ -461,7 +422,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     [DB.sh save];
     [self.delegate onUserLoginStateChange:user];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onUserUpdated:(NSNotification *)notification
@@ -537,7 +497,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)displayIntroMovieView
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     self.guiIntroMovieContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^
      {
@@ -548,12 +508,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
          self.guiSignUpView.hidden = YES;
          [self.introMovieController initIntroMoviePlayer];
      }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)hideIntroMovieView
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     self.guiSignUpView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^
     {
@@ -564,14 +524,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         self.guiIntroMovieContainerView.hidden = YES;
         [self.introMovieController stopMoviePlayer];
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     [textField resignFirstResponder];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     return YES;
 }
 
@@ -579,7 +539,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 #pragma mark Text Field/Keyboard stuff
 -(void)keyboardWasShown:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     NSDictionary* info = notification.userInfo;
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
@@ -596,16 +556,16 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     self.guiLoginErrorLabel.hidden = YES;
     self.guiLoginErrorLabel.text = @"";
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 -(void)keyboardWillBeHidden:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.guiSignUpView.contentInset = contentInsets;
     self.guiSignUpView.scrollIndicatorInsets = contentInsets;
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
 }
 
 - (BOOL) validateEmail:(NSString *)emailAddress {
@@ -617,7 +577,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(NSDictionary *)getDeviceInformation
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     UIDevice *device = [UIDevice currentDevice];
     
     NSDictionary *deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString]};
@@ -629,16 +589,16 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString] , @"push_token" : pushToken};
     }
         
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     return deviceDictionary;
 }
 
 +(HMLoginMainViewController *)instantiateLoginScreen
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OnBoarding" bundle:nil];
     HMLoginMainViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginMainVC"];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     return vc;
 }
 
@@ -815,7 +775,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     if ([segue.identifier isEqualToString:@"IntroSegue"])
     {
         self.introMovieController = segue.destinationViewController;
@@ -826,7 +786,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 - (void)didReceiveMemoryWarning
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

@@ -154,7 +154,6 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self done];
     self.videoPlayer = nil;
     [self removeObservers];
@@ -180,8 +179,6 @@
     } completion:^(BOOL finished) {
         
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -331,7 +328,6 @@
 
 -(void)_startToPlayTheActualVideo
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (self.waitingToStartPlayingTheFile == NO)
     {
         return;
@@ -352,7 +348,6 @@
             self.waitingToStartPlayingTheFile = NO;
         }
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
@@ -470,7 +465,6 @@
 
 -(void)done
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     self.isPlaying = NO;
     self.waitingToStartPlayingTheFile = NO;
     [self.videoPlayer stop];
@@ -496,7 +490,6 @@
     } completion:^(BOOL finished) {
         
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 

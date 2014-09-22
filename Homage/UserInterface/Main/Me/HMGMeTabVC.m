@@ -58,7 +58,6 @@
 #pragma mark lifecycle related
 - (void)viewDidLoad
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [super viewDidLoad];
     //[self.refreshControl beginRefreshing];
     [self initGUI];
@@ -69,50 +68,36 @@
     
     _sectionChanges = [NSMutableArray array];
     _objectChanges = [NSMutableArray array];
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[Mixpanel sharedInstance] track:@"MEEnterTab"];
     [self initObservers];
     [self refreshFromLocalStorage];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self removeObservers];
     //[self.moviePlayer done];
     
     //no movie is playing. nothing should happen
     if (self.playingMovieIndex == -1) return;
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark initializations
 -(void)initGUI
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     //init refresh control
     UIRefreshControl *tempRefreshControl = [[UIRefreshControl alloc] init];
     [self.userRemakesCV addSubview:tempRefreshControl];
@@ -127,16 +112,13 @@
     [self.noRemakesLabel setHidden:YES];
     self.noRemakesLabel.textColor = [HMColor.sh textImpact];
     self.title = LS(@"ME_TAB_HEADLINE_TITLE");
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initContent
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self refreshFromLocalStorage];
     [self refetchRemakesFromServer];
     //[self.userRemakesCV reloadData];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers
@@ -157,10 +139,6 @@
 }
 -(void)initObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
-    
-    
     // Observe lazy loading thumbnails
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeThumbnailLoaded:)
@@ -187,14 +165,10 @@
                                                    selector:@selector(onReachabilityStatusChange:)
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
                                                      object:nil];*/
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    
 }
 
 -(void)removeObservers
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_REMAKES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
@@ -203,7 +177,6 @@
     //[nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
     [nc removeObserver:self name:HM_SHORT_URL object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark - Observers handlers
@@ -212,7 +185,6 @@
     //
     // Backend notifies that local storage was updated with remakes.
     //
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (notification.isReportingError && HMServer.sh.isReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
                                                         message:@"Something went wrong. \n\nTry to refresh in a few moments."
@@ -224,7 +196,7 @@
             [alert show];
         });
         
-        HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
+        HMGLogError(@">>> error in onRemakesRefetched: %@", notification.reportedError.localizedDescription);
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.userRemakesCV.hidden = NO;
@@ -243,8 +215,6 @@
             
         });
     }
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)refreshRemakes
@@ -255,7 +225,6 @@
 
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
     
     //need to check if this notification came from the same sender
@@ -270,7 +239,7 @@
     UIImage *image = info[@"image"];
     
     if (notification.isReportingError ) {
-        HMGLogError(@">>> error in %s: %@", __PRETTY_FUNCTION__ , notification.reportedError.localizedDescription);
+        HMGLogError(@">>> error in onRemakeThumbnailLoaded: %@", notification.reportedError.localizedDescription);
         remake.thumbnail = [UIImage imageNamed:@"missingThumbnail"];
     } else {
         remake.thumbnail = image;
@@ -289,12 +258,10 @@
         cell.guiThumbImage.alpha = 1;
         cell.guiThumbImage.transform = CGAffineTransformIdentity;
     }];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onRemakeDeletion:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remakeID"];
     
@@ -315,13 +282,10 @@
         [DB.sh.context deleteObject:remake];
         [DB.sh save];
     }
-        
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onRemakeCreation:(NSNotification *)notification
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // Get the new remake object.
     NSString *remakeID = notification.userInfo[@"remakeID"];
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
@@ -332,7 +296,6 @@
     
     // Present the recorder for the newly created remake.
     [self initRecorderWithRemake:remake];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onReachabilityStatusChange:(NSNotification *)notification
@@ -355,14 +318,11 @@
 #pragma mark - Refresh my remakes
 -(void)refetchRemakesFromServer
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [HMServer.sh refetchRemakesForUserID:User.current.userID];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)refreshFromLocalStorage
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
     HMGLogDebug(@"num of fetched objects: %d" , self.fetchedResultsController.fetchedObjects.count);
@@ -375,16 +335,12 @@
                        [self handleNoRemakes];
                        [self.userRemakesCV reloadData];
                    });
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)onPulledToRefetch
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[Mixpanel sharedInstance] track:@"MEUserRefresh"];
     [self refetchRemakesFromServer];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
@@ -392,11 +348,9 @@
 // Lazy instantiation of the fetched results controller.
 -(NSFetchedResultsController *)fetchedResultsController
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     // If already exists, just return it.
     NSString *currentUserID = [User current].userID;
     if (_fetchedResultsController && [self.currentFetchedResultsUser isEqualToString:currentUserID]) {
-        HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
         return _fetchedResultsController;
     }
     
@@ -420,7 +374,6 @@
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
     
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return _fetchedResultsController;
 }
 
@@ -434,7 +387,6 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    HMGLogDebug(@"%s started and finished" , __PRETTY_FUNCTION__);
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
     return self.fetchedResultsController.fetchedObjects.count;
     
@@ -443,11 +395,9 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGUserRemakeCVCell *cell = [self.userRemakesCV dequeueReusableCellWithReuseIdentifier:@"RemakeCell"
                                                                               forIndexPath:indexPath];
     [self updateCell:cell forIndexPath:indexPath];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
     return cell;
 }
 
@@ -455,8 +405,6 @@
 
 - (void)updateCell:(HMGUserRemakeCVCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
-    
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
@@ -485,12 +433,10 @@
     
     cell.storyNameLabel.text = remake.story.name;
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)updateUIOfRemakeCell:(HMGUserRemakeCVCell *)cell withStatus:(NSNumber *)status
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     UIImage *image;
     
     switch (status.intValue)
@@ -550,26 +496,21 @@
             break;
             
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
-    
 }
 
 -(void)handleNoRemakes
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if ([self.userRemakesCV numberOfItemsInSection:0] == 0) {
         [self.noRemakesLabel setHidden:NO];
     } else {
         [self.noRemakesLabel setHidden:YES];
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark cell action button
 
 - (IBAction)actionButtonPushed:(UIButton *)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
     if (!cell) return;
     
@@ -595,16 +536,12 @@
             //TODO: what to do?
             break;
     }
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 #pragma mark video player
 -(void)playRemakeVideoWithURL:(NSString *)videoURL inCell:(HMGUserRemakeCVCell *)cell withIndexPath:(NSIndexPath *)indexPath
 {
-    
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     /*if (self.playingMovieIndex != -1) //another movie is being played in another cell
     {
         HMGUserRemakeCVCell *otherRemakeCell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
@@ -614,7 +551,6 @@
     self.playingMovieIndex = indexPath.item;
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self initVideoPlayerWithRemake:remake];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)initVideoPlayerWithRemake:(Remake *)remake
@@ -641,7 +577,6 @@
 
 -(void)configureCellForMoviePlaying:(HMGUserRemakeCVCell *)cell active:(BOOL)active
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     if (active)
     {
         //[cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
@@ -654,32 +589,26 @@
         [cell.guiThumbImage setHidden:NO];
         [cell.buttonsView setHidden:NO];
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 -(void)closeCurrentlyPlayingMovie
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self getCellFromCollectionView:self.userRemakesCV atIndex:self.playingMovieIndex atSection:0];
     [self closeMovieInCell:cell];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)closeMovieInCell:(HMGUserRemakeCVCell *)remakeCell
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     //self.moviePlayer = nil;
     [self configureCellForMoviePlaying:remakeCell active:NO];
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 #pragma mark remaking
 - (IBAction)deleteRemake:(UIButton *)sender
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
     
@@ -694,8 +623,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [alertView show];
     });
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(HMGUserRemakeCVCell *)getParentCollectionViewCellOfButton:(UIButton *)button
@@ -726,7 +653,6 @@
 
 - (IBAction)remakeButtonPushed:(UIButton *)button
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self closeCurrentlyPlayingMovie];
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
     if (!cell) return;
@@ -761,14 +687,11 @@
     } else {
         [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
     }
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 #pragma mark sharing
 - (IBAction)shareButtonPushed:(UIButton *)button
 {
-    
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
     if (!cell) return;
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
@@ -784,13 +707,10 @@
         });
 
     } else [self shareRemake:remakeToShare];
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(void)shareRemake:(Remake *)remake
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [[HMGoogleAPI sharedInstance] shortenURL:remake.shareURL info:@{@"remake_id" :remake.sID}];
 }
 
@@ -854,7 +774,7 @@
     
     [activityViewController setValue:generalShareSubject forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self presentViewController:activityViewController animated:YES completion:^{}];
     });
@@ -864,18 +784,15 @@
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
     recorderVC.delegate = self;
     if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
 #pragma mark UITextView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     //remake button pushed
     if (alertView.tag == REMAKE_ALERT_VIEW_TAG)
     {
@@ -932,8 +849,6 @@
         }
     
     }
-    
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 -(UICollectionViewCell *)getCellFromCollectionView:(UICollectionView *)collectionView atIndex:(NSInteger)index atSection:(NSInteger)section
@@ -994,11 +909,9 @@
 #pragma mark HMSimpleVideoViewController delegate
 -(void)videoPlayerDidStop
 {
-    HMGLogDebug(@"%s started" , __PRETTY_FUNCTION__);
     [self.guiVideoContainer removeFromSuperview];
     if (self.playingMovieIndex != -1)
         [self closeCurrentlyPlayingMovie];
-    HMGLogDebug(@"%s finished" , __PRETTY_FUNCTION__);
 }
 
 
@@ -1034,6 +947,8 @@
         case NSFetchedResultsChangeDelete:
             change[@(type)] = @(sectionIndex);
             break;
+        default:
+            break;
     }
     
     [_sectionChanges addObject:change];
@@ -1061,6 +976,8 @@
                                 break;
                             case NSFetchedResultsChangeUpdate:
                                 [self.userRemakesCV reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                                break;
+                            default:
                                 break;
                         }
                     }];

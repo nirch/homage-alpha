@@ -99,6 +99,7 @@
 		086D94A4188701EA0086C565 /* HMServer+Stories.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D949E188701EA0086C565 /* HMServer+Stories.m */; };
 		086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94A7188702130086C565 /* HMServer+LazyLoading.m */; };
 		086D94A9188702130086C565 /* HMServer+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94A7188702130086C565 /* HMServer+LazyLoading.m */; };
+		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
 		08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7AF188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7B3188C6B9500C0EE27 /* HMAvenirBookFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7B2188C6B9500C0EE27 /* HMAvenirBookFontButton.m */; };
@@ -205,7 +206,6 @@
 		263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C4483192E6BA400AD82EC /* Contour+Factory.m */; };
 		263C448D192F4E5E00AD82EC /* Contour.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C448C192F4E5E00AD82EC /* Contour.m */; };
 		2650DED8190D45D900CA306C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2650DED7190D45D900CA306C /* Crashlytics.framework */; };
-		2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3218EDA37100CA362F /* Homage-Info.plist */; };
 		2655DF3618EDA37100CA362F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF3418EDA37100CA362F /* main.m */; };
 		2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3718EDA46400CA362F /* Storyboard.storyboard */; };
 		2655DF5318EDA4D200CA362F /* HMPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */; };
@@ -366,6 +366,7 @@
 		086D949E188701EA0086C565 /* HMServer+Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Stories.m"; sourceTree = "<group>"; };
 		086D94A6188702130086C565 /* HMServer+LazyLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+LazyLoading.h"; sourceTree = "<group>"; };
 		086D94A7188702130086C565 /* HMServer+LazyLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+LazyLoading.m"; sourceTree = "<group>"; };
+		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		08ACB7AC188C631C00C0EE27 /* HMAnimationsFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnimationsFX.h; sourceTree = "<group>"; };
 		08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnimationsFX.m; sourceTree = "<group>"; };
 		08ACB7B1188C6B9500C0EE27 /* HMAvenirBookFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAvenirBookFontButton.h; sourceTree = "<group>"; };
@@ -489,7 +490,7 @@
 		2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMIntroMovieViewController.m; path = login/HMIntroMovieViewController.m; sourceTree = "<group>"; };
 		2655DF5A18EDA50600CA362F /* HMLoginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMLoginDelegate.h; path = login/HMLoginDelegate.h; sourceTree = "<group>"; };
 		2655DF5B18EDA50600CA362F /* HMLoginMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMLoginMainViewController.h; path = login/HMLoginMainViewController.h; sourceTree = "<group>"; };
-		2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMLoginMainViewController.m; path = login/HMLoginMainViewController.m; sourceTree = "<group>"; };
+		2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = HMLoginMainViewController.m; path = login/HMLoginMainViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2655DF6118EDA53F00CA362F /* HMsideBarNavigatorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMsideBarNavigatorDelegate.h; path = "side bar/HMsideBarNavigatorDelegate.h"; sourceTree = "<group>"; };
 		2655DF6218EDA53F00CA362F /* HMsideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMsideBarViewController.h; path = "side bar/HMsideBarViewController.h"; sourceTree = "<group>"; };
 		2655DF6318EDA53F00CA362F /* HMsideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMsideBarViewController.m; path = "side bar/HMsideBarViewController.m"; sourceTree = "<group>"; };
@@ -584,6 +585,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */,
 				267A64D519532275003DFFEA /* Security.framework in Frameworks */,
 				26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */,
 				08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */,
@@ -643,6 +645,7 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0875E5E219CF1DAE001E1F2D /* libicucore.dylib */,
 				267A64D419532275003DFFEA /* Security.framework */,
 				26B448F41947E28800BC6317 /* SystemConfiguration.framework */,
 				26B448F21947E25700BC6317 /* Appsee.framework */,
@@ -1429,7 +1432,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = HM;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Homage;
 				TargetAttributes = {
 					0806FA0B18828AEB007514BE = {
@@ -1479,7 +1482,6 @@
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				2638593B18955252003A7B3D /* Settings.bundle in Resources */,
-				2655DF3518EDA37100CA362F /* Homage-Info.plist in Resources */,
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
 				26DE49AA1912552D00BC2B0B /* cinemaCountdown5.wav in Resources */,
 				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
