@@ -22,4 +22,6 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 @property (nonatomic) BOOL sessionStartFlag;
 @property (nonatomic) BOOL userJoinFlow;
 
+@property (nonatomic) BOOL shouldAllowStatusBar;
+
 @end

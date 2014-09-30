@@ -789,8 +789,8 @@
     [HMServer.sh lazyLoadImageFromURL:scene.silhouetteURL
                      placeHolderImage:nil
                      notificationName:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
-                                 info:@{@"sceneID":scene.sID}
-     ];
+                                 info:@{@"sceneID":scene.sID}];
+    
     return nil;
 }
 

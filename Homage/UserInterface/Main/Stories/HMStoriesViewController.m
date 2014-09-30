@@ -19,10 +19,21 @@
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
+// The collection view displaying the list of stories
 @property (weak, nonatomic) IBOutlet UICollectionView *storiesCV;
+
+// A label indicating no stories in the list.
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noStoriesLabel;
+
+// The fetched results controller with the query to the list of stories
+// Doesn't implement fetched results controller delegate.
+// Just refetches and reloads all data when notification about update is recieved.
+@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
+
+// A weak reference to the refresh controll (The owner will be it's superview - storiesCV)
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
+
+// TODO: make sure this is a correct implementation.
 @property (weak,nonatomic) Story *preRequestedStory;
 
 @end
@@ -55,16 +66,21 @@
 #pragma mark initializations
 -(void)initGUI
 {
-    
-    
-    UIRefreshControl *tempRefreshControl = [[UIRefreshControl alloc] init];
-    [self.storiesCV addSubview:tempRefreshControl];
-    self.refreshControl = tempRefreshControl;
+    // Init pull to refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [self.storiesCV addSubview:refreshControl];
+    self.refreshControl = refreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [HMColor.sh main2];
+    CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
+    f.origin.y += 32;
+    [[refreshControl.subviews objectAtIndex:0] setFrame:f];
+    
+    // Title of this screen.
     self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
     HMGLogDebug(@"title is: %@" , self.title);
     
-    //self.view.backgroundColor = [UIColor clearColor];
+    // Other UI initializations
     [self.storiesCV setBackgroundColor: [UIColor clearColor]];
     self.storiesCV.alwaysBounceVertical = YES;
     self.noStoriesLabel.text = LS(@"NO_STORIES");
@@ -73,9 +89,7 @@
 
 -(void)initContent
 {
-    
     [self refreshFromLocalStorage];
-    
 }
 
 
@@ -167,9 +181,8 @@
     UIImage *image = info[@"image"];
     
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
     if (notification.isReportingError || !image) {
-        story.thumbnail = [UIImage imageNamed:@"missingThumbnail"];
+        story.thumbnail = nil;
     } else {
         story.thumbnail = image;
     }
@@ -180,7 +193,7 @@
     // Reveal the image animation
     HMStoryCell *cell = (HMStoryCell *)[self.storiesCV cellForItemAtIndexPath:indexPath];
     cell.guiThumbImage.alpha = 0;
-    cell.guiThumbImage.image = story.thumbnail;
+    cell.guiThumbImage.image = image ? story.thumbnail : [UIImage imageNamed:@"missingThumbnail"];
     cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
     [UIView animateWithDuration:0.7 animations:^{
         cell.guiThumbImage.alpha = 1;
@@ -236,7 +249,6 @@
             [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"story" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
         }
         
-        
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
     }
@@ -251,6 +263,9 @@
 
 -(void)refreshFromLocalStorage
 {
+    //
+    // Performs a fetch from local storage and reloads data of the collection.
+    //
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
@@ -269,6 +284,8 @@
     if (_fetchedResultsController) return _fetchedResultsController;
     
     // Define fetch request.
+    // Fetches all stories with isActive=@(YES)
+    // Orders them by orderID (ascending order)
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_STORY];
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @(YES)];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"orderID" ascending:YES]];
@@ -286,7 +303,7 @@
     _fetchedResultsController = nil;
 }
 
-#pragma mark - stories collection view 
+#pragma mark - UICollectionViewDelegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
@@ -301,28 +318,30 @@
     return cell;
 }
 
+#pragma mark - Cells configuration
 -(void)configureCell:(HMStoryCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    //HMGLogDebug(@"story name: %@" , story.name);
     
     cell.guiStoryNameLabel.text = story.name;
-    HMGLogDebug(@"story name: %@" , story.name);
+    cell.guiLevelOfDifficulty.image = [self getDifficultyLevelThumbForStory:story];
+    
+    // Get thumb image from local storage or lazy load it from server.
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
     cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
     
-    cell.guiLevelOfDifficulty.image = [self getDifficultyLevelThumbForStory:story];
+    // Is a selfie icon
+    NSString *shotModeImageName = story.isASelfie ? @"selfie1" : @"director1";
+    cell.guiShotMode.image = [UIImage imageNamed:shotModeImageName];
     
-    if (story.isASelfie) {
-        cell.guiShotMode.image = [UIImage imageNamed:@"selfie1"];
-    } else {
-        cell.guiShotMode.image = [UIImage imageNamed:@"director1"];
-    }
-    
+    // Number of remakes
     NSNumber *remakesNum = story.remakesNumber;
-    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"#%ld" , (long)remakesNum.integerValue];
+    cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"%ld" , (long)remakesNum.integerValue];
 }
 
+#pragma mark - Collection View configuration
 -(UIImage *)getDifficultyLevelThumbForStory:(Story *)story
 {
     UIImage *image;
@@ -343,6 +362,9 @@
 
 -(void)handleNoRemakes
 {
+    //
+    // Show indication in the UI in case no stories available.
+    //
     if ([self.storiesCV numberOfItemsInSection:0] == 0) {
         [self.noStoriesLabel setHidden:NO];
     } else {
@@ -358,7 +380,7 @@
                      placeHolderImage:nil
                      notificationName:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                  info:@{@"indexPath":indexPath, @"storyID":story.sID}
-    ];
+     ];
     return nil;
 }
 

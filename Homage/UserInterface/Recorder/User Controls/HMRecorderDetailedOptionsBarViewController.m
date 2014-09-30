@@ -493,8 +493,8 @@
     [HMServer.sh lazyLoadImageFromURL:story.thumbnailURL
                      placeHolderImage:nil
                      notificationName:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
-                                 info:@{@"storyID":story.sID}
-     ];
+                                 info:@{@"storyID":story.sID}];
+    
     return nil;
 }
 

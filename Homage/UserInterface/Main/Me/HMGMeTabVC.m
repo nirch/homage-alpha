@@ -419,16 +419,19 @@
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     
     if (remake.thumbnail) {
+        
         cell.guiThumbImage.image = remake.thumbnail;
         cell.guiThumbImage.alpha = 1;
+        
     } else {
+        
         cell.guiThumbImage.alpha = 0;
         cell.guiThumbImage.image = nil;
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}
-         ];
+                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}];
+        
     }
     
     cell.storyNameLabel.text = remake.story.name;
@@ -523,8 +526,9 @@
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
-            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
-            [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
+            NSLog(@">>> %@", remake.story.name);
+            //[[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
+            //[self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
             break;
         case HMGRemakeStatusInProgress:
             //TODO:connect to recorder at last non taken scene

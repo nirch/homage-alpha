@@ -134,7 +134,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiGuestButton.hidden = NO;
     self.guiCancelButton.hidden = YES;
     
-    //self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:0.3 maskImage:nil];
     [[AMBlurView new] insertIntoView:self.guiBlurredView];
     
     for (HMAvenirBookFontButton *button in self.buttonCollection)

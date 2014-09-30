@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *guiUserIcon;
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiHelloUserLabel;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiJoinButton;
@@ -87,25 +88,14 @@
 
 -(void)initGUI
 {
-
-    //self.guiBGImageView.image = [self.guiBGImageView.image applyBlurWithRadius:10.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.8] saturationDeltaFactor:0.3 maskImage:nil];
-    [[AMBlurView new] insertIntoView:self.guiBlurredView];
-    
-    [self.guiHelloUserLabel setTextColor:[HMColor.sh textImpact]];
-    
     for (HMAvenirBookFontButton *button in self.tabButtonCollection)
     {
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        
         button.clipsToBounds = YES;
         
         CALayer *bottomBorder = [CALayer layer];
-        
-        bottomBorder.borderColor = [HMColor.sh greyLine].CGColor;
+        bottomBorder.borderColor = [UIColor blackColor].CGColor;
         bottomBorder.borderWidth = 1;
         bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
-        
         [button.layer addSublayer:bottomBorder];
         
         [self selectButton:self.storiesButton];
@@ -208,6 +198,9 @@
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
 {
     self.guiProfilePictureView.profileID = fbProfileID;
+    self.guiProfilePictureView.hidden = fbProfileID == nil;
+    self.guiUserIcon.hidden = !self.guiProfilePictureView.hidden;
+    
     self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO_USER") , userName];
     if (![userName isEqualToString:@"Guest"])
     {

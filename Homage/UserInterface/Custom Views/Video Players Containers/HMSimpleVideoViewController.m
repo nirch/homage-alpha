@@ -15,6 +15,7 @@
 #import "Mixpanel.h"
 #import "HMServer+analytics.h"
 #import "DB.h"
+#import "HMAppDelegate.h"
 
 @implementation UIDevice (ALSystemVersion)
 
@@ -121,8 +122,11 @@
     
     if (self.shouldAutoPlay)
     {
-        [self play];
+        [self updateUIToPlayVideoState];
         self.shouldAutoPlay = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self play];
+        });
     }
 }
 
@@ -490,6 +494,11 @@
     } completion:^(BOOL finished) {
         
     }];
+    
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    app.shouldAllowStatusBar = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+
 }
 
 
@@ -662,55 +671,60 @@
     if (!self.waitingToStartPlayingTheFile && !self.isPlaying) return;
     
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    NSLog(@"device orientation is now: %d" , [[UIDevice currentDevice] orientation]);
+    NSLog(@"device orientation is now: %ld" , (long)[[UIDevice currentDevice] orientation]);
     
     dispatch_async(dispatch_get_main_queue(), ^{
-    switch (orientation) {
-        case UIDeviceOrientationLandscapeLeft:
-            if (self.playPortrait)
-            {
-                [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
-                //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
-            }
-            self.playPortrait = NO;
-            self.previousOrientation = orientation;
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            if (self.playPortrait)
-            {
-            [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeLeft];
-            //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
-            }
-            self.playPortrait = NO;
-            self.previousOrientation = orientation;
-            break;
-        case UIDeviceOrientationPortrait:
-            if (self.playPortrait)
-            {
+        switch (orientation) {
+            case UIDeviceOrientationLandscapeLeft:
+                if (self.playPortrait)
+                {
+                    [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
+                    //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+                }
+                self.playPortrait = NO;
                 self.previousOrientation = orientation;
                 break;
-            }
-            if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
-            {
-                [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
-                //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:NO completion:nil];
-            } else {
-                [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
-            }
-            self.previousOrientation = orientation;
-            self.playPortrait = YES;
-            break;
-        default:
-            if (self.previousOrientation == UIDeviceOrientationPortrait || self.previousOrientation == UIDeviceOrientationFaceDown || self.previousOrientation == UIDeviceOrientationFaceUp)
-            {
-                self.playPortrait = YES;
-            } else
-            {
+            case UIDeviceOrientationLandscapeRight:
+                if (self.playPortrait)
+                {
+                    [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeLeft];
+                    //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
+                }
                 self.playPortrait = NO;
-            }
-            self.previousOrientation = orientation;
-            break;
-    }
+                self.previousOrientation = orientation;
+                break;
+            case UIDeviceOrientationPortrait:
+                if (self.playPortrait)
+                {
+                    self.previousOrientation = orientation;
+                    break;
+                }
+                if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
+                {
+                    [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
+                    //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:NO completion:nil];
+                } else {
+                    [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
+                }
+                self.previousOrientation = orientation;
+                self.playPortrait = YES;
+                break;
+            default:
+                if (self.previousOrientation == UIDeviceOrientationPortrait || self.previousOrientation == UIDeviceOrientationFaceDown || self.previousOrientation == UIDeviceOrientationFaceUp)
+                {
+                    self.playPortrait = YES;
+                } else
+                {
+                    self.playPortrait = NO;
+                }
+                self.previousOrientation = orientation;
+                break;
+        }
+        
+        HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+        app.shouldAllowStatusBar = UIDeviceOrientationIsPortrait(orientation);
+        [self setNeedsStatusBarAppearanceUpdate];
+        
     });
 }
 
@@ -735,22 +749,22 @@
     [self updateScalingModeForOrientation:orientation];
     
     switch (orientation) {
-            case UIInterfaceOrientationPortraitUpsideDown:
+        case UIInterfaceOrientationPortraitUpsideDown:
             angle = M_PI;
             backgroundFrame = CGRectMake(-movieBackgroundPadding, -movieBackgroundPadding, windowSize.width + movieBackgroundPadding*2, windowSize.height + movieBackgroundPadding*2);
             movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.width - movieBackgroundPadding*2, backgroundFrame.size.height - movieBackgroundPadding*2);
             break;
-            case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeLeft:
             angle = - M_PI_2;
             backgroundFrame = CGRectMake([self statusBarHeightInOrientation:orientation] - movieBackgroundPadding, -movieBackgroundPadding, windowSize.height + movieBackgroundPadding*2, windowSize.width + movieBackgroundPadding*2);
             movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, backgroundFrame.size.height - movieBackgroundPadding*2, backgroundFrame.size.width - movieBackgroundPadding*2);
             break;
-            case UIInterfaceOrientationLandscapeRight:
+        case UIInterfaceOrientationLandscapeRight:
             angle = M_PI_2;
             backgroundFrame = CGRectMake(-movieBackgroundPadding, -movieBackgroundPadding, windowSize.height + movieBackgroundPadding*2, windowSize.width + movieBackgroundPadding*2);
             movieFrame = CGRectMake(movieBackgroundPadding, movieBackgroundPadding, windowSize.height - movieBackgroundPadding*2, windowSize.width - movieBackgroundPadding*2);
             break;
-            case UIInterfaceOrientationPortrait:
+        case UIInterfaceOrientationPortrait:
         default:
             angle = 0.f;
             backgroundFrame = CGRectMake(-movieBackgroundPadding, [self statusBarHeightInOrientation:orientation] - movieBackgroundPadding, windowSize.width + movieBackgroundPadding*2, windowSize.height + movieBackgroundPadding*2);

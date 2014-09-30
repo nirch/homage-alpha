@@ -28,8 +28,8 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMDINOTCondBoldFontLabel.h"
 #import "HMVideoPlayerDelegate.h"
-#import <CrashReporter/PLCrashReporter.h>
-#import <CrashReporter/PLCrashReport.h>
+//#import <CrashReporter/PLCrashReporter.h>
+//#import <CrashReporter/PLCrashReport.h>
 #import "HMAppDelegate.h"
 #import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
@@ -44,6 +44,12 @@
 
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
+
+// Navigation bar
+@property (weak, nonatomic) IBOutlet UIView *guiTopNavContainer;
+@property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
+@property (weak, nonatomic) IBOutlet UILabel *guiTabNameLabel;
+
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppWrapperHideView;
@@ -60,13 +66,11 @@
 @property (weak,nonatomic) HMsideBarViewController *sideBarVC;
 @property (weak,nonatomic) HMLoginMainViewController *loginVC;
 @property (atomic, readonly) NSDate *launchDateTime;
-@property (weak, nonatomic) IBOutlet UILabel *guiTabNameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *guiHomageLogo;
+
 @property (weak,nonatomic) Story *loginStory;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppMainView;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiNoConnectivityLabel;
-@property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (nonatomic) NSInteger selectedTab;
 @property (nonatomic) BOOL justStarted;
 @property (nonatomic) NSInteger appEnabled;
@@ -89,10 +93,11 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Launch time
     _launchDateTime = [NSDate date];
     self.justStarted = YES;
+    
     // Init look
     [self initGUI];
     [self initObservers];
@@ -100,7 +105,7 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
-    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -123,10 +128,8 @@
 
 -(void)initGUI
 {
-
-    //self.guiAppBGImageView.image = [self.guiAppBGImageView.image applyBlurWithRadius:7.0 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:0.2 maskImage:nil];
-    
-    [[AMBlurView new] insertIntoView:self.guiBlurredView];
+    // Make the top navigation bar blurry
+    [[AMBlurView new] insertIntoView:self.guiTopNavContainer];
         
     self.guiAppWrapperHideView.hidden = YES;
     self.renderingContainerView.hidden = YES;
@@ -135,9 +138,10 @@
     
     self.guiNoConnectivityView.hidden = YES;
     //self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
-    self.guiTabNameLabel.textColor = [UIColor whiteColor];
+    self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
     
     self.selectedTab = HMStoriesTab;
+    [self changeTitleByIndex:self.selectedTab];
     
     self.appEnabled = 0; // counter. if == 0, app should be enabled
     self.guiAppHideView.hidden = YES;
@@ -228,26 +232,12 @@
 -(void)prepareSplashView
 {
     // Splash view initial state.
-    self.guiTextLabel1.alpha = 0;
-    self.guiTextLabel1.transform = CGAffineTransformMakeTranslation(40, 0);
-    self.guiTextLabel2.alpha = 0;
-    self.guiTextLabel2.transform = CGAffineTransformMakeTranslation(60, 0);
 }
 
 -(void)startSplashView
 {
     // Show the splash screen animations.
-    [UIView animateWithDuration:0.3 animations:^{
-        self.guiTextLabel1.alpha = 1;
-        self.guiTextLabel1.transform = CGAffineTransformIdentity;
-        self.guiTextLabel2.alpha = 1;
-        self.guiTextLabel2.transform = CGAffineTransformIdentity;
-    }];
-    
-    [UIView animateWithDuration:4.0 delay:0 options:(UIViewAnimationOptionCurveLinear) animations:^{
-        self.guiBGImage.transform = CGAffineTransformMakeTranslation(-20, 0);
-    } completion:^(BOOL finished) {
-    }];
+    // TODO: add some animations here
     
     // Show activity.
     [self.guiActivity startAnimating];
@@ -501,7 +491,7 @@
         self.guiNavButton.tag = BACK_TAG;
     } else
     {
-        [self.guiNavButton setImage:[UIImage imageNamed:@"more3white"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
         self.guiNavButton.tag = SETTING_TAG;
     }
 }
@@ -530,58 +520,61 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"version"];
     
-    
     // Dismiss the splash screen.
-    [self dismissSplashScreen];
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"appLaunch"];
+    [self dismissSplashScreen];
     
+    //
+    // If no current logged in user, present the login screen.
+    //
     if (![User current])
     {
         [self presentLoginScreen];
-    } else {
+        return;
+    }
+    
+    //
+    // A current logged in user found.
+    //
+    
+    //make sure login screen is hidden
+    [self hideLoginScreen];
+    
+    //Mixpanel analytics
+    User *user = [User current];
+    [HMServer.sh updateServerWithCurrentUser:user.userID];
+    [self.loginVC registerLoginAnalyticsForUser:user];
+    [self onUserLoginStateChange:user];
+    
+    //handle push notification from background
+    HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (myDelegate.pushNotificationFromBG)
+    {
+        NSDictionary *info = myDelegate.pushNotificationFromBG;
+        NSNumber *notificationType = info[@"type"];
         
-        //make sure login screen is hidden
-        [self hideLoginScreen];
-        
-        //Mixpanel analytics
-        
-        User *user = [User current];
-        [HMServer.sh updateServerWithCurrentUser:user.userID];
-        [self.loginVC registerLoginAnalyticsForUser:user];
-        
-        
-        [self onUserLoginStateChange:user];
-        
-        //handle push notification from background
-        HMAppDelegate *myDelegate = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
-        if (myDelegate.pushNotificationFromBG)
+        if ( notificationType.integerValue == HMPushMovieReady )
         {
-            NSDictionary *info = myDelegate.pushNotificationFromBG;
-            NSNumber *notificationType = info[@"type"];
-            
-            if ( notificationType.integerValue == HMPushMovieReady )
-            {
-              [self switchToTab:HMMeTab];
-            } else if ( notificationType.integerValue == HMPushNewStory)
-            {
-                NSString *storyID = info[@"story_id"];
-                [HMServer.sh refetchStoryWithStoryID:storyID];
-                [self switchToTab:HMStoriesTab];
-            } else {
-                [self switchToTab:HMStoriesTab];
-            }
-        }
-        
-        if (!myDelegate.sessionStartFlag)
+          [self switchToTab:HMMeTab];
+        } else if ( notificationType.integerValue == HMPushNewStory)
         {
-            myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
-            [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
-            myDelegate.sessionStartFlag = YES;
+            NSString *storyID = info[@"story_id"];
+            [HMServer.sh refetchStoryWithStoryID:storyID];
+            [self switchToTab:HMStoriesTab];
+        } else {
+            [self switchToTab:HMStoriesTab];
         }
     }
     
-    [self reportCrashesIfExist];
+    if (!myDelegate.sessionStartFlag)
+    {
+        myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
+        [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
+        myDelegate.sessionStartFlag = YES;
+    }
+    
+    //[self reportCrashesIfExist];
     
     // The upload manager with # workers of a specific type.
     // You can always replace to another implementation of upload workers,
@@ -594,76 +587,76 @@
     //[self.renderingVC renderStartedWithRemakeID:@"52d7fd79db25451694000001"];
 }
 
-#pragma mark crash reports
--(void)reportCrashesIfExist
-{
-    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-    NSError *error;
-    
-    // Check if we previously crashed
-    if ([crashReporter hasPendingCrashReport])
-        [self handleCrashReport];
-    
-    // Enable the Crash Reporter
-    if (![crashReporter enableCrashReporterAndReturnError: &error])
-        HMGLogWarning(@"Warning: Could not enable crash reporter: %@", error);
-}
-
-- (void)handleCrashReport {
-    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-    NSData *crashData;
-    NSError *error;
-    
-    // Try loading the crash report
-    crashData = [crashReporter loadPendingCrashReportDataAndReturnError: &error];
-    if (crashData == nil) {
-        HMGLogWarning(@"Could not load crash report: %@", error);
-    } else {
-        PLCrashReport *report = [[PLCrashReport alloc] initWithData: crashData error: &error];
-        if (report == nil)
-        {
-            HMGLogWarning(@"could not parse crash report");
-        } else
-        {
-            HMGLogInfo(@"app crashed on %@", report.systemInfo.timestamp);
-            HMGLogInfo(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
-                       report.signalInfo.code, report.signalInfo.address);
-            HMGLogInfo(@"crashed with exception: %@ reason: %@ stack: %@" , report.exceptionInfo.exceptionName , report.exceptionInfo.exceptionReason , report.exceptionInfo.stackFrames);
-            
-            Mixpanel *mixpanel = [Mixpanel sharedInstance];
-            
-            NSDictionary *crashDict = @{};
-            
-            if (report.signalInfo)
-            {
-                NSString *signalName = report.signalInfo.name ? report.signalInfo.name : @"not available";
-                NSString *signalCode = report.signalInfo.code ? report.signalInfo.code : @"not available";
-                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : @0 ;
-                
-                crashDict = @{@"signal_name" : signalName , @"signal_code" : signalCode , @"signal_address" : address};
-            }
-            
-            if (report.exceptionInfo)
-            {
-                NSString *exceptionName = report.exceptionInfo.exceptionName ? report.exceptionInfo.exceptionName : @"not available";
-                NSString *exceptionReason = report.exceptionInfo.exceptionReason ? report.exceptionInfo.exceptionReason : @"not available";
-                NSArray  *stackFrames = report.exceptionInfo.stackFrames ? report.exceptionInfo.stackFrames : @[];
-                
-                NSMutableDictionary *temp = [crashDict mutableCopy];
-                [temp setValue:exceptionName forKey:@"exceptionName"];
-                [temp setValue:exceptionReason forKey:@"exceptionReason"];
-                [temp setValue:stackFrames forKey:@"stackFrames"];
-                crashDict = [NSDictionary dictionaryWithDictionary:temp];
-            }
-    
-            [mixpanel track:@"AppCrash" properties:crashDict];
-        }
-    }
-    
-    // Purge the report
-    [crashReporter purgePendingCrashReport];
-    return;
-}
+//#pragma mark crash reports
+//-(void)reportCrashesIfExist
+//{
+//    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
+//    NSError *error;
+//    
+//    // Check if we previously crashed
+//    if ([crashReporter hasPendingCrashReport])
+//        [self handleCrashReport];
+//    
+//    // Enable the Crash Reporter
+//    if (![crashReporter enableCrashReporterAndReturnError: &error])
+//        HMGLogWarning(@"Warning: Could not enable crash reporter: %@", error);
+//}
+//
+//- (void)handleCrashReport {
+//    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
+//    NSData *crashData;
+//    NSError *error;
+//    
+//    // Try loading the crash report
+//    crashData = [crashReporter loadPendingCrashReportDataAndReturnError: &error];
+//    if (crashData == nil) {
+//        HMGLogWarning(@"Could not load crash report: %@", error);
+//    } else {
+//        PLCrashReport *report = [[PLCrashReport alloc] initWithData: crashData error: &error];
+//        if (report == nil)
+//        {
+//            HMGLogWarning(@"could not parse crash report");
+//        } else
+//        {
+//            HMGLogInfo(@"app crashed on %@", report.systemInfo.timestamp);
+//            HMGLogInfo(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
+//                       report.signalInfo.code, report.signalInfo.address);
+//            HMGLogInfo(@"crashed with exception: %@ reason: %@ stack: %@" , report.exceptionInfo.exceptionName , report.exceptionInfo.exceptionReason , report.exceptionInfo.stackFrames);
+//            
+//            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//            
+//            NSDictionary *crashDict = @{};
+//            
+//            if (report.signalInfo)
+//            {
+//                NSString *signalName = report.signalInfo.name ? report.signalInfo.name : @"not available";
+//                NSString *signalCode = report.signalInfo.code ? report.signalInfo.code : @"not available";
+//                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : @0 ;
+//                
+//                crashDict = @{@"signal_name" : signalName , @"signal_code" : signalCode , @"signal_address" : address};
+//            }
+//            
+//            if (report.exceptionInfo)
+//            {
+//                NSString *exceptionName = report.exceptionInfo.exceptionName ? report.exceptionInfo.exceptionName : @"not available";
+//                NSString *exceptionReason = report.exceptionInfo.exceptionReason ? report.exceptionInfo.exceptionReason : @"not available";
+//                NSArray  *stackFrames = report.exceptionInfo.stackFrames ? report.exceptionInfo.stackFrames : @[];
+//                
+//                NSMutableDictionary *temp = [crashDict mutableCopy];
+//                [temp setValue:exceptionName forKey:@"exceptionName"];
+//                [temp setValue:exceptionReason forKey:@"exceptionReason"];
+//                [temp setValue:stackFrames forKey:@"stackFrames"];
+//                crashDict = [NSDictionary dictionaryWithDictionary:temp];
+//            }
+//    
+//            [mixpanel track:@"AppCrash" properties:crashDict];
+//        }
+//    }
+//    
+//    // Purge the report
+//    [crashReporter purgePendingCrashReport];
+//    return;
+//}
 
 -(void)presentLoginScreen
 {
@@ -798,8 +791,13 @@
 -(void)switchToTab:(NSInteger)toIndex
 {
     self.appTabBarController.selectedIndex = toIndex;
-    
-    switch (toIndex) {
+    [self changeTitleByIndex:toIndex];
+    self.selectedTab = toIndex;
+}
+
+-(void)changeTitleByIndex:(NSInteger)index
+{
+    switch (index) {
         case HMStoriesTab:
             self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
             break;
@@ -813,9 +811,6 @@
             self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
             break;
     }
-    
-    self.selectedTab = toIndex;
-
 }
 
 -(void)showRenderingView
@@ -1068,7 +1063,12 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    return !app.shouldAllowStatusBar;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

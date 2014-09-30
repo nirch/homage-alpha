@@ -48,7 +48,7 @@ static int _incr = 0;
 + (NSString *) md5HashFromString:(NSString *)source {
   const char *cStr = [source UTF8String];
   unsigned char result[16];
-  CC_MD5(cStr, strlen(cStr), result);
+  CC_MD5(cStr, (CC_LONG)strlen(cStr), result);
   return [NSString stringWithFormat:
       @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
       result[0], result[1], result[2], result[3],

@@ -8,6 +8,12 @@
 
 #import "HMStoryCell.h"
 
+@interface HMStoryCell()
+
+@property (weak, nonatomic) IBOutlet UIView *guiBottomContainer;
+
+@end
+
 @implementation HMStoryCell
 
 - (id)initWithFrame:(CGRect)frame

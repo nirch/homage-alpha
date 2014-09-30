@@ -103,8 +103,6 @@
     
     self.title = self.story.name;
     
-    [[AMBlurView new] insertIntoView:self.guiBlurredView];
-    
     self.noRemakesLabel.text = LS(@"NO_REMAKES");
     self.guiDescriptionField.font = [UIFont fontWithName:@"Avenir Book" size:self.guiDescriptionField.font.pointSize];
     self.guiDescriptionField.text = self.story.descriptionText;
@@ -425,8 +423,8 @@
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
                          notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}
-         ];
+                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}];
+        
     }
 }
 
