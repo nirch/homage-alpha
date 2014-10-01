@@ -178,28 +178,24 @@
 
 -(void)shareApp
 {
-//    NSArray *activityItems = @[];
-//    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
-//    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
-//    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
-//        if (completed) {
-//            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remakeID}];
-//            NSNumber *shareMethod = [self getShareMethod:activityType];
-//            [HMServer.sh reportRemakeShare:remakeID forUserID:[User current].userID shareMethod:shareMethod];
-//            
-//        }
-//    };
-//    
-//    [activityViewController setValue:generalShareSubject forKey:@"subject"];
-//    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
-//    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self presentViewController:activityViewController animated:YES completion:^{}];
-//    });
+    //
+    // Get the urls for downloading iOS and android app from CFG file
+    //
+    #ifndef DEBUG
+        NSString *urlIOS = [HMServer.sh absoluteURLNamed:@"prod_download_app_ios_url"];
+        NSString *urlAndroid = [HMServer.sh absoluteURLNamed:@"prod_download_app_android_url"];
+    #else
+        NSString *urlIOS = [HMServer.sh absoluteURLNamed:@"test_download_app_ios_url"];
+        NSString *urlAndroid = [HMServer.sh absoluteURLNamed:@"test_download_app_android_url"];
+    #endif
 
-    NSArray *sharingItems = @[@"Make awesome videos! \n\n Keep calm and download homage: http://homage.it/download/app/ios"];
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
-    [activityController setValue:@"Check this fun app" forKey:@"subject"];
+    // Build the message text.
+    NSString *sharingBodyText = [NSString stringWithFormat:LS(@"SHARING_APP_BODY_MESSAGE"), urlIOS, urlAndroid];
+    NSString *sharingTitleText = LS(@"SHARING_APP_SUBJECT");
+    
+    // Open sharing activity.
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[sharingBodyText] applicationActivities:nil];
+    [activityController setValue:sharingTitleText forKey:@"subject"];
     activityController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
     [self presentViewController:activityController animated:YES completion:nil];
 

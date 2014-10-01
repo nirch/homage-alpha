@@ -51,6 +51,7 @@
         [self loadCFG];
         [self loadAppDetails];
         [self initSessionManager];
+        self.urlsCachedInfo = [NSCache new];
     }
     return self;
 }
@@ -91,6 +92,15 @@
 }
 
 #pragma mark - URL named
+-(NSString *)absoluteURLNamed:(NSString *)urlName
+{
+    NSString *url = self.cfg[@"urls"][urlName];
+    if (!url) return nil;
+    // Must start with http:// or https://
+    if ([url hasPrefix:@"http://"] || [url hasPrefix:@"https://"]) return url;
+    return nil;
+}
+
 -(NSString *)relativeURLNamed:(NSString *)relativeURLName
 {
     NSString *relativeURL = self.cfg[@"urls"][relativeURLName];

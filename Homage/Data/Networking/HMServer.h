@@ -26,10 +26,14 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 +(HMServer *)sharedInstance;
 +(HMServer *)sh;
 
+// Cache urls
+@property (nonatomic) NSCache *urlsCachedInfo;
+
 // HTTP session manager
 @property (strong, nonatomic, readonly) AFHTTPSessionManager *session;
 
 #pragma mark - URL named
+-(NSString *)absoluteURLNamed:(NSString *)urlName;
 -(NSString *)relativeURLNamed:(NSString *)urlName;
 -(NSString *)relativeURLNamed:(NSString *)relativeURLName withSuffix:(NSString *)suffix;
 

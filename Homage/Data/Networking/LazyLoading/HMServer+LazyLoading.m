@@ -11,46 +11,6 @@
 
 @implementation HMServer (LazyLoading)
 
-//-(void)lazyLoadImageFromURL:(NSString *)url
-//           placeHolderImage:(UIImage *)placeHolderImage
-//           notificationName:(NSString *)notificationName
-//                       info:(NSDictionary *)info
-//                  imageView:(UIImageView *)imageView
-//{
-//    //UIImageView *imageView = [[UIImageView alloc] init];
-//    NSMutableDictionary *moreInfo = [info mutableCopy];
-//    
-//    [imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]
-//                     placeholderImage:placeHolderImage
-//
-//                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                                  //
-//                                  // Successfully loaded image
-//                                  //
-//                                  if (image) {
-//                                      HMGLogDebug(@"Lazy loaded image from URL:%@", request.URL);
-//                                      [moreInfo addEntriesFromDictionary:@{@"image":image}];
-//                                  } else {
-//                                      // For some reason success in response, but no image object returned?
-//                                      NSString *errorDescription = [NSString stringWithFormat:@"Lazy Loading returned nil image from URL:%@", request.URL];
-//                                      NSError *error = [NSError errorWithDomain:ERROR_DOMAIN_NETWORK code:HMNetworkErrorImageLoadingFailed userInfo:@{NSLocalizedDescriptionKey:errorDescription}];
-//                                      [moreInfo addEntriesFromDictionary:@{@"error":error}];
-//                                      HMGLogDebug(errorDescription);
-//                                  }
-//                                  [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
-//                              }
-//     
-//                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//                                  //
-//                                  // Failed loading image from server
-//                                  //
-//                                  HMGLogDebug(@"Failed lazy Loading image from URL:%@ %@", request.URL, error.localizedDescription);
-//                                  [moreInfo addEntriesFromDictionary:@{@"error":error}];
-//                                  [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
-//                              }
-//     ];
-//}
-
 
 -(void)lazyLoadImageFromURL:(NSString *)url
            placeHolderImage:(UIImage *)placeHolderImage
@@ -59,6 +19,10 @@
 {
     // User info about the request/response
     NSMutableDictionary *moreInfo = [info mutableCopy];
+    
+    // Don't allow repeatedly lazy loading the same image url (when a request to that url is already in progress).
+    if ([self.urlsCachedInfo objectForKey:url]) return;
+    [self.urlsCachedInfo setObject:@YES forKey:url];
     
     // Build the url request
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -91,6 +55,9 @@
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
+        // Reallow requests to this url in the future.
+        [self.urlsCachedInfo removeObjectForKey:url];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         //
@@ -100,6 +67,8 @@
         [moreInfo addEntriesFromDictionary:@{@"error":error}];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
+        // Reallow requests to this url in the future.
+        [self.urlsCachedInfo removeObjectForKey:url];
     }];
     
     // Start the request

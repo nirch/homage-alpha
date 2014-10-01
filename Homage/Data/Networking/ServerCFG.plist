@@ -54,6 +54,14 @@
 		<string>text</string>
 		<key>render</key>
 		<string>render</string>
+		<key>prod_download_app_ios_url</key>
+		<string>http://app.homage.it/download/ios</string>
+		<key>prod_download_app_android_url</key>
+		<string>http://app.homage.it/download/android</string>
+		<key>test_download_app_ios_url</key>
+		<string>http://app-test.homage.it/download/ios</string>
+		<key>test_download_app_android_url</key>
+		<string>http://app-test.homage.it/download/android</string>
 	</dict>
 </dict>
 </plist>
