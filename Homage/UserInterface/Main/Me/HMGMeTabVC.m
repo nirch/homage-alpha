@@ -23,6 +23,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "NSDictionary+TypeSafeValues.h"
 #import "HMServer+analytics.h"
+#import "HMAppDelegate.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -51,7 +52,7 @@
 #define TRASH_ALERT_VIEW_TAG  200
 #define SHARE_ALERT_VIEW_TAG  300
 
-#define HOMAGE_APPSTORE_LINK @"https://itunes.apple.com/us/app/homage/id851746600?l=iw&ls=1&mt=8"
+//#define HOMAGE_APPSTORE_LINK @"https://itunes.apple.com/us/app/homage/id851746600?l=iw&ls=1&mt=8"
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -99,10 +100,14 @@
 -(void)initGUI
 {
     //init refresh control
-    UIRefreshControl *tempRefreshControl = [[UIRefreshControl alloc] init];
-    [self.userRemakesCV addSubview:tempRefreshControl];
-    self.refreshControl = tempRefreshControl;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [self.userRemakesCV addSubview:refreshControl];
+    self.refreshControl = refreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [HMColor.sh main2];
+    CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
+    f.origin.y += 32;
+    [[refreshControl.subviews objectAtIndex:0] setFrame:f];
     
     //self.view.backgroundColor = [UIColor clearColor];
     [self.userRemakesCV setBackgroundColor:[UIColor clearColor]];
@@ -739,7 +744,7 @@
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSString *downloadLink = HOMAGE_APPSTORE_LINK;
+    //NSString *downloadLink = HOMAGE_APPSTORE_LINK;
 
     if (info[@"short_url"])
     {
@@ -753,11 +758,11 @@
     if (remake.story.shareMessage)
     {
         generalShareSubject = remake.story.shareMessage;
-        whatsAppShareString = [NSString stringWithFormat:LS(@"SHARE_MSG_BODY") ,remake.story.shareMessage , remakeShareURL, downloadLink];
+        whatsAppShareString = [NSString stringWithFormat:LS(@"SHARE_MSG_BODY") ,remake.story.shareMessage , remakeShareURL];
     } else
     {
         generalShareSubject = [NSString stringWithFormat:LS(@"DEFAULT_SHARE_MSG_SUBJECT") , remake.story.name];
-        whatsAppShareString = [NSString stringWithFormat:LS(@"DEFUALT_SHARE_MSG_BODY") , remake.story.name , remakeShareURL, downloadLink];
+        whatsAppShareString = [NSString stringWithFormat:LS(@"DEFUALT_SHARE_MSG_BODY") , remake.story.name , remakeShareURL];
     }
     
     NSString *generalShareBody = [whatsAppShareString stringByAppendingString:[NSString stringWithFormat:LS(@"SHARE_MSG_BODY_HASHTAGS") , storyNameWithoutSpaces, storyNameWithoutSpaces]];
@@ -788,6 +793,12 @@
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
+    // Handle status bar hiding
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    app.isInRecorderContext = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+
+    // Open the recorder.
     HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
     recorderVC.delegate = self;
     if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
@@ -896,17 +907,18 @@
     HMGLogDebug(@"This is the remake ID the recorder used:%@", remakeID);
     
     // Handle reasons
-    if (reason == HMRecorderDismissReasonUserAbortedPressingX)
-    {
-        //do nothing, need to stay on story details
-    } else if (reason == HMRecorderDismissReasonFinishedRemake)
-    {
+    if (reason == HMRecorderDismissReasonUserAbortedPressingX) {
+        //do nothing.
+    } else if (reason == HMRecorderDismissReasonFinishedRemake) {
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:@{@"remakeID" : remakeID}];
     }
     
-    //Dismiss modal recoder??
+    //Dismiss the modal recorder VC.
     [sender dismissViewControllerAnimated:YES completion:^{
-        //[self.navigationController popViewControllerAnimated:YES];
+        // Mark in app delegate that we left the recorder context
+        HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+        app.isInRecorderContext = NO;
+        [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
 

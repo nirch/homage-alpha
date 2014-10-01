@@ -6,12 +6,15 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+@import AVFoundation;
+
 #import "HMWhileRecordingOverlayViewController.h"
 #import "HMNotificationCenter.h"
 #import "AWTimeProgressView.h"
 #import "HMMotionDetectorDelegate.h"
 #import "DB.h"
 #import "HMMotionDetector.h"
+
 
 @interface HMWhileRecordingOverlayViewController ()
 
@@ -20,8 +23,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiScriptLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiProcessingActivity;
 @property (weak, nonatomic) IBOutlet UILabel *guiProcessingLabel;
+
 @property (nonatomic, readonly) Remake *remake;
 @property (nonatomic, readonly) Scene *scene;
+
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -122,6 +128,15 @@
     }
 }
 
+-(void)playEndOfDurationSound
+{
+    NSError *error;
+    NSURL *soundURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"recordingEnd" ofType:@"wav"]];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:&error];
+    [self.audioPlayer prepareToPlay];
+    [self.audioPlayer play];
+}
+
 #pragma mark - Timed Recording Progress (AWTimeProgressDelegate)
 -(void)timeProgressDidStartAtTime:(NSDate *)time forDuration:(NSTimeInterval)duration
 {
@@ -137,6 +152,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self
                                                       userInfo:info];
+    
+    // Play sound at the end of the duration
+    [self playEndOfDurationSound];
+    
     self.guiProcessingLabel.hidden = NO;
     [self.guiProcessingActivity startAnimating];
 }

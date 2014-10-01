@@ -22,8 +22,8 @@
 
 -(void)initCustomFont
 {
-    self.titleLabel.font = [UIFont fontWithName:@"Avenir Book" size:self.titleLabel.font.pointSize];
-    //[self setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
+    // TODO: remove this class. deprecated. use HMRegularFontButton instead.
+    self.titleLabel.font = [UIFont fontWithName:@"Bryant-MediumCompressed" size:self.titleLabel.font.pointSize];
 }
 
 

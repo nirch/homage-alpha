@@ -112,7 +112,7 @@
     [super viewDidLoad];
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
-                        
+    [self setNeedsStatusBarAppearanceUpdate];          
     [self postEnableBGDetectionNotification];
     [self initRemakerState];
     [self initOptions];
@@ -146,7 +146,7 @@
     HMGLogInfo(@"Recorder deallocated successfully for remakeID:%@", self.remake.sID);
 }
 
-- (BOOL)prefersStatusBarHidden
+-(BOOL)prefersStatusBarHidden
 {
     return YES;
 }

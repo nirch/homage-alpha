@@ -26,7 +26,7 @@
 #import "HMGMeTabVC.h"
 #import "HMStoriesViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
-#import "HMDINOTCondBoldFontLabel.h"
+#import "HMBoldFontLabel.h"
 #import "HMVideoPlayerDelegate.h"
 //#import <CrashReporter/PLCrashReporter.h>
 //#import <CrashReporter/PLCrashReport.h>
@@ -487,7 +487,7 @@
 {
     if ([navVC.viewControllers count] > 1)
     {
-        [self.guiNavButton setImage:[UIImage imageNamed:@"back2white"] forState:UIControlStateNormal];
+        [self.guiNavButton setImage:[UIImage imageNamed:@"backNavIcon"] forState:UIControlStateNormal];
         self.guiNavButton.tag = BACK_TAG;
     } else
     {
@@ -768,9 +768,8 @@
     [self.view bringSubviewToFront:self.guiVideoContainer];
     
     HMSimpleVideoViewController *vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiVideoContainer rotationSensitive:YES];
-    vc.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]] absoluteString];
+    vc.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"howtoVideo" ofType:@"mp4"]] absoluteString];
     [vc hideVideoLabel];
-    //[self.videoView hideMediaControls];
     
     vc.delegate = self;
     vc.originatingScreen = [NSNumber numberWithInteger:HMHowTo];
@@ -778,13 +777,6 @@
     vc.entityID = @"none";
     vc.resetStateWhenVideoEnds = YES;
     [vc play];
-    
-    /*HMVideoPlayerVC *videoPlayerController = [[HMVideoPlayerVC alloc] init];
-    videoPlayerController.delegate = self;
-    NSURL *videoURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"introVideo" ofType:@"mp4"]];
-    videoPlayerController.videoURL = videoURL;
-    self.moviePlayer = videoPlayerController;
-    [self presentViewController:videoPlayerController animated:YES completion:nil];*/
 }
 
 
@@ -799,18 +791,24 @@
 {
     switch (index) {
         case HMStoriesTab:
-            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
+            self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
             break;
         case HMMeTab:
-            self.guiTabNameLabel.text = LS(@"ME_TAB_HEADLINE_TITLE");
+            self.title = LS(@"ME_TAB_HEADLINE_TITLE");
             break;
         case HMSettingsTab:
-            self.guiTabNameLabel.text = LS(@"SETTINGS_TAB_HEADLINE TITLE");
+            self.title = LS(@"SETTINGS_TAB_HEADLINE TITLE");
             break;
         default:
-            self.guiTabNameLabel.text = LS(@"STORIES_TAB_HEADLINE_TITLE");
+            self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
             break;
     }
+}
+
+-(void)setTitle:(NSString *)title
+{
+    [super setTitle:title];
+    self.guiTabNameLabel.text = title;
 }
 
 -(void)showRenderingView
@@ -1063,8 +1061,12 @@
 
 - (BOOL)prefersStatusBarHidden
 {
+    // Determine if should show the status bar.
+    // Will show/hide depending on what the video player allows.
+    // Or, if going into the recorder, always hide the status bar.
     HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
-    return !app.shouldAllowStatusBar;
+    BOOL shouldHide = !app.shouldAllowStatusBar || app.isInRecorderContext;
+    return shouldHide;
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle{

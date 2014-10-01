@@ -11,7 +11,7 @@ Project highest structure:
     
 - App
 
-    - Fonts                         : Fonts files used in this app. DINOT(DINOT-Regular) and DIN OT(DINOT-CondBold).
+    - Fonts                         : Fonts files used in this app.
     - Notification Center           : Related to *local* notifications used to notify different layers of the app about occured events.
     - Logs                          : Logging macros
     - Supporting Files              : General projects files, headers and plists

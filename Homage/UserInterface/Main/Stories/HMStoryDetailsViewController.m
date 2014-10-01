@@ -21,19 +21,24 @@
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMServer+analytics.h"
+#import "HMAppDelegate.h"
+#import "HMRegularFontLabel.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
-@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
+@property (weak,nonatomic) UIView *guiRemakeVideoContainer;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiStoryDescriptionLabel;
+
+// Video player
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
 @property (strong,nonatomic) HMSimpleVideoViewController *remakeMoviePlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
 
+// Data
+@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
-@property (weak,nonatomic) UIView *guiRemakeVideoContainer;
 @property (nonatomic) Remake *flaggedRemake;
-
 
 @end
 
@@ -51,17 +56,14 @@
 #pragma mark lifecycle related
 -(void)viewDidLoad
 {
-    
     [super viewDidLoad];
-	[self initGUI];
+    [self initGUI];
     [self initContent];
     [self refetchRemakesForStoryID:self.story.sID];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     self.guiRemakeActivity.hidden = YES;
     if (self.autoStartPlayingStory)
     {
@@ -69,7 +71,6 @@
         self.autoStartPlayingStory = NO;
     }
     [self initObservers];
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -100,16 +101,11 @@
 
 -(void)initGUI
 {
-    
     self.title = self.story.name;
     
     self.noRemakesLabel.text = LS(@"NO_REMAKES");
-    self.guiDescriptionField.font = [UIFont fontWithName:@"Avenir Book" size:self.guiDescriptionField.font.pointSize];
-    self.guiDescriptionField.text = self.story.descriptionText;
+    self.guiStoryDescriptionLabel.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
-    
-    
-    
 }
 
 -(void)initStoryMoviePlayer
@@ -131,9 +127,15 @@
 
 -(void)initContent
 {
-    
-    [self refreshFromLocalStorage];
-    
+    self.noRemakesLabel.alpha = 0;
+    self.remakesCV.alpha = 0;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self refreshFromLocalStorage];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.noRemakesLabel.alpha = 1;
+            self.remakesCV.alpha = 1;
+        }];
+    });
 }
 
 #pragma mark - Observers
@@ -573,15 +575,6 @@
     [HMServer.sh markRemakeAsInappropriate:@{@"remake_id" : remakeID , @"user_id" : userID}];
 }
 
-#pragma mark recorder init
--(void)initRecorderWithRemake:(Remake *)remake completion:(void (^)())completion
-{
-    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-    recorderVC.delegate = self;
-    [self.storyMoviePlayer done];
-    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:completion];
-    
-}
 
 #pragma mark UIAlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -627,23 +620,29 @@
                               remakeID:(NSString *)remakeID
                                 sender:(HMRecorderViewController *)sender
 {
-    HMGLogDebug(@"This is the remake ID the recorder used:%@", remakeID);
+    HMGLogDebug(@"Recorder asked to be dismissed. This is the remake ID the recorder used:%@", remakeID);
     
     self.autoStartPlayingStory = NO;
+
     // Handle reasons
-    if (reason == HMRecorderDismissReasonUserAbortedPressingX)
-    {
-        //do nothing, need to stay on story details
-    } else if (reason == HMRecorderDismissReasonFinishedRemake)
-    {
-        //[self.navigationController popViewControllerAnimated:YES];
-        
+    if (reason == HMRecorderDismissReasonUserAbortedPressingX) {
+
+        // Do nothing, need to stay on story details
+
+    } else if (reason == HMRecorderDismissReasonFinishedRemake) {
+
+        // Notify anyone who is interested that the recorder finished
+        // with the provided remake id.
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FINISHED object:self userInfo:@{@"remakeID" : remakeID}];
+        
     }
     
-    //Dismiss modal recoder??
+    //Dismiss the modal recorder VC.
     [sender dismissViewControllerAnimated:YES completion:^{
-        //[self.navigationController popViewControllerAnimated:YES];
+        // Mark in app delegate that we left the recorder context
+        HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+        app.isInRecorderContext = NO;
+        [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
 
@@ -652,20 +651,35 @@
 {
     CGFloat currentOffset = self.remakesCV.contentOffset.y;
     CGFloat contentInset = self.remakesCV.contentInset.top;
-    self.guiDescriptionBG.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
+    self.guiStoryDescriptionLabel.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
 }
 
 
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
-    
-    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
-    recorderVC.delegate = self;
-    if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
-    
+    [self initRecorderWithRemake:remake completion:nil];
 }
 
+-(void)initRecorderWithRemake:(Remake *)remake completion:(void (^)())completion
+{
+    // Handle status bar hiding
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    app.isInRecorderContext = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+
+    // Open the recorder
+    HMRecorderViewController *recorderVC = [HMRecorderViewController recorderForRemake:remake];
+    recorderVC.delegate = self;
+    [self.storyMoviePlayer done];
+    if (recorderVC) {
+        [self presentViewController:recorderVC animated:YES completion:completion];
+    } else {
+        // Some error occured. Failed to initialize video recorder VC.
+        app.isInRecorderContext = NO;
+        HMGLogError(@"For some reason, faied to initialize recorder VC");
+    }
+}
 
 // ============
 // Rewind segue

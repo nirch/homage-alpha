@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Mko-4Y-5oJ">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -30,29 +29,6 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <view hidden="YES" contentMode="scaleToFill" id="Osm-im-Hz3" userLabel="blurred view">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" id="BGe-RC-PIs" userLabel="no connectivity View">
-                                        <rect key="frame" x="0.0" y="60" width="320" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnectivity" id="vUV-gb-yMF">
-                                                <rect key="frame" x="51" y="3" width="25" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMAvenirBookFontLabel">
-                                                <rect key="frame" x="87" y="3" width="163" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
                                     <view contentMode="scaleToFill" id="9mk-cg-4a4" userLabel="app main view">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -70,6 +46,24 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                             </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="BGe-RC-PIs" userLabel="no connectivity View">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnectivity" id="vUV-gb-yMF">
+                                                <rect key="frame" x="51" y="3" width="25" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMAvenirBookFontLabel">
+                                                <rect key="frame" x="87" y="3" width="163" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="1" green="0.1433620514" blue="0.1383423765" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -100,11 +94,11 @@
                                                     <action selector="sideBarButtonPushed:" destination="Mko-4Y-5oJ" eventType="touchUpInside" id="nE2-8C-cFJ"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PcV-Lk-RmR" userLabel="nav Title Homage" customClass="HMDINOTRegularFontLabel">
-                                                <rect key="frame" x="88" y="20" width="145" height="44"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PcV-Lk-RmR" userLabel="nav Title Homage" customClass="HMRegularFontLabel">
+                                                <rect key="frame" x="74" y="25" width="173" height="39"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -309,7 +303,6 @@
                                             <outlet property="guiShotMode" destination="yre-Et-9j7" id="E3i-Ic-Ves"/>
                                             <outlet property="guiStoryNameLabel" destination="mTY-Gz-YqK" id="pwe-t6-oew"/>
                                             <outlet property="guiThumbImage" destination="JWM-Cs-k2w" id="eus-q1-f5k"/>
-                                            <segue destination="ZiT-ur-2sF" kind="push" identifier="story details segue" id="CrG-yp-mJg"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -330,6 +323,7 @@
                     <connections>
                         <outlet property="noStoriesLabel" destination="C7L-Hb-oGt" id="6FN-NC-M4Z"/>
                         <outlet property="storiesCV" destination="HkM-dd-oCy" id="PZM-ef-a60"/>
+                        <segue destination="ZiT-ur-2sF" kind="push" identifier="story details segue" id="SE0-H8-uAl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oP2-ed-tvA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -344,23 +338,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="story description" textAlignment="center" id="YAE-ZL-RuW">
-                                <rect key="frame" x="0.0" y="300" width="320" height="50"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="( No remakes label )" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMAvenirBookFontLabel">
                                 <rect key="frame" x="10" y="432" width="300" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story description text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="znf-eH-Mpo" userLabel="Story Description Text" customClass="HMRegularFontLabel">
+                                <rect key="frame" x="20" y="296" width="280" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="n4c-ID-VSQ">
-                                <rect key="frame" x="0.0" y="300" width="320" height="248"/>
+                                <rect key="frame" x="0.0" y="300" width="320" height="268"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="50" maxX="0.0" maxY="0.0"/>
@@ -437,8 +430,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Kth-YP-vBm" customClass="HMDINOTCondBoldFontButton">
-                                <rect key="frame" x="6" y="246" width="281" height="52"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Kth-YP-vBm" customClass="HMBoldFontButton">
+                                <rect key="frame" x="0.0" y="246" width="320" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <inset key="titleEdgeInsets" minX="23" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -453,8 +446,9 @@
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="KL3-sw-np8">
-                                <rect key="frame" x="70" y="263" width="20" height="20"/>
+                                <rect key="frame" x="78" y="263" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -462,9 +456,9 @@
                     <navigationItem key="navigationItem" title="Story" id="W2N-Qt-Czx"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="guiDescriptionField" destination="YAE-ZL-RuW" id="kQL-RG-ttp"/>
                         <outlet property="guiRemakeActivity" destination="KL3-sw-np8" id="gFe-SP-dRB"/>
                         <outlet property="guiRemakeButton" destination="Kth-YP-vBm" id="SJy-hd-Phg"/>
+                        <outlet property="guiStoryDescriptionLabel" destination="znf-eH-Mpo" id="jMv-gT-bVv"/>
                         <outlet property="guiStoryMovieContainer" destination="ZjV-7o-L6U" id="Eh5-qX-ad0"/>
                         <outlet property="noRemakesLabel" destination="xrO-tV-a3k" id="lnJ-Q7-5TM"/>
                         <outlet property="remakesCV" destination="n4c-ID-VSQ" id="LNh-x3-q49"/>
@@ -483,8 +477,8 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nBO-G7-mhb" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
-                                <rect key="frame" x="13" y="213" width="291" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="15" y="257" width="291" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -803,7 +797,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="60"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yhk-LX-8UH" userLabel="hello user Label" customClass="HMDINOTRegularFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yhk-LX-8UH" userLabel="hello user Label" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="53" y="18" width="165" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
@@ -819,7 +813,7 @@
                                         <rect key="frame" x="15" y="21" width="31" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hfQ-pw-J8P" customClass="HMDINOTRegularFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hfQ-pw-J8P" customClass="HMRegularFontButton">
                                         <rect key="frame" x="54" y="21" width="158" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -828,10 +822,10 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="joinButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="zGN-4b-wXG"/>
+                                            <action selector="onJoinButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="R3w-AN-pX3"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o3r-9s-FMS" customClass="HMDINOTRegularFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o3r-9s-FMS" customClass="HMRegularFontButton">
                                         <rect key="frame" x="54" y="21" width="158" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -840,7 +834,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="logoutButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="Y2k-nO-va0"/>
+                                            <action selector="onLogoutButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="Y0C-xn-zGc"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -850,7 +844,7 @@
                                 <rect key="frame" x="0.0" y="60" width="220" height="508"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nR4-uX-sgD" customClass="HMDINOTRegularFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nR4-uX-sgD" customClass="HMRegularFontButton">
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -860,10 +854,14 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="storiesButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="beq-Jh-9gz"/>
+                                            <action selector="onStoriesButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="71z-6d-9Fy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="os6-0F-yVc" customClass="HMDINOTRegularFontButton">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconStories" id="lKg-bR-Nc9">
+                                        <rect key="frame" x="162" y="8" width="50" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="os6-0F-yVc" customClass="HMRegularFontButton">
                                         <rect key="frame" x="0.0" y="54" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -874,10 +872,14 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="meButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="kO0-PG-cd8"/>
+                                            <action selector="onMeButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="Gmx-jh-IQg"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bkd-Dk-DVo" customClass="HMDINOTRegularFontButton">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconMyStories" id="SFz-LH-tmw">
+                                        <rect key="frame" x="162" y="62" width="50" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bkd-Dk-DVo" customClass="HMRegularFontButton">
                                         <rect key="frame" x="0.0" y="108" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -888,10 +890,14 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="settingsButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="w3T-q8-SeB"/>
+                                            <action selector="onSettingsButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="J2x-EZ-7IZ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="36P-bm-q0f" customClass="HMDINOTRegularFontButton">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconSettings" id="2cW-It-OBv">
+                                        <rect key="frame" x="162" y="116" width="50" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="36P-bm-q0f" customClass="HMRegularFontButton">
                                         <rect key="frame" x="0.0" y="162" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -902,23 +908,29 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="HowToPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="ZKN-Df-XW4"/>
+                                            <action selector="onHowToButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="73d-EQ-OdN"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconStories" id="lKg-bR-Nc9">
-                                        <rect key="frame" x="162" y="8" width="50" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconMyStories" id="SFz-LH-tmw">
-                                        <rect key="frame" x="162" y="62" width="50" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconSettings" id="2cW-It-OBv">
-                                        <rect key="frame" x="162" y="116" width="50" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconHowto" id="Lsg-jO-iQF">
                                         <rect key="frame" x="162" y="170" width="50" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="H1L-uE-WNf" customClass="HMRegularFontButton">
+                                        <rect key="frame" x="0.0" y="216" width="220" height="54"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="SHARE APP">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onShareAppButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="s3I-Bg-dlk"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon" id="vrP-8a-lvl">
+                                        <rect key="frame" x="162" y="224" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -929,20 +941,22 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="guiHelloUserLabel" destination="Yhk-LX-8UH" id="ohO-u7-WOG"/>
+                        <outlet property="guiHowToButton" destination="36P-bm-q0f" id="DUS-Wf-ZIc"/>
                         <outlet property="guiJoinButton" destination="hfQ-pw-J8P" id="Cuh-DR-9Xu"/>
                         <outlet property="guiLogoutButton" destination="o3r-9s-FMS" id="JOe-JM-GWF"/>
+                        <outlet property="guiMeButton" destination="os6-0F-yVc" id="4uQ-x1-eh7"/>
                         <outlet property="guiProfilePictureView" destination="0hW-jc-Mh0" id="KGt-jd-Fph"/>
+                        <outlet property="guiSettingsButton" destination="Bkd-Dk-DVo" id="Lt5-B9-NU4"/>
+                        <outlet property="guiShareAppButton" destination="H1L-uE-WNf" id="Fqa-0G-QFI"/>
+                        <outlet property="guiStoriesButton" destination="nR4-uX-sgD" id="6gS-67-zCe"/>
                         <outlet property="guiUserIcon" destination="SZL-qh-Cpt" id="znt-zY-RXB"/>
-                        <outlet property="howToButton" destination="36P-bm-q0f" id="dYL-55-kYg"/>
-                        <outlet property="meButton" destination="os6-0F-yVc" id="dm9-5s-G8T"/>
-                        <outlet property="settingsButton" destination="Bkd-Dk-DVo" id="P0W-cI-SV2"/>
-                        <outlet property="storiesButton" destination="nR4-uX-sgD" id="K11-oM-zpF"/>
                         <outletCollection property="loginActionsButtonCollection" destination="hfQ-pw-J8P" id="lYd-o7-Tr0"/>
                         <outletCollection property="loginActionsButtonCollection" destination="o3r-9s-FMS" id="h4t-3S-hzm"/>
                         <outletCollection property="tabButtonCollection" destination="nR4-uX-sgD" id="28I-VJ-K1z"/>
                         <outletCollection property="tabButtonCollection" destination="os6-0F-yVc" id="g0O-l6-ME0"/>
                         <outletCollection property="tabButtonCollection" destination="Bkd-Dk-DVo" id="Mfc-ky-LIb"/>
                         <outletCollection property="tabButtonCollection" destination="36P-bm-q0f" id="cL8-E4-F2o"/>
+                        <outletCollection property="tabButtonCollection" destination="H1L-uE-WNf" id="UJa-yR-fig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9s5-UW-DuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1083,7 +1097,7 @@
                                         <rect key="frame" x="149" y="460" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </activityIndicatorView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="KWE-2p-7fu" customClass="HMDINOTCondBoldFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="KWE-2p-7fu" customClass="HMBoldFontButton">
                                         <rect key="frame" x="78" y="407" width="143" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -1151,7 +1165,7 @@
                                     <action selector="onPressedSkipButton:" destination="XKt-or-Ani" eventType="touchUpInside" id="hTW-uE-BNi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Zef-pc-ubu" customClass="HMDINOTCondBoldFontButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Zef-pc-ubu" customClass="HMBoldFontButton">
                                 <rect key="frame" x="14" y="363" width="281" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
@@ -1183,6 +1197,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AppIcon" width="38" height="38"/>
         <image name="CellGradient" width="1" height="95"/>
         <image name="GuestUserIcon" width="31" height="31"/>
         <image name="NavIconHowto" width="38" height="38"/>

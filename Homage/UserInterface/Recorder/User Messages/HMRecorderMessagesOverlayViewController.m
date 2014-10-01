@@ -134,7 +134,13 @@
 {
     if (self.alreadyInitializedGUI) return;
     
-    [[AMBlurView new] insertIntoView:self.guiBlurredView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[AMBlurView new] insertIntoView:self.guiBlurredView];
+        self.guiBlurredView.alpha = 0.0;
+        [UIView animateWithDuration:1.0 animations:^{
+            self.guiBlurredView.alpha = 1.0;
+        }];
+    });
     
     // Mark that GUI already initialized once.
     _alreadyInitializedGUI = YES;

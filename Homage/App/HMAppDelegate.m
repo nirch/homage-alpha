@@ -230,4 +230,14 @@
     return wasHandled;
 }
 
+-(void)setShouldAllowStatusBar:(BOOL)shouldAllowStatusBar
+{
+    _shouldAllowStatusBar = shouldAllowStatusBar;
+}
+
+-(void)setIsInRecorderContext:(BOOL)isInRecorderContext
+{
+    _isInRecorderContext = isInRecorderContext;
+}
+
 @end

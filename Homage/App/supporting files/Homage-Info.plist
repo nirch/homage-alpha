@@ -39,6 +39,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Bryant-MediumCompressed.otf</string>
 		<string>DINOT-CondBold.otf</string>
 		<string>DINOT-Regular.otf</string>
 	</array>

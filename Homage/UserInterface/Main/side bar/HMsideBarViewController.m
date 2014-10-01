@@ -11,6 +11,7 @@
 #import "UIImage+ImageEffects.h"
 #import "HMColor.h"
 #import "HMAvenirBookFontButton.h"
+#import "HMRegularFontButton.h"
 #import "HMAvenirBookFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AMBlurView.h"
@@ -21,10 +22,13 @@
 
 @interface HMsideBarViewController ()
 
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *storiesButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *settingsButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *meButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *howToButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiStoriesButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiMeButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiSettingsButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiHowToButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiShareAppButton;
+@property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *tabButtonCollection;
+
 @property (weak,nonatomic)  UIButton *selectedButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
@@ -34,7 +38,7 @@
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiHelloUserLabel;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiJoinButton;
-@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *tabButtonCollection;
+
 @property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *loginActionsButtonCollection;
 
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiLogoutButton;
@@ -98,7 +102,7 @@
         bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
         [button.layer addSublayer:bottomBorder];
         
-        [self selectButton:self.storiesButton];
+        [self selectButton:self.guiStoriesButton];
     }
     
     for (HMAvenirBookFontButton *button in self.loginActionsButtonCollection)
@@ -122,37 +126,6 @@
     }
 }
 
-- (IBAction)storiesButtonPushed:(id)sender
-{
-    [self selectButton:sender];
-    [[Mixpanel sharedInstance] track:@"UserPressedStoriesTab"];
-    if ([self.delegate respondsToSelector:@selector(storiesButtonPushed)])
-        [self.delegate storiesButtonPushed];
-}
-
-- (IBAction)meButtonPushed:(id)sender
-{
-    [self selectButton:sender];
-    [[Mixpanel sharedInstance] track:@"UserPressedmeTab"];
-    if ([self.delegate respondsToSelector:@selector(meButtonPushed)])
-        [self.delegate meButtonPushed];
-}
-
-- (IBAction)settingsButtonPushed:(id)sender
-{
-    [self selectButton:sender];
-    [[Mixpanel sharedInstance] track:@"UserPressedSettingsTab"];
-    if ([self.delegate respondsToSelector:@selector(settingsButtonPushed)])
-        [self.delegate settingsButtonPushed];
-}
-
-- (IBAction)HowToPushed:(UIButton *)sender
-{
-    [[Mixpanel sharedInstance] track:@"UserPressedIntroStoryTab"];
-    if ([self.delegate respondsToSelector:@selector(howToButtonPushed)])
-        [self.delegate howToButtonPushed];
-}
-
 -(void)selectButton:(UIButton *)sender
 {
     [UIView animateWithDuration:0.1 animations:
@@ -172,27 +145,17 @@
     
     switch (tabIndexInt) {
         case HMStoriesTab:
-            [self storiesButtonPushed:self.storiesButton];
+            [self onStoriesButtonPushed:self.guiStoriesButton];
             break;
         case HMMeTab:
-            [self meButtonPushed:self.meButton];
+            [self onMeButtonPushed:self.guiMeButton];
             break;
         case HMSettingsTab:
-            [self settingsButtonPushed:self.settingsButton];
+            [self onSettingsButtonPushed:self.guiSettingsButton];
             break;
         default:
             break;
     }
-}
-
-- (IBAction)logoutButtonPushed:(HMAvenirBookFontButton *)sender
-{
-    [self.delegate logoutPushed];
-}
-
-- (IBAction)joinButtonPushed:(HMAvenirBookFontButton *)sender
-{
-    [self.delegate joinButtonPushed];
 }
 
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
@@ -212,4 +175,84 @@
         self.guiLogoutButton.hidden = YES;
     }
 }
+
+-(void)shareApp
+{
+//    NSArray *activityItems = @[];
+//    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
+//    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
+//    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
+//        if (completed) {
+//            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remakeID}];
+//            NSNumber *shareMethod = [self getShareMethod:activityType];
+//            [HMServer.sh reportRemakeShare:remakeID forUserID:[User current].userID shareMethod:shareMethod];
+//            
+//        }
+//    };
+//    
+//    [activityViewController setValue:generalShareSubject forKey:@"subject"];
+//    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self presentViewController:activityViewController animated:YES completion:^{}];
+//    });
+
+    NSArray *sharingItems = @[@"Make awesome videos! \n\n Keep calm and download homage: http://homage.it/download/app/ios"];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    [activityController setValue:@"Check this fun app" forKey:@"subject"];
+    activityController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    [self presentViewController:activityController animated:YES completion:nil];
+
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onLogoutButtonPushed:(HMAvenirBookFontButton *)sender
+{
+    [self.delegate logoutPushed];
+}
+
+- (IBAction)onJoinButtonPushed:(HMAvenirBookFontButton *)sender
+{
+    [self.delegate joinButtonPushed];
+}
+
+- (IBAction)onStoriesButtonPushed:(id)sender
+{
+    [self selectButton:sender];
+    [[Mixpanel sharedInstance] track:@"UserPressedStoriesTab"];
+    if ([self.delegate respondsToSelector:@selector(storiesButtonPushed)])
+        [self.delegate storiesButtonPushed];
+}
+
+- (IBAction)onMeButtonPushed:(id)sender
+{
+    [self selectButton:sender];
+    [[Mixpanel sharedInstance] track:@"UserPressedmeTab"];
+    if ([self.delegate respondsToSelector:@selector(meButtonPushed)])
+        [self.delegate meButtonPushed];
+}
+
+- (IBAction)onSettingsButtonPushed:(id)sender
+{
+    [self selectButton:sender];
+    [[Mixpanel sharedInstance] track:@"UserPressedSettingsTab"];
+    if ([self.delegate respondsToSelector:@selector(settingsButtonPushed)])
+        [self.delegate settingsButtonPushed];
+}
+
+- (IBAction)onHowToButtonPushed:(UIButton *)sender
+{
+    [[Mixpanel sharedInstance] track:@"UserPressedIntroStoryTab"];
+    if ([self.delegate respondsToSelector:@selector(howToButtonPushed)])
+        [self.delegate howToButtonPushed];
+}
+
+- (IBAction)onShareAppButtonPushed:(UIButton *)sender {
+    [self shareApp];
+}
+
+
 @end

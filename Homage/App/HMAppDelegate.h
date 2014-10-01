@@ -23,5 +23,6 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 @property (nonatomic) BOOL userJoinFlow;
 
 @property (nonatomic) BOOL shouldAllowStatusBar;
+@property (nonatomic) BOOL isInRecorderContext;
 
 @end

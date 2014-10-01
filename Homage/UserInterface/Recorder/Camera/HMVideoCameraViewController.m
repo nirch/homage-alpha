@@ -13,6 +13,9 @@
 #import "HMNotificationCenter.h"
 #import "InfoKeys.h"
 #import "HMExtractController.h"
+#import "Mixpanel.h"
+#import "DB.h"
+
 
 // Contexts
 static void *RecordingContext = &RecordingContext;
@@ -821,36 +824,68 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [self setBackgroundRecordingID:UIBackgroundTaskInvalid];
     if (backgroundRecordingID != UIBackgroundTaskInvalid) [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
 
+    NSString *remakeID = self.lastRecordingStartInfo[@"remakeID"];
+    NSNumber *sceneID = self.lastRecordingStartInfo[@"sceneID"];
+    // Find related objects in local storage
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    Footage *footage = [remake footageWithSceneID:sceneID];
+    if (remake == nil || footage == nil) {
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputValidated" properties:@{@"remake_id":remakeID, @"scene_id":sceneID}];
+        [self epicFailWithOutputFileURL:outputFileURL];
+        return;
+    }
+    
     //
-    // If camera error (user exited app for example), just cleanup the temp file and exit.
+    // If camera error, just cleanup and show error message to the user.
     //
     if (error) {
-        HMGLogError(@"captureOutput error: %@", error);
-        [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
+        HMGLogDebug(@"Recording failed with an error:%@", [error description]);
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputError" properties:@{@"remake_id":remakeID, @"scene_id":sceneID, @"error_description":[error description]}];
+        [self epicFailWithOutputFileURL:outputFileURL];
         return;
     }
     
     //
     // No camera errors. Check the reason for why the recording was stopped.
-    // Was it cancelled by the user or a legal footage is available?
+    // Was it cancelled by the user or the recorder for some reason?
     //
-    
     NSInteger recordStopReason = [self.lastRecordingStopInfo[HM_INFO_KEY_RECORDING_STOP_REASON]integerValue];
-    if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable) {
-        HMGLogDebug(@"User canceled recording.");
+    if (recordStopReason == HMRecordingStopReasonUserCanceled ||
+        recordStopReason == HMRecordingStopReasonCameraNotStable ||
+        recordStopReason == HMRecordingStopReasonAppWentToBackground) {
+        
+        HMGLogDebug(@"Recording was canceled with reason:%d", recordStopReason);
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputCanceledWithReason" properties:@{@"reason_code":@(recordStopReason)}];
+
         [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
         return;
     }
+    
+    
+    //
+    // Validate output video file.
+    //
+    NSString *fileName = [outputFileURL lastPathComponent];
+    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *rawMoviePath = [documentsPath stringByAppendingPathComponent:fileName];
+    
+    AVURLAsset *outputAsset = [AVURLAsset URLAssetWithURL:nil options:nil];
+    NSTimeInterval outputDuration = CMTimeGetSeconds(outputAsset.duration);
+    
+    // Asset exists?
+    if (outputDuration == 0) {
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputMissing" properties:@{@"remake_id":remakeID, @"scene_id":sceneID}];
+        [self epicFailWithOutputFileURL:outputFileURL];
+        return;
+    }
+    
+    // Validate duration of the output file.
     
     //
     // Move the file to its finale destination
     //
     NSError *moveError;
-    NSString *fileName = [outputFileURL lastPathComponent];
-    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *rawMoviePath = [documentsPath stringByAppendingPathComponent:fileName];
     [[NSFileManager defaultManager] moveItemAtURL:outputFileURL toURL:[NSURL fileURLWithPath:rawMoviePath] error:&moveError];
-
     if (moveError) {
         //
         // Something went wrong with copying the file from the tmp dir to the local videos directory.
@@ -861,15 +896,27 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     }
     
     //
-    // Notify the recorder that a new raw footage file is available.
+    // Notify the recorder that a new valid raw footage file is available.
     //
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
                                                         object:self
                                                       userInfo:@{@"rawMoviePath":rawMoviePath,
-                                                                 @"remakeID":self.lastRecordingStartInfo[@"remakeID"],
-                                                                 @"sceneID":self.lastRecordingStartInfo[@"sceneID"]
-                                                                 }
-     ];
+                                                                 @"remakeID":remakeID,
+                                                                 @"sceneID":sceneID
+                                                                 }];
+    [[Mixpanel sharedInstance] track:@"RECaptureOutputValidated" properties:@{@"remake_id":remakeID, @"scene_id":sceneID}];
+}
+         
+-(void)epicFailWithOutputFileURL:(NSURL *)outputFileURL
+{
+    [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
+
+    //
+    // Notify the recorder that the recording failed.
+    //
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 #pragma mark Device Configuration

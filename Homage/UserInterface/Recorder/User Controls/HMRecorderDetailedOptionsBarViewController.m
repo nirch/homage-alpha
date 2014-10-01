@@ -437,8 +437,6 @@
     HMSceneCell *cell = (HMSceneCell *)[self.guiTableView cellForRowAtIndexPath:indexPath];
     double progress = [info[HM_INFO_PROGRESS] doubleValue];
     cell.guiUploadProgressBar.progress = progress;
-    
-    
 }
 
 #pragma mark - Scene selection

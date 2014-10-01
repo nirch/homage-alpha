@@ -31,8 +31,8 @@
 		081CDB0A19D94B7700723609 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 081CDB0119D94B7700723609 /* cinemaCountdown_oneLast.wav */; };
 		081CDB1719D94B7700723609 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 081CDB0819D94B7700723609 /* introVideo.mp4 */; };
 		081CDB1819D94B7700723609 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 081CDB0819D94B7700723609 /* introVideo.mp4 */; };
-		081CDB1B19D97E8D00723609 /* HMDINOTRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMDINOTRegularFontLabel.m */; };
-		081CDB1C19D97E8D00723609 /* HMDINOTRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMDINOTRegularFontLabel.m */; };
+		081CDB1B19D97E8D00723609 /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
+		081CDB1C19D97E8D00723609 /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
 		0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
 		0831C7E51885ECD30024406B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
 		0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8D918D04E1700222997 /* CoreMedia.framework */; };
@@ -105,6 +105,7 @@
 		086D94A4188701EA0086C565 /* HMServer+Stories.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D949E188701EA0086C565 /* HMServer+Stories.m */; };
 		086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94A7188702130086C565 /* HMServer+LazyLoading.m */; };
 		086D94A9188702130086C565 /* HMServer+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94A7188702130086C565 /* HMServer+LazyLoading.m */; };
+		086F5F4C19DC03B6007DF004 /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 086F5F4B19DC03B6007DF004 /* recordingEnd.wav */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
 		08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7AF188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
@@ -187,10 +188,6 @@
 		08DF23331892704300912657 /* HMStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231B1892704300912657 /* HMStoryCell.m */; };
 		08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231D1892704300912657 /* HMStoryDetailsViewController.m */; };
 		08DF23351892704300912657 /* HMStoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231D1892704300912657 /* HMStoryDetailsViewController.m */; };
-		08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */; };
-		08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */; };
-		08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */; };
-		08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */; };
 		08E50EC618868AEF001A8B75 /* HMAvenirBookFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EC518868AEF001A8B75 /* HMAvenirBookFontLabel.m */; };
 		08E50EC718868AEF001A8B75 /* HMAvenirBookFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50EC518868AEF001A8B75 /* HMAvenirBookFontLabel.m */; };
 		08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECA188697CE001A8B75 /* HMRoundView.m */; };
@@ -200,8 +197,10 @@
 		08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E50ED418869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */; };
-		08EA3B3319D9DD8A00B074DA /* HMDINOTRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMDINOTRegularFontButton.m */; };
-		08EA3B3419D9DD8A00B074DA /* HMDINOTRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMDINOTRegularFontButton.m */; };
+		08EA3B3319D9DD8A00B074DA /* HMRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */; };
+		08EA3B3419D9DD8A00B074DA /* HMRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */; };
+		08EECB3C19DAABD1002BB197 /* howtoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08EECB3B19DAABD1002BB197 /* howtoVideo.mp4 */; };
+		08EECB3E19DAC1DF002BB197 /* Bryant-MediumCompressed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08EECB3D19DAC1DF002BB197 /* Bryant-MediumCompressed.otf */; };
 		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
@@ -257,8 +256,8 @@
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
 		26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
 		26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
-		65C10D9218A265DC00A65917 /* HMDINOTCondBoldFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMDINOTCondBoldFontLabel.m */; };
-		65C10D9318A265DC00A65917 /* HMDINOTCondBoldFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMDINOTCondBoldFontButton.m */; };
+		65C10D9218A265DC00A65917 /* HMBoldFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMBoldFontLabel.m */; };
+		65C10D9318A265DC00A65917 /* HMBoldFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMBoldFontButton.m */; };
 		69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		F13FA51B1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
 		F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51A1899447F0026EA5F /* HMServer+Users.m */; };
@@ -299,8 +298,8 @@
 		081237D21882DA3D00DA5D23 /* HMServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMServer.m; path = Networking/HMServer.m; sourceTree = "<group>"; };
 		081CDB0119D94B7700723609 /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
 		081CDB0819D94B7700723609 /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
-		081CDB1919D97E8D00723609 /* HMDINOTRegularFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTRegularFontLabel.h; sourceTree = "<group>"; };
-		081CDB1A19D97E8D00723609 /* HMDINOTRegularFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDINOTRegularFontLabel.m; sourceTree = "<group>"; };
+		081CDB1919D97E8D00723609 /* HMRegularFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRegularFontLabel.h; sourceTree = "<group>"; };
+		081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRegularFontLabel.m; sourceTree = "<group>"; };
 		0831C7E21885ECD30024406B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		0838E8D918D04E1700222997 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -373,6 +372,7 @@
 		086D949E188701EA0086C565 /* HMServer+Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Stories.m"; sourceTree = "<group>"; };
 		086D94A6188702130086C565 /* HMServer+LazyLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+LazyLoading.h"; sourceTree = "<group>"; };
 		086D94A7188702130086C565 /* HMServer+LazyLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+LazyLoading.m"; sourceTree = "<group>"; };
+		086F5F4B19DC03B6007DF004 /* recordingEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = recordingEnd.wav; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		08ACB7AC188C631C00C0EE27 /* HMAnimationsFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnimationsFX.h; sourceTree = "<group>"; };
 		08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnimationsFX.m; sourceTree = "<group>"; };
@@ -456,8 +456,6 @@
 		08DF231C1892704300912657 /* HMStoryDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryDetailsViewController.h; sourceTree = "<group>"; };
 		08DF231D1892704300912657 /* HMStoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HMStoryDetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DF231E1892704300912657 /* HMStoryPresenterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryPresenterProtocol.h; sourceTree = "<group>"; };
-		08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINOT-CondBold.otf"; sourceTree = "<group>"; };
-		08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINOT-Regular.otf"; sourceTree = "<group>"; };
 		08E50EC0188685E1001A8B75 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme.txt; sourceTree = "<group>"; };
 		08E50EC418868AEF001A8B75 /* HMAvenirBookFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAvenirBookFontLabel.h; sourceTree = "<group>"; };
 		08E50EC518868AEF001A8B75 /* HMAvenirBookFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAvenirBookFontLabel.m; sourceTree = "<group>"; };
@@ -468,8 +466,10 @@
 		08E50ED118869ADD001A8B75 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
 		08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		08EA3B3119D9DD8A00B074DA /* HMDINOTRegularFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTRegularFontButton.h; sourceTree = "<group>"; };
-		08EA3B3219D9DD8A00B074DA /* HMDINOTRegularFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDINOTRegularFontButton.m; sourceTree = "<group>"; };
+		08EA3B3119D9DD8A00B074DA /* HMRegularFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRegularFontButton.h; sourceTree = "<group>"; };
+		08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRegularFontButton.m; sourceTree = "<group>"; };
+		08EECB3B19DAABD1002BB197 /* howtoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = howtoVideo.mp4; sourceTree = "<group>"; };
+		08EECB3D19DAC1DF002BB197 /* Bryant-MediumCompressed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bryant-MediumCompressed.otf"; sourceTree = "<group>"; };
 		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
@@ -568,10 +568,10 @@
 		26B498AB18B6011E00026401 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		26B498AD18B60D4A00026401 /* HMMotionDetectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMMotionDetectorDelegate.h; sourceTree = "<group>"; };
 		26B498AE18BA4A8D00026401 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		65C10D8E18A265DC00A65917 /* HMDINOTCondBoldFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDINOTCondBoldFontLabel.m; sourceTree = "<group>"; };
-		65C10D8F18A265DC00A65917 /* HMDINOTCondBoldFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDINOTCondBoldFontButton.m; sourceTree = "<group>"; };
-		65C10D9018A265DC00A65917 /* HMDINOTCondBoldFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTCondBoldFontButton.h; sourceTree = "<group>"; };
-		65C10D9118A265DC00A65917 /* HMDINOTCondBoldFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDINOTCondBoldFontLabel.h; sourceTree = "<group>"; };
+		65C10D8E18A265DC00A65917 /* HMBoldFontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMBoldFontLabel.m; sourceTree = "<group>"; };
+		65C10D8F18A265DC00A65917 /* HMBoldFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMBoldFontButton.m; sourceTree = "<group>"; };
+		65C10D9018A265DC00A65917 /* HMBoldFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBoldFontButton.h; sourceTree = "<group>"; };
+		65C10D9118A265DC00A65917 /* HMBoldFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBoldFontLabel.h; sourceTree = "<group>"; };
 		96F79CFCF01B4B89A68A3025 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F12571C819054883001255A2 /* Model104.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model104.xcdatamodel; sourceTree = "<group>"; };
 		F13FA5191899447F0026EA5F /* HMServer+Users.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Users.h"; sourceTree = "<group>"; };
@@ -1211,8 +1211,7 @@
 		08E50EB9188683DD001A8B75 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				08E50EBA188683DD001A8B75 /* DINOT-CondBold.otf */,
-				08E50EBB188683DD001A8B75 /* DINOT-Regular.otf */,
+				08EECB3D19DAC1DF002BB197 /* Bryant-MediumCompressed.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -1220,14 +1219,14 @@
 		08E50EC318868ACD001A8B75 /* Custom Font Related */ = {
 			isa = PBXGroup;
 			children = (
-				08EA3B3119D9DD8A00B074DA /* HMDINOTRegularFontButton.h */,
-				08EA3B3219D9DD8A00B074DA /* HMDINOTRegularFontButton.m */,
-				081CDB1919D97E8D00723609 /* HMDINOTRegularFontLabel.h */,
-				081CDB1A19D97E8D00723609 /* HMDINOTRegularFontLabel.m */,
-				65C10D8E18A265DC00A65917 /* HMDINOTCondBoldFontLabel.m */,
-				65C10D8F18A265DC00A65917 /* HMDINOTCondBoldFontButton.m */,
-				65C10D9018A265DC00A65917 /* HMDINOTCondBoldFontButton.h */,
-				65C10D9118A265DC00A65917 /* HMDINOTCondBoldFontLabel.h */,
+				08EA3B3119D9DD8A00B074DA /* HMRegularFontButton.h */,
+				08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */,
+				65C10D9018A265DC00A65917 /* HMBoldFontButton.h */,
+				65C10D8F18A265DC00A65917 /* HMBoldFontButton.m */,
+				081CDB1919D97E8D00723609 /* HMRegularFontLabel.h */,
+				081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */,
+				65C10D9118A265DC00A65917 /* HMBoldFontLabel.h */,
+				65C10D8E18A265DC00A65917 /* HMBoldFontLabel.m */,
 				08E50EC418868AEF001A8B75 /* HMAvenirBookFontLabel.h */,
 				08E50EC518868AEF001A8B75 /* HMAvenirBookFontLabel.m */,
 				08ACB7B1188C6B9500C0EE27 /* HMAvenirBookFontButton.h */,
@@ -1290,8 +1289,10 @@
 		266F62A2190E950E003774C5 /* media resources */ = {
 			isa = PBXGroup;
 			children = (
+				086F5F4B19DC03B6007DF004 /* recordingEnd.wav */,
 				081CDB0119D94B7700723609 /* cinemaCountdown_oneLast.wav */,
 				081CDB0819D94B7700723609 /* introVideo.mp4 */,
+				08EECB3B19DAABD1002BB197 /* howtoVideo.mp4 */,
 			);
 			name = "media resources";
 			path = mediaResources;
@@ -1477,23 +1478,24 @@
 				081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */,
 				269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */,
 				2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */,
+				08EECB3C19DAABD1002BB197 /* howtoVideo.mp4 in Resources */,
 				26385939189550DC003A7B3D /* Localizable.strings in Resources */,
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
 				26385938189550DC003A7B3D /* InfoPlist.strings in Resources */,
 				0806FA2218828AEB007514BE /* Images.xcassets in Resources */,
 				081CDB0919D94B7700723609 /* cinemaCountdown_oneLast.wav in Resources */,
+				086F5F4C19DC03B6007DF004 /* recordingEnd.wav in Resources */,
+				08EECB3E19DAC1DF002BB197 /* Bryant-MediumCompressed.otf in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				2638593B18955252003A7B3D /* Settings.bundle in Resources */,
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
-				08E50EBC188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				2655DF5418EDA4D200CA362F /* HMPrivacyPolicyViewController.xib in Resources */,
 				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				081CDB1719D94B7700723609 /* introVideo.mp4 in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
-				08E50EBE188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				267A640519532030003DFFEA /* whatsapp@2x.png in Resources */,
@@ -1507,7 +1509,6 @@
 				08B958761891394400BCCF8C /* Colors.plist in Resources */,
 				08081FB918D0A9EA00999068 /* close up.ctr in Resources */,
 				081237961882CB6100DA5D23 /* ServerCFG.plist in Resources */,
-				08E50EBF188683DD001A8B75 /* DINOT-Regular.otf in Resources */,
 				084560001890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				081CDB1819D94B7700723609 /* introVideo.mp4 in Resources */,
 				08EF170C1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
@@ -1515,7 +1516,6 @@
 				08DF22FE18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
 				08EF1717189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				08DF230418926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
-				08E50EBD188683DD001A8B75 /* DINOT-CondBold.otf in Resources */,
 				08CDF8461898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
 				0806FA3318828AEB007514BE /* InfoPlist.strings in Resources */,
 			);
@@ -1569,7 +1569,7 @@
 				08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */,
 				2655DF6418EDA53F00CA362F /* HMsideBarViewController.m in Sources */,
 				085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
-				65C10D9318A265DC00A65917 /* HMDINOTCondBoldFontButton.m in Sources */,
+				65C10D9318A265DC00A65917 /* HMBoldFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
 				267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */,
 				269409681968786500EC4726 /* HMStoryParser.m in Sources */,
@@ -1588,7 +1588,7 @@
 				08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
-				08EA3B3319D9DD8A00B074DA /* HMDINOTRegularFontButton.m in Sources */,
+				08EA3B3319D9DD8A00B074DA /* HMRegularFontButton.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
 				268341F818FFFD40002E8CB7 /* IASKSettingsStore.m in Sources */,
 				08B95872189138EF00BCCF8C /* HMColor.m in Sources */,
@@ -1640,7 +1640,7 @@
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
 				084560051890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				2675065C1972B4F000A2214F /* HMServer+analytics.m in Sources */,
-				081CDB1B19D97E8D00723609 /* HMDINOTRegularFontLabel.m in Sources */,
+				081CDB1B19D97E8D00723609 /* HMRegularFontLabel.m in Sources */,
 				0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
 				268341F918FFFD40002E8CB7 /* IASKSettingsStoreFile.m in Sources */,
 				086D93CF1886C8BB0086C565 /* HMParser.m in Sources */,
@@ -1660,7 +1660,7 @@
 				08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */,
 				268A380C1974AE1F0016C59C /* Remake.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
-				65C10D9218A265DC00A65917 /* HMDINOTCondBoldFontLabel.m in Sources */,
+				65C10D9218A265DC00A65917 /* HMBoldFontLabel.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				084E53411892240100D96258 /* HMServer+Render.m in Sources */,
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
@@ -1693,7 +1693,7 @@
 				08CDF8251896D4A200A9D235 /* HMAWS3Client.m in Sources */,
 				F13FA51C1899447F0026EA5F /* HMServer+Users.m in Sources */,
 				0840FF8818853FB400A6EF5E /* HMGLog.m in Sources */,
-				081CDB1C19D97E8D00723609 /* HMDINOTRegularFontLabel.m in Sources */,
+				081CDB1C19D97E8D00723609 /* HMRegularFontLabel.m in Sources */,
 				084E533A189209D700D96258 /* HMServer+Texts.m in Sources */,
 				08DF23251892704300912657 /* HMGMeTabVC.m in Sources */,
 				F13FA5201899497F0026EA5F /* HMUserParser.m in Sources */,
@@ -1759,7 +1759,7 @@
 				08DF230218926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
 				08B958911891678600BCCF8C /* Text+Factory.m in Sources */,
 				0806FB35188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
-				08EA3B3419D9DD8A00B074DA /* HMDINOTRegularFontButton.m in Sources */,
+				08EA3B3419D9DD8A00B074DA /* HMRegularFontButton.m in Sources */,
 				08E50EC718868AEF001A8B75 /* HMAvenirBookFontLabel.m in Sources */,
 				081237D41882DA3D00DA5D23 /* HMServer.m in Sources */,
 			);

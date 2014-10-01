@@ -97,7 +97,6 @@
 -(void)initObservers
 {
     
-
     // Observe application start
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onApplicationStartedNotification:)
@@ -120,8 +119,7 @@
                                                    selector:@selector(onReachabilityStatusChange:)
                                                        name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
                                                      object:nil];
-    
-    
+
 }
 
 -(void)removeObservers
@@ -141,10 +139,14 @@
     //
     // Application notifies that local storage is ready and the app can start.
     //
-    [self.refreshControl beginRefreshing];
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
     [self refetchStoriesFromServer];
    
-    
+    //
+    // Refresh from local storage before updated by server.
+    //
+    [self refreshFromLocalStorage];
 }
 
 -(void)onStoriesRefetched:(NSNotification *)notification
@@ -154,6 +156,8 @@
     // Backend notifies that local storage was updated with stories.
     //
     [self.refreshControl endRefreshing];
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = NO;
     [self refreshFromLocalStorage];
 
     // A simple example:
@@ -227,6 +231,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"story details segue"]) {
+        
         //
         // Segue to story details.
         //
@@ -316,6 +321,26 @@
     HMStoryCell *cell = (HMStoryCell *)[self.storiesCV dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     [self configureCell:cell forIndexPath:indexPath];
     return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    HMStoryCell *cell = (HMStoryCell *)[self.storiesCV cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1 animations:^{
+        cell.alpha = 0.5;
+        cell.transform = CGAffineTransformMakeScale(0.95, 0.95);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            cell.alpha = 1.0;
+            cell.transform = CGAffineTransformIdentity;
+        }];
+    }];
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    HMStoryCell *cell = (HMStoryCell *)[self.storiesCV cellForItemAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"story details segue" sender:cell];
 }
 
 #pragma mark - Cells configuration
