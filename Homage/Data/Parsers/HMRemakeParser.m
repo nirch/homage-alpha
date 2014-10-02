@@ -8,7 +8,6 @@
 
 #import "HMRemakeParser.h"
 
-
 @implementation HMRemakeParser
 
 -(void)parse
@@ -53,12 +52,7 @@
     NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     remake.lastLocalUpdate = lastLocalUpdate;
     
-    //"created_at" = "2014-03-09 14:30:13 UTC"
-    NSString *createdAtString = [info stringForKey:@"created_at"];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss ' UTC'"];
-    NSDate *createdAt = [dateFormat dateFromString:createdAtString];
-    remake.createdAt = createdAt;
+    remake.createdAt = [self parseDateOfString:[info stringForKey:@"created_at"]];
     
     self.parseInfo[@"remakeID"] = remakeID;
     
@@ -67,6 +61,22 @@
     }
 }
 
+-(NSDate *)parseDateOfString:(NSString *)dateString
+{
+    //"created_at" = "2014-03-09 14:30:13 UTC" <-- deprecated on server side
+    //"created_at" = "2014-09-15T13:12:19.644Z" <-- changed to this on server side
+    NSDate *date;
+    
+    dateString = [dateString substringToIndex:19];
+    
+    // Prase the string to nsdate using the dateFormatter
+    date = [self.dateFormatter dateFromString:dateString];
+    if (date) return date;
+    
+    // Failed parsing date. Try again using the fallback dateformatter.
+    date = [self.dateFormatterFallback dateFromString:dateString];
+    return date;
+}
 
 -(void)parseFootage:(NSDictionary *)info forRemake:(Remake *)remake
 {

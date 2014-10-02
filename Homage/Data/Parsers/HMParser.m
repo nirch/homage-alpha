@@ -17,6 +17,12 @@
     if (self) {
         _ctx = DB.sh.context;
         _parseInfo = [NSMutableDictionary new];
+        
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        
+        _dateFormatterFallback = [[NSDateFormatter alloc] init];
+        [_dateFormatterFallback setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss ' UTC'"];
     }
     return self;
 }
