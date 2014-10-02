@@ -158,6 +158,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self done];
     self.videoPlayer = nil;
     [self removeObservers];

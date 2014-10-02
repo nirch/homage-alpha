@@ -58,6 +58,8 @@
 @property (nonatomic) UIInterfaceOrientation interfaceOrientaion;
 @property (nonatomic) NSString *contourFile;
 
+@property (nonatomic) CMTime firstSampleTime;
+
 //@property (readonly) CHomage *h_ext;
 
 //@property CMTime frameTime;
@@ -232,6 +234,7 @@
 -(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
 {
     if (_isCurrentlyRecording) return;
+
    dispatch_async(self.extractQueue, ^{
         _isCurrentlyRecording = YES;
         NSLog(@"Start recording with FG extraction: %@", outputFileURL);
@@ -345,14 +348,28 @@
         }
         
         CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+        self.firstSampleTime = lastSampleTime;
         [self.assetWriter startWriting];
         [self.assetWriter startSessionAtSourceTime:lastSampleTime];
     }
     
     if (captureOutput == _movieDataOutput) {
+        CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+        CMTime timePassed = CMTimeSubtract(lastSampleTime, self.firstSampleTime);
+        NSTimeInterval timePassedMS = CMTimeGetSeconds(timePassed) * 1000.0f;
+
         if (self.writerVideoInput.readyForMoreMediaData)
         {
             [self.writerVideoInput appendSampleBuffer:sampleBuffer];
+            
+            // Check if duration end passed.
+            if (timePassedMS >= 4800) {
+                // Notify that should stop recording.
+                NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
+                [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                                                                    object:self
+                                                                  userInfo:info];
+            }
         }
         else
         {
@@ -372,7 +389,6 @@
             [[Mixpanel sharedInstance] track:@"ErrWriterInput" properties:errorDictionary];
         }
     }
-
 }
 
 -(void)handleBackgroundDetectionForSampleBuffer:(CMSampleBufferRef)sampleBuffer

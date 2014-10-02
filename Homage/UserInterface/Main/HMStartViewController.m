@@ -110,6 +110,8 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     // Prepare local storage and start the App.
     if (!self.justStarted) return;
     
@@ -123,7 +125,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    
+    [super viewWillDisappear:animated];
 }
 
 -(void)initGUI

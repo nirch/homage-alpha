@@ -108,6 +108,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 //
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self initAVObservers];
     [self initAppObservers];
     [self refreshCameraFeedWithFlip:NO];
@@ -118,6 +120,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 //
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [self updateOrientation:(UIInterfaceOrientation)[UIDevice currentDevice].orientation];
 }
 
@@ -126,6 +129,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 //
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self removeAVObservers];
     [self removeAppObservers];
 }
@@ -652,9 +657,11 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
                 BOOL frontCamera = [self isFrontCamera];
                 [self.extractController setupExtractorientationWithDeviceOrientation:interfaceOrientation frontCamera:frontCamera];
+                //self.extractController.recordingDuration = 4800;
             }
             
-            [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath] recordingDelegate:self];
+            [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath]
+                                          recordingDelegate:self];
         }
         else
         {

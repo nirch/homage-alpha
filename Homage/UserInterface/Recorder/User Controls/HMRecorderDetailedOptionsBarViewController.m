@@ -99,6 +99,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self checkMicrophoneAuthorization];
     [self initGUIOnceAfterFirstAppearance];
     [self initObservers];
@@ -107,6 +109,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self removeObservers];
     [self.sceneVideoVC done];
     [self.storyVideoVC done];

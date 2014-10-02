@@ -53,13 +53,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self initGUI];
     [self hideAllAnimated:NO];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-
 }
 
 -(void)initGUI

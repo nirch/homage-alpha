@@ -43,17 +43,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self initObservers];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self removeObservers];
-}
-
--(void)dealloc
-{
-    // NSLog(@">>> dealloc %@", [self class]);
 }
 
 
@@ -148,10 +145,12 @@
     // User shot the video for the whole duration of the scene. Hazahh!
     // Need to notify everyone that "The recording should be stopped because it was successful".
     //
-    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
-                                                        object:self
-                                                      userInfo:info];
+//    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+//                                                        object:self
+//                                                      userInfo:info];
+    
     
     // Play sound at the end of the duration
     [self playEndOfDurationSound];

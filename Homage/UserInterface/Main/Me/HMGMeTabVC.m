@@ -73,6 +73,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [[Mixpanel sharedInstance] track:@"MEEnterTab"];
     [self initObservers];
     [self refreshFromLocalStorage];
@@ -80,11 +82,13 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-
+    [super viewDidAppear:animated];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self removeObservers];
     //[self.moviePlayer done];
     
@@ -94,6 +98,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark initializations

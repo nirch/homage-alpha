@@ -105,6 +105,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     self.tosVC = [[HMTOSViewController alloc] init];
     self.privacyVC = [[HMPrivacyPolicyViewController alloc] init];
     self.legalNavVC = [[UINavigationController alloc] init];
@@ -117,11 +119,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self.guiActivityView stopAnimating];
     self.guiActivityView.hidden = YES;
     [self removeObservers];
     [self resetTextFields];
-
 }
 
 -(void)initGUI

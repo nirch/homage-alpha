@@ -53,12 +53,16 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self.refreshControl endRefreshing];
     [self removeObservers];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self initObservers];
     [self initContent];
 }

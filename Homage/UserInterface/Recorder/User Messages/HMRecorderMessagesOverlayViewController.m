@@ -110,23 +110,22 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self initGUIOnceAfterFirstAppearance];
     [self initObservers];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
+    [super viewDidAppear:animated];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [self removeObservers];
-}
-
--(void)dealloc
-{
-    // NSLog(@">>> dealloc %@", [self class]);
 }
 
 #pragma mark - UI init

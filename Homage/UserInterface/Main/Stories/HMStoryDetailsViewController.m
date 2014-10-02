@@ -64,6 +64,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     self.guiRemakeActivity.hidden = YES;
     if (self.autoStartPlayingStory)
     {
@@ -75,13 +77,14 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     
     self.guiRemakeButton.enabled = YES;
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     
     self.guiRemakeActivity.hidden = YES;
     [self.guiRemakeActivity stopAnimating];
@@ -92,9 +95,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    
-    
-    
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark initializations
@@ -110,7 +111,6 @@
 
 -(void)initStoryMoviePlayer
 {
-    
     HMSimpleVideoViewController *vc;
     self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer rotationSensitive:YES];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
@@ -122,7 +122,6 @@
     self.storyMoviePlayer.entityType = [NSNumber numberWithInteger:HMStory];
     self.storyMoviePlayer.entityID = self.story.sID;
     self.storyMoviePlayer.resetStateWhenVideoEnds = YES;
-    
 }
 
 -(void)initContent
