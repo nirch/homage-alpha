@@ -13,6 +13,8 @@
     AVCaptureVideoDataOutputSampleBufferDelegate,AVCaptureAudioDataOutputSampleBufferDelegate
 >
 
+@property (nonatomic) NSTimeInterval recordingDuration;
+
 -(id)initWithSession:(AVCaptureSession *)session movieDataOutput:(AVCaptureVideoDataOutput *)movieDataOutput audioDataOutput:(AVCaptureAudioDataOutput *)audioDataOutput;
 
 -(void)updateContour:(NSString *)contourFile;

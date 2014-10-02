@@ -422,16 +422,18 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)onShouldStartRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
+    NSTimeInterval recordingDurationMS = [info[HM_INFO_DURATION_IN_SECONDS] doubleValue] * 1000;
+    
     //stop observer should be called only once and can be triggered from multiple sources
     [self addStopOserver];
-    [self toggleMovieRecording:info Start:YES];
+    [self toggleMovieRecording:info Start:YES recordingDuration:recordingDurationMS];
 }
 
 -(void)onShouldStopRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
     [self removeStopObserver];
-    [self toggleMovieRecording:info Start:NO];
+    [self toggleMovieRecording:info Start:NO recordingDuration:0];
 }
 
 -(void)onFlipCamera:(NSNotification *)notification
@@ -616,7 +618,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
      ];
 }
 
--(void)toggleMovieRecording:(NSDictionary *)info Start:(BOOL)start
+// TODO: seperate toggleMovieRecording to two different method. One for starting recording (+duration) and one for just stopping the recording.
+-(void)toggleMovieRecording:(NSDictionary *)info Start:(BOOL)start recordingDuration:(NSTimeInterval)recordingDuration
 {
     dispatch_async([self sessionQueue], ^{
         id outputController = self.extractController ? self.extractController : self.movieFileOutput;
@@ -624,6 +627,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         if (start)
         //if (![outputController isRecording])
         {
+            
+            
             self.lastRecordingStartInfo = info;
             self.lockInterfaceRotation = YES;
             
@@ -657,7 +662,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                 UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
                 BOOL frontCamera = [self isFrontCamera];
                 [self.extractController setupExtractorientationWithDeviceOrientation:interfaceOrientation frontCamera:frontCamera];
-                //self.extractController.recordingDuration = 4800;
+                self.extractController.recordingDuration = recordingDuration;
             }
             
             [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath]

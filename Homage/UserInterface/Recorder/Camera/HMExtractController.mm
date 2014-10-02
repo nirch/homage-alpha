@@ -86,6 +86,7 @@
         // Is CFrameBufferIos *m_fb really needed? The images are now provided in the recording output delegate.
         // No need to get the frames in the C++ code.
         // m_hm = new CHomage( NULL );
+        _recordingDuration = 0;
     }
     return self;
 }
@@ -362,8 +363,9 @@
         {
             [self.writerVideoInput appendSampleBuffer:sampleBuffer];
             
-            // Check if duration end passed.
-            if (timePassedMS >= 4800) {
+            // Check if reached recording duration (if recording duration was set)
+            if (self.recordingDuration > 0 && timePassedMS >= self.recordingDuration) {
+                // Reached the set recording duration.
                 // Notify that should stop recording.
                 NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
