@@ -91,6 +91,9 @@
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
 "CAMERA_NOT_STABLE_TITLE" = "Steady now...";
 
+"EPIC_FAIL_MESSAGE" = "Something went wrong. Please try again";
+"EPIC_FAIL_TITLE" = "Epic Fail...";
+
 "UNKNOWN_MAIL_ADDRESS" = "Unknown mail address";
 "INCORRECT_PASSWORD" = "Incorrect mail address or password";
 "INCORRECT_EMAIL_ADDRESS_FORMAT" = "incorrect email format";

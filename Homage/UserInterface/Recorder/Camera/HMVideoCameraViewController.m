@@ -824,12 +824,15 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [self setBackgroundRecordingID:UIBackgroundTaskInvalid];
     if (backgroundRecordingID != UIBackgroundTaskInvalid) [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
 
+    //
+    // Find related objects in local storage
+    //
     NSString *remakeID = self.lastRecordingStartInfo[@"remakeID"];
     NSNumber *sceneID = self.lastRecordingStartInfo[@"sceneID"];
-    // Find related objects in local storage
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     Footage *footage = [remake footageWithSceneID:sceneID];
-    if (remake == nil || footage == nil) {
+    Scene *scene = [remake.story findSceneWithID:sceneID];
+    if (remake == nil || footage == nil || scene == nil) {
         [[Mixpanel sharedInstance] track:@"RECaptureOutputValidated" properties:@{@"remake_id":remakeID, @"scene_id":sceneID}];
         [self epicFailWithOutputFileURL:outputFileURL];
         return;
@@ -855,7 +858,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         recordStopReason == HMRecordingStopReasonAppWentToBackground) {
         
         HMGLogDebug(@"Recording was canceled with reason:%d", recordStopReason);
-        [[Mixpanel sharedInstance] track:@"RECaptureOutputCanceledWithReason" properties:@{@"reason_code":@(recordStopReason)}];
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputCanceledWithReason" properties:@{@"remake_id":remakeID, @"scene_id":sceneID, @"reason_code":@(recordStopReason)}];
 
         [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
         return;
@@ -867,19 +870,62 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     //
     NSString *fileName = [outputFileURL lastPathComponent];
     NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+
     NSString *rawMoviePath = [documentsPath stringByAppendingPathComponent:fileName];
     
-    AVURLAsset *outputAsset = [AVURLAsset URLAssetWithURL:nil options:nil];
-    NSTimeInterval outputDuration = CMTimeGetSeconds(outputAsset.duration);
+    AVURLAsset *outputAsset = [AVURLAsset URLAssetWithURL:outputFileURL options:nil];
+    CMTime cmTimeDuration = outputAsset.duration;
+    NSTimeInterval outputDuration = CMTimeGetSeconds(cmTimeDuration); // In seconds
+    NSTimeInterval targetDuration = scene.duration.doubleValue;
+    NSDictionary *fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:outputFileURL.path error:&error];
     
-    // Asset exists?
-    if (outputDuration == 0) {
+    // Check for existance of output file.
+    if (fileInfo == nil ||
+        outputAsset == nil ||
+        isnan(outputDuration) ||
+        outputDuration == 0) {
+
+        // Asset doesn't exist, is empty or duration is corrupted.
         [[Mixpanel sharedInstance] track:@"RECaptureOutputMissing" properties:@{@"remake_id":remakeID, @"scene_id":sceneID}];
         [self epicFailWithOutputFileURL:outputFileURL];
         return;
     }
     
     // Validate duration of the output file.
+    outputDuration = round(outputDuration * 1000.0f); // Converted to mseconds
+    NSTimeInterval diffDuration = outputDuration - targetDuration;
+    HMGLogDebug(@"Output duration:%f  target:%f  diff:%f", outputDuration, targetDuration, diffDuration);
+    if (fabs(diffDuration) > 300) {
+        // Duration difference is very large.
+        // Something went wrong with the recording timer.
+        // FIX THIS! This is a critical bug. This shouldn't ever happen.
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputWrongDuration" properties:@{
+                                                                                  @"remake_id":remakeID,
+                                                                                  @"scene_id":sceneID,
+                                                                                  @"target_duration":@(targetDuration),
+                                                                                  @"output_duration":@(outputDuration),
+                                                                                  @"duration_diff":@(diffDuration),
+                                                                                  }];
+        [self epicFailWithOutputFileURL:outputFileURL];
+        return;
+    }
+    
+    // Check if file is suspiciously small compared to video duration.
+    // If it is, this is probably because of the bug that causes videos to be
+    // saved with audio only. Fail footage in such cases and report the event to mixpanel with info.
+    unsigned long long fileSize = [fileInfo fileSize];
+    unsigned long long threshold = outputDuration * 20;
+    if (fileSize < threshold) {
+        HMGLogError(@"Output file size suspiciously short :%d", fileSize);
+        [[Mixpanel sharedInstance] track:@"RECaptureOutputFileSuspiciouslyShort" properties:@{
+                                                                                      @"remake_id":remakeID,
+                                                                                      @"scene_id":sceneID,
+                                                                                      @"output_duration":@(outputDuration),
+                                                                                      @"file_size":@(fileSize),
+                                                                                      }];
+        [self epicFailWithOutputFileURL:outputFileURL];
+        return;
+    }
     
     //
     // Move the file to its finale destination
@@ -904,7 +950,18 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                                                                  @"remakeID":remakeID,
                                                                  @"sceneID":sceneID
                                                                  }];
-    [[Mixpanel sharedInstance] track:@"RECaptureOutputValidated" properties:@{@"remake_id":remakeID, @"scene_id":sceneID}];
+    
+    //
+    // Report validated output to mixpanel with details.
+    //
+    [[Mixpanel sharedInstance] track:@"RECaptureOutputValidated" properties:@{
+                                                                              @"remake_id":remakeID,
+                                                                              @"scene_id":sceneID,
+                                                                              @"target_duration":@(targetDuration),
+                                                                              @"output_duration":@(outputDuration),
+                                                                              @"duration_diff":@(diffDuration),
+                                                                              @"file_size":@(fileSize)
+                                                                              }];
 }
          
 -(void)epicFailWithOutputFileURL:(NSURL *)outputFileURL
@@ -914,7 +971,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     //
     // Notify the recorder that the recording failed.
     //
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_EPIC_FAIL
                                                         object:self
                                                       userInfo:nil];
 }

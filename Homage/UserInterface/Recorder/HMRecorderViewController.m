@@ -711,8 +711,16 @@
 
 -(void)onRecorderEpicFail:(NSNotification *)notification
 {
-    // TODO: open error screen here
-    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeSceneContext
+                       checkNextStateOnDismiss:NO
+                                          info:@{
+                                                 @"icon name":@"iconEpicFail",
+                                                 @"title":LS(@"EPIC_FAIL_TITLE"),
+                                                 @"text":LS(@"EPIC_FAIL_MESSAGE"),
+                                                 @"ok button text":LS(@"OK_GOT_IT"),
+                                                 }];
+    [self presentRecorderIdleUI];
 }
 
 -(void)onRender:(NSNotification *)notification
