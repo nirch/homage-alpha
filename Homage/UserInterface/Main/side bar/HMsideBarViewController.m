@@ -12,6 +12,7 @@
 #import "HMColor.h"
 #import "HMAvenirBookFontButton.h"
 #import "HMRegularFontButton.h"
+#import "HMAppDelegate.h"
 #import "HMAvenirBookFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AMBlurView.h"
@@ -79,17 +80,11 @@
 -(void)initObservers
 {
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onSwitchedTab:) name:HM_MAIN_SWITCHED_TAB object:nil];
-    
-    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onReachabilityStatusChange:)
-                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:nil];*/
 }
 
 -(void)removeObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_MAIN_SWITCHED_TAB object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
 }
 
 -(void)initGUI
@@ -117,15 +112,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(void)onReachabilityStatusChange:(NSNotification *)notification
-{
-    for (UIButton *button in self.loginActionsButtonCollection)
-    {
-        //[button setEnabled:HMServer.sh.isReachable];
-        button.enabled = HMServer.sh.isReachable;
-    }
 }
 
 -(void)selectButton:(UIButton *)sender
@@ -184,8 +170,15 @@
     // Get the urls for downloading iOS and android app from CFG file
     //
     #ifndef DEBUG
+    if (IS_TEST_APP) {
+        // Release, but just a beta test application.
+        NSString *urlIOS = [HMServer.sh absoluteURLNamed:@"test_download_app_ios_url"];
+        NSString *urlAndroid = [HMServer.sh absoluteURLNamed:@"test_download_app_android_url"];
+    } else {
+        // Release app for production.
         NSString *urlIOS = [HMServer.sh absoluteURLNamed:@"prod_download_app_ios_url"];
         NSString *urlAndroid = [HMServer.sh absoluteURLNamed:@"prod_download_app_android_url"];
+    }
     #else
         NSString *urlIOS = [HMServer.sh absoluteURLNamed:@"test_download_app_ios_url"];
         NSString *urlAndroid = [HMServer.sh absoluteURLNamed:@"test_download_app_android_url"];

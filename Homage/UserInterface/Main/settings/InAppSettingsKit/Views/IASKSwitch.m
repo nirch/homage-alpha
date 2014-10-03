@@ -19,4 +19,13 @@
 
 @implementation IASKSwitch
 
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        self.tintColor = [UIColor greenColor];
+    }
+    return self;
+}
+
 @end

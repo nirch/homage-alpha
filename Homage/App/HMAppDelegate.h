@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#define IS_TEST_APP NO
+
 typedef NS_ENUM(NSInteger, HMPushNotificationType) {
     HMPushMovieReady,
     HMPushMovieFailed,

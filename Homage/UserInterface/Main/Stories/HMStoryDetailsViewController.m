@@ -158,13 +158,6 @@
                                                    selector:@selector(onRemakeThumbnailLoaded:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                                      object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onReachabilityStatusChange:)
-                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:nil];
-    
-    
 }
 
 -(void)removeObservers
@@ -174,8 +167,6 @@
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
-    
 }
 
 
@@ -270,24 +261,6 @@
     
     cell.guiUserName.text = remake.user.userID;
     
-}
-
--(void)onReachabilityStatusChange:(NSNotification *)notification
-{
-    [self setActionsEnabled:HMServer.sh.isReachable];
-}
-
--(void)setActionsEnabled:(BOOL)enabled
-{
-    
-    
-    [self.guiRemakeButton setEnabled:NO];
-    
-    //disable remake CV
-    for (UICollectionViewCell *cell in [self.remakesCV visibleCells])
-    {
-        [cell setUserInteractionEnabled:enabled];
-    }
 }
 
 

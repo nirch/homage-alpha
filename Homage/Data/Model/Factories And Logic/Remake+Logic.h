@@ -14,7 +14,11 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
     HMGRemakeStatusRendering,
     HMGRemakeStatusDone,
     HMGRemakeStatusTimeout,
-    HMGRemakeStatusDeleted
+    HMGRemakeStatusDeleted,
+    HMGRemakeStatusPendingScenes,
+    HMGRemakeStatusPendingQueue,
+    HMGRemakeStatusFailed,
+    HMGRemakeStatusClientRequestedDeletion
 };
 
 

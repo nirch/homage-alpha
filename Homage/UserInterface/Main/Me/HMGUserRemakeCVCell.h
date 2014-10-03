@@ -22,5 +22,7 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *actionButtonCollection;
 
+@property (weak, nonatomic) IBOutlet UIView *guiActivityOverlay;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 @end

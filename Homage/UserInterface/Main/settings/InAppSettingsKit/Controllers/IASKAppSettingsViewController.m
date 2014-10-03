@@ -26,6 +26,7 @@
 #import "IASKSpecifier.h"
 #import "IASKSpecifierValuesViewController.h"
 #import "IASKTextField.h"
+#import "HMColor.h"
 
 #if !__has_feature(objc_arc)
 #error "IASK needs ARC"
@@ -139,6 +140,11 @@ CGRect IASKCGRectSwap(CGRect rect);
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapToEndEdit:)];   
     tapGesture.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:tapGesture];
+    
+    // styling
+    self.tableView.backgroundColor = [UIColor blackColor];
+    [self.tableView setSeparatorColor:[HMColor.sh main2]];
+
 }
 
 - (void)viewDidUnload {
@@ -387,7 +393,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 - (UIView *)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
 	if ([self.delegate respondsToSelector:@selector(settingsViewController:tableView:viewForHeaderForSection:)]) {
-		return [self.delegate settingsViewController:self tableView:tableView viewForHeaderForSection:section];
+        UIView *view = [self.delegate settingsViewController:self tableView:tableView viewForHeaderForSection:section];
+        return view;
 	} else {
 		return nil;
 	}
@@ -477,7 +484,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	IASKSpecifier *specifier  = [self.settingsReader specifierForIndexPath:indexPath];
+    IASKSpecifier *specifier  = [self.settingsReader specifierForIndexPath:indexPath];
 	if ([specifier.type isEqualToString:kIASKCustomViewSpecifier] && [self.delegate respondsToSelector:@selector(tableView:cellForSpecifier:)]) {
 		UITableViewCell* cell = [self.delegate tableView:tableView cellForSpecifier:specifier];
 		assert(nil != cell && "delegate must return a UITableViewCell for custom cell types");
@@ -487,7 +494,15 @@ CGRect IASKCGRectSwap(CGRect rect);
 	UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:specifier.type];
 	if(nil == cell) {
       cell = [self newCellForIdentifier:specifier.type];
-	}
+    }
+    
+    // custom styling
+    cell.backgroundColor = [UIColor blackColor];
+    cell.backgroundView.backgroundColor = [UIColor blackColor];
+    cell.contentView.backgroundColor = [UIColor blackColor];
+    cell.tintColor = [UIColor greenColor];
+    cell.textLabel.textColor = [HMColor.sh textImpact];
+    cell.textLabel.font = [UIFont fontWithName:@"Bryant-MediumCompressed" size:cell.textLabel.font.pointSize];
 	
 	if ([specifier.type isEqualToString:kIASKPSToggleSwitchSpecifier]) {
 		cell.textLabel.text = specifier.title;
@@ -508,6 +523,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 		IASKSwitch *toggle = (IASKSwitch*)cell.accessoryView;
 		toggle.on = toggleState;
 		toggle.key = specifier.key;
+        toggle.tintColor = [HMColor.sh main2];
+        toggle.onTintColor = [HMColor.sh main2];
 	}
 	else if ([specifier.type isEqualToString:kIASKPSMultiValueSpecifier]) {
 		cell.textLabel.text = specifier.title;
@@ -589,6 +606,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 	cell.detailTextLabel.textAlignment = specifier.textAlignment;
 	cell.textLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
 	cell.detailTextLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
+    
     return cell;
 }
 

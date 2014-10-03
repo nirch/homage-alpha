@@ -24,6 +24,7 @@
 #import "NSDictionary+TypeSafeValues.h"
 #import "HMServer+analytics.h"
 #import "HMAppDelegate.h"
+#import "AWAlertView.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -34,15 +35,14 @@
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSString *currentFetchedResultsUser;
-@property (nonatomic) NSDictionary *remakeToDeleteInfo;
+
+//@property (nonatomic) NSMutableDictionary *remakesToDeleteInfo;
+
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
+
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (nonatomic,weak) UIView *guiVideoContainer;
-
-@property (nonatomic) NSMutableArray *objectChanges;
-@property (nonatomic) NSMutableArray *sectionChanges;
-
 
 @end
 
@@ -60,15 +60,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self.refreshControl beginRefreshing];
+    
+    //self.remakesToDeleteInfo = [NSMutableDictionary new];
+    
     [self initGUI];
     [self initContent];
     [self initPermanentObservers];
     
     self.playingMovieIndex = -1;
-    
-    _sectionChanges = [NSMutableArray array];
-    _objectChanges = [NSMutableArray array];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -128,7 +127,6 @@
 {
     [self refreshFromLocalStorage];
     [self refetchRemakesFromServer];
-    //[self.userRemakesCV reloadData];
 }
 
 #pragma mark - Observers
@@ -147,6 +145,7 @@
                                                        name:HM_NOTIFICATION_SERVER_USER_REMAKES
                                                      object:nil];
 }
+
 -(void)initObservers
 {
     // Observe lazy loading thumbnails
@@ -170,11 +169,7 @@
                                                    selector:@selector(onShortenURLReceived:)
                                                        name:HM_SHORT_URL
                                                      object:nil];
-    
-    /*[[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onReachabilityStatusChange:)
-                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:nil];*/
+
 }
 
 -(void)removeObservers
@@ -211,25 +206,15 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.userRemakesCV.hidden = NO;
             [self refreshFromLocalStorage];
-            //[self.userRemakesCV reloadData];
+            [self.userRemakesCV reloadData];
             [self.refreshControl endRefreshing];
-            
-            //TODO: this is a fix for a ui bug in refresh control. try to fix this
-            if (self.userRemakesCV.contentOffset.y != 0)
-            {
-                [self.userRemakesCV setContentOffset:CGPointMake(0,0) animated:YES];
-            }
-            
-            //NSLog(@"collection view content insets: (%f %f %f %f);" , self.userRemakesCV.contentInset.top ,self.userRemakesCV.contentInset.bottom, self.userRemakesCV.contentInset.left, self.userRemakesCV.contentInset.right);
-            //NSLog(@"collection view content insets: (%f %f);" , self.userRemakesCV.contentOffset.x , self.userRemakesCV.contentOffset.y);
-            
         });
     }
 }
 
 -(void)refreshRemakes
 {
-    self.userRemakesCV.hidden = YES;
+    [self refreshFromLocalStorage];
     [self refetchRemakesFromServer];
 }
 
@@ -272,9 +257,8 @@
 
 -(void)onRemakeDeletion:(NSNotification *)notification
 {
-    NSDictionary *info = notification.userInfo;
-    NSString *remakeID = info[@"remakeID"];
-    
+    // For now, just refetch and reload.
+    // TODO: add a proper implementation of NSFetchedResultsControllerDelegate
     if (notification.isReportingError && HMServer.sh.isReachable) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
                                                         message:@"Something went wrong.\n\nTry to delete the remake in a few moments."
@@ -282,16 +266,12 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil
                               ];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
-        HMGLogError(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
-    } else {
-        Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-        [remake deleteRawLocalFiles];
-        [DB.sh.context deleteObject:remake];
-        [DB.sh save];
+        [alert show];
     }
+
+    // Refresh and reload
+    [self refreshFromLocalStorage];
+
 }
 
 -(void)onRemakeCreation:(NSNotification *)notification
@@ -301,28 +281,10 @@
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
     if ((notification.isReportingError && HMServer.sh.isReachable) || !remake ) {
         [self remakeCreationFailMessage];
-        
     }
     
     // Present the recorder for the newly created remake.
     [self initRecorderWithRemake:remake];
-}
-
--(void)onReachabilityStatusChange:(NSNotification *)notification
-{
-    [self setActionsEnabled:HMServer.sh.isReachable];
-}
-
--(void)setActionsEnabled:(BOOL)enabled
-{
-    for (HMGUserRemakeCVCell *cell in [self.userRemakesCV visibleCells])
-    {
-        //[cell setUserInteractionEnabled:enabled];
-        for (UIButton *button in cell.actionButtonCollection)
-        {
-            button.enabled = NO;
-        }
-    }
 }
 
 #pragma mark - Refresh my remakes
@@ -334,17 +296,15 @@
 -(void)refreshFromLocalStorage
 {
     NSError *error;
+    _fetchedResultsController = nil;
     [self.fetchedResultsController performFetch:&error];
     HMGLogDebug(@"num of fetched objects: %d" , self.fetchedResultsController.fetchedObjects.count);
     if (error) {
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       [self handleNoRemakes];
-                       [self.userRemakesCV reloadData];
-                   });
+    [self.userRemakesCV reloadData];
+    [self handleNoRemakes];
 }
 
 -(void)onPulledToRefetch
@@ -382,7 +342,7 @@
 
     // Create the fetched results controller and return it.
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
-    _fetchedResultsController.delegate = self;
+    //_fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
 }
@@ -410,8 +370,6 @@
     [self updateCell:cell forIndexPath:indexPath];
     return cell;
 }
-
-
 
 - (void)updateCell:(HMGUserRemakeCVCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
@@ -462,7 +420,10 @@
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
+            cell.guiActivityOverlay.alpha = 0;
+            [cell.guiActivity stopAnimating];
             break;
+            
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
             image = [UIImage imageNamed:@"play1white"];
@@ -473,12 +434,8 @@
             cell.shareButton.enabled = YES;
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
-            
-            //test
-            //[cell.shareButton.layer setShadowOpacity:1];
-            //[cell.shareButton.layer setShadowOffset:CGSizeMake(2,2)];
-            //[cell.shareButton.layer setShadowColor:[UIColor blackColor].CGColor];
-                        
+            cell.guiActivityOverlay.alpha = 0;
+            [cell.guiActivity stopAnimating];
             break;
             
         case HMGRemakeStatusNew:
@@ -488,6 +445,8 @@
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
+            cell.guiActivityOverlay.alpha = 0;
+            [cell.guiActivity stopAnimating];
             break;
             
         case HMGRemakeStatusRendering:
@@ -497,6 +456,8 @@
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
+            cell.guiActivityOverlay.alpha = 0;
+            [cell.guiActivity stopAnimating];
             break;
         
         case HMGRemakeStatusTimeout:
@@ -506,8 +467,18 @@
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.deleteButton.enabled = YES;
+            cell.guiActivityOverlay.alpha = 0;
+            [cell.guiActivity stopAnimating];
             break;
-            
+        
+        case HMGRemakeStatusClientRequestedDeletion:
+            if (cell.guiActivityOverlay.alpha == 0) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    cell.guiActivityOverlay.alpha = 1;
+                    [cell.guiActivity startAnimating];
+                }];
+            }
+            break;
     }
 }
 
@@ -519,39 +490,6 @@
         [self.noRemakesLabel setHidden:YES];
     }
 }
-
-#pragma mark cell action button
-
-- (IBAction)actionButtonPushed:(UIButton *)sender
-{
-    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
-    if (!cell) return;
-    
-    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
-    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    switch (remake.status.integerValue)
-    {
-        case HMGRemakeStatusDone:
-            NSLog(@">>> %@", remake.story.name);
-            //[[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
-            //[self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
-            break;
-        case HMGRemakeStatusInProgress:
-            //TODO:connect to recorder at last non taken scene
-            break;
-        case HMGRemakeStatusNew:
-            //TODO:connect to recorder at last non taken scene
-            break;
-        case HMGRemakeStatusRendering:
-            //TODO: what to do?
-            break;
-    }
-}
-
 
 #pragma mark video player
 -(void)playRemakeVideoWithURL:(NSString *)videoURL inCell:(HMGUserRemakeCVCell *)cell withIndexPath:(NSIndexPath *)indexPath
@@ -619,26 +557,6 @@
     self.playingMovieIndex = -1; //we are good to go and play a movie in another cell
 }
 
-
-#pragma mark remaking
-- (IBAction)deleteRemake:(UIButton *)sender
-{
-    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
-    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag                                                                         inSection:0];
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    self.remakeToDeleteInfo = @{@"remake_id" : remake.sID};
-    HMGLogDebug(@"about the delete remake: %@" , remake.sID);
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"DELETE_REMAKE") message:LS(@"APPROVE_DELETION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
-    
-    alertView.tag = TRASH_ALERT_VIEW_TAG;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [alertView show];
-    });
-}
-
 -(HMGUserRemakeCVCell *)getParentCollectionViewCellOfButton:(UIButton *)button
 {
     //TODO: this is only the current hirarchy in the hmguserCVcell!
@@ -665,64 +583,7 @@
 }
 
 
-- (IBAction)remakeButtonPushed:(UIButton *)button
-{
-    [self closeCurrentlyPlayingMovie];
-    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
-    if (!cell) return;
- 
-    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    cell.remakeButton.enabled = NO;
-    
-    self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
-    
-    if (!self.remakeToContinueWith.story.isActive.boolValue)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SORRY") message:LS(@"STORY_NOT_AVAILABLE") delegate:self cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alertView show];
-        });
-        return;
-    }
-    
-    NSInteger remakeStatus = self.remakeToContinueWith.status.integerValue;
-    
-    //we only want to suggest to continue a remake if a remake is in user progress or timed out and we want to give him the option to send to rendering again
-    if (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
-        alertView.tag = REMAKE_ALERT_VIEW_TAG;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alertView show];
-        });
-    } else {
-        [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
-    }
-}
-
 #pragma mark sharing
-- (IBAction)shareButtonPushed:(UIButton *)button
-{
-    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
-    if (!cell) return;
-    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    if ([[User current] isGuestUser])
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
-        alertView.tag = SHARE_ALERT_VIEW_TAG;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alertView show];
-        });
-
-    } else [self shareRemake:remakeToShare];
-}
-
 -(void)shareRemake:(Remake *)remake
 {
     [[HMGoogleAPI sharedInstance] shortenURL:remake.shareURL info:@{@"remake_id" :remake.sID}];
@@ -840,20 +701,43 @@
     //trash button pushed
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)
     {
-        if (buttonIndex == 0) {
-            self.remakeToDeleteInfo = nil;
-        }
         if (buttonIndex == 1) {
-            NSString *remakeID = self.remakeToDeleteInfo[@"remake_id"];
-            Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+            
+            // Mark remake for deletion and update cell.
+            AWAlertView *av = (AWAlertView *)alertView;
+            NSIndexPath *indexPath = av.awContextObject;
+
+            Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            remake.status = @(HMGRemakeStatusClientRequestedDeletion);
+            
+            if ([[self.userRemakesCV indexPathsForVisibleItems] containsObject:indexPath] ) {
+                [self.userRemakesCV reloadItemsAtIndexPaths:@[indexPath]];
+            }
             
             if (remake.story.name)
             {
                 [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
             }
             
-            [HMServer.sh deleteRemakeWithID:remakeID];
-            self.remakeToDeleteInfo = nil;
+            
+            // Tell server to delete remake.
+            [HMServer.sh deleteRemakeWithID:remake.sID];
+            
+//            NSString *remakeID = self.remakeToDeleteInfo[@"remake_id"];
+//            NSIndexPath *indexPath =
+//            
+//            Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+//            
+//            if (remake.story.name)
+//            {
+//                [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
+//            }
+//            
+//            
+//
+//            
+//            [HMServer.sh deleteRemakeWithID:remakeID];
+//            self.remakeToDeleteInfo = nil;
         }
     } else if (alertView.tag == SHARE_ALERT_VIEW_TAG)
     {
@@ -907,8 +791,8 @@
 #pragma mark - HMRecorderDelegate
 -(void)recorderAsksDismissalWithReason:(HMRecorderDismissReason)reason
                               remakeID:(NSString *)remakeID
-                                sender:(HMRecorderViewController *)sender
-{
+                                sender:(HMRecorderViewController *)sender {
+    
     HMGLogDebug(@"This is the remake ID the recorder used:%@", remakeID);
     
     // Handle reasons
@@ -935,159 +819,6 @@
         [self closeCurrentlyPlayingMovie];
 }
 
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    NSMutableDictionary *change = [NSMutableDictionary new];
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            change[@(type)] = newIndexPath;
-            break;
-        case NSFetchedResultsChangeDelete:
-            change[@(type)] = indexPath;
-            break;
-        case NSFetchedResultsChangeUpdate:
-            change[@(type)] = indexPath;
-            break;
-        case NSFetchedResultsChangeMove:
-            change[@(type)] = @[indexPath, newIndexPath];
-            break;
-    }
-    [_objectChanges addObject:change];}
-
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    
-    NSMutableDictionary *change = [NSMutableDictionary new];
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            change[@(type)] = @(sectionIndex);
-            break;
-        case NSFetchedResultsChangeDelete:
-            change[@(type)] = @(sectionIndex);
-            break;
-        default:
-            break;
-    }
-    
-    [_sectionChanges addObject:change];
-}
-
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-    {
-        if ([_sectionChanges count] > 0)
-        {
-            [self.userRemakesCV performBatchUpdates:^{
-                
-                for (NSDictionary *change in _sectionChanges)
-                {
-                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                        
-                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                        switch (type)
-                        {
-                            case NSFetchedResultsChangeInsert:
-                                [self.userRemakesCV insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                                break;
-                            case NSFetchedResultsChangeDelete:
-                                [self.userRemakesCV deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                                break;
-                            case NSFetchedResultsChangeUpdate:
-                                [self.userRemakesCV reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                                break;
-                            default:
-                                break;
-                        }
-                    }];
-                }
-            } completion:nil];
-        }
-        
-        if ([_objectChanges count] > 0 && [_sectionChanges count] == 0)
-        {
-            
-            if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.userRemakesCV.window == nil) {
-                // This is to prevent a bug in UICollectionView from occurring.
-                // The bug presents itself when inserting the first object or deleting the last object in a collection view.
-                // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure
-                // This code should be removed once the bug has been fixed, it is tracked in OpenRadar
-                // http://openradar.appspot.com/12954582
-                [self.userRemakesCV reloadData];
-                
-            } else {
-                
-                [self.userRemakesCV performBatchUpdates:^{
-                    
-                    for (NSDictionary *change in _objectChanges)
-                    {
-                        [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                            
-                            NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                            //NSError *error;
-                            switch (type)
-                            {
-                                case NSFetchedResultsChangeInsert:
-                                    [self.userRemakesCV insertItemsAtIndexPaths:@[obj]];
-                                    break;
-                                case NSFetchedResultsChangeDelete:
-                                {
-                                    [self.userRemakesCV deleteItemsAtIndexPaths:@[obj]];
-                                    break;
-                                }
-                                case NSFetchedResultsChangeUpdate:
-                                    [self.userRemakesCV reloadItemsAtIndexPaths:@[obj]];
-                                    break;
-                                case NSFetchedResultsChangeMove:
-                                    [self.userRemakesCV moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
-                                    break;
-                            }
-                        }];
-                    }
-                } completion:nil];
-            }
-        }
-        
-        [_sectionChanges removeAllObjects];
-        [_objectChanges removeAllObjects];
-}
-
-- (BOOL)shouldReloadCollectionViewToPreventKnownIssue {
-    __block BOOL shouldReload = NO;
-    for (NSDictionary *change in self.objectChanges) {
-        [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-            NSIndexPath *indexPath = obj;
-            switch (type) {
-                case NSFetchedResultsChangeInsert:
-                    if ([self.userRemakesCV numberOfItemsInSection:indexPath.section] == 0) {
-                        shouldReload = YES;
-                    } else {
-                        shouldReload = NO;
-                    }
-                    break;
-                case NSFetchedResultsChangeDelete:
-                    if ([self.userRemakesCV numberOfItemsInSection:indexPath.section] == 1) {
-                        shouldReload = YES;
-                    } else {
-                        shouldReload = NO;
-                    }
-                    break;
-                case NSFetchedResultsChangeUpdate:
-                    shouldReload = NO;
-                    break;
-                case NSFetchedResultsChangeMove:
-                    shouldReload = NO;
-                    break;
-            }
-        }];
-    }
-    
-    return shouldReload;
-}
-
 // ============
 // Rewind segue
 // ============
@@ -1101,6 +832,114 @@
     CGSize size = rect.size;
     CGPoint origin = rect.origin;
     NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onActionButtonPushed:(UIButton *)sender
+{
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
+    if (!cell) return;
+    
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
+    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+    switch (remake.status.integerValue)
+    {
+        case HMGRemakeStatusDone:
+            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
+            [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
+            break;
+        case HMGRemakeStatusInProgress:
+            //TODO:connect to recorder at last non taken scene
+            break;
+        case HMGRemakeStatusNew:
+            //TODO:connect to recorder at last non taken scene
+            break;
+        case HMGRemakeStatusRendering:
+            //TODO: what to do?
+            break;
+    }
+}
+
+- (IBAction)onDeleteRemakeButtonPushed:(UIButton *)sender
+{
+    // Get some info
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    HMGLogDebug(@"User want to delete remake: %@ at indexPath:%@" , remake.sID, indexPath);
+    
+    //
+    // Ask user if sure about deleting the remake.
+    //
+    AWAlertView *alertView = [[AWAlertView alloc] initWithTitle: LS(@"DELETE_REMAKE") message:LS(@"APPROVE_DELETION") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES"), nil];
+    alertView.tag = TRASH_ALERT_VIEW_TAG;
+    alertView.awContextObject = indexPath;
+    [alertView show];
+}
+
+- (IBAction)onRemakeButtonPushed:(UIButton *)button
+{
+    [self closeCurrentlyPlayingMovie];
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+    if (!cell) return;
+    
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+    cell.remakeButton.enabled = NO;
+    
+    self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
+    
+    if (!self.remakeToContinueWith.story.isActive.boolValue)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SORRY") message:LS(@"STORY_NOT_AVAILABLE") delegate:self cancelButtonTitle:LS(@"OK") otherButtonTitles:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+        return;
+    }
+    
+    NSInteger remakeStatus = self.remakeToContinueWith.status.integerValue;
+    
+    //we only want to suggest to continue a remake if a remake is in user progress or timed out and we want to give him the option to send to rendering again
+    if (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+        alertView.tag = REMAKE_ALERT_VIEW_TAG;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+    } else {
+        [HMServer.sh createRemakeForStoryWithID:self.remakeToContinueWith.story.sID forUserID:User.current.userID withResolution:@"360"];
+    }
+}
+
+- (IBAction)onShareButtonPushed:(UIButton *)button
+{
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+    if (!cell) return;
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([[User current] isGuestUser])
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
+        alertView.tag = SHARE_ALERT_VIEW_TAG;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+        
+    } else [self shareRemake:remakeToShare];
 }
 
 @end

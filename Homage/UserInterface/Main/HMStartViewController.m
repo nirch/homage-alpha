@@ -71,6 +71,10 @@
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppMainView;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiNoConnectivityLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *guiDarkOverlay;
+@property (weak, nonatomic) IBOutlet UIView *guiBlurryOverlay;
+
 @property (nonatomic) NSInteger selectedTab;
 @property (nonatomic) BOOL justStarted;
 @property (nonatomic) NSInteger appEnabled;
@@ -132,10 +136,10 @@
 {
     // Make the top navigation bar blurry
     [[AMBlurView new] insertIntoView:self.guiTopNavContainer];
-        
+    [[AMBlurView new] insertIntoView:self.guiBlurryOverlay];
     self.guiAppWrapperHideView.hidden = YES;
     self.renderingContainerView.hidden = YES;
-    self.loginContainerView.hidden = YES;
+    //self.loginContainerView.hidden = YES;
     self.loginContainerView.alpha = 0;
     
     self.guiNoConnectivityView.hidden = YES;
@@ -662,31 +666,38 @@
 
 -(void)presentLoginScreen
 {
-    if (self.loginContainerView.hidden == NO) return;
+    //if (self.loginContainerView.hidden == NO) return;
     
-    self.appWrapperView.hidden = YES;
-    self.loginContainerView.hidden = NO;
+    //self.appWrapperView.hidden = YES;
+    //self.loginContainerView.hidden = NO;
     [self.loginVC onPresentLoginCalled];
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:2.0 animations:^{
         self.loginContainerView.alpha = 1;
-    } completion:nil];
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiBlurryOverlay.alpha = 1;
+        self.guiDarkOverlay.alpha = 1;
+    } ];
     
 }
 
 -(void)hideLoginScreen
 {
-    if (self.loginContainerView.hidden == YES) return;
+    //if (self.loginContainerView.hidden == YES) return;
     
     self.appWrapperView.hidden = NO;
     
     [self switchToTab:HMStoriesTab];
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         self.loginContainerView.alpha = 0;
-    } completion:^(BOOL finished)
-     {
-         self.loginContainerView.hidden = YES;
-     }];
+    }];
+    
+    [UIView animateWithDuration:2.0 animations:^{
+        self.guiBlurryOverlay.alpha = 0;
+        self.guiDarkOverlay.alpha = 0;
+    }];
 }
 
 
@@ -725,6 +736,7 @@
         {
             [navVC popToRootViewControllerAnimated:YES];
         }
+        [self updateNavButtonForNavController:navVC];
     }
   
     [self showMainAppView];
@@ -751,11 +763,11 @@
 -(void)howToButtonPushed
 {
     [[Mixpanel sharedInstance] track:@"appWillPlayIntroMovie"];
-    [self initIntroMoviePlayer];
+    [self initHowtoPlayer];
     [self showMainAppView];
 }
 
--(void)initIntroMoviePlayer
+-(void)initHowtoPlayer
 {
     if (![HMServer.sh isReachable])
     {

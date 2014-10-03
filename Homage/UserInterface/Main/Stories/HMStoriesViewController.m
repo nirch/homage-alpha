@@ -67,6 +67,11 @@
     [self initContent];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 #pragma mark initializations
 -(void)initGUI
 {
@@ -119,11 +124,6 @@
                                                        name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                                      object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onReachabilityStatusChange:)
-                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:nil];
-
 }
 
 -(void)removeObservers
@@ -132,7 +132,6 @@
     [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
 }
 
 
@@ -216,19 +215,6 @@
     [[Mixpanel sharedInstance] track:@"UserRefreshStories"];
     [self refetchStoriesFromServer];
     
-}
-
--(void)onReachabilityStatusChange:(NSNotification *)notification
-{
-    [self setActionsEnabled:HMServer.sh.isReachable];
-}
-
--(void)setActionsEnabled:(BOOL)enabled
-{
-    for (UICollectionViewCell *cell in [self.storiesCV visibleCells])
-    {
-        [cell setUserInteractionEnabled:enabled];
-    }
 }
 
 #pragma mark - Navigation

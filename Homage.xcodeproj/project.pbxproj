@@ -89,6 +89,7 @@
 		085BF6F018C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		0863D0A91889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
+		086A343219DD6EE400B60BB5 /* AWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 086A343119DD6EE400B60BB5 /* AWAlertView.m */; };
 		086D93CF1886C8BB0086C565 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
 		086D93D01886C8BB0086C565 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
 		086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CC1886C8BB0086C565 /* HMRemakeParser.m */; };
@@ -356,6 +357,8 @@
 		085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderTutorialViewController.m; sourceTree = "<group>"; };
 		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
 		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
+		086A343019DD6EE400B60BB5 /* AWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWAlertView.h; sourceTree = "<group>"; };
+		086A343119DD6EE400B60BB5 /* AWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWAlertView.m; sourceTree = "<group>"; };
 		086D93C91886C8BB0086C565 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
 		086D93CA1886C8BB0086C565 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
 		086D93CB1886C8BB0086C565 /* HMRemakeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeParser.h; sourceTree = "<group>"; };
@@ -944,6 +947,15 @@
 			path = Tutorial;
 			sourceTree = "<group>";
 		};
+		086A342F19DD6EE400B60BB5 /* Alert View */ = {
+			isa = PBXGroup;
+			children = (
+				086A343019DD6EE400B60BB5 /* AWAlertView.h */,
+				086A343119DD6EE400B60BB5 /* AWAlertView.m */,
+			);
+			path = "Alert View";
+			sourceTree = "<group>";
+		};
 		086D93C81886C8BB0086C565 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1035,7 @@
 		0884566418848D3300B94267 /* Custom Views & Controls */ = {
 			isa = PBXGroup;
 			children = (
+				086A342F19DD6EE400B60BB5 /* Alert View */,
 				269264661908F88C009567AA /* buttons */,
 				08DF22F518926E3900912657 /* Video Players Containers */,
 				08ACB842188EEA8B00C0EE27 /* Progress Views */,
@@ -1195,15 +1208,15 @@
 		08DF23151892704300912657 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
-				08DF23161892704300912657 /* HMRemakeCell.h */,
-				08DF23171892704300912657 /* HMRemakeCell.m */,
+				08DF231E1892704300912657 /* HMStoryPresenterProtocol.h */,
 				08DF23181892704300912657 /* HMStoriesViewController.h */,
 				08DF23191892704300912657 /* HMStoriesViewController.m */,
 				08DF231A1892704300912657 /* HMStoryCell.h */,
 				08DF231B1892704300912657 /* HMStoryCell.m */,
 				08DF231C1892704300912657 /* HMStoryDetailsViewController.h */,
 				08DF231D1892704300912657 /* HMStoryDetailsViewController.m */,
-				08DF231E1892704300912657 /* HMStoryPresenterProtocol.h */,
+				08DF23161892704300912657 /* HMRemakeCell.h */,
+				08DF23171892704300912657 /* HMRemakeCell.m */,
 			);
 			path = Stories;
 			sourceTree = "<group>";
@@ -1382,12 +1395,12 @@
 		26A239A818A963CA00980BFC /* login */ = {
 			isa = PBXGroup;
 			children = (
-				2655DF5718EDA50600CA362F /* HMIntroMovieDelagate.h */,
-				2655DF5818EDA50600CA362F /* HMIntroMovieViewController.h */,
-				2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */,
 				2655DF5A18EDA50600CA362F /* HMLoginDelegate.h */,
 				2655DF5B18EDA50600CA362F /* HMLoginMainViewController.h */,
 				2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */,
+				2655DF5718EDA50600CA362F /* HMIntroMovieDelagate.h */,
+				2655DF5818EDA50600CA362F /* HMIntroMovieViewController.h */,
+				2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -1637,6 +1650,7 @@
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				08CDF82E1897F6B000A9D235 /* Scene.m in Sources */,
 				268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
+				086A343219DD6EE400B60BB5 /* AWAlertView.m in Sources */,
 				086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */,
 				084560051890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				2675065C1972B4F000A2214F /* HMServer+analytics.m in Sources */,

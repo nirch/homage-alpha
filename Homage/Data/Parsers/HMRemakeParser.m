@@ -39,6 +39,17 @@
     Story *story = [Story storyWithID:storyID inContext:self.ctx];
     User *user = [User userWithID:userID inContext:self.ctx];
     
+    // If returned with statud deleted, just delete the remake from local storage (if exists).
+    NSNumber *status = [info numberForKey:@"status"];
+    if (status.integerValue == HMGRemakeStatusDeleted) {
+        // Delete remake from local storage (if exists)
+        Remake *remakeToDelete = [Remake findWithID:remakeID inContext:self.ctx];
+        if (!remakeToDelete) return;
+        [self.ctx deleteObject:remakeToDelete];
+        [DB.sh save];
+        return;
+    }
+    
     Remake *remake = [Remake remakeWithID:remakeID story:story user:user inContext:self.ctx];
     remake.status = [info numberForKey:@"status"];
     

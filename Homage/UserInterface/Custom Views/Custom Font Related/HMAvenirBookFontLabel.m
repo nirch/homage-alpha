@@ -21,8 +21,7 @@
 
 -(void)initCustomFont
 {
-    // TODO: remove this class. deprecated. use HMRegularFontLabel instead.
-    [self setFont:[UIFont fontWithName:@"Bryant-MediumCompressed" size:self.font.pointSize]];
+    [self setFont:[UIFont fontWithName:@"Avenir Book" size:self.font.pointSize]];
 }
 
 @end

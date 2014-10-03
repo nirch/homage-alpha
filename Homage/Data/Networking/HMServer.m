@@ -9,6 +9,7 @@
 #import "HMServer.h"
 #import "HMParser.h"
 #import "HMJSONResponseSerializerWithData.h"
+#import "HMAppDelegate.h"
 
 //#import "HMUploadManager.h"
 
@@ -147,12 +148,21 @@
     
     // Init the server NSURL
     #ifndef DEBUG
-        // Production server
+    if (IS_TEST_APP) {
+        // Use test server on test apps
+        // (even on "Release" compilation)
+        NSString *port = self.cfg[@"port"];
+        NSString *protocol = self.cfg[@"protocol"];
+        NSString *host = self.cfg[@"host"];
+    } else {
+        // Release app for production.
+        // Use production server urls and settings
         NSString *port = self.cfg[@"prod_port"];
         NSString *protocol = self.cfg[@"prod_protocol"];
         NSString *host = self.cfg[@"prod_host"];
+    }
     #else
-        // Test server
+        // Just debugging the app. Use test server.
         NSString *port = self.cfg[@"port"];
         NSString *protocol = self.cfg[@"protocol"];
         NSString *host = self.cfg[@"host"];

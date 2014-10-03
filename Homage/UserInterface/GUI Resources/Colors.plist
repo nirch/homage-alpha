@@ -12,6 +12,8 @@
 	<string>#FFFFFFFF</string>
 	<key>textImpact</key>
 	<string>#ff5f45FF</string>
+	<key>textPlaceholder</key>
+	<string>#FF7D5F99</string>
 	<key>recorderTableCellBackground</key>
 	<string>#00000000</string>
 	<key>recorderTableCellBackgroundHighlighted</key>

@@ -12,6 +12,7 @@
 #import "HMUploadS3Worker.h"
 #import "HMServer+analytics.h"
 #import "Mixpanel.h"
+#import "HMColor.h"
 #import "DB.h"
 #import "HMNotificationCenter.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -96,6 +97,9 @@
     [Appirater appLaunched:YES];
     self.userJoinFlow = NO;
     [FBLoginView class];
+    
+    // Some app wide styling
+    [[UITextField appearance] setTintColor:[HMColor.sh textImpact]];
     
     return YES;
 }

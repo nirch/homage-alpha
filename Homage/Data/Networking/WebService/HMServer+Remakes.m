@@ -87,7 +87,7 @@
                  parameters:nil
            notificationName:HM_NOTIFICATION_SERVER_REMAKE_DELETION
                        info:@{@"remakeID" : remakeID}
-                     parser:nil
+                     parser:[HMRemakeParser new]
      ];
 }
 

@@ -21,6 +21,9 @@
 /** The most common/regular color for text. */
 -(UIColor *)text;
 
+/** Color of placeholder text in textfields */
+-(UIColor *)textPlaceholder;
+
 /** Text color with an impact. Use in titles, on text selection or on important buttons */
 -(UIColor *)textImpact;
 

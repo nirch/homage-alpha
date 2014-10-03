@@ -66,6 +66,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
 @property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontLabel) NSArray *labelCollection;
 
+@property (weak, nonatomic) IBOutlet UIView *guiFacebookLoginContainer;
 
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
@@ -92,13 +93,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     loginView.delegate = self;
     
     // Align the button in the center horizontally
-    loginView.frame = CGRectMake(54, 110, 212, 50);
+    loginView.frame = self.guiFacebookLoginContainer.bounds;
     
-    // Align the button in the center vertically
-    //loginView.center = self.guiSignUpView.center;
-    
-    // Add the button to the view
-    [self.guiSignUpView addSubview:loginView];
+    // Add the button to the container
+    [self.guiFacebookLoginContainer addSubview:loginView];
+    self.guiFacebookLoginContainer.backgroundColor = [UIColor clearColor];
     
     [self initGUI];
 }
@@ -137,7 +136,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiGuestButton.hidden = NO;
     self.guiCancelButton.hidden = YES;
     
-    [[AMBlurView new] insertIntoView:self.guiBlurredView];
+    //[[AMBlurView new] insertIntoView:self.guiBlurredView];
     
     for (HMAvenirBookFontButton *button in self.buttonCollection)
     {
@@ -499,7 +498,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)displayIntroMovieView
 {
-    
     self.guiIntroMovieContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^
      {
@@ -510,23 +508,18 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
          self.guiSignUpView.hidden = YES;
          [self.introMovieController initIntroMoviePlayer];
      }];
-    
 }
 
 -(void)hideIntroMovieView
 {
-    
-    self.guiSignUpView.hidden = NO;
+    [self.introMovieController stopMoviePlayer];
     [UIView animateWithDuration:0.3 animations:^
     {
         self.guiIntroMovieContainerView.alpha = 0;
-        self.guiSignUpView.alpha = 1;
     } completion:^(BOOL finished)
     {
         self.guiIntroMovieContainerView.hidden = YES;
-        [self.introMovieController stopMoviePlayer];
     }];
-    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -897,11 +890,19 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     self.guiMailTextField.text = @"";
     self.guiPasswordTextField.text = @"";
+    
+    self.guiMailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: [HMColor.sh textPlaceholder]}];
+    self.guiMailTextField.textColor = [HMColor.sh main2];
+
+    self.guiPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: [HMColor.sh textPlaceholder]}];
+    self.guiPasswordTextField.textColor = [HMColor.sh main2];
 }
 
 -(void)onPresentLoginCalled
 {
     [self resetTextFields];
+    self.guiSignUpView.alpha = 1;
+    self.guiSignUpView.hidden = NO;
 }
 
 @end

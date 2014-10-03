@@ -63,6 +63,7 @@
 -(UIColor *)main1                  {return [self colorNamed:@"main1"];}
 -(UIColor *)main2                  {return [self colorNamed:@"main2"];}
 -(UIColor *)text                   {return [self colorNamed:@"text"];}
+-(UIColor *)textPlaceholder        {return [self colorNamed:@"textPlaceholder"];}
 -(UIColor *)textImpact             {return [self colorNamed:@"textImpact"];}
 -(UIColor *)greyLine               {return [self colorNamed:@"greyLine"];}
 
