@@ -148,18 +148,22 @@
     
     // Init the server NSURL
     #ifndef DEBUG
+    NSString *port;
+    NSString *protocol;
+    NSString *host;
+
     if (IS_TEST_APP) {
         // Use test server on test apps
         // (even on "Release" compilation)
-        NSString *port = self.cfg[@"port"];
-        NSString *protocol = self.cfg[@"protocol"];
-        NSString *host = self.cfg[@"host"];
+        port = self.cfg[@"port"];
+        protocol = self.cfg[@"protocol"];
+        host = self.cfg[@"host"];
     } else {
         // Release app for production.
         // Use production server urls and settings
-        NSString *port = self.cfg[@"prod_port"];
-        NSString *protocol = self.cfg[@"prod_protocol"];
-        NSString *host = self.cfg[@"prod_host"];
+        port = self.cfg[@"prod_port"];
+        protocol = self.cfg[@"prod_protocol"];
+        host = self.cfg[@"prod_host"];
     }
     #else
         // Just debugging the app. Use test server.
