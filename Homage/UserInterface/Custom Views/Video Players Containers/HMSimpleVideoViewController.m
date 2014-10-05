@@ -858,18 +858,18 @@
     [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
 }
 
--(void)printViewProperties:(UIView *)view name:(NSString *)name
-{
-    [self displayRect:name BoundsOf:view.frame];
-    HMGLogDebug(@"%@ alpha: %f hidden: %hhd" , name ,  view.alpha , view.hidden);
-}
+//-(void)printViewProperties:(UIView *)view name:(NSString *)name
+//{
+//    [self displayRect:name BoundsOf:view.frame];
+//    HMGLogDebug(@"%@ alpha: %f hidden: %hhd" , name ,  view.alpha , view.hidden);
+//}
 
--(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
-{
-    CGSize size = rect.size;
-    CGPoint origin = rect.origin;
-    HMGLogDebug(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
-}
+//-(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
+//{
+//    CGSize size = rect.size;
+//    CGPoint origin = rect.origin;
+//    HMGLogDebug(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
+//}
 
 -(void)onMovieDurationAvailable:(NSNotification *)notification
 {

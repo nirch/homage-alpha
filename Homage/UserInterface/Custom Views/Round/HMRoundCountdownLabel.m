@@ -8,12 +8,14 @@
 
 #import "HMRoundCountdownLabel.h"
 #import "AWPieSliceView.h"
+#import "HMAppDelegate.h"
 
 @interface HMRoundCountdownLabel()
 
 @property (nonatomic, readonly) NSTimer *timer;
 @property (nonatomic, readonly) AWPieSliceView *pieSlice;
 @property (nonatomic, readonly) UILabel *label;
+@property (nonatomic, readonly) BOOL isSlowDevice;
 
 @end
 
@@ -26,6 +28,8 @@
         self.countDownStartValue = self.text.integerValue;
         self.layer.cornerRadius = self.bounds.size.width/2.0f;
         self.text = @"";
+        HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+        _isSlowDevice = [app isSlowDevice];
     }
     return self;
 }
@@ -37,6 +41,8 @@
         self.countDownStartValue = self.text.integerValue;
         self.layer.cornerRadius = self.bounds.size.width/2.0f;
         self.text = @"";
+        HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+        _isSlowDevice = [app isSlowDevice];
     }
     return self;
 }
@@ -77,16 +83,19 @@
     }
     
     // Add a new pie slice to the view
-    _pieSlice = [[AWPieSliceView alloc] initWithFrame:self.bounds];
-    self.pieSlice.value = 0.0f;
-    self.pieSlice.backgroundColor = [UIColor whiteColor];
-    self.pieSlice.alpha = 0.6;
-    [self addSubview:self.pieSlice];
-    double delayInSeconds = 0.01;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.pieSlice.value = 1.0f;
-    });
+
+    if (!self.isSlowDevice) {
+        _pieSlice = [[AWPieSliceView alloc] initWithFrame:self.bounds];
+        self.pieSlice.value = 0.0f;
+        self.pieSlice.backgroundColor = [UIColor whiteColor];
+        self.pieSlice.alpha = 0.6;
+        [self addSubview:self.pieSlice];
+        double delayInSeconds = 0.01;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.pieSlice.value = 1.0f;
+        });
+    }
     
     // Add the label above it.
     _label = [[UILabel alloc] initWithFrame:self.bounds];

@@ -323,7 +323,6 @@
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
-    
     //detect bad background
     if (captureOutput == _movieDataOutput)
     {
@@ -361,16 +360,17 @@
 
         if (self.writerVideoInput.readyForMoreMediaData)
         {
-            [self.writerVideoInput appendSampleBuffer:sampleBuffer];
-            
             // Check if reached recording duration (if recording duration was set)
             if (self.recordingDuration > 0 && timePassedMS >= self.recordingDuration) {
                 // Reached the set recording duration.
                 // Notify that should stop recording.
+                // And skip writing unneeded frames.
                 NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
                 [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                                     object:self
                                                                   userInfo:info];
+            } else {
+                [self.writerVideoInput appendSampleBuffer:sampleBuffer];
             }
         }
         else
@@ -383,7 +383,16 @@
     {
         if (self.writerAudioInput.readyForMoreMediaData)
         {
-            [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+            CMTime lastSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer);
+            CMTime timePassed = CMTimeSubtract(lastSampleTime, self.firstSampleTime);
+            NSTimeInterval timePassedMS = CMTimeGetSeconds(timePassed) * 1000.0f;
+
+            if (self.recordingDuration > 0 && timePassedMS >= self.recordingDuration) {
+                // Over the time limit.
+                // Skip writing audio.
+            } else {
+                [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+            }
         }
         else
         {
@@ -537,14 +546,17 @@
 // Creating a CVPixelBuffer from a CGImage
 +(CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image frameSize:(CGSize)frameSize
 {
+    CVPixelBufferRef pxbuffer = NULL;
+
+    #ifdef DEBUG
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
                              [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,
                              nil];
-    CVPixelBufferRef pxbuffer = NULL;
     CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, frameSize.width,
                                           frameSize.height, kCVPixelFormatType_32ARGB, (__bridge  CFDictionaryRef) options,
                                           &pxbuffer);
+    #endif
     NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
     
     CVPixelBufferLockBaseAddress(pxbuffer, 0);

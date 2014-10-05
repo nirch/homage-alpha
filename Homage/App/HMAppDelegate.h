@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#define IS_TEST_APP NO
+#define IS_TEST_APP YES
 
 typedef NS_ENUM(NSInteger, HMPushNotificationType) {
     HMPushMovieReady,
@@ -26,5 +26,9 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 
 @property (nonatomic) BOOL shouldAllowStatusBar;
 @property (nonatomic) BOOL isInRecorderContext;
+
+@property (nonatomic, readonly) NSString *deviceModel;
+
+-(BOOL)isSlowDevice;
 
 @end

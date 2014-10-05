@@ -426,14 +426,14 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     
     //stop observer should be called only once and can be triggered from multiple sources
     [self addStopOserver];
-    [self toggleMovieRecording:info Start:YES recordingDuration:recordingDurationMS];
+    [self startVideoRecording:info recordingDuration:recordingDurationMS];
 }
 
 -(void)onShouldStopRecording:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
     [self removeStopObserver];
-    [self toggleMovieRecording:info Start:NO recordingDuration:0];
+    [self stopVideoRecording:info];
 }
 
 -(void)onFlipCamera:(NSNotification *)notification
@@ -618,64 +618,74 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
      ];
 }
 
-// TODO: seperate toggleMovieRecording to two different method. One for starting recording (+duration) and one for just stopping the recording.
--(void)toggleMovieRecording:(NSDictionary *)info Start:(BOOL)start recordingDuration:(NSTimeInterval)recordingDuration
+#pragma mark - Start / Stop recording
+-(void)startVideoRecording:(NSDictionary *)info recordingDuration:(NSTimeInterval)recordingDuration
 {
     dispatch_async([self sessionQueue], ^{
-        id outputController = self.extractController ? self.extractController : self.movieFileOutput;
-        
-        if (start)
-        //if (![outputController isRecording])
-        {
-            
-            
-            self.lastRecordingStartInfo = info;
-            self.lockInterfaceRotation = YES;
-            
-            if ([[UIDevice currentDevice] isMultitaskingSupported])
-            {
-                // Setup background task. This is needed because the captureOutput:didFinishRecordingToOutputFileAtURL: callback is not received until AVCam returns to the foreground unless you request background execution time. This also ensures that there will be time to write the file to the assets library when AVCam is backgrounded. To conclude this background execution, -endBackgroundTask is called in -recorder:recordingDidFinishToOutputFileURL:error: after the recorded file has been saved.
-                [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]];
-            }
-            
-            // Update the orientation on the movie file output video connection before starting recording.
-            AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-            connection.videoOrientation = self.previewLayer.connection.videoOrientation;
-            
-            // Turning OFF flash for video recording
-            [HMVideoCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
-
-            // Lock focus on a point (currently hard coded point, should be received from the server later.
-            [self focusWithMode:AVCaptureFocusModeLocked
-                 exposeWithMode:AVCaptureExposureModeLocked
-                whiteBalanceWithMode:AVCaptureWhiteBalanceModeLocked
-                  atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
-             ];
-            
-            // Start recording to a temp file.
-            NSString *fileName = info[@"fileName"];
-            NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
-            HMGLogDebug(@"Output to:%@", tmpPath);
-            
-            if (outputController == self.extractController)
-            {
-                UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
-                BOOL frontCamera = [self isFrontCamera];
-                [self.extractController setupExtractorientationWithDeviceOrientation:interfaceOrientation frontCamera:frontCamera];
-                self.extractController.recordingDuration = recordingDuration;
-            }
-            
-            [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath]
-                                          recordingDelegate:self];
-        }
-        else
-        {
-            self.lastRecordingStopInfo = info;
-            [outputController stopRecording];
-            [self resetCameraToInitialFocusSettings];
-        }
+        [self _startVideoRecording:info recordingDuration:recordingDuration];
     });
 }
+
+-(void)_startVideoRecording:(NSDictionary *)info recordingDuration:(NSTimeInterval)recordingDuration
+{
+    id outputController = self.extractController ? self.extractController : self.movieFileOutput;
+    //if (![outputController isRecording])
+    
+    self.lastRecordingStartInfo = info;
+    self.lockInterfaceRotation = YES;
+    
+    if ([[UIDevice currentDevice] isMultitaskingSupported])
+    {
+        // Setup background task. This is needed because the captureOutput:didFinishRecordingToOutputFileAtURL: callback is not received until AVCam returns to the foreground unless you request background execution time. This also ensures that there will be time to write the file to the assets library when AVCam is backgrounded. To conclude this background execution, -endBackgroundTask is called in -recorder:recordingDidFinishToOutputFileURL:error: after the recorded file has been saved.
+        [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]];
+    }
+    
+    // Update the orientation on the movie file output video connection before starting recording.
+    AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+    connection.videoOrientation = self.previewLayer.connection.videoOrientation;
+    
+    // Turning OFF flash for video recording
+    [HMVideoCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[[self videoDeviceInput] device]];
+    
+    // Lock focus on a point (currently hard coded point, should be received from the server later.
+    [self focusWithMode:AVCaptureFocusModeLocked
+         exposeWithMode:AVCaptureExposureModeLocked
+   whiteBalanceWithMode:AVCaptureWhiteBalanceModeLocked
+          atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
+     ];
+    
+    // Start recording to a temp file.
+    NSString *fileName = info[@"fileName"];
+    NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+    HMGLogDebug(@"Output to:%@", tmpPath);
+    
+    if (outputController == self.extractController)
+    {
+        UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
+        BOOL frontCamera = [self isFrontCamera];
+        [self.extractController setupExtractorientationWithDeviceOrientation:interfaceOrientation frontCamera:frontCamera];
+        self.extractController.recordingDuration = recordingDuration;
+    }
+    
+    [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath]
+                                  recordingDelegate:self];
+}
+
+-(void)stopVideoRecording:(NSDictionary *)info
+{
+    dispatch_async([self sessionQueue], ^{
+        [self _stopVideoRecording:info];
+    });
+}
+
+-(void)_stopVideoRecording:(NSDictionary *)info
+{
+    id outputController = self.extractController ? self.extractController : self.movieFileOutput;
+    self.lastRecordingStopInfo = info;
+    [outputController stopRecording];
+    [self resetCameraToInitialFocusSettings];
+}
+
 
 -(BOOL)isFrontCamera
 {

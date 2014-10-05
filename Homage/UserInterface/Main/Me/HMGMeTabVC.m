@@ -872,9 +872,8 @@
     // Get some info
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    HMGLogDebug(@"User want to delete remake: %@ at indexPath:%@" , remake.sID, indexPath);
+//    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    HMGLogDebug(@"User want to delete remake: %@ at indexPath:%@" , remake.sID, indexPath);
     
     //
     // Ask user if sure about deleting the remake.
