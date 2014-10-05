@@ -23,6 +23,7 @@
 
 @interface HMExtractController (){
     
+    BOOL _postedStopRequest;
     int counter;
     CUniformBackground *m_foregroundExtraction;
     image_type *m_original_image;
@@ -241,6 +242,7 @@
         NSLog(@"Start recording with FG extraction: %@", outputFileURL);
         _outputFileURL = outputFileURL;
         _recordingDelegate = delegate;
+       _postedStopRequest = NO;
         
         // Creating the container to which the video will be written to
         NSError *error;
@@ -362,14 +364,18 @@
         {
             // Check if reached recording duration (if recording duration was set)
             if (self.recordingDuration > 0 && timePassedMS >= self.recordingDuration) {
-                // Reached the set recording duration.
-                // Notify that should stop recording.
-                // And skip writing unneeded frames.
-                NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
-                [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
-                                                                    object:self
-                                                                  userInfo:info];
+                if (!_postedStopRequest) {
+                    // Reached the set recording duration.
+                    // Notify that should stop recording.
+                    // And skip writing unneeded frames.
+                    NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonEndedSuccessfully)};
+                    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                                                                        object:self
+                                                                      userInfo:info];
+                    _postedStopRequest = YES;
+                }
             } else {
+                // Still need to write video frames
                 [self.writerVideoInput appendSampleBuffer:sampleBuffer];
             }
         }
@@ -391,6 +397,7 @@
                 // Over the time limit.
                 // Skip writing audio.
             } else {
+                // Still need to audio output
                 [self.writerAudioInput appendSampleBuffer:sampleBuffer];
             }
         }
