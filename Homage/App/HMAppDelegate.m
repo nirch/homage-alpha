@@ -47,6 +47,7 @@
         //crashlytics crash reporting
         [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     #else
+        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
         [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
     #endif
     

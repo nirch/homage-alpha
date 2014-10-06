@@ -68,6 +68,8 @@
 @property (nonatomic) UIDeviceOrientation previousOrientation;
 @property (nonatomic) BOOL userPaused;
 
+@property (nonatomic) BOOL reportedMovieStartedPlaying;
+
 @end
 
 @implementation HMSimpleVideoViewController
@@ -78,7 +80,7 @@
 {
     self = [self initWithNibNamed:@"HMSimpleVideoViewController" inParentVC:parentVC containerView:containerView rotationSensitive:(BOOL)rotate];
     if (self) {
-        
+        self.reportedMovieStartedPlaying = NO;
     }
     return self;
 }
@@ -288,6 +290,7 @@
     
     if (self.viewID && self.entityID && self.entityType && self.originatingScreen) {
         [HMServer.sh reportVideoStopWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID forDuration:playbackTime outOfTotalDuration:totalDuration fromOriginatingScreen:self.originatingScreen];
+        self.reportedMovieStartedPlaying = NO;
     }
     
     self.currentPlaybackTime = 0;
@@ -301,6 +304,16 @@
         self.videoView.guiLoadActivity.hidden = YES;
         self.videoView.guiPlayPauseButton.selected = YES;
         self.videoView.guiVideoSlider.hidden = YES;
+        
+        if (!self.reportedMovieStartedPlaying) {
+            if (self.entityID && self.entityType && self.originatingScreen != nil) {
+                [[Mixpanel sharedInstance] track:@"start_play_video" properties:@{@"playing_entity":self.entityType, @"entity_id":self.entityID, @"originating_screen":self.originatingScreen}];
+                self.viewID = [HMServer.sh generateBSONID];
+                [HMServer.sh reportVideoStartWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID fromOriginatingScreen:self.originatingScreen];
+            }
+            self.reportedMovieStartedPlaying = YES;
+        }
+        
     } else if (self.videoPlayer.playbackState == MPMoviePlaybackStatePaused) {
 
         if (!self.userPaused)
@@ -459,13 +472,6 @@
     //if (!self.videoPlayer.contentURL) self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     self.videoPlayer.contentURL = [NSURL URLWithString:self.videoURL];
     if ([self.delegate respondsToSelector:@selector(videoPlayerWillPlay)]) [self.delegate videoPlayerWillPlay];
-    
-    if (self.entityID && self.entityType && self.originatingScreen != nil) {
-        [[Mixpanel sharedInstance] track:@"start_play_video" properties:@{@"playing_entity":self.entityType, @"entity_id":self.entityID, @"originating_screen":self.originatingScreen}];
-        self.viewID = [HMServer.sh generateBSONID];
-        [HMServer.sh reportVideoStartWithViewID:self.viewID forEntity:self.entityType withID:self.entityID forUserID:[User current].userID fromOriginatingScreen:self.originatingScreen];
-    }
-
     self.isPlaying = YES;
 }
 

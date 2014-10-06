@@ -109,7 +109,7 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
-    [self setNeedsStatusBarAppearanceUpdate];
+    //[self setNeedsStatusBarAppearanceUpdate];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -136,7 +136,9 @@
 {
     // Make the top navigation bar blurry
     [[AMBlurView new] insertIntoView:self.guiTopNavContainer];
-    [[AMBlurView new] insertIntoView:self.guiBlurryOverlay];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[AMBlurView new] insertIntoView:self.guiBlurryOverlay];
+    });
     self.guiAppWrapperHideView.hidden = YES;
     self.renderingContainerView.hidden = YES;
     //self.loginContainerView.hidden = YES;
@@ -534,7 +536,7 @@
     //
     // If no current logged in user, present the login screen.
     //
-    if (![User current])
+    if (![User current] || YES)
     {
         [self presentLoginScreen];
         return;
