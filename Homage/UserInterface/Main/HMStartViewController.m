@@ -28,8 +28,6 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMBoldFontLabel.h"
 #import "HMVideoPlayerDelegate.h"
-//#import <CrashReporter/PLCrashReporter.h>
-//#import <CrashReporter/PLCrashReport.h>
 #import "HMAppDelegate.h"
 #import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
@@ -50,30 +48,32 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiTabNameLabel;
 
-
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppWrapperHideView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
-@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppHideView;
-@property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
 
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
 @property (weak, nonatomic) IBOutlet UIView *loginContainerView;
-@property (weak,nonatomic) UITabBarController *appTabBarController;
-@property (weak,nonatomic) HMRenderingViewController *renderingVC;
-@property (weak,nonatomic) HMsideBarViewController *sideBarVC;
-@property (weak,nonatomic) HMLoginMainViewController *loginVC;
-@property (atomic, readonly) NSDate *launchDateTime;
 
-@property (weak,nonatomic) Story *loginStory;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppMainView;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiNoConnectivityLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *guiDarkOverlay;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurryOverlay;
+
+// Deprecated
+@property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+
+@property (weak,nonatomic) UITabBarController *appTabBarController;
+@property (weak,nonatomic) HMRenderingViewController *renderingVC;
+@property (weak,nonatomic) HMsideBarViewController *sideBarVC;
+@property (weak,nonatomic) HMLoginMainViewController *loginVC;
+@property (atomic, readonly) NSDate *launchDateTime;
+@property (weak,nonatomic) Story *loginStory;
 
 @property (nonatomic) NSInteger selectedTab;
 @property (nonatomic) BOOL justStarted;
