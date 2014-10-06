@@ -147,29 +147,32 @@
     self.cfg = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
     
     // Init the server NSURL
-    #ifndef DEBUG
     NSString *port;
     NSString *protocol;
     NSString *host;
 
+    #ifndef DEBUG
     if (IS_TEST_APP) {
         // Use test server on test apps
         // (even on "Release" compilation)
         port = self.cfg[@"port"];
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];
+        HMGLogNotice(@"Using test server (release app):%@", host);
     } else {
         // Release app for production.
         // Use production server urls and settings
         port = self.cfg[@"prod_port"];
         protocol = self.cfg[@"prod_protocol"];
         host = self.cfg[@"prod_host"];
+        HMGLogNotice(@"Using prod server (release app):%@", host);
     }
     #else
         // Just debugging the app. Use test server.
-        NSString *port = self.cfg[@"port"];
-        NSString *protocol = self.cfg[@"protocol"];
-        NSString *host = self.cfg[@"host"];
+        port = self.cfg[@"port"];
+        protocol = self.cfg[@"protocol"];
+        host = self.cfg[@"host"];
+        HMGLogNotice(@"Using test server (debug app):%@", host);
     #endif
     
     if (port) {

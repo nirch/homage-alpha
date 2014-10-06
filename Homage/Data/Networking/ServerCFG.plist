@@ -55,13 +55,13 @@
 		<key>render</key>
 		<string>render</string>
 		<key>prod_download_app_ios_url</key>
-		<string>http://app.homage.it/ios</string>
+		<string>http://bit.ly/1rONZLw</string>
 		<key>prod_download_app_android_url</key>
-		<string>http://app.homage.it/android</string>
+		<string>http://bit.ly/1vHOBUK</string>
 		<key>test_download_app_ios_url</key>
-		<string>http://app-test.homage.it/ios</string>
+		<string>http://app-test.homage.it/ios?src=ios</string>
 		<key>test_download_app_android_url</key>
-		<string>http://app-test.homage.it/android</string>
+		<string>http://app-test.homage.it/android?src=ios</string>
 	</dict>
 </dict>
 </plist>

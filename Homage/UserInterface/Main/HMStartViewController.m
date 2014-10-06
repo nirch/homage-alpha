@@ -724,6 +724,11 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
 -(void)storiesButtonPushed
 {
     [self switchToTab:HMStoriesTab];

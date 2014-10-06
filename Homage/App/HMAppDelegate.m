@@ -36,13 +36,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Let the device know we want to receive push notifications
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                      
-                                                                           
-                                                                           UIRemoteNotificationTypeSound |
-                                                                           UIRemoteNotificationTypeAlert
-                                                                           )
-     ];
+    [self initRemotePushNotificationsWithLaunchOptions:launchOptions];
     
     self.shouldAllowStatusBar = YES;
    
@@ -114,6 +108,44 @@
     return YES;
 }
 
+
+// Remote push notifications handling
+-(void)initRemotePushNotificationsWithLaunchOptions:(NSDictionary *)launchOptions
+{
+    UIApplication *application = [UIApplication sharedApplication];
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        //
+        // use registerUserNotificationSettings
+        // iOS 8 and above
+        //
+        // Notification type (sound, alert and badge)
+        NSUInteger notificationTypes = (UIUserNotificationTypeSound |
+                                        UIUserNotificationTypeAlert |
+                                        UIUserNotificationTypeBadge);
+        
+        // Register user norification.
+        [application registerUserNotificationSettings:[UIUserNotificationSettings
+                                                       settingsForTypes:notificationTypes
+                                                       categories:nil]];
+        
+        // Register remote notification.
+        [application registerForRemoteNotifications];
+    } else {
+        //
+        // use registerForRemoteNotifications
+        // iOS 7
+        //
+        
+        // Let the device know we want to receive push notifications
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                               UIRemoteNotificationTypeSound |
+                                                                               UIRemoteNotificationTypeAlert
+                                                                               )
+         ];
+    }
+}
+
+
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     // TODO: Route here the remote notification received when the app was active
@@ -169,6 +201,7 @@
 {
 	HMGLogDebug(@"Registered to remote notifications with token: %@", deviceToken);
     self.pushToken = deviceToken;
+    NSLog(@"PT >>> %@", self.pushToken);
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
