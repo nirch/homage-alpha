@@ -935,6 +935,13 @@
     NSString *storyID = info[@"story_id"];
     NSNumber *appState = info[@"app_state"];
     NSNumber *success = info[@"success"];
+    NSString *remakeID = info[@"remake_id"];
+    
+    //
+    // Fetch new movie info
+    if (remakeID) {
+        [HMServer.sh refetchRemakeWithID:remakeID];
+    }
     
     if (appState.intValue == UIApplicationStateActive)
     {

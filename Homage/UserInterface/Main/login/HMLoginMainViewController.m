@@ -633,9 +633,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     
     HMGLogInfo(@"fb login view fetched user info start");
-    //[self.guiActivityView stopAnimating];
-    //self.guiActivityView.hidden = YES;
-    
     
     if ([self isFacebookUser:self.cachedUser equalToFacebookUser:user])
     {

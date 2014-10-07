@@ -213,8 +213,6 @@
         [self cleanPrivateRemakes];
         [self refreshFromLocalStorage];
     }
-    
-    
 }
 
 -(void)onRemakeThumbnailLoaded:(NSNotification *)notification

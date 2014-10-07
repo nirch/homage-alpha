@@ -35,7 +35,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Get push token from previous app launches.
+//  TODO: handle old known push token here.
+//    // Get push token from previous app launches.
 //    if (!self.pushToken)
 //        self.pushToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"deviceToken"];
     
@@ -209,7 +210,8 @@
     
     // Remmember push notification token for future app starts
     [[NSUserDefaults standardUserDefaults] setValue:deviceToken forKey:@"deviceToken"];
-    NSLog(@">>> %@", deviceToken);
+    
+    // TODO: handle cases where push token changed for already logged in user.
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error

@@ -102,9 +102,15 @@
     [super viewWillAppear:animated];
     
     [self checkMicrophoneAuthorization];
-    [self initGUIOnceAfterFirstAppearance];
     [self initObservers];
     [self updateTableHeader];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self initGUIOnceAfterFirstAppearance];
+    [super viewDidAppear:animated];
+    [self initVideoControllers];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -130,6 +136,17 @@
 
 -(void)initGUI
 {
+    // Countdown delegate
+    self.guiRoundCountdownLabal.delegate = self;
+    
+    //bad BG label
+    self.guiBadBGLabel.hidden = YES;
+}
+
+-(void)initVideoControllers
+{
+    // Moved here for support of iOS8
+
     // Video controllers (scene & story)
     HMSimpleVideoViewController *vc;
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
@@ -138,7 +155,7 @@
     self.sceneVideoVC.originatingScreen = [NSNumber numberWithInteger:HMRecorderMenu];
     self.sceneVideoVC.entityType = [NSNumber numberWithInteger:HMScene];
     self.sceneVideoVC.entityID = @"none";
-    
+
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
     self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
@@ -147,12 +164,6 @@
     self.storyVideoVC.originatingScreen = [NSNumber numberWithInteger:HMRecorderMenu];
     self.storyVideoVC.entityType = [NSNumber numberWithInteger:HMStory];
     self.storyVideoVC.entityID = self.remake.story.sID;
-    
-    // Countdown delegate
-    self.guiRoundCountdownLabal.delegate = self;
-    
-    //bad BG label
-    self.guiBadBGLabel.hidden = YES;
 }
 
 -(void)initGUIOnceAfterFirstAppearance

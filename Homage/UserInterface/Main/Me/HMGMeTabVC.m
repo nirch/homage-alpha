@@ -144,6 +144,12 @@
                                                    selector:@selector(onRemakesRefetched:)
                                                        name:HM_NOTIFICATION_SERVER_USER_REMAKES
                                                      object:nil];
+    
+    // Observe refetching a specific remake
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRemakeRefetched:)
+                                                       name:HM_NOTIFICATION_SERVER_REMAKE
+                                                     object:nil];
 }
 
 -(void)initObservers
@@ -210,6 +216,11 @@
             [self.refreshControl endRefreshing];
         });
     }
+}
+
+-(void)onRemakeRefetched:(NSNotification *)notification
+{
+    [self refreshFromLocalStorage];
 }
 
 -(void)refreshRemakes
