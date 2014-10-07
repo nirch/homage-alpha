@@ -614,7 +614,6 @@
         // Mark in app delegate that we left the recorder context
         HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
         app.isInRecorderContext = NO;
-        [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
 

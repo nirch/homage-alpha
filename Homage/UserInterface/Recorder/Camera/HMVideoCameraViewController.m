@@ -333,7 +333,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 #pragma mark - status bar
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
 }
 
 #pragma mark - Orientation changes
@@ -364,7 +364,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     return result;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+
+-(void)cameraWillRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 
     [UIView animateWithDuration:duration animations:^{
@@ -377,7 +378,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     }];
 }
 
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+-(void)cameraDidRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     if (self.extractController)
     {
@@ -396,15 +397,15 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     
 }
 
--(BOOL)shouldAutorotate
-{
-    return !self.lockInterfaceRotation;
-}
-
--(NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
-}
+//-(BOOL)shouldAutorotate
+//{
+//    return !self.lockInterfaceRotation;
+//}
+//
+//-(NSUInteger)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskLandscape;
+//}
 
 #pragma mark - Authorization
 -(BOOL)isSessionRunningAndDeviceAuthorized

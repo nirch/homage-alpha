@@ -839,18 +839,38 @@
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    /*
-    // A hack forcing alpha users to rotate the device, until "upside down" videos will have a solution.
-    // This hack forces UIInterfaceOrientationMaskLandscapeRight when using the back camera
-    // It will just transform the whole view upside down when using the front camera.
-    // TODO: remove this hack ASAP.
-    if (self.allowedOrientations == 0) return UIInterfaceOrientationMaskLandscapeRight;
-    return self.allowedOrientations;
-     */
+    // Lock orientation on iOS8 for now (because willRotateToInterfaceOrientation was deprecated)
+    if ([self respondsToSelector:@selector(willTransitionToTraitCollection:withTransitionCoordinator:)]){
+        return UIInterfaceOrientationMaskLandscapeRight;
+    }
     
+    // iOS7
     return UIInterfaceOrientationMaskLandscape;
 }
 
+
+//
+// Bacward compatability: Oritentation support for iOS7
+//
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.videoCameraVC cameraWillRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+//
+// Backward compatability: Orientation support for iOS7
+//
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.videoCameraVC cameraDidRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+//-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+//{
+//}
+//-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+//{
+//}
 
 #pragma mark - containment segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -109,7 +109,6 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
-    //[self setNeedsStatusBarAppearanceUpdate];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -532,11 +531,17 @@
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"appLaunch"];
     [self dismissSplashScreen];
+ 
+    // The upload manager with # workers of a specific type.
+    // You can always replace to another implementation of upload workers,
+    // as long as the workers conform to the HMUploadWorkerProtocol.
+    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+    [HMUploadManager.sh startMonitoring];
     
     //
     // If no current logged in user, present the login screen.
     //
-    if (![User current] || YES)
+    if (![User current])
     {
         [self presentLoginScreen];
         return;
@@ -581,14 +586,6 @@
         [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
         myDelegate.sessionStartFlag = YES;
     }
-    
-    //[self reportCrashesIfExist];
-    
-    // The upload manager with # workers of a specific type.
-    // You can always replace to another implementation of upload workers,
-    // as long as the workers conform to the HMUploadWorkerProtocol.
-    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
-    [HMUploadManager.sh startMonitoring];
     
     //DEBUG
     //[self showRenderingView];

@@ -22,4 +22,8 @@
 -(void)attachCameraIO;
 -(void)updateContour:(NSString *)contourlocalURL;
 
+
+-(void)cameraWillRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
+-(void)cameraDidRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
+
 @end

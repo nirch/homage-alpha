@@ -572,19 +572,23 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(NSDictionary *)getDeviceInformation
 {
-    
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+
     UIDevice *device = [UIDevice currentDevice];
-    
-    NSDictionary *deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString]};
+    NSDictionary *deviceDictionary =  @{
+                                        @"name": device.name,
+                                        @"system_name": device.systemName,
+                                        @"system_version": device.systemVersion,
+                                        @"model": device.model,
+                                        @"identifier_for_vendor": [device.identifierForVendor UUIDString],
+                                        @"app_version": appVersion
+                                        };
     
     NSData *pushToken = self.myAppDelegate.pushToken;
-    
     if (pushToken)
     {
         deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString] , @"push_token" : pushToken};
     }
-        
-    
     return deviceDictionary;
 }
 
@@ -855,8 +859,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
             [mixpanel registerSuperProperties:@{@"$ignore": @"true"}];
         }
     } else {
-        [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];
-        [mixpanel.people set:@{@"user" : @"guest" ,@"homage_id":user.userID}];
+        if (user.userID) {
+            [mixpanel registerSuperProperties:@{@"email" : @"guest" , @"homage_id" : user.userID}];
+            [mixpanel.people set:@{@"user" : @"guest" ,@"homage_id":user.userID}];
+        }
     }
     
     if ([user.userID isEqualToString:[User current].userID])
