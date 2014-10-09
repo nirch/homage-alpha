@@ -213,7 +213,6 @@
 		2639DD7F1916E84700440745 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2639DD7E1916E84700440745 /* Default-568h@2x.png */; };
 		263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C4483192E6BA400AD82EC /* Contour+Factory.m */; };
 		263C448D192F4E5E00AD82EC /* Contour.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C448C192F4E5E00AD82EC /* Contour.m */; };
-		2650DED8190D45D900CA306C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2650DED7190D45D900CA306C /* Crashlytics.framework */; };
 		2655DF3618EDA37100CA362F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF3418EDA37100CA362F /* main.m */; };
 		2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3718EDA46400CA362F /* Storyboard.storyboard */; };
 		2655DF5318EDA4D200CA362F /* HMPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */; };
@@ -488,7 +487,6 @@
 		263C4483192E6BA400AD82EC /* Contour+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contour+Factory.m"; sourceTree = "<group>"; };
 		263C448B192F4E5E00AD82EC /* Contour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contour.h; sourceTree = "<group>"; };
 		263C448C192F4E5E00AD82EC /* Contour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contour.m; sourceTree = "<group>"; };
-		2650DED7190D45D900CA306C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2655DF3218EDA37100CA362F /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Homage-Info.plist"; path = "App/supporting files/Homage-Info.plist"; sourceTree = "<group>"; };
 		2655DF3318EDA37100CA362F /* Homage-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "Homage-Prefix.pch"; path = "App/supporting files/Homage-Prefix.pch"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2655DF3418EDA37100CA362F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "App/supporting files/main.m"; sourceTree = "<group>"; };
@@ -599,7 +597,6 @@
 				26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */,
 				08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */,
 				0838E8DE18D04E4600222997 /* AVFoundation.framework in Frameworks */,
-				2650DED8190D45D900CA306C /* Crashlytics.framework in Frameworks */,
 				0838E8DC18D04E2400222997 /* CoreVideo.framework in Frameworks */,
 				0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */,
 				26B498AF18BA4A8D00026401 /* AudioToolbox.framework in Frameworks */,
@@ -668,7 +665,6 @@
 				267A64D419532275003DFFEA /* Security.framework */,
 				26B448F41947E28800BC6317 /* SystemConfiguration.framework */,
 				26B448F21947E25700BC6317 /* Appsee.framework */,
-				2650DED7190D45D900CA306C /* Crashlytics.framework */,
 				08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */,
 				0838E8DD18D04E4600222997 /* AVFoundation.framework */,
 				0838E8DB18D04E2400222997 /* CoreVideo.framework */,
@@ -1428,7 +1424,7 @@
 				0806FA0918828AEB007514BE /* Frameworks */,
 				0806FA0A18828AEB007514BE /* Resources */,
 				B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */,
-				26347612190D437B007205BF /* ShellScript */,
+				08FAAB8E19E4515400E923EA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1554,7 +1550,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		26347612190D437B007205BF /* ShellScript */ = {
+		08FAAB8E19E4515400E923EA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1565,7 +1561,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
+			shellScript = "${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run daa34917843cd9e52b65a68cec43efac16fb680a";
 		};
 		B782C1C7E7374A85B74F3F36 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -32,7 +32,7 @@
 #import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
 #import "HMServer+Users.h"
-#import <Crashlytics/Crashlytics.h>
+//#import <Crashlytics/Crashlytics.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import "UIImage+ImageEffects.h"
 #import "AMBlurView.h"
