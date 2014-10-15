@@ -597,10 +597,48 @@
 #pragma mark sharing
 -(void)shareRemake:(Remake *)remake
 {
-    [[HMGoogleAPI sharedInstance] shortenURL:remake.shareURL info:@{@"remake_id" :remake.sID}];
+    //[[HMGoogleAPI sharedInstance] shortenURL:remake.shareURL info:@{@"remake_id" :remake.sID}];
+    NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *shareLinkPrefix = [HMServer.sh getShareLinkPrefix];
+    NSString *shareID = [HMServer.sh generateBSONID];
+    NSString *remakeShareURL = [NSString stringWithFormat:@"%@/%@" , shareLinkPrefix , shareID];
+    
+    NSString *generalShareSubject;
+    NSString *whatsAppShareString;
+    if (remake.story.shareMessage)
+    {
+        generalShareSubject = remake.story.shareMessage;
+        whatsAppShareString = [NSString stringWithFormat:LS(@"SHARE_MSG_BODY") ,remake.story.shareMessage , remakeShareURL];
+    } else
+    {
+        generalShareSubject = [NSString stringWithFormat:LS(@"DEFAULT_SHARE_MSG_SUBJECT") , remake.story.name];
+        whatsAppShareString = [NSString stringWithFormat:LS(@"DEFUALT_SHARE_MSG_BODY") , remake.story.name , remakeShareURL];
+    }
+    
+    NSString *generalShareBody = [whatsAppShareString stringByAppendingString:[NSString stringWithFormat:LS(@"SHARE_MSG_BODY_HASHTAGS") , storyNameWithoutSpaces, storyNameWithoutSpaces]];
+    
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:whatsAppShareString forABID:nil];
+    
+    NSArray *activityItems = [NSArray arrayWithObjects: generalShareBody, whatsappMsg, remake.thumbnail, nil];
+    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
+    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
+        if (completed) {
+            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remake.sID}];
+            NSNumber *shareMethod = [self getShareMethod:activityType];
+            [HMServer.sh reportShare:shareID forRemake:remake.sID forUserID:[User current].userID shareMethod:shareMethod shareLink:remakeShareURL shareSuccess:true fromOriginatingScreen:[NSNumber numberWithInteger:HMMyStories]];
+        }
+    };
+    
+    [activityViewController setValue:generalShareSubject forKey:@"subject"];
+    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:activityViewController animated:YES completion:^{}];
+    });
 }
 
--(void)onShortenURLReceived:(NSNotification *)notification
+/*-(void)onShortenURLReceived:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
     
@@ -653,8 +691,7 @@
         if (completed) {
             [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remakeID}];
             NSNumber *shareMethod = [self getShareMethod:activityType];
-            [HMServer.sh reportRemakeShare:remakeID forUserID:[User current].userID shareMethod:shareMethod];
-            
+            [HMServer.sh reportRemakeShare:remakeID forUserID:[User current].userID shareMethod:shareMethod shareLink:remakeShareURL shareSuccess:true fromOriginatingScreen:[NSNumber numberWithInteger:HMMyStories]];
         }
     };
     
@@ -665,7 +702,7 @@
         [self presentViewController:activityViewController animated:YES completion:^{}];
     });
  
-}
+}*/
 
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake

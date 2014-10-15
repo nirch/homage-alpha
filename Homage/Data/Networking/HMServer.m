@@ -21,6 +21,7 @@
 @property (strong,nonatomic) NSString *appVersionInfo;
 @property (strong,nonatomic) NSString *appBuildInfo;
 @property (strong,nonatomic) NSString *currentUserID;
+@property (strong,nonatomic) NSDictionary *configurationInfo;
 
 @end
 
@@ -121,6 +122,16 @@
     self.currentUserID = userID;
 }
 
+-(void)updateConfiguration:(NSDictionary *)info
+{
+    self.configurationInfo = info;
+}
+
+-(NSString *)getShareLinkPrefix
+{
+    return self.configurationInfo[@"share_link_prefix"];
+}
+
 -(void)loadAppDetails
 {
     NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -210,6 +221,10 @@
                parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
+    if (!moreInfo) {
+        moreInfo = [NSMutableDictionary new];
+    }
+    
     
     //
     // send GET Request to server
