@@ -67,6 +67,7 @@
         //
         [self.dbDocument saveToURL:self.dbDocument.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
             if (success) {
+                [self disableBackupForURL:self.dbDocument.fileURL];
                 HMGLogDebug(@"Created managed document.");
                 if (successHandler) successHandler();
             } else {
@@ -82,6 +83,7 @@
         //
         [self.dbDocument openWithCompletionHandler:^(BOOL success) {
             if (success) {
+                [self disableBackupForURL:self.dbDocument.fileURL];
                 HMGLogDebug(@"Opened managed document.");
                 if (successHandler) successHandler();
             } else {
@@ -98,6 +100,17 @@
         HMGLogDebug(@"Managed document is already opened.");
         if (successHandler) successHandler();
 
+    }
+}
+
+-(void)disableBackupForURL:(NSURL *)url
+{
+    // Prevent resource of this url to be backed up to iCloud.
+    // (app store guideline 2.23)
+    NSError *error;
+    [url setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&error];
+    if (error) {
+        HMGLogError(@"Failed to mark managed document as excluded from iCloud backup. %@", [error localizedDescription]);
     }
 }
 

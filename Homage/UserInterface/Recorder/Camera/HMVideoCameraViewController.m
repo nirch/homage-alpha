@@ -954,7 +954,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     // Move the file to its finale destination
     //
     NSError *moveError;
-    [[NSFileManager defaultManager] moveItemAtURL:outputFileURL toURL:[NSURL fileURLWithPath:rawMoviePath] error:&moveError];
+    NSURL *rawMovieURL = [NSURL fileURLWithPath:rawMoviePath];
+    [[NSFileManager defaultManager] moveItemAtURL:outputFileURL toURL:rawMovieURL error:&moveError];
     if (moveError) {
         //
         // Something went wrong with copying the file from the tmp dir to the local videos directory.
@@ -962,6 +963,12 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         HMGLogError(@"Error while moving movie to :%@", rawMoviePath);
         [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
         return;
+    }
+
+    NSError *markError;
+    [rawMovieURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&markError];
+    if (markError) {
+        HMGLogError(@"Error while marking file to be excluded from icloud backup:%@", rawMoviePath);
     }
     
     //
