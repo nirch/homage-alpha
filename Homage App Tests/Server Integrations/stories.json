@@ -1,0 +1,1908 @@
+[
+  {
+    "_id": {
+      "$oid": "53ec8c014b7b616933000122"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Do a little dance for this fun little clip",
+    "level": 0,
+    "name": "Hello Nyan Kitty",
+    "order_id": -11,
+    "remakes_num": 22,
+    "scenes": [
+      {
+        "context": "It's a hello kitty/nyan cat mash up!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 6200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Bust out your best dance moves!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Hello+Nyan+Kitty/silo+1.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Hello+Nyan+Kitty/silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Hello+Nyan+Kitty/scene+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Hello+Nyan+Kitty/scene+1.mp4"
+      }
+    ],
+    "share_message": "Dance like its super happy fun time!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Hello+Nyan+Kitty/thumb+main.jpg",
+    "thumbnail_rip": 1,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Hello+Nyan+Kitty/Hello+Nyan+Kitty.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "5433ec0a62ec29ada400023c"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "It's all about that bass",
+    "level": 0,
+    "name": "The Bass",
+    "order_id": -11,
+    "remakes_num": 2,
+    "scenes": [
+      {
+        "context": "You're doing backup vocals for the clip",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 3000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "You're doing backup vocals for the clip",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/silo+1.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/scene+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/scene+1.mp4"
+      },
+      {
+        "context": "Show off your badonkadonk!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 4000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Show everyone who's really got bass",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/silo+2.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/scene+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/scene+2.mp4"
+      }
+    ],
+    "share_message": "Check out my Bass, no treble",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/main+thumb.jpg",
+    "thumbnail_rip": 3,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Bass/The+Bass.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53ce9bc405f0f6e8f2000655"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "You are a character in Street Fighter",
+    "level": 0,
+    "name": "Street Fighter",
+    "order_id": -10,
+    "remakes_num": 17,
+    "scenes": [
+      {
+        "context": "Strike a pose for the character selection screen",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 4400,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Is that your meanest face?",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/silo+1.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/scene+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/scene+1.mp4"
+      },
+      {
+        "context": "You are about to face off in battle, try to stand so you face your enemy to the right ",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 8600,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Engage in battle!!!Dragon or Tiger style?",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/Silo+2+torso+new.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/Silo+2+torso+new.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/scene+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/scene+2.mp4"
+      },
+      {
+        "context": "Celebrate your victory!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 4800,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "A little dance maybe?",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/Silo+3+newer.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/Silo+3+newer.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/scene+3.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/scene+3.mp4"
+      }
+    ],
+    "share_message": "Show off your fighting moves",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Street+Fighter/Main+thumb.jpg",
+    "thumbnail_rip": 13.4,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/Street+Fighter/Street+Fighter+new.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "541030fdcfe5e61df90001a1"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "You record the message, we'll hologram it",
+    "level": 0,
+    "name": "Hologramming",
+    "order_id": -9,
+    "remakes_num": 23,
+    "scenes": [
+      {
+        "context": "Hologram yourself!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 6200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Send out an important message, as if an evil empire was chasing you",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Hologram/silo+1.png",
+        "silhouettes": {
+          "360": "https://s3.amazonaws.com/homageapp/Stories/Hologram/silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Hologram/scene+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Hologram/Holo.mp4"
+      }
+    ],
+    "share_message": "Available June 2020!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Hologram/tumb+main.jpg",
+    "thumbnail_rip": 14,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Hologram/Holo.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "542a6799454c61e96400065b"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "It's a nice day for a roller coaster ride",
+    "level": 0,
+    "name": "Roller",
+    "order_id": -8,
+    "remakes_num": 5,
+    "scenes": [
+      {
+        "context": "You are riding on a rolle coaster ride",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 7000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Are you a screamer or a day dreamer?",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/silo.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/silo.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/scene+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/scene+1.mp4"
+      },
+      {
+        "context": "Make a face for the camera!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 2300,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "It's time for a snap shot from your day in the park",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/silo.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/silo.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/scene+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/scene+2.mp4"
+      }
+    ],
+    "share_message": "Check out my roller coaster face",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/Main+thumb.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Roller/Roller.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53b17db89a452198f80004a6"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Stand up for the national anthem!",
+    "level": 0,
+    "name": "World Cup Argentina",
+    "order_id": -4,
+    "remakes_num": 19,
+    "scenes": [
+      {
+        "context": "Keep steady and try to stand at the same angle as the other players",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 5200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Sing for the fans!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/silo+1.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/scene+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/scene+1.mp4"
+      },
+      {
+        "context": "You made the starting eleven!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 5200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Your mom must be thrilled!!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/silo+2.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/scene+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/scene+2.mp4"
+      }
+    ],
+    "share_message": "Show your national pride!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/thumb+1.jpg",
+    "thumbnail_rip": 5,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Argentina/WC+ARG.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53bffcbbf0c5349d4600058f"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "You are replacing Alejandro Sabella as head coach",
+    "level": 0,
+    "name": "Argentina Coach",
+    "order_id": -3,
+    "remakes_num": 4,
+    "scenes": [
+      {
+        "context": "This looks like a promising attack",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 2400,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "You can sense the goal coming",
+        "selfie": true,
+        "silhouette": "https://s3.amazonaws.com/homageapp/Stories/WC+Coach/silo.png",
+        "silhouettes": {
+          "360": "https://s3.amazonaws.com/homageapp/Stories/WC+Coach/silo.png"
+        },
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/WC+Coach/thumb+1.jpg",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/WC+Coach/scene+1.mp4"
+      },
+      {
+        "context": "Show your feelings with the quality of that attempt",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 3400,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "My mom could play better!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/silo.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/silo.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/scene+2.mp4"
+      },
+      {
+        "context": "Goaaaaaaaaaaaaaaaaallllll",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 3400,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "It was all due to your coaching!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/silo.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/silo.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/scene+3.mp4"
+      }
+    ],
+    "share_message": "Show your coaching style",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/thumb.jpg",
+    "thumbnail_rip": 18,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Coach/WC+Coach.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53c7d110c05d603a910003d6"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Getting ready to race",
+    "level": 0,
+    "name": "F1 Rookie",
+    "order_id": -3,
+    "remakes_num": 9,
+    "scenes": [
+      {
+        "context": "Getting ready to race",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up 360.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 5600,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Show your race face!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/silo+1+good.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/silo+1+good.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/SCENE+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/scene+1.mp4"
+      },
+      {
+        "context": "The race is on!",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up 360.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 5600,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "You've made a great start!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/silo+2+good.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/silo+2+good.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/SCENE+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/SCENE+2.mp4"
+      },
+      {
+        "context": "You won the race!",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up 360.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 4800,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "Celebrate!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/silo+2+good.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/silo+2+good.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/SCENE+4.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/scene+4.mp4"
+      }
+    ],
+    "share_message": "There's a new driver in town",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/f1+main.jpg",
+    "thumbnail_rip": 22,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/F1+rookie/f1+Rookie.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53b540d3123459d5aa000253"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "You are replacing Neymar at the last minute....",
+    "level": 0,
+    "name": "World Cup Brazil",
+    "order_id": -2,
+    "remakes_num": 45,
+    "scenes": [
+      {
+        "context": "The announcer seems skeptical if this line up change...",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 6200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "It's your time to shine for Brazil!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Brazil/silo+1.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Brazil/silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Brazil/thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Brazil/scene+1.mp4"
+      }
+    ],
+    "share_message": "It's your time to shine for Brazil!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Brazil/main+thumb.jpg",
+    "thumbnail_rip": 10,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/WC+Brazil/WC+BRazil.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "535e8fc981360cd22f0003d4"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Defend your city!",
+    "level": 0,
+    "name": "Superior Man",
+    "order_id": -1,
+    "remakes_num": 17,
+    "scenes": [
+      {
+        "context": "You've spotted a burglary with your superior vision!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 5000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "You're on the look out for crime, and you spot something",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man/silo+1.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Scene+1.mp4"
+      },
+      {
+        "context": "You are on the chase",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 3000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Nodbody can run faster than you!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man/silo+2.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Scene+2.mp4"
+      },
+      {
+        "context": "Take down the bandit!(remember to be with your back to the camera)!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 3000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "Lunge and surprise this crook!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man/silo+3.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+3.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+3.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Scene+3.mp4"
+      },
+      {
+        "context": "You gotta fly, more crime awaits justice!",
+        "contour": "C:/Users/Administrator/Documents/Contours/knees up 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/knees+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/knees+up+360.ctr"
+          }
+        },
+        "duration": 5500,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 4,
+        "script": "Take off to the next adventure",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man/silo+4.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+4.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+4.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Scene+4.mp4"
+      }
+    ],
+    "share_message": "I'm Superior in every way!!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thum+main.jpg",
+    "thumbnail_rip": 15,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/Superior+Man+360/Superior+Man+360+new+SFX.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "52de83db8bc427751c000305"
+    },
+    "active": false,
+    "description": "Jump from an airplane! Be part of Dive School!",
+    "level": 0,
+    "name": "Dive School",
+    "order_id": 1,
+    "remakes_num": 55,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "You are preparing for the jump inside the plane, you should be excited/shocked",
+        "duration": 3300,
+        "script": "Prepare to Jump",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Scenes/Dive_School_Scene_1_Video_V1.mov",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Scenes/Dive_School_Scene_1_Thumbnail_V1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Dive_School_Silhouette_Scene_1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "You are free-falling from 12,000 feet!!!",
+        "duration": 5000,
+        "script": "faliiiiiing",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Scenes/Dive_School_Scene_2_Video_V1.mov",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Scenes/Dive_School_Scene_2_Thumbnail_V1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Dive_School_Silhouette_Scene_2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Dive_School_Thumbnail_V1.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School/Dive_School_Video_V1.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "5356dc94ebad7c3bf100015d"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Prepare to Turbo Ski!",
+    "level": 0,
+    "name": "TurboSki",
+    "order_id": 1,
+    "remakes_num": 35,
+    "scenes": [
+      {
+        "context": "Get your ski on!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 5300,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Get your ski on!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki/Silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/turboski+silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/scene+1.mp4"
+      },
+      {
+        "context": "Faster! Fasssster!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 5200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Faster! Fasssster!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki/Silo++2+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/turboski+silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+2.jpg",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/TurboSki+360/scene+2.mp4"
+      },
+      {
+        "context": "Watch out for that tree!",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 2300,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "This might hurt a bit...",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki/Silo++3+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/turboski+silo+3.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+3.jpg",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/TurboSki+360/scene+3.mp4"
+      }
+    ],
+    "share_message": "Check out my mad ski moves",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+Main.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/TurboSki+-+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "52ee613cab557ec484000021"
+    },
+    "active": false,
+    "description": "This is your chance to win the Oscars!",
+    "level": 0,
+    "name": "The Oscars",
+    "order_id": 2,
+    "remakes_num": 8,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "You are sitting on a chair - all the nominees are waiting for the announcement - and you are the winner!!!",
+        "duration": 6400,
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Scenes/1/Oscars_Scene_1_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Scenes/1/Oscars_Scene_1_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Oscar_Silhouette.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "selfie": false
+      },
+      {
+        "id": 2,
+        "context": "You are on the stage! Say a joke",
+        "duration": 10700,
+        "script": "Any joke...",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Scenes/2/Oscars_Scene_2_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Scenes/2/Oscars_Scene_2_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Oscar_Silhouette.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": false
+      },
+      {
+        "id": 3,
+        "context": "Say thanks to the people who got you to this point",
+        "duration": 7500,
+        "script": "Thanks mom...",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Scenes/3/Oscars_Scene_3_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Scenes/3/Oscars_Scene_3_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Oscar_Silhouette_2_new.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": false
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Oscars_Thumbnail.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar/Oscars_Video.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "534fc5b9924daff68b0000e9"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "This is your chance to win the Oscars!",
+    "level": 0,
+    "name": "The Oscars",
+    "order_id": 2,
+    "remakes_num": 21,
+    "scenes": [
+      {
+        "context": "You are sitting on a chair - all the nominees are waiting for the announcement - and you are the winner!!!",
+        "contour": "C:/Users/Administrator/Documents/Contours/head and shoulders 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/head+and+shoulders+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+shoulders+360.ctr"
+          }
+        },
+        "duration": 6600,
+        "id": 1,
+        "script": "They just called your name!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+480/oscar+silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/scene+1.mp4"
+      },
+      {
+        "context": "You are on the stage! Say a joke",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 8200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Any joke...",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+480/oscar+silo+2+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/scene+2.mp4"
+      },
+      {
+        "context": "Say thanks to the people who got you to this point",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 4140,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "Thanks mom...",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+480/oscar+silo+3+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+silo+3.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/thumb+3.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/scene+3.mp4"
+      }
+    ],
+    "share_message": "OMG! just won an oscar!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/Oscar+thumb.jpg",
+    "thumbnail_rip": 14,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "52cddaf80fad07c3290001aa"
+    },
+    "active": false,
+    "description": "Play Luke in the famous - I am your father - scene",
+    "level": 2,
+    "name": "Star Wars",
+    "order_id": 3,
+    "remakes_num": 4,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "Darth Vader Just told you that he is your father",
+        "script": "You are in shock!!!",
+        "duration": 8030,
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/1/Star_Wars_Scene_1_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/1/Star_Wars_Scene_1_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Silhouettes/Close+Up.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Star Wars/Star_Wars_Scene_1_Ebox.ebox",
+        "selfie": false
+      },
+      {
+        "id": 2,
+        "context": "Noooooooooooooooooooooooooooooooooo",
+        "script": "Nooooooooooooooooooooooooo",
+        "duration": 8030,
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/2/Star_Wars_Scene_2_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/2/Star_Wars_Scene_2_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Silhouettes/Head+and+Chest.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/head and chest.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Star Wars/Star_Wars_Scene_2_Ebox.ebox",
+        "selfie": false
+      },
+      {
+        "id": 3,
+        "context": "You are loosing your grip",
+        "script": "No talking",
+        "duration": 3030,
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/3/Star_Wars_Scene_3_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/3/Star_Wars_Scene_3_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Silhouettes/Torso.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Star Wars/Star_Wars_Scene_3_Ebox.ebox",
+        "selfie": false
+      },
+      {
+        "id": 4,
+        "context": "You are falling down the space ship",
+        "script": "No talking",
+        "duration": 3880,
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/4/Star_Wars_Scene_4_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Scenes/4/Star_Wars_Scene_4_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Silhouettes/American+Shot.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/american shot.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Star Wars/Star_Wars_Scene_4_Ebox.ebox",
+        "selfie": false
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Star_Wars_Thumbnail.png",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/StarWars/Star_Wars_Video.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "52c18c569f372005e0000286"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "This template takes a given video, trims it from second 1 to second 4 and adds a text on the video",
+    "level": 1,
+    "name": "Test",
+    "order_id": 5,
+    "remakes_num": 0,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "A video with at least 5 seconds",
+        "script": "No script - do what ever you want",
+        "duration": 4000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Silhouettes/new/close+up+small+V2.png",
+        "contour": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Contour.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Ebox.ebox",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "A video with at least 5 seconds",
+        "script": "No script - do what ever you want",
+        "duration": 4000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Silhouettes/new/head+%26+shoulders+small+V2.png",
+        "contour": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Contour.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Ebox.ebox",
+        "selfie": true
+      },
+      {
+        "id": 3,
+        "context": "A video with at least 5 seconds",
+        "script": "No script - do what ever you want",
+        "duration": 4000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Silhouettes/new/head+%26+chest+small+V2.png",
+        "contour": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Contour.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Ebox.ebox",
+        "selfie": true
+      },
+      {
+        "id": 4,
+        "context": "A video with at least 5 seconds",
+        "script": "No script - do what ever you want",
+        "duration": 4000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Silhouettes/new/torso+small+V2.png",
+        "contour": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Contour.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Ebox.ebox",
+        "selfie": true
+      },
+      {
+        "id": 5,
+        "context": "A video with at least 5 seconds",
+        "script": "No script - do what ever you want",
+        "duration": 4000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Silhouettes/new/kness+up+small.png",
+        "contour": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Contour.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Ebox.ebox",
+        "selfie": true
+      },
+      {
+        "id": 6,
+        "context": "A video with at least 5 seconds",
+        "script": "No script - do what ever you want",
+        "duration": 4000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Scenes/1/Test_Scene_1_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Silhouettes/new/as+small.png",
+        "contour": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Contour.ctr",
+        "ebox": "C:/Users/Administrator/Documents/Stories/Test/Scenes/1/Test_Scene_1_Ebox.ebox",
+        "selfie": true
+      }
+    ],
+    "texts": [
+      {
+        "id": 1,
+        "max_chars": 7,
+        "name": "Text on video",
+        "description": "Enter the text that will be presented on the video"
+      }
+    ],
+    "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Test/Test_Thumbnail.png",
+    "thumbnail_rip": 1.2,
+    "video": "https://s3.amazonaws.com/homageapp/Temp/Messi+Vs+Tomer%2BHomage+Logo.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "5315c2d2717f5df24a0001a7"
+    },
+    "active": false,
+    "description": "Jump from an airplane! Be part of Dive School!",
+    "level": 0,
+    "name": "Dive School 2",
+    "order_id": 6,
+    "remakes_num": 3,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "You are preparing for the jump inside the plane, you should be excited/shocked",
+        "duration": 3300,
+        "script": "Prepare to Jump",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+2/Scenes/1/Dive_School_Scene_1_Video.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+2/Scenes/1/Dive_School_Scene_1_Thumbnail.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+2/Dive_School_Silhouette_Scene_1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "You are free-falling from 12,000 feet!!!",
+        "duration": 5000,
+        "script": "faliiiiiing",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+2/Scenes/2/Dive_School_Scene_2_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Dive+School+2/scenes/2/Dive_School_Scene_2_Thumbnail.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Stories/Dive+School+2/scenes/2/Dive_School_Silhouette_Scene_2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+2/Dive_School_Thumbnail_V1.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+2/Dive_School_Video_V1.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "530dd1e5784380a058000601"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Jump from an airplane! Be part of Dive School!",
+    "level": 0,
+    "name": "Dive School",
+    "order_id": 8,
+    "remakes_num": 56,
+    "scenes": [
+      {
+        "context": "You are preparing for the jump inside the plane, you should be excited/shocked",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 3300,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Prepare to Jump",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+480/Dive_School_Silhouette_Scene_1_V2.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/diveschool+silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/scene+1.mp4"
+      },
+      {
+        "context": "You are free-falling from 12,000 feet!!!",
+        "contour": "C:/Users/Administrator/Documents/Contours/close up 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 5000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "faliiiiiing",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dive+School+480/Dive_School_Silhouette_Scene_2_V2.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/diveschool+silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/scene+2.mp4"
+      }
+    ],
+    "share_message": "I just jumped from a plane!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/DiveSchool+thumb+main.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/Diveschool+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "532f058a3f13af9af80001bb"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Defeat the giant monster!",
+    "level": 0,
+    "name": "Monster Attack",
+    "order_id": 9,
+    "remakes_num": 30,
+    "scenes": [
+      {
+        "context": "You are a fighter pilot sent to intercept the monster",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "https://s3.amazonaws.com/homageapp/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 5200,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Report to base as your nearing the hot zone",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/silo+1+V2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/Scene+1.mp4"
+      },
+      {
+        "context": "Get ready to engage",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/close+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr"
+          }
+        },
+        "duration": 3000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "You've spotted the monster destroying the city!!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/silo+1+V2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/thumb+3.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/Scene+3.mp4"
+      },
+      {
+        "context": "You are an angry monster!",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/knees+up+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/knees+up+360.ctr"
+          }
+        },
+        "duration": 4000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "Destroy the city!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/silo+3+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/Scene+2.mp4"
+      }
+    ],
+    "share_message": "Saving the world, one monster at a time...",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/monster+attack+thumbnail.jpg",
+    "thumbnail_rip": 9,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Monster+Attack/360/Monster+Attack+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53206e5514b2ecc477000241"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Aliens have invaded earth!",
+    "level": 0,
+    "name": "Aliens",
+    "order_id": 10,
+    "remakes_num": 17,
+    "scenes": [
+      {
+        "context": "You are a WWN field reporter, and spaceships have invaded earth ",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 7600,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "Report from the field",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/silo+1+480.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/silo++1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/thumb+1.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/scene+1.mp4"
+      },
+      {
+        "context": "As President, reassure your people at this dark hour",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 9600,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "Speak to your people president!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/silo++2+480.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/Silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/thumb+2.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/Scene+2.mp4"
+      },
+      {
+        "context": "Your live report is suddenly interrupted",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 7500,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "give your final report from the field",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/silo+1+480.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/silo++1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/thumb+3.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/Scene+3.mp4"
+      }
+    ],
+    "share_message": "Aliens just invaded earth!",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/thumb+Main.jpg",
+    "thumbnail_rip": 19,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Aliens/Aliens+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53565aa49c5200617200017a"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "Soap up your daily beefs!",
+    "level": 0,
+    "name": "The Dumb & The Helpless",
+    "order_id": 12,
+    "remakes_num": 11,
+    "scenes": [
+      {
+        "context": "Tell your partner whats really bothering you...",
+        "contour": "C:/Users/Administrator/Documents/Contours/head and chest 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr"
+          }
+        },
+        "duration": 4000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "This behaviour must change!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+3.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+1.mp4"
+      },
+      {
+        "context": "Defned your self against these vile accusations",
+        "contour": "C:/Users/Administrator/Documents/Contours/head and chest 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr"
+          }
+        },
+        "duration": 4000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "You are an angle! Remind them!",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless/silo+2+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+4.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+2.mp4"
+      },
+      {
+        "context": "Stick to your guns!",
+        "contour": "C:/Users/Administrator/Documents/Contours/head and chest 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr"
+          }
+        },
+        "duration": 4000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "Are you going to let them off so easy?",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+1.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+5.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+3.mp4"
+      },
+      {
+        "context": "Have the last say",
+        "contour": "C:/Users/Administrator/Documents/Contours/head and chest 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr"
+          }
+        },
+        "duration": 4000,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 4,
+        "script": "The final word is yours, a joke perhaps?",
+        "selfie": true,
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless/silo+2+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+2.png"
+        },
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+6.jpg",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+4.mp4"
+      }
+    ],
+    "share_message": "These are the days of my life",
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/Thumb+main.jpg",
+    "thumbnail_rip": 16,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/D%26H+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "5320cade72ec727673000402"
+    },
+    "active": true,
+    "description": "Share your thoughts on current events",
+    "level": 0,
+    "name": "Hot Topic",
+    "order_id": 13,
+    "remakes_num": 2,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "Share your thoughts on current events",
+        "duration": 10000,
+        "script": "What topic do you think is hot this week?",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Hot+Topic/shot+1.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Hot+Topic/thumb+1.jpg",
+        "silhouette": "https://s3.amazonaws.com/homageapp/Stories/Hot+Topic/silo+1+360.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/knees up 480.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Hot+Topic/Thumb+Main.jpg",
+    "thumbnail_rip": 9,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/Hot+Topic/Hot+Topic_v01.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "535704b5c133e52ecb00016d"
+    },
+    "active": true,
+    "active_from": "1.1.0",
+    "description": "As The Interpreter interpret President Obama's speech to sign language",
+    "level": 0,
+    "name": "The Interpreter",
+    "order_id": 14,
+    "remakes_num": 17,
+    "scenes": [
+      {
+        "context": "They aint cheering for you, but you might as well enjoy it",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 5100,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 1,
+        "script": "This is your 15 minutes, bask in the moment",
+        "selfie": true,
+        "silhouette": "https://s3.amazonaws.com/homageapp/Stories/The+Interpreter/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/interpreter+silo+1.png"
+        },
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/Thumb+1.jpg",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/scene+1.mp4"
+      },
+      {
+        "context": "Show off your own sign language",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 7500,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 2,
+        "script": "How would YOU say Triumph in sign language?",
+        "selfie": true,
+        "silhouette": "https://s3.amazonaws.com/homageapp/Stories/The+Interpreter/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/interpreter+silo+1.png"
+        },
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/Thumb+2.jpg",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/scene+2.mp4"
+      },
+      {
+        "context": "Obama keeps talking, you keep making up signs",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso 480.ctr",
+        "contours": {
+          "360": {
+            "contour": "C:/Users/Administrator/Documents/Contours/torso+360-face.ctr",
+            "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr"
+          }
+        },
+        "duration": 4300,
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "id": 3,
+        "script": "A boy raised herding cattle... thats a tough one",
+        "selfie": true,
+        "silhouette": "https://s3.amazonaws.com/homageapp/Stories/The+Interpreter/silo+1+360.png",
+        "silhouettes": {
+          "360": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/interpreter+silo+1.png"
+        },
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/Thumb+3.jpg",
+        "video": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/scene+3.mp4"
+      }
+    ],
+    "share_message": "Anyone can be a sign language interpreter",
+    "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/Thumb+Main_v03.jpg",
+    "thumbnail_rip": 4,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/The+Intrepreter+360/The+Interpreter+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "536e10a0a25ca8ffc0000188"
+    },
+    "story_480": {
+      "$oid": "535e8fc981360cd22f0003d4"
+    },
+    "description": "Defend your city!",
+    "level": 0,
+    "name": "Superior Man",
+    "order_id": 16,
+    "remakes_num": 5,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "You've spotted a burglary with your superior vision!",
+        "duration": 5000,
+        "script": "You're on the look out for crime, and you spot something",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/scene+1.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "You are on the chase",
+        "duration": 3000,
+        "script": "Nodbody can run faster than you!",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/scene+2.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+2.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 3,
+        "context": "Take down the bandit!(remember to be with your back to the camera)!",
+        "duration": 3000,
+        "script": "Lunge and surprise this crook!",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Superior+Man+360/scene+3.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Superior+Man+360/thumb+3.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+3.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 4,
+        "context": "You gotta fly, more crime awaits justice!",
+        "duration": 5500,
+        "script": "Take off to the next adventure",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/scene+4.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thumb+4.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/Superior+Man+silo+4.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/knees+up+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/knees+up+360.ctr",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Superior+Man+360/thum+main.jpg",
+    "thumbnail_rip": 15,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/Superior+Man+360/Superior+Man+360+new+SFX.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "538140fe709b9aac2300009d"
+    },
+    "story_480": {
+      "$oid": "5356dc94ebad7c3bf100015d"
+    },
+    "description": "Prepare to Turbo Ski!",
+    "level": 0,
+    "name": "TurboSki",
+    "order_id": 20,
+    "remakes_num": 26,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "Get your ski on!",
+        "duration": 5300,
+        "script": "Get your ski on!",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/scene+1.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/turboski+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "ebox": "C:/Development/Algo/Full.ebox",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "Faster! Fasssster!",
+        "duration": 5200,
+        "script": "Faster! Fasssster!",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Scene+2.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+2.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/turboski+silo+2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 3,
+        "context": "Watch out for that tree!",
+        "duration": 2300,
+        "script": "This might hurt a bit...",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Scene+3.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.netp/Stories/TurboSki+360/Thumb+3.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/turboski+silo+3.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/Thumb+Main.jpg",
+    "thumbnail_rip": 6,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/TurboSki+360/TurboSki+compressed.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "538141ceb3931c1bac000067"
+    },
+    "story_480": {
+      "$oid": "53565aa49c5200617200017a"
+    },
+    "description": "Soap up your daily beefs!",
+    "level": 0,
+    "name": "The Dumb & The Helpless",
+    "order_id": 21,
+    "remakes_num": 8,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "Tell your partner whats really bothering you...",
+        "duration": 4000,
+        "script": "This behaviour must change!",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+1.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+3.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "Defned your self against these vile accusations",
+        "duration": 4000,
+        "script": "You are an angle! Remind them!",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+2.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+4.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.netStories/Dumb+%26+Helpless+360/d%26h+silo+2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 3,
+        "context": "Stick to your guns!",
+        "duration": 4000,
+        "script": "Are you going to let them off so easy?",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+3.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+5.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 4,
+        "context": "Have the last say",
+        "duration": 4000,
+        "script": "The final word is yours, a joke perhaps?",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/scene+4.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/thumb+6.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/d%26h+silo+2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/head+and+chest+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+chest+360.ctr",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/Thumb+main.jpg",
+    "thumbnail_rip": 16,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Dumb+%26+Helpless+360/D%26H+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53814358d4615dfffa00007f"
+    },
+    "story_480": {
+      "$oid": "535704b5c133e52ecb00016d"
+    },
+    "description": "As The Interpreter interpret President Obama's speech to sign language",
+    "level": 0,
+    "name": "The Interpreter",
+    "order_id": 22,
+    "remakes_num": 10,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "They aint cheering for you, but you might as well enjoy it",
+        "duration": 5100,
+        "script": "This is your 15 minutes, bask in the moment",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Interpreter+360/scene+1.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Interpreter+360/Thumb+1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/interpreter+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "Show off your own sign language",
+        "duration": 7500,
+        "script": "How would YOU say Triumph in sign language?",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Interpreter+360/scene+2.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Interpreter+360/Thumb+2.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/interpreter+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 3,
+        "context": "Obama keeps talking, you keep making up signs",
+        "duration": 4300,
+        "script": "A boy raised herding cattle... thats a tough one",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Interpreter+360/scene+3.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Interpreter+360/Thumb+3.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/interpreter+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/Thumb+Main_v03.jpg",
+    "thumbnail_rip": 4,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/The+Intrepreter+360/The+Interpreter+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53814446709b9aa621000073"
+    },
+    "story_480": {
+      "$oid": "530dd1e5784380a058000601"
+    },
+    "description": "Jump from an airplane! Be part of Dive School!",
+    "level": 0,
+    "name": "Dive School",
+    "order_id": 23,
+    "remakes_num": 61,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "You are preparing for the jump inside the plane, you should be excited/shocked",
+        "duration": 3300,
+        "script": "Prepare to Jump",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/scene+1.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/thumb+1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/diveschool+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close+up+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "You are free-falling from 12,000 feet!!!",
+        "duration": 5000,
+        "script": "faliiiiiing",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/Scene+2.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/thumb+2.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Diveschool+360/diveschool+silo+2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/close+up+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/close+up+360.ctr",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Diveschool+360/DiveSchool+thumb+main.jpg",
+    "thumbnail_rip": 6,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/Diveschool+360/Diveschool+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "53823df3a4f80acb7b00028b"
+    },
+    "story_480": {
+      "$oid": "534fc5b9924daff68b0000e9"
+    },
+    "description": "This is your chance to win the Oscars!",
+    "level": 0,
+    "name": "The Oscars",
+    "order_id": 24,
+    "remakes_num": 16,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "You are sitting on a chair - all the nominees are waiting for the announcement - and you are the winner!!!",
+        "duration": 6600,
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/scene+1.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/thumb+1.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+silo+1.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/head+and+shoulders+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/head+and+shoulders+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 2,
+        "context": "You are on the stage! Say a joke",
+        "duration": 8700,
+        "script": "Any joke...",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/scene+2.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/thumb+2.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+silo+2.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      },
+      {
+        "id": 3,
+        "context": "Say thanks to the people who got you to this point",
+        "duration": 5100,
+        "script": "Thanks mom...",
+        "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/scene+3.mp4",
+        "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/thumb+3.jpg",
+        "silhouette": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+silo+3.png",
+        "contour": "C:/Users/Administrator/Documents/Contours/torso+360.ctr",
+        "contour_remote": "http://d293iqusjtyr94.cloudfront.net/Contours/360/torso+360.ctr",
+        "selfie": true
+      }
+    ],
+    "thumbnail": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/Oscar+thumb.jpg",
+    "thumbnail_rip": 14,
+    "video": "http://d293iqusjtyr94.cloudfront.net/Stories/Oscar+360/oscar+360.mp4"
+  },
+  {
+    "_id": {
+      "$oid": "52c4341d220b10ce920001a7"
+    },
+    "active": false,
+    "description": "Create a video invitation to your Birthday!",
+    "level": 2,
+    "name": "Birthday",
+    "order_id": 999,
+    "remakes_num": 0,
+    "scenes": [
+      {
+        "id": 1,
+        "context": "What are you up to today?",
+        "script": "Take a funny video of yourself showing your friends what are you up to today",
+        "duration": 8000,
+        "video": "https://s3.amazonaws.com/homageapp/Stories/Birthday/Scenes/1/Birthday_Scene_1_Video.mp4",
+        "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Birthday/Scenes/1/Birthday_Scene_1_Thumbnail.jpg",
+        "silhouette": null,
+        "selfie": true
+      }
+    ],
+    "texts": [
+      {
+        "id": 1,
+        "max_chars": 4,
+        "name": "Birth Year",
+        "description": "Enter the year you were born"
+      },
+      {
+        "id": 2,
+        "max_chars": 15,
+        "name": "Name",
+        "description": "Enter your name"
+      },
+      {
+        "id": 3,
+        "max_chars": 10,
+        "name": "Date",
+        "description": "Enter the date of the event"
+      }
+    ],
+    "thumbnail": "https://s3.amazonaws.com/homageapp/Stories/Birthday/Birthday_Thumbnail.jpg",
+    "thumbnail_rip": 16,
+    "video": "https://s3.amazonaws.com/homageapp/Stories/Birthday/Birthday_Thumbnail.jpg"
+  }
+]

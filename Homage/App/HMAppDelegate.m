@@ -18,7 +18,6 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Appirater/Appirater.h>
-#import <Appsee/Appsee.h>
 #import <sys/utsname.h>
 
 @interface HMAppDelegate()
@@ -35,6 +34,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
 //  TODO: handle old known push token here.
 //    // Get push token from previous app launches.
 //    if (!self.pushToken)
@@ -47,14 +47,15 @@
    
     #ifndef DEBUG
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-        //[Appsee start:@"128117df897b4508a2b68550ca52b354"];
     
         //crashlytics crash reporting
         [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+    
     #else
+    
         // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-        // [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
         // [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+    
     #endif
     
     

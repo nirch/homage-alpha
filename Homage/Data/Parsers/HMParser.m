@@ -17,14 +17,29 @@
     if (self) {
         _ctx = DB.sh.context;
         _parseInfo = [NSMutableDictionary new];
-        
-        _dateFormatter = [[NSDateFormatter alloc] init];
-        [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-        
-        _dateFormatterFallback = [[NSDateFormatter alloc] init];
-        [_dateFormatterFallback setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss ' UTC'"];
+        [self initDateFormatters];
     }
     return self;
+}
+
+-(id)initWithContext:(NSManagedObjectContext *)ctx
+{
+    self = [super init];
+    if (self) {
+        _ctx = ctx;
+        _parseInfo = [NSMutableDictionary new];
+        [self initDateFormatters];
+    }
+    return self;
+}
+
+-(void)initDateFormatters
+{
+    _dateFormatter = [[NSDateFormatter alloc] init];
+    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    
+    _dateFormatterFallback = [[NSDateFormatter alloc] init];
+    [_dateFormatterFallback setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss ' UTC'"];
 }
 
 -(void)parse

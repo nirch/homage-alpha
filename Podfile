@@ -1,9 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios,          '7.0'
-link_with 'Homage', 'HomageTests'
+link_with 'Homage', 'Homage App Tests'
 pod 'AFNetworking',     '~> 2.4.0'
 pod 'Mixpanel', '~> 2.5.0'
-pod 'Facebook-iOS-SDK', '~> 3.14'
+pod 'Facebook-iOS-SDK', '~> 3.19.0'
 pod 'Appirater'
 pod 'CrashlyticsFramework'
 

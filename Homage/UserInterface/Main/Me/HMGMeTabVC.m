@@ -430,21 +430,19 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
             
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            image = [UIImage imageNamed:@"play1white"];
+            image = [UIImage imageNamed:@"HMPlayButton"];
             [cell.actionButton setImage:image forState:UIControlStateNormal];
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;
             [cell.shareButton setHidden:NO];
             cell.shareButton.enabled = YES;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -455,7 +453,6 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -466,7 +463,6 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -477,7 +473,6 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -545,10 +540,8 @@
         //[cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
         [cell.guiThumbImage setHidden:YES];
         [cell.buttonsView setHidden:YES];
-        [cell.moviePlaceHolder setHidden:NO];
     } else
     {
-        [cell.moviePlaceHolder setHidden:YES];
         [cell.guiThumbImage setHidden:NO];
         [cell.buttonsView setHidden:NO];
     }

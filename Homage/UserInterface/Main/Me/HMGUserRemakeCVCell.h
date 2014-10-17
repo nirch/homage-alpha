@@ -10,19 +10,16 @@
 
 @interface HMGUserRemakeCVCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
-@property (weak, nonatomic) IBOutlet UIView *moviePlaceHolder;
 @property (weak, nonatomic) IBOutlet UIView *buttonsView;
 
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *remakeButton;
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
-@property (weak, nonatomic) IBOutlet UIButton *closeMovieButton;
 @property (weak, nonatomic) IBOutlet UILabel *storyNameLabel;
-
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *actionButtonCollection;
 
 @property (weak, nonatomic) IBOutlet UIView *guiActivityOverlay;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+
+@property (weak, nonatomic) IBOutlet UIView *guiHighlightOverlay;
 
 @end
