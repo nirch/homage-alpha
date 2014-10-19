@@ -32,6 +32,7 @@
 #import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
 #import "HMServer+Users.h"
+#import "HMServer+Info.h"
 //#import <Crashlytics/Crashlytics.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import "UIImage+ImageEffects.h"
@@ -39,7 +40,6 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMServer+Stories.h"
 #import "HMServer+analytics.h"
-
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
 
@@ -205,6 +205,11 @@
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onUserJoin:)
                                                        name:HM_NOTIFICATION_USER_JOIN
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onConfigurationDataAvailable:)
+                                                       name:HM_NOTIFICATION_SERVER_CONFIG
                                                      object:nil];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(settingsDidChange:) name:kIASKAppSettingChanged object:nil];
@@ -538,6 +543,8 @@
     [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
     [HMUploadManager.sh startMonitoring];
     
+    [HMServer.sh LoadAdditionalConfig];
+    
     //
     // If no current logged in user, present the login screen.
     //
@@ -586,10 +593,6 @@
         [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
         myDelegate.sessionStartFlag = YES;
     }
-    
-    //DEBUG
-    //[self showRenderingView];
-    //[self.renderingVC renderStartedWithRemakeID:@"52d7fd79db25451694000001"];
 }
 
 //#pragma mark crash reports
@@ -1012,6 +1015,12 @@
     
     [self.sideBarVC updateSideBarGUIWithName:userName FBProfile:fbProfileID];
     
+}
+
+-(void)onConfigurationDataAvailable:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    [HMServer.sh updateConfiguration:info];
 }
 
 -(void)logoutPushed

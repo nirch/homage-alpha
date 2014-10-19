@@ -115,7 +115,7 @@
 "DEFAULT_SHARE_MSG_SUBJECT" = "Check my awesome video \"%@\" : \n";
 "SHARE_MSG_BODY" = "%@: \n %@";
 "DEFUALT_SHARE_MSG_BODY" = "Check my video \"%@\": \n\n %@";
-"SHARE_MSG_BODY_HASHTAGS" = "#Homage #Homage%@ #%@";
+"SHARE_MSG_BODY_HASHTAGS" = " #Homage #Homage%@ #%@";
 
 "SHARING_APP_SUBJECT" = "Join me in making awesome videos!";
 "SHARING_APP_BODY_MESSAGE" = "Keep calm and download homage:\n\n iPhone: %@\nAndroid: %@";

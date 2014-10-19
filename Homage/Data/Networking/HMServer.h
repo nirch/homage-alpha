@@ -39,6 +39,9 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 
 #pragma mark - provide server woth request context
 -(void)updateServerWithCurrentUser:(NSString *)userID;
+-(void)updateConfiguration:(NSDictionary *)info;
+-(NSString *)getShareLinkPrefix;
+
 
 #pragma mark - GET requests
 ///

@@ -133,6 +133,10 @@
 		08B958A2189167D800BCCF8C /* User+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A1189167D800BCCF8C /* User+Logic.m */; };
 		08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A5189167EE00BCCF8C /* Text+Logic.m */; };
 		08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
+		08BE816219F4586500840CD9 /* HMServer+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816119F4586500840CD9 /* HMServer+Info.m */; };
+		08BE816319F4586500840CD9 /* HMServer+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816119F4586500840CD9 /* HMServer+Info.m */; };
+		08BE816619F4589100840CD9 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
+		08BE816719F4589100840CD9 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
 		08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */; };
 		08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */; };
 		08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8211896D4A200A9D235 /* HMUploadManager.m */; };
@@ -398,6 +402,10 @@
 		08B958A81891685300BCCF8C /* Story+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Story+Logic.h"; sourceTree = "<group>"; };
 		08B958A91891685300BCCF8C /* Story+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Story+Logic.m"; sourceTree = "<group>"; };
 		08B958AC18917CE000BCCF8C /* HMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderDelegate.h; sourceTree = "<group>"; };
+		08BE816019F4586500840CD9 /* HMServer+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HMServer+Info.h"; path = "Networking/WebService/HMServer+Info.h"; sourceTree = "<group>"; };
+		08BE816119F4586500840CD9 /* HMServer+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMServer+Info.m"; path = "Networking/WebService/HMServer+Info.m"; sourceTree = "<group>"; };
+		08BE816419F4589100840CD9 /* HMConfigurationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMConfigurationParser.h; sourceTree = "<group>"; };
+		08BE816519F4589100840CD9 /* HMConfigurationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMConfigurationParser.m; sourceTree = "<group>"; };
 		08CDF81C1896D4A200A9D235 /* HMAWS3Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAWS3Client.h; sourceTree = "<group>"; };
 		08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAWS3Client.m; sourceTree = "<group>"; };
 		08CDF81E1896D4A200A9D235 /* HMUploadS3Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadS3Worker.h; sourceTree = "<group>"; };
@@ -692,8 +700,8 @@
 			isa = PBXGroup;
 			children = (
 				0806FA3418828AEB007514BE /* HomageTests.m */,
-				0806FA2F18828AEB007514BE /* Supporting Files */,
 				2610133618E172A80065C72B /* HMLoginTests.m */,
+				0806FA2F18828AEB007514BE /* Supporting Files */,
 			);
 			path = HomageTests;
 			sourceTree = "<group>";
@@ -761,6 +769,8 @@
 		0806FB381882A5B800F0EF50 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				08BE816019F4586500840CD9 /* HMServer+Info.h */,
+				08BE816119F4586500840CD9 /* HMServer+Info.m */,
 				2675065D1972E77300A2214F /* BSONIdGenerator.h */,
 				2675065E1972E77300A2214F /* BSONIdGenerator.m */,
 				081237941882CB6100DA5D23 /* ServerCFG.plist */,
@@ -945,6 +955,8 @@
 		086D93C81886C8BB0086C565 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
+				08BE816419F4589100840CD9 /* HMConfigurationParser.h */,
+				08BE816519F4589100840CD9 /* HMConfigurationParser.m */,
 				086D93C91886C8BB0086C565 /* HMParser.h */,
 				086D93CA1886C8BB0086C565 /* HMParser.m */,
 				086D93CB1886C8BB0086C565 /* HMRemakeParser.h */,
@@ -1654,6 +1666,7 @@
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
 				08EA3B3319D9DD8A00B074DA /* HMRegularFontButton.m in Sources */,
+				08BE816619F4589100840CD9 /* HMConfigurationParser.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
 				268341F818FFFD40002E8CB7 /* IASKSettingsStore.m in Sources */,
 				08B95872189138EF00BCCF8C /* HMColor.m in Sources */,
@@ -1735,6 +1748,7 @@
 				268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */,
 				2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */,
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
+				08BE816219F4586500840CD9 /* HMServer+Info.m in Sources */,
 				084E5339189209D700D96258 /* HMServer+Texts.m in Sources */,
 				2675065F1972E77300A2214F /* BSONIdGenerator.m in Sources */,
 				268A380F1974AE650016C59C /* User.m in Sources */,
@@ -1777,6 +1791,7 @@
 				08537F0E19EC098200EBACA4 /* Contour.m in Sources */,
 				08537F1119EC098A00EBACA4 /* Scene.m in Sources */,
 				0888CEAB19ECFAA4003D7249 /* HMUserParser.m in Sources */,
+				08BE816319F4586500840CD9 /* HMServer+Info.m in Sources */,
 				0888CE9819EC7206003D7249 /* HMServer+Texts.m in Sources */,
 				0888CE9A19EC720C003D7249 /* HMServer+Users.m in Sources */,
 				08651F1819EC09C000EF12FA /* User+Logic.m in Sources */,
@@ -1791,6 +1806,7 @@
 				08651F1719EC09BD00EF12FA /* User+Factory.m in Sources */,
 				088D5FBB19EC015A00075C4A /* Homage_App_Tests.m in Sources */,
 				0888CEA619ECFA8D003D7249 /* HMRemakeParser.m in Sources */,
+				08BE816719F4589100840CD9 /* HMConfigurationParser.m in Sources */,
 				08537F0A19EC094600EBACA4 /* DB.m in Sources */,
 				0888CEA519ECFA89003D7249 /* HMParser.m in Sources */,
 				08537F1419EC099600EBACA4 /* Remake+Factory.m in Sources */,

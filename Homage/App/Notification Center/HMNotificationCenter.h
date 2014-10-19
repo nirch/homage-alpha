@@ -86,6 +86,9 @@
 #define HM_NOTIFICATION_SERVER_USER_END_SESSION    @"user end session"
 #define HM_NOTIFICATION_SERVER_USER_UPDATE_SESSION @"user update session"
 
+//ADDITIONAL CONFIGURATIONS
+#define HM_NOTIFICATION_SERVER_CONFIG @"additional confiurations"
+
 @interface HMNotificationCenter : NSObject
 
 @end
