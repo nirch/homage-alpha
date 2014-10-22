@@ -10,6 +10,6 @@
 
 @interface HMServer (Info)
 
--(void)LoadAdditionalConfig;
+-(void)loadAdditionalConfig;
 
 @end

@@ -11,7 +11,7 @@
 #import "HMJSONResponseSerializerWithData.h"
 #import "HMAppDelegate.h"
 
-//#import "HMUploadManager.h"
+#import "HMUploadManager.h"
 
 @interface HMServer()
 
@@ -68,19 +68,8 @@
 
 }
 
--(void)testUploadManager
-{
-    //[HMUploadManager sh];
-}
-
 -(void)chooseSerializerForParser:(HMParser *)parser
 {
-//    if (parser) {
-//        self.session.responseSerializer = [AFJSONResponseSerializer new];
-//    } else {
-//        self.session.responseSerializer = [AFHTTPResponseSerializer new];
-//    }
-    
     self.session.requestSerializer = [AFHTTPRequestSerializer new];
     [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
     [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];

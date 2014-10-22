@@ -12,7 +12,7 @@
 
 @implementation HMServer (Info)
 
--(void)LoadAdditionalConfig
+-(void)loadAdditionalConfig
 {
     [self getRelativeURLNamed:@"additional config" parameters:nil notificationName:HM_NOTIFICATION_SERVER_CONFIG info:nil parser:[HMConfigurationParser new]];
 }

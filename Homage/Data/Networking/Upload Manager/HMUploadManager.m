@@ -93,7 +93,6 @@
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -113,9 +112,9 @@
 
 -(void)checkForUploadsWithPrioritizedFootages:(NSArray *)prioritizedFootages
 {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-    [self _checkForUploadsWithPrioritizedFootages:prioritizedFootages];
-//    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self _checkForUploadsWithPrioritizedFootages:prioritizedFootages];
+    });
 }
 
 -(void)_checkForUploadsWithPrioritizedFootages:(NSArray *)prioritizedFootages
@@ -190,6 +189,7 @@
 
 -(void)uploadFile:(NSString *)localFilePath
 {
+    return;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self _uploadFile:localFilePath];
     });

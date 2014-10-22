@@ -13,6 +13,8 @@
 
 // For now, removed the faulty NSFetchedResultsController implementation <-- NSFetchedResultsControllerDelegate
 
+@property (weak, nonatomic) IBOutlet UIScrollView *guiScrollView;
+
 -(void)refetchRemakesFromServer;
 -(void)refreshFromLocalStorage;
 

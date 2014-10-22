@@ -16,6 +16,8 @@
 #import "HMColor.h"
 #import "Mixpanel.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "HMMainGUIProtocol.h"
+#import "HMAppDelegate.h"
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -70,6 +72,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self updateRenderingBarState];
 }
 
 #pragma mark initializations
@@ -124,6 +127,17 @@
                                                        name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
                                                      object:nil];
     
+    // Observe rendering bar
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRenderingBarStateChanged:)
+                                                       name:HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN
+                                                     object:nil];
+
+    // Observe rendering bar
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRenderingBarStateChanged:)
+                                                       name:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN
+                                                     object:nil];
 }
 
 -(void)removeObservers
@@ -132,6 +146,9 @@
     [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
+    
+    [nc removeObserver:self name:HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN object:nil];
 }
 
 
@@ -216,6 +233,31 @@
     [self refetchStoriesFromServer];
     
 }
+
+-(void)onRenderingBarStateChanged:(NSNotification *)notification
+{
+    [self updateRenderingBarState];
+}
+
+#pragma mark - Rendering bar states
+-(void)updateRenderingBarState
+{
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        if ([app.mainVC isRenderingViewShowing]) {
+            UIEdgeInsets c = self.storiesCV.contentInset;
+            c.bottom = [app.mainVC renderingViewHeight];
+            self.storiesCV.contentInset = c;
+        } else {
+            UIEdgeInsets c = self.storiesCV.contentInset;
+            c.bottom = 0;
+            self.storiesCV.contentInset = c;
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 
 #pragma mark - Navigation
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

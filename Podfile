@@ -6,4 +6,4 @@ pod 'Mixpanel', '~> 2.5.0'
 pod 'Facebook-iOS-SDK', '~> 3.19.0'
 pod 'Appirater'
 pod 'CrashlyticsFramework'
-
+pod 'AWSiOSSDKv2', '~> 2.0'

@@ -25,6 +25,7 @@
 #import "HMServer+analytics.h"
 #import "HMAppDelegate.h"
 #import "AWAlertView.h"
+#import "UIView+Hierarchy.h"
 
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
@@ -43,6 +44,10 @@
 
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (nonatomic,weak) UIView *guiVideoContainer;
+
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *guiCellPanGestureRecognizer;
+
+@property (nonatomic) BOOL needsCheckIfAllClosed;
 
 @end
 
@@ -82,6 +87,10 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    UIEdgeInsets e = self.userRemakesCV.contentInset;
+    e.bottom = 314;
+    self.userRemakesCV.contentInset = e;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -121,6 +130,12 @@
     [self.noRemakesLabel setHidden:YES];
     self.noRemakesLabel.textColor = [HMColor.sh textImpact];
     self.title = LS(@"ME_TAB_HEADLINE_TITLE");
+    
+    // Checks if need to close "opened" cells.
+    self.needsCheckIfAllClosed = NO;
+    
+    //
+    
 }
 
 -(void)initContent
@@ -387,6 +402,8 @@
     //
     
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
+    if (cell.guiScrollView.delegate == nil) cell.guiScrollView.delegate = self;
+    [cell closeAnimated:NO];
     
     if (remake.thumbnail) {
         
@@ -412,6 +429,10 @@
 {
     UIImage *image;
     
+    cell.remakeButton.alpha = 1;
+    
+    cell.guiScrollView.contentSize = CGSizeMake(640, cell.guiScrollView.bounds.size.height);
+    
     switch (status.intValue)
     {
         case HMGRemakeStatusInProgress:
@@ -436,6 +457,8 @@
             cell.remakeButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
+            
+            cell.remakeButton.alpha = 0;
             break;
             
         case HMGRemakeStatusNew:
@@ -555,7 +578,7 @@
 -(HMGUserRemakeCVCell *)getParentCollectionViewCellOfButton:(UIButton *)button
 {
     //TODO: this is only the current hirarchy in the hmguserCVcell!
-    id cell = button.superview.superview.superview;
+    id cell = [button findAncestorViewThatIsMemberOf:[HMGUserRemakeCVCell class]];
     if (![cell isKindOfClass:[HMGUserRemakeCVCell class]])
     {
         HMGLogError(@"button super view is not a collection view cell!");
@@ -743,6 +766,7 @@
             remake.status = @(HMGRemakeStatusClientRequestedDeletion);
             
             if ([[self.userRemakesCV indexPathsForVisibleItems] containsObject:indexPath] ) {
+                // TODO: check if reloadItemsAtIndexPaths works ok on iOS 7.0.2
                 [self.userRemakesCV reloadItemsAtIndexPaths:@[indexPath]];
             }
             
@@ -781,6 +805,7 @@
         //join now!
         if (buttonIndex == 1)
         {
+            [self closeAllCellsExceptCell:nil animated:NO];
             [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_USER_JOIN object:nil userInfo:nil];
         }
     
@@ -851,6 +876,76 @@
         [self closeCurrentlyPlayingMovie];
 }
 
+
+#pragma mark - Scroll view delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // if scrolled a cell to the right and the cell
+    // is in the normal state, consider it a swipe right and show the
+    // left side bar
+    switch (scrollView.tag) {
+        case 1:
+            // Remake cells scroll views
+            [self handleRemakeCellScrollView:scrollView];
+            break;
+            
+        default:
+            return;
+    }
+}
+
+-(void)handleRemakeCellScrollView:(UIScrollView *)scrollView
+{
+    CGFloat offsetX = scrollView.contentOffset.x;
+    
+    if (offsetX < 0) {
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        scrollView.bounces = NO;
+        scrollView.userInteractionEnabled = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_REQUEST_TO_SHOW_SIDE_BAR object:self];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            scrollView.bounces = YES;
+            scrollView.userInteractionEnabled = YES;
+        });
+        return;
+    }
+    
+    if (offsetX == 0) {
+        return;
+    }
+    
+    CGFloat part = MAX(offsetX / 160.0f , 0);
+    CGFloat scale = MAX(1.0f - part, 0.3);
+    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)scrollView.superview.superview;
+    cell.guiThumbImage.transform = CGAffineTransformMakeScale(scale, scale);
+    cell.guiThumbImage.alpha = 1-part;
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView.tag == 1) {
+        scrollView.bounces = YES;
+        HMGUserRemakeCVCell *draggedCell = (HMGUserRemakeCVCell *)scrollView.superview.superview;
+        
+        // close all cells not dragged.
+        [self closeAllCellsExceptCell:draggedCell animated:YES];
+        self.needsCheckIfAllClosed = YES;
+        
+    } else {
+        if (self.needsCheckIfAllClosed) [self closeAllCellsExceptCell:nil animated:YES];
+    }
+}
+
+-(void)closeAllCellsExceptCell:(HMGUserRemakeCVCell *)exceptCell animated:(BOOL)animated
+{
+    for (HMGUserRemakeCVCell *cell in self.userRemakesCV.visibleCells) {
+        if (![cell isEqual:exceptCell]) {
+            [cell closeAnimated:animated];
+        }
+    }
+    self.needsCheckIfAllClosed = NO;
+}
+
 // ============
 // Rewind segue
 // ============
@@ -904,8 +999,6 @@
     // Get some info
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-//    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    HMGLogDebug(@"User want to delete remake: %@ at indexPath:%@" , remake.sID, indexPath);
     
     //
     // Ask user if sure about deleting the remake.
@@ -923,9 +1016,8 @@
     if (!cell) return;
     
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    cell.remakeButton.enabled = NO;
+    
+    [cell disableInteractionForAShortWhile];
     
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);

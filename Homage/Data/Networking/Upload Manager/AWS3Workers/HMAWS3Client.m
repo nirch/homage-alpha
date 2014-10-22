@@ -2,14 +2,13 @@
 //  HMAWS3Client.m
 //  Homage
 //
+//  Created by Aviv Wolf on 10/20/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
 #import "HMAWS3Client.h"
 #import "HMUploadS3Worker.h"
-
-#define UPLOAD_TIMEOUT 600
-#define CONNECTION_TIMEOUT 60
+#import "Mixpanel.h"
 
 @interface HMAWS3Client()
 
@@ -48,52 +47,64 @@
 -(void)initS3TransferManager
 {
     HMGLogDebug(@"initS3TransferManager");
-    
-    // Initialize the S3 Client.
-    [AmazonErrorHandler shouldNotThrowExceptions];
-    AmazonS3Client *s3 = [[AmazonS3Client alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
-    // [AmazonLogger verboseLogging];
-    
-    s3.timeout = UPLOAD_TIMEOUT;
-    s3.connectionTimeout = CONNECTION_TIMEOUT;
-    s3.maxRetries = 10;
-    
-    // Initialize the S3TransferManager
-    self.tm = [S3TransferManager new];
-    self.tm.s3 = s3;
+
+    // Configurate the transfer
+    AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithAccessKey:ACCESS_KEY_ID secretKey:SECRET_KEY];
+    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    [configuration setMaxRetryCount:5];
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+
+    // Get the default transfer manager.
+    self.tm = [AWSS3TransferManager defaultS3TransferManager];
+
+    // Check if transfer manager created.
+    if (!self.tm) {
+        HMGLogError(@"Failed initializing upload manager");
+        [[Mixpanel sharedInstance] track:@"UploadManagerInitFailed"];
+    }
 }
 
--(S3TransferOperation *)startUploadJobForWorker:(HMUploadS3Worker *)s3worker
+-(AWSS3TransferManagerUploadRequest *)startUploadJobForWorker:(HMUploadS3Worker *)s3worker
 {
     // Validations
-    
     if (!s3worker.source) {
         HMGLogError(@"startUploadJobForWorker failed. No source file provided");
+        [[Mixpanel sharedInstance] track:@"UploadJobStartFailed" properties:@{@"reason":@"No source file provided"}];
         return nil;
     }
-
-
+    
+    
     if (![[NSFileManager defaultManager] fileExistsAtPath:s3worker.source]) {
         // File doesn't exist in the provided path
         HMGLogError(@"startUploadJobForWorker failed. File doesn't exist in provided path %@", s3worker.source);
+        [[Mixpanel sharedInstance] track:@"UploadJobStartFailed" properties:@{@"reason":@"Source file missing",@"more_info":s3worker.source}];
         return nil;
     }
-
+    
     
     if (!s3worker.destination) {
         HMGLogError(@"startUploadJobForWorker failed. No destination provided");
+        [[Mixpanel sharedInstance] track:@"UploadJobStartFailed" properties:@{@"reason":@"No destination provided"}];
         return nil;
     }
+
+    // Source url
+    NSString *sourcePath = s3worker.source;
+    if (![sourcePath hasPrefix:@"file://"]) {
+        sourcePath = [NSString stringWithFormat:@"file://%@", sourcePath];
+    }
+    NSURL *sourceURL = [NSURL URLWithString:sourcePath];
     
     // The upload request.
-    // Sets the worker as the delegate.
-    S3PutObjectRequest *uploadRequest = [S3PutObjectRequest new];
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
     uploadRequest.bucket = BUCKET_NAME;
-    uploadRequest.filename = s3worker.source;
+    uploadRequest.body = sourceURL;
     uploadRequest.key = s3worker.destination;
-    uploadRequest.delegate = s3worker;
-    S3TransferOperation *transferOpertaion = [self.tm upload:uploadRequest];
-    return transferOpertaion;
+    
+    // return the upload request
+    return uploadRequest;
 }
+
+
 
 @end

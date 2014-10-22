@@ -32,6 +32,9 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 // HTTP session manager
 @property (strong, nonatomic, readonly) AFHTTPSessionManager *session;
 
+// Status
+@property (nonatomic) NSString *connectionLabel;
+
 #pragma mark - URL named
 -(NSString *)absoluteURLNamed:(NSString *)urlName;
 -(NSString *)relativeURLNamed:(NSString *)urlName;

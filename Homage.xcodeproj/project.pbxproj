@@ -32,8 +32,7 @@
 		0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
 		0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF9318854F6C00A6EF5E /* NSNotificationCenter+Utils.m */; };
 		0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */; };
-		08455FD5189032B90040504D /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08455FD4189032B90040504D /* AWSRuntime.framework */; };
-		08455FD8189032FF0040504D /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08455FD7189032FF0040504D /* AWSS3.framework */; };
+		0842A63119F74A17002F0D8B /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0842A63019F74A17002F0D8B /* UIView+Hierarchy.m */; };
 		08455FF71890458E0040504D /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE11890458E0040504D /* AVCamPreviewView.m */; };
 		08455FF91890458E0040504D /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE31890458E0040504D /* HMVideoCameraViewController.m */; };
 		08455FFB1890458E0040504D /* HMRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE51890458E0040504D /* HMRecorderViewController.m */; };
@@ -137,15 +136,13 @@
 		08BE816319F4586500840CD9 /* HMServer+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816119F4586500840CD9 /* HMServer+Info.m */; };
 		08BE816619F4589100840CD9 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
 		08BE816719F4589100840CD9 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
-		08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */; };
-		08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */; };
-		08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8211896D4A200A9D235 /* HMUploadManager.m */; };
 		08CDF82E1897F6B000A9D235 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF82D1897F6B000A9D235 /* Scene.m */; };
 		08CDF83A1897F6B100A9D235 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
 		08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
 		08D03F7D18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */; };
 		08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
 		08D1C3C9189B09A200C18AB0 /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D1C3C8189B09A200C18AB0 /* Footage.m */; };
+		08DC067819F5513800D239B5 /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DC067519F5513800D239B5 /* HMUploadManager.m */; };
 		08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
 		08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22F918926E3900912657 /* HMSimpleVideoView.m */; };
 		08DF230118926E3900912657 /* HMSimpleVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22FB18926E3900912657 /* HMSimpleVideoViewController.m */; };
@@ -168,6 +165,10 @@
 		08EECB3E19DAC1DF002BB197 /* Bryant-MediumCompressed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08EECB3D19DAC1DF002BB197 /* Bryant-MediumCompressed.otf */; };
 		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
+		08F966B019F5573600247161 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966AF19F5573600247161 /* HMAWS3Client.m */; };
+		08F966B119F5573600247161 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966AF19F5573600247161 /* HMAWS3Client.m */; };
+		08F966B419F5575100247161 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966B319F5575100247161 /* HMUploadS3Worker.m */; };
+		08F966B519F5575100247161 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966B319F5575100247161 /* HMUploadS3Worker.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		26385939189550DC003A7B3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		2638593B18955252003A7B3D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2638593A18955252003A7B3D /* Settings.bundle */; };
@@ -300,8 +301,9 @@
 		0840FF9318854F6C00A6EF5E /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
 		0840FF97188553BF00A6EF5E /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
 		0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMNotificationCenter.m; sourceTree = "<group>"; };
-		08455FD4189032B90040504D /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = Homage/Frameworks/AWSRuntime.framework; sourceTree = "<group>"; };
-		08455FD7189032FF0040504D /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSS3.framework; path = Homage/Frameworks/AWSS3.framework; sourceTree = "<group>"; };
+		08419A1B19F6F20900FEC87D /* HMMainGUIProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMainGUIProtocol.h; sourceTree = "<group>"; };
+		0842A62F19F74A17002F0D8B /* UIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Hierarchy.h"; sourceTree = "<group>"; };
+		0842A63019F74A17002F0D8B /* UIView+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Hierarchy.m"; sourceTree = "<group>"; };
 		08455FE01890458E0040504D /* AVCamPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamPreviewView.h; sourceTree = "<group>"; };
 		08455FE11890458E0040504D /* AVCamPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPreviewView.m; sourceTree = "<group>"; };
 		08455FE21890458E0040504D /* HMVideoCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoCameraViewController.h; sourceTree = "<group>"; };
@@ -406,14 +408,6 @@
 		08BE816119F4586500840CD9 /* HMServer+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "HMServer+Info.m"; path = "Networking/WebService/HMServer+Info.m"; sourceTree = "<group>"; };
 		08BE816419F4589100840CD9 /* HMConfigurationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMConfigurationParser.h; sourceTree = "<group>"; };
 		08BE816519F4589100840CD9 /* HMConfigurationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMConfigurationParser.m; sourceTree = "<group>"; };
-		08CDF81C1896D4A200A9D235 /* HMAWS3Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAWS3Client.h; sourceTree = "<group>"; };
-		08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAWS3Client.m; sourceTree = "<group>"; };
-		08CDF81E1896D4A200A9D235 /* HMUploadS3Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadS3Worker.h; sourceTree = "<group>"; };
-		08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadS3Worker.m; sourceTree = "<group>"; };
-		08CDF8201896D4A200A9D235 /* HMUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManager.h; sourceTree = "<group>"; };
-		08CDF8211896D4A200A9D235 /* HMUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadManager.m; sourceTree = "<group>"; };
-		08CDF8221896D4A200A9D235 /* HMUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManagerDelegate.h; sourceTree = "<group>"; };
-		08CDF8231896D4A200A9D235 /* HMUploadWorkerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadWorkerProtocol.h; sourceTree = "<group>"; };
 		08CDF82C1897F6B000A9D235 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		08CDF82D1897F6B000A9D235 /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		08CDF8381897F6B100A9D235 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
@@ -425,6 +419,10 @@
 		08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderPreviewViewController.m; sourceTree = "<group>"; };
 		08D1C3C7189B09A200C18AB0 /* Footage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Footage.h; sourceTree = "<group>"; };
 		08D1C3C8189B09A200C18AB0 /* Footage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Footage.m; sourceTree = "<group>"; };
+		08DC067419F5513800D239B5 /* HMUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManager.h; sourceTree = "<group>"; };
+		08DC067519F5513800D239B5 /* HMUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadManager.m; sourceTree = "<group>"; };
+		08DC067619F5513800D239B5 /* HMUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadManagerDelegate.h; sourceTree = "<group>"; };
+		08DC067719F5513800D239B5 /* HMUploadWorkerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadWorkerProtocol.h; sourceTree = "<group>"; };
 		08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMMeVideoPlayer.xib; sourceTree = "<group>"; };
 		08DF22F818926E3900912657 /* HMSimpleVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoView.h; sourceTree = "<group>"; };
 		08DF22F918926E3900912657 /* HMSimpleVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSimpleVideoView.m; sourceTree = "<group>"; };
@@ -465,6 +463,10 @@
 		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
+		08F966AE19F5573600247161 /* HMAWS3Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAWS3Client.h; sourceTree = "<group>"; };
+		08F966AF19F5573600247161 /* HMAWS3Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAWS3Client.m; sourceTree = "<group>"; };
+		08F966B219F5575100247161 /* HMUploadS3Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadS3Worker.h; sourceTree = "<group>"; };
+		08F966B319F5575100247161 /* HMUploadS3Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadS3Worker.m; sourceTree = "<group>"; };
 		1ED3A430529290A1F8D55577 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2610133618E172A80065C72B /* HMLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginTests.m; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
@@ -591,9 +593,7 @@
 				26B498AC18B6011E00026401 /* CoreMotion.framework in Frameworks */,
 				0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */,
 				0806FA1418828AEB007514BE /* UIKit.framework in Frameworks */,
-				08455FD8189032FF0040504D /* AWSS3.framework in Frameworks */,
 				0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */,
-				08455FD5189032B90040504D /* AWSRuntime.framework in Frameworks */,
 				69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,8 +657,6 @@
 				0838E8D918D04E1700222997 /* CoreMedia.framework */,
 				26B498AE18BA4A8D00026401 /* AudioToolbox.framework */,
 				26B498AB18B6011E00026401 /* CoreMotion.framework */,
-				08455FD7189032FF0040504D /* AWSS3.framework */,
-				08455FD4189032B90040504D /* AWSRuntime.framework */,
 				0806FA0F18828AEB007514BE /* Foundation.framework */,
 				0806FA1118828AEB007514BE /* CoreGraphics.framework */,
 				0806FA1318828AEB007514BE /* UIKit.framework */,
@@ -769,22 +767,22 @@
 		0806FB381882A5B800F0EF50 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				081237D11882DA3D00DA5D23 /* HMServer.h */,
+				081237D21882DA3D00DA5D23 /* HMServer.m */,
 				08BE816019F4586500840CD9 /* HMServer+Info.h */,
 				08BE816119F4586500840CD9 /* HMServer+Info.m */,
 				2675065D1972E77300A2214F /* BSONIdGenerator.h */,
 				2675065E1972E77300A2214F /* BSONIdGenerator.m */,
 				081237941882CB6100DA5D23 /* ServerCFG.plist */,
-				081237D11882DA3D00DA5D23 /* HMServer.h */,
-				081237D21882DA3D00DA5D23 /* HMServer.m */,
 				267A64D919559F3D003DFFEA /* HMGoogleAPI.h */,
 				267A64DA19559F3D003DFFEA /* HMGoogleAPI.m */,
 				08D03F7B18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.h */,
 				08D03F7C18941A6A00DEBDBC /* HMServer+ReachabilityMonitor.m */,
 				2660C2A618DB4ED7006CF443 /* HMJSONResponseSerializerWithData.h */,
 				2660C2A718DB4ED7006CF443 /* HMJSONResponseSerializerWithData.m */,
+				08DC067319F5513800D239B5 /* Upload Manager */,
 				086D94A5188702130086C565 /* LazyLoading */,
 				086D9498188701EA0086C565 /* WebService */,
-				08CDF81A1896D4A200A9D235 /* Upload Manager */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -1108,6 +1106,8 @@
 			children = (
 				08B958681891377400BCCF8C /* NSString+Utilities.h */,
 				08B958691891377400BCCF8C /* NSString+Utilities.m */,
+				0842A62F19F74A17002F0D8B /* UIView+Hierarchy.h */,
+				0842A63019F74A17002F0D8B /* UIView+Hierarchy.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1156,26 +1156,26 @@
 			path = "Factories And Logic";
 			sourceTree = "<group>";
 		};
-		08CDF81A1896D4A200A9D235 /* Upload Manager */ = {
+		08DC067319F5513800D239B5 /* Upload Manager */ = {
 			isa = PBXGroup;
 			children = (
-				08CDF81B1896D4A200A9D235 /* AWS3Workers */,
-				08CDF8201896D4A200A9D235 /* HMUploadManager.h */,
-				08CDF8211896D4A200A9D235 /* HMUploadManager.m */,
-				08CDF8221896D4A200A9D235 /* HMUploadManagerDelegate.h */,
-				08CDF8231896D4A200A9D235 /* HMUploadWorkerProtocol.h */,
+				08DC067919F551B500D239B5 /* AWS3Workers */,
+				08DC067419F5513800D239B5 /* HMUploadManager.h */,
+				08DC067519F5513800D239B5 /* HMUploadManager.m */,
+				08DC067619F5513800D239B5 /* HMUploadManagerDelegate.h */,
+				08DC067719F5513800D239B5 /* HMUploadWorkerProtocol.h */,
 			);
 			name = "Upload Manager";
 			path = "Networking/Upload Manager";
 			sourceTree = "<group>";
 		};
-		08CDF81B1896D4A200A9D235 /* AWS3Workers */ = {
+		08DC067919F551B500D239B5 /* AWS3Workers */ = {
 			isa = PBXGroup;
 			children = (
-				08CDF81C1896D4A200A9D235 /* HMAWS3Client.h */,
-				08CDF81D1896D4A200A9D235 /* HMAWS3Client.m */,
-				08CDF81E1896D4A200A9D235 /* HMUploadS3Worker.h */,
-				08CDF81F1896D4A200A9D235 /* HMUploadS3Worker.m */,
+				08F966AE19F5573600247161 /* HMAWS3Client.h */,
+				08F966AF19F5573600247161 /* HMAWS3Client.m */,
+				08F966B219F5575100247161 /* HMUploadS3Worker.h */,
+				08F966B319F5575100247161 /* HMUploadS3Worker.m */,
 			);
 			path = AWS3Workers;
 			sourceTree = "<group>";
@@ -1199,6 +1199,7 @@
 		08DF23051892704300912657 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				08419A1B19F6F20900FEC87D /* HMMainGUIProtocol.h */,
 				08DF23061892704300912657 /* HMStartViewController.h */,
 				08DF23071892704300912657 /* HMStartViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
@@ -1696,12 +1697,13 @@
 				08B95896189167A000BCCF8C /* Remake+Logic.m in Sources */,
 				2655DF5E18EDA50600CA362F /* HMIntroMovieViewController.m in Sources */,
 				084E53311891E3D100D96258 /* HMSceneCell.m in Sources */,
-				08CDF8241896D4A200A9D235 /* HMAWS3Client.m in Sources */,
 				086D94A8188702130086C565 /* HMServer+LazyLoading.m in Sources */,
 				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
 				2655DF5318EDA4D200CA362F /* HMPrivacyPolicyViewController.m in Sources */,
 				08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */,
+				0842A63119F74A17002F0D8B /* UIView+Hierarchy.m in Sources */,
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
+				08DC067819F5513800D239B5 /* HMUploadManager.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
 				263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
@@ -1709,7 +1711,6 @@
 				269264651908F87B009567AA /* HMDINOTRegularFontButton+colorEffectes.m in Sources */,
 				2655DF5F18EDA50600CA362F /* HMLoginMainViewController.m in Sources */,
 				08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */,
-				08CDF8261896D4A200A9D235 /* HMUploadS3Worker.m in Sources */,
 				08DF23301892704300912657 /* HMStoriesViewController.m in Sources */,
 				267A64DB19559F3D003DFFEA /* HMGoogleAPI.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
@@ -1730,13 +1731,13 @@
 				08B9586A1891377400BCCF8C /* NSString+Utilities.m in Sources */,
 				08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */,
 				08E50EC618868AEF001A8B75 /* HMAvenirBookFontLabel.m in Sources */,
+				08F966B019F5573600247161 /* HMAWS3Client.m in Sources */,
 				2655DF5518EDA4D200CA362F /* HMTOSViewController.m in Sources */,
 				263C448D192F4E5E00AD82EC /* Contour.m in Sources */,
 				086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */,
 				084E533D18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
-				08CDF8281896D4A200A9D235 /* HMUploadManager.m in Sources */,
 				268A380C1974AE1F0016C59C /* Remake.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				65C10D9218A265DC00A65917 /* HMBoldFontLabel.m in Sources */,
@@ -1755,6 +1756,7 @@
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
 				268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */,
+				08F966B419F5575100247161 /* HMUploadS3Worker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1778,6 +1780,7 @@
 				0888CEAC19ECFAA8003D7249 /* HMStoryParser.m in Sources */,
 				08651F1619EC09BA00EF12FA /* Text+Logic.m in Sources */,
 				0888CEA019EC7226003D7249 /* BSONIdGenerator.m in Sources */,
+				08F966B519F5575100247161 /* HMUploadS3Worker.m in Sources */,
 				08537F1819EC09A200EBACA4 /* Story+Factory.m in Sources */,
 				08651F1A19EC0A1300EF12FA /* MyManagedDocument.m in Sources */,
 				08537F1219EC099000EBACA4 /* Footage+Factory.m in Sources */,
@@ -1789,6 +1792,7 @@
 				0888CE9C19EC7215003D7249 /* HMServer+ReachabilityMonitor.m in Sources */,
 				0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */,
 				08537F0E19EC098200EBACA4 /* Contour.m in Sources */,
+				08F966B119F5573600247161 /* HMAWS3Client.m in Sources */,
 				08537F1119EC098A00EBACA4 /* Scene.m in Sources */,
 				0888CEAB19ECFAA4003D7249 /* HMUserParser.m in Sources */,
 				08BE816319F4586500840CD9 /* HMServer+Info.m in Sources */,
@@ -1940,6 +1944,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Homage/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
@@ -2004,7 +2009,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Homage Technology LTD (56F7YSPHC5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Homage Technology LTD (56F7YSPHC5)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
@@ -2013,6 +2018,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Homage/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
@@ -2064,7 +2070,7 @@
 					UIKit,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b8727542-6b35-4ecd-98f8-8833e28cfd5c";
+				PROVISIONING_PROFILE = "9f8f83ad-2c0d-423c-9aea-d80995c43c89";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
@@ -2080,6 +2086,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Homage/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
@@ -2125,6 +2132,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Homage/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";

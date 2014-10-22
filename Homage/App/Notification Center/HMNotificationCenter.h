@@ -12,6 +12,13 @@
 // General application states.
 #define HM_NOTIFICATION_APPLICATION_STARTED @"Application Started"
 
+#define HM_NOTIFICATION_UI_REQUEST_TO_SHOW_SIDE_BAR @"Show Side Bar"
+#define HM_NOTIFICATION_UI_REQUEST_TO_HIDE_SIDE_BAR @"Hide Side Bar"
+#define HM_NOTIFICATION_UI_SIDE_BAR_SHOWN @"Shown Side Bar"
+#define HM_NOTIFICATION_UI_SIDE_BAR_HIDDEN @"Hidden Side Bar"
+#define HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN @"Rendering Bar Shown"
+#define HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN @"Rendering Bar Hidden"
+
 // Fetches from the REST API.
 #define HM_NOTIFICATION_SERVER_USER_CREATION        @"Server New User"
 
