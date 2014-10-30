@@ -21,7 +21,6 @@
 @property (strong,nonatomic) NSString *appVersionInfo;
 @property (strong,nonatomic) NSString *appBuildInfo;
 @property (strong,nonatomic) NSString *currentUserID;
-@property (strong,nonatomic) NSDictionary *configurationInfo;
 
 @end
 
@@ -114,11 +113,6 @@
 -(void)updateConfiguration:(NSDictionary *)info
 {
     self.configurationInfo = info;
-}
-
--(NSString *)getShareLinkPrefix
-{
-    return self.configurationInfo[@"share_link_prefix"];
 }
 
 -(void)loadAppDetails
@@ -277,12 +271,7 @@
                      parser:(HMParser *)parser
 {
     
-    NSMutableDictionary *moreInfo = [info mutableCopy];
-    if (!moreInfo[@"attempts_count"])
-    {
-        moreInfo[@"attempts_count"] = [NSNumber numberWithInt:1];
-    }
-    
+    NSMutableDictionary *moreInfo = [info mutableCopy];    
     [self postRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
                parameters:(NSDictionary *)parameters
          notificationName:(NSString *)notificationName
@@ -298,8 +287,6 @@
                 parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
-    int attmeptsCount = [moreInfo[@"attempts_count"] intValue];
-    [moreInfo removeObjectForKey:@"attempts_counts"];
     
     //
     // send POST Request to server
@@ -308,7 +295,7 @@
     HMGLogDebug(@"POST request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
     [self.session POST:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-
+        
         //
         // Successful response from server.
         //
@@ -346,21 +333,9 @@
         //
         // Failed request.
         //
-        if (attmeptsCount > 1)
-        {
-            [moreInfo addEntriesFromDictionary:@{@"attempts_count":[NSNumber numberWithInt:attmeptsCount-1]}];
-            [self postRelativeURL:relativeURL
-                       parameters:parameters
-                 notificationName:notificationName
-                             info:moreInfo
-                           parser:parser];
-        } else
-        {
-            HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-            
-            [moreInfo addEntriesFromDictionary:@{@"error":error}];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
-        }
+        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        [moreInfo addEntriesFromDictionary:@{@"error":error}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
     }];
 }
 

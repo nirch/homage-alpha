@@ -44,18 +44,25 @@
 
 -(void)refetchRemakesWithStoryID:(NSString *)storyID
 {
+    [self refetchRemakesWithStoryID:storyID likesInfoForUserID:nil];
+}
+
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID
+{
     // A simple GET request to the server
-    // Example URL: http://54.204.34.168:4567/remake/52d7a02edb25451630000002
+    // Example URL: http://54.204.34.168:4567/remakes/story/52d7a02edb25451630000002
     // Fetches info of a remake with the given id.
     // Returns (JSON) with the info about the given remake.
     NSString *relativeURL = [self relativeURLNamed:@"story's remakes" withSuffix:storyID];
+    NSDictionary *parameters = userID ? @{@"user_id":userID} : nil;
     [self getRelativeURL:relativeURL
-              parameters:nil
+              parameters:parameters
         notificationName:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY
-                    info:@{@"storyID":storyID}
+                    info:userID ? @{@"storyID":storyID, @"likesForUserID":userID} : @{@"storyID":storyID}
                   parser:[HMRemakesParser new]
      ];
 }
+
 
     
 -(void)refetchRemakesForUserID:(NSString *)userID

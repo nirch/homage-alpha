@@ -109,6 +109,12 @@
 
 ///
 /**
+ * pause the video.
+ */
+-(void)pause;
+
+///
+/**
  * hide video label
  */
 -(void)hideVideoLabel;

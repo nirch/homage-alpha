@@ -18,6 +18,7 @@
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (nonatomic) int64_t totalBytesWritten;
 @property (nonatomic) int64_t totalBytesExpectedToWrite;
+@property (nonatomic) BOOL wasCanceled;
 
 @end
 
@@ -67,6 +68,7 @@
     //
     // Create the upload request to do the job.
     //
+    self.wasCanceled = NO;
     AWSS3TransferManagerUploadRequest *uploadRequest = [self.client startUploadJobForWorker:self];
     if (!uploadRequest) return NO;
     
@@ -97,7 +99,7 @@
         //
         // Handle success.
         //
-        if (!task.error && task.isCompleted) {
+        if (!task.error && task.isCompleted && !task.isCancelled && !self.wasCanceled) {
                 double speed = self.totalBytesWritten/duration;
             
                 // Successful upload. Update the manager.
@@ -114,6 +116,24 @@
                                                                                @"network_type":networkType
                                                                                }];
             
+            return nil;
+        }
+        
+        //
+        // Handle cancellation.
+        //
+        if (self.wasCanceled) {
+            HMGLogDebug(@"Upload task was canceled because of user retake.");
+            [[Mixpanel sharedInstance] track:@"UploadCanceled" properties:@{@"source":self.source,
+                                                                            @"destination":self.destination,
+                                                                            @"duration":@(duration),
+                                                                            @"total_bytes_sent":@(self.totalBytesWritten),
+                                                                            @"total_bytes_expected_to_write":@(self.totalBytesExpectedToWrite),
+                                                                            @"network_type":networkType
+                                                                            }];
+            
+            [self.delegate worker:self reportingFinishedWithSuccess:NO info:nil];
+            [self unmarkAsWorkingInTheBackground];
             return nil;
         }
         
@@ -144,8 +164,10 @@
 -(void)stopWorking
 {
     AWSS3TransferManagerUploadRequest *uploadRequest =self.userInfo[@"uploadRequest"];
-    [uploadRequest pause];
+    self.wasCanceled = YES;
+    [uploadRequest cancel];
     [self.userInfo removeObjectForKey:@"uploadRequest"];
+    HMGLogDebug(@"Upload worker stopping: %@", self.destination);
 }
 
 -(void)markAsWorkingInTheBackground

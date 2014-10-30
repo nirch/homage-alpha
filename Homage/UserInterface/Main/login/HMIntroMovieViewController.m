@@ -93,7 +93,8 @@
 
 
 - (IBAction)onPressedSkipButton:(UIButton *)sender {
-    [[Mixpanel sharedInstance] track:@"HitSkipButton"];
+    // Deprecated event
+    //[[Mixpanel sharedInstance] track:@"HitSkipButton"];
     [self.moviePlayerVC done];
     [self.delegate onLoginPressedSkip];
 }

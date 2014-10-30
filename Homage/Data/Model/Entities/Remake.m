@@ -2,7 +2,7 @@
 //  Remake.m
 //  Homage
 //
-//  Created by Yoav Caspin on 7/15/14.
+//  Created by Aviv Wolf on 10/28/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -25,6 +25,10 @@
 @dynamic thumbnail;
 @dynamic thumbnailURL;
 @dynamic videoURL;
+@dynamic viewsCount;
+@dynamic isLikedByUsers;
+@dynamic likesCount;
+@dynamic userFullName;
 @dynamic footages;
 @dynamic story;
 @dynamic user;

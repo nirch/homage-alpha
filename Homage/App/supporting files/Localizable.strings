@@ -46,7 +46,12 @@
 "NO" = "No";
 
 /*in me screen, when you have no remakes, this label will show*/
-"NO_REMAKES" = "(no remakes)";
+"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST STORY!";
+"REMAKE_MORE_STORIES" = "REMAKE MORE STORIES!";
+"REMAKE_A_STORY" = "REMAKE A STORY!";
+
+/*in the story details screen, when no remakes available, this label will show*/
+"NO_REMAKES_STORY_DETAILS" = "Be the first to make a video";
 
 /*in stories tab ,when you have no stories, this label will show*/
 "NO_STORIES" = "(no stories)";
@@ -125,7 +130,9 @@
 "MARK_AS_INAPPROPRIATE" = "Mark as inappropriate";
 "MARK_AS_INAPPROPRIATE_QUESTION" = "Are you sure you to flag this remake as inappropriate";
 
-
+/*Social*/
+"LIKE_BUTTON_LABEL" = "Like";
+"UNLIKE_BUTTON_LABEL" = "Unlike";
 
 
 

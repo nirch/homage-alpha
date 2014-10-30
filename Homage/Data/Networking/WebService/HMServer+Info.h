@@ -12,4 +12,7 @@
 
 -(void)loadAdditionalConfig;
 
+-(NSString *)getShareLinkPrefix;
+-(BOOL)shouldMirrorSelfieSilhouette;
+
 @end

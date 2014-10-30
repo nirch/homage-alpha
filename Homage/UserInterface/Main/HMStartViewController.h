@@ -13,8 +13,4 @@
     HMMainGUIProtocol
 >
 
-@property (weak, nonatomic) IBOutlet UIView *guiSplashView;
-@property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
-
 @end

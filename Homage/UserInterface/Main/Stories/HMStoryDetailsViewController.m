@@ -23,17 +23,38 @@
 #import "HMServer+analytics.h"
 #import "HMAppDelegate.h"
 #import "HMRegularFontLabel.h"
+#import "HMRemakeScreenViewController.h"
+#import "AMBlurView.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
+// Remakes collection view
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
-@property (weak,nonatomic) UIView *guiRemakeVideoContainer;
+
+// Story label
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiStoryDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIView *guiStoryDescriptionBluryBG;
+
+// More remakes headline
+@property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineBG;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiMoreRemakesHeadlineLabel;
+
+// Remake button
+@property (weak,nonatomic)  IBOutlet UIView *guiRemakeVideoContainer;
 
 // Video player
 @property (strong,nonatomic) HMSimpleVideoViewController *storyMoviePlayer;
 @property (strong,nonatomic) HMSimpleVideoViewController *remakeMoviePlayer;
 @property (nonatomic) NSInteger playingRemakeIndex;
+@property (nonatomic) BOOL shouldShowStoryMiniPlayer;
+@property (nonatomic) BOOL isShowingStoryMiniPlayer;
+@property (weak, nonatomic) IBOutlet UIButton *guiBackToTopButton;
+
+// Remake screen overlay
+@property (weak, nonatomic) IBOutlet UIView *guiRemakeScreenContainer;
+@property (weak, nonatomic) HMRemakeScreenViewController *remakeScreenVC;
+@property (nonatomic) BOOL ignoreRemakeSelections;
 
 // Data
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
@@ -47,6 +68,8 @@
 #define REMAKE_ALERT_TAG 100
 #define MARK_AS_INAPPROPRIATE_TAG 200
 #define HM_EXCLUDE_GRADE -1
+
+#define MORE_REMAKES_OFFSET_POINT 180.0f
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize story = _story;
@@ -78,7 +101,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     self.guiRemakeButton.enabled = YES;
 }
 
@@ -104,13 +126,22 @@
 {
     self.title = self.story.name;
     
-    self.noRemakesLabel.text = LS(@"NO_REMAKES");
+    self.noRemakesLabel.text = LS(@"NO_REMAKES_STORY_DETAILS");
     self.guiStoryDescriptionLabel.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
+    
+    // Story description.
+    self.guiStoryMovieContainer.layer.zPosition = -1;
+    [[AMBlurView new] insertIntoView:self.guiStoryDescriptionBluryBG];
+    
+    // More remakes headline
+    [[AMBlurView new] insertIntoView:self.guiMoreRemakesHeadlineBG];
 }
 
 -(void)initStoryMoviePlayer
 {
+    self.shouldShowStoryMiniPlayer = YES;
+    
     HMSimpleVideoViewController *vc;
     self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer rotationSensitive:YES];
     self.storyMoviePlayer.videoURL = self.story.videoURL;
@@ -130,11 +161,25 @@
     self.remakesCV.alpha = 0;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self refreshFromLocalStorage];
+        
         [UIView animateWithDuration:0.2 animations:^{
-            self.noRemakesLabel.alpha = 1;
             self.remakesCV.alpha = 1;
         }];
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            self.noRemakesLabel.alpha = 1;
+        }];
     });
+}
+
+#pragma mark - Segues
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"remake embedded screen segue"]) {
+        HMRemakeScreenViewController *vc = segue.destinationViewController;
+        vc.delegate = self;
+        self.remakeScreenVC = vc;
+    }
 }
 
 #pragma mark - Observers
@@ -173,7 +218,6 @@
 #pragma mark - Observers handlers
 -(void)onRemakeCreation:(NSNotification *)notification
 {
-    
     
     [self.guiRemakeActivity stopAnimating];
     self.guiRemakeActivity.hidden = YES;
@@ -244,20 +288,20 @@
     // Reveal the image
     HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
     cell.guiThumbImage.alpha = 0;
-    cell.guiMoreButton.alpha = 1;
+    //cell.guiMoreButton.alpha = 1;
     cell.guiThumbImage.image = remake.thumbnail;
     CGAffineTransform transform = CGAffineTransformMakeScale(0.8, 0.8);
     cell.guiThumbImage.transform = transform;
-    cell.guiMoreButton.transform = transform;
+    //cell.guiMoreButton.transform = transform;
     
     [UIView animateWithDuration:0.7 animations:^{
         cell.guiThumbImage.alpha = 1;
-        cell.guiMoreButton.alpha = 1;
+        //cell.guiMoreButton.alpha = 1;
         cell.guiThumbImage.transform = CGAffineTransformIdentity;
-        cell.guiMoreButton.transform = CGAffineTransformIdentity;
+        //cell.guiMoreButton.transform = CGAffineTransformIdentity;
     }];
     
-    cell.guiUserName.text = remake.user.userID;
+    //cell.guiUserName.text = remake.user.userID;
     
 }
 
@@ -280,11 +324,9 @@
 
 -(void)refetchRemakesForStoryID:(NSString *)storyID
 {
-    
-    
     //when we will get the new refetch from the server, we will have all the still public remakes in hand. the remake parser will put this flag up again, and this way we'll know the remakes we should delete from the DB
     [self markCurrentRemakesAsNonPublic];
-    [HMServer.sh refetchRemakesWithStoryID:storyID];
+    [HMServer.sh refetchRemakesWithStoryID:storyID likesInfoForUserID:User.current.userID];
 }
 
 -(void)markCurrentRemakesAsNonPublic
@@ -379,18 +421,19 @@
 {
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.guiUserName.text = remake.user.userID;
-    cell.guiThumbImage.transform = CGAffineTransformIdentity;
-    cell.tag = indexPath.item;
-    cell.guiMoreButton.tag = indexPath.item;
+    //cell.guiUserName.text = remake.user.userID;
+    //cell.tag = indexPath.item;
+    //cell.guiMoreButton.tag = indexPath.item;
     
+    // Thumbnail
+    cell.guiThumbImage.transform = CGAffineTransformIdentity;
     if (remake.thumbnail) {
         cell.guiThumbImage.image = remake.thumbnail;
         cell.guiThumbImage.alpha = 1;
-        cell.guiMoreButton.alpha = 1;
+        // cell.guiMoreButton.alpha = 1;
     } else {
         cell.guiThumbImage.alpha = 0;
-        cell.guiMoreButton.alpha = 0;
+        // cell.guiMoreButton.alpha = 0;
         cell.guiThumbImage.image = nil;
         [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
                          placeHolderImage:nil
@@ -398,13 +441,84 @@
                                      info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}];
         
     }
+    
+    //
+    // Social
+    //
+    
+    // Likes counter
+    if (remake.likesCount && remake.likesCount.integerValue > 0) {
+        cell.guiLikesCountLabel.text = [NSString stringWithFormat:@"%@", remake.likesCount];
+        cell.guiLikesCountLabel.alpha = 1.0;
+        cell.guiLikesIcon.alpha = 1.0;
+    } else {
+        cell.guiLikesCountLabel.text = @"0";
+        cell.guiLikesCountLabel.alpha = 0.3;
+        cell.guiLikesIcon.alpha = 0.3;
+    }
+    
+    // Views counter
+    if (remake.viewsCount && remake.viewsCount.integerValue > 0) {
+        cell.guiViewsCountLabel.text = [NSString stringWithFormat:@"%@", remake.viewsCount];
+        cell.guiViewsCountLabel.alpha = 1.0;
+        cell.guiViewsIcon.alpha = 1.0;
+    } else {
+        cell.guiViewsCountLabel.text = @"0";
+        cell.guiViewsCountLabel.alpha = 0.3;
+        cell.guiViewsIcon.alpha = 0.3;
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Check if ignore flag not set.
+    if (self.ignoreRemakeSelections) return;
+    
+    // Get the related remake (ignore if for some reason not found);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    self.playingRemakeIndex = indexPath.item;
-    [self initVideoPlayerWithRemake:remake];
+    if (!remake) {
+        HMGLogError(@"User selected remake but none found in local storage. Critical error.");
+        return;
+    }
+
+    // Will ignore further selections, until the remake screen is dismissed.
+    self.ignoreRemakeSelections = YES;
+    
+    // Prepare the remake screen before the transition.
+    HMRemakeCell *cell = (HMRemakeCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    CGRect f = cell.frame;
+    CGPoint c = cell.center;
+    c.y -= collectionView.contentOffset.y;
+    [self.remakeScreenVC prepareForRemake:remake animateFromRect:f fromCenter:c];
+    
+    // Reveal the remake screen
+    self.guiRemakeScreenContainer.hidden = NO;
+    self.guiRemakeScreenContainer.alpha = 0;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiRemakeScreenContainer.alpha = 1;
+        self.guiMoreRemakesHeadlineLabel.alpha = 0;
+        
+        CGFloat currentOffset = self.remakesCV.contentOffset.y + self.remakesCV.contentInset.top;
+        if (currentOffset >= MORE_REMAKES_OFFSET_POINT) self.guiStoryMovieContainer.alpha = 0;
+    }];
+    
+    // Stop the story movie player (if playing)
+    [self.storyMoviePlayer done];
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    HMRemakeCell *cell = (HMRemakeCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1 animations:^{
+        cell.alpha = 0.5;
+        cell.transform = CGAffineTransformMakeScale(0.95, 0.95);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            cell.alpha = 1.0;
+            cell.transform = CGAffineTransformIdentity;
+        }];
+    }];
 }
 
 -(void)handleNoRemakes
@@ -450,72 +564,31 @@
 }
 
 
--(void)initVideoPlayerWithRemake:(Remake *)remake
-{
-    UIView *view;
-    self.guiRemakeVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
-    self.guiRemakeVideoContainer.backgroundColor = [UIColor blackColor];
-    
-    [self.view addSubview:self.guiRemakeVideoContainer];
-    [self.view bringSubviewToFront:self.guiRemakeVideoContainer];
-    //[self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
-    
-    self.remakeMoviePlayer = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiRemakeVideoContainer rotationSensitive:YES];
-    self.remakeMoviePlayer.videoURL = remake.videoURL;
-    [self.remakeMoviePlayer hideVideoLabel];
-    //[self.videoView hideMediaControls];
-    
-    self.remakeMoviePlayer.delegate = self;
-    self.remakeMoviePlayer.originatingScreen = [NSNumber numberWithInteger:HMStoryDetails];
-    self.remakeMoviePlayer.entityType = [NSNumber numberWithInteger:HMRemake];
-    self.remakeMoviePlayer.entityID = remake.sID;
-    self.remakeMoviePlayer.resetStateWhenVideoEnds = YES;
-    [self.remakeMoviePlayer play];
-    [self.remakeMoviePlayer setFullScreen];
-}
+// Deprecated.
+//-(void)initVideoPlayerWithRemake:(Remake *)remake
+//{
+//    UIView *view;
+//    self.guiRemakeVideoContainer = view = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.guiRemakeVideoContainer.backgroundColor = [UIColor clearColor];
+//    
+//    [self.view addSubview:self.guiRemakeVideoContainer];
+//    [self.view bringSubviewToFront:self.guiRemakeVideoContainer];
+//    //[self displayRect:@"self.guiVideoContainer.frame" BoundsOf:self.guiVideoContainer.frame];
+//    
+//    self.remakeMoviePlayer = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiRemakeVideoContainer rotationSensitive:YES];
+//    self.remakeMoviePlayer.videoURL = remake.videoURL;
+//    [self.remakeMoviePlayer hideVideoLabel];
+//    //[self.videoView hideMediaControls];
+//    
+//    self.remakeMoviePlayer.delegate = self;
+//    self.remakeMoviePlayer.originatingScreen = [NSNumber numberWithInteger:HMStoryDetails];
+//    self.remakeMoviePlayer.entityType = [NSNumber numberWithInteger:HMRemake];
+//    self.remakeMoviePlayer.entityID = remake.sID;
+//    self.remakeMoviePlayer.resetStateWhenVideoEnds = YES;
+//    [self.remakeMoviePlayer play];
+//    [self.remakeMoviePlayer setFullScreen];
+//}
 
-
-
-#pragma mark - IB Actions
-- (IBAction)onPressedRemakeButton:(UIButton *)sender
-{
-    self.guiRemakeButton.enabled = NO;
-    self.guiRemakeActivity.hidden = NO;
-    [self.guiRemakeActivity startAnimating];
-    [self.storyMoviePlayer done];
-    
-    User *user = [User current];
-    self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
-    
-
-    if (self.oldRemakeInProgress)
-    {
-        if (self.oldRemakeInProgress.status.integerValue == HMGRemakeStatusNew)
-        {
-            [self initRecorderWithRemake:self.oldRemakeInProgress];
-        } else
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                alertView.tag = REMAKE_ALERT_TAG;
-                [alertView show];
-            });
-        }
-    } else {
-        [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
-        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
-    }
-}
-
-- (IBAction)moreButtonPushed:(UIButton *)sender
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    self.flaggedRemake = remake;
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:LS(@"OPTIONS") delegate:self cancelButtonTitle:LS(@"CANCEL") destructiveButtonTitle:nil otherButtonTitles:LS(@"MARK_AS_INAPPROPRIATE"), nil];
-    [actionSheet showInView:self.view];
-}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -615,16 +688,85 @@
     }];
 }
 
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat currentOffset = self.remakesCV.contentOffset.y;
-    CGFloat contentInset = self.remakesCV.contentInset.top;
-    self.guiStoryDescriptionLabel.alpha = MAX((1-(contentInset + currentOffset)/contentInset),0);
+    CGFloat currentOffset = scrollView.contentOffset.y + scrollView.contentInset.top;
+    
+    if (self.shouldShowStoryMiniPlayer) {
+        // Handle displaying/hiding mini player.
+        [self handleMiniPlayerAppearanceByOffset:currentOffset];
+    } else {
+        CGFloat moviePos = -currentOffset;
+        self.guiStoryMovieContainer.transform = CGAffineTransformMakeTranslation(0, moviePos);
+        if (currentOffset >= MORE_REMAKES_OFFSET_POINT) {
+            if (self.storyMoviePlayer.isInAction) {
+                [self.storyMoviePlayer pause];
+            }
+        }
+    }
+    
+    // More remakes headline position
+    CGFloat moreRamakesHeadlinePosition = MAX(-currentOffset, -MORE_REMAKES_OFFSET_POINT);
+    self.guiMoreRemakesHeadlineContainer.transform = CGAffineTransformMakeTranslation(0, moreRamakesHeadlinePosition);
+    self.guiMoreRemakesHeadlineContainer.userInteractionEnabled = currentOffset >= MORE_REMAKES_OFFSET_POINT;
 }
 
+-(void)handleMiniPlayerAppearanceByOffset:(CGFloat)currentOffset
+{
+    if (currentOffset >= MORE_REMAKES_OFFSET_POINT) {
+        
+        if (!self.isShowingStoryMiniPlayer) {
+            // Reveal the mini player
+            self.guiStoryMovieContainer.layer.zPosition = 10;
+            self.guiStoryMovieContainer.alpha = 0;
+            self.isShowingStoryMiniPlayer = YES;
+            self.guiBackToTopButton.hidden = NO;
+            self.guiBackToTopButton.layer.zPosition = 20;
+            CGAffineTransform t = CGAffineTransformIdentity;
+            t = CGAffineTransformTranslate(t, 220, -65);
+            t = CGAffineTransformScale(t, 0.20, 0.20);
+            self.guiStoryMovieContainer.transform = t;
+            [UIView animateWithDuration:1.0 animations:^{
+                CGAffineTransform t = CGAffineTransformIdentity;
+                t = CGAffineTransformTranslate(t, 120, -65);
+                t = CGAffineTransformScale(t, 0.20, 0.20);
+                self.guiStoryMovieContainer.transform = t;
+                self.guiStoryMovieContainer.alpha = 1;
+            }];
+        }
+        
+    } else {
+        CGFloat moviePos = -currentOffset;
+        self.guiStoryMovieContainer.transform = CGAffineTransformMakeTranslation(0, moviePos);
+        self.guiStoryMovieContainer.layer.zPosition = -1;
+        self.isShowingStoryMiniPlayer = NO;
+        self.guiBackToTopButton.hidden = YES;
+        self.guiStoryMovieContainer.alpha = 1;
+        self.guiStoryMovieContainer.hidden = NO;
+    }
+}
 
-#pragma mark recorder init
+#pragma mark - HMRemakePresenterDelegate
+-(void)dismissPresentedRemake
+{
+    // Hide the remake screen
+    self.ignoreRemakeSelections = NO;
+    [UIView animateWithDuration:0.2 delay:0.1 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.guiRemakeScreenContainer.alpha = 0;
+        self.guiMoreRemakesHeadlineLabel.alpha = 1;
+        self.guiStoryMovieContainer.alpha = 1;
+    } completion:nil];
+    [self.remakesCV reloadData];
+}
+
+-(void)userWantsToRemakeStory
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self remakeStory];
+    });
+}
+
+#pragma mark - recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
     [self initRecorderWithRemake:remake completion:nil];
@@ -650,12 +792,72 @@
     }
 }
 
+-(void)remakeStory
+{
+    self.guiRemakeButton.enabled = NO;
+    self.guiRemakeActivity.hidden = NO;
+    [self.guiRemakeActivity startAnimating];
+    [self.storyMoviePlayer done];
+    
+    User *user = [User current];
+    self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
+    
+    
+    if (self.oldRemakeInProgress)
+    {
+        if (self.oldRemakeInProgress.status.integerValue == HMGRemakeStatusNew)
+        {
+            [self initRecorderWithRemake:self.oldRemakeInProgress];
+        } else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                alertView.tag = REMAKE_ALERT_TAG;
+                [alertView show];
+            });
+        }
+    } else {
+        [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
+        [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
+    }
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedScrollToTopButton:(id)sender
+{
+    [self.remakesCV scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+}
+
+
+- (IBAction)onPressedRemakeButton:(UIButton *)sender
+{
+    [self remakeStory];
+}
+
+- (IBAction)moreButtonPushed:(UIButton *)sender
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    self.flaggedRemake = remake;
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:LS(@"OPTIONS") delegate:self cancelButtonTitle:LS(@"CANCEL") destructiveButtonTitle:nil otherButtonTitles:LS(@"MARK_AS_INAPPROPRIATE"), nil];
+    [actionSheet showInView:self.view];
+}
+
 // ============
 // Rewind segue
 // ============
 -(IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
 {
     //self.view.backgroundColor = [UIColor clearColor];
+}
+
+-(IBAction)unwindFromRemakeScreenToStoryDetails:(UIStoryboardSegue *)unwindSegue
+{
+    
 }
 
 @end

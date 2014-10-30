@@ -65,11 +65,8 @@
 ///
 /**
  *  A DELETE request to the server requesting deletion of the remake with the given id.
- 
  *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKE_DELETION.
- 
  *  Parser used: HMRemakeParser.
- 
  *  @code
 [HMServer.sh deleteRemakeWithID:remakeID];
  *  @endcode
@@ -80,17 +77,28 @@
 ///
 /**
  *  A GET request to the server requesting info about remakes related to a user.
- 
  *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY.
- 
  *  Parser used: HMRemakesParser.
- 
  *  @code
  [HMServer.sh refetchRemakesWithStoryID:storyID];
  *  @endcode
  *  @param storyID  The id of the story
  */
 -(void)refetchRemakesWithStoryID:(NSString *)storyID;
+
+///
+/**
+ *  A GET request to the server requesting info about remakes related to a story.
+ *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY.
+ *  If user ID provided will also indicate is_liked boolean value indicating if
+ *  remake was liked or not by that user.
+ *  Parser used: HMRemakesParser.
+ *  @code
+ [HMServer.sh refetchRemakesWithStoryID:storyID];
+ *  @endcode
+ *  @param storyID  The id of the story
+ */
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID;
 
 
 

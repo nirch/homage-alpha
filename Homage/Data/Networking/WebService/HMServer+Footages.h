@@ -21,7 +21,6 @@
 *  @param remakeID The remake id related to this footage.
 *  @param sceneID  The scene id number related to this footage.
 */
--(void)updateOnSuccessFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID TakeID:(NSString *)takeID;
-
--(void)updateOnUploadStartFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID TakeID:(NSString *)takeID;
+-(void)updateOnSuccessFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID takeID:(NSString *)takeID attemptCount:(NSInteger)attemptCount;
+-(void)updateOnUploadStartFootageForRemakeID:(NSString *)remakeID sceneID:(NSNumber *)sceneID takeID:(NSString *)takeID attemptCount:(NSInteger)attemptCount;
 @end

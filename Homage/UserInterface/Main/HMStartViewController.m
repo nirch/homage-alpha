@@ -18,6 +18,7 @@
 #import "HMColor.h"
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
+#import "HMSplashViewController.h"
 #import "Mixpanel.h"
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
@@ -63,10 +64,12 @@
 @property (weak, nonatomic) IBOutlet UIView *guiDarkOverlay;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurryOverlay;
 
-// Deprecated
-@property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
-//@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+// Splash screen
+@property (weak, nonatomic) IBOutlet UIView *guiSplashView;
+@property (weak,nonatomic) HMSplashViewController *splashVC;
 
+
+@property (weak, nonatomic) UIView *guiVideoContainer;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (weak,nonatomic) HMsideBarViewController *sideBarVC;
@@ -265,34 +268,40 @@
     return self.renderingContainerView.bounds.size.height;
 }
 
+-(void)showStoriesTab
+{
+    // TODO: fix Yoav's naming conventions. seperate between IB Actions handlers names and other VC methods.
+    [self storiesButtonPushed];
+}
+
 #pragma mark - Splash View
 -(void)prepareSplashView
 {
-    // Splash view initial state.
+    for (UIViewController *vc in self.childViewControllers) {
+        if ([vc isKindOfClass:[HMSplashViewController class]]) {
+            self.splashVC = (HMSplashViewController *)vc;
+        }
+    }
+    [self.splashVC prepare];
 }
 
 -(void)startSplashView
 {
-    // Show the splash screen animations.
-    // TODO: add some animations here
-    
-    // Show activity.
-    [self.guiActivity startAnimating];
+    [self.splashVC start];
 }
 
--(void)dismissSplashScreen
+-(void)dismissSplashScreenAfterAShortAnimation
 {
-    // Don't dismiss splash too quickly after launch.
-    // Will allow the splash screen to animate for about a second or two.
     NSTimeInterval timeIntervalSinceLaunch = [[NSDate date] timeIntervalSinceDate:self.launchDateTime];
-    double delayInSeconds = timeIntervalSinceLaunch > 2.5 ? 0 : 2.5 - timeIntervalSinceLaunch;
-
+    double delayInSeconds = timeIntervalSinceLaunch > 3.0 ? 0 : 3.0 - timeIntervalSinceLaunch;
+    
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [UIView animateWithDuration:0.3 animations:^{
             self.guiSplashView.alpha = 0;
         } completion:^(BOOL finished) {
             self.guiSplashView.hidden = YES;
+            [self.splashVC done];
         }];
     });
 }
@@ -568,15 +577,15 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"version"];
     
-    // Dismiss the splash screen.
+    // Dismiss the splash screen after a short animation.
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"appLaunch"];
-    [self dismissSplashScreen];
+    [self dismissSplashScreenAfterAShortAnimation];
  
     // The upload manager with # workers of a specific type.
     // You can always replace to another implementation of upload workers,
     // as long as the workers conform to the HMUploadWorkerProtocol.
-    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:3]];
     [HMUploadManager.sh startMonitoring];
     
     //
@@ -799,17 +808,9 @@
     if (!self.renderingContainerView.hidden) return;
     
     self.renderingContainerView.hidden = NO;
-    //CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-    //CGRect newAppContainerViewFrame = self.appWrapperView.frame;
-    //newAppContainerViewFrame.size.height -= renderingBarHeight;
-    self.renderingContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
-        //self.appWrapperView.frame = newAppContainerViewFrame;
         self.renderingContainerView.alpha = 1;
         self.renderingContainerView.transform = CGAffineTransformIdentity;
-
-        //self.appWrapperView.layer.borderColor = [[UIColor yellowColor] CGColor];
-        //self.appWrapperView.layer.borderWidth = 3.0f;
     } completion:^(BOOL finished) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN object:self];
@@ -821,11 +822,7 @@
 {
     if (self.renderingContainerView.hidden) return;
     
-    //CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-    //CGRect newAppContainerViewFrame = self.appWrapperView.frame;
-    //newAppContainerViewFrame.size.height += renderingBarHeight;
     [UIView animateWithDuration:0.3 animations:^{
-        //self.appWrapperView.frame = newAppContainerViewFrame;
         self.renderingContainerView.alpha = 0;
         self.renderingContainerView.transform = CGAffineTransformMakeScale(1.3, 1.3);
     } completion:^(BOOL finished){

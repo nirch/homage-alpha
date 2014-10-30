@@ -10,6 +10,9 @@
 #import "HMServer+Footages.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "mixPanel.h"
+
+#define MAX_NUMBER_OF_SERVER_UPDATE_ATTEMPTS 3
 
 @interface HMUploadManager()
 
@@ -76,31 +79,134 @@
 #pragma mark - Observers
 -(void)initObservers
 {
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
     // Observe reachability
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onReachabilityStatusChanged:)
-                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onReachabilityStatusChanged:)
+                     name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                   object:nil];
     
-  
     
+    // Observe upload start updates
+    [nc addUniqueObserver:self
+                 selector:@selector(onServerUpdatedAboutUploadNeedsToStart:)
+                     name:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_START
+                   object:nil];
+
+    // Observe upload success updates
+    [nc addUniqueObserver:self
+                 selector:@selector(onServerUpdatedAboutUploadSuccess:)
+                     name:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_SUCCESS
+                   object:nil];
+
 }
-
-
 
 
 -(void)removeObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_START object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_SUCCESS object:nil];
 }
 
 #pragma mark - Observers handlers
 -(void)onReachabilityStatusChanged:(NSNotification *)notification
 {
-    if (HMServer.sh.isReachable) {
+    if (HMServer.sh.isReachable)
         [self checkForUploads];
+}
+
+-(void)onServerUpdatedAboutUploadNeedsToStart:(NSNotification *)notification
+{
+    NSString *remakeID = notification.userInfo[@"remakeID"];
+    NSNumber *sceneID = notification.userInfo[@"sceneID"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    Footage *footage = [remake footageWithSceneID:sceneID];
+    NSInteger attemptCount = [notification.userInfo[@"attemptCount"] integerValue];
+
+    if (notification.isReportingError) {
+        HMGLogError(@"Failed updating server about footage ready for upload. %@ Attempt %@", footage.takeID, @(attemptCount));
+        // Inform mixpanel that failed to update server about upload about to start.
+        NSDictionary *props = @{
+                                @"remake_id":remakeID,
+                                @"scene_id":sceneID,
+                                @"take_id":footage.takeID,
+                                @"attempt_count":@(attemptCount)
+                                };
+        [[Mixpanel sharedInstance] track:@"UpdateServerAboutUploadStartFailed" properties:props];
+
+        // Failed to update server about that an upload to s3 is about to start.
+        // Wait awhile and retry to update the server.
+        attemptCount++;
+        if (attemptCount <= MAX_NUMBER_OF_SERVER_UPDATE_ATTEMPTS) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self updateServerAboutUploadFootage:footage attemptCount:attemptCount];
+            });
+        }
+        return;
     }
+    
+    // Start the upload.
+    [self uploadFootage:footage];
+}
+
+-(void)onServerUpdatedAboutUploadSuccess:(NSNotification *)notification
+{
+    NSString *remakeID = notification.userInfo[@"remakeID"];
+    NSNumber *sceneID = notification.userInfo[@"sceneID"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    Footage *footage = [remake footageWithSceneID:sceneID];
+    NSInteger attemptCount = [notification.userInfo[@"attemptCount"] integerValue];
+
+    if (notification.isReportingError) {
+        HMGLogError(@"Failed updating server about footage upload success. %@ Attempt %@", footage.takeID, @(attemptCount));
+        // Inform mixpanel that failed to update server about upload about to start.
+        NSDictionary *props = @{
+                                @"remake_id":remakeID,
+                                @"scene_id":sceneID,
+                                @"take_id":footage.takeID,
+                                @"attempt_count":@(attemptCount)
+                                };
+        [[Mixpanel sharedInstance] track:@"UpdateServerAboutUploadSuccessFailed" properties:props];
+        
+        // Failed to update server about that an upload to s3 was successful.
+        // Wait awhile and retry to update the server.
+        attemptCount++;
+        if (attemptCount <= MAX_NUMBER_OF_SERVER_UPDATE_ATTEMPTS && footage.done.boolValue != YES) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self updateServerAboutSuccessfulUploadFootage:footage attemptCount:attemptCount];
+            });
+        }
+        return;
+    }
+    footage.done = @YES;
+    HMGLogDebug(@"Updated server about successful upload %@", footage.takeID);
+}
+
+#pragma mark - Updating server
+-(void)updateServerAboutUploadFootage:(Footage *)footage attemptCount:(NSInteger)attemptCount
+{
+    footage.done = @NO;
+    HMGLogDebug(@"Will inform server about upload about to start: %@", footage.takeID);
+    // PUT FOOTAGE (on successful put, the upload will begin.
+    // If failed to update the server about the upload, will attempt again after a delay.
+    [HMServer.sh updateOnUploadStartFootageForRemakeID:footage.remake.sID
+                                               sceneID:footage.sceneID
+                                                takeID:[footage takeID]
+                                          attemptCount:attemptCount];
+}
+
+-(void)updateServerAboutSuccessfulUploadFootage:(Footage *)footage attemptCount:(NSInteger)attemptCount
+{
+    HMGLogDebug(@"Will inform server about upload success: %@", footage.takeID);
+    // POST FOOTAGE (on successful put, the upload will begin.
+    // If failed to update the server about the successful upload, will attempt again after a delay.
+    [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
+                                               sceneID:footage.sceneID
+                                                takeID:[footage takeID]
+                                          attemptCount:attemptCount];
 }
 
 #pragma mark - Manager actions
@@ -161,10 +267,10 @@
         }];
     }
     
+    
     for (Footage *footage in footages)
     {
-        [self updateServerAboutUploadStartForFootage:footage];
-        [self uploadFootage:footage];
+        [self updateServerAboutUploadFootage:footage attemptCount:1];
     }
 }
 
@@ -302,18 +408,6 @@
     footage.currentlyUploaded = @NO;
 }
 
--(void)updateServerAboutSuccessfulUploadForFootage:(Footage *)footage
-{
-    //using footage.rawLocalFile as a take unique ID
-    [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID TakeID:[footage takeID]];
-}
-
--(void)updateServerAboutUploadStartForFootage:(Footage *)footage
-{
-    //using footage.rawLocalFile as a take unique ID
-    [HMServer.sh updateOnUploadStartFootageForRemakeID:footage.remake.sID sceneID:footage.sceneID TakeID:[footage takeID]];
-}
-
 -(BOOL)isCurrentlyUploadingFootage:(Footage *)footage
 {
     if (self.workersByFootageIdentifier[footage.identifier]) return YES;
@@ -340,7 +434,9 @@
     // Update the footage about success / failure
     if (success) {
         footage.rawUploadedFile = aWorker.source;
-        [self updateServerAboutSuccessfulUploadForFootage:footage];
+
+        // Updating server about successful upload
+        [self updateServerAboutSuccessfulUploadFootage:footage attemptCount:1];
         
         // This worker earned his day pay
         // Put the worker to rest
@@ -381,8 +477,7 @@
                                                                  HM_INFO_SCENE_ID:sceneID,
                                                                  HM_INFO_FOOTAGE_IDENTIFIER:footageIdentifier,
                                                                  HM_INFO_PROGRESS:@(progress)
-                                                                 }
-     ];
+                                                                 }];
 }
 
 

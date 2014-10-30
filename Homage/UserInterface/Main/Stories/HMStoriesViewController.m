@@ -87,6 +87,7 @@
     CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
     f.origin.y += 32;
     [[refreshControl.subviews objectAtIndex:0] setFrame:f];
+    refreshControl.layer.zPosition = -1;
     
     // Title of this screen.
     self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
@@ -246,11 +247,11 @@
     [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         if ([app.mainVC isRenderingViewShowing]) {
             UIEdgeInsets c = self.storiesCV.contentInset;
-            c.bottom = [app.mainVC renderingViewHeight];
+            c.top = [app.mainVC renderingViewHeight];
             self.storiesCV.contentInset = c;
         } else {
             UIEdgeInsets c = self.storiesCV.contentInset;
-            c.bottom = 0;
+            c.top = 0;
             self.storiesCV.contentInset = c;
         }
     } completion:^(BOOL finished) {

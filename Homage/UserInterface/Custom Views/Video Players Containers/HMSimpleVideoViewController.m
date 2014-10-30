@@ -70,6 +70,8 @@
 
 @property (nonatomic) BOOL reportedMovieStartedPlaying;
 
+@property (nonatomic) BOOL markedAsDone;
+
 @end
 
 @implementation HMSimpleVideoViewController
@@ -81,6 +83,7 @@
     self = [self initWithNibNamed:@"HMSimpleVideoViewController" inParentVC:parentVC containerView:containerView rotationSensitive:(BOOL)rotate];
     if (self) {
         self.reportedMovieStartedPlaying = NO;
+        self.markedAsDone = NO;
     }
     return self;
 }
@@ -175,7 +178,7 @@
     
     self.videoView.guiPlayButton.hidden = NO;
     self.videoView.guiLoadActivity.alpha = 1;
-    self.videoView.guiControlsContainer.hidden = YES;
+    [self videoPlaybackControlsShouldBeVisible:NO];
     [self.videoView.guiLoadActivity stopAnimating];
     self.videoView.guiLoadActivity.hidden = YES;
     
@@ -299,6 +302,16 @@
 -(void)onMoviePlayerPlaybackStateDidChange:(NSNotification *)notification
 {
     if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
+        
+        // If get notification about video playing,
+        // but video player already marked to be in the "done" state
+        // don't play the video.
+        if (self.markedAsDone) {
+            [self.videoPlayer stop];
+            return;
+        }
+        
+        // Change UI to playing state.
         self.videoPlayer.view.alpha = 1;
         [self.videoView.guiLoadActivity stopAnimating];
         self.videoView.guiLoadActivity.hidden = YES;
@@ -326,12 +339,15 @@
         self.videoView.guiPlayPauseButton.selected = NO;
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
+        
     } else {
+        
         [self.videoView.guiLoadActivity stopAnimating];
         self.videoView.guiLoadActivity.hidden = YES;
         self.videoView.guiPlayPauseButton.selected = NO;
         self.videoView.guiVideoSlider.hidden = NO;
         self.videoView.guiVideoSlider.value = self.videoPlayer.currentPlaybackTime / self.videoPlayer.duration;
+        
     }
     
     self.currentPlaybackTime = self.videoPlayer.currentPlaybackTime;
@@ -443,7 +459,6 @@
 
 -(void)play
 {
-    
     if (![HMServer.sh isReachable])
     {
         return;
@@ -452,6 +467,7 @@
     
     if ([self.delegate respondsToSelector:@selector(videoPlayerWasFired)]) [self.delegate videoPlayerWasFired];
     self.waitingToStartPlayingTheFile = YES;
+    self.markedAsDone = NO;
     self.videoPlayer.shouldAutoplay = YES;
     [self updateUIToPlayVideoState];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -477,6 +493,7 @@
 
 -(void)done
 {
+    self.markedAsDone = YES;
     self.isPlaying = NO;
     self.waitingToStartPlayingTheFile = NO;
     [self.videoPlayer stop];
@@ -490,7 +507,7 @@
     
     self.videoView.guiPlayButton.hidden = NO;
     self.videoView.guiLoadActivity.alpha = 1;
-    self.videoView.guiControlsContainer.hidden = YES;
+    [self videoPlaybackControlsShouldBeVisible:NO];
     [self.videoView.guiLoadActivity stopAnimating];
     self.videoView.guiLoadActivity.hidden = YES;
     
@@ -809,12 +826,30 @@
     return (self.isPlaying || self.waitingToStartPlayingTheFile);
 }
 
+-(void)pause
+{
+    if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
+        self.userPaused = YES;
+        [self.videoPlayer pause];
+        self.videoView.guiPlayPauseButton.selected = NO;
+    }
+}
+
 -(void)setScalingMode:(NSString *)scale
 {
     
     if ([scale isEqualToString:@"aspect fit"])
     {
          _videoPlayer.scalingMode = MPMovieScalingModeAspectFit;
+    }
+}
+
+#pragma mark - Show/Hide controls
+-(void)videoPlaybackControlsShouldBeVisible:(BOOL)shouldBeVisible
+{
+    self.videoView.guiControlsContainer.hidden = !shouldBeVisible;
+    if ([self.delegate respondsToSelector:@selector(videoPlayerIsShowingPlaybackControls:)]) {
+        [self.delegate performSelector:@selector(videoPlayerIsShowingPlaybackControls:) withObject:@(shouldBeVisible)];
     }
 }
 
@@ -856,8 +891,11 @@
 
 - (IBAction)onPressedToggleControls:(id)sender
 {
-    self.videoView.guiControlsContainer.hidden = !self.videoView.guiControlsContainer.hidden;
+    [self videoPlaybackControlsShouldBeVisible:self.videoView.guiControlsContainer.hidden];
 }
+
+//-(void)videoPlayerIsShowingPlaybackControls:(BOOL)controlsShown;
+
 
 - (IBAction)onMovedSlider:(UISlider *)sender
 {

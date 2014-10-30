@@ -12,5 +12,6 @@
 
 -(BOOL)isRenderingViewShowing;
 -(CGFloat)renderingViewHeight;
+-(void)showStoriesTab;
 
 @end

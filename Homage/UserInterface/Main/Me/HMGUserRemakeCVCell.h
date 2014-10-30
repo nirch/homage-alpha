@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiHighlightOverlay;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *guiScrollView;
+@property (weak, nonatomic) IBOutlet UIView *guiThumbContainer;
 
 -(void)closeAnimated:(BOOL)animated;
 -(void)disableInteractionForAShortWhile;

@@ -18,6 +18,10 @@
 	<dict>
 		<key>additional config</key>
 		<string>config</string>
+		<key>like remake</key>
+		<string>remake/like</string>
+		<key>unlike remake</key>
+		<string>remake/unlike</string>
 		<key>user session update</key>
 		<string>user/session_update</string>
 		<key>user session end</key>

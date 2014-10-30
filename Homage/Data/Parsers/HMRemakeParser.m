@@ -59,6 +59,8 @@
     remake.shareURL = [info stringForKey:@"share_link"];
     remake.grade = [info numberForKey:@"grade"] ? [info numberForKey:@"grade"] : [NSNumber numberWithInt:0];
     remake.stillPublic = @YES;
+    remake.viewsCount = [info numberForKey:@"views"];
+    remake.userFullName = [info stringForKey:@"user_fullname"];
     
     NSDate *lastLocalUpdate = updateTime ? updateTime : [NSDate date];
     remake.lastLocalUpdate = lastLocalUpdate;
@@ -69,6 +71,36 @@
     
     for (NSDictionary *footageInfo in info[@"footages"]) {
         [self parseFootage:footageInfo forRemake:remake];
+    }
+    
+    //
+    // Social
+    //
+    remake.likesCount = [info numberForKey:@"like_count"];
+    
+    // Likes for user
+    // Used when parsing lots of remakes and checking if likes by a user id.
+    NSString *likesForUserID = self.parseInfo[@"likesForUserID"];
+    if (likesForUserID) {
+        BOOL likedByThisUser = [[info boolNumberForKey:@"is_liked"] boolValue];
+        if (likedByThisUser) {
+            [remake likedByUserID:likesForUserID];
+        } else {
+            [remake unlikedByUserID:likesForUserID];
+        }
+    }
+    
+    // Liked / Unliked by user
+    // Used when user just liked / unliked a specific remake
+    NSNumber *justLikedOrUnlikedRemake = self.parseInfo[@"liked_remake"];
+    if (justLikedOrUnlikedRemake) {
+        BOOL isLiked = justLikedOrUnlikedRemake.boolValue;
+        User *currentUser = User.current;
+        if (isLiked) {
+            [remake likedByUserID:currentUser.userID];
+        } else {
+            [remake unlikedByUserID:currentUser.userID];
+        }
     }
 }
 
