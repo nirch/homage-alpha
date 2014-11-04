@@ -270,6 +270,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     if (self.currentSessionHomageID)
     {
+        NSString *userID = [User current].userID;
+        if (!userID) userID = @"unknown";
         [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
         self.sessionStartFlag = NO;
     }

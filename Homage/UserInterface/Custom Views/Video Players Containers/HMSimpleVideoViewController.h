@@ -177,4 +177,6 @@
  */
 -(void)setFrame:(CGRect)frame;
 
+-(void)setThumbURL:(NSURL *)thumbURL;
+
 @end

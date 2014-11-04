@@ -25,6 +25,9 @@
 #import "HMRegularFontLabel.h"
 #import "HMRemakeScreenViewController.h"
 #import "AMBlurView.h"
+#import "DB.h"
+#import <UIScrollView+BottomRefreshControl.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -57,9 +60,15 @@
 @property (nonatomic) BOOL ignoreRemakeSelections;
 
 // Data
-@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (weak,nonatomic) Remake *oldRemakeInProgress;
 @property (nonatomic) Remake *flaggedRemake;
+
+// Paging
+@property (nonatomic) NSInteger shownRemakesPages;
+
+// Fetched from server
+@property (nonatomic) BOOL fetchedFirstPageFromServer;
 
 @end
 
@@ -82,7 +91,7 @@
     [super viewDidLoad];
     [self initGUI];
     [self initContent];
-    [self refetchRemakesForStoryID:self.story.sID];
+    [self refetchRemakesForStoryID:self.story.sID page:@(self.shownRemakesPages)];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -126,7 +135,8 @@
 {
     self.title = self.story.name;
     
-    self.noRemakesLabel.text = LS(@"NO_REMAKES_STORY_DETAILS");
+    self.fetchedFirstPageFromServer = NO;
+    self.noRemakesLabel.text = @"";
     self.guiStoryDescriptionLabel.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
     
@@ -136,6 +146,19 @@
     
     // More remakes headline
     [[AMBlurView new] insertIntoView:self.guiMoreRemakesHeadlineBG];
+    
+    // Pull up to refresh
+    UIRefreshControl *refreshControl = [UIRefreshControl new];
+    [refreshControl addTarget:self action:@selector(loadAnotherRemakesPage) forControlEvents:UIControlEventValueChanged];
+    [refreshControl setTintColor:[HMColor.sh main2]];
+    refreshControl.layer.zPosition = -1;
+    self.remakesCV.bottomRefreshControl = refreshControl;
+}
+
+-(void)loadAnotherRemakesPage
+{
+    self.shownRemakesPages++;
+    [self refetchRemakesForStoryID:self.story.sID page:@(self.shownRemakesPages)];
 }
 
 -(void)initStoryMoviePlayer
@@ -157,6 +180,7 @@
 
 -(void)initContent
 {
+    self.shownRemakesPages = 1;
     self.noRemakesLabel.alpha = 0;
     self.remakesCV.alpha = 0;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -164,10 +188,6 @@
         
         [UIView animateWithDuration:0.2 animations:^{
             self.remakesCV.alpha = 1;
-        }];
-        
-        [UIView animateWithDuration:1.0 animations:^{
-            self.noRemakesLabel.alpha = 1;
         }];
     });
 }
@@ -197,12 +217,6 @@
                                                    selector:@selector(onRemakesRefetched:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY
                                                      object:nil];
-    
-    // Observe lazy loading thumbnails
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRemakeThumbnailLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                                     object:nil];
 }
 
 -(void)removeObservers
@@ -211,7 +225,6 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
 }
 
 
@@ -238,10 +251,13 @@
 
 -(void)onRemakesRefetched:(NSNotification *)notification
 {
+    self.fetchedFirstPageFromServer = YES;
+    
+    [self.remakesCV.bottomRefreshControl endRefreshing];
+    
     //
     // Backend notifies that local storage was updated with remakes.
     //
-    
     if (notification.isReportingError && HMServer.sh.isReachable ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
                                                         message:@"Something went wrong :-(\n\nTry to refresh later."
@@ -257,52 +273,6 @@
         [self cleanPrivateRemakes];
         [self refreshFromLocalStorage];
     }
-}
-
--(void)onRemakeThumbnailLoaded:(NSNotification *)notification
-{
-    
-    NSDictionary *info = notification.userInfo;
-    
-    //need to check if this notification came from the same sender
-    id sender = info[@"sender"];
-    if (sender != self) return;
-    
-    NSString *remakeID = info[@"remakeID"];
-    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    if (!remake) return;
-    
-    NSIndexPath *indexPath = info[@"indexPath"];
-    UIImage *image = info[@"image"];
-    
-    if (notification.isReportingError ) {
-        HMGLogError(@">>> error in story details onRemakeThumbnailLoaded: %@", notification.reportedError.localizedDescription);
-        remake.thumbnail = [UIImage imageNamed:@"errorThumbnail"];
-    } else {
-        remake.thumbnail = image;
-    }
-    
-    // If row not visible, no need to show the image
-    if (![self.remakesCV.indexPathsForVisibleItems containsObject:indexPath]) return;
-    
-    // Reveal the image
-    HMRemakeCell *cell = (HMRemakeCell *)[self.remakesCV cellForItemAtIndexPath:indexPath];
-    cell.guiThumbImage.alpha = 0;
-    //cell.guiMoreButton.alpha = 1;
-    cell.guiThumbImage.image = remake.thumbnail;
-    CGAffineTransform transform = CGAffineTransformMakeScale(0.8, 0.8);
-    cell.guiThumbImage.transform = transform;
-    //cell.guiMoreButton.transform = transform;
-    
-    [UIView animateWithDuration:0.7 animations:^{
-        cell.guiThumbImage.alpha = 1;
-        //cell.guiMoreButton.alpha = 1;
-        cell.guiThumbImage.transform = CGAffineTransformIdentity;
-        //cell.guiMoreButton.transform = CGAffineTransformIdentity;
-    }];
-    
-    //cell.guiUserName.text = remake.user.userID;
-    
 }
 
 
@@ -322,15 +292,22 @@
 
 #pragma mark refreshing remakes
 
--(void)refetchRemakesForStoryID:(NSString *)storyID
+-(void)refetchRemakesForStoryID:(NSString *)storyID page:(NSNumber *)page
 {
-    //when we will get the new refetch from the server, we will have all the still public remakes in hand. the remake parser will put this flag up again, and this way we'll know the remakes we should delete from the DB
-    [self markCurrentRemakesAsNonPublic];
-    [HMServer.sh refetchRemakesWithStoryID:storyID likesInfoForUserID:User.current.userID];
+    if (!page) page = @1;
+    
+    // when we will get the new refetch from the server, we will have all the still public remakes in hand.
+    // the remake parser will put this flag up again, and this way we'll know the remakes we should delete from the DB
+    //[self markCurrentRemakesAsNonPublic];
+
+    [HMServer.sh refetchRemakesWithStoryID:storyID
+                        likesInfoForUserID:User.current.userID
+                                      page:page.integerValue];
 }
 
 -(void)markCurrentRemakesAsNonPublic
 {
+    return;
     for (Remake *remake in self.fetchedResultsController.fetchedObjects)
     {
         if (remake)
@@ -344,7 +321,7 @@
 {
     
     NSError *error;
-    
+    self.fetchedResultsController = nil;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
         HMGLogError(@"Critical local storage error, when fetching remakes. %@", error);
@@ -374,19 +351,15 @@
     
     // Define fetch request.
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
-    
     NSPredicate *storyPredicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
-    
     NSPredicate *notSameUser = [NSPredicate predicateWithFormat:@"user!=%@" , [User current]];
-    
     NSPredicate *hidePredicate = [NSPredicate predicateWithFormat:@"grade!=%d" , HM_EXCLUDE_GRADE];
-    
-    NSPredicate *compoundPredicate
-    = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser,hidePredicate]];
+    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser,hidePredicate]];
     
     fetchRequest.predicate = compoundPredicate;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
+    fetchRequest.fetchLimit = self.shownRemakesPages * NUMBER_OF_REMAKES_PER_PAGE;
     
     // Create the fetched results controller and return it.
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
@@ -427,20 +400,24 @@
     
     // Thumbnail
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
-    if (remake.thumbnail) {
-        cell.guiThumbImage.image = remake.thumbnail;
-        cell.guiThumbImage.alpha = 1;
-        // cell.guiMoreButton.alpha = 1;
-    } else {
-        cell.guiThumbImage.alpha = 0;
-        // cell.guiMoreButton.alpha = 0;
-        cell.guiThumbImage.image = nil;
-        [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
-                         placeHolderImage:nil
-                         notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}];
-        
-    }
+    cell.guiThumbImage.alpha = 0;
+    
+    // Lazy load image.
+    NSURL *thumbURL =[NSURL URLWithString:remake.thumbnailURL];
+    [cell.guiThumbImage sd_setImageWithURL:thumbURL placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority|SDWebImageDownloaderLIFOExecutionOrder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (cacheType == SDImageCacheTypeNone) {
+            // Reveal with animation
+            cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
+            [UIView animateWithDuration:0.2 animations:^{
+                cell.guiThumbImage.alpha = 1;
+                cell.guiThumbImage.transform = CGAffineTransformIdentity;
+            }];
+        } else {
+            // Reveal with no animation.
+            cell.guiThumbImage.alpha = 1;
+        }
+    }];
+    
     
     //
     // Social
@@ -505,6 +482,17 @@
     
     // Stop the story movie player (if playing)
     [self.storyMoviePlayer done];
+    
+    // Mixpanel event
+    NSString *userID = remake.user.userID ? remake.user.userID : @"unknown";
+    NSDictionary *properties = @{
+                                 @"story_id": remake.story.sID,
+                                 @"remake_id": remake.sID,
+                                 @"remake_owner_id": userID,
+                                 @"index": @(indexPath.item)
+                                 };
+    [[Mixpanel sharedInstance] track:@"SDShareRemake" properties:properties];
+    
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -523,10 +511,21 @@
 
 -(void)handleNoRemakes
 {
+    BOOL hidden = YES;
     if ([self.remakesCV numberOfItemsInSection:0] == 0) {
-        [self.noRemakesLabel setHidden:NO];
+        // If no fetches from server happened yet, stay hidden.
+        // If already fetched from server and still no remakes, show the label.
+        if (self.fetchedFirstPageFromServer) {
+            hidden = NO;
+        }
+    }
+    if (hidden) {
+        self.noRemakesLabel.alpha = 0;
     } else {
-        [self.noRemakesLabel setHidden:YES];
+        self.noRemakesLabel.text = LS(@"NO_REMAKES_STORY_DETAILS");
+        [UIView animateWithDuration:1.0 animations:^{
+            self.noRemakesLabel.alpha = 1;
+        }];
     }
 }
 

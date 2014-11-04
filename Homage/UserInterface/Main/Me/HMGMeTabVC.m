@@ -704,20 +704,23 @@
             // Mark remake for deletion and update cell.
             AWAlertView *av = (AWAlertView *)alertView;
             NSIndexPath *indexPath = av.awContextObject;
+            if (!indexPath) return;
 
             Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            if (!remake || !remake.sID) return;
+            
+            // Mark remake as user requested deletion.
             remake.status = @(HMGRemakeStatusClientRequestedDeletion);
             
-            if ([[self.userRemakesCV indexPathsForVisibleItems] containsObject:indexPath] ) {
-                // TODO: check if reloadItemsAtIndexPaths works ok on iOS 7.0.2
-                [self.userRemakesCV reloadItemsAtIndexPaths:@[indexPath]];
-            }
+            // Reload data (reload all data
+            // because of a bug in reloadItemsAtIndexPaths in iOS 7.0.X
+            [self.userRemakesCV reloadData];
             
-            if (remake.story.name)
+            // Mixpanel event about the deletion request.
+            if (remake.story.name && remake.story.sID)
             {
                 [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
             }
-            
             
             // Tell server to delete remake.
             [HMServer.sh deleteRemakeWithID:remake.sID];

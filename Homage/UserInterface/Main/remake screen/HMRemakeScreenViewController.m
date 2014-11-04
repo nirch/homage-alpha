@@ -13,6 +13,7 @@
 #import "HMServer+Likes.h"
 #import "HMNotificationCenter.h"
 #import "HMSharing.h"
+#import "Mixpanel.h"
 
 @interface HMRemakeScreenViewController ()
 
@@ -158,10 +159,12 @@
     // Update Like Button
     if ([self.remake isLikedByCurrentUser]) {
         [self.guiLikeButton setTitle:LS(@"UNLIKE_BUTTON_LABEL") forState:UIControlStateNormal];
+        [self.guiLikeButton setImage:[UIImage imageNamed:@"LikedIcon"] forState:UIControlStateNormal];
     } else {
         [self.guiLikeButton setTitle:LS(@"LIKE_BUTTON_LABEL") forState:UIControlStateNormal];
+        [self.guiLikeButton setImage:[UIImage imageNamed:@"likesIcon"] forState:UIControlStateNormal];
     }
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.guiLikeButton.alpha = 1;
     } completion:^(BOOL finished) {
         self.guiLikeButton.userInteractionEnabled = YES;
@@ -198,6 +201,22 @@
 #pragma mark - Observers handlers
 -(void)onLikeStatusUpdated:(NSNotification *)notification
 {
+    NSDictionary *info = notification.userInfo;
+    NSString *remakeID = info[@"remake_id"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    if (remake != nil && info[@"liked_remake"] != nil) {
+        NSString *eventName = [info[@"liked_remake"] boolValue] ? @"UserLikedRemake" : @"UserUnlikedRemake";
+        NSString *userID = info[@"user_id"];
+        NSString *storyID = remake.story.sID;
+        if (userID != nil && storyID != nil) {
+            NSDictionary *properties = @{
+                                         @"user_id":userID,
+                                         @"story_id":storyID,
+                                         @"remake_id":remakeID
+                                         };
+            [[Mixpanel sharedInstance] track:eventName properties:properties];
+        }
+    }
     [self updateInfoForRemake];
 }
 
@@ -225,9 +244,20 @@
 #pragma mark - Video player
 -(void)initVideoPlayerWithRemake:(Remake *)remake
 {
+    if (self.remakeMoviePlayer) {
+        // hide and try to remove older movie player.
+        self.remakeMoviePlayer.view.hidden = YES;
+        [self.remakeMoviePlayer removeFromParentViewController];
+        [self.remakeMoviePlayer.view removeFromSuperview];
+    }
+    
     self.remakeMoviePlayer = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiRemakeVideoContainer rotationSensitive:YES];
     self.remakeMoviePlayer.videoURL = remake.videoURL;
-    self.remakeMoviePlayer.videoImage = remake.thumbnail;
+    
+    NSURL *thumbURL = [NSURL URLWithString:remake.thumbnailURL];
+    [self.remakeMoviePlayer setVideoImage:nil];
+    [self.remakeMoviePlayer setThumbURL:thumbURL];    
+    
     [self.remakeMoviePlayer hideVideoLabel];
     [self.remakeMoviePlayer hideMediaControls];
 

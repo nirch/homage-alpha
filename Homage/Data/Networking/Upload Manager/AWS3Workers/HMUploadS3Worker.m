@@ -144,14 +144,14 @@
         // Update the app's upload manager.
         NSString *errorString = task.error ? [task.error localizedDescription] : @"";
         [[Mixpanel sharedInstance] track:@"UploadFailed" properties:@{@"source":self.source,
-                                                                       @"destination":self.destination,
-                                                                       @"duration":@(duration),
-                                                                       @"total_bytes_sent":@(self.totalBytesWritten),
-                                                                       @"total_bytes_expected_to_write":@(self.totalBytesExpectedToWrite),
-                                                                       @"network_type":networkType,
-                                                                       @"is_canceled":@(task.isCancelled),
-                                                                       @"error":errorString
-                                                                       }];
+                                                                      @"destination":self.destination,
+                                                                      @"duration":@(duration),
+                                                                      @"total_bytes_sent":@(self.totalBytesWritten),
+                                                                      @"total_bytes_expected_to_write":@(self.totalBytesExpectedToWrite),
+                                                                      @"network_type":networkType,
+                                                                      @"is_canceled":@(task.isCancelled),
+                                                                      @"error":errorString
+                                                                      }];
         
         [self.delegate worker:self reportingFinishedWithSuccess:NO info:@{@"error":errorString}];
         [self unmarkAsWorkingInTheBackground];

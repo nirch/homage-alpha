@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080120121A068F11002F10B2 /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120111A068F11002F10B2 /* HMRefreshControl.m */; };
+		080120141A069043002F10B2 /* HMRefreshControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080120131A069043002F10B2 /* HMRefreshControl.xib */; };
+		080120171A08C045002F10B2 /* HMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120161A08C045002F10B2 /* HMNavigationController.m */; };
 		0806FA1018828AEB007514BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA0F18828AEB007514BE /* Foundation.framework */; };
 		0806FA1218828AEB007514BE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1118828AEB007514BE /* CoreGraphics.framework */; };
 		0806FA1418828AEB007514BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1318828AEB007514BE /* UIKit.framework */; };
@@ -265,6 +268,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080120101A068F11002F10B2 /* HMRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRefreshControl.h; sourceTree = "<group>"; };
+		080120111A068F11002F10B2 /* HMRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshControl.m; sourceTree = "<group>"; };
+		080120131A069043002F10B2 /* HMRefreshControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRefreshControl.xib; sourceTree = "<group>"; };
+		080120151A08C045002F10B2 /* HMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNavigationController.h; sourceTree = "<group>"; };
+		080120161A08C045002F10B2 /* HMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMNavigationController.m; sourceTree = "<group>"; };
 		0806FA0C18828AEB007514BE /* Homage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0806FA0F18828AEB007514BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0806FA1118828AEB007514BE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -640,6 +648,16 @@
 				C6B4A0D3661F7086E1C965A9 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		0801200F1A068EEC002F10B2 /* Custom Refresh View */ = {
+			isa = PBXGroup;
+			children = (
+				080120101A068F11002F10B2 /* HMRefreshControl.h */,
+				080120111A068F11002F10B2 /* HMRefreshControl.m */,
+				080120131A069043002F10B2 /* HMRefreshControl.xib */,
+			);
+			path = "Custom Refresh View";
 			sourceTree = "<group>";
 		};
 		0806FA0318828AEB007514BE = {
@@ -1082,6 +1100,7 @@
 		0884566418848D3300B94267 /* Custom Views & Controls */ = {
 			isa = PBXGroup;
 			children = (
+				0801200F1A068EEC002F10B2 /* Custom Refresh View */,
 				086A342F19DD6EE400B60BB5 /* Alert View */,
 				269264661908F88C009567AA /* buttons */,
 				08DF22F518926E3900912657 /* Video Players Containers */,
@@ -1259,6 +1278,8 @@
 				08C1CD3919F917E300FF0770 /* HMSplashViewController.m */,
 				08DF23081892704300912657 /* HMTabBarController.h */,
 				08DF23091892704300912657 /* HMTabBarController.m */,
+				080120151A08C045002F10B2 /* HMNavigationController.h */,
+				080120161A08C045002F10B2 /* HMNavigationController.m */,
 				26A239A818A963CA00980BFC /* login */,
 				2638594118964F28003A7B3D /* settings */,
 				2638593C1895A979003A7B3D /* side bar */,
@@ -1602,6 +1623,7 @@
 				081CDB0919D94B7700723609 /* cinemaCountdown_oneLast.wav in Resources */,
 				086F5F4C19DC03B6007DF004 /* recordingEnd.wav in Resources */,
 				08EECB3E19DAC1DF002BB197 /* Bryant-MediumCompressed.otf in Resources */,
+				080120141A069043002F10B2 /* HMRefreshControl.xib in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
@@ -1807,6 +1829,7 @@
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */,
+				080120121A068F11002F10B2 /* HMRefreshControl.m in Sources */,
 				268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */,
 				2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */,
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
@@ -1816,6 +1839,7 @@
 				081E398019FD6CDC00990F50 /* HMRemakeScreenViewController.m in Sources */,
 				268A380F1974AE650016C59C /* User.m in Sources */,
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
+				080120171A08C045002F10B2 /* HMNavigationController.m in Sources */,
 				268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				2655DF6818EDA9F600CA362F /* HMRenderingViewController.m in Sources */,
 				08F966B419F5575100247161 /* HMUploadS3Worker.m in Sources */,

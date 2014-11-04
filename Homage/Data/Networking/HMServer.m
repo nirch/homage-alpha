@@ -317,7 +317,7 @@
                 [moreInfo addEntriesFromDictionary:@{@"error":parser.error}];
                 [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                 return;
-                
+
             }
         }
         

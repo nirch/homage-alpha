@@ -14,6 +14,8 @@
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *memoryPSC;
 @property (nonatomic, readonly) NSManagedObjectContext *memoryCTX;
 
+@property (nonatomic, readonly) NSCache *remakesThumbsInMemoryCache;
+
 @end
 
 @implementation DB
@@ -49,6 +51,8 @@
                                                    NSMigratePersistentStoresAutomaticallyOption:@YES,
                                                    NSInferMappingModelAutomaticallyOption:@YES
                                                    };
+        
+        _remakesThumbsInMemoryCache = [NSCache new];
     }
     return self;
 }

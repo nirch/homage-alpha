@@ -16,6 +16,8 @@
 #import "HMServer+analytics.h"
 #import "DB.h"
 #import "HMAppDelegate.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @implementation UIDevice (ALSystemVersion)
 
@@ -397,6 +399,23 @@
     self.videoView.guiVideoThumb.image = videoImage;
 }
 
+-(void)setThumbURL:(NSURL *)thumbURL
+{
+    self.videoView.guiVideoThumb.alpha = 0;
+    [self.videoView.guiVideoThumb sd_setImageWithURL:thumbURL placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [self setVideoImage:image];
+        if (cacheType == SDImageCacheTypeNone) {
+            // Reveal with animation
+            [UIView animateWithDuration:0.2 animations:^{
+                self.videoView.guiVideoThumb.alpha = 1;
+            }];
+        } else {
+            // Reveal with no animation.
+            self.videoView.guiVideoThumb.alpha = 1;
+        }
+    }];
+}
+
 -(NSString *)videoLabelText
 {
     return self.videoView.guiVideoLabel.text;
@@ -747,7 +766,7 @@
         }
         
         HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
-        app.shouldAllowStatusBar = UIDeviceOrientationIsPortrait(orientation);
+        app.shouldAllowStatusBar = !UIDeviceOrientationIsLandscape(orientation);
         [self setNeedsStatusBarAppearanceUpdate];
         
     });
@@ -919,5 +938,6 @@
 {
     HMGLogDebug(@"duration for movie receicved: %f" , self.videoPlayer.duration);
 }
+
 
 @end
