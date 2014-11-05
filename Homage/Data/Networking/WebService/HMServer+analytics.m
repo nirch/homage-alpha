@@ -20,10 +20,11 @@
     return [BSONIdGenerator generate];
 }
 
--(void)reportRemakeShare:(NSString *)remakeID forUserID:(NSString *)userID shareMethod:(NSNumber *)shareMethod
+-(void)reportShare:(NSString *)shareID forRemake:(NSString *)remakeID forUserID:(NSString *)userID shareMethod:(NSNumber *)shareMethod shareLink:(NSString *)shareLink shareSuccess:(BOOL)shareSuccess fromOriginatingScreen:(NSNumber *)originatingScreen
 {
+    NSNumber *success = [NSNumber numberWithBool:shareSuccess];
     [self postRelativeURLNamed:@"share remake"
-                    parameters:@{@"user_id":userID, @"remake_id":remakeID , @"share_method":shareMethod}
+                    parameters:@{@"share_id":shareID, @"user_id":userID, @"remake_id":remakeID , @"share_method":shareMethod, @"share_link":shareLink, @"share_status":success, @"originating_screen":originatingScreen}
               notificationName:HM_NOTIFICATION_SERVER_SHARE_REMAKE
                           info:@{@"userID":userID,@"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]}
                         parser:nil

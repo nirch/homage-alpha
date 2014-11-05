@@ -12,10 +12,13 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMAvenirBookFontButton.h"
 #import "HMBoldFontButton.h"
-#import "AMBlurView.h"
+#import "HMRemakePresenterDelegate.h"
 
 @interface HMStoryDetailsViewController : UIViewController<
-    HMStoryPresenterProtocol,NSFetchedResultsControllerDelegate>
+    HMStoryPresenterProtocol,
+    NSFetchedResultsControllerDelegate,
+    HMRemakePresenterDelegate
+>
 
 @property (weak, nonatomic) IBOutlet HMBoldFontButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;

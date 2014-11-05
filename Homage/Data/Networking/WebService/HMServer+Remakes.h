@@ -8,6 +8,8 @@
 
 #import "HMServer.h"
 
+#define NUMBER_OF_REMAKES_PER_PAGE 16
+
 @interface HMServer (Remakes)
 
 ///
@@ -65,11 +67,8 @@
 ///
 /**
  *  A DELETE request to the server requesting deletion of the remake with the given id.
- 
  *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKE_DELETION.
- 
  *  Parser used: HMRemakeParser.
- 
  *  @code
 [HMServer.sh deleteRemakeWithID:remakeID];
  *  @endcode
@@ -79,19 +78,18 @@
 
 ///
 /**
- *  A GET request to the server requesting info about remakes related to a user.
- 
+ *  A GET request to the server requesting info about remakes related to a story.
  *  Notification name when done: HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY.
- 
  *  Parser used: HMRemakesParser.
- 
  *  @code
  [HMServer.sh refetchRemakesWithStoryID:storyID];
  *  @endcode
  *  @param storyID  The id of the story
  */
 -(void)refetchRemakesWithStoryID:(NSString *)storyID;
-
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID;
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID page:(NSInteger)page;
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID limit:(NSNumber *)limit skip:(NSNumber *)skip;
 
 
 -(void)markRemakeAsInappropriate:(NSDictionary *)userParams;

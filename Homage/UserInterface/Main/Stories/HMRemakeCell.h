@@ -12,7 +12,11 @@
 @interface HMRemakeCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiUserName;
-@property (weak, nonatomic) IBOutlet UIButton *guiMoreButton;
+
+// Social indicators
+@property (weak, nonatomic) IBOutlet UIImageView *guiLikesIcon;
+@property (weak, nonatomic) IBOutlet UITextView *guiLikesCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *guiViewsIcon;
+@property (weak, nonatomic) IBOutlet UITextView *guiViewsCountLabel;
 
 @end

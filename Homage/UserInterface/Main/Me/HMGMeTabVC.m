@@ -19,30 +19,41 @@
 #import "HMVideoPlayerDelegate.h"
 #import "HMSimpleVideoViewController.h"
 #import "JBWhatsAppActivity.h"
-#import "HMGoogleAPI.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "NSDictionary+TypeSafeValues.h"
 #import "HMServer+analytics.h"
 #import "HMAppDelegate.h"
 #import "AWAlertView.h"
+#import "UIView+Hierarchy.h"
+#import "HMSharing.h"
 
+#define SCROLL_VIEW_CELL 1
+#define SCROLL_VIEW_CV 70
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
-//HMSimpleVideoPlayerDelegate removed
 
+@property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
+
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSString *currentFetchedResultsUser;
-
-//@property (nonatomic) NSMutableDictionary *remakesToDeleteInfo;
 
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
 
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (nonatomic,weak) UIView *guiVideoContainer;
+
+@property (nonatomic) HMSharing *currentSharer;
+
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *guiCellPanGestureRecognizer;
+
+@property (nonatomic) BOOL needsCheckIfAllClosed;
+
+// Yes, the name of the variable is long because it is funny. deal with it!
+@property (nonatomic) CGFloat bottomButtonAppearanceThresholdThatIsUsedToDetermineWhenToShowOrHideIt;
 
 @end
 
@@ -82,6 +93,12 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    UIEdgeInsets e = self.userRemakesCV.contentInset;
+    e.bottom = 314;
+    self.userRemakesCV.contentInset = e;
+    [self handleVisibilityOfMoreStoriesButton];
+    [self updateRenderingBarState];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -112,15 +129,24 @@
     CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
     f.origin.y += 32;
     [[refreshControl.subviews objectAtIndex:0] setFrame:f];
+    refreshControl.layer.zPosition = -1;
     
     //self.view.backgroundColor = [UIColor clearColor];
     [self.userRemakesCV setBackgroundColor:[UIColor clearColor]];
     self.userRemakesCV.alwaysBounceVertical = YES;
     
-    self.noRemakesLabel.text = LS(@"NO_REMAKES");
+    self.noRemakesLabel.text = LS(@"NO_REMAKES_ME_SCREEN");
     [self.noRemakesLabel setHidden:YES];
     self.noRemakesLabel.textColor = [HMColor.sh textImpact];
     self.title = LS(@"ME_TAB_HEADLINE_TITLE");
+    
+    // Checks if need to close "opened" cells.
+    self.needsCheckIfAllClosed = NO;
+    
+    // Goto stories button
+    CGFloat t = IS_IPHONE_5 ? 510 : 470;
+    self.bottomButtonAppearanceThresholdThatIsUsedToDetermineWhenToShowOrHideIt = t;
+    [self _remakeMoreStoriesOutOfScreenPosition];
 }
 
 -(void)initContent
@@ -150,6 +176,24 @@
                                                    selector:@selector(onRemakeRefetched:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE
                                                      object:nil];
+
+    // Observe deletion of remake
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRemakeDeletion:)
+                                                       name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
+                                                     object:nil];
+    
+    // Observe rendering bar
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRenderingBarStateChanged:)
+                                                       name:HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN
+                                                     object:nil];
+    
+    // Observe rendering bar
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRenderingBarStateChanged:)
+                                                       name:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN
+                                                     object:nil];
 }
 
 -(void)initObservers
@@ -159,35 +203,20 @@
                                                    selector:@selector(onRemakeThumbnailLoaded:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
                                                      object:nil];
-    // Observe deletion of remake
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRemakeDeletion:)
-                                                       name:HM_NOTIFICATION_SERVER_REMAKE_DELETION
-                                                     object:nil];
     
     //observe generation of remake
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeCreation:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
                                                      object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onShortenURLReceived:)
-                                                       name:HM_SHORT_URL
-                                                     object:nil];
-
 }
 
 -(void)removeObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_REMAKES object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_DELETION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
-    //[nc removeObserver:self name:HM_REFRESH_USER_DATA object:nil];
-    [nc removeObserver:self name:HM_SHORT_URL object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
+    //[nc removeObserver:self name:HM_SHORT_URL object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -216,6 +245,11 @@
             [self.refreshControl endRefreshing];
         });
     }
+}
+
+-(void)onRenderingBarStateChanged:(NSNotification *)notification
+{
+    [self updateRenderingBarState];
 }
 
 -(void)onRemakeRefetched:(NSNotification *)notification
@@ -298,6 +332,25 @@
     [self initRecorderWithRemake:remake];
 }
 
+#pragma mark - Rendering bar states
+-(void)updateRenderingBarState
+{
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        if ([app.mainVC isRenderingViewShowing]) {
+            UIEdgeInsets c = self.userRemakesCV.contentInset;
+            c.top = [app.mainVC renderingViewHeight];
+            self.userRemakesCV.contentInset = c;
+        } else {
+            UIEdgeInsets c = self.userRemakesCV.contentInset;
+            c.top = 0;
+            self.userRemakesCV.contentInset = c;
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 #pragma mark - Refresh my remakes
 -(void)refetchRemakesFromServer
 {
@@ -315,7 +368,7 @@
         return;
     }
     [self.userRemakesCV reloadData];
-    [self handleNoRemakes];
+    [self handleRemakesCount];
 }
 
 -(void)onPulledToRefetch
@@ -396,6 +449,8 @@
     //
     
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
+    if (cell.guiScrollView.delegate == nil) cell.guiScrollView.delegate = self;
+    [cell closeAnimated:NO];
     
     if (remake.thumbnail) {
         
@@ -421,6 +476,10 @@
 {
     UIImage *image;
     
+    cell.remakeButton.alpha = 1;
+    
+    cell.guiScrollView.contentSize = CGSizeMake(640, cell.guiScrollView.bounds.size.height);
+    
     switch (status.intValue)
     {
         case HMGRemakeStatusInProgress:
@@ -430,23 +489,23 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
             
         case HMGRemakeStatusDone:
             [cell.actionButton setTitle:@"" forState:UIControlStateNormal];
-            image = [UIImage imageNamed:@"play1white"];
+            image = [UIImage imageNamed:@"HMPlayButton"];
             [cell.actionButton setImage:image forState:UIControlStateNormal];
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;
             [cell.shareButton setHidden:NO];
             cell.shareButton.enabled = YES;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
+            
+            cell.remakeButton.alpha = 0;
             break;
             
         case HMGRemakeStatusNew:
@@ -455,7 +514,6 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -466,7 +524,6 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -477,7 +534,6 @@
             [cell.shareButton setHidden:YES];
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
-            cell.deleteButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
             [cell.guiActivity stopAnimating];
             break;
@@ -493,12 +549,14 @@
     }
 }
 
--(void)handleNoRemakes
+-(void)handleRemakesCount
 {
     if ([self.userRemakesCV numberOfItemsInSection:0] == 0) {
         [self.noRemakesLabel setHidden:NO];
+        [self.guiRemakeMoreStoriesButton setTitle:LS(@"REMAKE_A_STORY") forState:UIControlStateNormal];
     } else {
         [self.noRemakesLabel setHidden:YES];
+        [self.guiRemakeMoreStoriesButton setTitle:LS(@"REMAKE_MORE_STORIES") forState:UIControlStateNormal];
     }
 }
 
@@ -545,10 +603,8 @@
         //[cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
         [cell.guiThumbImage setHidden:YES];
         [cell.buttonsView setHidden:YES];
-        [cell.moviePlaceHolder setHidden:NO];
     } else
     {
-        [cell.moviePlaceHolder setHidden:YES];
         [cell.guiThumbImage setHidden:NO];
         [cell.buttonsView setHidden:NO];
     }
@@ -571,7 +627,7 @@
 -(HMGUserRemakeCVCell *)getParentCollectionViewCellOfButton:(UIButton *)button
 {
     //TODO: this is only the current hirarchy in the hmguserCVcell!
-    id cell = button.superview.superview.superview;
+    id cell = [button findAncestorViewThatIsMemberOf:[HMGUserRemakeCVCell class]];
     if (![cell isKindOfClass:[HMGUserRemakeCVCell class]])
     {
         HMGLogError(@"button super view is not a collection view cell!");
@@ -594,79 +650,6 @@
 }
 
 
-#pragma mark sharing
--(void)shareRemake:(Remake *)remake
-{
-    [[HMGoogleAPI sharedInstance] shortenURL:remake.shareURL info:@{@"remake_id" :remake.sID}];
-}
-
--(void)onShortenURLReceived:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    
-    NSString *remakeShareURL;
-    
-    if (info[@"error"])
-    {
-        HMGLogWarning(@"error reported on URL shortening. will share long url. error description: %@" , info[@"error"]);
-    }
-    
-    if (!info[@"remake_id"])
-    {
-        HMGLogWarning(@"did not receive remake_id");
-        return;
-    }
-    
-    NSString *remakeID = info[@"remake_id"];
-    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    
-    NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
-    //NSString *downloadLink = HOMAGE_APPSTORE_LINK;
-
-    if (info[@"short_url"])
-    {
-        remakeShareURL = info[@"short_url"];
-    } else {
-        remakeShareURL = remake.shareURL; //this is the long URL in case shortening failed
-    }
-    
-    NSString *generalShareSubject;
-    NSString *whatsAppShareString;
-    if (remake.story.shareMessage)
-    {
-        generalShareSubject = remake.story.shareMessage;
-        whatsAppShareString = [NSString stringWithFormat:LS(@"SHARE_MSG_BODY") ,remake.story.shareMessage , remakeShareURL];
-    } else
-    {
-        generalShareSubject = [NSString stringWithFormat:LS(@"DEFAULT_SHARE_MSG_SUBJECT") , remake.story.name];
-        whatsAppShareString = [NSString stringWithFormat:LS(@"DEFUALT_SHARE_MSG_BODY") , remake.story.name , remakeShareURL];
-    }
-    
-    NSString *generalShareBody = [whatsAppShareString stringByAppendingString:[NSString stringWithFormat:LS(@"SHARE_MSG_BODY_HASHTAGS") , storyNameWithoutSpaces, storyNameWithoutSpaces]];
-    
-    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:whatsAppShareString forABID:nil];
-    
-    NSArray *activityItems = [NSArray arrayWithObjects: generalShareBody, whatsappMsg, remake.thumbnail, nil];
-    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
-    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
-        if (completed) {
-            [[Mixpanel sharedInstance] track:@"MEShareRemake" properties:@{@"story" : remake.story.name , @"share_method" : activityType , @"remake_id" : remakeID}];
-            NSNumber *shareMethod = [self getShareMethod:activityType];
-            [HMServer.sh reportRemakeShare:remakeID forUserID:[User current].userID shareMethod:shareMethod];
-            
-        }
-    };
-    
-    [activityViewController setValue:generalShareSubject forKey:@"subject"];
-    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self presentViewController:activityViewController animated:YES completion:^{}];
-    });
- 
-}
-
 #pragma mark recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
@@ -685,9 +668,11 @@
 #pragma mark UITextView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //remake button pushed
     if (alertView.tag == REMAKE_ALERT_VIEW_TAG)
     {
+        //
+        //remake button pushed
+        //
         
         if (buttonIndex == 0)
         {
@@ -708,50 +693,45 @@
             self.remakeToContinueWith = nil;
         }
         //[self.userRemakesCV reloadData];
+    
+    } else if (alertView.tag == TRASH_ALERT_VIEW_TAG) {
         
-    //trash button pushed
-    } else if (alertView.tag == TRASH_ALERT_VIEW_TAG)
-    {
+        //
+        // delete button pushed
+        //
         if (buttonIndex == 1) {
             
             // Mark remake for deletion and update cell.
             AWAlertView *av = (AWAlertView *)alertView;
             NSIndexPath *indexPath = av.awContextObject;
+            if (!indexPath) return;
 
             Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            if (!remake || !remake.sID) return;
+            
+            // Mark remake as user requested deletion.
             remake.status = @(HMGRemakeStatusClientRequestedDeletion);
             
-            if ([[self.userRemakesCV indexPathsForVisibleItems] containsObject:indexPath] ) {
-                [self.userRemakesCV reloadItemsAtIndexPaths:@[indexPath]];
-            }
+            // Reload data (reload all data
+            // because of a bug in reloadItemsAtIndexPaths in iOS 7.0.X
+            [self.userRemakesCV reloadData];
             
-            if (remake.story.name)
+            // Mixpanel event about the deletion request.
+            if (remake.story.name && remake.story.sID)
             {
                 [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
             }
             
-            
             // Tell server to delete remake.
             [HMServer.sh deleteRemakeWithID:remake.sID];
             
-//            NSString *remakeID = self.remakeToDeleteInfo[@"remake_id"];
-//            NSIndexPath *indexPath =
-//            
-//            Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-//            
-//            if (remake.story.name)
-//            {
-//                [[Mixpanel sharedInstance] track:@"MEDeleteRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
-//            }
-//            
-//            
-//
-//            
-//            [HMServer.sh deleteRemakeWithID:remakeID];
-//            self.remakeToDeleteInfo = nil;
         }
-    } else if (alertView.tag == SHARE_ALERT_VIEW_TAG)
-    {
+        
+    } else if (alertView.tag == SHARE_ALERT_VIEW_TAG) {
+        //
+        // 
+        //
+        
         //dont join
         if (buttonIndex == 0)
         {
@@ -760,9 +740,9 @@
         //join now!
         if (buttonIndex == 1)
         {
+            [self closeAllCellsExceptCell:nil animated:NO];
             [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_USER_JOIN object:nil userInfo:nil];
         }
-    
     }
 }
 
@@ -771,32 +751,6 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:section];
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     return cell;
-}
-
--(void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(NSNumber *)getShareMethod:(NSString *)activityType
-{
-    if ([activityType isEqualToString:@"com.apple.UIKit.activity.CopyToPasteboard"])
-        return [NSNumber numberWithInt:HMShareMethodCopyToPasteboard];
-    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToFacebook"])
-        return [NSNumber numberWithInt:HMShareMethodPostToFacebook];
-    //TODO:: get whatsapp activity name from iphone
-    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWhatsApp"])
-        return [NSNumber numberWithInt:HMShareMethodPostToWhatsApp];
-    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Mail"])
-        return [NSNumber numberWithInt:HMShareMethodEmail];
-    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Message"])
-        return [NSNumber numberWithInt:HMShareMethodMessage];
-    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWeibo"])
-        return [NSNumber numberWithInt:HMShareMethodPostToWeibo];
-    else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToTwitter"])
-        return [NSNumber numberWithInt:HMShareMethodPostToTwitter];
-    else return [NSNumber numberWithInt:999];
 }
 
 #pragma mark - HMRecorderDelegate
@@ -830,6 +784,58 @@
         [self closeCurrentlyPlayingMovie];
 }
 
+
+#pragma mark - Scroll view delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    switch (scrollView.tag) {
+        case SCROLL_VIEW_CELL:
+            // Remake cells scroll views
+            [self handleRemakeCellScrollView:scrollView];
+            break;
+        
+        case SCROLL_VIEW_CV:
+            [self handleVisibilityOfMoreStoriesButtonByScrollView:scrollView];
+            break;
+        
+        default:
+            return;
+    }
+}
+
+-(void)handleRemakeCellScrollView:(UIScrollView *)scrollView
+{
+    CGFloat offsetX = scrollView.contentOffset.x;
+    CGFloat part = MAX(offsetX / 160.0f , 0);
+    //CGFloat scale = MAX(1.0f - part, 0.3);
+    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)scrollView.superview.superview;
+    //cell.guiThumbContainer.transform = CGAffineTransformMakeScale(scale, scale);
+    cell.guiThumbContainer.transform = CGAffineTransformMakeTranslation(-offsetX, 0);
+    cell.guiThumbContainer.alpha = 1-part;
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView.tag == 1) {
+        HMGUserRemakeCVCell *draggedCell = (HMGUserRemakeCVCell *)scrollView.superview.superview;
+        // close all cells not dragged.
+        [self closeAllCellsExceptCell:draggedCell animated:YES];
+        self.needsCheckIfAllClosed = YES;
+    } else {
+        if (self.needsCheckIfAllClosed) [self closeAllCellsExceptCell:nil animated:YES];
+    }
+}
+
+-(void)closeAllCellsExceptCell:(HMGUserRemakeCVCell *)exceptCell animated:(BOOL)animated
+{
+    for (HMGUserRemakeCVCell *cell in self.userRemakesCV.visibleCells) {
+        if (![cell isEqual:exceptCell]) {
+            [cell closeAnimated:animated];
+        }
+    }
+    self.needsCheckIfAllClosed = NO;
+}
+
 // ============
 // Rewind segue
 // ============
@@ -843,6 +849,60 @@
     CGSize size = rect.size;
     CGPoint origin = rect.origin;
     NSLog(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
+}
+
+#pragma mark - Create more remakes buttons
+-(void)_remakeMoreStoriesOutOfScreenPosition
+{
+    CGAffineTransform t = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, 80);
+    t = CGAffineTransformScale(t, 1.3, 1.3);
+    self.guiRemakeMoreStoriesButton.alpha = 0;
+    self.guiRemakeMoreStoriesButton.transform = t;
+}
+
+-(void)hideRemakeMoreStoriesButton
+{
+    [self hideRemakeMoreStoriesButtonMovingToStories:NO];
+}
+
+-(void)hideRemakeMoreStoriesButtonMovingToStories:(BOOL)movingToStories
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self _remakeMoreStoriesOutOfScreenPosition];
+    } completion:^(BOOL finished) {
+        if (movingToStories) {
+            HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+            [app.mainVC showStoriesTab];
+        }
+    }];
+}
+
+-(void)showRemakeMoreStoriesButton
+{
+    [UIView animateWithDuration:0.3 delay:0.1 usingSpringWithDamping:0.4 initialSpringVelocity:0.1 options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.guiRemakeMoreStoriesButton.alpha = 1;
+                         self.guiRemakeMoreStoriesButton.transform = CGAffineTransformIdentity;
+                     } completion:nil];
+}
+
+-(void)handleVisibilityOfMoreStoriesButton
+{
+    [self handleVisibilityOfMoreStoriesButtonByScrollView:nil];
+}
+
+-(void)handleVisibilityOfMoreStoriesButtonByScrollView:(UIScrollView *)scrollView
+{
+    if (scrollView == nil) scrollView = self.userRemakesCV;
+    
+    // TODO: temporarily hardcoded. make dynamic solution.
+    CGFloat yOffset = scrollView.contentSize.height - scrollView.contentOffset.y;
+    BOOL shouldBeShown = yOffset < self.bottomButtonAppearanceThresholdThatIsUsedToDetermineWhenToShowOrHideIt;
+    if (shouldBeShown && self.guiRemakeMoreStoriesButton.alpha == 0) {
+        [self showRemakeMoreStoriesButton];
+    } else if (!shouldBeShown && self.guiRemakeMoreStoriesButton.alpha == 1) {
+        [self hideRemakeMoreStoriesButton];
+    }
 }
 
 #pragma mark - IB Actions
@@ -883,8 +943,6 @@
     // Get some info
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:sender];
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-//    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    HMGLogDebug(@"User want to delete remake: %@ at indexPath:%@" , remake.sID, indexPath);
     
     //
     // Ask user if sure about deleting the remake.
@@ -902,9 +960,8 @@
     if (!cell) return;
     
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
-    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    cell.remakeButton.enabled = NO;
+    
+    [cell disableInteractionForAShortWhile];
     
     self.remakeToContinueWith = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogDebug(@"gonna remake story: %@" , self.remakeToContinueWith.story.name);
@@ -938,7 +995,6 @@
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
     if (!cell) return;
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if ([[User current] isGuestUser])
@@ -949,7 +1005,17 @@
             [alertView show];
         });
         
-    } else [self shareRemake:remakeToShare];
+    } else {
+        self.currentSharer = [HMSharing new];
+        [self.currentSharer shareRemake:remakeToShare parentVC:self trackEventName:@"MEShareRemake"];
+    }
 }
+
+- (IBAction)onRemakeMoreStoriesButtonPushed:(id)sender
+{
+    [[Mixpanel sharedInstance] track:@"MERemakeMoreStories"];
+    [self hideRemakeMoreStoriesButtonMovingToStories:YES];
+}
+
 
 @end

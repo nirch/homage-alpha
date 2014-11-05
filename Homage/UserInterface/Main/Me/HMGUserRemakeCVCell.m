@@ -19,6 +19,22 @@
     return self;
 }
 
+-(void)closeAnimated:(BOOL)animated
+{
+    if (self.guiScrollView.contentOffset.x != 0) {
+        [self.guiScrollView setContentOffset:CGPointMake(0, 0) animated:animated];
+    }
+}
+
+-(void)disableInteractionForAShortWhile
+{
+    self.userInteractionEnabled = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.userInteractionEnabled = YES;
+    });
+}
+
+
 /*- (void)awakeFromNib {
     [self.expandedView setHidden:YES];
     CGRect frame = self.bounds;

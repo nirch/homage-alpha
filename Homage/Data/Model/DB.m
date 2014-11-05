@@ -8,6 +8,16 @@
 
 #import "DB.h"
 
+@interface DB()
+
+@property (nonatomic, readonly) NSManagedObjectModel *memoryMOM;
+@property (nonatomic, readonly) NSPersistentStoreCoordinator *memoryPSC;
+@property (nonatomic, readonly) NSManagedObjectContext *memoryCTX;
+
+@property (nonatomic, readonly) NSCache *remakesThumbsInMemoryCache;
+
+@end
+
 @implementation DB
 
 // DB is a singleton
@@ -41,6 +51,8 @@
                                                    NSMigratePersistentStoresAutomaticallyOption:@YES,
                                                    NSInferMappingModelAutomaticallyOption:@YES
                                                    };
+        
+        _remakesThumbsInMemoryCache = [NSCache new];
     }
     return self;
 }
@@ -50,6 +62,25 @@
 -(NSManagedObjectContext *)context
 {
     return [self.dbDocument managedObjectContext];
+}
+
+#pragma mark - In memory context for tests
+-(NSManagedObjectContext *)inMemoryContextForTestsFromBundles:(NSArray *)bundles
+{
+    if (self.memoryCTX) return self.memoryCTX;
+    
+    // Managed object model
+    _memoryMOM = [NSManagedObjectModel mergedModelFromBundles:bundles];
+
+    // Persistance store coordinator
+    _memoryPSC = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.memoryMOM];
+    
+    // Managed object context
+    _memoryCTX = [[NSManagedObjectContext alloc] init];
+    self.memoryCTX.persistentStoreCoordinator = self.memoryPSC;
+    
+    // Return the context
+    return self.memoryCTX;
 }
 
 #pragma mark - NSDocument
@@ -118,6 +149,18 @@
 {
     [self.dbDocument updateChangeCount:UIDocumentChangeDone];
 }
+
+-(void)disableBackupForURL:(NSURL *)url
+{
+    // Prevent resource of this url to be backed up to iCloud.
+    // (app store guideline 2.23)
+    NSError *error;
+    [url setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&error];
+    if (error) {
+        HMGLogError(@"Failed to mark managed document as excluded from iCloud backup. %@", [error localizedDescription]);
+    }
+}
+
 
 #pragma mark - Easier fetches
 -(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context

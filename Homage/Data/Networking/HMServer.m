@@ -11,7 +11,7 @@
 #import "HMJSONResponseSerializerWithData.h"
 #import "HMAppDelegate.h"
 
-//#import "HMUploadManager.h"
+#import "HMUploadManager.h"
 
 @interface HMServer()
 
@@ -67,19 +67,8 @@
 
 }
 
--(void)testUploadManager
-{
-    //[HMUploadManager sh];
-}
-
 -(void)chooseSerializerForParser:(HMParser *)parser
 {
-//    if (parser) {
-//        self.session.responseSerializer = [AFJSONResponseSerializer new];
-//    } else {
-//        self.session.responseSerializer = [AFHTTPResponseSerializer new];
-//    }
-    
     self.session.requestSerializer = [AFHTTPRequestSerializer new];
     [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
     [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
@@ -119,6 +108,11 @@
 -(void)updateServerWithCurrentUser:(NSString *)userID
 {
     self.currentUserID = userID;
+}
+
+-(void)updateConfiguration:(NSDictionary *)info
+{
+    self.configurationInfo = info;
 }
 
 -(void)loadAppDetails
@@ -210,6 +204,10 @@
                parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
+    if (!moreInfo) {
+        moreInfo = [NSMutableDictionary new];
+    }
+    
     
     //
     // send GET Request to server
@@ -273,12 +271,7 @@
                      parser:(HMParser *)parser
 {
     
-    NSMutableDictionary *moreInfo = [info mutableCopy];
-    if (!moreInfo[@"attempts_count"])
-    {
-        moreInfo[@"attempts_count"] = [NSNumber numberWithInt:1];
-    }
-    
+    NSMutableDictionary *moreInfo = [info mutableCopy];    
     [self postRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
                parameters:(NSDictionary *)parameters
          notificationName:(NSString *)notificationName
@@ -294,8 +287,6 @@
                 parser:(HMParser *)parser
 {
     NSMutableDictionary *moreInfo = [info mutableCopy];
-    int attmeptsCount = [moreInfo[@"attempts_count"] intValue];
-    [moreInfo removeObjectForKey:@"attempts_counts"];
     
     //
     // send POST Request to server
@@ -304,7 +295,7 @@
     HMGLogDebug(@"POST request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
     [self chooseSerializerForParser:parser];
     [self.session POST:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-
+        
         //
         // Successful response from server.
         //
@@ -326,7 +317,7 @@
                 [moreInfo addEntriesFromDictionary:@{@"error":parser.error}];
                 [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
                 return;
-                
+
             }
         }
         
@@ -342,21 +333,9 @@
         //
         // Failed request.
         //
-        if (attmeptsCount > 1)
-        {
-            [moreInfo addEntriesFromDictionary:@{@"attempts_count":[NSNumber numberWithInt:attmeptsCount-1]}];
-            [self postRelativeURL:relativeURL
-                       parameters:parameters
-                 notificationName:notificationName
-                             info:moreInfo
-                           parser:parser];
-        } else
-        {
-            HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
-            
-            [moreInfo addEntriesFromDictionary:@{@"error":error}];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
-        }
+        HMGLogError(@"Request failed with error.\t%@\t(time:%f)\t%@", relativeURL, [[NSDate date] timeIntervalSinceDate:requestDateTime], [error localizedDescription]);
+        [moreInfo addEntriesFromDictionary:@{@"error":error}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
     }];
 }
 

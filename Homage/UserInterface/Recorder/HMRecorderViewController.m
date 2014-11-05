@@ -26,6 +26,7 @@
 #import "Mixpanel.h"
 #import <AudioToolbox/AudioServices.h>
 #import "HMMotionDetector.h"
+#import "HMServer+Info.h"
 
 /*
 // ---------------------------------------------------------------------------------------------------------------------
@@ -77,6 +78,7 @@
 @property (nonatomic, readonly) NSUInteger allowedOrientations;
 @property (nonatomic) BOOL flagForDebugging;
 @property (nonatomic) BOOL stopRecordingFired;
+@property (nonatomic) BOOL isSelfie;
 
 // Some physics animations
 @property (nonatomic, readonly) UIDynamicAnimator *animator;
@@ -425,70 +427,89 @@
 #pragma mark - Observers
 -(void)initObservers
 {
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
     // Observe lazy loading thumbnails
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onSilhouetteLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onSilhouetteLoaded:)
+                     name:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
+                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onContourFileDownloaded:)
-                                                       name:HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onContourFileDownloaded:)
+                     name:HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED
+                   object:nil];
     
+    
+    
+    //
+    // Back Camera selected
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onBackCameraSelected:)
+                     name:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA
+                   object:nil];
+    
+    //
+    // Front Camera selected
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onFrontCameraSelected:)
+                     name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA
+                   object:nil];
     
     
     // Observe started recording
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onStartRecording:)
-                                                       name:HM_NOTIFICATION_RECORDER_START_RECORDING
-                                                     object:nil];
-
+    [nc addUniqueObserver:self
+                 selector:@selector(onStartRecording:)
+                     name:HM_NOTIFICATION_RECORDER_START_RECORDING
+                   object:nil];
+    
     // Observe stop recording
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onStopRecording:)
-                                                       name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
-                                                     object:nil];
-
+    [nc addUniqueObserver:self
+                 selector:@selector(onStopRecording:)
+                     name:HM_NOTIFICATION_RECORDER_STOP_RECORDING
+                   object:nil];
+    
     // Observe raw user's take file is available and
     // needs to be added to the related Footage object in local storage
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onNewRawFootageFileAvailable:)
-                                                       name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
-                                                     object:nil];
-
+    [nc addUniqueObserver:self
+                 selector:@selector(onNewRawFootageFileAvailable:)
+                     name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE
+                   object:nil];
+    
     // Handle recording errors by showing the FAIL message
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRecorderEpicFail:)
-                                                       name:HM_NOTIFICATION_RECORDER_EPIC_FAIL
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onRecorderEpicFail:)
+                     name:HM_NOTIFICATION_RECORDER_EPIC_FAIL
+                   object:nil];
     
     // Observe telling server to render
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRender:)
-                                                       name:HM_NOTIFICATION_SERVER_RENDER
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onRender:)
+                     name:HM_NOTIFICATION_SERVER_RENDER
+                   object:nil];
     
     //observe camera movment
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onCameraNotStable:)
-                                                       name:HM_NOTIFICATION_CAMERA_NOT_STABLE
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onCameraNotStable:)
+                     name:HM_NOTIFICATION_CAMERA_NOT_STABLE
+                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onBadBackgroundDetected:)
-                                                       name:HM_CAMERA_BAD_BACKGROUND
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onBadBackgroundDetected:)
+                     name:HM_CAMERA_BAD_BACKGROUND
+                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onGoodBackgroundDetected:)
-                                                       name:HM_CAMERA_GOOD_BACKGROUND
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onGoodBackgroundDetected:)
+                     name:HM_CAMERA_GOOD_BACKGROUND
+                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onAppMovedToBackground:)
-                                                       name:HM_APP_WILL_RESIGN_ACTIVE
-                                                     object:nil];
+    [nc addUniqueObserver:self
+                 selector:@selector(onAppMovedToBackground:)
+                     name:HM_APP_WILL_RESIGN_ACTIVE
+                   object:nil];
     
     
 
@@ -509,6 +530,21 @@
 }
 
 #pragma mark - Observers handlers
+-(void)onBackCameraSelected:(NSNotification *)notification
+{
+    HMGLogDebug(@"Back camera selected");
+    self.isSelfie = NO;
+    [self updateUIForSceneID:self.currentSceneID];
+}
+
+-(void)onFrontCameraSelected:(NSNotification *)notification
+{
+    HMGLogDebug(@"Front camera selected");
+    self.isSelfie = YES;
+    [self updateUIForSceneID:self.currentSceneID];
+}
+
+
 -(void)onSilhouetteLoaded:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
@@ -523,7 +559,7 @@
 
     // If related to current scene, display it.
     if ([scene.sID isEqualToNumber:self.currentSceneID]) {
-        self.guiSilhouetteImageView.image = image;
+        self.guiSilhouetteImageView.image = [self silhouetteForScene:scene flipped:self.isSelfie];
         self.guiSilhouetteImageView.alpha = 0;
         self.guiSilhouetteImageView.hidden = NO;
         [UIView animateWithDuration:0.7 animations:^{
@@ -708,7 +744,10 @@
     [HMUploadManager.sh cancelUploadForFootage:footage];
     
     // Tell the uploader to check for needed uploads. Give this footage, with the new rawLocalFile, priority.
-    [HMUploadManager.sh checkForUploadsWithPrioritizedFootages:@[footage]];
+    // Do this after waiting for 5 seconds.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [HMUploadManager.sh checkForUploadsWithPrioritizedFootages:@[footage]];        
+    });
 
     // Move along to the next state.
     [self presentRecorderIdleUI];
@@ -762,7 +801,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil userInfo:@{@"sceneID":sceneID}];
 
     // Show silhouete of the related scene (or lazy load it).
-    UIImage *sillhouetterImage = [self silhouetteForScene:scene];
+    UIImage *sillhouetterImage = [self silhouetteForScene:scene flipped:self.isSelfie];
     self.guiSilhouetteImageView.image = sillhouetterImage;
     self.guiSilhouetteImageView.alpha = sillhouetterImage ? SILHOUETTE_HARD_CODED_ALPHA : 0;
     self.guiSilhouetteImageView.hidden = NO;
@@ -783,7 +822,7 @@
 {
     for (Scene *scene in self.remake.story.scenes)
     {
-        [self silhouetteForScene:scene];
+        [self silhouetteForScene:scene flipped:NO];
     }
 }
 
@@ -796,9 +835,13 @@
 }
 
 #pragma mark - Lazy loading
--(UIImage *)silhouetteForScene:(Scene *)scene
+-(UIImage *)silhouetteForScene:(Scene *)scene flipped:(BOOL)flipped
 {
-    if (scene.silhouette) return scene.silhouette;
+    if (scene.silhouette) {
+        if (![HMServer.sh shouldMirrorSelfieSilhouette]) return scene.silhouette;
+        if (!flipped) return scene.silhouette;
+        return [self flippedImageOfImage:scene.silhouette];
+    }
     
     [HMServer.sh lazyLoadImageFromURL:scene.silhouetteURL
                      placeHolderImage:nil
@@ -806,6 +849,14 @@
                                  info:@{@"sceneID":scene.sID}];
     
     return nil;
+}
+
+-(UIImage *)flippedImageOfImage:(UIImage *)sourceImage
+{
+    UIImage* flippedImage = [UIImage imageWithCGImage:sourceImage.CGImage
+                                                scale:sourceImage.scale
+                                          orientation:UIImageOrientationUpMirrored];
+    return flippedImage;
 }
 
 -(NSString *)contourFileForScene:(Scene *)scene
@@ -1311,6 +1362,7 @@
 -(void)flipCamera
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_FLIP_CAMERA object:self];
+    [self updateUIForSceneID:self.currentSceneID];
 }
 
 #pragma mark - IB Actions

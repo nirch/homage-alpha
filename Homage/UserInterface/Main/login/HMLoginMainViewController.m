@@ -113,6 +113,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiLoginErrorLabel.alpha = 0;
     self.guiLoginErrorLabel.hidden = YES;
     self.guiLoginErrorLabel.text = @"";
+    [self.guiActivityView stopAnimating];
     [self resetTextFields];
 }
 
@@ -294,6 +295,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(IBAction)onPressedSignUpLogin:(UIButton *)sender
 {
+    if (self.guiActivityView.isAnimating) return;
+    
     self.loginMethod = HMMailConnect;
     self.guiLoginErrorLabel.text = @"";
     
@@ -317,12 +320,12 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo};
         [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
     }
-    
-    [self resetTextFields];
 }
 
 - (IBAction)onPressedGuest:(UIButton *)sender
 {
+    if (self.guiActivityView.isAnimating) return;
+    
     self.loginMethod = HMGuestConnect;
     
     if (!HMServer.sh.isReachable)

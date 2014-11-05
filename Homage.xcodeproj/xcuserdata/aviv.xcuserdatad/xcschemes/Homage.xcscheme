@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Homage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "088D5FB519EC015A00075C4A"
+               BuildableName = "Homage App Tests.xctest"
+               BlueprintName = "Homage App Tests"
+               ReferencedContainer = "container:Homage.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -32,9 +46,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0806FA2618828AEB007514BE"
-               BuildableName = "HomageTests.xctest"
-               BlueprintName = "HomageTests"
+               BlueprintIdentifier = "088D5FB519EC015A00075C4A"
+               BuildableName = "Homage App Tests.xctest"
+               BlueprintName = "Homage App Tests"
                ReferencedContainer = "container:Homage.xcodeproj">
             </BuildableReference>
          </TestableReference>

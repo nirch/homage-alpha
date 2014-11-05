@@ -9,7 +9,6 @@
 #import "HMAppDelegate.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMUploadManager.h"
-#import "HMUploadS3Worker.h"
 #import "HMServer+analytics.h"
 #import "Mixpanel.h"
 #import "HMColor.h"
@@ -18,7 +17,6 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Appirater/Appirater.h>
-#import <Appsee/Appsee.h>
 #import <sys/utsname.h>
 
 @interface HMAppDelegate()
@@ -35,32 +33,40 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//  TODO: handle old known push token here.
-//    // Get push token from previous app launches.
-//    if (!self.pushToken)
-//        self.pushToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"deviceToken"];
+    #ifndef DEBUG
+
+        // ----------------------------------------------------------
+        // Release Build
+        // ----------------------------------------------------------
+
+        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    
+        //crashlytics crash reporting
+        [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+
+    #else
+
+        // ----------------------------------------------------------
+        // Debug Build
+        // ----------------------------------------------------------
+
+        // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        // [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+    
+    #endif
+    
+    //  TODO: handle old known push token here.
+    //    // Get push token from previous app launches.
+    //    if (!self.pushToken)
+    //        self.pushToken = [[NSUserDefaults standardUserDefaults] valueForKey:@"deviceToken"];
     
     // Async: Let the device know we want to receive push notifications
     [self initRemotePushNotificationsWithLaunchOptions:launchOptions];
     
     self.shouldAllowStatusBar = YES;
-   
-    #ifndef DEBUG
-        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-        //[Appsee start:@"128117df897b4508a2b68550ca52b354"];
-    
-        //crashlytics crash reporting
-        [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
-    #else
-        // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-        // [Appsee start:@"b2ba1b07eb884267b865eb5019912ef5"];
-        // [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
-    #endif
-    
-    
     self.pushNotificationFromBG = nil;
     
-    // TODO: Route here the remote notification received when the app was inactive
+    // Routing remote notification received when the app was inactive
     if (launchOptions) {
         NSDictionary *notificationInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (notificationInfo) {
@@ -86,12 +92,6 @@
                 self.pushNotificationFromBG = @{@"type" : [NSNumber numberWithInt:pushNotificationType]};
                  [[Mixpanel sharedInstance] track:@"push notification clicked" properties:@{@"type" : @"general meesage" , @"app_status" : @"closed"}];
             }
-            
-            // TODO: according to the detail in the notification, decide where and how to navigate to the proper screen in the UI.
-            // IMPORTANT!!!!!:
-            // Remmember that your app was just launched, you will have to initialize stuff first, before navigating to the screen you want.
-            // You don't even have the local storage at this point and you have to wait for NSManagedDocument to open/be created.
-            // So raise some flags or whatever here, and do the navigation logic in your UIViewControllers where they belong and at the proper moment!
         }
     }
     
@@ -270,6 +270,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     if (self.currentSessionHomageID)
     {
+        NSString *userID = [User current].userID;
+        if (!userID) userID = @"unknown";
         [HMServer.sh reportSession:self.currentSessionHomageID endForUser:[User current].userID];
         self.sessionStartFlag = NO;
     }

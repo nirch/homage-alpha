@@ -109,6 +109,12 @@
 
 ///
 /**
+ * pause the video.
+ */
+-(void)pause;
+
+///
+/**
  * hide video label
  */
 -(void)hideVideoLabel;
@@ -170,5 +176,7 @@
  *  sets the movie thumbnail image
  */
 -(void)setFrame:(CGRect)frame;
+
+-(void)setThumbURL:(NSURL *)thumbURL;
 
 @end

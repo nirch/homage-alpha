@@ -18,6 +18,7 @@
 #import "HMColor.h"
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
+#import "HMSplashViewController.h"
 #import "Mixpanel.h"
 #import "HMUploadManager.h"
 #import "HMUploadS3Worker.h"
@@ -32,14 +33,13 @@
 #import "IASKAppSettingsViewController.h"
 #import "HMLoginMainViewController.h"
 #import "HMServer+Users.h"
-//#import <Crashlytics/Crashlytics.h>
+#import "HMServer+Info.h"
 #import <AVFoundation/AVAudioPlayer.h>
 #import "UIImage+ImageEffects.h"
 #import "AMBlurView.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMServer+Stories.h"
 #import "HMServer+analytics.h"
-
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
 
@@ -64,10 +64,12 @@
 @property (weak, nonatomic) IBOutlet UIView *guiDarkOverlay;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurryOverlay;
 
-// Deprecated
-@property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
-@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
+// Splash screen
+@property (weak, nonatomic) IBOutlet UIView *guiSplashView;
+@property (weak,nonatomic) HMSplashViewController *splashVC;
 
+
+@property (weak, nonatomic) UIView *guiVideoContainer;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (weak,nonatomic) HMsideBarViewController *sideBarVC;
@@ -97,6 +99,10 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Store a reference to the start view controller in app delefate.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    app.mainVC = self;
     
     // Launch time
     _launchDateTime = [NSDate date];
@@ -207,7 +213,22 @@
                                                        name:HM_NOTIFICATION_USER_JOIN
                                                      object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(settingsDidChange:) name:kIASKAppSettingChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onConfigurationDataAvailable:)
+                                                       name:HM_NOTIFICATION_SERVER_CONFIG
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onRequestToShowSideBar:)
+                                                       name:HM_NOTIFICATION_UI_REQUEST_TO_SHOW_SIDE_BAR
+                                                     object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(settingsDidChange:)
+                                                       name:kIASKAppSettingChanged
+                                                     object:nil];
+    
 
     
 }
@@ -235,34 +256,52 @@
     [HMServer.sh updateUserPreferences:@{@"user_id" : userID , @"is_public" : shareValue}];
 }
 
+#pragma mark - HMMainGUIProtocol
+-(BOOL)isRenderingViewShowing
+{
+    if (self.renderingContainerView.hidden) return NO;
+    return YES;
+}
+
+-(CGFloat)renderingViewHeight
+{
+    return self.renderingContainerView.bounds.size.height;
+}
+
+-(void)showStoriesTab
+{
+    // TODO: fix Yoav's naming conventions. seperate between IB Actions handlers names and other VC methods.
+    [self storiesButtonPushed];
+}
+
 #pragma mark - Splash View
 -(void)prepareSplashView
 {
-    // Splash view initial state.
+    for (UIViewController *vc in self.childViewControllers) {
+        if ([vc isKindOfClass:[HMSplashViewController class]]) {
+            self.splashVC = (HMSplashViewController *)vc;
+        }
+    }
+    [self.splashVC prepare];
 }
 
 -(void)startSplashView
 {
-    // Show the splash screen animations.
-    // TODO: add some animations here
-    
-    // Show activity.
-    [self.guiActivity startAnimating];
+    [self.splashVC start];
 }
 
--(void)dismissSplashScreen
+-(void)dismissSplashScreenAfterAShortAnimation
 {
-    // Don't dismiss splash too quickly after launch.
-    // Will allow the splash screen to animate for about a second or two.
     NSTimeInterval timeIntervalSinceLaunch = [[NSDate date] timeIntervalSinceDate:self.launchDateTime];
-    double delayInSeconds = timeIntervalSinceLaunch > 2.5 ? 0 : 2.5 - timeIntervalSinceLaunch;
-
+    double delayInSeconds = timeIntervalSinceLaunch > 3.0 ? 0 : 3.0 - timeIntervalSinceLaunch;
+    
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [UIView animateWithDuration:0.3 animations:^{
             self.guiSplashView.alpha = 0;
         } completion:^(BOOL finished) {
             self.guiSplashView.hidden = YES;
+            [self.splashVC done];
         }];
     });
 }
@@ -286,6 +325,15 @@
             UINavigationController *navVC = (UINavigationController *)vc;
             [navVC popViewControllerAnimated:YES];
         }
+    }
+}
+
+-(IBAction)debugButtonPushed:(UIButton *)sender
+{
+    if (self.renderingContainerView.hidden) {
+        [self showRenderingView];
+    } else {
+        [self hideRenderingView];
     }
 }
 
@@ -424,11 +472,13 @@
 
 -(void)showSideBar
 {
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.8 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.5 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
         //self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth-currentAppWrapperCenterX,0);
         [self.appWrapperView setFrame:CGRectMake(sideBarWidth, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_SIDE_BAR_HIDDEN object:nil];
+    }];
     
     self.guiAppWrapperHideView.hidden = NO;
     self.sideBarVisible = YES;
@@ -527,16 +577,21 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"version"];
     
-    // Dismiss the splash screen.
+    // Dismiss the splash screen after a short animation.
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"appLaunch"];
-    [self dismissSplashScreen];
+    [self dismissSplashScreenAfterAShortAnimation];
  
     // The upload manager with # workers of a specific type.
     // You can always replace to another implementation of upload workers,
     // as long as the workers conform to the HMUploadWorkerProtocol.
-    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:5]];
+    [HMUploadManager.sh addWorkers:[HMUploadS3Worker instantiateWorkers:3]];
     [HMUploadManager.sh startMonitoring];
+    
+    //
+    // Loading client configurations set on the server side.
+    //
+    [HMServer.sh loadAdditionalConfig];
     
     //
     // If no current logged in user, present the login screen.
@@ -586,89 +641,11 @@
         [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
         myDelegate.sessionStartFlag = YES;
     }
-    
-    //DEBUG
-    //[self showRenderingView];
-    //[self.renderingVC renderStartedWithRemakeID:@"52d7fd79db25451694000001"];
 }
 
-//#pragma mark crash reports
-//-(void)reportCrashesIfExist
-//{
-//    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-//    NSError *error;
-//    
-//    // Check if we previously crashed
-//    if ([crashReporter hasPendingCrashReport])
-//        [self handleCrashReport];
-//    
-//    // Enable the Crash Reporter
-//    if (![crashReporter enableCrashReporterAndReturnError: &error])
-//        HMGLogWarning(@"Warning: Could not enable crash reporter: %@", error);
-//}
-//
-//- (void)handleCrashReport {
-//    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-//    NSData *crashData;
-//    NSError *error;
-//    
-//    // Try loading the crash report
-//    crashData = [crashReporter loadPendingCrashReportDataAndReturnError: &error];
-//    if (crashData == nil) {
-//        HMGLogWarning(@"Could not load crash report: %@", error);
-//    } else {
-//        PLCrashReport *report = [[PLCrashReport alloc] initWithData: crashData error: &error];
-//        if (report == nil)
-//        {
-//            HMGLogWarning(@"could not parse crash report");
-//        } else
-//        {
-//            HMGLogInfo(@"app crashed on %@", report.systemInfo.timestamp);
-//            HMGLogInfo(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
-//                       report.signalInfo.code, report.signalInfo.address);
-//            HMGLogInfo(@"crashed with exception: %@ reason: %@ stack: %@" , report.exceptionInfo.exceptionName , report.exceptionInfo.exceptionReason , report.exceptionInfo.stackFrames);
-//            
-//            Mixpanel *mixpanel = [Mixpanel sharedInstance];
-//            
-//            NSDictionary *crashDict = @{};
-//            
-//            if (report.signalInfo)
-//            {
-//                NSString *signalName = report.signalInfo.name ? report.signalInfo.name : @"not available";
-//                NSString *signalCode = report.signalInfo.code ? report.signalInfo.code : @"not available";
-//                NSNumber *address = report.signalInfo.address ? [NSNumber numberWithLongLong:report.signalInfo.address] : @0 ;
-//                
-//                crashDict = @{@"signal_name" : signalName , @"signal_code" : signalCode , @"signal_address" : address};
-//            }
-//            
-//            if (report.exceptionInfo)
-//            {
-//                NSString *exceptionName = report.exceptionInfo.exceptionName ? report.exceptionInfo.exceptionName : @"not available";
-//                NSString *exceptionReason = report.exceptionInfo.exceptionReason ? report.exceptionInfo.exceptionReason : @"not available";
-//                NSArray  *stackFrames = report.exceptionInfo.stackFrames ? report.exceptionInfo.stackFrames : @[];
-//                
-//                NSMutableDictionary *temp = [crashDict mutableCopy];
-//                [temp setValue:exceptionName forKey:@"exceptionName"];
-//                [temp setValue:exceptionReason forKey:@"exceptionReason"];
-//                [temp setValue:stackFrames forKey:@"stackFrames"];
-//                crashDict = [NSDictionary dictionaryWithDictionary:temp];
-//            }
-//    
-//            [mixpanel track:@"AppCrash" properties:crashDict];
-//        }
-//    }
-//    
-//    // Purge the report
-//    [crashReporter purgePendingCrashReport];
-//    return;
-//}
 
 -(void)presentLoginScreen
 {
-    //if (self.loginContainerView.hidden == NO) return;
-    
-    //self.appWrapperView.hidden = YES;
-    //self.loginContainerView.hidden = NO;
     [self.loginVC onPresentLoginCalled];
     [UIView animateWithDuration:2.0 animations:^{
         self.loginContainerView.alpha = 1;
@@ -678,13 +655,10 @@
         self.guiBlurryOverlay.alpha = 1;
         self.guiDarkOverlay.alpha = 1;
     } ];
-    
 }
 
 -(void)hideLoginScreen
 {
-    //if (self.loginContainerView.hidden == YES) return;
-    
     self.appWrapperView.hidden = NO;
     
     [self switchToTab:HMStoriesTab];
@@ -834,40 +808,29 @@
     if (!self.renderingContainerView.hidden) return;
     
     self.renderingContainerView.hidden = NO;
-    CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-    CGRect newAppContainerViewFrame = self.appWrapperView.frame;
-    
-    newAppContainerViewFrame.size.height -= renderingBarHeight;
-    self.renderingContainerView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
-        self.appWrapperView.frame = newAppContainerViewFrame;
         self.renderingContainerView.alpha = 1;
-        //self.appWrapperView.layer.borderColor = [[UIColor yellowColor] CGColor];
-        //self.appWrapperView.layer.borderWidth = 3.0f;
-    } completion:nil];
+        self.renderingContainerView.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN object:self];
+        });
+    }];
 }
 
 -(void)hideRenderingView
 {
     if (self.renderingContainerView.hidden) return;
     
-    CGFloat renderingBarHeight = self.renderingContainerView.frame.size.height;
-    CGRect newAppContainerViewFrame = self.appWrapperView.frame;
-    
-    newAppContainerViewFrame.size.height += renderingBarHeight;
     [UIView animateWithDuration:0.3 animations:^{
-        self.appWrapperView.frame = newAppContainerViewFrame;
         self.renderingContainerView.alpha = 0;
+        self.renderingContainerView.transform = CGAffineTransformMakeScale(1.3, 1.3);
     } completion:^(BOOL finished){
-        if (finished)
-        self.renderingContainerView.hidden = YES;
+        if (finished) self.renderingContainerView.hidden = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN object:self];
+        });
     }];
-}
-
--(BOOL)isRenderingViewShowing
-{
-    if (self.renderingContainerView.hidden) return NO;
-    return YES;
 }
 
 - (void)renderDoneClickedWithSuccess:(BOOL)success
@@ -1012,6 +975,17 @@
     
     [self.sideBarVC updateSideBarGUIWithName:userName FBProfile:fbProfileID];
     
+}
+
+-(void)onConfigurationDataAvailable:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    [HMServer.sh updateConfiguration:info];
+}
+
+-(void)onRequestToShowSideBar:(NSNotificationCenter *)notification
+{
+    [self showSideBar];
 }
 
 -(void)logoutPushed

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+@import CoreGraphics;
+
 #import "Scene.h"
 
 @interface Scene (Logic)

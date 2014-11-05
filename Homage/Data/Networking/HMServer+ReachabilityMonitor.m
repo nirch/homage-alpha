@@ -16,23 +16,28 @@
     [self.session.reachabilityManager startMonitoring];
     __weak HMServer *weakSelf = self;
     [self.session.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:weakSelf userInfo:@{@"status": @(status)}];;
         switch (status) {
                 case AFNetworkReachabilityStatusNotReachable:
                     HMGLogDebug(@"Reachability: NO Internet Connection");
+                    weakSelf.connectionLabel = @"";
                     break;
 
                 case AFNetworkReachabilityStatusReachableViaWiFi:
                     HMGLogDebug(@"Reachability: YES WIFI");
+                    weakSelf.connectionLabel = @"wifi";
                     break;
 
                 case AFNetworkReachabilityStatusReachableViaWWAN:
                     HMGLogDebug(@"Reachability: YES 3G");
+                    weakSelf.connectionLabel = @"wan";
                 break;
             default:
                 HMGLogDebug(@"Reachability: unknown");
                 break;
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                                                            object:weakSelf
+                                                          userInfo:@{@"status": @(status)}];;
     }];
 }
 

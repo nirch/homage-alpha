@@ -14,4 +14,6 @@
 
 +(Story *)storyWithID:(NSString *)sID inContext:(NSManagedObjectContext *)context;
 
++(NSArray *)allActiveStoriesInContext:(NSManagedObjectContext  *)context;
+
 @end

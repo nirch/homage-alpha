@@ -44,18 +44,58 @@
 
 -(void)refetchRemakesWithStoryID:(NSString *)storyID
 {
+    [self refetchRemakesWithStoryID:storyID likesInfoForUserID:nil];
+}
+
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID
+{
+    [self refetchRemakesWithStoryID:storyID likesInfoForUserID:userID limit:nil skip:nil];
+}
+
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID page:(NSInteger)page
+{
+    NSInteger skip = NUMBER_OF_REMAKES_PER_PAGE * (page-1);
+    NSInteger limit = NUMBER_OF_REMAKES_PER_PAGE;
+    [self refetchRemakesWithStoryID:storyID likesInfoForUserID:userID limit:@(limit) skip:@(skip)];
+}
+
+-(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID limit:(NSNumber *)limit skip:(NSNumber *)skip
+{
     // A simple GET request to the server
-    // Example URL: http://54.204.34.168:4567/remake/52d7a02edb25451630000002
+    // Example URL: http://54.204.34.168:4567/remakes/story/52d7a02edb25451630000002
     // Fetches info of a remake with the given id.
     // Returns (JSON) with the info about the given remake.
+    
     NSString *relativeURL = [self relativeURLNamed:@"story's remakes" withSuffix:storyID];
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    NSMutableDictionary *info = [NSMutableDictionary new];
+    
+    // User id (for getting info about likes/unlikes)
+    if (userID) {
+        parameters[@"user_id"] = userID;
+        info[@"likesForUserID"] = userID;
+    }
+    
+    // Maximum results to return.
+    if (limit) {
+        parameters[@"limit"] = limit;
+    } else {
+        parameters[@"limit"] = @20;
+    }
+    
+    if (skip) {
+        parameters[@"skip"] = skip;
+    }
+    
     [self getRelativeURL:relativeURL
-              parameters:nil
+              parameters:parameters
         notificationName:HM_NOTIFICATION_SERVER_REMAKES_FOR_STORY
-                    info:@{@"storyID":storyID}
-                  parser:[HMRemakesParser new]
-     ];
+                    info:info
+                  parser:[HMRemakesParser new]];
+    
 }
+
+
 
     
 -(void)refetchRemakesForUserID:(NSString *)userID

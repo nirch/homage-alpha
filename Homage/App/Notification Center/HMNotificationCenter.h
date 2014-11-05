@@ -12,6 +12,13 @@
 // General application states.
 #define HM_NOTIFICATION_APPLICATION_STARTED @"Application Started"
 
+#define HM_NOTIFICATION_UI_REQUEST_TO_SHOW_SIDE_BAR @"Show Side Bar"
+#define HM_NOTIFICATION_UI_REQUEST_TO_HIDE_SIDE_BAR @"Hide Side Bar"
+#define HM_NOTIFICATION_UI_SIDE_BAR_SHOWN @"Shown Side Bar"
+#define HM_NOTIFICATION_UI_SIDE_BAR_HIDDEN @"Hidden Side Bar"
+#define HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN @"Rendering Bar Shown"
+#define HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN @"Rendering Bar Hidden"
+
 // Fetches from the REST API.
 #define HM_NOTIFICATION_SERVER_USER_CREATION        @"Server New User"
 
@@ -79,12 +86,17 @@
 #define HM_SHORT_URL @"request response for URL shortening"
 
 //HOMAGE_SERVER_ANALYTICS
-#define HM_NOTIFICATION_SERVER_SHARE_REMAKE        @"remake shared"
-#define HM_NOTIFICATION_SERVER_REMAKE_VIEW         @"remake viewed"
-#define HM_NOTIFICATION_SERVER_STORY_VIEW          @"story viewed"
-#define HM_NOTIFICATION_SERVER_USER_BEGIN_SESSION  @"user begin session"
-#define HM_NOTIFICATION_SERVER_USER_END_SESSION    @"user end session"
-#define HM_NOTIFICATION_SERVER_USER_UPDATE_SESSION @"user update session"
+#define HM_NOTIFICATION_SERVER_SHARE_REMAKE          @"remake shared"
+#define HM_NOTIFICATION_SERVER_REMAKE_VIEW           @"remake viewed"
+#define HM_NOTIFICATION_SERVER_STORY_VIEW            @"story viewed"
+#define HM_NOTIFICATION_SERVER_USER_BEGIN_SESSION    @"user begin session"
+#define HM_NOTIFICATION_SERVER_USER_END_SESSION      @"user end session"
+#define HM_NOTIFICATION_SERVER_USER_UPDATE_SESSION   @"user update session"
+#define HM_NOTIFICATION_SERVER_USER_LIKED_REMAKE     @"user liked a remake"
+#define HM_NOTIFICATION_SERVER_USER_UNLIKED_REMAKE   @"user unliked a remake"
+
+//ADDITIONAL CONFIGURATIONS
+#define HM_NOTIFICATION_SERVER_CONFIG @"additional confiurations"
 
 @interface HMNotificationCenter : NSObject
 

@@ -51,5 +51,7 @@
 -(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 -(id)fetchOrCreateEntityNamed:(NSString *)entityName withPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 
+// In memory context for testing the model in memory (no persistance)
+-(NSManagedObjectContext *)inMemoryContextForTestsFromBundles:(NSArray *)bundles;
 
 @end

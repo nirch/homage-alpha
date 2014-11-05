@@ -386,11 +386,24 @@
 //
 - (IBAction)onPressedRetakeLastSceneButton:(UIButton *)sender
 {
+    Remake *remake = [self.remakerDelegate remake];
+    NSString *sceneID = [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue];
+    NSString *storyName = remake.story.name;
+    NSString *remakeID = remake.sID;
+
+    NSDictionary *props = @{
+                            @"scene_id": sceneID ,
+                            @"story": storyName,
+                            @"remake_id": remakeID
+                            };
+    
+    [[Mixpanel sharedInstance] track:@"RERetakeLast" properties:props];
+    
     NSDictionary *info = @{
                            @"sceneID":[self.remakerDelegate currentSceneID],
                            @"dismissOnDecision":@NO
                            };
-    [[Mixpanel sharedInstance] track:@"RERetakeLast" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
+    
     HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
     [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
     

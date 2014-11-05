@@ -265,7 +265,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                  selector:@selector(onFlipCamera:)
                      name:HM_NOTIFICATION_RECORDER_FLIP_CAMERA
                    object:nil];
-
+    
     //
     // Countdown started. Will focus camera on a specific point.
     //
@@ -295,6 +295,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_FLIP_CAMERA object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
     [nc removeObserver:self name:HM_APP_WILL_ENTER_FOREGROUND object:nil];
@@ -733,6 +735,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
         //1605
         
+        //
+        // Preffered Position
+        //
         if (flip)
         {
             switch (currentPosition)
@@ -965,6 +970,13 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         return;
     }
 
+    NSError *markError;
+    [rawMovieURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&markError];
+    if (markError) {
+        HMGLogError(@"Error while marking file to be excluded from icloud backup:%@", rawMoviePath);
+    }
+    
+    // Mark to be excluded from iCloud backup
     NSError *markError;
     [rawMovieURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&markError];
     if (markError) {

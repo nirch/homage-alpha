@@ -2,17 +2,23 @@
 //  HMUploadS3Worker.m
 //  Homage
 //
+//  Created by Aviv Wolf on 10/20/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
 #import "HMUploadS3Worker.h"
 #import "HMNotificationCenter.h"
+#import "Mixpanel.h"
+#import "HMServer.h"
 
 @interface HMUploadS3Worker()
 
 @property (nonatomic) HMAWS3Client *client;
 @property (nonatomic) NSString *name;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
+@property (nonatomic) int64_t totalBytesWritten;
+@property (nonatomic) int64_t totalBytesExpectedToWrite;
+@property (nonatomic) BOOL wasCanceled;
 
 @end
 
@@ -59,25 +65,109 @@
 
 -(BOOL)startWorking
 {
-    S3TransferOperation *transferOperation = [self.client startUploadJobForWorker:self];
-    if (!transferOperation) {
-        HMGLogError(@"Couldn't start upload job (transferOperation is nil) %@", self.jobID);
-        return NO;
-    }
+    //
+    // Create the upload request to do the job.
+    //
+    self.wasCanceled = NO;
+    AWSS3TransferManagerUploadRequest *uploadRequest = [self.client startUploadJobForWorker:self];
+    if (!uploadRequest) return NO;
+    
+    //
+    // Mark as working in the background, so if app goes to the background, the upload will continue.
+    //
     [self markAsWorkingInTheBackground];
-    self.userInfo[@"transferOperation"] = transferOperation;
+    self.userInfo[@"uploadRequest"] = uploadRequest;
+    
+    //
+    // Upload progress block.
+    //
+    uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend){
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self requestDidSendData:bytesSent totalBytesWritten:totalBytesSent totalBytesExpectedToWrite:totalBytesExpectedToSend];
+        });
+    };
+    
+    //
+    //  Tell client transfer manager to start the upload and handle success/failure.
+    //
+    NSDate *start = [NSDate date];
+    [[self.client.tm upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+        
+        NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:start];
+        NSString *networkType = HMServer.sh.connectionLabel;
+        
+        //
+        // Handle success.
+        //
+        if (!task.error && task.isCompleted && !task.isCancelled && !self.wasCanceled) {
+                double speed = self.totalBytesWritten/duration;
+            
+                // Successful upload. Update the manager.
+                _progress = 1.0;
+                HMGLogDebug(@"Completed upload");
+                [self.delegate worker:self reportingFinishedWithSuccess:YES info:nil];
+                [self unmarkAsWorkingInTheBackground];
+                [[Mixpanel sharedInstance] track:@"UploadSuccess" properties:@{@"source":self.source,
+                                                                               @"destination":self.destination,
+                                                                               @"duration":@(duration),
+                                                                               @"spd":@(speed),
+                                                                               @"total_bytes_sent":@(self.totalBytesWritten),
+                                                                               @"total_bytes_expected_to_write":@(self.totalBytesExpectedToWrite),
+                                                                               @"network_type":networkType
+                                                                               }];
+            
+            return nil;
+        }
+        
+        //
+        // Handle cancellation.
+        //
+        if (self.wasCanceled) {
+            HMGLogDebug(@"Upload task was canceled because of user retake.");
+            [[Mixpanel sharedInstance] track:@"UploadCanceled" properties:@{@"source":self.source,
+                                                                            @"destination":self.destination,
+                                                                            @"duration":@(duration),
+                                                                            @"total_bytes_sent":@(self.totalBytesWritten),
+                                                                            @"total_bytes_expected_to_write":@(self.totalBytesExpectedToWrite),
+                                                                            @"network_type":networkType
+                                                                            }];
+            
+            [self.delegate worker:self reportingFinishedWithSuccess:NO info:nil];
+            [self unmarkAsWorkingInTheBackground];
+            return nil;
+        }
+        
+        //
+        // Handle failure.
+        //
+        
+        // Update the app's upload manager.
+        NSString *errorString = task.error ? [task.error localizedDescription] : @"";
+        [[Mixpanel sharedInstance] track:@"UploadFailed" properties:@{@"source":self.source,
+                                                                      @"destination":self.destination,
+                                                                      @"duration":@(duration),
+                                                                      @"total_bytes_sent":@(self.totalBytesWritten),
+                                                                      @"total_bytes_expected_to_write":@(self.totalBytesExpectedToWrite),
+                                                                      @"network_type":networkType,
+                                                                      @"is_canceled":@(task.isCancelled),
+                                                                      @"error":errorString
+                                                                      }];
+        
+        [self.delegate worker:self reportingFinishedWithSuccess:NO info:@{@"error":errorString}];
+        [self unmarkAsWorkingInTheBackground];
+        return nil;
+    }];
+    
     return YES;
 }
 
 -(void)stopWorking
 {
-//    [self.client.tm cancelAllTransfers];
-    S3TransferOperation *transferOperation = self.userInfo[@"transferOperation"];
-    S3PutObjectRequest *putRequest = transferOperation.putRequest;
-    [transferOperation pause];
-    [transferOperation cleanup];
-    [putRequest cancel];
-    [self.userInfo removeObjectForKey:@"transferOperation"];
+    AWSS3TransferManagerUploadRequest *uploadRequest =self.userInfo[@"uploadRequest"];
+    self.wasCanceled = YES;
+    [uploadRequest cancel];
+    [self.userInfo removeObjectForKey:@"uploadRequest"];
+    HMGLogDebug(@"Upload worker stopping: %@", self.destination);
 }
 
 -(void)markAsWorkingInTheBackground
@@ -109,22 +199,16 @@
     }
 }
 
-#pragma mark - AmazonServiceRequestDelegate
-//
-//  Did receive response
-//
--(void)request:(AmazonServiceRequest *)request didReceiveResponse:(NSURLResponse *)response
-{
-    HMGLogDebug(@"didReceiveResponse called: %@", response);
-}
-
+#pragma mark - Upload progress
 //
 //  Did send data
 //
--(void)request:(AmazonServiceRequest *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
+-(void)requestDidSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
-    // HMGLogDebug(@"%lld / %lld writtern", totalBytesWritten, totalBytesExpectedToWrite);
     double progress = ((double)totalBytesWritten/(double)totalBytesExpectedToWrite);
+    self.totalBytesWritten = totalBytesWritten;
+    self.totalBytesExpectedToWrite = totalBytesExpectedToWrite;
+
     if (progress > self.progress+0.05) {
         _progress = progress;
         HMGLogDebug(@"%@ %.02f writtern", self.source, self.progress);
@@ -133,72 +217,8 @@
         if ([self.delegate respondsToSelector:@selector(worker:reportingProgress:info:)]) {
             [self.delegate worker:self reportingProgress:self.progress info:self.userInfo];
         }
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UPLOAD_PROGRESS object:self userInfo:@{}];
-        
     }
-}
-
-
-//
-// Did complete response
-//
--(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response
-{
-    /**
-     Example response for multipart upload.
-     
-     <?xml version="1.0" encoding="UTF-8"?>
-     <CompleteMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-     <Location>https://homageapp.s3.amazonaws.com/Remakes%2F52e58c31db25451064000011%2Fraw_scene_1.mov</Location>
-     <Bucket>homageapp</Bucket>
-     <Key>Remakes/52e58c31db25451064000011/raw_scene_1.mov</Key>
-     <ETag>"29e1fcd4157073de5b851016b46224a3-3"</ETag>
-     </CompleteMultipartUploadResult>
-     
-     */
-    _progress = 1.0;
-    HMGLogDebug(@"Complete with response: %@", [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-
-    // Update the manager, if able.
-    if ([self.delegate respondsToSelector:@selector(worker:reportingFinishedWithSuccess:info:)]) {
-        [self.delegate worker:self reportingFinishedWithSuccess:YES info:nil];
-    }
-
-    [self unmarkAsWorkingInTheBackground];
-}
-
-
-
-//
-//  did fail with error
-//
--(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error
-{
-    HMGLogDebug(@"didFailWithError called: %@", error);
-    
-    // Update the manager, if able.
-    if ([self.delegate respondsToSelector:@selector(worker:reportingFinishedWithSuccess:info:)]) {
-        [self.delegate worker:self reportingFinishedWithSuccess:NO info:@{@"error":error}];
-    }
-    
-    [self unmarkAsWorkingInTheBackground];
-}
-
-
-//
-//  did fail with service exception
-//
--(void)request:(AmazonServiceRequest *)request didFailWithServiceException:(NSException *)exception
-{
-    HMGLogDebug(@"didFailWithServiceException called: %@", exception);
-    
-    // Update the manager, if able.
-    if ([self.delegate respondsToSelector:@selector(worker:reportingFinishedWithSuccess:info:)]) {
-        [self.delegate worker:self reportingFinishedWithSuccess:NO info:@{@"exception":exception}];
-    }
-    
-    [self unmarkAsWorkingInTheBackground];
 }
 
 

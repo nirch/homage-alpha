@@ -103,7 +103,7 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
 *
 *  @param textID The text ID (notice, this starts at 1).
 *
-*  @return Returns a sting or nil if the id is out of bounds.
+*  @return Returns a string or nil if the id is out of bounds.
 */
 -(NSString *)textWithID:(NSNumber *)textID;
 
@@ -113,5 +113,25 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
 */
 -(void)deleteRawLocalFiles;
 
+///
+/**
+ *  Returns YES if the user liked this remake.
+ *
+ *  @param userID The user id of the user that liked/unliked this remake.
+ *  @return Returns a boolean value indicating if the user did or didn't like this remake.
+ */
+-(BOOL)isLikedByUserID:(NSString *)userID;
+
+///
+/**
+ *  Returns YES if the current user liked this remake.
+ *
+ *  @return Returns a boolean value indicating if the current user did or didn't like this remake.
+ */
+-(BOOL)isLikedByCurrentUser;
+
+
+-(void)likedByUserID:(NSString *)userID;
+-(void)unlikedByUserID:(NSString *)userID;
 
 @end

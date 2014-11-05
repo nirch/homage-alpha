@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, HMParserErrorCode) {
 @property (nonatomic, readonly) NSDateFormatter *dateFormatter;
 @property (nonatomic, readonly) NSDateFormatter *dateFormatterFallback;
 
+-(id)initWithContext:(NSManagedObjectContext *)ctx;
+
 // Reference to the context
 @property (readonly, nonatomic, weak) NSManagedObjectContext *ctx;
 

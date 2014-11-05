@@ -124,4 +124,44 @@
         [footage deleteRawLocalFile];
 }
 
+-(BOOL)isLikedByUserID:(NSString *)userID
+{
+    NSDictionary *likedByUsers = self.isLikedByUsers;
+    if (!likedByUsers) return NO;
+    if (likedByUsers[userID]) return YES;
+    return NO;
+}
+
+-(BOOL)isLikedByCurrentUser
+{
+    return [self isLikedByUserID:User.current.userID];
+}
+
+-(void)likedByUserID:(NSString *)userID
+{
+    NSMutableDictionary *likes = self.isLikedByUsers;
+    
+    // Create mutable dictionary if missing.
+    if (!likes) likes = [NSMutableDictionary new];
+    
+    // Add user as liking this remake
+    likes[userID] = @YES;
+    
+    // Store it.
+    self.isLikedByUsers = likes;
+}
+
+-(void)unlikedByUserID:(NSString *)userID
+{
+    NSMutableDictionary *likes = self.isLikedByUsers;
+
+    // If not liked yet by this user, do nothing.
+    if (!likes || !likes[userID]) return;
+
+    // Unlike by this user
+    [likes removeObjectForKey:userID];
+    self.isLikedByUsers = likes;
+}
+
+
 @end

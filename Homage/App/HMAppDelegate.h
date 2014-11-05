@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#import "HMMainGUIProtocol.h"
+
 #define IS_TEST_APP NO
 
 typedef NS_ENUM(NSInteger, HMPushNotificationType) {
@@ -28,6 +30,8 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 @property (nonatomic) BOOL isInRecorderContext;
 
 @property (nonatomic, readonly) NSString *deviceModel;
+
+@property UIViewController<HMMainGUIProtocol> *mainVC;
 
 -(BOOL)isSlowDevice;
 
