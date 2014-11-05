@@ -70,6 +70,8 @@
 		08537F1619EC099B00EBACA4 /* Scene+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958811891678600BCCF8C /* Scene+Factory.m */; };
 		08537F1719EC099F00EBACA4 /* Scene+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9589D189167C700BCCF8C /* Scene+Logic.m */; };
 		08537F1819EC09A200EBACA4 /* Story+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958831891678600BCCF8C /* Story+Factory.m */; };
+		0855D3701A0A68BA004830AE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0855D36F1A0A68BA004830AE /* Settings.bundle */; };
+		0855D3711A0A68BA004830AE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0855D36F1A0A68BA004830AE /* Settings.bundle */; };
 		085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		08651F1419EC09B400EF12FA /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
@@ -360,6 +362,7 @@
 		084E53401892240100D96258 /* HMServer+Render.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Render.m"; sourceTree = "<group>"; };
 		084E90D21A00E12800779030 /* HMSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSharing.h; sourceTree = "<group>"; };
 		084E90D31A00E12800779030 /* HMSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSharing.m; sourceTree = "<group>"; };
+		0855D36F1A0A68BA004830AE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		085BF6ED18C36AC2009D79C5 /* HMRecorderTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderTutorialViewController.h; sourceTree = "<group>"; };
 		085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderTutorialViewController.m; sourceTree = "<group>"; };
 		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
@@ -719,6 +722,7 @@
 		0806FA1618828AEB007514BE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0855D36F1A0A68BA004830AE /* Settings.bundle */,
 				F182B6DE18F407FB00A89B79 /* close up 480.ctr */,
 				08081FB718D0A9EA00999068 /* close up.ctr */,
 				2655DF3218EDA37100CA362F /* Homage-Info.plist */,
@@ -1634,6 +1638,7 @@
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
+				0855D3701A0A68BA004830AE /* Settings.bundle in Resources */,
 				267A640519532030003DFFEA /* whatsapp@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1643,6 +1648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0888CE9F19EC7222003D7249 /* ServerCFG.plist in Resources */,
+				0855D3711A0A68BA004830AE /* Settings.bundle in Resources */,
 				0888CEA419EC7DC2003D7249 /* stories.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
