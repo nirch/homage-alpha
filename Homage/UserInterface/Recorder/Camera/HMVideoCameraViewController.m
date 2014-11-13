@@ -969,12 +969,6 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
         return;
     }
-
-    NSError *markError;
-    [rawMovieURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&markError];
-    if (markError) {
-        HMGLogError(@"Error while marking file to be excluded from icloud backup:%@", rawMoviePath);
-    }
     
     // Mark to be excluded from iCloud backup
     NSError *markError;
