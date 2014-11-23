@@ -12,7 +12,6 @@
 #import "DB.h"
 #import "HMSceneCell.h"
 #import "HMNotificationCenter.h"
-#import "HMServer+LazyLoading.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMRoundCountdownLabel.h"
 #import "HMColor.h"
@@ -73,6 +72,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRecordButton;
 @property (weak, nonatomic) IBOutlet UIView *guiCountdownContainer;
 @property (weak, nonatomic) IBOutlet HMRoundCountdownLabel *guiRoundCountdownLabal;
+@property (weak, nonatomic) IBOutlet UIView *guiRoundBorder;
 
 
 //THE HAND!!!
@@ -141,13 +141,21 @@
     
     //bad BG label
     self.guiBadBGLabel.hidden = YES;
+    
+    // Round border for record button
+    UIView *b = self.guiRoundBorder;
+    b.backgroundColor = [UIColor clearColor];
+
+    b.layer.cornerRadius = b.bounds.size.width/2.0f;
+    b.layer.borderColor = [UIColor whiteColor].CGColor;
+    b.layer.borderWidth = 3;
 }
 
 -(void)initVideoControllers
 {
-    // Moved here for support of iOS8
-
     // Video controllers (scene & story)
+
+    // Scene
     HMSimpleVideoViewController *vc;
     _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
     self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
@@ -156,14 +164,17 @@
     self.sceneVideoVC.entityType = [NSNumber numberWithInteger:HMScene];
     self.sceneVideoVC.entityID = @"none";
 
+    // Story
     _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
     self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
-    self.storyVideoVC.videoImage = [self lazyLoadThumbForStory:self.remake.story];
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
     self.storyVideoVC.delegate = self;
     self.storyVideoVC.originatingScreen = [NSNumber numberWithInteger:HMRecorderMenu];
     self.storyVideoVC.entityType = [NSNumber numberWithInteger:HMStory];
     self.storyVideoVC.entityID = self.remake.story.sID;
+    NSURL *storyThumbURL = [NSURL URLWithString:self.remake.story.thumbnailURL];
+    [self.storyVideoVC setThumbURL:storyThumbURL];
+
 }
 
 -(void)initGUIOnceAfterFirstAppearance
@@ -245,19 +256,7 @@
                      name:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE
                    object:nil];
     
-    // Observe scene thumbnail
-    [nc addUniqueObserver:self
-                 selector:@selector(onLazyLoadedSceneThumbnail:)
-                     name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL
-                   object:nil];
-    
-    // Observe story thumbnail
-    [nc addUniqueObserver:self
-                 selector:@selector(onLazyLoadedStoryThumbnail:)
-                     name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
-                   object:nil];
-    
-    // Observe story thumbnail
+    // Observe upload progress
     [nc addUniqueObserver:self
                  selector:@selector(onUploadProgress:)
                      name:HM_NOTIFICATION_UPLOAD_PROGRESS
@@ -309,8 +308,6 @@
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENING object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
     /*[nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
@@ -321,40 +318,6 @@
 }
 
 #pragma mark - Observers handlers
--(void)onLazyLoadedSceneThumbnail:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    NSNumber *sceneID = info[@"sceneID"];
-    UIImage *image = info[@"image"];
-    
-    Scene *scene = [self.remake.story findSceneWithID:sceneID];
-    if (notification.isReportingError || !image) {
-        scene.thumbnail = nil;
-    } else {
-        scene.thumbnail = image;
-    }
-    
-    // If scene not currently visible, don't update the UI
-    if (![self.sceneID isEqualToNumber:sceneID]) return;
-    self.sceneVideoVC.videoImage = image;
-}
-
--(void)onLazyLoadedStoryThumbnail:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    UIImage *image = info[@"image"];
-    NSString *storyID = info[@"storyID"];
-    
-    if (notification.isReportingError || !image || ![storyID isEqualToString:self.remake.story.sID])
-    {
-        self.remake.story.thumbnail = nil;
-    } else {
-        self.remake.story.thumbnail = image;
-    }
-    // If scene not currently visible, don't update the UI
-    self.storyVideoVC.videoImage = image;
-}
-
 -(void)onRecorderDetailedOptionsClosed:(NSNotification *)notification
 {
     self.guiLessDetailsBar.hidden = NO;
@@ -468,8 +431,10 @@
     self.guiCurrentSceneDurationLabel.text = [scene titleForTime];
     
     // Current scene "OUR TAKE" video.
-    self.sceneVideoVC.videoImage = [self lazyLoadThumbImageForScene:scene];
-    self.sceneVideoVC.videoURL = scene.videoURL;
+    [self.sceneVideoVC setVideoURL:scene.videoURL];
+    NSURL *sceneThumbURL = [NSURL URLWithString:scene.thumbnailURL];
+    [self.sceneVideoVC setThumbURL:sceneThumbURL];
+
     
     // Show script button shown only if script exists for this scene.
     double w = self.guiSceneDirectionButtonContainer.superview.bounds.size.width;
@@ -486,29 +451,6 @@
     [self.guiTableView reloadData];
     [self updateShowHideScriptButtonWithReport:NO];
     [self updateTableHeader];
-}
-
-#pragma mark - Lazy loading
--(UIImage *)lazyLoadThumbImageForScene:(Scene *)scene
-{
-    if (scene.thumbnail) return scene.thumbnail;
-    [HMServer.sh lazyLoadImageFromURL:scene.thumbnailURL
-                     placeHolderImage:nil
-                     notificationName:HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL
-                                 info:@{@"sceneID":scene.sID}
-     ];
-    return nil;
-}
-
--(UIImage *)lazyLoadThumbForStory:(Story *)story
-{
-    if (story.thumbnail) return story.thumbnail;
-    [HMServer.sh lazyLoadImageFromURL:story.thumbnailURL
-                     placeHolderImage:nil
-                     notificationName:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
-                                 info:@{@"storyID":story.sID}];
-    
-    return nil;
 }
 
 #pragma mark - Original takes

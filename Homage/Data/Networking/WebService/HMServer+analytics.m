@@ -20,13 +20,58 @@
     return [BSONIdGenerator generate];
 }
 
--(void)reportShare:(NSString *)shareID forRemake:(NSString *)remakeID forUserID:(NSString *)userID shareMethod:(NSNumber *)shareMethod shareLink:(NSString *)shareLink shareSuccess:(BOOL)shareSuccess fromOriginatingScreen:(NSNumber *)originatingScreen
-{
-    NSNumber *success = [NSNumber numberWithBool:shareSuccess];
+-(void)requestShare:(NSString *)shareID
+          forRemake:(NSString *)remakeID
+             userID:(NSString *)userID
+          shareLink:(NSString *)shareLink
+    originatingScreen:(NSNumber *)originatingScreen
+               info:(NSDictionary *)info {
+
+    // Parameters of the request
+    NSDictionary *params = @{
+                             @"share_id":shareID,
+                             @"user_id":userID,
+                             @"remake_id":remakeID ,
+                             @"share_link":shareLink,
+                             @"share_status":@(NO),
+                             @"originating_screen":originatingScreen
+                             };
+    
+    // Post request to the server.
     [self postRelativeURLNamed:@"share remake"
-                    parameters:@{@"share_id":shareID, @"user_id":userID, @"remake_id":remakeID , @"share_method":shareMethod, @"share_link":shareLink, @"share_status":success, @"originating_screen":originatingScreen}
+                   parameters:params
+             notificationName:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST
+                         info:@{
+                                @"userID":userID,
+                                @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT],
+                                @"share_bundle":info
+                                }
+                       parser:nil];
+}
+
+-(void)reportShare:(NSString *)shareID
+            userID:(NSString *)userID
+         forRemake:(NSString *)remakeID
+       shareMethod:(NSNumber *)shareMethod
+      shareSuccess:(BOOL)shareSuccess
+              info:(NSDictionary *)info {
+    NSNumber *success = [NSNumber numberWithBool:shareSuccess];
+    // Parameters of the request
+    NSDictionary *params = @{
+                             @"share_id":shareID,
+                             @"share_method":shareMethod,
+                             @"share_status":success,
+                             @"user_id":userID
+                             };
+    
+    [self putRelativeURLNamed:@"share remake"
+                    parameters:params
               notificationName:HM_NOTIFICATION_SERVER_SHARE_REMAKE
-                          info:@{@"userID":userID,@"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]}
+                          info:@{
+                                 @"userID":userID,
+                                 @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT],
+                                 @"share_bundle":info
+                                 }
                         parser:nil
      ];
 }
@@ -52,8 +97,13 @@
     }
 }
 
--(void)reportVideoStopWithViewID:(NSString *)viewID forEntity:(NSNumber *)entityType withID:(NSString *)entityID forUserID:(NSString *)userID forDuration:(NSNumber *)playbackTime outOfTotalDuration:(NSNumber *)videoDuration fromOriginatingScreen:(NSNumber *)originatingScreen
-{
+-(void)reportVideoStopWithViewID:(NSString *)viewID
+                       forEntity:(NSNumber *)entityType
+                          withID:(NSString *)entityID
+                       forUserID:(NSString *)userID
+                     forDuration:(NSNumber *)playbackTime
+              outOfTotalDuration:(NSNumber *)videoDuration
+           fromOriginatingScreen:(NSNumber *)originatingScreen {
     if (entityType.intValue == HMStory)
     {
         [self postRelativeURLNamed:@"view story"

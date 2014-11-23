@@ -845,6 +845,10 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 {
     self.lockInterfaceRotation = NO;
     
+    AVCaptureDevice *currentVideoDevice = [[self videoDeviceInput] device];
+    AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
+    BOOL isSelfie = currentPosition == AVCaptureDevicePositionFront;
+    
     //
     // End background task.
     //
@@ -875,6 +879,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         [self epicFailWithOutputFileURL:outputFileURL];
         return;
     }
+    
+    
     
     //
     // No camera errors. Check the reason for why the recording was stopped.
@@ -984,7 +990,8 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
                                                         object:self
                                                       userInfo:@{@"rawMoviePath":rawMoviePath,
                                                                  @"remakeID":remakeID,
-                                                                 @"sceneID":sceneID
+                                                                 @"sceneID":sceneID,
+                                                                 @"isSelfie":@(isSelfie)
                                                                  }];
     
     //

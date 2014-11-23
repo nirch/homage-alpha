@@ -75,4 +75,13 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
  */
 -(NSNumber *)isActiveInCurrentVersionFirstVersion:(NSString *)firstVersionActive LastVersionActive:(NSString *)lastVersionActive;
 
+
+///
+/**
+ *  returns if the video for this story is cached (or bundled) locally on the device.
+ *
+ *  @return BOOL value indicating if the story video is available locally on the device.
+ */
+-(BOOL)isVideoAvailableLocally;
+
 @end

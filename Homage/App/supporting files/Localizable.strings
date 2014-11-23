@@ -8,11 +8,15 @@
 "CRITICAL_ERROR" = "CRITICAL ERROR";
 "CANCEL" = "Cancel";
 
+//General alerts and buttons
+"TRY_AGAIN_BUTTON" = "Try again";
+"CANCEL_BUTTON" = "Cancel";
+
 //indicating that the video saving process had failed */
 "VIDEO_SAVING_FAILED" = "Video saving failed";
 
 "OK" = "OK";
-"OK_GOT_IT" = "OK, Got it";
+"OK_GOT_IT" = "OK, GOT IT";
 "SORRY" = "Sorry!";
 "STORY_NOT_AVAILABLE" = "This story is no longer available. if you loved it, do tell us about it in the feedback section (->Settings)";
 
@@ -88,9 +92,18 @@
 "CREATE_MOVIE" = "CREATE MOVIE";
 "SHOW_YOUR_TAKE" = "SHOW YOUR TAKE";
 
+/*recorder tutorial*/
+"HELP_LABEL_SOLID_BG" = "Use solid backgrounds";
+"HELP_LABEL_PLACE_ACTOR" = "Place the actor here";
+"HELP_LABEL_SCENE_DURATION" = "Scene duration";
+"HELP_LABEL_GET_INSPIRED" = "Get inspired";
+"HELP_BUTTON_NEXT" = "NEXT";
+"HELP_BUTTON_FINISH" = "FINISH";
+
 /*go to next scene button*/
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
+"BAD_BACKGROUND_TITLE" = "IMPROPER BACKGROUND";
 "BAD_BACKGROUND_ADVICE" = "Improper background. For optimal results, use a solid color wall";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
@@ -124,6 +137,10 @@
 
 "SHARING_APP_SUBJECT" = "Join me in making awesome videos!";
 "SHARING_APP_BODY_MESSAGE" = "Keep calm and download homage:\n\n iPhone: %@\nAndroid: %@";
+
+//share alerts
+"SHARE_REMAKE_FAILED_TITLE" = "Failed sharing remake";
+"SHARE_REMAKE_FAILED_BODY" = "Failed sharing remake. Check connection and try again.";
 
 /*remake options menu*/
 "OPTIONS" = "Options";

@@ -8,6 +8,7 @@
 
 #import "Story+Logic.h"
 #import "DB.h"
+#import "HMCacheManager.h"
 
 @implementation Story (Logic)
 
@@ -106,6 +107,20 @@
     HMGLogDebug(@"firstVersionActive: %@ , currentAppVersion: %@ lastVersionActive: %@" , firstVersionActive , currentAppVersion , lastVersionActive);
     return @NO;
     
+}
+
+-(BOOL)isVideoAvailableLocally
+{
+    // Check if video is bundled locally.
+    if ([HMCacheManager.sh isResourceBundledLocallyForURL:self.videoURL])
+        return YES;
+    
+    // Check if video downloaded and cached locally.
+    if ([HMCacheManager.sh isResourceCachedLocallyForURL:self.videoURL cachePath:HMCacheManager.sh.storiesCachePath])
+        return YES;
+    
+    // Not bundled and not cached.
+    return NO;
 }
 
 @end

@@ -17,8 +17,13 @@
 @implementation HMSharing
 
 #pragma mark sharing
--(void)shareRemake:(Remake *)remake parentVC:(UIViewController *)parentVC trackEventName:(NSString *)trackEventName
-{
+-(NSDictionary *)generateShareBundleForRemake:(Remake *)remake
+                               trackEventName:(NSString *)trackEventName
+                            originatingScreen:(NSNumber *)originatingScreen {
+    
+    // The dictionary holding the generated share info.
+    NSMutableDictionary *shareBundle = [NSMutableDictionary new];
+    
     // Build the remake share URL
     NSString *storyNameWithoutSpaces = [remake.story.name stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *shareLinkPrefix = [HMServer.sh getShareLinkPrefix];
@@ -32,42 +37,98 @@
     {
         generalShareSubject = remake.story.shareMessage;
         whatsAppShareString = [NSString stringWithFormat:LS(@"SHARE_MSG_BODY") ,remake.story.shareMessage , remakeShareURL];
-    } else
-    {
+    } else {
         generalShareSubject = [NSString stringWithFormat:LS(@"DEFAULT_SHARE_MSG_SUBJECT") , remake.story.name];
         whatsAppShareString = [NSString stringWithFormat:LS(@"DEFUALT_SHARE_MSG_BODY") , remake.story.name , remakeShareURL];
     }
     
+    // General share body.
     NSString *generalShareBody = [whatsAppShareString stringByAppendingString:[NSString stringWithFormat:LS(@"SHARE_MSG_BODY_HASHTAGS") , storyNameWithoutSpaces, storyNameWithoutSpaces]];
-    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:whatsAppShareString forABID:nil];
     
+    // Whatsapp message
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:whatsAppShareString forABID:nil];
+
     //
-    NSArray *activityItems = [NSArray arrayWithObjects: generalShareBody, whatsappMsg, remake.thumbnail, nil];
+    // Build the bundle and return it
+    //
+    shareBundle[K_SHARE_ID] = shareID;
+    shareBundle[K_REMAKE_ID] = remake.sID;
+    shareBundle[K_REMAKE_OWNER_ID] = remake.user.userID;
+    shareBundle[K_STORY_NAME] = remake.story.name;
+    shareBundle[K_USER_ID] = [User current].userID;
+    shareBundle[K_SHARE_URL] = remakeShareURL;
+    shareBundle[K_SHARE_SUBJECT] = generalShareSubject;
+    shareBundle[K_SHARE_BODY] = generalShareBody;
+    shareBundle[K_WHATS_APP_MESSAGE] = whatsappMsg;
+    shareBundle[K_ORIGINATING_SCREEN] = originatingScreen;
+    shareBundle[K_TRACK_EVENT_NAME] = trackEventName;
+    return shareBundle;
+}
+
+-(void)requestShareWithBundle:(NSDictionary *)shareBundle
+{
+    NSString *shareID = shareBundle[K_SHARE_ID];
+    NSString *remakeID = shareBundle[K_REMAKE_ID];
+    NSString *remakeShareURL = shareBundle[K_SHARE_URL];
+    NSNumber *originatingScreen = shareBundle[K_ORIGINATING_SCREEN];
+    [HMServer.sh requestShare:shareID
+                    forRemake:remakeID
+                       userID:[User current].userID
+                    shareLink:remakeShareURL
+            originatingScreen:originatingScreen
+                         info:shareBundle];
+}
+
+-(void)shareRemakeBundle:(NSDictionary *)shareBundle
+                parentVC:(UIViewController *)parentVC
+          trackEventName:(NSString *)trackEventName
+               thumbnail:(UIImage *)thumbnail {
+
+    // Gather info about the share
+    NSString *generalShareSubject = shareBundle[K_SHARE_SUBJECT];
+    NSString *generalShareBody =    shareBundle[K_SHARE_BODY];
+    NSString *whatsAppMsg =         shareBundle[K_WHATS_APP_MESSAGE];
+    
+    // Create the activity items array.
+    NSArray *activityItems;
+    if (thumbnail) {
+        activityItems = @[generalShareBody, whatsAppMsg, thumbnail];
+    } else {
+        activityItems = @[generalShareBody, whatsAppMsg];
+    }
     NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
+        NSNumber *shareMethod = [self getShareMethod:activityType];
+
+        // Report to the server.
+        [HMServer.sh reportShare:shareBundle[K_SHARE_ID]
+                          userID:shareBundle[K_USER_ID]
+                       forRemake:shareBundle[K_REMAKE_ID]
+                     shareMethod:shareMethod
+                    shareSuccess:completed
+                            info:shareBundle];
+        
+        // Mixpanel report.
         if (completed) {
             NSDictionary *trackProperties = @{
-                                              @"story" : remake.story.name ,
+                                              @"story" : shareBundle[K_STORY_NAME] ,
                                               @"share_method" : activityType ,
-                                              @"remake_id" : remake.sID,
-                                              @"user_id" : User.current.userID,
-                                              @"remake_owner_id": remake.user.userID
+                                              @"remake_id" : shareBundle[K_REMAKE_ID],
+                                              @"user_id" : shareBundle[K_USER_ID],
+                                              @"remake_owner_id": shareBundle[K_REMAKE_OWNER_ID],
+                                              @"originating_screen": shareBundle[K_ORIGINATING_SCREEN]
                                               };
-            
             [[Mixpanel sharedInstance] track:trackEventName properties:trackProperties];
-            NSNumber *shareMethod = [self getShareMethod:activityType];
-            [HMServer.sh reportShare:shareID forRemake:remake.sID forUserID:[User current].userID shareMethod:shareMethod shareLink:remakeShareURL shareSuccess:true fromOriginatingScreen:[NSNumber numberWithInteger:HMMyStories]];
-            
         }
     };
-    
+
     [activityViewController setValue:generalShareSubject forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [parentVC presentViewController:activityViewController animated:YES completion:^{}];
     });
+
 }
 
 -(NSNumber *)getShareMethod:(NSString *)activityType
@@ -76,7 +137,6 @@
         return [NSNumber numberWithInt:HMShareMethodCopyToPasteboard];
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToFacebook"])
         return [NSNumber numberWithInt:HMShareMethodPostToFacebook];
-    //TODO:: get whatsapp activity name from iphone
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWhatsApp"])
         return [NSNumber numberWithInt:HMShareMethodPostToWhatsApp];
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Mail"])

@@ -2,7 +2,7 @@
 //  Footage.h
 //  Homage
 //
-//  Created by Aviv Wolf on 10/30/14.
+//  Created by Aviv Wolf on 11/23/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @interface Footage : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * currentlyUploaded;
+@property (nonatomic, retain) NSNumber * done;
 @property (nonatomic, retain) NSDate * lastUploadAttemptTime;
 @property (nonatomic, retain) id lastUploadFailedErrorDescription;
 @property (nonatomic, retain) NSString * processedVideoS3Key;
@@ -23,7 +24,7 @@
 @property (nonatomic, retain) NSNumber * sceneID;
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSNumber * uploadsFailedCounter;
-@property (nonatomic, retain) NSNumber * done;
+@property (nonatomic, retain) NSNumber * rawIsSelfie;
 @property (nonatomic, retain) Remake *remake;
 
 @end

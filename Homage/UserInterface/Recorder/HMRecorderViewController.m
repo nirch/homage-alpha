@@ -18,7 +18,6 @@
 #import "HMRecorderChildInterface.h"
 #import "HMRecorderMessagesOverlayViewController.h"
 #import "HMNotificationCenter.h"
-#import "HMServer+LazyLoading.h"
 #import "HMRecorderEditTextsViewController.h"
 #import "HMVideoCameraViewController.h"
 #import "HMRecorderTutorialViewController.h"
@@ -27,15 +26,10 @@
 #import <AudioToolbox/AudioServices.h>
 #import "HMMotionDetector.h"
 #import "HMServer+Info.h"
-
-/*
-// ---------------------------------------------------------------------------------------------------------------------
-#import <objc/message.h> // TODO: Used by the orientation hack. Remove this or you may not be approved for the appstore!
-// ---------------------------------------------------------------------------------------------------------------------
-*/
-// TODO: Temporary. This is for fake footages upload updates.
-// This will be the responsibility of the uploader and not the recorder.
+#import "HMServer+LazyLoading.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "HMServer+Footages.h"
+#import "HMCacheManager.h"
 
 @interface HMRecorderViewController () <UIAlertViewDelegate>
 
@@ -88,6 +82,9 @@
 
 @property (nonatomic) NSInteger backgroundStatusCounter;
 @property (nonatomic) BOOL      backgroundAlertDisplaying;
+@property (nonatomic) BOOL      isBadBackgroundWarningOn;
+
+@property (nonatomic) NSMutableArray *preloadedImageViews;
 
 @end
 
@@ -114,7 +111,8 @@
     [super viewDidLoad];
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
-    [self setNeedsStatusBarAppearanceUpdate];          
+    [HMCacheManager.sh pauseDownloads];
+    [self setNeedsStatusBarAppearanceUpdate];
     [self postEnableBGDetectionNotification];
     [self initRemakerState];
     [self initOptions];
@@ -140,6 +138,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self fixLayout];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -194,9 +193,16 @@
     
     self.backgroundStatusCounter = 0;
     
-    //[self loadContours];
+    self.guiBackgroundStatusButton.alpha = 0;
+    self.isBadBackgroundWarningOn = NO;
+}
 
-    //[self.guiBackgroundStatusButton setImage:goodBackground forState:UIControlStateNormal];
+-(void)fixLayout
+{
+    CGPoint p = self.guiBackgroundStatusButton.center;
+    CGPoint c = self.view.center;
+    p.x = c.x + 42;
+    self.guiBackgroundStatusButton.center = p;
 }
 
 #pragma mark - Recorder state flow
@@ -347,7 +353,6 @@
 -(void)stateShowHelpScreens
 {
     _recorderState = HMRecorderStateHelpScreens;
-    //TODO: uncomment line below
     self.guiHelperScreenContainer.hidden = NO;
     [self postDisableBGdetectionNotification];
     self.guiHelperScreenContainer.alpha = 0;
@@ -428,12 +433,6 @@
 -(void)initObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
-    // Observe lazy loading thumbnails
-    [nc addUniqueObserver:self
-                 selector:@selector(onSilhouetteLoaded:)
-                     name:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
-                   object:nil];
     
     [nc addUniqueObserver:self
                  selector:@selector(onContourFileDownloaded:)
@@ -518,7 +517,6 @@
 -(void)removeObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE object:nil];
@@ -542,31 +540,6 @@
     HMGLogDebug(@"Front camera selected");
     self.isSelfie = YES;
     [self updateUIForSceneID:self.currentSceneID];
-}
-
-
--(void)onSilhouetteLoaded:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    UIImage *image = info[@"image"];
-    Scene *scene = [Scene sceneWithID:info[@"sceneID"] story:self.remake.story inContext:DB.sh.context];
-    
-    if (notification.isReportingError || !image) {
-        scene.silhouette = nil;
-    } else {
-        scene.silhouette = image;
-    }
-
-    // If related to current scene, display it.
-    if ([scene.sID isEqualToNumber:self.currentSceneID]) {
-        self.guiSilhouetteImageView.image = [self silhouetteForScene:scene flipped:self.isSelfie];
-        self.guiSilhouetteImageView.alpha = 0;
-        self.guiSilhouetteImageView.hidden = NO;
-        [UIView animateWithDuration:0.7 animations:^{
-            // TODO: Make silhouette alpha dynamic
-            self.guiSilhouetteImageView.alpha = SILHOUETTE_HARD_CODED_ALPHA;
-        }];
-    }
 }
 
 -(void)onContourFileDownloaded:(NSNotification *)notification
@@ -622,7 +595,6 @@
     self.guiDismissButton.enabled = NO;
     self.guiCameraSwitchingButton.enabled = NO;
     self.guiSceneDirectionButton.enabled = NO;
-    self.guiBackgroundStatusButton.enabled = NO;
 
     self.guiWhileRecordingOverlay.hidden = NO;
     self.guiWhileRecordingOverlay.alpha = 0;
@@ -637,7 +609,6 @@
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiDismissButton.alpha = 0;
         self.guiSceneDirectionButton.alpha = 0;
-        self.guiBackgroundStatusButton.alpha = 0;
         
         // Fade in "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 1;
@@ -696,7 +667,6 @@
     self.guiSceneDirectionButton.hidden = NO;
     
     self.guiBackgroundStatusButton.enabled = YES;
-    self.guiBackgroundStatusButton.hidden = NO;
     
     [UIView animateWithDuration:0.2 animations:^{
         
@@ -707,7 +677,6 @@
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
         self.guiSceneDirectionButton.alpha = 1;
-        self.guiBackgroundStatusButton.alpha = 1;
         
         // Fade out "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 0;
@@ -723,6 +692,7 @@
     NSString *remakeID = info[@"remakeID"];
     NSString *rawMoviePath = info[@"rawMoviePath"];
     NSNumber *sceneID = info[@"sceneID"];
+    BOOL isSelfie = [info[@"isSelfie"] boolValue];
     
     if (!sceneID)
     {
@@ -738,6 +708,7 @@
     Footage *footage = [self.remake footageWithSceneID:sceneID];
     if (footage.rawLocalFile) [footage deleteRawLocalFile];
     footage.rawLocalFile = rawMoviePath;
+    footage.rawIsSelfie = @(isSelfie);
     [DB.sh save];
 
     // If uploader is currently uploading a file for this footage, cancel the upload (it is irelevant, a newer file is available).
@@ -801,11 +772,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil userInfo:@{@"sceneID":sceneID}];
 
     // Show silhouete of the related scene (or lazy load it).
-    UIImage *sillhouetterImage = [self silhouetteForScene:scene flipped:self.isSelfie];
-    self.guiSilhouetteImageView.image = sillhouetterImage;
-    self.guiSilhouetteImageView.alpha = sillhouetterImage ? SILHOUETTE_HARD_CODED_ALPHA : 0;
-    self.guiSilhouetteImageView.hidden = NO;
-    self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
+    [self silhouetteForScene:scene flipped:self.isSelfie];
     
     //update video camera controller with proper contour file
     NSString *contourFileLocalURL = [self contourFileForScene:scene];
@@ -820,10 +787,23 @@
 
 -(void)loadSilhouettes
 {
-    for (Scene *scene in self.remake.story.scenes)
-    {
-        [self silhouetteForScene:scene flipped:NO];
+    if (!self.preloadedImageViews) self.preloadedImageViews = [NSMutableArray new];
+    for (Scene *scene in self.remake.story.scenes) {
+        NSURL *url = [NSURL URLWithString:scene.silhouetteURL];
+        [self preloadImageViewAtURL:url];
     }
+}
+
+-(void)preloadImageViewAtURL:(NSURL *)url
+{
+    UIImageView *imageView = [UIImageView new];
+    imageView.hidden = YES;
+    NSInteger i = self.preloadedImageViews.count;
+    imageView.frame = CGRectMake(i * 50, 0, 50, 50);
+    [self.preloadedImageViews addObject:imageView];
+    [self.view addSubview:imageView];
+    [imageView sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageHighPriority completed:nil];
+    HMGLogDebug(@"Preloading silhoutte at url:%@", url);
 }
 
 -(void)loadContours
@@ -837,16 +817,24 @@
 #pragma mark - Lazy loading
 -(UIImage *)silhouetteForScene:(Scene *)scene flipped:(BOOL)flipped
 {
-    if (scene.silhouette) {
-        if (![HMServer.sh shouldMirrorSelfieSilhouette]) return scene.silhouette;
-        if (!flipped) return scene.silhouette;
-        return [self flippedImageOfImage:scene.silhouette];
-    }
-    
-    [HMServer.sh lazyLoadImageFromURL:scene.silhouetteURL
-                     placeHolderImage:nil
-                     notificationName:HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE
-                                 info:@{@"sceneID":scene.sID}];
+    self.guiSilhouetteImageView.alpha = 0;
+    NSURL *thumbURL = [NSURL URLWithString:scene.silhouetteURL];
+    [self.guiSilhouetteImageView sd_setImageWithURL:thumbURL placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.guiSilhouetteImageView.image = image;
+        if (cacheType == SDImageCacheTypeNone) {
+            // Reveal with animation
+            [UIView animateWithDuration:0.7 animations:^{
+                self.guiSilhouetteImageView.alpha = SILHOUETTE_HARD_CODED_ALPHA;
+                self.guiSilhouetteImageView.hidden = NO;
+                self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
+            }];
+        } else {
+            // Reveal with no animation.
+            self.guiSilhouetteImageView.alpha = SILHOUETTE_HARD_CODED_ALPHA;
+            self.guiSilhouetteImageView.hidden = NO;
+            self.guiSilhouetteImageView.transform = CGAffineTransformIdentity;
+        }
+    }];
     
     return nil;
 }
@@ -1122,7 +1110,7 @@
      ];
 }
 
-#pragma mark - Sort this out
+#pragma mark - User messages
 -(void)revealMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
     [self.messagesOverlayVC showMessageOfType:messageType checkNextStateOnDismiss:checkNextStateOnDismiss info:info];
@@ -1213,6 +1201,7 @@
     [self showTopButtons];
     [self hideTopScriptView];
 
+    self.guiBackgroundStatusButton.transform = CGAffineTransformIdentity;
     _detailedOptionsOpened = NO;
     if (!animated) {
         self.guiDetailedOptionsBarContainer.hidden = NO;
@@ -1232,13 +1221,12 @@
 
 -(void)openDetailedOptionsAnimated:(BOOL)animated
 {
-
     [self hideTopButtons];
     [self showTopScriptViewIfUserPreffered];
     
+    self.guiDetailedOptionsBarContainer.hidden = !self.isBadBackgroundWarningOn;
     _detailedOptionsOpened = YES;
     if (!animated) {
-        self.guiDetailedOptionsBarContainer.hidden = NO;
         self.guiDetailedOptionsBarContainer.transform = OPTIONS_BAR_TRANSFORM_OPENED;
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil userInfo:@{@"animated":@(animated)}];
         return;
@@ -1288,7 +1276,7 @@
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
         self.guiSceneDirectionButton.alpha = 1;
-        self.guiBackgroundStatusButton.alpha = 1;
+        self.guiBackgroundStatusButton.alpha = self.isBadBackgroundWarningOn ? 1:0;
     } completion:^(BOOL finished) {
     }];
 }
@@ -1365,6 +1353,26 @@
     [self updateUIForSceneID:self.currentSceneID];
 }
 
+#pragma mark - Bad background
+-(void)presentBadBackgroundAlert
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                       @"icon name":@"badBackground",
+                                                                                       @"text":LS(@"BAD_BACKGROUND_TITLE"),
+                                                                                       @"ok button text":LS(@"OK_GOT_IT"),
+                                                                                       
+                                                                                       @"blur alpha":@0.85,
+                                                                                       @"minimized background status":@YES
+                                                                                       
+                                                                                       }];
+        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeBigImage
+                           checkNextStateOnDismiss:NO
+                                              info:allInfo
+         ];
+    });
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -1381,27 +1389,6 @@
     [self presentBadBackgroundAlert];
     
 }
-
--(void)presentBadBackgroundAlert
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-    NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                   @"icon name":@"badBackground",
-                                                                                   @"text":LS(@"BAD_BACKGROUND_ADVICE"),
-                                                                                   @"ok button text":LS(@"OK_GOT_IT"),
-                                                                                   
-                                                                                   @"blur alpha":@0.85,
-                                                                                   @"minimized background status":@YES
-                                                                                   
-                                                                                   }];
-    [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeBigImage
-                       checkNextStateOnDismiss:NO
-                                          info:allInfo
-     ];
-    });
-}
-
-
 
 - (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
 {
@@ -1444,6 +1431,13 @@
         self.guiDetailedOptionsBarContainer.transform = CGAffineTransformMakeTranslation(0, y);
         lastYChange = y-previousY;
         previousY = y;
+        
+        // Transform the bad background warning icon
+        CGFloat scale = MAX(MIN(1-(self.startPanningY-y)/30.0f,1.0f),0);
+        CGAffineTransform t = CGAffineTransformMakeTranslation(0, y-self.startPanningY);
+        t = CGAffineTransformScale(t, scale, scale);
+        self.guiBackgroundStatusButton.transform = t;
+
     } else if (sender.state == UIGestureRecognizerStateCancelled || sender.state == UIGestureRecognizerStateEnded) {
         //
         // Determine if to open or close at the end of the drag.
@@ -1572,25 +1566,29 @@
 {
     
     dispatch_async(dispatch_get_main_queue(), ^{
-    if (activate)
-    {
-        [self.guiBackgroundStatusButton setImage:[UIImage imageNamed:@"iconBackgroundBad"] forState:UIControlStateNormal];
-        CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"contents"];
-        crossFade.duration = 0.5;
-        UIImage *goodBackground = [UIImage imageNamed:@"iconBackgroundGood"];
-        UIImage *badBackground = [UIImage imageNamed:@"iconBackgroundBad"];
-        crossFade.fromValue = (id)(badBackground.CGImage);
-        crossFade.toValue = (id)(goodBackground.CGImage);
-        crossFade.removedOnCompletion = NO;
-        crossFade.autoreverses = YES;
-        crossFade.repeatCount = HUGE_VALF;
-        crossFade.fillMode = kCAFillModeForwards;
-        [self.guiBackgroundStatusButton.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
-    } else
-    {
-        [self.guiBackgroundStatusButton.imageView.layer removeAllAnimations];
-        [self.guiBackgroundStatusButton setImage:[UIImage imageNamed:@"iconBackgroundGood"] forState:UIControlStateNormal];
-    }
+        if (activate)
+        {
+            self.isBadBackgroundWarningOn = YES;
+            [UIView animateWithDuration:0.3 animations:^{
+                self.guiBackgroundStatusButton.alpha = 1;
+            } completion:^(BOOL finished) {
+                CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"opacity"];
+                crossFade.duration = 1.0;
+                crossFade.fromValue = @(1.0);
+                crossFade.toValue = @(0.5);
+                crossFade.removedOnCompletion = NO;
+                crossFade.autoreverses = YES;
+                crossFade.repeatCount = HUGE_VALF;
+                crossFade.fillMode = kCAFillModeForwards;
+                [self.guiBackgroundStatusButton.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
+            }];
+        } else {
+            [self.guiBackgroundStatusButton.imageView.layer removeAllAnimations];
+            self.isBadBackgroundWarningOn = NO;
+            [UIView animateWithDuration:0.1 animations:^{
+                self.guiBackgroundStatusButton.alpha = 0;
+            }];
+        }
     });
 }
 

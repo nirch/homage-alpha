@@ -12,23 +12,19 @@
 
 @interface HMRecorderTutorialViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *guiSceneDurationLabel;
-@property (weak, nonatomic) IBOutlet UIView *guiSceneDurationPosition;
-
-@property (weak, nonatomic) IBOutlet UILabel *guiGetInspiredLabel;
-@property (weak, nonatomic) IBOutlet UIView *guiGetInspiredPosition;
-
-@property (weak, nonatomic) IBOutlet UILabel *guiFigureLabel;
-@property (weak, nonatomic) IBOutlet UIView *guiFigurePosition;
-
-@property (weak, nonatomic) IBOutlet UILabel *guiWallLabel;
-@property (weak, nonatomic) IBOutlet UIView *guiWallPosition;
-
-@property (nonatomic) NSArray *labels;
-@property (nonatomic) NSArray *positions;
-@property (nonatomic) NSMutableArray *arrows;
 @property (nonatomic) NSInteger index;
-@property (nonatomic) NSArray *tutorials;
+
+@property (weak, nonatomic) IBOutlet UIView *guiDarkOverlay;
+@property (weak, nonatomic) IBOutlet UIView *guiSilIndicatorContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiSolidBGIndicatorContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiSceneIndicatorContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiInspiredIndicatorContainer;
+@property (weak, nonatomic) IBOutlet UIButton *guiContinueButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *guiSceneDurationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiUseSolidBGLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiPlaceActorHereLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiGetInspiredLabel;
 
 @end
 
@@ -39,136 +35,143 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor clearColor];
-    
     self.index = 0;
-    
-    self.tutorials = @[
-                       @[@0,@1],
-                       @[@2,@3]
-                       ];
-    
+    [self hideAllAnimated:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self hideAllAnimated:NO];
+    [self initGUI];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [self initGUI];
+
 }
 
 -(void)initGUI
 {
-    self.labels = @[self.guiSceneDurationLabel,
-                    self.guiGetInspiredLabel,
-                    self.guiFigureLabel,
-                    self.guiWallLabel];
-    
-    self.positions = @[self.guiSceneDurationPosition,
-                       self.guiGetInspiredPosition,
-                       self.guiFigurePosition,
-                       self.guiWallPosition];
-    
-    self.arrows = [NSMutableArray new];
-    
-    for (NSInteger i=0;i<self.labels.count;i++) {
-        [self.arrows addObject:[self createArrowForIndex:i]];
-    }
-    
-    [self hideAllAnimated:NO];
-
+    self.guiSceneDurationLabel.text = LS(@"HELP_LABEL_SCENE_DURATION");
+    self.guiUseSolidBGLabel.text = LS(@"HELP_LABEL_SOLID_BG");
+    self.guiPlaceActorHereLabel.text = LS(@"HELP_LABEL_PLACE_ACTOR");
+    self.guiGetInspiredLabel.text = LS(@"HELP_LABEL_GET_INSPIRED");
 }
 
 -(void)hideAllAnimated:(BOOL)animated
 {
     if (!animated) {
-        for (UIView *view in self.positions) view.hidden = YES;
-        for (UILabel *label in self.labels) label.alpha = 0;
-        for (UIImageView *arrow in self.arrows) arrow.alpha = 0;
+        self.guiContinueButton.alpha = 0;
+        self.guiDarkOverlay.alpha = 0;
+        self.guiInspiredIndicatorContainer.alpha = 0;
+        self.guiSceneIndicatorContainer.alpha = 0;
+        self.guiSilIndicatorContainer.alpha = 0;
+        self.guiSolidBGIndicatorContainer.alpha = 0;
         return;
     }
     
-    [UIView animateWithDuration:0.7 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         [self hideAllAnimated:NO];
     }];
-}
-
-#pragma mark - Arrows
--(UIImageView *)createArrowForIndex:(NSInteger)index
-{
-    UIImage *image = [UIImage imageNamed:@"ToturialArrow"];
-    UIImageView *arrow = [[UIImageView alloc] initWithImage:image];
-    arrow.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-
-    UILabel *label = self.labels[index];
-    UIView *position = self.positions[index];
-    
-    CGFloat x1 = label.center.x;
-    CGFloat y1 = label.center.y;
-    CGFloat x2 = position.center.x;
-    CGFloat y2 = position.center.y;
-    
-    CGFloat x = (x1+x2)/2.0f;
-    CGFloat y = (y1+y2)/2.0f;
-    
-    [self.view addSubview:arrow];
-    
-    arrow.center = CGPointMake(x, y);
-    
-    CGFloat angle = atan2( x2 - x1 , y1 - y2);
-    
-    arrow.transform = CGAffineTransformMakeRotation(angle);
-    
-    return arrow;
 }
 
 #pragma mark - Flow
 -(void)start
 {
     self.index = 0;
-    [self showTutorialAtIndex:self.index];
+    [self handleState];
 }
 
 -(void)next
 {
     self.index++;
-    [self showTutorialAtIndex:self.index];
+    [self handleState];
 }
 
 -(void)done
 {
     [self.remakerDelegate dismissOverlayAdvancingState:YES info:@{@"dismissing help screen":@YES}];
-    
     User *user = [User current];
     user.skipRecorderTutorial = @YES;
 }
 
 #pragma mark - Showing tutorial messages
--(void)showTutorialAtIndex:(NSInteger)index
+-(void)handleState
 {
-    [self hideAllAnimated:YES];
-
-    if (self.index >= self.tutorials.count) {
+    if (self.index >= 2) {
         [self done];
         return;
     }
-    
-    NSArray *indexesToReveal = self.tutorials[index];
 
-    for (NSNumber *indexNumber in indexesToReveal) {
-        NSInteger index = indexNumber.integerValue;
-        UILabel *label = self.labels[index];
-        UIImageView *arrow = self.arrows[index];
-        [self revealView:label delay:0.5];
-        [self fadeInView:arrow delay:0.7];
-    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showTutorialForCurrentIndex];
+    });
+}
+
+-(void)showTutorialForCurrentIndex
+{
+    [self fadeInView:self.guiDarkOverlay delay:0.0];
+    [self fadeInView:self.guiContinueButton delay:0.3];
+    if (self.index==0) {
+        [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_NEXT") forState:UIControlStateNormal];
+        [self revealView:self.guiSolidBGIndicatorContainer delay:0.0];
+        [self fadeInView:self.guiSilIndicatorContainer delay:0.8];
+    } else if (self.index==1) {
+        [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_FINISH") forState:UIControlStateNormal];
+        
+        // Punch holes in the dark overlay
+        [self punchHoles];
+        
+        // Reveal indicators
+        [self revealView:self.guiSceneIndicatorContainer delay:0.4];
+        [self revealView:self.guiInspiredIndicatorContainer delay:0.8];
+    }
+}
+
+-(void)punchHoles
+{
+    UIView *viewWithHoles = self.guiDarkOverlay;
+    
+    CGRect bounds = viewWithHoles.bounds;
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.frame = bounds;
+    maskLayer.fillColor = [UIColor blackColor].CGColor;
+    
+    CGPoint point1;
+    CGPoint point2;
+
+    // TODO: support iPhone 6, 6 Plus, iPads layouts
+    if (IS_16_9_LANDSCAPE) {
+        // 16/9 screens (iPhone5, 5s, 5c)
+        point1 = CGPointMake(191, 289);
+        point2 = CGPointMake(534, 287);
+    } else {
+        // 4/3 screens (iPhone 4, 4s)
+        point1 = CGPointMake(166, 289);
+        point2 = CGPointMake(445, 287);
+    }
+    
+    UIBezierPath *path = [UIBezierPath new];
+    [self punchHoleInBounds:bounds atPoint:point1 radius:28 toPath:path];
+    [self punchHoleInBounds:bounds atPoint:point2 radius:28 toPath:path];
+    [path appendPath:[UIBezierPath bezierPathWithRect:bounds]];
+
+    maskLayer.path = path.CGPath;
+    maskLayer.fillRule = kCAFillRuleEvenOdd;
+    viewWithHoles.layer.mask = maskLayer;
+}
+
+-(void)punchHoleInBounds:(CGRect)bounds
+                 atPoint:(CGPoint)point
+                  radius:(CGFloat)radius
+                  toPath:(UIBezierPath *)path
+{
+    CGRect const circleRect = CGRectMake(point.x - radius,
+                                         point.y - radius,
+                                         2 * radius,
+                                         2 * radius);
+    [path appendPath:[UIBezierPath bezierPathWithOvalInRect:circleRect]];
 }
 
 -(void)revealView:(UIView *)view delay:(CGFloat)delay
@@ -201,7 +204,10 @@
 // ===========
 - (IBAction)onPressedNextButton:(id)sender
 {
-    [self next];
+    [self hideAllAnimated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self next];
+    });
 }
 
 - (BOOL)prefersStatusBarHidden

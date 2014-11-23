@@ -93,7 +93,6 @@
         scene.contourRemoteURL =        [info stringForKey:@"contour_remote"];
     }
     
-    CLEAR_CACHE_CHECK(scene,thumbnailURL,thumbnail,@"thumbnail"); // clear scene.thumbnail if url changed
     scene.thumbnailURL =            [info stringForKey:@"thumbnail"];
     
     if (info[@"silhouettes"])
@@ -101,12 +100,10 @@
         //new mongo configuration
         NSDictionary *silhouettes = info[@"silhouettes"];
         NSString *silhouetteNewURL = [silhouettes stringForKey:@"360"];
-        if (![silhouetteNewURL isEqualToString:scene.silhouetteURL]) scene.silhouette = nil;
         scene.silhouetteURL = silhouetteNewURL;
     } else
     {
         //old mongo configuration
-        CLEAR_CACHE_CHECK(scene,silhouetteURL,silhouette,@"silhouette"); // clear scene.thumbnail if url changed
         scene.silhouetteURL =           [info stringForKey:@"silhouette"];
     }
     

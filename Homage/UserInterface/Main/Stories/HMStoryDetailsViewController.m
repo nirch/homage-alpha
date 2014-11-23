@@ -10,7 +10,6 @@
 #import "HMStoryPresenterProtocol.h"
 #import "HMNotificationCenter.h"
 #import "HMServer+Remakes.h"
-#import "HMServer+LazyLoading.h"
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
 #import "HMRecorderViewController.h"
@@ -73,6 +72,8 @@
 @end
 
 @implementation HMStoryDetailsViewController
+
+@synthesize debugForcedVideoURL = _debugForcedVideoURL;
 
 #define REMAKE_ALERT_TAG 100
 #define MARK_AS_INAPPROPRIATE_TAG 200
@@ -167,10 +168,22 @@
     
     HMSimpleVideoViewController *vc;
     self.storyMoviePlayer = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryMovieContainer rotationSensitive:YES];
-    self.storyMoviePlayer.videoURL = self.story.videoURL;
+    
+    if (self.debugForcedVideoURL) {
+        // Used for debugging
+        self.storyMoviePlayer.videoURL = self.debugForcedVideoURL;
+    } else {
+        // The url to the video of the story
+        self.storyMoviePlayer.videoURL = self.story.videoURL;
+    }
+    
     [self.storyMoviePlayer hideVideoLabel];
     [self.storyMoviePlayer hideMediaControls];
-    self.storyMoviePlayer.videoImage = self.story.thumbnail;
+    
+    // Lazy load image.
+    NSURL *thumbURL =[NSURL URLWithString:self.story.thumbnailURL];
+    [self.storyMoviePlayer setThumbURL:thumbURL];
+    
     self.storyMoviePlayer.delegate = self;
     self.storyMoviePlayer.originatingScreen = [NSNumber numberWithInteger:HMStoryDetails];
     self.storyMoviePlayer.entityType = [NSNumber numberWithInteger:HMStory];
@@ -393,10 +406,6 @@
 - (void)updateCell:(HMRemakeCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    //cell.guiUserName.text = remake.user.userID;
-    //cell.tag = indexPath.item;
-    //cell.guiMoreButton.tag = indexPath.item;
     
     // Thumbnail
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
@@ -621,8 +630,6 @@
 #pragma mark UIAlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
-    
     if (alertView.tag == REMAKE_ALERT_TAG)
     {
         switch (buttonIndex)

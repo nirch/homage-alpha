@@ -18,6 +18,9 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMMainGUIProtocol.h"
 #import "HMAppDelegate.h"
+#import "HMCacheManager.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "IASKSettingsReader.h"
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -121,12 +124,6 @@
                                                    selector:@selector(onStoriesRefetched:)
                                                        name:HM_NOTIFICATION_SERVER_STORIES
                                                      object:nil];
-
-    // Observe lazy loading thumbnails
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onStoryThumbnailLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
-                                                     object:nil];
     
     // Observe rendering bar
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -139,6 +136,13 @@
                                                    selector:@selector(onRenderingBarStateChanged:)
                                                        name:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN
                                                      object:nil];
+    
+    // Observe settings changes
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onSettingsChanged:)
+                                                       name:kIASKAppSettingChanged
+                                                     object:nil];
+    
 }
 
 -(void)removeObservers
@@ -146,8 +150,6 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_APPLICATION_STARTED object:nil];
     //[nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORIES object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL object:nil];
-    
     [nc removeObserver:self name:HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN object:nil];
 }
@@ -196,36 +198,42 @@
         HMGLogError(@">>> You also get the NSError object:%@", notification.reportedError.localizedDescription);
     }
     
+    //
+    // Check if needs to download and cache resources
+    //
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [HMCacheManager.sh checkIfNeedsToDownloadAndCacheResources];
+    });
 }
 
--(void)onStoryThumbnailLoaded:(NSNotification *)notification
-{
-    
-    NSDictionary *info = notification.userInfo;
-    NSIndexPath *indexPath = info[@"indexPath"];
-    UIImage *image = info[@"image"];
-    
-    Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (notification.isReportingError || !image) {
-        story.thumbnail = nil;
-    } else {
-        story.thumbnail = image;
-    }
-    
-    // If row not visible, no need to update ui for this image.
-    if (![self.storiesCV.indexPathsForVisibleItems containsObject:indexPath]) return;
-    
-    // Reveal the image animation
-    HMStoryCell *cell = (HMStoryCell *)[self.storiesCV cellForItemAtIndexPath:indexPath];
-    cell.guiThumbImage.alpha = 0;
-    cell.guiThumbImage.image = image ? story.thumbnail : [UIImage imageNamed:@"missingThumbnail"];
-    cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
-    [UIView animateWithDuration:0.7 animations:^{
-        cell.guiThumbImage.alpha = 1;
-        cell.guiThumbImage.transform = CGAffineTransformIdentity;
-    }];
-    
-}
+//-(void)onStoryThumbnailLoaded:(NSNotification *)notification
+//{
+//    
+//    NSDictionary *info = notification.userInfo;
+//    NSIndexPath *indexPath = info[@"indexPath"];
+//    UIImage *image = info[@"image"];
+//    
+//    Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    if (notification.isReportingError || !image) {
+//        story.thumbnail = nil;
+//    } else {
+//        story.thumbnail = image;
+//    }
+//    
+//    // If row not visible, no need to update ui for this image.
+//    if (![self.storiesCV.indexPathsForVisibleItems containsObject:indexPath]) return;
+//    
+//    // Reveal the image animation
+//    HMStoryCell *cell = (HMStoryCell *)[self.storiesCV cellForItemAtIndexPath:indexPath];
+//    cell.guiThumbImage.alpha = 0;
+//    cell.guiThumbImage.image = image ? story.thumbnail : [UIImage imageNamed:@"missingThumbnail"];
+//    cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
+//    [UIView animateWithDuration:0.7 animations:^{
+//        cell.guiThumbImage.alpha = 1;
+//        cell.guiThumbImage.transform = CGAffineTransformIdentity;
+//    }];
+//    
+//}
 
 -(void)onPulledToRefetch
 {
@@ -238,6 +246,14 @@
 -(void)onRenderingBarStateChanged:(NSNotification *)notification
 {
     [self updateRenderingBarState];
+}
+
+-(void)onSettingsChanged:(NSNotification *)notification
+{
+    if (notification.userInfo[@"cacheStoriesVideos"]) {
+        BOOL cacheStoriesVideos = [notification.userInfo[@"cacheStoriesVideos"] boolValue];
+        if (!cacheStoriesVideos) [HMCacheManager.sh clearStoriesCache];
+    }
 }
 
 #pragma mark - Rendering bar states
@@ -284,6 +300,15 @@
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
             story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
+
+// TODO: remove this before merge to master
+//            if (indexPath.item % 2 == 0) {
+//                vc.debugForcedVideoURL = @"http://d293iqusjtyr94.cloudfront.net/Temp/Street+Fighter+1200.mp4";
+//            } else {
+//                vc.debugForcedVideoURL = @"http://d293iqusjtyr94.cloudfront.net/Temp/Street+Fighter+500.mp4";
+//            }
+
+            
             [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"story" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
         }
         
@@ -380,19 +405,35 @@
 -(void)configureCell:(HMStoryCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Story *story = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    //HMGLogDebug(@"story name: %@" , story.name);
-    
+
     cell.guiStoryNameLabel.text = story.name;
-    cell.guiLevelOfDifficulty.image = [self getDifficultyLevelThumbForStory:story];
-    
-    // Get thumb image from local storage or lazy load it from server.
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
-    cell.guiThumbImage.alpha = story.thumbnail ? 1:0;
-    cell.guiThumbImage.image = [self thumbForStory:story forIndexPath:indexPath];
+    cell.guiThumbImage.alpha = 0;
     
-    // Is a selfie icon
-    NSString *shotModeImageName = story.isASelfie ? @"selfie1" : @"director1";
-    cell.guiShotMode.image = [UIImage imageNamed:shotModeImageName];
+    // Lazy load image.
+    NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];
+    [cell.guiThumbImage sd_setImageWithURL:thumbURL placeholderImage:nil
+                                   options:SDWebImageRetryFailed|SDWebImageHighPriority
+                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                     
+        if (cacheType == SDImageCacheTypeNone) {
+            
+            // Reveal with animation
+            cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
+            [UIView animateWithDuration:0.4 animations:^{
+                cell.guiThumbImage.alpha = 1;
+                cell.guiThumbImage.transform = CGAffineTransformIdentity;
+            }];
+            
+        } else {
+            
+            // Reveal with no animation.
+            cell.guiThumbImage.alpha = 1;
+            
+        }
+    }];
+
+    
     
     // Number of remakes
     NSNumber *remakesNum = story.remakesNumber;
@@ -400,24 +441,6 @@
 }
 
 #pragma mark - Collection View configuration
--(UIImage *)getDifficultyLevelThumbForStory:(Story *)story
-{
-    UIImage *image;
-    switch (story.level.integerValue)
-    {
-        case HMStoryLevelEasy:
-            image = [UIImage imageNamed:@"level1"];
-            break;
-        case HMStoryLevelMedium:
-            image = [UIImage imageNamed:@"level2"];
-            break;
-        case HMStoryLevelHard:
-            image = [UIImage imageNamed:@"level3"];
-            break;
-    }
-    return image;
-}
-
 -(void)handleNoRemakes
 {
     //
@@ -428,18 +451,6 @@
     } else {
         [self.noStoriesLabel setHidden:YES];
     }
-}
-
-#pragma mark - Lazy loading
--(UIImage *)thumbForStory:(Story *)story forIndexPath:(NSIndexPath *)indexPath
-{
-    if (story.thumbnail) return story.thumbnail;
-    [HMServer.sh lazyLoadImageFromURL:story.thumbnailURL
-                     placeHolderImage:nil
-                     notificationName:HM_NOTIFICATION_SERVER_STORY_THUMBNAIL
-                                 info:@{@"indexPath":indexPath, @"storyID":story.sID}
-     ];
-    return nil;
 }
 
 -(void)showStoryDetailedScreenForStory:(NSString *)storyID

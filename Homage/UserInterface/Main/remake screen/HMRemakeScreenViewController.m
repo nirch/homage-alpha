@@ -15,6 +15,8 @@
 #import "HMSharing.h"
 #import "Mixpanel.h"
 
+#define ALERT_VIEW_TAG_SHARE_FAILED 100
+
 @interface HMRemakeScreenViewController ()
 
 @property (nonatomic) BOOL markedAsDone;
@@ -44,6 +46,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiLikeButton;
 
 // Sharing
+@property (weak, nonatomic) IBOutlet UIButton *guiShareButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiShareActivity;
+
 @property (nonatomic) HMSharing *currentSharer;
 
 // Remake
@@ -187,6 +192,12 @@
                                                        name:HM_NOTIFICATION_SERVER_USER_UNLIKED_REMAKE
                                                      object:nil];
     
+    // Observe share request
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onShareRemakeRequest:)
+                                                       name:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST
+                                                     object:nil];
+    
 }
 
 -(void)removeObservers
@@ -220,9 +231,47 @@
     [self updateInfoForRemake];
 }
 
+-(void)onShareRemakeRequest:(NSNotification *)notification
+{
+    self.guiShareButton.hidden = NO;
+    [self.guiShareActivity stopAnimating];
+    
+    if (notification.isReportingError) {
+        // Failed to request a share remake object from the server.
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:LS(@"SHARE_REMAKE_FAILED_TITLE")
+                                                            message:LS(@"SHARE_REMAKE_FAILED_BODY")
+                                                           delegate:self
+                                                  cancelButtonTitle:LS(@"CANCEL_BUTTON")
+                                                  otherButtonTitles:LS(@"TRY_AGAIN_BUTTON"), nil];
+        alertView.tag = ALERT_VIEW_TAG_SHARE_FAILED;
+        [alertView show];
+        return;
+    }
+    
+    // Not error reported.
+    // The share bundle is ready for sharing.
+    // Open the ui for the user.
+    NSDictionary *shareBundle = notification.userInfo[@"share_bundle"];
+    [self shareRemakeOpenUIForBundle:shareBundle];
+}
+
+#pragma mark - Alert view delegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSInteger tag = alertView.tag;
+    if (tag == ALERT_VIEW_TAG_SHARE_FAILED) {
+        if (buttonIndex == 0) return;
+
+        // Retry share remake request
+        [self shareRemakeRequest];
+    }
+}
+
 #pragma mark - Tearing down
 -(void)done
 {
+    if (self.guiShareActivity.isAnimating) return;
+    
     // Mark as done
     self.markedAsDone = YES;
     
@@ -252,7 +301,19 @@
     }
     
     self.remakeMoviePlayer = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiRemakeVideoContainer rotationSensitive:YES];
-    self.remakeMoviePlayer.videoURL = remake.videoURL;
+    
+    if (self.debugForcedVideoURL) {
+        //
+        // Used for debugging in development. Forces a specific url of the video to play.
+        //
+        self.remakeMoviePlayer.videoURL = self.debugForcedVideoURL;
+    } else {
+        //
+        // The video of the remake.
+        //
+        self.remakeMoviePlayer.videoURL = remake.videoURL;
+    }
+    
     
     NSURL *thumbURL = [NSURL URLWithString:remake.thumbnailURL];
     [self.remakeMoviePlayer setVideoImage:nil];
@@ -324,6 +385,26 @@
     [HMServer.sh unlikeRemakeWithID:self.remake.sID userID:User.current.userID];
 }
 
+#pragma mark - Share remake
+-(void)shareRemakeRequest
+{
+    self.currentSharer = [HMSharing new];
+    NSDictionary *shareBundle = [self.currentSharer generateShareBundleForRemake:self.remake
+                                                                  trackEventName:@"SDShareRemake"
+                                                               originatingScreen:@(HMStoryDetails)];
+    [self.currentSharer requestShareWithBundle:shareBundle];
+    [self.guiShareActivity startAnimating];
+    [self.guiShareButton setHidden:YES];
+}
+
+-(void)shareRemakeOpenUIForBundle:(NSDictionary *)shareBundle
+{
+    [self.currentSharer shareRemakeBundle:shareBundle
+                                 parentVC:self
+                           trackEventName:@""
+                                thumbnail:self.remakeMoviePlayer.videoImage];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -347,8 +428,7 @@
 
 - (IBAction)onPressedShareButton:(id)sender
 {
-    self.currentSharer = [HMSharing new];
-    [self.currentSharer shareRemake:self.remake parentVC:self trackEventName:@"SDShareRemake"];
+    [self shareRemakeRequest];
 }
 
 -(IBAction)onPressedPlayButton:(UIButton *)button

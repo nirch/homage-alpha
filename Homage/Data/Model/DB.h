@@ -54,4 +54,5 @@
 // In memory context for testing the model in memory (no persistance)
 -(NSManagedObjectContext *)inMemoryContextForTestsFromBundles:(NSArray *)bundles;
 
+
 @end

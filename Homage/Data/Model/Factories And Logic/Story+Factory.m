@@ -23,8 +23,8 @@
 {
     // Create fetch request
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_STORY];
-    //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @(YES)];
-    //fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"orderID" ascending:YES]];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @(YES)];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"orderID" ascending:YES]];
 
     // Perform the fetch.
     NSError *error;

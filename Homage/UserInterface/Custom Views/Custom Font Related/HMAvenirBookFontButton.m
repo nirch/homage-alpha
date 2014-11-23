@@ -22,7 +22,6 @@
 
 -(void)initCustomFont
 {
-    // TODO: remove this class. deprecated. use HMRegularFontButton instead.
     self.titleLabel.font = [UIFont fontWithName:@"Bryant-MediumCompressed" size:self.titleLabel.font.pointSize];
 }
 

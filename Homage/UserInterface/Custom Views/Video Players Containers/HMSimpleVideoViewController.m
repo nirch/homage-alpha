@@ -17,12 +17,10 @@
 #import "DB.h"
 #import "HMAppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "HMCacheManager.h"
 
 
 @implementation UIDevice (ALSystemVersion)
-
-//static const CGFloat movieBackgroundPadding = 0.f;
-//static const NSTimeInterval fullscreenAnimationDuration = 0.3;
 
 + (float)iOSVersion {
     static float version = 0.f;
@@ -50,6 +48,7 @@
 }
 
 @end
+
 @interface HMSimpleVideoViewController ()
 
 @property (nonatomic, readonly) BOOL isFullscreen;
@@ -74,11 +73,15 @@
 
 @property (nonatomic) BOOL markedAsDone;
 
+@property (nonatomic) NSString *cachedVideoURL;
+@property (nonatomic) BOOL isPlayedFromCache;
+
 @end
 
 @implementation HMSimpleVideoViewController
 
 @synthesize videoPlayer = _videoPlayer;
+@synthesize videoURL = _videoURL;
 
 -(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC containerView:(UIView *)containerView rotationSensitive:(BOOL)rotate;
 {
@@ -110,6 +113,8 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    _isPlayedFromCache = NO;
+    _cachedVideoURL = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -131,7 +136,13 @@
     {
         [self updateUIToPlayVideoState];
         self.shouldAutoPlay = NO;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self determineIfPlayedFromCache];
+        if (self.isPlayedFromCache) {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.videoView.guiVideoThumb.alpha = 0;
+            }];
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self play];
         });
     }
@@ -176,7 +187,7 @@
         [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
     }
     
-    if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.hidden = NO;
+    if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabelContainer.hidden = NO;
     
     self.videoView.guiPlayButton.hidden = NO;
     self.videoView.guiLoadActivity.alpha = 1;
@@ -188,7 +199,7 @@
         self.videoPlayer.view.alpha = 0;
         self.videoView.guiVideoThumb.alpha = 1;
         self.videoView.guiPlayButton.alpha = 1;
-        if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.alpha = 1;
+        if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabelContainer.alpha = 1;
     } completion:^(BOOL finished) {
         
     }];
@@ -431,12 +442,12 @@
     self.videoView.guiLoadActivity.hidden = NO;
     [self.videoView.guiLoadActivity startAnimating];
     self.videoView.guiPlayPauseButton.selected = YES;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.videoView.guiPlayButton.alpha = 0;
-        self.videoView.guiVideoLabel.alpha = 0;
+        self.videoView.guiVideoLabelContainer.alpha = 0;
         self.videoView.guiVideoLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
     } completion:^(BOOL finished) {
-        self.videoView.guiVideoLabel.hidden = YES;
+        self.videoView.guiVideoLabelContainer.hidden = YES;
         self.videoView.guiPlayButton.hidden = YES;
         self.videoView.guiVideoLabel.transform = CGAffineTransformIdentity;
 
@@ -522,7 +533,7 @@
         [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
     }
 
-    if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.hidden = NO;
+    if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabelContainer.hidden = NO;
     
     self.videoView.guiPlayButton.hidden = NO;
     self.videoView.guiLoadActivity.alpha = 1;
@@ -534,7 +545,7 @@
         self.videoPlayer.view.alpha = 0;
         self.videoView.guiVideoThumb.alpha = 1;
         self.videoView.guiPlayButton.alpha = 1;
-        if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabel.alpha = 1;
+        if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabelContainer.alpha = 1;
     } completion:^(BOOL finished) {
         
     }];
@@ -558,15 +569,15 @@
     _shouldDisplayVideoLabel = NO;
     
     if (!animated) {
-        self.videoView.guiVideoLabel.hidden = YES;
+        self.videoView.guiVideoLabelContainer.hidden = YES;
         return;
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        self.videoView.guiVideoLabel.alpha = 0;
+        self.videoView.guiVideoLabelContainer.alpha = 0;
     } completion:^(BOOL finished) {
-        self.videoView.guiVideoLabel.alpha = 0;
-        self.videoView.guiVideoLabel.hidden = YES;
+        self.videoView.guiVideoLabelContainer.alpha = 0;
+        self.videoView.guiVideoLabelContainer.hidden = YES;
     }];
 }
 
@@ -580,15 +591,15 @@
     _shouldDisplayVideoLabel = YES;
     
     if (!animated) {
-        self.videoView.guiVideoLabel.hidden = NO;
+        self.videoView.guiVideoLabelContainer.hidden = NO;
         return;
     }
     
-    self.videoView.guiVideoLabel.hidden = NO;
+    self.videoView.guiVideoLabelContainer.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
-        self.videoView.guiVideoLabel.alpha = 1;
+        self.videoView.guiVideoLabelContainer.alpha = 1;
     } completion:^(BOOL finished) {
-        self.videoView.guiVideoLabel.alpha = 1;
+        self.videoView.guiVideoLabelContainer.alpha = 1;
     }];
 }
 
@@ -872,6 +883,56 @@
     }
 }
 
+#pragma mark - Cached videos
+-(NSString *)videoURL
+{
+    if (self.cachedVideoURL) return _cachedVideoURL;
+    return _videoURL;
+}
+
+-(void)setVideoURL:(NSString *)videoURL
+{
+    _videoURL = videoURL;
+}
+
+-(void)determineIfPlayedFromCache
+{
+    [self videoURL];
+    _isPlayedFromCache = _cachedVideoURL ? YES : NO;
+}
+
+-(NSString *)cachedVideoURL
+{
+    // Use cached video url if already set.
+    if (_cachedVideoURL) return _cachedVideoURL;
+
+    NSString *videoFile = [_videoURL lastPathComponent];
+    NSArray *comp = [videoFile componentsSeparatedByString:@"."];
+    NSString *fileName;
+    NSString *extension;
+    if (comp.count == 2) {
+        fileName = comp[0];
+        extension = comp[1];
+    }
+    if (!fileName || !extension) return nil;
+    
+    // Check if bundled video exists.
+    NSURL *bundledURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:extension];
+    if (bundledURL) {
+        _cachedVideoURL = [bundledURL description];
+        return _cachedVideoURL;
+    }
+    
+    // Check if video cached in caches folder.
+    HMCacheManager *cm = HMCacheManager.sh;
+    NSURL *cachedURL = [cm urlForCachedResource:_videoURL cachePath:cm.storiesCachePath];
+    if (cachedURL) {
+        _cachedVideoURL = [cachedURL description];
+        return _cachedVideoURL;
+    }
+    
+    return nil;
+}
 
 #pragma mark - IB Actions
 // ===========
@@ -913,26 +974,11 @@
     [self videoPlaybackControlsShouldBeVisible:self.videoView.guiControlsContainer.hidden];
 }
 
-//-(void)videoPlayerIsShowingPlaybackControls:(BOOL)controlsShown;
-
 
 - (IBAction)onMovedSlider:(UISlider *)sender
 {
     [self.videoPlayer setCurrentPlaybackTime:sender.value * self.videoPlayer.duration];
 }
-
-//-(void)printViewProperties:(UIView *)view name:(NSString *)name
-//{
-//    [self displayRect:name BoundsOf:view.frame];
-//    HMGLogDebug(@"%@ alpha: %f hidden: %hhd" , name ,  view.alpha , view.hidden);
-//}
-
-//-(void)displayRect:(NSString *)name BoundsOf:(CGRect)rect
-//{
-//    CGSize size = rect.size;
-//    CGPoint origin = rect.origin;
-//    HMGLogDebug(@"%@ bounds: origin:(%f,%f) size(%f %f)" , name , origin.x , origin.y , size.width , size.height);
-//}
 
 -(void)onMovieDurationAvailable:(NSNotification *)notification
 {

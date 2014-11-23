@@ -2,7 +2,7 @@
 //  Scene.m
 //  Homage
 //
-//  Created by Yoav Caspin on 5/22/14.
+//  Created by Aviv Wolf on 11/22/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -13,19 +13,17 @@
 @implementation Scene
 
 @dynamic context;
+@dynamic contourLocalURL;
+@dynamic contourRemoteURL;
 @dynamic duration;
 @dynamic focusPointX;
 @dynamic focusPointY;
 @dynamic isSelfie;
 @dynamic script;
 @dynamic sID;
-@dynamic silhouette;
 @dynamic silhouetteURL;
-@dynamic thumbnail;
 @dynamic thumbnailURL;
 @dynamic videoURL;
-@dynamic contourRemoteURL;
-@dynamic contourLocalURL;
 @dynamic story;
 
 @end

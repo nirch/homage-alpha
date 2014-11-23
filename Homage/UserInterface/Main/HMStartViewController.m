@@ -40,6 +40,7 @@
 #import "HMSimpleVideoViewController.h"
 #import "HMServer+Stories.h"
 #import "HMServer+analytics.h"
+#import <SDWebImage/SDWebImageDownloader.h>
 
 @interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
 
@@ -115,6 +116,9 @@
     // Splash screen.
     [self prepareSplashView];
     [self startSplashView];
+    
+    // Setup the image downloader
+    [[SDWebImageDownloader sharedDownloader] setMaxConcurrentDownloads:6];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -228,9 +232,6 @@
                                                    selector:@selector(settingsDidChange:)
                                                        name:kIASKAppSettingChanged
                                                      object:nil];
-    
-
-    
 }
 
 -(void)updateUserPreferences
@@ -765,7 +766,7 @@
     
     vc.delegate = self;
     vc.originatingScreen = [NSNumber numberWithInteger:HMHowTo];
-    vc.entityType = [NSNumber numberWithInteger:HMIntroMovie];
+    vc.entityType = [NSNumber numberWithInteger:HMHowTo];
     vc.entityID = @"none";
     vc.resetStateWhenVideoEnds = YES;
     [vc play];

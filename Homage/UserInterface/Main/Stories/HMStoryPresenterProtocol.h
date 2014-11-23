@@ -13,4 +13,7 @@
 @property (nonatomic) Story *story;
 @property (nonatomic) BOOL autoStartPlayingStory;
 
+// For debugging
+@property (nonatomic) NSString *debugForcedVideoURL;
+
 @end

@@ -52,8 +52,6 @@
     
     Remake *remake = [Remake remakeWithID:remakeID story:story user:user inContext:self.ctx];
     remake.status = [info numberForKey:@"status"];
-    
-    CLEAR_CACHE_CHECK(remake,thumbnailURL,thumbnail,@"thumbnail"); // clear remake.thumbnail if url changed
     remake.thumbnailURL = [info stringForKey:@"thumbnail"];
     remake.videoURL = [info stringForKey:@"video"];
     remake.shareURL = [info stringForKey:@"share_link"];

@@ -16,10 +16,12 @@
 
 @interface HMRemakeScreenViewController : UIViewController<
     HMSimpleVideoPlayerDelegate,
-    UIScrollViewDelegate
+    UIScrollViewDelegate,
+    UIAlertViewDelegate
 >
 
 @property (nonatomic, weak) id<HMRemakePresenterDelegate> delegate;
+@property (nonatomic) NSString *debugForcedVideoURL;
 
 -(void)prepareForRemake:(Remake *)remake animateFromRect:(CGRect)s fromCenter:(CGPoint)c;
 

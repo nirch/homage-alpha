@@ -206,17 +206,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(BOOL)checkCredentials
 {
     NSString *emailAddress = self.guiMailTextField.text;
-    
-    /*
-    // TODO: REMOVE!!!!! Ran's hack - always using the Test environment
-    if ([emailAddress isEqualToString:@"ranpeer@gmail.com"])
-    {
-        [[HMServer sh] ranHack];
-    }
-    */
-    
+
     BOOL isMailCorrectFormat = [self validateEmail:emailAddress];
-    
     if (!isMailCorrectFormat)
     {
         [self presentErrorLabelWithReason:HMIncorrectMailAddressFormat];

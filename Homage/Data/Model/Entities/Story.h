@@ -2,7 +2,7 @@
 //  Story.h
 //  Homage
 //
-//  Created by Yoav Caspin on 6/23/14.
+//  Created by Aviv Wolf on 11/17/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -20,12 +20,11 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * orderID;
 @property (nonatomic, retain) NSNumber * remakesNumber;
+@property (nonatomic, retain) NSString * shareMessage;
 @property (nonatomic, retain) NSString * sID;
-@property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSDecimalNumber * version;
 @property (nonatomic, retain) NSString * videoURL;
-@property (nonatomic, retain) NSString * shareMessage;
 @property (nonatomic, retain) NSSet *remakes;
 @property (nonatomic, retain) NSSet *scenes;
 @property (nonatomic, retain) NSSet *texts;

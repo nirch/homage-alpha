@@ -2,7 +2,7 @@
 //  Remake.h
 //  Homage
 //
-//  Created by Aviv Wolf on 10/28/14.
+//  Created by Aviv Wolf on 11/20/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -15,19 +15,18 @@
 
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * grade;
+@property (nonatomic, retain) id isLikedByUsers;
 @property (nonatomic, retain) NSDate * lastLocalUpdate;
+@property (nonatomic, retain) NSNumber * likesCount;
 @property (nonatomic, retain) NSString * shareURL;
 @property (nonatomic, retain) NSString * sID;
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSNumber * stillPublic;
 @property (nonatomic, retain) id texts;
-@property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSString * thumbnailURL;
+@property (nonatomic, retain) NSString * userFullName;
 @property (nonatomic, retain) NSString * videoURL;
 @property (nonatomic, retain) NSNumber * viewsCount;
-@property (nonatomic, retain) id isLikedByUsers;
-@property (nonatomic, retain) NSNumber * likesCount;
-@property (nonatomic, retain) NSString * userFullName;
 @property (nonatomic, retain) NSSet *footages;
 @property (nonatomic, retain) Story *story;
 @property (nonatomic, retain) User *user;

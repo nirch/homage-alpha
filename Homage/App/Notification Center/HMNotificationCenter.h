@@ -46,6 +46,9 @@
 #define HM_NOTIFICATION_UPLOAD_PROGRESS             @"Upload Progress"
 #define HM_NOTIFICATION_UPLOAD_FINISHED             @"Upload Finished"
 
+// Downloads
+#define HM_NOTIFICATION_DOWNLOAD_RESOURCE_FINISHED @"Download Resource Finished"
+
 // Lazy loading notifications
 #define HM_NOTIFICATION_SERVER_STORY_THUMBNAIL      @"Server Story Thumbnail"
 #define HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL     @"Server Remake Thumbnail"
@@ -86,6 +89,7 @@
 #define HM_SHORT_URL @"request response for URL shortening"
 
 //HOMAGE_SERVER_ANALYTICS
+#define HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST  @"remake share request"
 #define HM_NOTIFICATION_SERVER_SHARE_REMAKE          @"remake shared"
 #define HM_NOTIFICATION_SERVER_REMAKE_VIEW           @"remake viewed"
 #define HM_NOTIFICATION_SERVER_STORY_VIEW            @"story viewed"

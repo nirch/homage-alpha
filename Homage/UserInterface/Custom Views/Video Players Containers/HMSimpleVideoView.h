@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIView *guiVideoContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *guiVideoThumb;
 @property (weak, nonatomic) IBOutlet UIView *guiVideoThumbOverlay;
+
+@property (weak, nonatomic) IBOutlet UIView *guiVideoLabelContainer;
 @property (weak, nonatomic) IBOutlet UILabel *guiVideoLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiLoadActivity;
 @property (weak, nonatomic) IBOutlet UIButton *guiPlayButton;

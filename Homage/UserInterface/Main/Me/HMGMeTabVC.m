@@ -10,7 +10,6 @@
 #import "HMGLog.h"
 #import "HMGUserRemakeCVCell.h"
 #import "HMServer+Remakes.h"
-#import "HMServer+LazyLoading.h"
 #import "HMNotificationCenter.h"
 #import "HMAvenirBookFontLabel.h"
 #import "HMRecorderViewController.h"
@@ -26,6 +25,7 @@
 #import "AWAlertView.h"
 #import "UIView+Hierarchy.h"
 #import "HMSharing.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
@@ -198,12 +198,6 @@
 
 -(void)initObservers
 {
-    // Observe lazy loading thumbnails
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onRemakeThumbnailLoaded:)
-                                                       name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                                     object:nil];
-    
     //observe generation of remake
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onRemakeCreation:)
@@ -263,42 +257,6 @@
     [self refetchRemakesFromServer];
 }
 
--(void)onRemakeThumbnailLoaded:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    
-    //need to check if this notification came from the same sender
-    id sender = info[@"sender"];
-    if (sender != self) return;
-    
-    NSString *remakeID = info[@"remakeID"];
-    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
-    if (!remake) return;
-    
-    NSIndexPath *indexPath = info[@"indexPath"];
-    UIImage *image = info[@"image"];
-    
-    if (notification.isReportingError ) {
-        HMGLogError(@">>> error in onRemakeThumbnailLoaded: %@", notification.reportedError.localizedDescription);
-        remake.thumbnail = [UIImage imageNamed:@"missingThumbnail"];
-    } else {
-        remake.thumbnail = image;
-    }
-    
-    // If row not visible, no need to show the image
-    if (![self.userRemakesCV.indexPathsForVisibleItems containsObject:indexPath]) return;
-    
-    // Reveal the image
-    HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
-    cell.guiThumbImage.alpha = 0;
-    cell.guiThumbImage.image = remake.thumbnail;
-    cell.guiThumbImage.transform = CGAffineTransformMakeScale(0.8, 0.8);
-    
-    [UIView animateWithDuration:0.7 animations:^{
-        cell.guiThumbImage.alpha = 1;
-        cell.guiThumbImage.transform = CGAffineTransformIdentity;
-    }];
-}
 
 -(void)onRemakeDeletion:(NSNotification *)notification
 {
@@ -316,7 +274,6 @@
 
     // Refresh and reload
     [self refreshFromLocalStorage];
-
 }
 
 -(void)onRemakeCreation:(NSNotification *)notification
@@ -452,21 +409,20 @@
     if (cell.guiScrollView.delegate == nil) cell.guiScrollView.delegate = self;
     [cell closeAnimated:NO];
     
-    if (remake.thumbnail) {
-        
-        cell.guiThumbImage.image = remake.thumbnail;
-        cell.guiThumbImage.alpha = 1;
-        
-    } else {
-        
-        cell.guiThumbImage.alpha = 0;
-        cell.guiThumbImage.image = nil;
-        [HMServer.sh lazyLoadImageFromURL:remake.thumbnailURL
-                         placeHolderImage:nil
-                         notificationName:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL
-                                     info:@{@"indexPath":indexPath,@"sender":self,@"remakeID":remake.sID}];
-        
-    }
+    cell.guiThumbImage.alpha = 0;
+    NSURL *thumbURL = [NSURL URLWithString:remake.thumbnailURL];
+    [cell.guiThumbImage sd_setImageWithURL:thumbURL placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        cell.guiThumbImage.image = image;
+        if (cacheType == SDImageCacheTypeNone) {
+            // Reveal with animation
+            [UIView animateWithDuration:0.2 animations:^{
+                cell.guiThumbImage.alpha = 1;
+            }];
+        } else {
+            // Reveal with no animation.
+            cell.guiThumbImage.alpha = 1;
+        }
+    }];
     
     cell.storyNameLabel.text = remake.story.name;
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
@@ -992,23 +948,27 @@
 
 - (IBAction)onShareButtonPushed:(UIButton *)button
 {
-    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
-    if (!cell) return;
-    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    if ([[User current] isGuestUser])
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
-        alertView.tag = SHARE_ALERT_VIEW_TAG;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alertView show];
-        });
-        
-    } else {
-        self.currentSharer = [HMSharing new];
-        [self.currentSharer shareRemake:remakeToShare parentVC:self trackEventName:@"MEShareRemake"];
-    }
+    // TODO: fix share
+//    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+//    if (!cell) return;
+//    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+//    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    
+//    if ([[User current] isGuestUser])
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
+//        alertView.tag = SHARE_ALERT_VIEW_TAG;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [alertView show];
+//        });
+//        
+//    } else {
+////        self.currentSharer = [HMSharing new];
+////        [self.currentSharer shareRemake:remakeToShare
+////                               parentVC:self
+////                         trackEventName:@"MEShareRemake"
+////                      originatingScreen:@(HMMyStories)];
+//    }
 }
 
 - (IBAction)onRemakeMoreStoriesButtonPushed:(id)sender

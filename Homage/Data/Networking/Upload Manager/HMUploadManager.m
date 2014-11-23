@@ -195,7 +195,8 @@
     [HMServer.sh updateOnUploadStartFootageForRemakeID:footage.remake.sID
                                                sceneID:footage.sceneID
                                                 takeID:[footage takeID]
-                                          attemptCount:attemptCount];
+                                          attemptCount:attemptCount
+                                              isSelfie:footage.rawIsSelfie.boolValue];
 }
 
 -(void)updateServerAboutSuccessfulUploadFootage:(Footage *)footage attemptCount:(NSInteger)attemptCount
@@ -206,7 +207,8 @@
     [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
                                                sceneID:footage.sceneID
                                                 takeID:[footage takeID]
-                                          attemptCount:attemptCount];
+                                          attemptCount:attemptCount
+                                              isSelfie:footage.rawIsSelfie.boolValue];
 }
 
 #pragma mark - Manager actions

@@ -1,16 +1,22 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "1x"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "2x",
-      "filename" : "HelpScreenBackground@2x.png"
+      "filename" : "RecorderHelpScreenBG4inch@2x.png"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
+      "filename" : "RecorderHelpScreenBG@2x.png",
+      "subtype" : "retina4",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "iphone",
       "scale" : "3x"
     }
   ],
