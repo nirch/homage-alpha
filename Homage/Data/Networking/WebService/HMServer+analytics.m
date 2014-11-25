@@ -125,12 +125,14 @@
 
 -(void)reportSession:(NSString *)sessionID beginForUser:(NSString *)userID
 {
+    if (userID == nil || sessionID == nil) return;
     [self postRelativeURLNamed:@"user session start" parameters:@{@"session_id":sessionID, @"user_id":userID} notificationName:HM_NOTIFICATION_SERVER_USER_BEGIN_SESSION info:@{@"userID":userID, @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]} parser:nil];
     [[Mixpanel sharedInstance] track:@"user session start" properties:@{@"session_id":sessionID, @"user_id":userID}];
 }
 
 -(void)reportSession:(NSString *)sessionID endForUser:(NSString *)userID
 {
+    if (userID == nil || sessionID == nil) return;
     [self postRelativeURLNamed:@"user session end" parameters:@{@"session_id":sessionID, @"user_id":userID} notificationName:HM_NOTIFICATION_SERVER_USER_END_SESSION info:@{@"userID":userID, @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]} parser:nil];
     [[Mixpanel sharedInstance] track:@"user session end" properties:@{@"session_id":sessionID, @"user_id":userID}];
     
@@ -138,9 +140,9 @@
 
 -(void)reportSession:(NSString *)sessionID updateForUser:(NSString *)userID
 {
+    if (userID == nil || sessionID == nil) return;
     [self postRelativeURLNamed:@"user session update" parameters:@{@"session_id":sessionID, @"user_id":userID} notificationName:HM_NOTIFICATION_SERVER_USER_UPDATE_SESSION info:@{@"userID":userID, @"attempts_count":[NSNumber numberWithInt:ATTEMPTS_COUNT]} parser:nil];
     [[Mixpanel sharedInstance] track:@"user session update" properties:@{@"session_id":sessionID, @"user_id":userID}];
-    
 }
 
 @end

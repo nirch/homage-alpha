@@ -152,7 +152,11 @@
         if ([story isVideoAvailableLocally]) continue;
         
         // Skip this long video (hard coded in test env).
-        if ([story.videoURL containsString:@"Messi+Vs+Tomer"]) continue;
+        if ([story.videoURL rangeOfString:@"Messi+Vs+Tomer"].location != NSNotFound) {
+            continue;
+        }
+        
+        //if ([story.videoURL containsString:@"Messi+Vs+Tomer"]) continue;
         
         // Ignore videos already tried to download lately
         NSDate *latestAttempt = self.latestDownloadAttemptTimeForURL[story.videoURL];
