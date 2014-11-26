@@ -50,10 +50,6 @@
 #define HM_NOTIFICATION_DOWNLOAD_RESOURCE_FINISHED @"Download Resource Finished"
 
 // Lazy loading notifications
-#define HM_NOTIFICATION_SERVER_STORY_THUMBNAIL      @"Server Story Thumbnail"
-#define HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL     @"Server Remake Thumbnail"
-#define HM_NOTIFICATION_SERVER_SCENE_THUMBNAIL      @"Server Scene Thumbnil"
-#define HM_NOTIFICATION_SERVER_SCENE_SILHOUETTE     @"Server Scene Silhouette"
 #define HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED @"Server Scene Contour file"
 
 #define HM_NOTIFICATION_RECORDER_FINISHED           @"Recoder was dismissed"

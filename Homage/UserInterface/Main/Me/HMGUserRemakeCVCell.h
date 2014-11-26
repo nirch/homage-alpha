@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIView *buttonsView;
 
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *shareActivity;
 @property (weak, nonatomic) IBOutlet UIButton *remakeButton;
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
 @property (weak, nonatomic) IBOutlet UILabel *storyNameLabel;

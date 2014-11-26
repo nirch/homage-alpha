@@ -168,7 +168,18 @@
 #pragma mark - Observers handlers
 -(void)onRender:(NSNotification *)notification
 {
-    [self dismissActivityView];
+    if (notification.isReportingError) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed"
+                                                        message:LS(@"Something went wrong. Check your connectivity and try again.")
+                                                       delegate:nil
+                                              cancelButtonTitle:LS(@"OK")
+                                              otherButtonTitles:nil];
+        [alert show];
+        [self.guiActivity stopAnimating];
+        self.guiDismissButton.enabled = YES;
+    } else {
+        [self dismissActivityView];
+    }
 }
 
 -(void)dismissActivityView

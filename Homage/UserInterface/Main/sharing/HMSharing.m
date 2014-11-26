@@ -45,9 +45,6 @@
     // General share body.
     NSString *generalShareBody = [whatsAppShareString stringByAppendingString:[NSString stringWithFormat:LS(@"SHARE_MSG_BODY_HASHTAGS") , storyNameWithoutSpaces, storyNameWithoutSpaces]];
     
-    // Whatsapp message
-    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:whatsAppShareString forABID:nil];
-
     //
     // Build the bundle and return it
     //
@@ -59,7 +56,7 @@
     shareBundle[K_SHARE_URL] = remakeShareURL;
     shareBundle[K_SHARE_SUBJECT] = generalShareSubject;
     shareBundle[K_SHARE_BODY] = generalShareBody;
-    shareBundle[K_WHATS_APP_MESSAGE] = whatsappMsg;
+    shareBundle[K_WHATS_APP_MESSAGE] = whatsAppShareString;
     shareBundle[K_ORIGINATING_SCREEN] = originatingScreen;
     shareBundle[K_TRACK_EVENT_NAME] = trackEventName;
     return shareBundle;
@@ -87,15 +84,18 @@
     // Gather info about the share
     NSString *generalShareSubject = shareBundle[K_SHARE_SUBJECT];
     NSString *generalShareBody =    shareBundle[K_SHARE_BODY];
-    NSString *whatsAppMsg =         shareBundle[K_WHATS_APP_MESSAGE];
+    
+    
+    // Whatsapp message
+    NSString *whatAppMessage = shareBundle[K_WHATS_APP_MESSAGE];
     
     // Create the activity items array.
-    NSArray *activityItems;
-    if (thumbnail) {
-        activityItems = @[generalShareBody, whatsAppMsg, thumbnail];
-    } else {
-        activityItems = @[generalShareBody, whatsAppMsg];
-    }
+    NSMutableArray *activityItems = [NSMutableArray new];
+    if (generalShareBody) [activityItems addObject:generalShareBody];
+    if (whatAppMessage) [activityItems addObject:[[WhatsAppMessage alloc] initWithMessage:whatAppMessage forABID:nil]];
+    if (thumbnail) [activityItems addObject:thumbnail];
+
+    //
     NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {

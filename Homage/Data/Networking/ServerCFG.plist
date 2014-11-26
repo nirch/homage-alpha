@@ -66,6 +66,8 @@
 		<string>text</string>
 		<key>render</key>
 		<string>render</string>
+		<key>bad request</key>
+		<string>dsflkghsldkfgjh</string>
 		<key>prod_download_app_ios_url</key>
 		<string>http://bit.ly/1rONZLw</string>
 		<key>prod_download_app_android_url</key>

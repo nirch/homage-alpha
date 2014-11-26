@@ -30,6 +30,8 @@
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
 
+#define ALERT_VIEW_TAG_SHARE_FAILED 200
+
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
@@ -203,14 +205,19 @@
                                                    selector:@selector(onRemakeCreation:)
                                                        name:HM_NOTIFICATION_SERVER_REMAKE_CREATION
                                                      object:nil];
+    
+    // Observe share request
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onShareRemakeRequest:)
+                                                       name:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST
+                                                     object:nil];
 }
 
 -(void)removeObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_THUMBNAIL object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
-    //[nc removeObserver:self name:HM_SHORT_URL object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -287,6 +294,43 @@
     
     // Present the recorder for the newly created remake.
     [self initRecorderWithRemake:remake];
+}
+
+-(void)onShareRemakeRequest:(NSNotification *)notification
+{
+    if (notification.isReportingError) {
+        // Failed to request a share remake object from the server.
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:LS(@"SHARE_REMAKE_FAILED_TITLE")
+                                                            message:LS(@"SHARE_REMAKE_FAILED_BODY")
+                                                           delegate:self
+                                                  cancelButtonTitle:LS(@"CANCEL_BUTTON")
+                                                  otherButtonTitles:LS(@"TRY_AGAIN_BUTTON"), nil];
+        alertView.tag = ALERT_VIEW_TAG_SHARE_FAILED;
+        [alertView show];
+        return;
+    }
+    
+    // No error reported.
+    // The share bundle is ready for sharing.
+    // Open the ui for the user.
+    NSDictionary *shareBundle = notification.userInfo[@"share_bundle"];
+    [self.currentSharer shareRemakeBundle:shareBundle
+                                 parentVC:self
+                           trackEventName:@"SDShareRemake"
+                                thumbnail:self.currentSharer.image];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self stopShareActivity];
+        self.currentSharer = nil;
+    });
+}
+
+-(void)stopShareActivity
+{
+    for (HMGUserRemakeCVCell *cell in self.userRemakesCV.visibleCells) {
+        [cell.shareActivity stopAnimating];
+        [cell.shareButton setHidden:NO];
+    }
 }
 
 #pragma mark - Rendering bar states
@@ -433,7 +477,7 @@
     UIImage *image;
     
     cell.remakeButton.alpha = 1;
-    
+    [cell.shareActivity stopAnimating];
     cell.guiScrollView.contentSize = CGSizeMake(640, cell.guiScrollView.bounds.size.height);
     
     switch (status.intValue)
@@ -861,6 +905,17 @@
     }
 }
 
+#pragma mark - Share remake
+-(void)shareRemakeRequestForRemake:(Remake *)remake thumb:(UIImage *)thumb
+{
+    self.currentSharer = [HMSharing new];
+    self.currentSharer.image = thumb;
+    NSDictionary *shareBundle = [self.currentSharer generateShareBundleForRemake:remake
+                                                                  trackEventName:@"MEShareRemake"
+                                                               originatingScreen:@(HMMyStories)];
+    [self.currentSharer requestShareWithBundle:shareBundle];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -948,27 +1003,28 @@
 
 - (IBAction)onShareButtonPushed:(UIButton *)button
 {
-    // TODO: fix share
-//    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
-//    if (!cell) return;
-//    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-//    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    
-//    if ([[User current] isGuestUser])
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
-//        alertView.tag = SHARE_ALERT_VIEW_TAG;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [alertView show];
-//        });
-//        
-//    } else {
-////        self.currentSharer = [HMSharing new];
-////        [self.currentSharer shareRemake:remakeToShare
-////                               parentVC:self
-////                         trackEventName:@"MEShareRemake"
-////                      originatingScreen:@(HMMyStories)];
-//    }
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+    if (!cell) return;
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([[User current] isGuestUser])
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
+        alertView.tag = SHARE_ALERT_VIEW_TAG;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alertView show];
+        });
+        
+    } else {
+        // Allow sharing one at a time.
+        if (self.currentSharer) return;
+        
+        // Share request for the remake. (Homage server needs to create a share object first)
+        [self shareRemakeRequestForRemake:remakeToShare thumb:cell.guiThumbImage.image];
+        cell.shareButton.hidden = YES;
+        [cell.shareActivity startAnimating];
+    }
 }
 
 - (IBAction)onRemakeMoreStoriesButtonPushed:(id)sender

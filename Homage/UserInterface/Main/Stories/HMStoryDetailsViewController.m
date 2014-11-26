@@ -262,6 +262,11 @@
     
 }
 
+-(void)onShareRemakeRequest:(NSNotification *)notification
+{
+    
+}
+
 -(void)onRemakesRefetched:(NSNotification *)notification
 {
     self.fetchedFirstPageFromServer = YES;

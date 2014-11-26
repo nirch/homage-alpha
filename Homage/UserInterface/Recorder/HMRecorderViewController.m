@@ -199,9 +199,12 @@
 
 -(void)fixLayout
 {
-    CGPoint p = self.guiBackgroundStatusButton.center;
-    CGPoint c = self.view.center;
-    p.x = c.x + 42;
+    CGPoint p;
+    if (IS_IPHONE_5 || IS_16_9_LANDSCAPE) {
+        p = CGPointMake(328, 267);
+    } else {
+        p = CGPointMake(283, 267);
+    }
     self.guiBackgroundStatusButton.center = p;
 }
 
@@ -598,6 +601,7 @@
 
     self.guiWhileRecordingOverlay.hidden = NO;
     self.guiWhileRecordingOverlay.alpha = 0;
+    self.guiBackgroundStatusButton.hidden = YES;
     
     [UIView animateWithDuration:0.2 animations:^{
         

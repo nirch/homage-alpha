@@ -684,6 +684,11 @@
                                                                                 <action selector="onShareButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="9wK-JO-NkY"/>
                                                                             </connections>
                                                                         </button>
+                                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="wAI-0I-iDw">
+                                                                            <rect key="frame" x="67" y="58" width="20" height="20"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <color key="color" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </activityIndicatorView>
                                                                         <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" id="nUh-vj-K1h" userLabel="Highlight Overlay">
                                                                             <rect key="frame" x="-168" y="0.0" width="320" height="94"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -833,6 +838,7 @@
                                             <outlet property="guiThumbContainer" destination="E2A-Jk-ZZI" id="40Z-ya-B0L"/>
                                             <outlet property="guiThumbImage" destination="VI8-bD-3VH" id="2rZ-sH-TeS"/>
                                             <outlet property="remakeButton" destination="zVP-Pe-Sxq" id="3EJ-ei-Kxt"/>
+                                            <outlet property="shareActivity" destination="wAI-0I-iDw" id="TwD-rR-fi4"/>
                                             <outlet property="shareButton" destination="M0A-XO-3Ed" id="Xvy-86-MlX"/>
                                             <outlet property="storyNameLabel" destination="PBd-7c-2kj" id="K1c-MX-zit"/>
                                         </connections>

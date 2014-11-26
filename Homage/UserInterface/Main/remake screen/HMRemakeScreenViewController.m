@@ -233,9 +233,6 @@
 
 -(void)onShareRemakeRequest:(NSNotification *)notification
 {
-    self.guiShareButton.hidden = NO;
-    [self.guiShareActivity stopAnimating];
-    
     if (notification.isReportingError) {
         // Failed to request a share remake object from the server.
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:LS(@"SHARE_REMAKE_FAILED_TITLE")
@@ -248,11 +245,20 @@
         return;
     }
     
-    // Not error reported.
+    // No error reported.
     // The share bundle is ready for sharing.
     // Open the ui for the user.
     NSDictionary *shareBundle = notification.userInfo[@"share_bundle"];
-    [self shareRemakeOpenUIForBundle:shareBundle];
+    [self.currentSharer shareRemakeBundle:shareBundle
+                                 parentVC:self
+                           trackEventName:@"SDShareRemake"
+                                thumbnail:self.remakeMoviePlayer.videoImage];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.guiShareButton.hidden = NO;
+        [self.guiShareActivity stopAnimating];
+        self.currentSharer = nil;
+    });
 }
 
 #pragma mark - Alert view delegate
@@ -395,14 +401,6 @@
     [self.currentSharer requestShareWithBundle:shareBundle];
     [self.guiShareActivity startAnimating];
     [self.guiShareButton setHidden:YES];
-}
-
--(void)shareRemakeOpenUIForBundle:(NSDictionary *)shareBundle
-{
-    [self.currentSharer shareRemakeBundle:shareBundle
-                                 parentVC:self
-                           trackEventName:@""
-                                thumbnail:self.remakeMoviePlayer.videoImage];
 }
 
 #pragma mark - IB Actions

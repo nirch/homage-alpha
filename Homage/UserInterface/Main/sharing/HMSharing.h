@@ -24,6 +24,8 @@
 
 @interface HMSharing : NSObject
 
+@property (nonatomic) UIImage *image;
+
 /**
  *  Generate info bundle for sharing a remake.
  *
