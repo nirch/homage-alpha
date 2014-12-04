@@ -57,7 +57,8 @@
 -(void)shareRemakeBundle:(NSDictionary *)shareBundle
                 parentVC:(UIViewController *)parentVC
           trackEventName:(NSString *)trackEventName
-               thumbnail:(UIImage *)thumbnail;
+               thumbnail:(UIImage *)thumbnail
+              sourceView:(UIView *)sourceView;
 
 
 @end

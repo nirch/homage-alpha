@@ -69,6 +69,9 @@
 // Fetched from server
 @property (nonatomic) BOOL fetchedFirstPageFromServer;
 
+// Offset point
+@property (nonatomic) CGFloat offsetPoint;
+
 @end
 
 @implementation HMStoryDetailsViewController
@@ -80,6 +83,7 @@
 #define HM_EXCLUDE_GRADE -1
 
 #define MORE_REMAKES_OFFSET_POINT 180.0f
+#define MORE_REMAKES_OFFSET_POINT_IPAD 360.0f;
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize story = _story;
@@ -112,6 +116,7 @@
 {
     [super viewDidAppear:animated];
     self.guiRemakeButton.enabled = YES;
+    [self fixLayout];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -128,6 +133,13 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+}
+
+-(void)fixLayout
+{
+    if (IS_IPAD) {
+        
+    }
 }
 
 #pragma mark initializations
@@ -154,6 +166,13 @@
     [refreshControl setTintColor:[HMColor.sh main2]];
     refreshControl.layer.zPosition = -1;
     self.remakesCV.bottomRefreshControl = refreshControl;
+    
+    // offset point
+    if (IS_IPAD) {
+        self.offsetPoint = MORE_REMAKES_OFFSET_POINT_IPAD;
+    } else {
+        self.offsetPoint = MORE_REMAKES_OFFSET_POINT;
+    }
 }
 
 -(void)loadAnotherRemakesPage
@@ -491,7 +510,7 @@
         self.guiMoreRemakesHeadlineLabel.alpha = 0;
         
         CGFloat currentOffset = self.remakesCV.contentOffset.y + self.remakesCV.contentInset.top;
-        if (currentOffset >= MORE_REMAKES_OFFSET_POINT) self.guiStoryMovieContainer.alpha = 0;
+        if (currentOffset >= self.offsetPoint) self.guiStoryMovieContainer.alpha = 0;
     }];
     
     // Stop the story movie player (if playing)
@@ -702,30 +721,33 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat currentOffset = scrollView.contentOffset.y + scrollView.contentInset.top;
-    
     if (self.shouldShowStoryMiniPlayer) {
         // Handle displaying/hiding mini player.
         [self handleMiniPlayerAppearanceByOffset:currentOffset];
     } else {
         CGFloat moviePos = -currentOffset;
         self.guiStoryMovieContainer.transform = CGAffineTransformMakeTranslation(0, moviePos);
-        if (currentOffset >= MORE_REMAKES_OFFSET_POINT) {
+        if (currentOffset >= self.offsetPoint) {
             if (self.storyMoviePlayer.isInAction) {
                 [self.storyMoviePlayer pause];
             }
         }
     }
-    
+
     // More remakes headline position
-    CGFloat moreRamakesHeadlinePosition = MAX(-currentOffset, -MORE_REMAKES_OFFSET_POINT);
+    CGFloat moreRamakesHeadlinePosition = MAX(-currentOffset, -self.offsetPoint);
     self.guiMoreRemakesHeadlineContainer.transform = CGAffineTransformMakeTranslation(0, moreRamakesHeadlinePosition);
-    self.guiMoreRemakesHeadlineContainer.userInteractionEnabled = currentOffset >= MORE_REMAKES_OFFSET_POINT;
+    self.guiMoreRemakesHeadlineContainer.userInteractionEnabled = currentOffset >= self.offsetPoint;
+}
+
+-(void)_iPadScrollViewDidScroll:(UIScrollView *)scrollView
+{
+
 }
 
 -(void)handleMiniPlayerAppearanceByOffset:(CGFloat)currentOffset
 {
-    if (currentOffset >= MORE_REMAKES_OFFSET_POINT) {
-        
+    if (currentOffset >= self.offsetPoint) {
         if (!self.isShowingStoryMiniPlayer) {
             // Reveal the mini player
             self.guiStoryMovieContainer.layer.zPosition = 10;
@@ -734,21 +756,41 @@
             self.guiBackToTopButton.hidden = NO;
             self.guiBackToTopButton.layer.zPosition = 20;
             CGAffineTransform t = CGAffineTransformIdentity;
-            t = CGAffineTransformTranslate(t, 220, -65);
-            t = CGAffineTransformScale(t, 0.20, 0.20);
+            if (IS_IPAD) {
+                t = CGAffineTransformTranslate(t, 400, -180);
+                t = CGAffineTransformScale(t, 0.20, 0.20);
+            } else {
+                t = CGAffineTransformTranslate(t, 220, -65);
+                t = CGAffineTransformScale(t, 0.20, 0.20);
+            }
             self.guiStoryMovieContainer.transform = t;
             [UIView animateWithDuration:1.0 animations:^{
                 CGAffineTransform t = CGAffineTransformIdentity;
-                t = CGAffineTransformTranslate(t, 120, -65);
-                t = CGAffineTransformScale(t, 0.20, 0.20);
+                if (IS_IPAD) {
+                    t = CGAffineTransformTranslate(t, 300, -180);
+                    t = CGAffineTransformScale(t, 0.20, 0.20);
+                } else {
+                    t = CGAffineTransformTranslate(t, 120, -65);
+                    t = CGAffineTransformScale(t, 0.20, 0.20);
+                }
                 self.guiStoryMovieContainer.transform = t;
                 self.guiStoryMovieContainer.alpha = 1;
             }];
         }
         
     } else {
-        CGFloat moviePos = -currentOffset;
-        self.guiStoryMovieContainer.transform = CGAffineTransformMakeTranslation(0, moviePos);
+        CGAffineTransform t;
+        if (IS_IPAD) {
+            CGFloat moviePos = -currentOffset/2.0f;
+            t = CGAffineTransformMakeTranslation(0, moviePos);
+            CGFloat scale = MAX(MIN(1.0, 1-currentOffset / self.offsetPoint),0.2);
+            t = CGAffineTransformScale(t, scale, scale);
+        } else {
+            CGFloat moviePos = -currentOffset;
+            t = CGAffineTransformMakeTranslation(0, moviePos);
+        }
+        
+        self.guiStoryMovieContainer.transform = t;
         self.guiStoryMovieContainer.layer.zPosition = -1;
         self.isShowingStoryMiniPlayer = NO;
         self.guiBackToTopButton.hidden = YES;

@@ -92,6 +92,7 @@
 		086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94441886E2CC0086C565 /* HMRemakesParser.m */; };
 		086D94A1188701EA0086C565 /* HMServer+Remakes.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D949C188701EA0086C565 /* HMServer+Remakes.m */; };
 		086D94A3188701EA0086C565 /* HMServer+Stories.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D949E188701EA0086C565 /* HMServer+Stories.m */; };
+		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
 		0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
 		0888CE9119EC3DFA003D7249 /* Homage_LocalStorage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */; };
@@ -389,6 +390,7 @@
 		086D949C188701EA0086C565 /* HMServer+Remakes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Remakes.m"; sourceTree = "<group>"; };
 		086D949D188701EA0086C565 /* HMServer+Stories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+Stories.h"; sourceTree = "<group>"; };
 		086D949E188701EA0086C565 /* HMServer+Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Stories.m"; sourceTree = "<group>"; };
+		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_LocalStorage_Tests.m; sourceTree = "<group>"; };
 		0888CE9319EC3EAC003D7249 /* Homage_Parsing_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_Parsing_Tests.m; sourceTree = "<group>"; };
@@ -807,6 +809,7 @@
 			children = (
 				0806FA2118828AEB007514BE /* Images.xcassets */,
 				2655DF3718EDA46400CA362F /* Storyboard.storyboard */,
+				0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */,
 				08DF23051892704300912657 /* Main */,
 				08455FDE1890458E0040504D /* Recorder */,
 				0884566418848D3300B94267 /* Custom Views & Controls */,
@@ -1703,6 +1706,7 @@
 				08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */,
 				08EA81421A21702F00742251 /* The+Base1.mp4 in Resources */,
 				08DF22FD18926E3900912657 /* HMMeVideoPlayer.xib in Resources */,
+				087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */,
 				2655DF5418EDA4D200CA362F /* HMPrivacyPolicyViewController.xib in Resources */,
 				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
@@ -2160,7 +2164,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2234,7 +2238,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
 			};

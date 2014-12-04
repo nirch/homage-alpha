@@ -252,7 +252,8 @@
     [self.currentSharer shareRemakeBundle:shareBundle
                                  parentVC:self
                            trackEventName:@"SDShareRemake"
-                                thumbnail:self.remakeMoviePlayer.videoImage];
+                                thumbnail:self.remakeMoviePlayer.videoImage
+                               sourceView:self.guiShareButton];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.guiShareButton.hidden = NO;

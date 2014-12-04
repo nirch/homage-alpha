@@ -35,6 +35,7 @@
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
+@property (weak, nonatomic) IBOutlet UIButton *lastShareButtonPressed;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
 
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
@@ -317,7 +318,8 @@
     [self.currentSharer shareRemakeBundle:shareBundle
                                  parentVC:self
                            trackEventName:@"SDShareRemake"
-                                thumbnail:self.currentSharer.image];
+                                thumbnail:self.currentSharer.image
+                                    sourceView:self.lastShareButtonPressed];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self stopShareActivity];
@@ -1007,6 +1009,8 @@
     if (!cell) return;
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    self.lastShareButtonPressed = button;
+    
     
     if ([[User current] isGuestUser])
     {

@@ -79,7 +79,8 @@
 -(void)shareRemakeBundle:(NSDictionary *)shareBundle
                 parentVC:(UIViewController *)parentVC
           trackEventName:(NSString *)trackEventName
-               thumbnail:(UIImage *)thumbnail {
+               thumbnail:(UIImage *)thumbnail
+              sourceView:(UIView *)sourceView {
 
     // Gather info about the share
     NSString *generalShareSubject = shareBundle[K_SHARE_SUBJECT];
@@ -125,6 +126,12 @@
 
     [activityViewController setValue:generalShareSubject forKey:@"subject"];
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    
+    if (IS_IPAD && sourceView) {
+        activityViewController.popoverPresentationController.sourceView = sourceView;
+    }
+    
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [parentVC presentViewController:activityViewController animated:YES completion:^{}];
     });
