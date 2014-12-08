@@ -145,7 +145,6 @@
     // Round border for record button
     UIView *b = self.guiRoundBorder;
     b.backgroundColor = [UIColor clearColor];
-
     b.layer.cornerRadius = b.bounds.size.width/2.0f;
     b.layer.borderColor = [UIColor whiteColor].CGColor;
     b.layer.borderWidth = 3;
@@ -480,6 +479,11 @@
     HMSceneCell *cell = [self.guiTableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     [self configureCell:cell forIndexPath:indexPath];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [cell setBackgroundColor:[UIColor clearColor]];
 }
 
 // The scenes are ordered in the UI from bottom (lowest ID) to the top (highest ID)

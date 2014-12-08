@@ -192,15 +192,23 @@
     [self loadSilhouettes];
     
     self.backgroundStatusCounter = 0;
-    
     self.guiBackgroundStatusButton.alpha = 0;
     self.isBadBackgroundWarningOn = NO;
+    
+    //
+    if (IS_IPAD) {
+        CGPoint p = self.guiDetailedOptionsBarContainer.center;
+        p.y += 452;
+        self.guiDetailedOptionsBarContainer.center = p;
+    }
 }
 
 -(void)fixLayout
 {
     CGPoint p;
-    if (IS_IPHONE_5 || IS_16_9_LANDSCAPE) {
+    if (IS_IPAD) {
+        p = CGPointMake(556, 719);
+    } else if (IS_IPHONE_5 || IS_16_9_LANDSCAPE) {
         p = CGPointMake(328, 267);
     } else {
         p = CGPointMake(283, 267);
