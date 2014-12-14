@@ -16,6 +16,7 @@
 @interface HMServer()
 
 @property (strong, nonatomic) NSDictionary *cfg;
+@property (strong, nonatomic) NSString *defaultsFileName;
 @property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (strong,nonatomic) NSDictionary *context;
 @property (strong,nonatomic) NSString *appVersionInfo;
@@ -25,6 +26,8 @@
 @end
 
 @implementation HMServer
+
+@synthesize configurationInfo = _configurationInfo;
 
 #pragma mark - Initialization
 // A singleton
@@ -115,6 +118,32 @@
     self.configurationInfo = info;
 }
 
+-(void)setConfigurationInfo:(NSDictionary *)configurationInfo
+{
+    if (!configurationInfo) return;
+    
+    // Store in memory.
+    _configurationInfo = configurationInfo;
+    
+    // Store in local storage for future use.
+    [[NSUserDefaults standardUserDefaults] setValue:configurationInfo forKey:@"config"];
+}
+
+-(NSDictionary *)configurationInfo
+{
+    // If in memory, return configuration from memory.
+    if (_configurationInfo) return _configurationInfo;
+    
+    // If not in memory, check if exists in local storage. If it does, put it in memory and return it.
+    _configurationInfo = [[NSUserDefaults standardUserDefaults] valueForKey:@"config"];
+    if (_configurationInfo) return _configurationInfo;
+    
+    // Not in memory and not in local storage. Load defaults, store and return;
+    NSString * plistPath = [[NSBundle mainBundle] pathForResource:self.defaultsFileName ofType:@"plist"];
+    self.configurationInfo = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+    return _configurationInfo;
+}
+
 -(void)loadAppDetails
 {
     NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -152,6 +181,7 @@
         port = self.cfg[@"port"];
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];
+        self.defaultsFileName = @"DefaultsCFGTest";
         HMGLogNotice(@"Using test server (release app):%@", host);
     } else {
         // Release app for production.
@@ -159,6 +189,7 @@
         port = self.cfg[@"prod_port"];
         protocol = self.cfg[@"prod_protocol"];
         host = self.cfg[@"prod_host"];
+        self.defaultsFileName = @"DefaultsCFG";
         HMGLogNotice(@"Using prod server (release app):%@", host);
     }
     #else
@@ -166,6 +197,7 @@
         port = self.cfg[@"port"];
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];
+        self.defaultsFileName = @"DefaultsCFG";
         HMGLogNotice(@"Using test server (debug app):%@", host);
     #endif
     

@@ -17,6 +17,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Appirater/Appirater.h>
+#import "HMABTester.h"
 #import <sys/utsname.h>
 
 @interface HMAppDelegate()
@@ -27,10 +28,24 @@
 
 @implementation HMAppDelegate
 
+#pragma mark - keys
+// ----------------------------------------------------------
+// Tokens, private and public keys.
+// ----------------------------------------------------------
+// Mixpanel
 #define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
+
+// Facebook
 #define FB_APP_ID @"447743458659084"
+
+// Apple ID
 #define APPLE_ID @"851746600"
 
+// Crashlytics
+#define CRASHLYTICS_API_KEY @"daa34917843cd9e52b65a68cec43efac16fb680a"
+// ----------------------------------------------------------
+
+#pragma mark - Application life cycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     #ifndef DEBUG
@@ -42,7 +57,7 @@
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
     
         //crashlytics crash reporting
-        [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+        [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
 
     #else
 
@@ -111,6 +126,9 @@
     
     // Initialize some info about device
     _deviceModel = machineName();
+    
+    // Initialize AB Testing.
+    _abTester = [HMABTester new];
     
     return YES;
 }
@@ -290,6 +308,8 @@
     return wasHandled;
 }
 
+
+#pragma mark - App States
 -(void)setShouldAllowStatusBar:(BOOL)shouldAllowStatusBar
 {
     _shouldAllowStatusBar = shouldAllowStatusBar;
@@ -300,6 +320,7 @@
     _isInRecorderContext = isInRecorderContext;
 }
 
+#pragma mark - App Info
 NSString* machineName()
 {
     /*

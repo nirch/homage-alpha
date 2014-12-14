@@ -9,6 +9,8 @@
 #import "HMRecorderTutorialViewController.h"
 
 #import "DB.h"
+#import "HMAppDelegate.h"
+#import "HMABTester.h"
 
 @interface HMRecorderTutorialViewController ()
 
@@ -25,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiUseSolidBGLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiPlaceActorHereLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiGetInspiredLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *guiGetInspiredIcon;
 
 @end
 
@@ -43,12 +47,13 @@
 {
     [super viewWillAppear:animated];
     [self initGUI];
+    [self initABTesting];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    [self fixLayout];
 }
 
 -(void)initGUI
@@ -58,6 +63,19 @@
     self.guiPlaceActorHereLabel.text = LS(@"HELP_LABEL_PLACE_ACTOR");
     self.guiGetInspiredLabel.text = LS(@"HELP_LABEL_GET_INSPIRED");
 }
+
+-(void)initABTesting
+{
+    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    HMABTester *abTester = app.abTester;
+    
+    // Get inspired icon
+    NSString *abTestGetInspiredIconName = [abTester stringValueForProject:@"recorder icons"
+                                                                  varName:@"getInspiredIcon"
+                                                    hardCodedDefaultValue:@"iconUpArrow"];
+    self.guiGetInspiredIcon.image = [UIImage imageNamed:abTestGetInspiredIconName];
+}
+
 
 -(void)hideAllAnimated:(BOOL)animated
 {
@@ -74,6 +92,12 @@
     [UIView animateWithDuration:0.2 animations:^{
         [self hideAllAnimated:NO];
     }];
+}
+
+#pragma mark - Layout fixes
+-(void)fixLayout
+{
+    
 }
 
 #pragma mark - Flow
@@ -114,9 +138,11 @@
     [self fadeInView:self.guiDarkOverlay delay:0.0];
     [self fadeInView:self.guiContinueButton delay:0.3];
     if (self.index==0) {
+    
         [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_NEXT") forState:UIControlStateNormal];
         [self revealView:self.guiSolidBGIndicatorContainer delay:0.0];
         [self fadeInView:self.guiSilIndicatorContainer delay:0.8];
+    
     } else if (self.index==1) {
         [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_FINISH") forState:UIControlStateNormal];
         
@@ -141,8 +167,10 @@
     CGPoint point1;
     CGPoint point2;
 
-    // TODO: support iPhone 6, 6 Plus, iPads layouts
-    if (IS_16_9_LANDSCAPE) {
+    if (IS_IPAD) {
+        // IPad (Retina and none retina)
+        
+    } else if (IS_16_9_LANDSCAPE) {
         // 16/9 screens (iPhone5, 5s, 5c)
         point1 = CGPointMake(191, 289);
         point2 = CGPointMake(534, 287);

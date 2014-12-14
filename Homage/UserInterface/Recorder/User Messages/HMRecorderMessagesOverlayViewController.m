@@ -63,7 +63,7 @@
 {
     [super viewDidLoad];
 
-    [self loadSubviews];
+//
     
     [self.guiDismissButton addMotionEffectWithAmount:15];
     [self.guiTextMessageIcon addMotionEffectWithAmount:15];
@@ -71,7 +71,6 @@
     [self.guiGeneralMessageOKButton addMotionEffectWithAmount:15];
     [self.guiAreYouSureYouWantToRetakeLabel addMotionEffectWithAmount:15];
 }
-
 
 -(void)loadSubviews
 {
@@ -82,7 +81,6 @@
     //  Each type of message screen has it's own xib file (all using this same view controller)
     //
     // Load subview from xibs
-    
     UIView *generalMessageView = [[NSBundle mainBundle] loadNibNamed:@"HMRecorderMessageGeneralView" owner:self options:nil][0];
     generalMessageView.frame = self.view.bounds;
     generalMessageView.backgroundColor = [UIColor clearColor];
@@ -119,6 +117,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self loadSubviews];
 }
 
 -(void)viewWillDisappear:(BOOL)animated

@@ -572,7 +572,7 @@
                                         <rect key="frame" x="284" y="0.0" width="284" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconUpArrowSmall" id="e4Y-rA-xzv">
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconUpArrow" id="e4Y-rA-xzv" userLabel="getInspiredIcon">
                                                 <rect key="frame" x="242" y="10" width="42" height="35"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
@@ -696,6 +696,7 @@
                         <outlet property="guiCountdownContainer" destination="cwP-eK-oSv" id="YCL-Ot-T3I"/>
                         <outlet property="guiCurrentSceneDurationLabel" destination="XEA-tI-Pxu" id="Ct7-w4-Q7T"/>
                         <outlet property="guiCurrentSceneLabel" destination="vJw-ti-qYL" id="4l2-ah-n1u"/>
+                        <outlet property="guiGetInspiredIcon" destination="e4Y-rA-xzv" id="hfh-gj-bdT"/>
                         <outlet property="guiLessDetailsBar" destination="ncI-xc-Aml" id="Ouz-GT-L7i"/>
                         <outlet property="guiMicrophoneUnauthorizedLabel" destination="Bv2-vc-Da0" id="puA-he-kdA"/>
                         <outlet property="guiMoreDetailsBar" destination="NcZ-Uk-buY" id="n6c-D3-Irr"/>
@@ -957,7 +958,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999973" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpScreenBackground" id="A4q-7v-rdU">
+                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999973" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="helpScreenBG" id="A4q-7v-rdU" userLabel="HelpScreenBG">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="helpScreenControls" id="dS2-hB-DKm" userLabel="helpScreenControls">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -970,9 +975,9 @@
                                 <rect key="frame" x="16" y="56" width="536" height="266"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpSilInd" id="073-nh-vS9">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="helpContour" id="073-nh-vS9">
                                         <rect key="frame" x="18" y="0.0" width="500" height="266"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place the actor here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gK8-0X-jRA" customClass="HMAvenirBookFontLabel">
                                         <rect key="frame" x="371" y="81" width="147" height="21"/>
@@ -986,9 +991,9 @@
                             </view>
                             <view contentMode="scaleToFill" id="Qam-bp-1OZ" userLabel="Solid BG Ind container">
                                 <rect key="frame" x="8" y="64" width="160" height="166"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpSolidBackgroundIndicator" id="gRv-Su-NaH">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="helpSolidBackgroundIndicator" id="gRv-Su-NaH">
                                         <rect key="frame" x="23" y="0.0" width="115" height="133"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1004,9 +1009,9 @@
                             </view>
                             <view contentMode="scaleToFill" id="VBD-8T-FuI" userLabel="Scene Ind container">
                                 <rect key="frame" x="110" y="211" width="160" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpDownIndicator" id="3pg-yU-v8U">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="helpDownIndicator" id="3pg-yU-v8U">
                                         <rect key="frame" x="23" y="-3" width="115" height="133"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1022,9 +1027,9 @@
                             </view>
                             <view contentMode="scaleToFill" id="TH0-br-zg9" userLabel="Get Inspired Ind container">
                                 <rect key="frame" x="455" y="205" width="130" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HelpDownIndicator" id="cWb-jf-ISu">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="helpDownIndicator" id="cWb-jf-ISu">
                                         <rect key="frame" x="35" y="1" width="87" height="133"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1042,7 +1047,7 @@
                                 <rect key="frame" x="470" y="14" width="87" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" title="NEXT" image="NextIcon">
+                                <state key="normal" title="NEXT" image="nextIcon">
                                     <color key="titleColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1050,6 +1055,10 @@
                                     <action selector="onPressedNextButton:" destination="xmX-EA-Pjz" eventType="touchUpInside" id="LBh-dS-CqL"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconUpArrow" id="P9a-rt-RRV">
+                                <rect key="frame" x="517" y="278" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1058,6 +1067,7 @@
                     <connections>
                         <outlet property="guiContinueButton" destination="O3Q-33-w9J" id="q5h-kK-fsk"/>
                         <outlet property="guiDarkOverlay" destination="oZe-eU-WvL" id="LMF-Bg-Gwf"/>
+                        <outlet property="guiGetInspiredIcon" destination="P9a-rt-RRV" id="HQH-ov-kA5"/>
                         <outlet property="guiGetInspiredLabel" destination="wAX-iT-Vho" id="Lsf-FD-O24"/>
                         <outlet property="guiInspiredIndicatorContainer" destination="TH0-br-zg9" id="EK2-vI-xLY"/>
                         <outlet property="guiPlaceActorHereLabel" destination="gK8-0X-jRA" id="7Xs-iA-8ev"/>
@@ -1070,16 +1080,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZOe-v7-YOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="437" y="803"/>
+            <point key="canvasLocation" x="403" y="816"/>
         </scene>
     </scenes>
     <resources>
-        <image name="HelpDownIndicator" width="55" height="83"/>
-        <image name="HelpScreenBackground" width="480" height="320"/>
-        <image name="HelpSilInd" width="356" height="265"/>
-        <image name="HelpSolidBackgroundIndicator" width="87" height="115"/>
-        <image name="NextIcon" width="32" height="32"/>
         <image name="badBackgroundWarningIcon" width="26" height="26"/>
+        <image name="helpContour" width="356" height="265"/>
+        <image name="helpDownIndicator" width="55" height="83"/>
+        <image name="helpScreenBG" width="480" height="270"/>
+        <image name="helpScreenControls" width="480" height="320"/>
+        <image name="helpSolidBackgroundIndicator" width="87" height="115"/>
         <image name="iconCameraFlip" width="47" height="47"/>
         <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>
@@ -1093,7 +1103,8 @@
         <image name="iconSceneRetake" width="20" height="20"/>
         <image name="iconSceneScriptLighter" width="22" height="20"/>
         <image name="iconSmallClock" width="20" height="20"/>
-        <image name="iconUpArrowSmall" width="24" height="10"/>
+        <image name="iconUpArrow" width="24" height="10"/>
+        <image name="nextIcon" width="32" height="32"/>
         <image name="noConnectivity" width="60" height="60"/>
         <image name="sceneDirectionIcon" width="34" height="27"/>
         <image name="showScriptIcon" width="27" height="22"/>

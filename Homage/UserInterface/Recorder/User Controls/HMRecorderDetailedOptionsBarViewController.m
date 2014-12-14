@@ -21,6 +21,8 @@
 #import "HMMotionDetector.h"
 #import "HMAvenirBookFontLabel.h"
 #import "HMServer+analytics.h"
+#import "HMAppDelegate.h"
+#import "HMABTester.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -34,11 +36,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiMicrophoneUnauthorizedLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
-
+@property (weak, nonatomic) IBOutlet UIImageView *guiGetInspiredIcon;
 
 //deprecated. set GUI outlet if you need to debug background detection
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiBadBGLabel;
-
 
 // Table of scenes
 @property (weak, nonatomic) IBOutlet UITableView *guiTableView;
@@ -52,13 +53,12 @@
 @property (weak, nonatomic, readonly) HMSimpleVideoViewController *sceneVideoVC;
 @property (weak, nonatomic, readonly) HMSimpleVideoViewController *storyVideoVC;
 
-
-
 // Scene direction and show script buttons
 @property (weak, nonatomic) IBOutlet UIView *guiSceneDirectionButtonContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiSceneDirectionButton;
 @property (weak, nonatomic) IBOutlet UIView *guiShowScriptButtonContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiShowScriptButton;
+
 
 // Pointers to some info
 @property (nonatomic, readonly) Remake *remake;
@@ -93,6 +93,7 @@
     _remake = [self.remakerDelegate remake];
     [self checkMicrophoneAuthorization];
     [self initGUI];
+    [self initABTesting];
     [self initObservers];
     [self refreshInfo];
 }
@@ -148,6 +149,18 @@
     b.layer.cornerRadius = b.bounds.size.width/2.0f;
     b.layer.borderColor = [UIColor whiteColor].CGColor;
     b.layer.borderWidth = 3;
+}
+
+-(void)initABTesting
+{
+    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    HMABTester *abTester = app.abTester;
+
+    // Get inspired icon
+    NSString *abTestGetInspiredIconName = [abTester stringValueForProject:@"recorder icons"
+                                                              varName:@"getInspiredIcon"
+                                                hardCodedDefaultValue:@"iconUpArrow"];
+    self.guiGetInspiredIcon.image = [UIImage imageNamed:abTestGetInspiredIconName];
 }
 
 -(void)initVideoControllers
@@ -371,7 +384,9 @@
     self.guiLessDetailsBar.alpha = 0;
     self.guiMoreDetailsBar.alpha = 1;
     
-    
+    // Report AB Test conversion event - The drawer was opened.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    [app.abTester reportEventType:@"onOpenedRecorderDrawer"];
 }
 
 -(void)onRecorderDetailedOptionsOpening:(NSNotification *)notification
@@ -608,6 +623,10 @@
     self.guiPointingHand.hidden = YES;
     [[Mixpanel sharedInstance] track:@"REexpandMenu" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
     [self.remakerDelegate toggleOptions];
+
+    // Report AB Test conversion event - The get inspired button was tapped.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    [app.abTester reportEventType:@"onTappedGetInspiredIcon"];
 }
 
 - (IBAction)onChangedValueOriginalTakesPageControl:(UIPageControl *)sender

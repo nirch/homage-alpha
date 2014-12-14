@@ -12,8 +12,7 @@
 
 -(void)parse
 {
-    NSDictionary *info = self.objectToParse;
-    self.parseInfo[@"share_link_prefix"] = info[@"share_link_prefix"];
+    self.parseInfo = self.objectToParse;
 }
   
 

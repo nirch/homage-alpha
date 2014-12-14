@@ -86,6 +86,8 @@
 @property (nonatomic) CGFloat startPanY;
 @property (nonatomic) BOOL sideBarVisible;
 
+@property (nonatomic) NSInteger retryFetchCFGWaitTime;
+
 
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *guiAppMainPanGestureRecognizer;
 
@@ -108,6 +110,9 @@
     // Launch time
     _launchDateTime = [NSDate date];
     self.justStarted = YES;
+    
+    // Starting information
+    self.retryFetchCFGWaitTime = 5;
     
     // Init look
     [self initGUI];
@@ -980,6 +985,20 @@
 
 -(void)onConfigurationDataAvailable:(NSNotification *)notification
 {
+    if (notification.isReportingError) {
+        // Wait for a few seconds and retry fetching configuration from server.
+        HMGLogDebug(@"CFG fetch from server failed. Refetch configurations from server in %@ seconds.", @(self.retryFetchCFGWaitTime));
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.retryFetchCFGWaitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //
+            // Loading client configurations set on the server side.
+            //
+            [HMServer.sh loadAdditionalConfig];
+        });
+        self.retryFetchCFGWaitTime *= 2;
+        return;
+    }
+    
+    
     NSDictionary *info = notification.userInfo;
     [HMServer.sh updateConfiguration:info];
 }

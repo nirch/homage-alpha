@@ -37,7 +37,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="284" height="35"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradientTop" id="iwc-lO-DeQ" userLabel="Video label bg">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradientTop" id="iwc-lO-DeQ" userLabel="Video label bg">
                             <rect key="frame" x="0.0" y="0.0" width="284" height="35"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -85,7 +85,7 @@
                     <rect key="frame" x="0.0" y="116" width="284" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradient" id="o0B-Cg-w3z">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="o0B-Cg-w3z">
                             <rect key="frame" x="0.0" y="0.0" width="284" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         </imageView>
@@ -149,8 +149,8 @@
         </viewController>
     </objects>
     <resources>
-        <image name="CellGradient" width="1" height="95"/>
-        <image name="CellGradientTop" width="1" height="95"/>
+        <image name="cellGradient" width="1" height="95"/>
+        <image name="cellGradientTop" width="30" height="46"/>
         <image name="iconSmallPlayerFullScreen" width="16" height="16"/>
         <image name="iconSmallPlayerPause" width="10" height="19"/>
         <image name="iconSmallPlayerPlay" width="19" height="19"/>

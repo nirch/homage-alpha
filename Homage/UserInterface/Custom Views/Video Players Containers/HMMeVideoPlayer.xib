@@ -41,7 +41,7 @@
                     <rect key="frame" x="0.0" y="177" width="320" height="46"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradient" id="MeU-hw-MCn">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="MeU-hw-MCn">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         </imageView>
@@ -96,7 +96,7 @@
         </view>
     </objects>
     <resources>
-        <image name="CellGradient" width="1" height="95"/>
+        <image name="cellGradient" width="1" height="95"/>
         <image name="iconSmallPlayerFullScreen" width="16" height="16"/>
         <image name="iconSmallPlayerPause" width="10" height="19"/>
         <image name="iconSmallPlayerPlay" width="19" height="19"/>

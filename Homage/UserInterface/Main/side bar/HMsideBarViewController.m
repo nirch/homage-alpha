@@ -245,6 +245,7 @@
 }
 
 - (IBAction)onShareAppButtonPushed:(UIButton *)sender {
+    [[Mixpanel sharedInstance] track:@"UserPressedShareApp"];
     [self shareApp];
 }
 

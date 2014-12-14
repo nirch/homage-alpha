@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>identifier</key>
+	<string>homage app</string>
+	<key>private_key</key>
+	<string>K+p276mubnxPXRgovcfr3nSo6hP091Xrikax6sV1d/Y=</string>
+	<key>public_key</key>
+	<string>fdee5f249f59438695b489f5fca05c68</string>
+	<key>projects</key>
+	<dict>
+		<key>recorder icons</key>
+		<dict>
+			<key>defaults</key>
+			<dict>
+				<key>getInspiredIcon</key>
+				<string>iconUpArrow</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

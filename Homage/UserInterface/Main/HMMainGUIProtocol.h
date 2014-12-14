@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class HMABTester;
+
 @protocol HMMainGUIProtocol <NSObject>
 
 -(BOOL)isRenderingViewShowing;

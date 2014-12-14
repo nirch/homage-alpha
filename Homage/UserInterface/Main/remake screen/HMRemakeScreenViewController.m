@@ -164,7 +164,7 @@
     // Update Like Button
     if ([self.remake isLikedByCurrentUser]) {
         [self.guiLikeButton setTitle:LS(@"UNLIKE_BUTTON_LABEL") forState:UIControlStateNormal];
-        [self.guiLikeButton setImage:[UIImage imageNamed:@"LikedIcon"] forState:UIControlStateNormal];
+        [self.guiLikeButton setImage:[UIImage imageNamed:@"likedIcon"] forState:UIControlStateNormal];
     } else {
         [self.guiLikeButton setTitle:LS(@"LIKE_BUTTON_LABEL") forState:UIControlStateNormal];
         [self.guiLikeButton setImage:[UIImage imageNamed:@"likesIcon"] forState:UIControlStateNormal];

@@ -33,6 +33,8 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 
 @property UIViewController<HMMainGUIProtocol> *mainVC;
 
+@property (nonatomic, readonly) HMABTester *abTester;
+
 -(BOOL)isSlowDevice;
 
 @end

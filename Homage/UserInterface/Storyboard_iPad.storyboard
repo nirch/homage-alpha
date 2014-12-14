@@ -304,7 +304,7 @@
                                                     <rect key="frame" x="82" y="320" width="604" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SmallRemakeIcon" id="QSJ-Sj-dDP" userLabel="Remakes Icon">
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smallRemakeIcon" id="QSJ-Sj-dDP" userLabel="Remakes Icon">
                                                             <rect key="frame" x="574" y="6" width="28" height="23"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -325,7 +325,7 @@
                                                         </label>
                                                     </subviews>
                                                 </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradient" id="WpC-Nw-Zh8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="WpC-Nw-Zh8">
                                                     <rect key="frame" x="82" y="306" width="604" height="49"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -401,7 +401,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="255" height="144"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradient" id="YMp-vJ-vb8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="YMp-vJ-vb8">
                                                     <rect key="frame" x="-2" y="98" width="264" height="46"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 </imageView>
@@ -538,7 +538,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="MAKE YOUR OWN" image="RemakeBlackBGButton">
+                                <state key="normal" title="MAKE YOUR OWN" image="remakeInverseBGButton">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -590,7 +590,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlackHMBG" id="bjW-As-CzW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="subtleBackground" id="bjW-As-CzW">
                                 <rect key="frame" x="0.0" y="-60" width="768" height="1099"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -653,7 +653,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="152" height="94"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <inset key="imageEdgeInsets" minX="-1" minY="40" maxX="0.0" maxY="0.0"/>
-                                                                            <state key="normal" image="MyStoriesRemakeButton">
+                                                                            <state key="normal" image="myStoriesRemakeButton">
                                                                                 <color key="titleColor" red="1" green="0.44389514829999999" blue="0.13661929859999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <color key="titleShadowColor" red="0.31813570149999998" green="0.57142857140000003" blue="0.2674017226" alpha="1" colorSpace="calibratedRGB"/>
                                                                             </state>
@@ -665,7 +665,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="152" height="93"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <inset key="contentEdgeInsets" minX="0.0" minY="35" maxX="0.0" maxY="0.0"/>
-                                                                            <state key="normal" image="MyStoriesShareButton">
+                                                                            <state key="normal" image="myStoriesShareButton">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
                                                                             <connections>
@@ -711,7 +711,7 @@
                                                                                     <rect key="frame" x="0.0" y="0.0" width="88" height="94"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <inset key="imageEdgeInsets" minX="-1" minY="40" maxX="0.0" maxY="0.0"/>
-                                                                                    <state key="normal" image="MyStoriesRemakeButton">
+                                                                                    <state key="normal" image="myStoriesRemakeButton">
                                                                                         <color key="titleColor" red="1" green="0.44389514829999999" blue="0.13661929859999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                                         <color key="titleShadowColor" red="0.31813570149999998" green="0.57142857140000003" blue="0.2674017226" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     </state>
@@ -744,7 +744,7 @@
                                                                                     <rect key="frame" x="0.0" y="0.0" width="88" height="94"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <inset key="imageEdgeInsets" minX="-1" minY="40" maxX="0.0" maxY="0.0"/>
-                                                                                    <state key="normal" image="MyStoriesDeleteButton">
+                                                                                    <state key="normal" image="myStoriesDeleteButton">
                                                                                         <color key="titleColor" red="1" green="0.44389514829999999" blue="0.13661929859999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                                         <color key="titleShadowColor" red="0.31813570149999998" green="0.57142857140000003" blue="0.2674017226" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     </state>
@@ -775,7 +775,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <gestureRecognizers/>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradient" id="EDU-Sp-GFi">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="EDU-Sp-GFi">
                                                             <rect key="frame" x="0.0" y="0.0" width="334" height="188"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         </imageView>
@@ -783,7 +783,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="334" height="188"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                            <state key="normal" image="HMPlayButton">
+                                                            <state key="normal" image="myStoriesPlayButton">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                             <connections>
@@ -849,7 +849,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="REMAKE MORE STORIES" image="RemakeBlackBGButton">
+                                <state key="normal" title="REMAKE MORE STORIES" image="remakeInverseBGButton">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -980,9 +980,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FkG-6x-iW9" userLabel="close button">
-                                        <rect key="frame" x="270" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="718" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="CloseBlack">
+                                        <state key="normal" image="progressCloseIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1061,7 +1061,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GuestUserIcon" id="2VQ-kq-D2I" userLabel="UserIcon">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guestUserIcon" id="2VQ-kq-D2I" userLabel="UserIcon">
                                         <rect key="frame" x="15" y="25" width="31" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1109,7 +1109,7 @@
                                             <action selector="onStoriesButtonPushed:" destination="zGQ-3L-zy4" eventType="touchUpInside" id="J5w-Ne-xT5"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconStories" id="Jpi-JD-b2m">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navIconStories" id="Jpi-JD-b2m">
                                         <rect key="frame" x="162" y="8" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1127,11 +1127,11 @@
                                             <action selector="onMeButtonPushed:" destination="zGQ-3L-zy4" eventType="touchUpInside" id="FOg-ja-hDU"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconMyStories" id="Ksz-Us-HW6">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navIconMyStories" id="Ksz-Us-HW6">
                                         <rect key="frame" x="162" y="62" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconSettings" id="JS6-mG-LqW">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navIconSettings" id="JS6-mG-LqW">
                                         <rect key="frame" x="162" y="116" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1149,7 +1149,7 @@
                                             <action selector="onHowToButtonPushed:" destination="zGQ-3L-zy4" eventType="touchUpInside" id="Cip-aB-nWi"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NavIconHowto" id="qcS-hd-coP">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navIconHowto" id="qcS-hd-coP">
                                         <rect key="frame" x="162" y="170" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1167,7 +1167,7 @@
                                             <action selector="onShareAppButtonPushed:" destination="zGQ-3L-zy4" eventType="touchUpInside" id="GN2-jX-cd7"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon" id="ou1-Ok-pHP">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navAppIcon" id="ou1-Ok-pHP">
                                         <rect key="frame" x="162" y="224" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1358,7 +1358,7 @@
                                         <rect key="frame" x="53" y="545" width="214" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="2"/>
-                                        <state key="normal" title="Cancel" image="SmallCloseIcon">
+                                        <state key="normal" title="Cancel" image="smallCloseIcon">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1413,7 +1413,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" id="Y5W-cv-7Ms" userLabel="moviePlayer">
                                 <rect key="frame" x="0.0" y="101" width="320" height="180"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Bw-xr-Mrn" customClass="HMAvenirBookFontButton">
@@ -1427,12 +1427,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Ljs-Jr-xMk" customClass="HMBoldFontButton">
-                                <rect key="frame" x="14" y="363" width="281" height="52"/>
+                                <rect key="frame" x="16" y="363" width="281" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <inset key="titleEdgeInsets" minX="23" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
-                                <state key="normal" title="LETS CREATE" image="iconGotIt">
+                                <state key="normal" title="LETS CREATE" image="iconLetsCreate">
                                     <color key="titleColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1520,7 +1520,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradientTop" id="rvR-jd-hu2">
+                                                    <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradientTop" id="rvR-jd-hu2">
                                                         <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </imageView>
@@ -1564,7 +1564,7 @@
                                                 <rect key="frame" x="0.0" y="316" width="640" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellGradient" id="UDg-T6-sZc">
+                                                    <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="UDg-T6-sZc">
                                                         <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </imageView>
@@ -1601,7 +1601,7 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <inset key="titleEdgeInsets" minX="10" minY="-1" maxX="0.0" maxY="0.0"/>
-                                                        <state key="normal" image="ShareButton">
+                                                        <state key="normal" image="shareButton">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
@@ -1630,7 +1630,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="MAKE YOUR OWN" image="RemakeBlackBGButton">
+                                <state key="normal" title="MAKE YOUR OWN" image="remakeInverseBGButton">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1667,31 +1667,31 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppIcon" width="38" height="38"/>
-        <image name="BlackHMBG" width="320" height="568"/>
-        <image name="CellGradient" width="1" height="95"/>
-        <image name="CellGradientTop" width="1" height="95"/>
-        <image name="CloseBlack" width="22" height="22"/>
-        <image name="GuestUserIcon" width="31" height="31"/>
-        <image name="HMPlayButton" width="44" height="44"/>
-        <image name="MyStoriesDeleteButton" width="44" height="44"/>
-        <image name="MyStoriesRemakeButton" width="44" height="44"/>
-        <image name="MyStoriesShareButton" width="44" height="44"/>
-        <image name="NavIconHowto" width="38" height="38"/>
-        <image name="NavIconMyStories" width="38" height="38"/>
-        <image name="NavIconSettings" width="38" height="38"/>
-        <image name="NavIconStories" width="40" height="38"/>
-        <image name="RemakeBlackBGButton" width="33" height="33"/>
-        <image name="ShareButton" width="44" height="44"/>
-        <image name="SmallCloseIcon" width="17" height="17"/>
-        <image name="SmallRemakeIcon" width="18" height="15"/>
-        <image name="background" width="568" height="568"/>
-        <image name="iconGotIt" width="32" height="32"/>
+        <image name="background" width="568" height="320"/>
+        <image name="cellGradient" width="1" height="95"/>
+        <image name="cellGradientTop" width="1" height="95"/>
+        <image name="guestUserIcon" width="31" height="31"/>
+        <image name="iconLetsCreate" width="32" height="32"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="likesIcon" width="12" height="11"/>
         <image name="more" width="20" height="15"/>
+        <image name="myStoriesDeleteButton" width="44" height="44"/>
+        <image name="myStoriesPlayButton" width="44" height="44"/>
+        <image name="myStoriesRemakeButton" width="44" height="44"/>
+        <image name="myStoriesShareButton" width="44" height="44"/>
+        <image name="navAppIcon" width="38" height="38"/>
+        <image name="navIconHowto" width="38" height="38"/>
+        <image name="navIconMyStories" width="38" height="38"/>
+        <image name="navIconSettings" width="38" height="38"/>
+        <image name="navIconStories" width="40" height="38"/>
         <image name="noConnectivity" width="60" height="60"/>
+        <image name="progressCloseIcon" width="22" height="22"/>
+        <image name="remakeInverseBGButton" width="33" height="33"/>
+        <image name="shareButton" width="44" height="44"/>
+        <image name="smallCloseIcon" width="17" height="17"/>
         <image name="smallGuestIcon" width="18" height="18"/>
+        <image name="smallRemakeIcon" width="18" height="15"/>
+        <image name="subtleBackground" width="320" height="568"/>
         <image name="tp_pause_button.png" width="568" height="568"/>
         <image name="viewsIcon" width="17" height="11"/>
     </resources>

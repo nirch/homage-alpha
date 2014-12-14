@@ -30,6 +30,9 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMServer+Footages.h"
 #import "HMCacheManager.h"
+#import "HMMainGUIProtocol.h"
+#import "HMABTester.h"
+#import "HMAppDelegate.h"
 
 @interface HMRecorderViewController () <UIAlertViewDelegate>
 
@@ -44,7 +47,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiSceneDirectionButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiBackgroundStatusButton;
 @property (weak, nonatomic) IBOutlet UIView *guiHelperScreenContainer;
-
 
 // Silhouette background image
 @property (weak, nonatomic) IBOutlet UIImageView *guiSilhouetteImageView;
@@ -111,9 +113,20 @@
     [super viewDidLoad];
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
+    
+    // Cache manager, stop downloads.
     [HMCacheManager.sh pauseDownloads];
+    
+    // Status bar should be hidden.
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    // Background detection.
     [self postEnableBGDetectionNotification];
+    
+    // Initalize AB Testing
+    [self initABTesting];
+    
+    // More initializations.
     [self initRemakerState];
     [self initOptions];
     [self initGUI];
@@ -158,6 +171,20 @@
     return YES;
 }
 
+#pragma mark - AB Testing
+-(void)initABTesting
+{
+    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    HMABTester *abTester = app.abTester;
+    
+    // Report about entering the recorder, if in testing.
+    if ([abTester isABTestingProject:@"recorder icons"]) {
+        // We care about reporting a view of the recorder, only if
+        // the recorder interface provided a variant.
+        [abTester reportEventType:@"enteredRecorder"];
+    }
+}
+
 #pragma mark - UI initializations
 -(void)initGUI
 {
@@ -195,7 +222,7 @@
     self.guiBackgroundStatusButton.alpha = 0;
     self.isBadBackgroundWarningOn = NO;
     
-    //
+    // iPad specific
     if (IS_IPAD) {
         CGPoint p = self.guiDetailedOptionsBarContainer.center;
         p.y += 452;
@@ -259,7 +286,7 @@
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
         BOOL debugAlwaysSkipHelpScreens = NO; // Set to NO or remove this for correct behavior.
-        BOOL debugAlwaysShowHelpScreens = NO;  // Set to NO or remove this for correct behavior.
+        BOOL debugAlwaysShowHelpScreens = YES;  // Set to NO or remove this for correct behavior.
         
         if (debugAlwaysShowHelpScreens) {
             [self stateShowHelpScreens];

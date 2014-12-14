@@ -204,6 +204,21 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [HMCacheManager.sh checkIfNeedsToDownloadAndCacheResources];
     });
+    
+    // Preload stories thumbs
+    [self preloadStoriesThumbs];
+}
+
+-(void)preloadStoriesThumbs
+{
+    for (Story *story in self.fetchedResultsController.fetchedObjects) {
+        HMGLogDebug(@"Preloading image from:%@", story.thumbnailURL);
+        UIImageView *imageView = [UIImageView new];
+        NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];
+        [imageView sd_setImageWithURL:thumbURL placeholderImage:nil
+                              options:SDWebImageRetryFailed|SDWebImageContinueInBackground|SDWebImageHighPriority
+                            completed:nil];
+    }
 }
 
 //-(void)onStoryThumbnailLoaded:(NSNotification *)notification
@@ -413,7 +428,7 @@
     // Lazy load image.
     NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];
     [cell.guiThumbImage sd_setImageWithURL:thumbURL placeholderImage:nil
-                                   options:SDWebImageRetryFailed|SDWebImageHighPriority
+                                   options:SDWebImageRetryFailed|SDWebImageContinueInBackground|SDWebImageHighPriority
                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                      
         if (cacheType == SDImageCacheTypeNone) {
