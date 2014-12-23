@@ -48,27 +48,7 @@
 #pragma mark - Application life cycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    #ifndef DEBUG
-
-        // ----------------------------------------------------------
-        // Release Build
-        // ----------------------------------------------------------
-
-        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-    
-        //crashlytics crash reporting
-        [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
-
-    #else
-
-        // ----------------------------------------------------------
-        // Debug Build
-        // ----------------------------------------------------------
-
-        // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-        // [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
-    
-    #endif
+    [self initRequiredServices];
     
     //  TODO: handle old known push token here.
     //    // Get push token from previous app launches.
@@ -177,6 +157,9 @@
     // This is a simple situation and the easiest way to announce about the notification is just
     // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
     // add an observer for it.
+    
+    // Initilize mixpanl if required.
+    [self initRequiredServices];
     
     NSMutableDictionary *info = [userInfo mutableCopy];
     HMPushNotificationType pushNotificationType = [[userInfo objectForKey:@"type"] intValue];
@@ -373,5 +356,36 @@ NSString* machineName()
     return [_slowDeviceFlag boolValue];
 }
 
+
+-(void)initRequiredServices
+{
+    HMGLogDebug(@"Initializing required 3rd party services.");
+    #ifndef DEBUG
+        // ----------------------------------------------------------
+        // Release Build
+        // ----------------------------------------------------------
+        if ([Mixpanel sharedInstance] == nil) {
+            HMGLogDebug(@"Initializing mixpanel with token: %@", MIXPANEL_TOKEN);
+            [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        } else {
+            HMGLogDebug(@"Mixpanel already initialized.");
+        }
+    
+        //crashlytics crash reporting
+        [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
+    #else
+    // ----------------------------------------------------------
+    // Debug Build
+    // ----------------------------------------------------------
+//    if ([Mixpanel sharedInstance] == nil) {
+//        HMGLogDebug(@"Initializing mixpanel with token: %@", MIXPANEL_TOKEN);
+//        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+//    } else {
+//        HMGLogDebug(@"Mixpanel already initialized.");
+//    }
+//
+//    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+    #endif
+}
 
 @end

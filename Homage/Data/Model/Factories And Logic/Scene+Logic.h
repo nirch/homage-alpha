@@ -62,7 +62,12 @@
  */
 -(CGPoint)focusCGPoint;
 
-
+/**
+ *  Does the scene have related audio files?
+ *
+ *  @return YES if the scene points to required audio resources.
+ */
+-(BOOL)usesAudioFilesInRecorder;
 
 
 @end

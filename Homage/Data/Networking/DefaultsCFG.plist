@@ -2,11 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>mirror_selfie_silhouette</key>
+	<key>remakes_save_to_device</key>
 	<integer>0</integer>
+	<key>campaign_id</key>
+	<string>544ead1e454c610d1600000f</string>
+	<key>login_flow</key>
+	<string>normal</string>
+	<key>mirror_selfie_silhouette</key>
+	<false/>
 	<key>share_link_prefix</key>
 	<string>http://play-test.homage.it</string>
 	<key>significant_view_pct_threshold</key>
 	<real>0.5</real>
+	<key>recorder_first_scene_context_message</key>
+	<false/>
 </dict>
 </plist>

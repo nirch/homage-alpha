@@ -123,4 +123,24 @@
     return NO;
 }
 
+-(BOOL)isPremiumAndLocked
+{
+    BOOL premium = [self.isPremium boolValue];
+    if (!premium) return NO;
+    BOOL purchased = [self.wasPurchased boolValue];
+    if (purchased) return NO;
+    
+    // Premium but was not purchased. Locked!
+    return YES;
+}
+
+-(BOOL)usesAudioFilesInRecorder
+{
+    for (Scene *scene in self.scenes) {
+        if ([scene usesAudioFilesInRecorder]) return YES;
+    }
+    return NO;
+}
+
+
 @end

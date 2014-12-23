@@ -58,6 +58,10 @@
     return focusPoint;
 }
 
-
+-(BOOL)usesAudioFilesInRecorder
+{
+    if (self.directionAudioURL || self.sceneAudioURL) return YES;
+    return NO;
+}
 
 @end

@@ -13,14 +13,16 @@
 #import "HMAvenirBookFontButton.h"
 #import "HMBoldFontButton.h"
 #import "HMRemakePresenterDelegate.h"
+#import "HMStoreDelegate.h"
 
 @interface HMStoryDetailsViewController : UIViewController<
     HMStoryPresenterProtocol,
     NSFetchedResultsControllerDelegate,
-    HMRemakePresenterDelegate
+    HMRemakePresenterDelegate,
+    HMStoreDelegate
 >
 
-@property (weak, nonatomic) IBOutlet HMBoldFontButton *guiRemakeButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiStoryMovieContainer;

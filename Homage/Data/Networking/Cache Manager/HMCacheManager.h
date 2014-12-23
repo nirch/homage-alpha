@@ -16,10 +16,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class Story;
+
 @interface HMCacheManager : NSObject
 
 @property (nonatomic, readonly) NSURL *cachePath;
 @property (nonatomic, readonly) NSURL *storiesCachePath;
+@property (nonatomic, readonly) NSURL *audioCachePath;
 
 
 // HMUploadManager is a singleton
@@ -33,6 +36,7 @@
 -(BOOL)isResourceBundledLocallyForURL:(NSString *)url;
 -(BOOL)isResourceCachedLocallyForURL:(NSString *)url cachePath:(NSURL *)cachePath;
 -(NSURL *)urlForCachedResource:(NSString *)url cachePath:(NSURL *)cachePath;
+-(NSURL *)urlForAudioResource:(NSString *)resourceURL;
 
 #pragma mark - download and cache resources
 // Check if more resources should be downloaded and cached on the device
@@ -40,6 +44,7 @@
 -(void)checkIfNeedsToDownloadAndCacheResources;
 -(void)pauseDownloads;
 -(void)clearStoriesCache;
+-(void)ensureAudioFilesAvailableForStory:(Story *)story;
 
 
 @end

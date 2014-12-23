@@ -25,7 +25,7 @@
 #import "Mixpanel.h"
 #import <AudioToolbox/AudioServices.h>
 #import "HMMotionDetector.h"
-#import "HMServer+Info.h"
+#import "HMServer+AppConfig.h"
 #import "HMServer+LazyLoading.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMServer+Footages.h"
@@ -33,6 +33,7 @@
 #import "HMMainGUIProtocol.h"
 #import "HMABTester.h"
 #import "HMAppDelegate.h"
+#import "HMServer+AppConfig.h"
 
 @interface HMRecorderViewController () <UIAlertViewDelegate>
 
@@ -45,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiTextsEditingContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiMessagesOverlayContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiSceneDirectionButton;
+@property (weak, nonatomic) IBOutlet UIView *guiSceneDirectionButtonContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiBackgroundStatusButton;
 @property (weak, nonatomic) IBOutlet UIView *guiHelperScreenContainer;
 
@@ -75,6 +77,9 @@
 @property (nonatomic) BOOL flagForDebugging;
 @property (nonatomic) BOOL stopRecordingFired;
 @property (nonatomic) BOOL isSelfie;
+
+// scene direction audio player
+@property (strong,nonatomic) AVAudioPlayer *directionAudioPlayer;
 
 // Some physics animations
 @property (nonatomic, readonly) UIDynamicAnimator *animator;
@@ -157,7 +162,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
+    [self stopSceneDirectionAudioPlayback]; // Stop if playing. Nothing otherwise.
     [self.videoCameraVC releaseCameraIO];
 }
 
@@ -286,7 +291,7 @@
     } else if (self.recorderState == HMRecorderStateGeneralMessage) {
         
         BOOL debugAlwaysSkipHelpScreens = NO; // Set to NO or remove this for correct behavior.
-        BOOL debugAlwaysShowHelpScreens = YES;  // Set to NO or remove this for correct behavior.
+        BOOL debugAlwaysShowHelpScreens = NO;  // Set to NO or remove this for correct behavior.
         
         if (debugAlwaysShowHelpScreens) {
             [self stateShowHelpScreens];
@@ -298,8 +303,15 @@
         // 1 - HMRecorderStateGeneralMessage --> 8 - HMRecorderStateHelpScreens
         User *user = [User current];
         if (user.skipRecorderTutorial || debugAlwaysSkipHelpScreens) {
-            [self stateShowContextForNextScene];
+            if ([HMServer.sh shouldShowFirstSceneContextMessage]) {
+                // Show a context message for the first scene.
+                [self stateShowContextForNextScene];
+            } else {
+                // Some apps are configured not to show the context message for the first scene.
+                [self stateMakingAScene];
+            }
         } else {
+            // Showing the help/tutorial screens.
             [self stateShowHelpScreens];
         }
         
@@ -413,6 +425,12 @@
     [self closeDetailedOptionsAnimated:YES];
     self.guiTextsEditingContainer.hidden = YES;
     
+    // Some scenes play scene direction as audio
+    Scene *scene = [self.remake.story findSceneWithID:self.currentSceneID];
+    if (scene.directionAudioURL) {
+        [self startSceneDirectionAudioPlayback];
+    }
+    
     // Now the user has control of the flow...
 }
 
@@ -495,6 +513,11 @@
                      name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA
                    object:nil];
     
+    // Observe user pressing the record button (start counting down to recording)
+    [nc addUniqueObserver:self
+                 selector:@selector(onStartedCountingDownToRecording:)
+                     name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING
+                   object:nil];
     
     // Observe started recording
     [nc addUniqueObserver:self
@@ -548,8 +571,6 @@
                      name:HM_APP_WILL_RESIGN_ACTIVE
                    object:nil];
     
-    
-
 }
 
 -(void)removeObservers
@@ -566,6 +587,11 @@
 }
 
 #pragma mark - Observers handlers
+-(void)onStartedCountingDownToRecording:(NSNotification *)notification
+{
+    if (self.directionAudioPlayer) [self stopSceneDirectionAudioPlayback];
+}
+
 -(void)onBackCameraSelected:(NSNotification *)notification
 {
     HMGLogDebug(@"Back camera selected");
@@ -647,7 +673,7 @@
         // Fade out unwanted buttons
         self.guiCameraSwitchingButton.alpha = 0;
         self.guiDismissButton.alpha = 0;
-        self.guiSceneDirectionButton.alpha = 0;
+        self.guiSceneDirectionButtonContainer.alpha = 0;
         
         // Fade in "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 1;
@@ -703,7 +729,7 @@
     self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
 
     self.guiSceneDirectionButton.enabled = YES;
-    self.guiSceneDirectionButton.hidden = NO;
+    self.guiSceneDirectionButtonContainer.hidden = NO;
     
     self.guiBackgroundStatusButton.enabled = YES;
     
@@ -715,7 +741,7 @@
         // Fade in buttons
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
-        self.guiSceneDirectionButton.alpha = 1;
+        self.guiSceneDirectionButtonContainer.alpha = 1;
         
         // Fade out "while recording" controls.
         self.guiWhileRecordingOverlay.alpha = 0;
@@ -1012,7 +1038,7 @@
     
     if (info[@"minimized scene direction"]) {
         [UIView animateWithDuration:0.2 animations:^{
-            self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiSceneDirectionButton];
+            self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiSceneDirectionButtonContainer];
         } completion:^(BOOL finished) {
             self.guiMessagesOverlayContainer.hidden = YES;
             [self postEnableBGDetectionNotification];
@@ -1045,9 +1071,9 @@
     }];
 }
 
--(CGAffineTransform)minimizedButtonTransform:(UIButton *)button
+-(CGAffineTransform)minimizedButtonTransform:(UIView *)view
 {
-    CGPoint dc = button.center;
+    CGPoint dc = view.center;
     CGPoint sc = self.guiMessagesOverlayContainer.center;
     
     double scaleX = 0.01;
@@ -1127,6 +1153,9 @@
 {
     _currentSceneID = sceneID;
     [self updateUIForSceneID:sceneID];
+    
+    // Stop playing scene direction audio if playing
+    if (self.directionAudioPlayer) [self stopSceneDirectionAudioPlayback];
 }
 
 -(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
@@ -1308,13 +1337,13 @@
 {
     self.guiDismissButton.hidden = NO;
     self.guiCameraSwitchingButton.hidden = !self.frontCameraAllowed;
-    self.guiSceneDirectionButton.hidden = NO;
+    self.guiSceneDirectionButtonContainer.hidden = NO;
     self.guiBackgroundStatusButton.hidden = NO;
     
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 1;
         self.guiCameraSwitchingButton.alpha = 1;
-        self.guiSceneDirectionButton.alpha = 1;
+        self.guiSceneDirectionButtonContainer.alpha = 1;
         self.guiBackgroundStatusButton.alpha = self.isBadBackgroundWarningOn ? 1:0;
     } completion:^(BOOL finished) {
     }];
@@ -1325,12 +1354,12 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.guiDismissButton.alpha = 0;
         self.guiCameraSwitchingButton.alpha = 0;
-        self.guiSceneDirectionButton.alpha = 0;
+        self.guiSceneDirectionButtonContainer.alpha = 0;
         self.guiBackgroundStatusButton.alpha = 0;
         
     } completion:^(BOOL finished) {
         self.guiDismissButton.hidden = YES;
-        self.guiSceneDirectionButton.hidden = YES;
+        self.guiSceneDirectionButtonContainer.hidden = YES;
         self.guiCameraSwitchingButton.hidden = YES;
         self.guiBackgroundStatusButton.hidden = YES;
     }];
@@ -1338,7 +1367,7 @@
 
 -(CGRect)sceneDirectionMinimizedFrame
 {
-    return self.guiSceneDirectionButton.frame;
+    return self.guiSceneDirectionButtonContainer.frame;
 }
 
 #pragma mark - Top script view
@@ -1412,12 +1441,68 @@
     });
 }
 
+#pragma mark - Audio direction
+-(void)toggleSceneDirectionAudioPlayback
+{
+    // Current scene.
+    if (self.directionAudioPlayer) {
+        [self stopSceneDirectionAudioPlayback];
+    } else {
+        [self startSceneDirectionAudioPlayback];
+    }
+}
+
+-(void)stopSceneDirectionAudioPlayback
+{
+    if (!self.directionAudioPlayer) return;
+    
+    self.directionAudioPlayer.delegate = nil;
+    [self.directionAudioPlayer stop];
+    self.directionAudioPlayer = nil;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiSceneDirectionButton.alpha = 1.0;
+    }];
+}
+
+-(void)startSceneDirectionAudioPlayback
+{
+    Scene *scene = [Scene sceneWithID:self.currentSceneID story:self.remake.story inContext:DB.sh.context];
+
+    // Play the direction audio,
+    NSString *url = scene.directionAudioURL;
+    NSError *error;
+    NSURL *soundURL = [HMCacheManager.sh urlForAudioResource:url];
+    self.directionAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:&error];
+    [self.directionAudioPlayer prepareToPlay];
+    [self.directionAudioPlayer play];
+    self.directionAudioPlayer.delegate = self;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiSceneDirectionButton.alpha = 0.2;
+    }];
+}
+
+#pragma mark - AVAudioPlayerDelegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self stopSceneDirectionAudioPlayback];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
+    Scene *scene = [Scene sceneWithID:self.currentSceneID story:self.remake.story inContext:DB.sh.context];
+    if (scene.directionAudioURL) {
+        // If direction with audio, will toggle audio playback.
+        [self toggleSceneDirectionAudioPlayback];
+        return;
+    }
+    
+    // Scene direction has no audio. Will show a textual direction screen.
+    // Show the scene context message for current scene.
     [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:NO info:@{@"blur alpha":@0.85,@"minimized scene direction":@YES}];
 }
 
@@ -1431,7 +1516,8 @@
 
 - (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
 {
-    
+    [self stopSceneDirectionAudioPlayback]; // Stop if playing. Nothing otherwise.
+
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"LEAVE_RECORDER_TITLE") message:LS(@"LEAVE_RECORDER_MESSAGE") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES") , nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         [alertView show];
@@ -1515,6 +1601,8 @@
 #pragma mark UITextView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [self stopSceneDirectionAudioPlayback]; // Stop if playing. Nothing otherwise.
+
     //leave recorder
     if (buttonIndex == 1) {
         [[Mixpanel sharedInstance] track:@"UserClosedRecorder" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
@@ -1576,6 +1664,8 @@
 
 -(void)onAppMovedToBackground:(NSNotification *)notification
 {
+    [self stopSceneDirectionAudioPlayback]; // Stop if playing. Nothing otherwise.
+    
     NSDictionary *info = @{HM_INFO_KEY_RECORDING_STOP_REASON:@(HMRecordingStopReasonAppWentToBackground)};
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self

@@ -2,7 +2,7 @@
 //  Scene.h
 //  Homage
 //
-//  Created by Aviv Wolf on 11/22/14.
+//  Created by Aviv Wolf on 12/17/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -25,6 +25,8 @@
 @property (nonatomic, retain) NSString * silhouetteURL;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * videoURL;
+@property (nonatomic, retain) NSString * sceneAudioURL;
+@property (nonatomic, retain) NSString * directionAudioURL;
 @property (nonatomic, retain) Story *story;
 
 @end

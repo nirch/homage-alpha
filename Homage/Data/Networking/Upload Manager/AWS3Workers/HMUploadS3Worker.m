@@ -30,6 +30,7 @@
 @synthesize destination = _destination;
 @synthesize userInfo = _userInfo;
 @synthesize progress = _progress;
+@synthesize metaData = _metaData;
 
 
 +(NSSet *)instantiateWorkers:(NSInteger)numberOfWorkers
@@ -61,6 +62,7 @@
     _destination = destination;
     _name = [destination lastPathComponent];
     _progress = 0;
+    _metaData = nil;
 }
 
 -(BOOL)startWorking

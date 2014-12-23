@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 
 @class HMParser;
+@class HMAppStore;
 
 #define ERROR_DOMAIN_NETWORK @"Network error"
 
@@ -43,10 +44,12 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(NSString *)relativeURLNamed:(NSString *)urlName;
 -(NSString *)relativeURLNamed:(NSString *)relativeURLName withSuffix:(NSString *)suffix;
 
-#pragma mark - provide server woth request context
+#pragma mark - provide server with request context
 -(void)updateServerWithCurrentUser:(NSString *)userID;
 -(void)updateConfiguration:(NSDictionary *)info;
 
+#pragma mark - App Store & In app purchases
+@property (nonatomic, readonly) HMAppStore *appStore;
 
 #pragma mark - GET requests
 ///

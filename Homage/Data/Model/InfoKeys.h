@@ -9,6 +9,7 @@
 // User info
 #define HM_INFO_REMAKE_ID                           @"remakeID"
 #define HM_INFO_FILE_NAME                           @"fileName"
+#define HM_INFO_SHOULD_RECORD_AUDIO                 @"shouldRecordAudio"
 #define HM_INFO_SCENE_ID                            @"sceneID"
 #define HM_INFO_FOOTAGE_IDENTIFIER                  @"footageIdentifier"    // A long identifier in the following format <remakeID>_<sceneID>
 #define HM_INFO_DURATION_IN_SECONDS                 @"durationInSeconds"

@@ -10,7 +10,7 @@
 #import "DB.h"
 #import "HMServer.h"
 #import "HMServer+analytics.h"
-#import "HMServer+Info.h"
+#import "HMServer+AppConfig.h"
 #import "JBWhatsAppActivity.h"
 #import "mixPanel.h"
 

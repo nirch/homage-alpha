@@ -2,7 +2,7 @@
 //  Story.h
 //  Homage
 //
-//  Created by Aviv Wolf on 11/17/14.
+//  Created by Aviv Wolf on 12/16/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -25,6 +25,8 @@
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSDecimalNumber * version;
 @property (nonatomic, retain) NSString * videoURL;
+@property (nonatomic, retain) NSNumber * isPremium;
+@property (nonatomic, retain) NSNumber * wasPurchased;
 @property (nonatomic, retain) NSSet *remakes;
 @property (nonatomic, retain) NSSet *scenes;
 @property (nonatomic, retain) NSSet *texts;

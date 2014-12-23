@@ -12,7 +12,17 @@
 
 -(void)parse
 {
-    self.parseInfo = self.objectToParse;
+    // Take as is. Just make sure not to include any nil/null values.
+    if ([self.objectToParse isKindOfClass:[NSDictionary class]]) {
+        NSMutableDictionary *prunedDictionary = [NSMutableDictionary new];
+        for (NSString * key in [self.objectToParse allKeys])
+        {
+            id value = self.objectToParse[key];
+            if ([value isKindOfClass:[NSNull class]]) continue;
+            prunedDictionary[key] = value;
+        }
+        self.parseInfo = prunedDictionary;
+    }
 }
   
 

@@ -25,6 +25,7 @@
 #import "HMRemakeScreenViewController.h"
 #import "AMBlurView.h"
 #import "DB.h"
+#import "HMInAppStoreViewController.h"
 #import <UIScrollView+BottomRefreshControl.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -166,6 +167,11 @@
     [refreshControl setTintColor:[HMColor.sh main2]];
     refreshControl.layer.zPosition = -1;
     self.remakesCV.bottomRefreshControl = refreshControl;
+    
+    // Premium content
+    if (self.story.isPremiumAndLocked) {
+        [self.guiRemakeButton setImage:[UIImage imageNamed:@"iconRemakeStoryLocked"] forState:UIControlStateNormal];
+    }
     
     // offset point
     if (IS_IPAD) {
@@ -316,7 +322,7 @@
 #pragma mark - Alerts
 -(void)remakeCreationFailMessage
 {
-    
+    self.guiRemakeButton.enabled = YES;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
                                                     message:@"Failed creating remake.\n\nTry again later."
                                                    delegate:self
@@ -516,7 +522,7 @@
     // Stop the story movie player (if playing)
     [self.storyMoviePlayer done];
     
-    // Mixpanel event
+    // Mixpanel event (user selected a remake in story details screen)
     NSString *userID = remake.user.userID ? remake.user.userID : @"unknown";
     NSDictionary *properties = @{
                                  @"story_id": remake.story.sID,
@@ -524,7 +530,7 @@
                                  @"remake_owner_id": userID,
                                  @"index": @(indexPath.item)
                                  };
-    [[Mixpanel sharedInstance] track:@"SDShareRemake" properties:properties];
+    [[Mixpanel sharedInstance] track:@"SDSelectedRemake" properties:properties];
     
 }
 
@@ -819,6 +825,30 @@
     });
 }
 
+#pragma mark - In App Store
+-(void)openInAppStoreForCurrentStory
+{
+    if (!self.story.isPremiumAndLocked) return;
+    
+    HMInAppStoreViewController *vc = [HMInAppStoreViewController storeVCForStory:self.story];
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma mark - HMStoreDelegate
+-(void)storeDidFinishWithInfo:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        // Back from the store.
+        
+        // Just dismiss. Do nothing.
+        if (info == nil) return;
+        
+        // Check if user unlocked the current premium story.
+        
+    }];
+}
+
 #pragma mark - recorder init
 -(void)initRecorderWithRemake:(Remake *)remake
 {
@@ -845,6 +875,8 @@
     }
 }
 
+
+
 -(void)remakeStory
 {
     self.guiRemakeButton.enabled = NO;
@@ -852,12 +884,25 @@
     [self.guiRemakeActivity startAnimating];
     [self.storyMoviePlayer done];
     
+    //
+    // Check if story is premium
+    // If it is premium, user will need to make a purchase first
+    //
+    if (self.story.isPremiumAndLocked) {
+        [self openInAppStoreForCurrentStory];
+        return;
+    }
+    
+    //
+    // Remaking (opening the recorder screen)
+    //
     User *user = [User current];
     self.oldRemakeInProgress = [user userPreviousRemakeForStory:self.story.sID];
-    
-    
     if (self.oldRemakeInProgress)
     {
+        //
+        // User already have a remake for this story in local storage.
+        //
         if (self.oldRemakeInProgress.status.integerValue == HMGRemakeStatusNew)
         {
             [self initRecorderWithRemake:self.oldRemakeInProgress];
@@ -870,6 +915,10 @@
             });
         }
     } else {
+        //
+        // User doesn't have and old remake for this story in local storage.
+        // Will create a new remake.
+        //
         [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
     }

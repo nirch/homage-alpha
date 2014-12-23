@@ -28,7 +28,9 @@
  *  @param storyID The id of the story
  *  @param userID  The id of the user
  */
--(void)createRemakeForStoryWithID:(NSString *)storyID forUserID:(NSString *)userID withResolution:(NSString *)resolution;
+-(void)createRemakeForStoryWithID:(NSString *)storyID
+                        forUserID:(NSString *)userID
+                   withResolution:(NSString *)resolution;
 
 ///
 /**

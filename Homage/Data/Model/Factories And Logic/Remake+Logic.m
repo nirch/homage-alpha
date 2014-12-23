@@ -163,5 +163,32 @@
     self.isLikedByUsers = likes;
 }
 
+-(NSArray *)allTakenTakesIDS
+{
+    NSMutableArray *takeIDS = [NSMutableArray new];
+    NSArray *footages = [self footagesOrdered];
+    NSArray *footagesReadyStates = [self footagesReadyStates];
+    for (int i=0; i<footages.count; i++) {
+        Footage *footage = footages[i];
+
+        // Make sure footage in correct state.
+        HMFootageReadyState readyState = [footagesReadyStates[i] integerValue];
+        if (readyState != HMFootageReadyStateReadyForSecondRetake) {
+            // Critical error - footage in wrong state.
+            HMGLogError(@"Footage in wrong state (not ready): %@ scene:%@ state:%@", self.sID, @(i+1), @(readyState));
+            return nil;
+        }
+        
+        // Get the take id.
+        NSString *takeID = [footage takeID];
+        if (takeID == nil) {
+            // Critical error - ready footage missing take id?
+            HMGLogError(@"Ready footage missing take_id %@ %@", self.sID, @(i+1));
+            return nil;
+        }
+        [takeIDS addObject:takeID];
+    }
+    return takeIDS;
+}
 
 @end

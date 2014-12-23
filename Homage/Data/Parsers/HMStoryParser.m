@@ -33,7 +33,8 @@
     story.level =               [info numberForKey:@"level"];
     story.videoURL =            [info stringForKey:@"video"];
     story.thumbnailURL =        [info stringForKey:@"thumbnail"];
-    story.shareMessage = [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
+    story.shareMessage =        [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
+    story.isPremium =           [info boolNumberForKey:@"is_premium"];
     
     // Parse the scenes of this story.
     BOOL allScenesAreSelfie = YES;
@@ -78,6 +79,11 @@
     scene.duration =                [info decimalNumberForKey:@"duration"];
     scene.videoURL =                [info stringForKey:@"video"];
     
+    // Audio files (optional)
+    scene.sceneAudioURL =           [info stringForKey:@"scene_audio"];
+    scene.directionAudioURL =       [info stringForKey:@"direction_audio"];
+
+    // Contours
     if (info[@"contours"])
     {
         //new mongo configueration

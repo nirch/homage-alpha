@@ -130,8 +130,25 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
  */
 -(BOOL)isLikedByCurrentUser;
 
-
+/**
+ *  Mark as liked by given user.
+ *
+ *  @param userID The user id that liked this remake.
+ */
 -(void)likedByUserID:(NSString *)userID;
+
+/**
+ *  Unmark as liked by given user.
+ *
+ *  @param userID The user id that unliked this remake.
+ */
 -(void)unlikedByUserID:(NSString *)userID;
+
+/**
+ *  The ordered array of takes of this remake (with ready / taken footage).
+ *
+ *  @return An array of take ids. All footages must be in correct (taken) state. Otherwise will return nil.
+ */
+-(NSArray *)allTakenTakesIDS;
 
 @end

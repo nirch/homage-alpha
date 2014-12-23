@@ -11,8 +11,15 @@
 #import <AWSiOSSDKv2/S3.h>
 
 #define BUCKET_NAME     @"homageapp"
-#define ACCESS_KEY_ID   @"AKIAJTPGKC25LGKJUCTA"
-#define SECRET_KEY      @"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"
+
+// Older keys, without restricted permissions
+//#define ACCESS_KEY_ID   @"AKIAJTPGKC25LGKJUCTA"
+//#define SECRET_KEY      @"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"
+
+// Newer keys, with restricted permissions (upload to s3 only)
+#define ACCESS_KEY_ID   @"AKIAJJQ55763CDX5DENQ"
+#define SECRET_KEY      @"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"
+
 
 #define STATUS_LABEL_READY          @"Ready"
 #define STATUS_LABEL_UPLOADING      @"Uploading..."

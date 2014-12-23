@@ -339,6 +339,17 @@
                                                         </imageView>
                                                     </subviews>
                                                 </view>
+                                                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="X0U-tW-cyL" userLabel="storyLockedContainer">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconStoryLocked" id="dqm-pu-UUr" userLabel="Story Locked Icon">
+                                                            <rect key="frame" x="115" y="45" width="90" height="90"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -353,6 +364,7 @@
                                             <outlet property="guiLevelOfDifficulty" destination="9KD-jG-LUX" id="dRC-Pp-pPy"/>
                                             <outlet property="guiNumOfRemakes" destination="zCL-L2-HEd" id="2hx-K8-Yy1"/>
                                             <outlet property="guiShotMode" destination="yre-Et-9j7" id="E3i-Ic-Ves"/>
+                                            <outlet property="guiStoryLockedContainer" destination="X0U-tW-cyL" id="nto-Jr-eqH"/>
                                             <outlet property="guiStoryNameLabel" destination="mTY-Gz-YqK" id="pwe-t6-oew"/>
                                             <outlet property="guiThumbImage" destination="JWM-Cs-k2w" id="eus-q1-f5k"/>
                                         </connections>
@@ -582,6 +594,7 @@
                         <outlet property="guiMoreRemakesHeadlineContainer" destination="agS-wG-7fb" id="HS7-8i-ePe"/>
                         <outlet property="guiMoreRemakesHeadlineLabel" destination="86L-1d-fyN" id="hj0-em-7Ki"/>
                         <outlet property="guiRemakeActivity" destination="baQ-JD-y4r" id="HAW-YM-8Xh"/>
+                        <outlet property="guiRemakeButton" destination="xOH-ge-tPC" id="zmm-Ke-A1B"/>
                         <outlet property="guiRemakeScreenContainer" destination="hQQ-Qc-PZX" id="XXb-qF-jR8"/>
                         <outlet property="guiStoryDescriptionBluryBG" destination="mlY-Qs-wJu" id="I0F-in-8Oz"/>
                         <outlet property="guiStoryDescriptionLabel" destination="znf-eH-Mpo" id="jMv-gT-bVv"/>
@@ -1684,6 +1697,7 @@
         <image name="guestUserIcon" width="31" height="31"/>
         <image name="iconLetsCreate" width="32" height="32"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
+        <image name="iconStoryLocked" width="70" height="70"/>
         <image name="likesIcon" width="12" height="11"/>
         <image name="more" width="20" height="15"/>
         <image name="myStoriesDeleteButton" width="44" height="44"/>

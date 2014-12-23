@@ -13,7 +13,9 @@
 
 @implementation HMServer (Remakes)
 
--(void)createRemakeForStoryWithID:(NSString *)storyID forUserID:(NSString *)userID withResolution:(NSString *)resolution
+-(void)createRemakeForStoryWithID:(NSString *)storyID
+                        forUserID:(NSString *)userID
+                   withResolution:(NSString *)resolution
 {
     // A simple POST request to the server
     // Example URL: http://54.204.34.168:4567/remake

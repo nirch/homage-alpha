@@ -83,17 +83,24 @@
                                     <action selector="onPressedFlipCameraButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="Vy0-UI-VLL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sjq-Nv-QkO" userLabel="Scene description button">
+                            <view contentMode="scaleToFill" id="Ufc-94-ykS" userLabel="Scene description button container">
                                 <rect key="frame" x="0.0" y="54" width="46" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="iconSceneDescriptionBW">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedSceneDirectionButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="8Af-xY-jHP"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sjq-Nv-QkO" userLabel="Scene description button">
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="iconSceneDescriptionBW">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedSceneDirectionButton:" destination="ILR-Rm-ajx" eventType="touchUpInside" id="8Af-xY-jHP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ru5-Jm-nvF" userLabel="background status icon">
                                 <rect key="frame" x="310" y="249" width="35" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -155,6 +162,7 @@
                         <outlet property="guiHelperScreenContainer" destination="vdq-Aj-jVY" id="JiW-YM-rLy"/>
                         <outlet property="guiMessagesOverlayContainer" destination="o9Z-78-Oru" id="xkF-y4-muH"/>
                         <outlet property="guiSceneDirectionButton" destination="sjq-Nv-QkO" id="cmS-S0-bWb"/>
+                        <outlet property="guiSceneDirectionButtonContainer" destination="Ufc-94-ykS" id="M8O-rT-DTr"/>
                         <outlet property="guiScriptLabel" destination="iJL-4S-1qD" id="3KV-SS-dl3"/>
                         <outlet property="guiSilhouetteImageView" destination="koQ-R3-wbM" id="Fj2-BE-ecP"/>
                         <outlet property="guiTextsEditingContainer" destination="KHc-rN-Ccn" id="VHO-4W-xE2"/>

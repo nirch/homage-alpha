@@ -16,5 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiShotMode;
 @property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiNumOfRemakes;
+@property (weak, nonatomic) IBOutlet UIView *guiStoryLockedContainer;
 
 @end

@@ -2,7 +2,7 @@
 //  Scene.m
 //  Homage
 //
-//  Created by Aviv Wolf on 11/22/14.
+//  Created by Aviv Wolf on 12/17/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -24,6 +24,8 @@
 @dynamic silhouetteURL;
 @dynamic thumbnailURL;
 @dynamic videoURL;
+@dynamic sceneAudioURL;
+@dynamic directionAudioURL;
 @dynamic story;
 
 @end

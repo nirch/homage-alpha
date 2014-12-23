@@ -17,20 +17,17 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 
 @interface Story (Logic)
 
-///
 /**
 *  The scenes of the story ordered by scene id.
 */
 @property (nonatomic, readonly) NSArray *scenesOrdered;
 
-///
 /**
  *  The texts of the story ordered by text id.
  */
 @property (nonatomic, readonly) NSArray *textsOrdered;
 
 
-///
 /**
 *  Used to check if story has a scene with the given scene id.
 *
@@ -40,7 +37,6 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 */
 -(BOOL)hasSceneWithID:(NSNumber *)sID;
 
-///
 /**
 *  Searches and returns a scene object related to this story, if such scene id exists.
 *
@@ -50,7 +46,6 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 */
 -(Scene *)findSceneWithID:(NSNumber *)sID;
 
-///
 /**
 *  Returns YES to "selfie" type stories (selfie=@YES)
 *   NO otherwise
@@ -59,7 +54,6 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 */
 -(BOOL)isASelfie;
 
-///
 /**
 *  Returns YES to "director" type stories (selfie=@NO)
 *
@@ -67,7 +61,6 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 */
 -(BOOL)isADirector;
 
-///
 /**
  *  gets two app version, and see if the current version is in the middle. if so - story is active
  *
@@ -76,12 +69,25 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 -(NSNumber *)isActiveInCurrentVersionFirstVersion:(NSString *)firstVersionActive LastVersionActive:(NSString *)lastVersionActive;
 
 
-///
 /**
  *  returns if the video for this story is cached (or bundled) locally on the device.
  *
  *  @return BOOL value indicating if the story video is available locally on the device.
  */
 -(BOOL)isVideoAvailableLocally;
+
+/**
+ *  Return if it is a premium story that was not purchased yet.
+ *
+ *  @return YES if it is an unpaid premium story. NO otherwise.
+ */
+-(BOOL)isPremiumAndLocked;
+
+/**
+ *  Does at least one of scenes of the story uses audio files in the recorder?
+ *
+ *  @return YES if at least one of the scenes return usesAudioFilesInRecorder.
+ */
+-(BOOL)usesAudioFilesInRecorder;
 
 @end

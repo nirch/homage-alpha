@@ -19,7 +19,7 @@
  *  @endcode
  *  @param remakeID The remake id for the remake we want to render.
  */
--(void)renderRemakeWithID:(NSString *)remakeID;
+-(void)renderRemakeWithID:(NSString *)remakeID takeIDS:(NSArray *)takeIDS;
 
 
 @end

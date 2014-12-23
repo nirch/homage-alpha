@@ -10,9 +10,11 @@
 
 #import "HMRemakerProtocol.h"
 #import "HMRecorderDelegate.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface HMRecorderViewController : UIViewController<
-    HMRemakerProtocol
+    HMRemakerProtocol,
+    AVAudioPlayerDelegate
 >
 
 ///

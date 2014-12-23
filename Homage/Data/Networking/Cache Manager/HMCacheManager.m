@@ -81,9 +81,13 @@
 
     // Cache folder for stories videos
     _storiesCachePath = [_cachePath URLByAppendingPathComponent:@"stories"];
+    _audioCachePath = [_cachePath URLByAppendingPathComponent:@"audio"];
     
     // Ensure stories cache folder exists (create it if it doesn't)
     [self createFolderIfMissingAtURL:_storiesCachePath];
+    
+    // Ensure audio cache folder exists (create it if it doesn't)
+    [self createFolderIfMissingAtURL:_audioCachePath];
 }
 
 #pragma mark - Observers
@@ -92,18 +96,18 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     // Observe closing animation
     [nc addUniqueObserver:self
-                 selector:@selector(onResourceDownloadFinished:)
-                     name:HM_NOTIFICATION_DOWNLOAD_RESOURCE_FINISHED
+                 selector:@selector(onVideoResourceDownloadFinished:)
+                     name:HM_NOTIFICATION_DOWNLOAD_VIDEO_RESOURCE_FINISHED
                    object:nil];
 }
 
--(void)onResourceDownloadFinished:(NSNotification *)notification
+-(void)onVideoResourceDownloadFinished:(NSNotification *)notification
 {
     self.downloadTask = nil;
     if (self.shouldPauseDownloads) return;
     
     __weak id weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf _checkIfNeedsToDownloadMoviesForStories];
     });
 }
@@ -113,8 +117,15 @@
 {
     HMGLogDebug(@"Checking if needs to download resources.");
     __weak id weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^() {
+    
+    // Downloading and caching videos for stories.
+    dispatch_async(dispatch_get_main_queue(), ^() {
         [weakSelf _checkIfNeedsToDownloadMoviesForStories];
+    });
+    
+    // Downloading and caching audio files for scenes of stories (that use them)
+    dispatch_async(dispatch_get_main_queue(), ^() {
+        [weakSelf _checkIfNeedsToDownloadAudioForStories];
     });
 }
 
@@ -145,6 +156,7 @@
     self.shouldPauseDownloads = NO;
     
     NSArray *stories = [Story allActiveStoriesInContext:DB.sh.context];
+    
     NSDate *now = [NSDate date];
     
     for (Story *story in stories) {
@@ -155,8 +167,6 @@
         if ([story.videoURL rangeOfString:@"Messi+Vs+Tomer"].location != NSNotFound) {
             continue;
         }
-        
-        //if ([story.videoURL containsString:@"Messi+Vs+Tomer"]) continue;
         
         // Ignore videos already tried to download lately
         NSDate *latestAttempt = self.latestDownloadAttemptTimeForURL[story.videoURL];
@@ -192,11 +202,85 @@
     }
 }
 
+-(void)_checkIfNeedsToDownloadAudioForStories
+{
+    NSArray *stories = [Story allActiveStoriesInContext:DB.sh.context];
+    for (Story *story in stories) {
+        if (!story.usesAudioFilesInRecorder) continue;
+        [self ensureAudioFilesAvailableForStory:story];
+    }
+}
+
 -(BOOL)storiesCacheCountReachedLimit
 {
     NSInteger count = [self folderFilesCount:self.storiesCachePath.path];
     if (count >= self.cfgCacheStoriesVideosMaxCount) return YES;
     return NO;
+}
+
+#pragma mark - Audio files
+-(void)ensureAudioFilesAvailableForStory:(Story *)story
+{
+    // Ignore stories that don't use audio files.
+    if (!story.usesAudioFilesInRecorder) return;
+    
+    // Iterate scenes and download missing audio files.
+    for (Scene *scene in story.scenes) {
+        if (![self isAudioResourceAvailableLocally:scene.sceneAudioURL]) {
+            HMGLogDebug(@"Missing scene audio file: %@", scene.sceneAudioURL);
+            [self downloadAndCacheAudioFile:scene.sceneAudioURL];
+        }
+        if (![self isAudioResourceAvailableLocally:scene.directionAudioURL]) {
+            HMGLogDebug(@"Missing direction audio file: %@", scene.directionAudioURL);
+            [self downloadAndCacheAudioFile:scene.directionAudioURL];
+        }
+    }
+}
+
+-(BOOL)isAudioResourceAvailableLocally:(NSString *)url
+{
+    // Check if video is bundled locally.
+    if ([self isResourceBundledLocallyForURL:url])
+        return YES;
+    
+    // Check if video downloaded and cached locally.
+    if ([self isResourceCachedLocallyForURL:url cachePath:self.audioCachePath])
+        return YES;
+    
+    // Not bundled and not cached.
+    return NO;
+}
+
+-(void)downloadAndCacheAudioFile:(NSString *)url
+{
+    // The request
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+
+    // The download task
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+
+        // The local url to download to.
+        NSURL *path = [self.audioCachePath URLByAppendingPathComponent:[response suggestedFilename]];
+        return path;
+        
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        
+        // When finished.
+        if (error) {
+            HMGLogError(@"Error while downloading audio resource. %@", [error localizedDescription]);
+        }
+        
+        // Notify about finished upload.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            HMGLogDebug(@"File downloaded and cached: %@", filePath);
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_DOWNLOAD_AUDIO_RESOURCE_FINISHED object:nil];
+        });
+        
+    }];
+    [downloadTask resume];
 }
 
 #pragma mark - Download story videos
@@ -228,7 +312,7 @@
         // Notify about finished upload.
         dispatch_async(dispatch_get_main_queue(), ^{
             HMGLogDebug(@"File downloaded and cached: %@", filePath);
-            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_DOWNLOAD_RESOURCE_FINISHED object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_DOWNLOAD_VIDEO_RESOURCE_FINISHED object:nil];
         });
         
     }];
@@ -292,6 +376,21 @@
     }
     
     return nil;
+}
+
+-(NSURL *)urlForAudioResource:(NSString *)resourceURL
+{
+    // If budled, return url pointing to resource in the bundle
+    NSURL *url = [self urlForBundledResource:resourceURL];
+    if (url) return url;
+    
+    // If cached, return url of the locally cached resource
+    url = [self urlForCachedResource:resourceURL cachePath:self.audioCachePath];
+    if (url) return url;
+    
+    // Not cached, return remote resource url
+    url = [NSURL URLWithString:resourceURL];
+    return url;
 }
 
 #pragma mark - folders

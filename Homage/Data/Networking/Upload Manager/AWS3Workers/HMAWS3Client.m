@@ -100,6 +100,7 @@
     uploadRequest.bucket = BUCKET_NAME;
     uploadRequest.body = sourceURL;
     uploadRequest.key = s3worker.destination;
+    uploadRequest.metadata = s3worker.metaData;
     
     // return the upload request
     return uploadRequest;

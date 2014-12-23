@@ -62,9 +62,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//
-    
+    [self loadSubviews];  
     [self.guiDismissButton addMotionEffectWithAmount:15];
     [self.guiTextMessageIcon addMotionEffectWithAmount:15];
     [self.guiTextMessageTitleLabel addMotionEffectWithAmount:15];
@@ -117,7 +115,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self loadSubviews];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -335,7 +332,11 @@
     [self.guiActivity startAnimating];
     Remake *remake = [self.remakerDelegate remake];
     [[Mixpanel sharedInstance] track: @"RECreateMovie" properties:@{@"story" : remake.story.name, @"remake_id": remake.sID}];
-    [HMServer.sh renderRemakeWithID:remake.sID];
+    
+    // Build render info.
+    NSString *remakeID = remake.sID;
+    NSArray *takesIDS = [remake allTakenTakesIDS];
+    [HMServer.sh renderRemakeWithID:remakeID takeIDS:takesIDS];
 }
 
 #pragma mark - IB Actions

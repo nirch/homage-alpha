@@ -356,16 +356,23 @@
 -(void)putWorkerToWork:(id<HMUploadWorkerProtocol>)worker onFootage:(Footage *)footage
 {
     HMGLogDebug(@"Uploading raw footage to %@", footage.rawVideoS3Key);
+    
+    // Initialize worker for new job.
     [worker newJobWithID:[[NSUUID UUID] UUIDString]
                   source:footage.rawLocalFile
              destination:footage.rawVideoS3Key
      ];
+    
+    // Set some user info about the job.
     [worker setUserInfo:[NSMutableDictionary dictionaryWithDictionary:@{
                                                                         HM_INFO_REMAKE_ID:footage.remake,
                                                                         HM_INFO_SCENE_ID:footage.sceneID,
                                                                         HM_INFO_FOOTAGE_IDENTIFIER:footage.identifier, @"type" : @"footage"
                                                                         }]
      ];
+    
+    // Add some meta data about the job.
+    worker.metaData = @{@"take_id":footage.takeID};
     
     if ([worker startWorking]) {
         self.busyWorkers[worker.jobID] = worker;

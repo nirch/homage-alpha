@@ -19,7 +19,7 @@
 	<key>stories_videos_caching_attempt_interval</key>
 	<string>1800</string>
 	<key>stories_videos_caching_limit</key>
-	<string>5</string>
+	<string>10</string>
 	<key>urls</key>
 	<dict>
 		<key>additional config</key>

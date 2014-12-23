@@ -10,12 +10,13 @@
 #import "HMParser.h"
 #import "HMJSONResponseSerializerWithData.h"
 #import "HMAppDelegate.h"
-
+#import "HMAppStore.h"
 #import "HMUploadManager.h"
+#import "HMServer+AppConfig.h"
 
 @interface HMServer()
 
-@property (strong, nonatomic) NSDictionary *cfg;
+@property (strong, nonatomic) NSMutableDictionary *cfg;
 @property (strong, nonatomic) NSString *defaultsFileName;
 @property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (strong,nonatomic) NSDictionary *context;
@@ -55,9 +56,15 @@
         [self loadCFG];
         [self loadAppDetails];
         [self initSessionManager];
+        [self initAppStore];
         self.urlsCachedInfo = [NSCache new];
     }
     return self;
+}
+
+-(void)initAppStore
+{
+    _appStore = [HMAppStore new];
 }
 
 -(void)initSessionManager
@@ -73,13 +80,23 @@
 -(void)chooseSerializerForParser:(HMParser *)parser
 {
     self.session.requestSerializer = [AFHTTPRequestSerializer new];
+    
+    // Add app information to the headers.
     [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
     [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
+
+    // Add campaign id to the headers (if set)
+    NSString *campaignID = [self campaignID];
+    if (campaignID) {
+        [self.session.requestSerializer setValue:campaignID forHTTPHeaderField:@"CAMPAIGN_ID"];
+    }
     
+    // Add current user id to the headers (if set)
     if (self.currentUserID) {
          [self.session.requestSerializer setValue:self.currentUserID forHTTPHeaderField:@"USER_ID"];
     }
     
+    // Set the session response serializer and set the acceptable content types
     self.session.responseSerializer = [HMJSONResponseSerializerWithData new];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
 }
@@ -122,11 +139,17 @@
 {
     if (!configurationInfo) return;
     
+    // First load the defaults and update from local storage.
+    NSMutableDictionary *storedConfiguration = [NSMutableDictionary dictionaryWithDictionary:self.configurationInfo];    
+    
+    // Update with new values
+    [storedConfiguration addEntriesFromDictionary:configurationInfo];
+    
     // Store in memory.
-    _configurationInfo = configurationInfo;
+    _configurationInfo = storedConfiguration;
     
     // Store in local storage for future use.
-    [[NSUserDefaults standardUserDefaults] setValue:configurationInfo forKey:@"config"];
+    [[NSUserDefaults standardUserDefaults] setValue:_configurationInfo forKey:@"config"];
 }
 
 -(NSDictionary *)configurationInfo
@@ -134,13 +157,25 @@
     // If in memory, return configuration from memory.
     if (_configurationInfo) return _configurationInfo;
     
-    // If not in memory, check if exists in local storage. If it does, put it in memory and return it.
-    _configurationInfo = [[NSUserDefaults standardUserDefaults] valueForKey:@"config"];
-    if (_configurationInfo) return _configurationInfo;
-    
-    // Not in memory and not in local storage. Load defaults, store and return;
+    // Not in memory. Load defaults.
+    NSMutableDictionary *configuration;
     NSString * plistPath = [[NSBundle mainBundle] pathForResource:self.defaultsFileName ofType:@"plist"];
-    self.configurationInfo = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+    configuration = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+
+    // Update with defaults specific to label (if defined)
+    NSString *labelDefaultsFile = [NSString stringWithFormat:@"Label%@", self.defaultsFileName];
+    plistPath = [[NSBundle mainBundle] pathForResource:labelDefaultsFile ofType:@"plist"];
+    [configuration addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:plistPath]];
+    
+    // After loading defaults, update values stored in local storage.
+    // Some values may have changed and stored in local storage.
+    NSDictionary *storedValues = [[NSUserDefaults standardUserDefaults] valueForKey:@"config"];
+    if (storedValues) {
+        [configuration addEntriesFromDictionary:storedValues];
+    }
+    
+    // Return the configuration info dictionary.
+    _configurationInfo = configuration;
     return _configurationInfo;
 }
 
@@ -168,6 +203,15 @@
     //
     NSString * plistPath = [[NSBundle mainBundle] pathForResource:@"ServerCFG" ofType:@"plist"];
     self.cfg = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+        
+    // Override cfg with label specific configurations (if available)
+    plistPath = [[NSBundle mainBundle] pathForResource:@"LabelServerCFG" ofType:@"plist"];
+    if (plistPath) {
+        NSDictionary *labelSpecificCFG = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+        if (labelSpecificCFG) {
+            [self.cfg addEntriesFromDictionary:labelSpecificCFG];
+        }
+    }
     
     // Init the server NSURL
     NSString *port;
@@ -198,7 +242,7 @@
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];
         self.defaultsFileName = @"DefaultsCFG";
-        HMGLogNotice(@"Using test server (debug app):%@", host);
+    HMGLogNotice(@"Using test server (debug app):%@", host);
     #endif
     
     if (port) {

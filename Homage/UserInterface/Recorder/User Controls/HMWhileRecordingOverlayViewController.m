@@ -14,7 +14,7 @@
 #import "HMMotionDetectorDelegate.h"
 #import "DB.h"
 #import "HMMotionDetector.h"
-
+#import "HMCacheManager.h"
 
 @interface HMWhileRecordingOverlayViewController ()
 
@@ -27,7 +27,9 @@
 @property (nonatomic, readonly) Remake *remake;
 @property (nonatomic, readonly) Scene *scene;
 
+// Playing audio
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) AVAudioPlayer *sceneAudioPlayer;
 
 @end
 
@@ -112,7 +114,31 @@
     [self update];
     [self updateUI];
     [self.guiTimeProgressView start];
+    
+    // Some scenes play audio in the background during recording.
+    if (self.scene.sceneAudioURL)
+        [self playSceneAudioWhileRecording];
+}
 
+-(void)playSceneAudioWhileRecording
+{
+    [self stopPlayingSceneAudio];
+    if (self.scene.sceneAudioURL == nil) return;
+    
+    NSString *url = self.scene.sceneAudioURL;
+    NSError *error;
+    NSURL *soundURL = [HMCacheManager.sh urlForAudioResource:url];
+    self.sceneAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:&error];
+    [self.sceneAudioPlayer prepareToPlay];
+    [self.sceneAudioPlayer play];
+}
+
+-(void)stopPlayingSceneAudio
+{
+    if (self.sceneAudioPlayer) {
+        [self.sceneAudioPlayer stop];
+        self.sceneAudioPlayer = nil;
+    }
 }
 
 -(void)onStopRecording:(NSNotification *)notification
@@ -123,6 +149,10 @@
     if ( recordStopReason == HMRecordingStopReasonUserCanceled || recordStopReason == HMRecordingStopReasonCameraNotStable || recordStopReason == HMRecordingStopReasonAppWentToBackground) {
         [self.guiTimeProgressView stop];
     }
+
+    // Some scenes play audio in the background during recording.
+    if (self.scene.sceneAudioURL)
+        [self stopPlayingSceneAudio];
 }
 
 -(void)playEndOfDurationSound

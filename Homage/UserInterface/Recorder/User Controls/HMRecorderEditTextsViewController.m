@@ -209,7 +209,7 @@
         return;
     }
     [self.guiCreateMovieActivity startAnimating];
-    [HMServer.sh renderRemakeWithID:self.remake.sID];
+    //[HMServer.sh renderRemakeWithID:self.remake.sID];
 }
 
 -(void)updateValues

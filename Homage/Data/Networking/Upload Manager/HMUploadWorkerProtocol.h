@@ -16,6 +16,7 @@
 @property (nonatomic, readonly) NSString *jobID;
 @property (nonatomic, readonly) double progress;
 @property (nonatomic) NSMutableDictionary *userInfo;
+@property (nonatomic) NSDictionary *metaData;
 
 ///
 /**

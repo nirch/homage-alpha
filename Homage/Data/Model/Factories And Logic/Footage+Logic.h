@@ -12,7 +12,6 @@
 
 @interface Footage (Logic)
 
-///
 typedef NS_ENUM(NSInteger, HMFootageStatus) {
     HMFootageStatusStatusOpen,
     HMFootageStatusStatusUploading,

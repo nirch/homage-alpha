@@ -315,15 +315,6 @@
             NSIndexPath *indexPath = [self.storiesCV indexPathForCell:(HMStoryCell *)sender];
             story = (Story *)[self.fetchedResultsController objectAtIndexPath:indexPath];
             vc.story = story;
-
-// TODO: remove this before merge to master
-//            if (indexPath.item % 2 == 0) {
-//                vc.debugForcedVideoURL = @"http://d293iqusjtyr94.cloudfront.net/Temp/Street+Fighter+1200.mp4";
-//            } else {
-//                vc.debugForcedVideoURL = @"http://d293iqusjtyr94.cloudfront.net/Temp/Street+Fighter+500.mp4";
-//            }
-
-            
             [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"story" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
         }
         
@@ -425,7 +416,7 @@
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     cell.guiThumbImage.alpha = 0;
     
-    // Lazy load image.
+    // Lazy load thumb image.
     NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];
     [cell.guiThumbImage sd_setImageWithURL:thumbURL placeholderImage:nil
                                    options:SDWebImageRetryFailed|SDWebImageContinueInBackground|SDWebImageHighPriority
@@ -448,11 +439,16 @@
         }
     }];
 
-    
-    
     // Number of remakes
     NSNumber *remakesNum = story.remakesNumber;
     cell.guiNumOfRemakes.text = [NSString stringWithFormat:@"%ld" , (long)remakesNum.integerValue];
+
+    // Premium content.
+    if (story.isPremiumAndLocked) {
+        cell.guiStoryLockedContainer.hidden = NO;
+    } else {
+        cell.guiStoryLockedContainer.hidden = YES;
+    }
 }
 
 #pragma mark - Collection View configuration

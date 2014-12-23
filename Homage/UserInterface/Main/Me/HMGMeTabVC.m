@@ -317,7 +317,7 @@
     NSDictionary *shareBundle = notification.userInfo[@"share_bundle"];
     [self.currentSharer shareRemakeBundle:shareBundle
                                  parentVC:self
-                           trackEventName:@"SDShareRemake"
+                           trackEventName:@"MEShareRemake"
                                 thumbnail:self.currentSharer.image
                                     sourceView:self.lastShareButtonPressed];
     

@@ -47,7 +47,8 @@
 #define HM_NOTIFICATION_UPLOAD_FINISHED             @"Upload Finished"
 
 // Downloads
-#define HM_NOTIFICATION_DOWNLOAD_RESOURCE_FINISHED @"Download Resource Finished"
+#define HM_NOTIFICATION_DOWNLOAD_VIDEO_RESOURCE_FINISHED @"Download Video Resource Finished"
+#define HM_NOTIFICATION_DOWNLOAD_AUDIO_RESOURCE_FINISHED @"Download Audio Resource Finished"
 
 // Lazy loading notifications
 #define HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED @"Server Scene Contour file"
@@ -94,6 +95,9 @@
 #define HM_NOTIFICATION_SERVER_USER_UPDATE_SESSION   @"user update session"
 #define HM_NOTIFICATION_SERVER_USER_LIKED_REMAKE     @"user liked a remake"
 #define HM_NOTIFICATION_SERVER_USER_UNLIKED_REMAKE   @"user unliked a remake"
+
+// App Store
+#define HM_NOTIFICATION_APP_STORE_PRODUCTS           @"app store products"
 
 //ADDITIONAL CONFIGURATIONS
 #define HM_NOTIFICATION_SERVER_CONFIG @"additional confiurations"
