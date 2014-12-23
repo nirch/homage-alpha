@@ -16,5 +16,7 @@
 	<real>0.5</real>
 	<key>recorder_first_scene_context_message</key>
 	<false/>
+	<key>uploader_reports_uploads</key>
+	<true/>
 </dict>
 </plist>

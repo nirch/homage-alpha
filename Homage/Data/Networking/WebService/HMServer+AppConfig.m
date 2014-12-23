@@ -51,4 +51,11 @@
     return campaignIDString;
 }
 
+-(BOOL)shouldUploaderReportUploads
+{
+    NSNumber *should = self.configurationInfo[@"uploader_reports_uploads"];
+    if (!should) return YES;
+    return should.boolValue;
+}
+
 @end

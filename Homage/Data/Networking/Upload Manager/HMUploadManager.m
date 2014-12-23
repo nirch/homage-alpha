@@ -11,6 +11,7 @@
 #import "HMNotificationCenter.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "mixPanel.h"
+#import "HMServer+AppConfig.h"
 
 #define MAX_NUMBER_OF_SERVER_UPDATE_ATTEMPTS 3
 
@@ -189,26 +190,30 @@
 -(void)updateServerAboutUploadFootage:(Footage *)footage attemptCount:(NSInteger)attemptCount
 {
     footage.done = @NO;
-    HMGLogDebug(@"Will inform server about upload about to start: %@", footage.takeID);
     // PUT FOOTAGE (on successful put, the upload will begin.
     // If failed to update the server about the upload, will attempt again after a delay.
-    [HMServer.sh updateOnUploadStartFootageForRemakeID:footage.remake.sID
-                                               sceneID:footage.sceneID
-                                                takeID:[footage takeID]
-                                          attemptCount:attemptCount
-                                              isSelfie:footage.rawIsSelfie.boolValue];
+    if ([HMServer.sh shouldUploaderReportUploads]) {
+        HMGLogDebug(@"Will inform server about upload about to start: %@", footage.takeID);
+        [HMServer.sh updateOnUploadStartFootageForRemakeID:footage.remake.sID
+                                                   sceneID:footage.sceneID
+                                                    takeID:[footage takeID]
+                                              attemptCount:attemptCount
+                                                  isSelfie:footage.rawIsSelfie.boolValue];
+    }
 }
 
 -(void)updateServerAboutSuccessfulUploadFootage:(Footage *)footage attemptCount:(NSInteger)attemptCount
 {
-    HMGLogDebug(@"Will inform server about upload success: %@", footage.takeID);
     // POST FOOTAGE (on successful put, the upload will begin.
     // If failed to update the server about the successful upload, will attempt again after a delay.
-    [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
-                                               sceneID:footage.sceneID
-                                                takeID:[footage takeID]
-                                          attemptCount:attemptCount
-                                              isSelfie:footage.rawIsSelfie.boolValue];
+    if ([HMServer.sh shouldUploaderReportUploads]) {
+        HMGLogDebug(@"Will inform server about upload success: %@", footage.takeID);
+        [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
+                                                   sceneID:footage.sceneID
+                                                    takeID:[footage takeID]
+                                              attemptCount:attemptCount
+                                                  isSelfie:footage.rawIsSelfie.boolValue];
+    }
 }
 
 #pragma mark - Manager actions

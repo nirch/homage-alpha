@@ -56,4 +56,13 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
  */
 -(NSString *)campaignID;
 
+
+/**
+ *  Setting determining if the upload manager reports start/finished uploads
+ *
+ *
+ *  @return <#return value description#>
+ */
+-(BOOL)shouldUploaderReportUploads;
+
 @end
