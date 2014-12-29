@@ -2,21 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>in_app_purchases</key>
+	<false/>
+	<key>in_app_purchases_hide_premium_stories</key>
+	<false/>
 	<key>remakes_save_to_device</key>
 	<integer>0</integer>
 	<key>campaign_id</key>
+	<string>54919516454c61f4080000e5</string>
+	<key>campaign_id - 2</key>
 	<string>544ead1e454c610d1600000f</string>
-	<key>login_flow</key>
-	<string>normal</string>
 	<key>mirror_selfie_silhouette</key>
 	<false/>
 	<key>share_link_prefix</key>
-	<string>http://play-test.homage.it</string>
+	<string>http://play.homage.it</string>
 	<key>significant_view_pct_threshold</key>
 	<real>0.5</real>
 	<key>recorder_first_scene_context_message</key>
 	<false/>
 	<key>uploader_reports_uploads</key>
+	<true/>
+	<key>login_flow</key>
+	<string>normal</string>
+	<key>login_flow_skip_intro_video</key>
 	<true/>
 </dict>
 </plist>

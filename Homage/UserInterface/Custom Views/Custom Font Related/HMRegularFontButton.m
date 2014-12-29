@@ -1,5 +1,5 @@
 //
-//  HMDINOTRegularFontButton.m
+//  HMRegularFontButton.m
 //  Homage
 //
 //  Created by Tomer Harry on 2/4/14.
@@ -7,7 +7,8 @@
 //
 
 #import "HMRegularFontButton.h"
-#import "HMColor.h"
+#import "HMStyle.h"
+#import <THLabel/THLabel.h>
 
 @implementation HMRegularFontButton
 
@@ -22,7 +23,9 @@
 
 -(void)initCustomFont
 {
-    self.titleLabel.font = [UIFont fontWithName:@"Bryant-MediumCompressed" size:self.titleLabel.font.pointSize];
+    NSString *fontName = [HMStyle.sh regularFontName];
+    self.titleLabel.font = [UIFont fontWithName:fontName
+                                           size:self.titleLabel.font.pointSize];
 }
 
 @end

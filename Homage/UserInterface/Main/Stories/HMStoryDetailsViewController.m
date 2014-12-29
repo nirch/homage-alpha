@@ -15,7 +15,7 @@
 #import "HMRecorderViewController.h"
 #import "HMRemakeCell.h"
 #import "HMGLog.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "Mixpanel.h"
 #import "HMSimpleVideoPlayerDelegate.h"
 #import "HMServer+ReachabilityMonitor.h"
@@ -28,6 +28,7 @@
 #import "HMInAppStoreViewController.h"
 #import <UIScrollView+BottomRefreshControl.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "HMServer+AppConfig.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -164,12 +165,12 @@
     // Pull up to refresh
     UIRefreshControl *refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(loadAnotherRemakesPage) forControlEvents:UIControlEventValueChanged];
-    [refreshControl setTintColor:[HMColor.sh main2]];
+    //[refreshControl setTintColor:[HMColor.sh main2]];
     refreshControl.layer.zPosition = -1;
     self.remakesCV.bottomRefreshControl = refreshControl;
     
     // Premium content
-    if (self.story.isPremiumAndLocked) {
+    if (self.story.isPremiumAndLocked && [HMServer.sh supportsInAppPurchases]) {
         [self.guiRemakeButton setImage:[UIImage imageNamed:@"iconRemakeStoryLocked"] forState:UIControlStateNormal];
     }
     
@@ -887,8 +888,10 @@
     //
     // Check if story is premium
     // If it is premium, user will need to make a purchase first
+    // (ignore and behave normally if app doesn't supports in app purchases
+    // or if the content was already paid for)
     //
-    if (self.story.isPremiumAndLocked) {
+    if (self.story.isPremiumAndLocked  && [HMServer.sh supportsInAppPurchases]) {
         [self openInAppStoreForCurrentStory];
         return;
     }

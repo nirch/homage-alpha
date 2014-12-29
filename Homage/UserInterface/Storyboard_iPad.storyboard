@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="Lip-jV-gUV">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
@@ -93,7 +92,7 @@
                                                 <rect key="frame" x="51" y="3" width="25" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8o5-U8-Gwg" customClass="HMAvenirBookFontLabel">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8o5-U8-Gwg" customClass="HMRegularFontLabel">
                                                 <rect key="frame" x="87" y="3" width="163" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -212,10 +211,10 @@
                         <outlet property="guiBlurryOverlay" destination="W56-Mp-c0X" id="Dpp-AF-LrS"/>
                         <outlet property="guiDarkOverlay" destination="z09-Wx-iNm" id="4zC-zC-uO2"/>
                         <outlet property="guiNavButton" destination="FkS-PO-Loy" id="smt-wL-0A7"/>
+                        <outlet property="guiNavTitleLabel" destination="MmL-QJ-RZq" id="y4Y-iX-uRL"/>
                         <outlet property="guiNoConnectivityLabel" destination="8o5-U8-Gwg" id="gSb-1k-UtK"/>
                         <outlet property="guiNoConnectivityView" destination="Wxh-87-FfL" id="iki-uQ-Lqt"/>
                         <outlet property="guiSplashView" destination="3Nm-G2-RPX" id="k7i-s5-9YN"/>
-                        <outlet property="guiTabNameLabel" destination="MmL-QJ-RZq" id="Zad-cR-TSh"/>
                         <outlet property="guiTopNavContainer" destination="mi8-rp-NpX" id="N9j-jD-59G"/>
                         <outlet property="loginContainerView" destination="OVb-fj-ap2" id="NvJ-6c-Xcn"/>
                         <outlet property="renderingContainerView" destination="5Jk-aC-LK8" id="dG7-UI-43a"/>
@@ -266,7 +265,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ft-Ni-D2Z" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ft-Ni-D2Z" userLabel="Label - no remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="239" y="485" width="291" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -309,14 +308,14 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="153" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0nT-hF-zx4" customClass="HMAvenirBookFontLabel">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="153" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0nT-hF-zx4" customClass="HMRegularFontLabel">
                                                             <rect key="frame" x="695" y="7" width="36" height="23"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" id="2S9-ZU-b5l" userLabel="Font Label - story name" customClass="HMAvenirBookFontLabel">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" id="2S9-ZU-b5l" userLabel="Font Label - story name" customClass="HMRegularFontLabel">
                                                             <rect key="frame" x="8" y="0.0" width="250" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -524,7 +523,7 @@
                                     <action selector="onPressedScrollToTopButton:" destination="6ta-1H-3mP" eventType="touchUpInside" id="q5n-S2-pzW"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dyo-O9-Wfe" userLabel="No remakes label" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dyo-O9-Wfe" userLabel="No remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="24" y="532" width="720" height="434"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -595,7 +594,7 @@
                                 <rect key="frame" x="0.0" y="-60" width="768" height="1099"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3dL-tJ-SiD" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3dL-tJ-SiD" userLabel="Label - no remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="16" y="283" width="736" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -639,7 +638,7 @@
                                                             <rect key="frame" x="331" y="38" width="152" height="96"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="iBR-WP-RJj" customClass="HMAvenirBookFontLabel">
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="iBR-WP-RJj" customClass="HMRegularFontLabel">
                                                                     <rect key="frame" x="0.0" y="5" width="152" height="40"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -697,7 +696,7 @@
                                                                     <rect key="frame" x="42" y="0.0" width="88" height="96"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="SxN-Ge-XoZ" customClass="HMAvenirBookFontLabel">
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="SxN-Ge-XoZ" customClass="HMRegularFontLabel">
                                                                             <rect key="frame" x="0.0" y="5" width="88" height="40"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -730,7 +729,7 @@
                                                                     <rect key="frame" x="191" y="0.0" width="88" height="96"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="P7k-V9-urP" customClass="HMAvenirBookFontLabel">
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="P7k-V9-urP" customClass="HMRegularFontLabel">
                                                                             <rect key="frame" x="0.0" y="5" width="88" height="40"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -973,7 +972,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prepering your movie: &lt;movie name&gt;.                                     we will notify you when we're done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2eR-UT-TC3" customClass="HMAvenirBookFontLabel">
+                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prepering your movie: &lt;movie name&gt;.                                     we will notify you when we're done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2eR-UT-TC3" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="50" y="0.0" width="585" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1001,7 +1000,7 @@
                                 <rect key="frame" x="50" y="0.0" width="718" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done!  Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eWQ-c4-9xC" customClass="HMAvenirBookFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done!  Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eWQ-c4-9xC" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="718" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1038,10 +1037,10 @@
             </objects>
             <point key="canvasLocation" x="-946" y="1847"/>
         </scene>
-        <!--Mside Bar View Controller-->
+        <!--Side Bar View Controller-->
         <scene sceneID="4Ku-EE-pOa">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="zGQ-3L-zy4" customClass="HMsideBarViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="zGQ-3L-zy4" customClass="HMSideBarViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Hnd-Hi-QoG">
                         <rect key="frame" x="0.0" y="0.0" width="220" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1203,13 +1202,13 @@
                         <outlet property="guiShareAppButton" destination="fqd-Kt-gg8" id="0uL-XB-k1W"/>
                         <outlet property="guiStoriesButton" destination="Wkg-aB-73G" id="IdL-tf-IiI"/>
                         <outlet property="guiUserIcon" destination="2VQ-kq-D2I" id="GyF-eS-9xf"/>
-                        <outletCollection property="loginActionsButtonCollection" destination="HdA-0G-pbc" id="spA-WT-SnG"/>
-                        <outletCollection property="loginActionsButtonCollection" destination="NeM-Wt-a3J" id="Uvg-D4-vzM"/>
-                        <outletCollection property="tabButtonCollection" destination="Wkg-aB-73G" id="Ap2-L6-YCN"/>
-                        <outletCollection property="tabButtonCollection" destination="GNb-6c-5xR" id="Ono-cD-KNd"/>
-                        <outletCollection property="tabButtonCollection" destination="hPK-6g-uFr" id="a3v-cd-aaC"/>
-                        <outletCollection property="tabButtonCollection" destination="KFx-gj-YUa" id="06E-Ey-xgu"/>
-                        <outletCollection property="tabButtonCollection" destination="fqd-Kt-gg8" id="6Jw-cg-P7x"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="hPK-6g-uFr" id="dFl-5N-Hew"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="Wkg-aB-73G" id="xtL-5d-yGM"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="GNb-6c-5xR" id="dyt-tl-v8b"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="fqd-Kt-gg8" id="Yx3-i8-9ns"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="KFx-gj-YUa" id="HdM-9b-plg"/>
+                        <outletCollection property="guiLoginActionsButtonCollection" destination="NeM-Wt-a3J" id="l9t-LQ-rbF"/>
+                        <outletCollection property="guiLoginActionsButtonCollection" destination="HdA-0G-pbc" id="38X-Gc-8tL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Jf-Rs-piP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1288,7 +1287,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F8t-1D-Q7a" customClass="HMAvenirBookFontLabel">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F8t-1D-Q7a" customClass="HMRegularFontLabel">
                                                 <rect key="frame" x="0.0" y="201" width="214" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -1315,14 +1314,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up or entering as a Guest you agree to our " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="prc-0D-vh0" customClass="HMAvenirBookFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up or entering as a Guest you agree to our " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="prc-0D-vh0" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="53" y="599" width="214" height="21"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="whw-yw-B9G" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="whw-yw-B9G" customClass="HMRegularFontButton">
                                         <rect key="frame" x="86" y="607" width="75" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
@@ -1335,7 +1334,7 @@
                                             <action selector="termsOfServicePushed:" destination="zui-AX-c0a" eventType="touchUpInside" id="e8S-mw-HfF"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="acr-ou-xuy" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="acr-ou-xuy" customClass="HMRegularFontButton">
                                         <rect key="frame" x="166" y="607" width="65" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
@@ -1348,14 +1347,14 @@
                                             <action selector="privacyPolicyPushed:" destination="zui-AX-c0a" eventType="touchUpInside" id="qw0-jb-KNq"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&amp;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Px-EG-QWj" customClass="HMAvenirBookFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&amp;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Px-EG-QWj" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="159" y="611" width="13" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="9OC-W1-Gtr" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="9OC-W1-Gtr" customClass="HMRegularFontButton">
                                         <rect key="frame" x="53" y="545" width="214" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="2"/>
@@ -1367,7 +1366,7 @@
                                             <action selector="cancelButtonPushed:" destination="zui-AX-c0a" eventType="touchUpInside" id="XfI-fl-GSk"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HH7-D1-HgK" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HH7-D1-HgK" customClass="HMRegularFontButton">
                                         <rect key="frame" x="53" y="545" width="214" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="2"/>
@@ -1417,7 +1416,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Bw-xr-Mrn" customClass="HMAvenirBookFontButton">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Bw-xr-Mrn" customClass="HMRegularFontButton">
                                 <rect key="frame" x="8" y="577" width="92" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="skip">

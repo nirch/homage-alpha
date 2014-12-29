@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HMAvenirBookFontLabel.h"
 
 @interface HMRemakeCell : UICollectionViewCell
 

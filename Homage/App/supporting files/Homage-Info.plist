@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.8.3D</string>
+	<string>1.8.4D</string>
 	<key>FacebookAppID</key>
 	<string>447743458659084</string>
 	<key>FacebookDisplayName</key>
@@ -39,12 +39,11 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Bryant-MediumCompressed.otf</string>
 		<string>DINOT-CondBold.otf</string>
-		<string>DINOT-Regular.otf</string>
+		<string>jilkyway.otf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
-	<false/>
+	<true/>
 	<key>UIMainStoryboardFile</key>
 	<string>Storyboard</string>
 	<key>UIMainStoryboardFile~ipad</key>

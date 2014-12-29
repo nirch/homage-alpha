@@ -14,6 +14,7 @@
 #import "HMNotificationCenter.h"
 #import "HMSharing.h"
 #import "Mixpanel.h"
+#import "HMServer+Remakes.h"
 
 #define ALERT_VIEW_TAG_SHARE_FAILED 100
 
@@ -53,6 +54,10 @@
 
 // Remake
 @property (nonatomic) Remake *remake;
+
+// More options overlay
+@property (weak, nonatomic) IBOutlet UIView *guiMoreOptionsContainer;
+@property (weak, nonatomic) IBOutlet UIButton *guiReportFlagButton;
 
 
 @end
@@ -300,6 +305,9 @@
 #pragma mark - Video player
 -(void)initVideoPlayerWithRemake:(Remake *)remake
 {
+    // More options container/overlay
+    self.guiMoreOptionsContainer.hidden = YES;
+    
     if (self.remakeMoviePlayer) {
         // hide and try to remove older movie player.
         self.remakeMoviePlayer.view.hidden = YES;
@@ -404,6 +412,32 @@
     [self.guiShareButton setHidden:YES];
 }
 
+-(void)showMoreOptions
+{
+    self.guiMoreOptionsContainer.alpha = 0;
+    self.guiMoreOptionsContainer.hidden = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiMoreOptionsContainer.alpha = 1;
+    } completion:^(BOOL finished) {
+    }];
+}
+
+-(void)dismissMoreOptions
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiMoreOptionsContainer.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.guiMoreOptionsContainer.hidden = YES;
+    }];
+}
+
+-(void)reportAsInappropriate
+{
+    NSString *userID = [User current].userID;
+    NSString *remakeID = self.remake.sID;
+    [HMServer.sh markRemakeAsInappropriate:@{@"remake_id" : remakeID , @"user_id" : userID}];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -445,5 +479,23 @@
         [self.delegate userWantsToRemakeStory];
     }
 }
+
+-(IBAction)onPressedMoreOptionsButton:(id)sender
+{
+    [self showMoreOptions];
+}
+
+- (IBAction)onPressedFlagButton:(id)sender
+{
+    [self dismissMoreOptions];
+    [self reportAsInappropriate];
+    [self done];
+}
+
+- (IBAction)onPressedDismissMoreOptionsButton:(id)sender
+{
+    [self dismissMoreOptions];
+}
+
 
 @end

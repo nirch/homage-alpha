@@ -13,7 +13,7 @@
 #import "HMStoryPresenterProtocol.h"
 #import "HMNotificationCenter.h"
 #import "HMGLog.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "Mixpanel.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMMainGUIProtocol.h"
@@ -21,6 +21,7 @@
 #import "HMCacheManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "IASKSettingsReader.h"
+#import "HMServer+AppConfig.h"
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -28,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *storiesCV;
 
 // A label indicating no stories in the list.
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noStoriesLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *noStoriesLabel;
 
 // The fetched results controller with the query to the list of stories
 // Doesn't implement fetched results controller delegate.
@@ -86,7 +87,7 @@
     [self.storiesCV addSubview:refreshControl];
     self.refreshControl = refreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl.tintColor = [HMColor.sh main2];
+    //self.refreshControl.tintColor = [HMColor.sh main2];
     CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
     f.origin.y += 32;
     [[refreshControl.subviews objectAtIndex:0] setFrame:f];
@@ -356,9 +357,22 @@
     // Fetches all stories with isActive=@(YES)
     // Orders them by orderID (ascending order)
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_STORY];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @(YES)];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"orderID" ascending:YES]];
     fetchRequest.fetchBatchSize = 20;
+    
+    // Filtering result
+    NSMutableArray *predicates = [NSMutableArray new];
+
+    // Active stories.
+    [predicates addObject:[NSPredicate predicateWithFormat:@"isActive=%@", @(YES)]];
+    
+    // If settings says it should hide premium stories, remove those marked as premium.
+    if ([HMServer.sh shouldHidePremiumStories])
+        [predicates addObject:[NSPredicate predicateWithFormat:@"isPremium<>%@", @(YES)]];
+    
+    // Predicates conjunction.
+    fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+
     
     // Create the fetched results controller and return it.
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];

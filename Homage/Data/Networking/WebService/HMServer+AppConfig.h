@@ -65,4 +65,20 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
  */
 -(BOOL)shouldUploaderReportUploads;
 
+/**
+ *  YES if possible to buy premium content in app.
+ *
+ *  @return YES/NO if premium content should be purchased before used by user.
+ */
+-(BOOL)supportsInAppPurchases;
+
+/**
+ *  Setting determining if to show premium stories or not in the stories feed.
+ *
+ *  @return YES if set to hide premium stories (NO by default).
+ */
+-(BOOL)shouldHidePremiumStories;
+
+
+
 @end

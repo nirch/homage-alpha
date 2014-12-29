@@ -25,7 +25,7 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="Uup-Jo-PmB" userLabel="Start Activity Indicator">
                                 <rect key="frame" x="150" y="274" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <color key="color" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="color" red="0.0" green="1" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -93,7 +93,7 @@
                                                 <rect key="frame" x="51" y="3" width="25" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMAvenirBookFontLabel">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IDg-TI-8JI" customClass="HMRegularFontLabel">
                                                 <rect key="frame" x="87" y="3" width="163" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -115,7 +115,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" id="pfj-cG-g8E" userLabel="Dark overlay">
+                                            <view contentMode="scaleToFill" id="pfj-cG-g8E" userLabel="Nav background">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
@@ -211,11 +211,13 @@
                         <outlet property="guiAppWrapperHideView" destination="KwL-k7-u0O" id="FtT-N4-3ac"/>
                         <outlet property="guiBlurryOverlay" destination="Bdh-tK-3fj" id="WrW-pZ-l0a"/>
                         <outlet property="guiDarkOverlay" destination="rzH-SQ-gRG" id="8se-3K-G9r"/>
+                        <outlet property="guiNavBackground" destination="pfj-cG-g8E" id="OiN-pS-6wU"/>
+                        <outlet property="guiNavBarSeparator" destination="uEc-TN-WaH" id="UMK-Bw-yg4"/>
                         <outlet property="guiNavButton" destination="zUe-p0-Ug6" id="a8W-kJ-pMb"/>
+                        <outlet property="guiNavTitleLabel" destination="PcV-Lk-RmR" id="ON1-MU-dAR"/>
                         <outlet property="guiNoConnectivityLabel" destination="IDg-TI-8JI" id="78F-9E-wfy"/>
                         <outlet property="guiNoConnectivityView" destination="BGe-RC-PIs" id="uVW-lK-Tz6"/>
                         <outlet property="guiSplashView" destination="0k7-VS-RTr" id="ZmN-ah-bQo"/>
-                        <outlet property="guiTabNameLabel" destination="PcV-Lk-RmR" id="dlw-f3-Q9x"/>
                         <outlet property="guiTopNavContainer" destination="93F-HB-nk2" id="RzC-Wc-IY8"/>
                         <outlet property="loginContainerView" destination="S40-L8-bdb" id="pJh-pa-Jlh"/>
                         <outlet property="renderingContainerView" destination="fIN-2a-57r" id="GfI-QZ-JqM"/>
@@ -266,7 +268,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C7L-Hb-oGt" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C7L-Hb-oGt" userLabel="Label - no remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="14" y="258" width="291" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -318,14 +320,14 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" id="mTY-Gz-YqK" userLabel="Font Label - story name" customClass="HMAvenirBookFontLabel">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" id="mTY-Gz-YqK" userLabel="Font Label - story name" customClass="HMRegularFontLabel">
                                                             <rect key="frame" x="8" y="0.0" width="200" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="153" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zCL-L2-HEd" customClass="HMAvenirBookFontLabel">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="153" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zCL-L2-HEd" customClass="HMRegularFontLabel">
                                                             <rect key="frame" x="256" y="7" width="29" height="23"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -547,7 +549,7 @@
                                     <action selector="onPressedScrollToTopButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="1lE-NU-IDL"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="10" y="352" width="300" height="158"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -619,7 +621,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nBO-G7-mhb" userLabel="Label - no remakes label" customClass="HMAvenirBookFontLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nBO-G7-mhb" userLabel="Label - no remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="15" y="150" width="291" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -663,7 +665,7 @@
                                                             <rect key="frame" x="165" y="0.0" width="152" height="96"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000000000000009" id="PBd-7c-2kj" customClass="HMAvenirBookFontLabel">
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000000000000009" id="PBd-7c-2kj" customClass="HMRegularFontLabel">
                                                                     <rect key="frame" x="0.0" y="5" width="152" height="40"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -721,7 +723,7 @@
                                                                     <rect key="frame" x="42" y="0.0" width="88" height="96"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="Qqh-zw-L3A" customClass="HMAvenirBookFontLabel">
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="Qqh-zw-L3A" customClass="HMRegularFontLabel">
                                                                             <rect key="frame" x="0.0" y="5" width="88" height="40"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -754,7 +756,7 @@
                                                                     <rect key="frame" x="191" y="0.0" width="88" height="96"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="zch-v5-dBZ" customClass="HMAvenirBookFontLabel">
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" id="zch-v5-dBZ" customClass="HMRegularFontLabel">
                                                                             <rect key="frame" x="0.0" y="5" width="88" height="40"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -997,7 +999,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prepering your movie: &lt;movie name&gt;.                                     we will notify you when we're done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMAvenirBookFontLabel">
+                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prepering your movie: &lt;movie name&gt;.                                     we will notify you when we're done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="50" y="0.0" width="220" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1025,7 +1027,7 @@
                                 <rect key="frame" x="50" y="0.0" width="270" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done!  Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwU-c8-CZT" customClass="HMAvenirBookFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done!  Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwU-c8-CZT" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="270" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1062,10 +1064,10 @@
             </objects>
             <point key="canvasLocation" x="166" y="798"/>
         </scene>
-        <!--Mside Bar View Controller-->
+        <!--Side Bar View Controller-->
         <scene sceneID="O9B-PB-KWL">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2Bz-2S-I1k" customClass="HMsideBarViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2Bz-2S-I1k" customClass="HMSideBarViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="76j-ok-Cpt">
                         <rect key="frame" x="0.0" y="0.0" width="220" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1125,7 +1127,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                         <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="STORIES">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1142,7 +1144,7 @@
                                         <rect key="frame" x="0.0" y="54" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="MY STORIES">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1160,7 +1162,7 @@
                                         <rect key="frame" x="0.0" y="108" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="SETTINGS">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1178,7 +1180,7 @@
                                         <rect key="frame" x="0.0" y="162" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="HOW TO">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1196,7 +1198,7 @@
                                         <rect key="frame" x="0.0" y="216" width="220" height="54"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="SHARE APP">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1222,18 +1224,20 @@
                         <outlet property="guiJoinButton" destination="hfQ-pw-J8P" id="Cuh-DR-9Xu"/>
                         <outlet property="guiLogoutButton" destination="o3r-9s-FMS" id="JOe-JM-GWF"/>
                         <outlet property="guiMeButton" destination="os6-0F-yVc" id="4uQ-x1-eh7"/>
+                        <outlet property="guiNavTitleContainer" destination="VHz-PL-kef" id="4Nb-LN-zgn"/>
                         <outlet property="guiProfilePictureView" destination="0hW-jc-Mh0" id="KGt-jd-Fph"/>
                         <outlet property="guiSettingsButton" destination="Bkd-Dk-DVo" id="Lt5-B9-NU4"/>
                         <outlet property="guiShareAppButton" destination="H1L-uE-WNf" id="Fqa-0G-QFI"/>
+                        <outlet property="guiSideNavBarBG" destination="dl3-qC-m7J" id="MEw-We-Yow"/>
                         <outlet property="guiStoriesButton" destination="nR4-uX-sgD" id="6gS-67-zCe"/>
                         <outlet property="guiUserIcon" destination="SZL-qh-Cpt" id="znt-zY-RXB"/>
-                        <outletCollection property="loginActionsButtonCollection" destination="hfQ-pw-J8P" id="lYd-o7-Tr0"/>
-                        <outletCollection property="loginActionsButtonCollection" destination="o3r-9s-FMS" id="h4t-3S-hzm"/>
-                        <outletCollection property="tabButtonCollection" destination="nR4-uX-sgD" id="28I-VJ-K1z"/>
-                        <outletCollection property="tabButtonCollection" destination="os6-0F-yVc" id="g0O-l6-ME0"/>
-                        <outletCollection property="tabButtonCollection" destination="Bkd-Dk-DVo" id="Mfc-ky-LIb"/>
-                        <outletCollection property="tabButtonCollection" destination="36P-bm-q0f" id="cL8-E4-F2o"/>
-                        <outletCollection property="tabButtonCollection" destination="H1L-uE-WNf" id="UJa-yR-fig"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="36P-bm-q0f" id="VSq-sB-og0"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="nR4-uX-sgD" id="W0T-zZ-kYp"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="Bkd-Dk-DVo" id="Gxd-zl-tV6"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="H1L-uE-WNf" id="m9R-gR-ggX"/>
+                        <outletCollection property="guiNavButtonsCollection" destination="os6-0F-yVc" id="miT-kX-h4C"/>
+                        <outletCollection property="guiLoginActionsButtonCollection" destination="hfQ-pw-J8P" id="axZ-Qy-fd9"/>
+                        <outletCollection property="guiLoginActionsButtonCollection" destination="o3r-9s-FMS" id="VVC-Vh-I4L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9s5-UW-DuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1312,7 +1316,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9O1-YS-X0U" customClass="HMAvenirBookFontLabel">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9O1-YS-X0U" customClass="HMRegularFontLabel">
                                                 <rect key="frame" x="0.0" y="201" width="214" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -1339,14 +1343,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up or entering as a Guest you agree to our " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9VN-dD-eWo" customClass="HMAvenirBookFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up or entering as a Guest you agree to our " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9VN-dD-eWo" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="53" y="527" width="214" height="21"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                         <color key="textColor" red="0.72156862745098038" green="0.72156862745098038" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gVs-7t-ccm" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gVs-7t-ccm" customClass="HMRegularFontButton">
                                         <rect key="frame" x="86" y="535" width="75" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
@@ -1359,7 +1363,7 @@
                                             <action selector="termsOfServicePushed:" destination="QbO-El-nSp" eventType="touchUpInside" id="xIA-kb-lYV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FRu-Cw-JEn" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FRu-Cw-JEn" customClass="HMRegularFontButton">
                                         <rect key="frame" x="166" y="535" width="65" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
@@ -1372,14 +1376,14 @@
                                             <action selector="privacyPolicyPushed:" destination="QbO-El-nSp" eventType="touchUpInside" id="r5I-0I-drg"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&amp;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NPO-zF-HQn" customClass="HMAvenirBookFontLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&amp;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NPO-zF-HQn" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="159" y="539" width="13" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Xry-Np-IlX" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Xry-Np-IlX" customClass="HMRegularFontButton">
                                         <rect key="frame" x="53" y="473" width="214" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="2"/>
@@ -1391,7 +1395,7 @@
                                             <action selector="cancelButtonPushed:" destination="QbO-El-nSp" eventType="touchUpInside" id="A2n-Pf-YTX"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EHn-lw-3WS" customClass="HMAvenirBookFontButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EHn-lw-3WS" customClass="HMRegularFontButton">
                                         <rect key="frame" x="53" y="473" width="214" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="2"/>
@@ -1413,13 +1417,21 @@
                         <outlet property="guiActivityView" destination="xLt-DS-T4z" id="4jc-k1-l94"/>
                         <outlet property="guiBGImageView" destination="2ke-zy-oEP" id="ybK-cm-szb"/>
                         <outlet property="guiCancelButton" destination="Xry-Np-IlX" id="op9-qR-52k"/>
+                        <outlet property="guiEmailPlate" destination="0UJ-gC-Rrl" id="S9v-aN-kq8"/>
                         <outlet property="guiFacebookLoginContainer" destination="GTU-5x-yn7" id="oG1-20-HiV"/>
+                        <outlet property="guiFooterLabel1" destination="9VN-dD-eWo" id="VkJ-aN-Bhg"/>
+                        <outlet property="guiFooterLabel2" destination="NPO-zF-HQn" id="IoK-Y5-xIW"/>
                         <outlet property="guiGuestButton" destination="EHn-lw-3WS" id="FOb-ge-vuh"/>
                         <outlet property="guiIntroMovieContainerView" destination="STm-SM-IBI" id="llg-dg-Oui"/>
                         <outlet property="guiLoginErrorLabel" destination="9O1-YS-X0U" id="Z5b-ZA-yOF"/>
                         <outlet property="guiMailTextField" destination="7SA-1V-0Fd" id="TAE-uK-yz7"/>
+                        <outlet property="guiOrLabel" destination="Hva-Aj-TPa" id="buf-d2-kOb"/>
+                        <outlet property="guiPasswordPlate" destination="09y-Ee-Rs6" id="Ifc-PH-Ry9"/>
                         <outlet property="guiPasswordTextField" destination="XfZ-Fw-lJk" id="psS-X7-k6b"/>
+                        <outlet property="guiPrivacyPolicyLink" destination="FRu-Cw-JEn" id="TwC-bP-hp4"/>
+                        <outlet property="guiSignInButton" destination="KWE-2p-7fu" id="YUE-05-dS9"/>
                         <outlet property="guiSignUpView" destination="29A-AE-HRd" id="TJv-Ep-htm"/>
+                        <outlet property="guiTOSLink" destination="gVs-7t-ccm" id="HUh-il-Ijg"/>
                         <outletCollection property="buttonCollection" destination="EHn-lw-3WS" id="Dp1-SI-40O"/>
                         <outletCollection property="buttonCollection" destination="Xry-Np-IlX" id="ILy-ID-4Zb"/>
                     </connections>
@@ -1441,7 +1453,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="kSX-T7-Wek" customClass="HMAvenirBookFontButton">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="kSX-T7-Wek" customClass="HMRegularFontButton">
                                 <rect key="frame" x="8" y="505" width="92" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="skip">
@@ -1594,7 +1606,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="n8M-kD-km2" userLabel="Like Button" customClass="HMRegularFontButton">
-                                                        <rect key="frame" x="0.0" y="0.0" width="66" height="44"/>
+                                                        <rect key="frame" x="0.0" y="8" width="66" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <inset key="titleEdgeInsets" minX="10" minY="-1" maxX="0.0" maxY="0.0"/>
@@ -1639,8 +1651,56 @@
                                                         <rect key="frame" x="288" y="12" width="20" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </activityIndicatorView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="DnM-3l-8xa" userLabel="More Options Button" customClass="HMRegularFontButton">
+                                                        <rect key="frame" x="223" y="8" width="30" height="36"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <inset key="titleEdgeInsets" minX="10" minY="-1" maxX="0.0" maxY="0.0"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="-1" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" image="moreOptionsIcon">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onPressedMoreOptionsButton:" destination="vB0-ch-lSv" eventType="touchUpInside" id="pVf-AO-HDf"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view hidden="YES" contentMode="scaleToFill" id="tXY-Fw-OVD" userLabel="More Options conainer">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="report as inappropriate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TOy-tP-3ao">
+                                                        <rect key="frame" x="73" y="109" width="175" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="dys-x7-tEz" userLabel="report button">
+                                                        <rect key="frame" x="73" y="55" width="175" height="70"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <state key="normal" image="flagIcon">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onPressedFlagButton:" destination="vB0-ch-lSv" eventType="touchUpInside" id="zmU-H3-dFd"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OF0-GR-hH9" userLabel="Close Icon">
+                                                        <rect key="frame" x="274" y="0.0" width="46" height="46"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <state key="normal" image="iconClose">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onPressedDismissMoreOptionsButton:" destination="vB0-ch-lSv" eventType="touchUpInside" id="62o-gM-tKx"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1672,11 +1732,13 @@
                         <outlet property="guiLikeButton" destination="n8M-kD-km2" id="jm8-a7-d2Y"/>
                         <outlet property="guiLikesCounterLabel" destination="GCj-px-wJU" id="fnM-y9-71O"/>
                         <outlet property="guiLikesIcon" destination="hu1-nB-yUe" id="6oM-Iw-4UW"/>
+                        <outlet property="guiMoreOptionsContainer" destination="tXY-Fw-OVD" id="s71-0T-C0t"/>
                         <outlet property="guiOverlayPlayButton" destination="wyb-2t-yno" id="VkW-Wj-aAL"/>
                         <outlet property="guiRemakeContainer" destination="Pcl-dC-mzU" id="agp-bp-cWp"/>
                         <outlet property="guiRemakeControlsConatinerBottom" destination="4c5-vm-4J2" id="n5a-qm-GqP"/>
                         <outlet property="guiRemakeControlsConatinerTop" destination="ngY-D9-gtL" id="Wwo-lG-N29"/>
                         <outlet property="guiRemakeVideoContainer" destination="ZPC-kl-XM2" id="ZVF-WT-2gf"/>
+                        <outlet property="guiReportFlagButton" destination="dys-x7-tEz" id="qqI-NT-Vvw"/>
                         <outlet property="guiScrollView" destination="GL9-IJ-X5A" id="WqK-bw-DTB"/>
                         <outlet property="guiShareActivity" destination="FKT-en-Y7U" id="qsn-WB-UXL"/>
                         <outlet property="guiShareButton" destination="D2W-gJ-4Lc" id="BAq-SC-lsy"/>
@@ -1694,12 +1756,15 @@
     <resources>
         <image name="cellGradient" width="1" height="95"/>
         <image name="cellGradientTop" width="1" height="95"/>
+        <image name="flagIcon" width="23" height="27"/>
         <image name="guestUserIcon" width="31" height="31"/>
+        <image name="iconClose" width="46" height="46"/>
         <image name="iconLetsCreate" width="32" height="32"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconStoryLocked" width="70" height="70"/>
         <image name="likesIcon" width="12" height="11"/>
         <image name="more" width="20" height="15"/>
+        <image name="moreOptionsIcon" width="12" height="2"/>
         <image name="myStoriesDeleteButton" width="44" height="44"/>
         <image name="myStoriesPlayButton" width="44" height="44"/>
         <image name="myStoriesRemakeButton" width="44" height="44"/>

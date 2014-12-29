@@ -1,19 +1,19 @@
 //
-//  HMsideBarViewController.m
+//  HMSideBarViewController.m
 //  Homage
 //
 //  Created by Yoav Caspin on 1/26/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import "HMsideBarViewController.h"
+#import "HMSideBarViewController.h"
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
-#import "HMColor.h"
-#import "HMAvenirBookFontButton.h"
+#import "HMStyle.h"
 #import "HMRegularFontButton.h"
+#import "HMRegularFontLabel.h"
+#import "HMRegularFontLabel.h"
 #import "HMAppDelegate.h"
-#import "HMAvenirBookFontLabel.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AMBlurView.h"
 #import "Mixpanel.h"
@@ -21,33 +21,36 @@
 #import "NSNotificationCenter+Utils.h"
 #import "HMServer+ReachabilityMonitor.h"
 
-@interface HMsideBarViewController ()
+@interface HMSideBarViewController ()
 
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiStoriesButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiMeButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiSettingsButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiHowToButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiShareAppButton;
-@property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *tabButtonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *guiNavButtonsCollection;
 
 @property (weak,nonatomic)  UIButton *selectedButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 
+@property (weak, nonatomic) IBOutlet UIView *guiSideNavBarBG;
 
+
+@property (weak, nonatomic) IBOutlet UIView *guiNavTitleContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *guiUserIcon;
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *guiProfilePictureView;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiHelloUserLabel;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiJoinButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiHelloUserLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiJoinButton;
 
-@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *loginActionsButtonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *guiLoginActionsButtonCollection;
 
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiLogoutButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiLogoutButton;
 
 
 @end
 
-@implementation HMsideBarViewController
+@implementation HMSideBarViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,7 +65,6 @@
 {
     [super viewDidLoad];
     [self initGUI];
-	// Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -89,23 +91,51 @@
 
 -(void)initGUI
 {
-    for (HMAvenirBookFontButton *button in self.tabButtonCollection)
-    {
-        button.clipsToBounds = YES;
-        
-        CALayer *bottomBorder = [CALayer layer];
-        bottomBorder.borderColor = [UIColor blackColor].CGColor;
-        bottomBorder.borderWidth = 1;
-        bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
-        [button.layer addSublayer:bottomBorder];
-        
-        [self selectButton:self.guiStoriesButton];
-    }
+//    for (HMRegularFontButton *button in self.guiNavButtonsCollection)
+//    {
+//        button.clipsToBounds = YES;
+//        
+//        CALayer *bottomBorder = [CALayer layer];
+//        bottomBorder.borderColor = [UIColor blackColor].CGColor;
+//        bottomBorder.borderWidth = 1;
+//        bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
+//        [button.layer addSublayer:bottomBorder];
+//        
+//        [self selectButton:self.guiStoriesButton];
+//    }
     
-    for (HMAvenirBookFontButton *button in self.loginActionsButtonCollection)
+    for (HMRegularFontButton *button in self.guiLoginActionsButtonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
+    
+    // ************
+    // *  STYLES  *
+    // ************
+
+    // Background color
+    self.guiSideNavBarBG.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_BG];
+    
+    // Nav Buttons
+    UIColor *bottomBorderColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_SEPARATOR];
+    for (UIButton *button in self.guiNavButtonsCollection) {
+        [button setTitleColor:[HMStyle.sh colorNamed:C_SIDE_NAV_BAR_OPTION_TEXT] forState:UIControlStateNormal];
+        button.clipsToBounds = YES;
+        CALayer *bottomBorder = [CALayer layer];
+        bottomBorder.borderColor = bottomBorderColor.CGColor;
+        bottomBorder.borderWidth = 1;
+        bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
+        [button.layer addSublayer:bottomBorder];
+        [self selectButton:self.guiStoriesButton];
+    }
+    
+    // Top user name and buttons
+    self.guiNavTitleContainer.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_TOP_CONTAINER];
+    self.guiHelloUserLabel.textColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_USER];
+    for (UIButton *button in self.guiLoginActionsButtonCollection) {
+        [button setTitleColor:[HMStyle.sh colorNamed:C_SIDE_NAV_BAR_LOGIN_BUTTON] forState:UIControlStateNormal];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,7 +149,7 @@
     [UIView animateWithDuration:0.1 animations:
      ^{
          [self.selectedButton setBackgroundColor:[UIColor clearColor]];
-         [sender setBackgroundColor:[[HMColor.sh textImpact] colorWithAlphaComponent:0.5]];
+         //[sender setBackgroundColor:[[HMColor.sh textImpact] colorWithAlphaComponent:0.5]];
      }];
     
     self.selectedButton = sender;
@@ -203,12 +233,12 @@
 // ===========
 // IB Actions.
 // ===========
-- (IBAction)onLogoutButtonPushed:(HMAvenirBookFontButton *)sender
+- (IBAction)onLogoutButtonPushed:(HMRegularFontButton *)sender
 {
     [self.delegate logoutPushed];
 }
 
-- (IBAction)onJoinButtonPushed:(HMAvenirBookFontButton *)sender
+- (IBAction)onJoinButtonPushed:(HMRegularFontButton *)sender
 {
     [self.delegate joinButtonPushed];
 }

@@ -10,7 +10,7 @@
 
 #import <AWSiOSSDKv2/S3.h>
 
-#define BUCKET_NAME     @"homageapp"
+#define BUCKET_NAME     @"homagetest"
 
 // Older keys, without restricted permissions
 //#define ACCESS_KEY_ID   @"AKIAJTPGKC25LGKJUCTA"

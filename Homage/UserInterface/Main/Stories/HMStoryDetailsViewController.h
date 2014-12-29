@@ -8,9 +8,9 @@
 
 #import "HMStoryPresenterProtocol.h"
 #import "DB.h"
-#import "HMAvenirBookFontLabel.h"
 #import "HMSimpleVideoViewController.h"
-#import "HMAvenirBookFontButton.h"
+#import "HMRegularFontButton.h"
+#import "HMRegularFontLabel.h"
 #import "HMBoldFontButton.h"
 #import "HMRemakePresenterDelegate.h"
 #import "HMStoreDelegate.h"
@@ -24,7 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiRemakeActivity;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *noRemakesLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiStoryMovieContainer;
 
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HMsideBarNavigatorDelegate <NSObject>
+@protocol HMSideBarNavigatorDelegate <NSObject>
 
 -(void)storiesButtonPushed;
 -(void)meButtonPushed;

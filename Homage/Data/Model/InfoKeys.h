@@ -15,3 +15,4 @@
 #define HM_INFO_DURATION_IN_SECONDS                 @"durationInSeconds"
 #define HM_INFO_PROGRESS                            @"progress"
 #define HM_INFO_FOCUS_POINT                         @"focusPoint"           // passed around as @[NSNumber,NSNumber]
+#define HM_INFO_SHOULD_RECORD_AUDIO                 @"shouldRecordAudio"    // boolean value indicating if needs to record video or not.

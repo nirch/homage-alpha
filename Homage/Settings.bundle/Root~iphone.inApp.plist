@@ -5,6 +5,16 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>DefaultValue</key>
+			<string>1.2.0</string>
+			<key>Key</key>
+			<string>version</string>
+			<key>Title</key>
+			<string>VERSION</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>

@@ -11,7 +11,7 @@
 #import "HMUploadManager.h"
 #import "HMServer+analytics.h"
 #import "Mixpanel.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "DB.h"
 #import "HMNotificationCenter.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -102,7 +102,7 @@
     [FBLoginView class];
     
     // Some app wide styling
-    [[UITextField appearance] setTintColor:[HMColor.sh textImpact]];
+    //[[UITextField appearance] setTintColor:[HMStyle.sh colorNamed:@"@impact"]];
     
     // Initialize some info about device
     _deviceModel = machineName();

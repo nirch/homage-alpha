@@ -1,5 +1,5 @@
 //
-//  HMDinFontLabel.h
+//  HMBoldFontLabel.h
 //  Homage
 //
 //  Created by Tomer Harry on 2/4/14.
@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <THLabel/THLabel.h>
 
-@interface HMBoldFontLabel : UILabel
+@interface HMBoldFontLabel : THLabel
 
 @end

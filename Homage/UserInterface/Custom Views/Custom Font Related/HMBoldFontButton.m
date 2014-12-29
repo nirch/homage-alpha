@@ -1,5 +1,5 @@
 //
-//  HMDinFontButton.m
+//  HMBoldFontButton.m
 //  Homage
 //
 //  Created by Tomer Harry on 2/4/14.
@@ -7,7 +7,8 @@
 //
 
 #import "HMBoldFontButton.h"
-#import "HMColor.h"
+#import "HMStyle.h"
+#import <THLabel/THLabel.h>
 
 @implementation HMBoldFontButton
 
@@ -22,7 +23,10 @@
 
 -(void)initCustomFont
 {
-    self.titleLabel.font = [UIFont fontWithName:@"Bryant-MediumCompressed" size:self.titleLabel.font.pointSize];
+    NSString *fontName = [HMStyle.sh boldFontName];
+    self.titleLabel.font = [UIFont fontWithName:fontName
+                                           size:self.titleLabel.font.pointSize];
+    
 }
 
 @end

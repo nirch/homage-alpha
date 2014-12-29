@@ -18,6 +18,7 @@
 #import "HMNotificationCenter.h"
 #import "HMUploadManager.h"
 #import "Mixpanel.h"
+#import "HMAppDelegate.h"
 
 
 
@@ -61,6 +62,8 @@
 
 @property (nonatomic) CMTime firstSampleTime;
 
+@property (nonatomic) BOOL isSlowDevice;
+
 //@property (readonly) CHomage *h_ext;
 
 //@property CMTime frameTime;
@@ -83,11 +86,11 @@
 {
     self = [super init];
     if (self) {
-        // TODO: Initialize CHomage here.
-        // Is CFrameBufferIos *m_fb really needed? The images are now provided in the recording output delegate.
-        // No need to get the frames in the C++ code.
-        // m_hm = new CHomage( NULL );
         _recordingDuration = 0;
+        
+        // Is slow device?
+        HMAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        self.isSlowDevice = [appDelegate isSlowDevice];
     }
     return self;
 }
@@ -224,13 +227,21 @@
 
 -(BOOL)shouldFlipVideo
 {
+    BOOL shouldFlip = self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft;
+    if (self.frontCamera) shouldFlip = !shouldFlip;
+    return shouldFlip;
+    
+    /*
     if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return NO;
-    if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return YES;
+    
+     if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return YES;
     if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
         return NO;
-    if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
+    
+     if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
         return YES;
     return NO;
+    */
 }
 
 -(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
@@ -273,8 +284,12 @@
        _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
        _writerVideoInput.expectsMediaDataInRealTime = YES;
        
-       if ([self shouldFlipVideo]) _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
-        _writerAudioInput = nil;
+       // We are flipping the video frame by frame if required (not on slow devices)
+       if (self.isSlowDevice && [self shouldFlipVideo]) {
+           _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
+       }
+
+       _writerAudioInput = nil;
       
        // Checking if the mic is enabled or not
        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL response){
@@ -283,11 +298,6 @@
 
        //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerVideoInput sourcePixelBufferAttributes:nil];
        [self.assetWriter addInput:self.writerVideoInput];
-       
-        // Start writing
-        //self.presentTime = CMTimeMake(0, self.frameTime.timescale);
-        //[self.assetWriter startWriting];
-        //[self.assetWriter startSessionAtSourceTime:kCMTimeZero];
     });
 }
 
@@ -375,7 +385,13 @@
                     _postedStopRequest = YES;
                 }
             } else {
-                // Still need to write video frames
+                if (!self.isSlowDevice && [self shouldFlipVideo]) {
+                    // Process and rotate the video 180Deg if required before saving.
+                    CVPixelBufferRef bufferRef = CMSampleBufferGetImageBuffer(sampleBuffer);
+                    CVtool::CVPixelBufferRef_rotate180(bufferRef);
+                }
+                
+                // Write the sample buffer.
                 [self.writerVideoInput appendSampleBuffer:sampleBuffer];
             }
         }
@@ -397,8 +413,8 @@
                 // Over the time limit.
                 // Skip writing audio.
             } else {
-                // Still need to audio output
-                [self.writerAudioInput appendSampleBuffer:sampleBuffer];
+                // In duration. Write the audio.
+                //[self.writerAudioInput appendSampleBuffer:sampleBuffer];
             }
         }
         else
@@ -598,5 +614,90 @@
 {
     self.backgroundDetectionEnabled = NO;
 }
+
+//#pragma mark - Tools
+//- (void)saveImageType3:(image_type *)image3 withName:(NSString *)name
+//{
+//    image_type* image4 = image4_from(image3, NULL);
+//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
+//    [self saveImage:imageToSave withName:name];
+//    image_destroy(image4, 1);
+//}
+//
+//- (void)savePixelBuffer:(CVPixelBufferRef)pixelBuffer withName:(NSString *)name
+//{
+//    UIImage *image = [self imageFromPixelBuffer:pixelBuffer];
+//    //UIImage *image = [self UIImageFromPixelBuffer:pixelBuffer];
+//    [self saveImage:image withName:name];
+//}
+//
+//- (void)saveSampleBuffer:(CMSampleBufferRef)samlpleBuffer withName:(NSString *)name
+//{
+//    UIImage *bgImage = [self imageFromSampleBuffer:samlpleBuffer];
+//    [self saveImage:bgImage withName:name];
+//}
+//
+//- (void)saveImage:(UIImage *) image withName:(NSString *)name
+//{
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+//    
+//    static int counter = 0;
+//    ++counter;
+//    
+//    NSString *path = [NSString stringWithFormat:@"%@-%d.jpg" , name, counter];
+//    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
+//    
+//    [UIImageJPEGRepresentation(image, 1.0) writeToFile:dataPath atomically:YES];
+//}
+//
+//// Create a UIImage from sample buffer data
+//- (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
+//{
+//    // Get a CMSampleBuffer's Core Video image buffer for the media data
+//    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+//    
+//    return [self imageFromPixelBuffer:imageBuffer];
+//}
+//
+//// Create a UIImage from sample buffer data
+//- (UIImage *) imageFromPixelBuffer:(CVImageBufferRef) imageBuffer
+//{
+//    // Lock the base address of the pixel buffer
+//    CVPixelBufferLockBaseAddress(imageBuffer, 0);
+//    
+//    // Get the number of bytes per row for the pixel buffer
+//    void *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
+//    
+//    // Get the number of bytes per row for the pixel buffer
+//    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+//    // Get the pixel buffer width and height
+//    size_t width = CVPixelBufferGetWidth(imageBuffer);
+//    size_t height = CVPixelBufferGetHeight(imageBuffer);
+//    
+//    // Create a device-dependent RGB color space
+//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//    
+//    // Create a bitmap graphics context with the sample buffer data
+//    CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8,
+//                                                 bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+//    // Create a Quartz image from the pixel data in the bitmap graphics context
+//    CGImageRef quartzImage = CGBitmapContextCreateImage(context);
+//    // Unlock the pixel buffer
+//    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+//    
+//    // Free up the context and color space
+//    CGContextRelease(context);
+//    CGColorSpaceRelease(colorSpace);
+//    
+//    // Create an image object from the Quartz image
+//    UIImage *image = [UIImage imageWithCGImage:quartzImage];
+//    
+//    // Release the Quartz image
+//    CGImageRelease(quartzImage);
+//    
+//    return (image);
+//}
+//
 
 @end

@@ -8,12 +8,12 @@
 
 #import "HMGMeTabVC.h"
 #import "HMGLog.h"
+#import "HMRegularFontLabel.h"
 #import "HMGUserRemakeCVCell.h"
 #import "HMServer+Remakes.h"
 #import "HMNotificationCenter.h"
-#import "HMAvenirBookFontLabel.h"
 #import "HMRecorderViewController.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "mixPanel.h"
 #import "HMVideoPlayerDelegate.h"
 #import "HMSimpleVideoViewController.h"
@@ -46,7 +46,7 @@
 @property (weak,nonatomic) Remake *remakeToContinueWith;
 @property (weak,nonatomic) Remake *remakeToShare;
 
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *noRemakesLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *noRemakesLabel;
 @property (nonatomic,weak) UIView *guiVideoContainer;
 
 @property (nonatomic) HMSharing *currentSharer;
@@ -128,7 +128,7 @@
     [self.userRemakesCV addSubview:refreshControl];
     self.refreshControl = refreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl.tintColor = [HMColor.sh main2];
+    //self.refreshControl.tintColor = [HMColor.sh main2];
     CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
     f.origin.y += 32;
     [[refreshControl.subviews objectAtIndex:0] setFrame:f];
@@ -140,7 +140,7 @@
     
     self.noRemakesLabel.text = LS(@"NO_REMAKES_ME_SCREEN");
     [self.noRemakesLabel setHidden:YES];
-    self.noRemakesLabel.textColor = [HMColor.sh textImpact];
+    //self.noRemakesLabel.textColor = [HMColor.sh textImpact];
     self.title = LS(@"ME_TAB_HEADLINE_TITLE");
     
     // Checks if need to close "opened" cells.

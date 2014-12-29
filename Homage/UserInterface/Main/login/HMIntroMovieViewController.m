@@ -7,17 +7,16 @@
 //
 
 #import "HMIntroMovieViewController.h"
-#import "HMAvenirBookFontLabel.h"
-#import "HMAvenirBookFontButton.h"
 #import "DB.h"
 #import "HMNotificationCenter.h"
+#import "HMRegularFontButton.h"
 #import "HMServer+Users.h"
 #import "HMServer+Remakes.h"
 #import "HMRecorderViewController.h"
 #import "UIView+MotionEffect.h"
 #import "UIImage+ImageEffects.h"
 #import "Mixpanel.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMServer+analytics.h"
 @import MediaPlayer;
@@ -33,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainer;
 @property (strong,nonatomic) HMSimpleVideoViewController *moviePlayerVC;
 
-@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *buttonCollection;
 
 
 @end

@@ -1,5 +1,5 @@
 //
-//  HMDinFontButton.h
+//  HMBoldFontButton.h
 //  Homage
 //
 //  Created by Tomer Harry on 2/4/14.

@@ -1,5 +1,5 @@
 //
-//  HMsideBarViewController.h
+//  HMSideBarViewController.h
 //  Homage
 //
 //  Created by Yoav Caspin on 1/26/14.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HMsideBarNavigatorDelegate.h"
+#import "HMSideBarNavigatorDelegate.h"
 
-@interface HMsideBarViewController : UIViewController
+@interface HMSideBarViewController : UIViewController
 
 typedef NS_ENUM(NSInteger, HMAppTab) {
     HMStoriesTab,
@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
     HMSettingsTab,
 };
 
-@property id<HMsideBarNavigatorDelegate> delegate;
+@property id<HMSideBarNavigatorDelegate> delegate;
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID;
 
 @end

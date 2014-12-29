@@ -11,7 +11,7 @@
 #import "HMServer+Remakes.h"
 #import "DB.h"
 #import "Remake+Logic.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "Mixpanel.h"
 
 @interface HMRenderingViewController ()

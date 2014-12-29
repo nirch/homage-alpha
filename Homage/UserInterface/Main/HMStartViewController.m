@@ -13,9 +13,9 @@
 #import "HMRecorderViewController.h"
 #import "HMServer+Remakes.h"
 #import "HMsideBarNavigatorDelegate.h"
-#import "HMsideBarViewController.h"
-#import "HMAvenirBookFontLabel.h"
-#import "HMColor.h"
+#import "HMSideBarViewController.h"
+#import "HMRegularFontLabel.h"
+#import "HMStyle.h"
 #import "HMRenderingViewController.h"
 #import "HMRenderingViewControllerDelegate.h"
 #import "HMSplashViewController.h"
@@ -42,12 +42,15 @@
 #import "HMServer+analytics.h"
 #import <SDWebImage/SDWebImageDownloader.h>
 
-@interface HMStartViewController () <HMsideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
+@interface HMStartViewController () <HMSideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
 
 // Navigation bar
 @property (weak, nonatomic) IBOutlet UIView *guiTopNavContainer;
+
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
-@property (weak, nonatomic) IBOutlet UILabel *guiTabNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiNavTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *guiNavBackground;
+@property (weak, nonatomic) IBOutlet UIView *guiNavBarSeparator;
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppWrapperHideView;
@@ -60,7 +63,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIView *guiAppMainView;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiNoConnectivityLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiNoConnectivityLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *guiDarkOverlay;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurryOverlay;
@@ -73,7 +76,7 @@
 @property (weak, nonatomic) UIView *guiVideoContainer;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
-@property (weak,nonatomic) HMsideBarViewController *sideBarVC;
+@property (weak,nonatomic) HMSideBarViewController *sideBarVC;
 @property (weak,nonatomic) HMLoginMainViewController *loginVC;
 @property (atomic, readonly) NSDate *launchDateTime;
 @property (weak,nonatomic) Story *loginStory;
@@ -155,12 +158,8 @@
     });
     self.guiAppWrapperHideView.hidden = YES;
     self.renderingContainerView.hidden = YES;
-    //self.loginContainerView.hidden = YES;
     self.loginContainerView.alpha = 0;
-    
     self.guiNoConnectivityView.hidden = YES;
-    //self.guiNoConnectivityLabel.textColor = [HMColor.sh textImpact];
-    self.guiTabNameLabel.textColor = [HMColor.sh textImpact];
     
     self.selectedTab = HMStoriesTab;
     [self changeTitleByIndex:self.selectedTab];
@@ -172,11 +171,13 @@
     [panRecognizer setMinimumNumberOfTouches:1];
 	[panRecognizer setMaximumNumberOfTouches:1];
 	[panRecognizer setDelegate:self];
-    
-    //debug
-    //[self.guiAppContainerView.layer setBorderColor:[UIColor yellowColor].CGColor];
-    //[self.guiAppContainerView.layer setBorderWidth:2.0f];
-    
+
+    // ************
+    // *  STYLES  *
+    // ************
+    self.guiNavBackground.backgroundColor = [HMStyle.sh colorNamed:C_NAV_BAR_BACKGROUND];
+    self.guiNavBarSeparator.backgroundColor = [HMStyle.sh colorNamed:C_NAV_BAR_SEPARATOR];
+    self.guiNavTitleLabel.textColor = [HMStyle.sh colorNamed:C_NAV_BAR_TITLE];
 }
 
 -(void)initObservers
@@ -506,14 +507,14 @@
 {
     if ([segue.identifier isEqualToString:@"appSegue"]) {
         self.appTabBarController = segue.destinationViewController;
-        self.guiTabNameLabel.hidden = NO;
+        self.guiNavTitleLabel.hidden = NO;
         self.appTabBarController.tabBar.hidden = YES;
         [self setNavControllersDelegate];
         //[self setSettingsVCdelegate];
         
     } else if ([segue.identifier isEqualToString:@"sideBarSegue"])
     {
-        self.sideBarVC = (HMsideBarViewController *)segue.destinationViewController;
+        self.sideBarVC = (HMSideBarViewController *)segue.destinationViewController;
         self.sideBarVC.delegate = self;
         
     } else if ([segue.identifier isEqualToString:@"renderSegue"])
@@ -806,7 +807,7 @@
 -(void)setTitle:(NSString *)title
 {
     [super setTitle:title];
-    self.guiTabNameLabel.text = title;
+    self.guiNavTitleLabel.text = title;
 }
 
 -(void)showRenderingView

@@ -19,7 +19,8 @@
     
     NSString *cleanString = [self stringByReplacingOccurrencesOfString:@"#" withString:@""];
     cleanString = [cleanString stringWithATrim];
-    if (cleanString.length==6) [cleanString stringByAppendingString:@"FF"];
+    if (cleanString.length==6)
+        cleanString = [cleanString stringByAppendingString:@"FF"];
     
     // Parse the string to rgba values
     unsigned int baseValue;

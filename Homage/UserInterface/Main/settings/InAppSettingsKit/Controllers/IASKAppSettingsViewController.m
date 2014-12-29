@@ -26,7 +26,7 @@
 #import "IASKSpecifier.h"
 #import "IASKSpecifierValuesViewController.h"
 #import "IASKTextField.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 
 #if !__has_feature(objc_arc)
 #error "IASK needs ARC"
@@ -142,9 +142,8 @@ CGRect IASKCGRectSwap(CGRect rect);
     [self.tableView addGestureRecognizer:tapGesture];
     
     // styling
-    self.tableView.backgroundColor = [UIColor blackColor];
-    [self.tableView setSeparatorColor:[HMColor.sh main2]];
-
+    self.tableView.backgroundColor = [HMStyle.sh colorNamed:C_SETTINGS_BG];
+    [self.tableView setSeparatorColor:[HMStyle.sh colorNamed:C_SETTINGS_TEXT]];
 }
 
 - (void)viewDidUnload {
@@ -501,8 +500,8 @@ CGRect IASKCGRectSwap(CGRect rect);
     cell.backgroundView.backgroundColor = [UIColor blackColor];
     cell.contentView.backgroundColor = [UIColor blackColor];
     cell.tintColor = [UIColor greenColor];
-    cell.textLabel.textColor = [HMColor.sh textImpact];
-    cell.textLabel.font = [UIFont fontWithName:@"Bryant-MediumCompressed" size:cell.textLabel.font.pointSize];
+    cell.textLabel.textColor = [HMStyle.sh colorNamed:C_SETTINGS_TEXT];
+    cell.textLabel.font = [UIFont fontWithName:@"Avenir Book" size:cell.textLabel.font.pointSize];
 	
 	if ([specifier.type isEqualToString:kIASKPSToggleSwitchSpecifier]) {
 		cell.textLabel.text = specifier.title;
@@ -523,8 +522,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 		IASKSwitch *toggle = (IASKSwitch*)cell.accessoryView;
 		toggle.on = toggleState;
 		toggle.key = specifier.key;
-        toggle.tintColor = [HMColor.sh main2];
-        toggle.onTintColor = [HMColor.sh main2];
+        toggle.tintColor = [HMStyle.sh colorNamed:C_SETTINGS_CONTROLS_TINT];
+        toggle.onTintColor = [HMStyle.sh colorNamed:C_SETTINGS_CONTROLS_TINT];
 	}
 	else if ([specifier.type isEqualToString:kIASKPSMultiValueSpecifier]) {
 		cell.textLabel.text = specifier.title;

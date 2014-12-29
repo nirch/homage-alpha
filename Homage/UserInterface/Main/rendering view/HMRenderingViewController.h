@@ -10,7 +10,7 @@
 #import "AWTimeProgressView.h"
 #import "AWTimeProgressDelegate.h"
 #import "HMRenderingViewControllerDelegate.h"
-#import "HMAvenirBookFontLabel.h"
+#import "HMRegularFontLabel.h"
 
 @interface HMRenderingViewController : UIViewController 
 @property (strong, nonatomic) IBOutlet UIView *guiTopView;
@@ -19,9 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityWheel;
 @property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
 
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiInProgressLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiInProgressLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiDoneRenderingView;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiDoneLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiDoneLabel;
 
 -(void)renderStartedWithRemakeID:(NSString *)remakeID;
 -(void)presentMovieStatus:(BOOL)success forStory:(NSString *)storyName;

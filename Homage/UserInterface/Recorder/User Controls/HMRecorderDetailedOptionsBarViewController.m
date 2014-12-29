@@ -14,12 +14,12 @@
 #import "HMNotificationCenter.h"
 #import "HMSimpleVideoViewController.h"
 #import "HMRoundCountdownLabel.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMAnimationsFX.h"
 #import "mixpanel.h"
 #import "HMMotionDetector.h"
-#import "HMAvenirBookFontLabel.h"
+#import "HMRegularFontLabel.h"
 #import "HMServer+analytics.h"
 #import "HMAppDelegate.h"
 #import "HMABTester.h"
@@ -34,12 +34,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiMicrophoneUnauthorizedLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiMicrophoneUnauthorizedLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiGetInspiredIcon;
 
 //deprecated. set GUI outlet if you need to debug background detection
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiBadBGLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiBadBGLabel;
 
 // Table of scenes
 @property (weak, nonatomic) IBOutlet UITableView *guiTableView;
@@ -438,9 +438,9 @@
     Footage *footage = [self.remake footageWithSceneID:sceneID];
     self.guiCurrentSceneLabel.text = [scene titleForSceneID];
     if ([footage readyState] == HMFootageReadyStateReadyForFirstRetake) {
-        self.guiCurrentSceneLabel.textColor = HMColor.sh.text;
+        //self.guiCurrentSceneLabel.textColor = HMColor.sh.text;
     } else {
-        self.guiCurrentSceneLabel.textColor = HMColor.sh.textImpact;
+        //self.guiCurrentSceneLabel.textColor = HMColor.sh.textImpact;
     }
     self.guiCurrentSceneDurationLabel.text = [scene titleForTime];
     
@@ -560,13 +560,22 @@
     NSString *fileName = [footage generateNewRawFileName];
     HMGLogDebug(@"Will start recording to tmp file:%@", fileName);
     
+    // Determine if needs to include an audio track with the recording.
+    // By default will record an audio track with the video recording.
+    BOOL shouldRecordAudio = YES;
+    Scene *scene = [self.remake.story findSceneWithID:footage.sceneID];
+
+    // If playing audio while recording, will ignore the mic input.
+    if (scene.sceneAudioURL) shouldRecordAudio = NO;
+    
     // Count down finished. Notify that the camera should start recording.
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_START_RECORDING
                                                         object:self
                                                       userInfo:@{HM_INFO_FILE_NAME:fileName,
                                                                  HM_INFO_REMAKE_ID:self.remake.sID,
                                                                  HM_INFO_SCENE_ID:footage.sceneID,
-                                                                 HM_INFO_DURATION_IN_SECONDS:@(footage.relatedScene.durationInSeconds)
+                                                                 HM_INFO_DURATION_IN_SECONDS:@(footage.relatedScene.durationInSeconds),
+                                                                 HM_INFO_SHOULD_RECORD_AUDIO:@(shouldRecordAudio)
                                                                  }
      ];
     dispatch_async(dispatch_get_main_queue(), ^{

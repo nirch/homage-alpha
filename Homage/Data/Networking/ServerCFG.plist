@@ -15,7 +15,7 @@
 	<key>prod_port</key>
 	<string>80</string>
 	<key>stories_videos_caching</key>
-	<true/>
+	<false/>
 	<key>stories_videos_caching_attempt_interval</key>
 	<string>1800</string>
 	<key>stories_videos_caching_limit</key>

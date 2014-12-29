@@ -8,7 +8,7 @@
 
 #import "HMRecorderEditTextsViewController.h"
 #import "DB.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "AMBlurView.h"
 #import "HMRecorderEditingTextCell.h"
 #import "HMServer+Texts.h"
@@ -88,14 +88,14 @@
     [cell.guiActivity stopAnimating];
 
     if (notification.isReportingError) {
-        cell.guiTextField.textColor = HMColor.sh.recorderEditTextError;
+        //cell.guiTextField.textColor = HMColor.sh.recorderEditTextError;
         cell.guiRetryButton.hidden = NO;
         cell.guiTextIsGoodIcon.hidden = YES;
         return;
     }
 
     cell.guiRetryButton.hidden = YES;
-    cell.guiTextField.textColor = HMColor.sh.recorderEditText;
+    //cell.guiTextField.textColor = HMColor.sh.recorderEditText;
 }
 
 -(void)onRender:(NSNotification *)notification
@@ -124,8 +124,8 @@
     NSString *textValue = [self.remake textWithID:textDefinition.sID];
     cell.guiTextField.delegate = self;
     cell.guiTextField.text = textValue;
-    cell.guiTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textDefinition.descriptionText.uppercaseString
-                                                                              attributes:@{NSForegroundColorAttributeName:HMColor.sh.main1}];
+//    cell.guiTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textDefinition.descriptionText.uppercaseString
+//                                                                              attributes:@{NSForegroundColorAttributeName:HMColor.sh.main1}];
     
     [self validateTextAtIndexPath:indexPath];
     cell.guiActivity.tag = indexPath.row;

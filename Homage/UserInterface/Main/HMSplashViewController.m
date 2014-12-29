@@ -8,6 +8,7 @@
 
 #import "HMSplashViewController.h"
 #import "HMToonBGView.h"
+#import "HMStyle.h"
 
 @interface HMSplashViewController ()
 
@@ -21,6 +22,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initGUI];
+}
+
+-(void)initGUI
+{
+    // ************
+    // *  STYLES  *
+    // ************
+    self.guiActivity.color = [HMStyle.sh colorNamed:C_SPLASH_ACTIVITY_INDICATOR];
 }
 
 -(void)prepare

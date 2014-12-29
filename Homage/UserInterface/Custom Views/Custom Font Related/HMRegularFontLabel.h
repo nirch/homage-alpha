@@ -1,5 +1,5 @@
 //
-//  HMDINOTRegularFontLabel.h
+//  HMRegularFontLabel.h
 //  Homage
 //
 //  Created by Tomer Harry on 2/4/14.
@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <THLabel/THLabel.h>
 
-@interface HMRegularFontLabel : UILabel
+@interface HMRegularFontLabel : THLabel
+
+// Optional customized stroke. If not set, uses default values set in style.
+-(void)customizeStrokeSize:(CGFloat)size color:(UIColor *)color;
 
 @end

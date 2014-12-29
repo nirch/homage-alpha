@@ -8,7 +8,11 @@
 
 #import "HMLoginMainViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "HMRegularFontButton.h"
+#import "HMBoldFontLabel.h"
+#import "HMRegularFontLabel.h"
 #import "HMNotificationCenter.h"
+#import "HMBoldFontButton.h"
 #import "HMServer+Users.h"
 #import "HMServer+analytics.h"
 #import "DB.h"
@@ -17,9 +21,7 @@
 #import "HMIntroMovieViewController.h"
 #import "HMIntroMovieDelagate.h"
 #import "UIImage+ImageEffects.h"
-#import "HMAvenirBookFontButton.h"
-#import "HMAvenirBookFontLabel.h"
-#import "HMColor.h"
+#import "HMStyle.h"
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
 #import "HMServer+ReachabilityMonitor.h"
@@ -50,23 +52,34 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 
 @property (weak, nonatomic) IBOutlet UIView *guiIntroMovieContainerView;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiSignupButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiLoginButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiGuestButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiForgotPasswordButton;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontButton *guiCancelButton;
+@property (weak, nonatomic) IBOutlet HMBoldFontButton *guiSignInButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiGuestButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiForgotPasswordButton;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiCancelButton;
+
 @property (weak, nonatomic) IBOutlet UITextField *guiMailTextField;
+@property (weak, nonatomic) IBOutlet UIView *guiEmailPlate;
+
 @property (weak, nonatomic) IBOutlet UITextField *guiPasswordTextField;
-@property (weak, nonatomic) IBOutlet HMAvenirBookFontLabel *guiLoginErrorLabel;
+@property (weak, nonatomic) IBOutlet UIView *guiPasswordPlate;
+
+@property (weak, nonatomic) IBOutlet HMBoldFontLabel *guiOrLabel;
+
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiLoginErrorLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *guiSignUpView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
-@property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivityView;
 
-@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontButton) NSArray *buttonCollection;
-@property (strong, nonatomic) IBOutletCollection(HMAvenirBookFontLabel) NSArray *labelCollection;
+@property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *buttonCollection;
+@property (strong, nonatomic) IBOutletCollection(HMRegularFontLabel) NSArray *labelCollection;
 
 @property (weak, nonatomic) IBOutlet UIView *guiFacebookLoginContainer;
+
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiFooterLabel1;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiFooterLabel2;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiTOSLink;
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiPrivacyPolicyLink;
+
 
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
@@ -137,19 +150,15 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiGuestButton.hidden = NO;
     self.guiCancelButton.hidden = YES;
     
-    //[[AMBlurView new] insertIntoView:self.guiBlurredView];
-    
-    for (HMAvenirBookFontButton *button in self.buttonCollection)
+    for (HMRegularFontButton *button in self.buttonCollection)
     {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
     
-    for (HMAvenirBookFontLabel *label in self.labelCollection)
+    for (HMRegularFontLabel *label in self.labelCollection)
     {
         [label setTextColor:[UIColor whiteColor]];
     }
-    
-    //[self.guiSignupButton setTitleColor:[HMColor.sh textImpact] forState:UIControlStateNormal];
     
     //text field stuff
     self.guiMailTextField.keyboardType = UIKeyboardTypeEmailAddress;
@@ -159,7 +168,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiMailTextField.delegate = self;
     self.guiPasswordTextField.delegate = self;
     
-    //sign up scrool view stuff
+    //sign up scroll view stuff
     self.guiSignUpView.contentSize = self.guiSignUpView.frame.size;
     self.guiSignUpView.scrollEnabled = NO;
     
@@ -169,6 +178,39 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     //activity view
     self.guiActivityView.hidden = YES;
     [self.guiActivityView stopAnimating];
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    
+    // Background
+    self.view.backgroundColor = [HMStyle.sh colorNamed:C_LOGIN_BACKGROUND];
+    
+    // Labels
+    self.guiOrLabel.textColor = [HMStyle.sh colorNamed:C_LOGIN_TEXT];
+    
+    // Text fields
+    NSDictionary *phAttributes = @{NSForegroundColorAttributeName:[HMStyle.sh colorNamed:C_LOGIN_INPUT_PLACE_HOLDER_TEXT]};
+
+    // Email
+    self.guiMailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:LS(@"EMAIL_PLACEHOLDER_TEXT") attributes:phAttributes];
+    self.guiMailTextField.textColor = [HMStyle.sh colorNamed:C_LOGIN_INPUT_TEXT];
+    self.guiEmailPlate.backgroundColor = [HMStyle.sh colorNamed:C_LOGIN_INPUT_TEXT];
+    
+    // Password
+    self.guiPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:LS(@"PASSWORD_PLACEHOLDER_TEXT") attributes:phAttributes];
+    self.guiPasswordTextField.textColor = [HMStyle.sh colorNamed:C_LOGIN_INPUT_TEXT];
+    self.guiPasswordPlate.backgroundColor = [HMStyle.sh colorNamed:C_LOGIN_INPUT_TEXT];
+
+    // Big sign in button
+    [self.guiSignInButton setBackgroundColor:[HMStyle.sh colorNamed:C_LOGIN_IMPACT_BUTTON_BG]];
+    [self.guiSignInButton setTitleColor:[HMStyle.sh colorNamed:C_LOGIN_IMPACT_BUTTON_TEXT] forState:UIControlStateNormal];
+
+    // Footer text and links
+    self.guiFooterLabel1.textColor = [HMStyle.sh colorNamed:C_LOGIN_FADED_TEXT];
+    self.guiFooterLabel2.textColor = [HMStyle.sh colorNamed:C_LOGIN_FADED_TEXT];
+    [self.guiTOSLink setTitleColor:[HMStyle.sh colorNamed:C_LOGIN_FADED_LINKS] forState:UIControlStateNormal];
+    [self.guiPrivacyPolicyLink setTitleColor:[HMStyle.sh colorNamed:C_LOGIN_FADED_LINKS] forState:UIControlStateNormal];
 }
 
 -(void)initObservers
@@ -875,11 +917,21 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(BOOL)shouldExcludethisAdressFromMixpanelData:(NSString *)email_address
 {
-    for (NSString *toBeExcludedMail in @[@"yoavcaspin@gmail.com",@"nir@homage.it",@"tomer@homage.it",@"yoav@homage.it",@"nirh2@yahoo.com",@"nir.channes@gmail.com",@"ranpeer@gmail.com",@"tomer.harry@gmail.com",@"hiorit@gmail.com"])
+    NSArray *excludeList = @[
+                             @"yoavcaspin@gmail.com",
+                             @"nir@homage.it",
+                             @"tomer@homage.it",
+                             @"yoav@homage.it",
+                             @"nirh2@yahoo.com",
+                             @"nir.channes@gmail.com",
+                             @"ranpeer@gmail.com",
+                             @"tomer.harry@gmail.com",
+                             @"hiorit@gmail.com"
+                             ];
+    for (NSString *toBeExcludedMail in excludeList)
     {
         if ([email_address isEqualToString:toBeExcludedMail]) return YES;
     }
-    
     return NO;
 }
 
@@ -887,12 +939,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 {
     self.guiMailTextField.text = @"";
     self.guiPasswordTextField.text = @"";
-    
-    self.guiMailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: [HMColor.sh textPlaceholder]}];
-    self.guiMailTextField.textColor = [HMColor.sh main2];
-
-    self.guiPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: [HMColor.sh textPlaceholder]}];
-    self.guiPasswordTextField.textColor = [HMColor.sh main2];
 }
 
 -(void)onPresentLoginCalled

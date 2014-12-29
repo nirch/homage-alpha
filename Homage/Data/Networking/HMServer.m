@@ -241,7 +241,7 @@
         port = self.cfg[@"port"];
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];
-        self.defaultsFileName = @"DefaultsCFG";
+        self.defaultsFileName = @"DefaultsCFGTest";
     HMGLogNotice(@"Using test server (debug app):%@", host);
     #endif
     
