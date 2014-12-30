@@ -41,7 +41,7 @@
 #pragma mark - Sharing
 -(NSString *)getShareLinkPrefix
 {
-    return [self.configurationInfo[@"share_link_prefix"] stringValue];
+    return self.configurationInfo[@"share_link_prefix"];
 }
 
 #pragma mark - Recorder

@@ -20,6 +20,7 @@
 #import "HMNotificationCenter.h"
 #import "NSNotificationCenter+Utils.h"
 #import "HMServer+ReachabilityMonitor.h"
+#import "HMServer+AppConfig.h"
 
 @interface HMSideBarViewController ()
 
@@ -47,6 +48,7 @@
 
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiLogoutButton;
 
+@property (weak, nonatomic) IBOutlet HMRegularFontButton *guiStoreButton;
 
 @end
 
@@ -91,23 +93,8 @@
 
 -(void)initGUI
 {
-//    for (HMRegularFontButton *button in self.guiNavButtonsCollection)
-//    {
-//        button.clipsToBounds = YES;
-//        
-//        CALayer *bottomBorder = [CALayer layer];
-//        bottomBorder.borderColor = [UIColor blackColor].CGColor;
-//        bottomBorder.borderWidth = 1;
-//        bottomBorder.frame = CGRectMake(0, button.frame.size.height - 1, button.frame.size.width,1);
-//        [button.layer addSublayer:bottomBorder];
-//        
-//        [self selectButton:self.guiStoriesButton];
-//    }
-    
-    for (HMRegularFontButton *button in self.guiLoginActionsButtonCollection)
-    {
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    }
+    // In app purchases button. Shown only if supported.
+    self.guiStoreButton.hidden = ![HMServer.sh supportsInAppPurchases];
     
     // ************
     // *  STYLES  *

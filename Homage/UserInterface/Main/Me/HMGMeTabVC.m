@@ -128,7 +128,6 @@
     [self.userRemakesCV addSubview:refreshControl];
     self.refreshControl = refreshControl;
     [self.refreshControl addTarget:self action:@selector(onPulledToRefetch) forControlEvents:UIControlEventValueChanged];
-    //self.refreshControl.tintColor = [HMColor.sh main2];
     CGRect f = [[refreshControl.subviews objectAtIndex:0] frame];
     f.origin.y += 32;
     [[refreshControl.subviews objectAtIndex:0] setFrame:f];
@@ -150,6 +149,12 @@
     CGFloat t = IS_IPHONE_5 ? 510 : 470;
     self.bottomButtonAppearanceThresholdThatIsUsedToDetermineWhenToShowOrHideIt = t;
     [self _remakeMoreStoriesOutOfScreenPosition];
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    self.refreshControl.tintColor = [HMStyle.sh colorNamed:C_REFRESH_CONTROL_TINT];
+    
 }
 
 -(void)initContent

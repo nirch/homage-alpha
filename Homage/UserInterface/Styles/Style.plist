@@ -40,6 +40,11 @@
 	</dict>
 	<key>colors</key>
 	<dict>
+		<key>misc</key>
+		<dict>
+			<key>colorRefreshControlTint</key>
+			<string>@impact</string>
+		</dict>
 		<key>splash</key>
 		<dict>
 			<key>colorSplashActivityIndicator</key>

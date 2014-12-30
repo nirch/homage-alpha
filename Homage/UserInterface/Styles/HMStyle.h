@@ -31,6 +31,11 @@
 #define K_FONT_BOLD_DEFAULT_STROKE_SIZE @"fontBoldDefaultStrokeSize"
 #define K_FONT_BOLD_DEFAULT_STROKE_COLOR @"fontBoldDefaultStrokeColor"
 
+#pragma mark - Colors
+
+// Misc
+#define C_REFRESH_CONTROL_TINT @"colorRefreshControlTint"
+
 // Splash screen
 #define C_SPLASH_ACTIVITY_INDICATOR @"colorSplashActivityIndicator"
 

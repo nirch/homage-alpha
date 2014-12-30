@@ -24,9 +24,9 @@
 -(void)initCustomFont
 {
     NSString *fontName = [HMStyle.sh boldFontName];
-    [self setFont:[UIFont fontWithName:fontName
-                                  size:self.font.pointSize]];
-    
+    [self setFont:[UIFont fontWithName:fontName size:self.font.pointSize]];
+    self.contentMode = UIViewContentModeCenter;
+
     // Default styles.
     self.strokeSize = [HMStyle.sh boldFontDefaultStrokeSize];
     self.strokeColor = [HMStyle.sh boldFontDefaultStrokeColor];

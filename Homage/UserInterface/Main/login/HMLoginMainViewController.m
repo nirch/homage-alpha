@@ -135,7 +135,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [super viewWillDisappear:animated];
     
     [self.guiActivityView stopAnimating];
-    self.guiActivityView.hidden = YES;
     [self removeObservers];
     [self resetTextFields];
 }
@@ -176,7 +175,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiForgotPasswordButton.hidden = YES;
     
     //activity view
-    self.guiActivityView.hidden = YES;
     [self.guiActivityView stopAnimating];
     
     // ************
@@ -211,6 +209,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiFooterLabel2.textColor = [HMStyle.sh colorNamed:C_LOGIN_FADED_TEXT];
     [self.guiTOSLink setTitleColor:[HMStyle.sh colorNamed:C_LOGIN_FADED_LINKS] forState:UIControlStateNormal];
     [self.guiPrivacyPolicyLink setTitleColor:[HMStyle.sh colorNamed:C_LOGIN_FADED_LINKS] forState:UIControlStateNormal];
+    
+    //
+//    self.guiActivityView
 }
 
 -(void)initObservers
@@ -370,6 +371,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.view endEditing:YES];
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *guestDictionary = @{@"is_public" : @NO , @"device" : deviceInfo};
+    [self.guiActivityView startAnimating];
+
     [HMServer.sh createUserWithDictionary:guestDictionary];
 }
 
@@ -745,7 +748,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView
 {
     HMGLogInfo(@"fb login");
-    self.guiActivityView.hidden = NO;
     [self.guiActivityView startAnimating];
 }
 
@@ -755,7 +757,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
 {
     HMGLogInfo(@"fb logout");
-    self.guiActivityView.hidden = YES;
     [self.guiActivityView stopAnimating];
 }
 

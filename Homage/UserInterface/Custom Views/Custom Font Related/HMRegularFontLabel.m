@@ -24,8 +24,8 @@
 -(void)initCustomFont
 {
     NSString *fontName = [HMStyle.sh regularFontName];
-    [self setFont:[UIFont fontWithName:fontName
-                                  size:self.font.pointSize]];
+    [self setFont:[UIFont fontWithName:fontName size:self.font.pointSize]];
+    self.contentMode = UIViewContentModeCenter;
     
     // Default styles.
     self.strokeSize = [HMStyle.sh regularFontDefaultStrokeSize];
