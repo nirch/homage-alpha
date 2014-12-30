@@ -21,12 +21,12 @@
 	<key>significant_view_pct_threshold</key>
 	<real>0.5</real>
 	<key>recorder_first_scene_context_message</key>
-	<false/>
+	<true/>
 	<key>uploader_reports_uploads</key>
 	<true/>
 	<key>login_flow</key>
 	<string>normal</string>
 	<key>login_flow_skip_intro_video</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

@@ -657,11 +657,10 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
           atDevicePoint:self.focusPoint monitorSubjectAreaChange:NO
      ];
     
-    // Start recording to a temp file.
+    // Init start recording to a temp file.
     NSString *fileName = info[@"fileName"];
     NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
     HMGLogDebug(@"Output to:%@", tmpPath);
-    
     if (outputController == self.extractController)
     {
         UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
@@ -670,8 +669,19 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         self.extractController.recordingDuration = recordingDuration;
     }
     
+    // Should record audio?
+    // (will not record audio when audio is played during recording)
+    BOOL shouldRecordAudio;
+    if (info[@"shouldRecordAudio"]) {
+        shouldRecordAudio = [info[@"shouldRecordAudio"] boolValue];
+    } else {
+        shouldRecordAudio = YES;
+    }
+    
+    // The the output controller to start recording to the temp file.
     [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath]
-                                  recordingDelegate:self];
+                                  recordingDelegate:self
+                                  shouldRecordAudio:shouldRecordAudio];
 }
 
 -(void)stopVideoRecording:(NSDictionary *)info

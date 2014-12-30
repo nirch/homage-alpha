@@ -63,6 +63,7 @@
 @property (nonatomic) CMTime firstSampleTime;
 
 @property (nonatomic) BOOL isSlowDevice;
+@property (nonatomic) BOOL shouldWriteAudio;
 
 //@property (readonly) CHomage *h_ext;
 
@@ -244,34 +245,36 @@
     */
 }
 
--(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
+-(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL
+                   recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
+                   shouldRecordAudio:(BOOL)shouldRecordAudio
 {
     if (_isCurrentlyRecording) return;
-
-   dispatch_async(self.extractQueue, ^{
+    self.shouldWriteAudio = shouldRecordAudio;
+    dispatch_async(self.extractQueue, ^{
         _isCurrentlyRecording = YES;
         NSLog(@"Start recording with FG extraction: %@", outputFileURL);
         _outputFileURL = outputFileURL;
         _recordingDelegate = delegate;
-       _postedStopRequest = NO;
+        _postedStopRequest = NO;
         
         // Creating the container to which the video will be written to
         NSError *error;
         _assetWriter = [[AVAssetWriter alloc] initWithURL:self.outputFileURL
                                                  fileType:AVFileTypeQuickTimeMovie
                                                     error:&error];
-       
+        
         // Output video bitrate
         NSDictionary *codecSettings = @{
-                                       AVVideoAverageBitRateKey:@3000000
-                                       };
-       
+                                        AVVideoAverageBitRateKey:@3000000
+                                        };
+        
         NSString *scalingMode = AVVideoScalingModeResizeAspect;
         if (self.session.sessionPreset == AVCaptureSessionPreset640x480)
         {
             scalingMode = AVVideoScalingModeResizeAspectFill;
         }
-
+        
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
@@ -280,24 +283,26 @@
                                         AVVideoCompressionPropertiesKey:codecSettings,
                                         AVVideoScalingModeKey:scalingMode
                                         };
-       
-       _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
-       _writerVideoInput.expectsMediaDataInRealTime = YES;
-       
-       // We are flipping the video frame by frame if required (not on slow devices)
-       if (self.isSlowDevice && [self shouldFlipVideo]) {
-           _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
-       }
-
-       _writerAudioInput = nil;
-      
-       // Checking if the mic is enabled or not
-       [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL response){
-           self.micEnabled = response;
-       }];
-
-       //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerVideoInput sourcePixelBufferAttributes:nil];
-       [self.assetWriter addInput:self.writerVideoInput];
+        
+        _writerVideoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:videoSettings];
+        _writerVideoInput.expectsMediaDataInRealTime = YES;
+        
+        // We are flipping the video frame by frame if required (not on slow devices)
+        if (self.isSlowDevice && [self shouldFlipVideo]) {
+            _writerVideoInput.transform = CGAffineTransformMakeRotation(M_PI);
+        }
+        
+        _writerAudioInput = nil;
+        
+        // Checking if the mic is enabled or not
+        if (self.shouldWriteAudio) {
+            [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL response){
+                self.micEnabled = response;
+            }];
+        }
+        
+        //_pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerVideoInput sourcePixelBufferAttributes:nil];
+        [self.assetWriter addInput:self.writerVideoInput];
     });
 }
 
@@ -414,7 +419,8 @@
                 // Skip writing audio.
             } else {
                 // In duration. Write the audio.
-                //[self.writerAudioInput appendSampleBuffer:sampleBuffer];
+                if (self.shouldWriteAudio)
+                    [self.writerAudioInput appendSampleBuffer:sampleBuffer];
             }
         }
         else
