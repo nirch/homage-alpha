@@ -13,5 +13,6 @@
 -(void)prepare;
 -(void)start;
 -(void)done;
+-(void)showFailedToConnectMessage;
 
 @end

@@ -12,6 +12,7 @@
     SKProductsRequestDelegate
 >
 
+-(NSString *)productsPrefix;
 -(void)requestInfo;
 -(SKProduct *)productForIdentifier:(NSString *)productIdentifier;
 

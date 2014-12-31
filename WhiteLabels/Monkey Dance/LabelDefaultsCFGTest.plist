@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>product_name</key>
+	<string>monkey_dnace</string>
+	<key>product_ids_prefix</key>
+	<string>md</string>
+	<key>campaign_id</key>
+	<string>54919516454c61f4080000e5</string>
+	<key>in_app_purchases</key>
+	<true/>
+	<key>recorder_first_scene_context_message</key>
+	<false/>
+	<key>login_flow_skip_intro_video</key>
+	<true/>
+	<key>login_flow_type</key>
+	<integer>1</integer>
+</dict>
+</plist>

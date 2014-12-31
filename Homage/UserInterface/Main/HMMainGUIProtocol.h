@@ -15,5 +15,6 @@
 -(BOOL)isRenderingViewShowing;
 -(CGFloat)renderingViewHeight;
 -(void)showStoriesTab;
+-(void)updateTitle:(NSString *)title;
 
 @end

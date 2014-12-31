@@ -61,6 +61,12 @@
     return campaignIDString;
 }
 
+-(NSString *)productsPrefix
+{
+    NSString *productIDSPrefix = self.configurationInfo[@"product_ids_prefix"];
+    return productIDSPrefix;
+}
+
 -(BOOL)shouldUploaderReportUploads
 {
     return [self should:@"uploader_reports_uploads" withDefault:YES];

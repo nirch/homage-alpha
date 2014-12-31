@@ -224,6 +224,11 @@
                                                      object:nil];
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserCreated:)
+                                                       name:HM_NOTIFICATION_SERVER_USER_CREATION
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(onConfigurationDataAvailable:)
                                                        name:HM_NOTIFICATION_SERVER_CONFIG
                                                      object:nil];
@@ -237,6 +242,11 @@
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
                                                    selector:@selector(settingsDidChange:)
                                                        name:kIASKAppSettingChanged
+                                                     object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserWantsToRetryLoginAsGuest:)
+                                                       name:HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST
                                                      object:nil];
 }
 
@@ -279,6 +289,11 @@
 {
     // TODO: fix Yoav's naming conventions. seperate between IB Actions handlers names and other VC methods.
     [self storiesButtonPushed];
+}
+
+-(void)updateTitle:(NSString *)title
+{
+    [self setTitle:title];
 }
 
 #pragma mark - Splash View
@@ -584,10 +599,10 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     [[NSUserDefaults standardUserDefaults] setObject:version forKey:@"version"];
     
-    // Dismiss the splash screen after a short animation.
+    
+    // App launched event.
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"appLaunch"];
-    [self dismissSplashScreenAfterAShortAnimation];
  
     // The upload manager with # workers of a specific type.
     // You can always replace to another implementation of upload workers,
@@ -605,10 +620,15 @@
     //
     if (![User current])
     {
-        [self presentLoginScreen];
+        // No current user. Present login screen or auto login,
+        // depending on login flow determind in app settings.
+        [self handleLoginFlow];
         return;
     }
     
+    // Dismiss the splash screen after a short animation.
+    [self dismissSplashScreenAfterAShortAnimation];
+
     //
     // A current logged in user found.
     //
@@ -647,6 +667,30 @@
         myDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
         [HMServer.sh reportSession:myDelegate.currentSessionHomageID beginForUser:user.userID];
         myDelegate.sessionStartFlag = YES;
+    }
+}
+
+-(void)handleLoginFlow
+{
+    if ([User current]) {
+        // Critical error
+        HMGLogError(@"Critical error. Entered handle login flow, but current user already exist");
+        return;
+    }
+    
+    // Check what flow to use.
+    HMLoginFlowType loginFlowType = [HMServer.sh loginFlowType];
+
+    // Normal login flow. Present login screen to the user.
+    if (loginFlowType == HMLoginFlowTypeNormal) {
+        [self dismissSplashScreenAfterAShortAnimation];
+        [self presentLoginScreen];
+        return;
+    }
+    
+    // Auto Login
+    if (loginFlowType == HMLoginFlowTypeAutoGuestLogin) {
+        [self.loginVC loginAsGuest];
     }
 }
 
@@ -1004,6 +1048,11 @@
     [HMServer.sh updateConfiguration:info];
 }
 
+-(void)onUserWantsToRetryLoginAsGuest:(NSNotificationCenter *)notification
+{
+    [self.loginVC loginAsGuest];
+}
+
 -(void)onRequestToShowSideBar:(NSNotificationCenter *)notification
 {
     [self showSideBar];
@@ -1031,6 +1080,19 @@
 -(void)onUserJoin:(NSNotification *)notification
 {
     [self presentJoinUI];
+}
+
+-(void)onUserCreated:(NSNotification *)notification
+{
+    HMLoginFlowType loginFlowType = [HMServer.sh loginFlowType];
+    if (loginFlowType == HMLoginFlowTypeAutoGuestLogin) {
+        if (notification.isReportingError) {
+            [self.splashVC showFailedToConnectMessage];
+            return;
+        }
+        [self dismissSplashScreenAfterAShortAnimation];
+        [self dismissLoginScreen];
+    }
 }
 
 -(void)presentJoinUI

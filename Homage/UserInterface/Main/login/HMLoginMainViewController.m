@@ -369,10 +369,14 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     [self.view endEditing:YES];
+    [self.guiActivityView startAnimating];
+    [self loginAsGuest];
+}
+
+-(void)loginAsGuest
+{
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *guestDictionary = @{@"is_public" : @NO , @"device" : deviceInfo};
-    [self.guiActivityView startAnimating];
-
     [HMServer.sh createUserWithDictionary:guestDictionary];
 }
 
@@ -661,6 +665,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)onUserJoin
 {
+    [self.guiActivityView stopAnimating];
     self.guiGuestButton.hidden = YES;
     self.guiCancelButton.hidden = NO;
     self.myAppDelegate.userJoinFlow = YES;

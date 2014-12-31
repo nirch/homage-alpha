@@ -17,6 +17,6 @@
 -(void)onUserJoin;
 -(void)onPresentLoginCalled;
 -(void)registerLoginAnalyticsForUser:(User *)user;
-
+-(void)loginAsGuest;
 
 @end

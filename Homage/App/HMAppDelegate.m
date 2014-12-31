@@ -383,7 +383,6 @@ NSString* machineName()
 //    } else {
 //        HMGLogDebug(@"Mixpanel already initialized.");
 //    }
-//
 //    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     #endif
 }

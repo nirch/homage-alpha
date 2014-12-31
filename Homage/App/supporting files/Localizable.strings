@@ -157,6 +157,9 @@
 
 /*In app store*/
 "STORE_BUY_BUTTON" = "BUY";
+"STORE_UNAVAILABLE_BUTTON" = "Disabled";
+"STORE_MISSING_PRODUCT_TITLE" = "Missing product";
+"STORE_MISSING_PRODUCT_TEXT" = "The product is temporarily unavailable. Try again later.";
 "STORE_TITLE" = "MONKEY STORE";
 "STORE_STORIES_TITLE" = "STORIES";
 

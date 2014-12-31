@@ -9,6 +9,8 @@
 #import "HMAppStore.h"
 #import <StoreKit/StoreKit.h>
 #import "HMNotificationCenter.h"
+#import "HMServer+AppConfig.h"
+#import "DB.h"
 
 @interface HMAppStore()
 
@@ -20,12 +22,48 @@
 
 @implementation HMAppStore
 
+-(NSArray *)allProductsIdentifiers
+{
+    //NSMutableArray *products = [NSMutableArray new];
+    
+    // Products prefix
+   // NSString *prefix = [HMServer.sh pro]
+    
+    // Bundle
+    
+    // Add bundle
+    return nil;
+}
+
+-(NSString *)productsPrefix
+{
+    return [HMServer.sh productsPrefix];
+}
+
 -(void)requestInfo
 {
     NSSet *productIdentifiers = [NSSet setWithObjects:@"54919516454c61f4080000e5", @"54902e1014aa8e2015000c41", nil];
     self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
     self.productsRequest.delegate = self;
     [self.productsRequest start];
+}
+
+-(NSString *)bundleProductID
+{
+    NSString *prefix = [self productsPrefix];
+    NSString *campaignID = [HMServer.sh campaignID];
+    return [NSString stringWithFormat:@"%@_%@", prefix, campaignID];
+}
+
+-(NSArray *)storiesProductID
+{
+//    NSMutableArray *pids = [NSMutableArray new];
+//    NSArray *premiumStories = [Story allPremiumStories];
+//    for (Story *story in premiumStories) {
+//        [pids addObject:story.productID];
+//    }
+//    return pids;
+    return nil;
 }
 
 #pragma mark - SKProductsRequestDelegate

@@ -9,7 +9,7 @@
 #import "NSNotificationCenter+Utils.h"
 #import "NSNotification+Utils.h"
 
-// General application states.
+// General application states and UI.
 #define HM_NOTIFICATION_APPLICATION_STARTED @"Application Started"
 
 #define HM_NOTIFICATION_UI_REQUEST_TO_SHOW_SIDE_BAR @"Show Side Bar"
@@ -18,6 +18,9 @@
 #define HM_NOTIFICATION_UI_SIDE_BAR_HIDDEN @"Hidden Side Bar"
 #define HM_NOTIFICATION_UI_RENDERING_BAR_SHOWN @"Rendering Bar Shown"
 #define HM_NOTIFICATION_UI_RENDERING_BAR_HIDDEN @"Rendering Bar Hidden"
+
+#define HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST  @"user retries login as guest"
+
 
 // Fetches from the REST API.
 #define HM_NOTIFICATION_SERVER_USER_CREATION        @"Server New User"

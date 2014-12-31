@@ -398,7 +398,8 @@
     NSPredicate *storyPredicate = [NSPredicate predicateWithFormat:@"story=%@", self.story];
     NSPredicate *notSameUser = [NSPredicate predicateWithFormat:@"user!=%@" , [User current]];
     NSPredicate *hidePredicate = [NSPredicate predicateWithFormat:@"grade!=%d" , HM_EXCLUDE_GRADE];
-    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate,notSameUser,hidePredicate]];
+    NSPredicate *statusPredicate = [NSPredicate predicateWithFormat:@"status=%@" , @(HMGRemakeStatusDone)];
+    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[storyPredicate, notSameUser, hidePredicate, statusPredicate]];
     
     fetchRequest.predicate = compoundPredicate;
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];

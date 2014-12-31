@@ -110,8 +110,8 @@
                     shareSuccess:completed
                             info:shareBundle];
         
-        // Mixpanel report.
-        if (completed) {
+        // Report to mixpanel
+        if (activityType) {
             NSDictionary *trackProperties = @{
                                               @"story" : shareBundle[K_STORY_NAME] ,
                                               @"share_method" : activityType ,

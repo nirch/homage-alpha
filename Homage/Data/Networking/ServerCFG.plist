@@ -8,14 +8,18 @@
 	<string>http</string>
 	<key>port</key>
 	<string>80</string>
+	<key>bucket_name</key>
+	<string>homagetest</string>
 	<key>prod_host</key>
 	<string>homage-server-app-prod.elasticbeanstalk.com</string>
 	<key>prod_protocol</key>
 	<string>http</string>
 	<key>prod_port</key>
 	<string>80</string>
+	<key>prod_bucket_name</key>
+	<string>homageapp</string>
 	<key>stories_videos_caching</key>
-	<false/>
+	<true/>
 	<key>stories_videos_caching_attempt_interval</key>
 	<string>1800</string>
 	<key>stories_videos_caching_limit</key>

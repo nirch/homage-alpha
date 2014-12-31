@@ -9,6 +9,7 @@
 #import "HMAWS3Client.h"
 #import "HMUploadS3Worker.h"
 #import "Mixpanel.h"
+#import "HMServer.h"
 
 @interface HMAWS3Client()
 
@@ -97,7 +98,7 @@
     
     // The upload request.
     AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-    uploadRequest.bucket = BUCKET_NAME;
+    uploadRequest.bucket = HMServer.sh.bucketName;
     uploadRequest.body = sourceURL;
     uploadRequest.key = s3worker.destination;
     uploadRequest.metadata = s3worker.metaData;

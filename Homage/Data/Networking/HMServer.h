@@ -48,6 +48,9 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(void)updateServerWithCurrentUser:(NSString *)userID;
 -(void)updateConfiguration:(NSDictionary *)info;
 
+#pragma mark - bucket name
+@property (nonatomic) NSString *bucketName;
+
 #pragma mark - App Store & In app purchases
 @property (nonatomic, readonly) HMAppStore *appStore;
 

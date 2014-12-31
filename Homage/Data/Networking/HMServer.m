@@ -222,6 +222,7 @@
     if (IS_TEST_APP) {
         // Use test server on test apps
         // (even on "Release" compilation)
+        self.bucketName = self.cfg[@"bucket_name"];
         port = self.cfg[@"port"];
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];
@@ -230,6 +231,7 @@
     } else {
         // Release app for production.
         // Use production server urls and settings
+        self.bucketName = self.cfg[@"prod_bucket_name"];
         port = self.cfg[@"prod_port"];
         protocol = self.cfg[@"prod_protocol"];
         host = self.cfg[@"prod_host"];
@@ -238,6 +240,7 @@
     }
     #else
         // Just debugging the app. Use test server.
+        self.bucketName = self.cfg[@"bucket_name"];
         port = self.cfg[@"port"];
         protocol = self.cfg[@"protocol"];
         host = self.cfg[@"host"];

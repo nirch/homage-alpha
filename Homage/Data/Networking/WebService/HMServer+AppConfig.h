@@ -15,8 +15,8 @@
 
 #pragma mark - Login
 typedef NS_ENUM(NSInteger, HMLoginFlowType) {
-    HMLoginFlowTypeNormal,              // Login screen. Allows user email, facebook or guest login.
-    HMLoginFlowTypeGuestOnly            // Skips login screen (Auto Login as guest)
+    HMLoginFlowTypeNormal,                  // Login screen. Allows user email, facebook or guest login.
+    HMLoginFlowTypeAutoGuestLogin           // Skips login screen (Auto Login as guest)
 };
 
 /**
@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
  */
 -(BOOL)shouldShowFirstSceneContextMessage;
 
+#pragma mark - Campaign
 /**
  *  the campaign_id set for this application.
  *
@@ -56,12 +57,14 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
  */
 -(NSString *)campaignID;
 
+#pragma mark - Store
+-(NSString *)productsPrefix;
 
 /**
  *  Setting determining if the upload manager reports start/finished uploads
  *
  *
- *  @return <#return value description#>
+ *  @return YES if should report to server on start/finished uploads.
  */
 -(BOOL)shouldUploaderReportUploads;
 
@@ -78,7 +81,5 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
  *  @return YES if set to hide premium stories (NO by default).
  */
 -(BOOL)shouldHidePremiumStories;
-
-
 
 @end

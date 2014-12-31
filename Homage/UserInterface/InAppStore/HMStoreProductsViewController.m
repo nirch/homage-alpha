@@ -115,7 +115,7 @@
 -(void)initAppStore
 {
     self.appStore = [HMAppStore new];
-    [self.appStore requestInfo];
+    //[self.appStore requestInfoForProducts];
 }
 
 #pragma mark - NSFetchedResultsController
@@ -184,9 +184,25 @@
 -(void)configureBundleCell:(HMStoreProductCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     SKProduct *product = [self.appStore productForIdentifier:[HMServer.sh campaignID]];
-    cell.guiTitle.text = product.localizedTitle;
-    cell.guiText.text = product.localizedDescription;
-    cell.guiPrice.text = product.price.stringValue;
+    if (product) {
+        cell.guiTitle.text = product.localizedTitle;
+        [cell.guiBuyButton setTitle:LS(@"STORE_BUY_BUTTON") forState:UIControlStateNormal];
+        cell.guiText.text = product.localizedDescription;
+        cell.guiPrice.text = product.price.stringValue;
+        cell.guiText.alpha = 1.0;
+        cell.guiTitle.alpha = 1.0;
+        cell.guiImage.alpha = 1.0;
+        cell.guiBuyButton.alpha = 1.0;
+    } else {
+        cell.guiTitle.text = LS(@"STORE_MISSING_PRODUCT_TITLE");
+        [cell.guiBuyButton setTitle:LS(@"STORE_UNAVAILABLE_BUTTON") forState:UIControlStateNormal];
+        cell.guiText.text = LS(@"STORE_MISSING_PRODUCT_TEXT");
+        cell.guiPrice.text = @"";
+        cell.guiText.alpha = 0.2;
+        cell.guiTitle.alpha = 0.2;
+        cell.guiImage.alpha = 0.2;
+        cell.guiBuyButton.alpha = 0.2;
+    }
 }
 
 -(void)configureStoryCell:(HMStoreProductCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
@@ -194,9 +210,26 @@
     Story *story = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:indexPath.item inSection:0]];
     
     SKProduct *product = [self.appStore productForIdentifier:story.sID];
-    cell.guiTitle.text = product.localizedTitle;
-    cell.guiText.text = product.localizedDescription;
-    cell.guiPrice.text = product.price.stringValue;
+    
+    if (product) {
+        cell.guiTitle.text = product.localizedTitle;
+        [cell.guiBuyButton setTitle:LS(@"STORE_BUY_BUTTON") forState:UIControlStateNormal];
+        cell.guiText.text = product.localizedDescription;
+        cell.guiText.alpha = 1.0;
+        cell.guiPrice.text = product.price.stringValue;
+        cell.guiTitle.alpha = 1.0;
+        cell.guiImage.alpha = 1.0;
+        cell.guiBuyButton.alpha = 1.0;
+    } else {
+        cell.guiTitle.text = LS(@"STORE_MISSING_PRODUCT_TITLE");
+        [cell.guiBuyButton setTitle:LS(@"STORE_UNAVAILABLE_BUTTON") forState:UIControlStateNormal];
+        cell.guiText.text = LS(@"STORE_MISSING_PRODUCT_TEXT");
+        cell.guiPrice.text = @"";
+        cell.guiText.alpha = 0.2;
+        cell.guiTitle.alpha = 0.2;
+        cell.guiImage.alpha = 0.2;
+        cell.guiBuyButton.alpha = 0.2;
+    }
 }
 
 

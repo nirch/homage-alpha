@@ -9,12 +9,21 @@
 #import "HMSplashViewController.h"
 #import "HMToonBGView.h"
 #import "HMStyle.h"
+#import "HMRegularFontLabel.h"
+#import "HMBoldFontButton.h"
+#import "HMNotificationCenter.h"
 
 @interface HMSplashViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
 @property (weak, nonatomic) IBOutlet HMToonBGView *guiBGView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiFailedToConnectLabel;
+@property (weak, nonatomic) IBOutlet HMBoldFontButton *guiTryAgainButton;
+
+
+
 
 @end
 
@@ -47,5 +56,27 @@
 {
     [self.guiActivity stopAnimating];
 }
+
+-(void)showFailedToConnectMessage
+{
+    [self.guiActivity stopAnimating];
+    self.guiFailedToConnectLabel.hidden = NO;
+    self.guiTryAgainButton.hidden = NO;
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedTryAgain:(id)sender
+{
+    self.guiTryAgainButton.hidden = YES;
+    self.guiFailedToConnectLabel.hidden = YES;
+    [self.guiActivity startAnimating];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
 
 @end
