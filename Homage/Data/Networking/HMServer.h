@@ -9,7 +9,6 @@
 #import <AFNetworking/AFNetworking.h>
 
 @class HMParser;
-@class HMAppStore;
 
 #define ERROR_DOMAIN_NETWORK @"Network error"
 
@@ -50,9 +49,6 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 
 #pragma mark - bucket name
 @property (nonatomic) NSString *bucketName;
-
-#pragma mark - App Store & In app purchases
-@property (nonatomic, readonly) HMAppStore *appStore;
 
 #pragma mark - GET requests
 ///

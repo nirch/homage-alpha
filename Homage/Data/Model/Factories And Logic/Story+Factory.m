@@ -35,5 +35,21 @@
     return stories;
 }
 
++(NSArray *)allActivePremiumStoriesInContext:(NSManagedObjectContext  *)context
+{
+    // Create fetch request
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_STORY];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND isPremium=%@", @(YES), @(YES)];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"orderID" ascending:YES]];
+    
+    // Perform the fetch.
+    NSError *error;
+    NSArray *stories = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) return nil;
+    
+    // Return the array of story objects.
+    return stories;
+}
+
 
 @end

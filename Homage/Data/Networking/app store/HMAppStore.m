@@ -17,54 +17,124 @@
 @property (nonatomic) SKProductsRequest *productsRequest;
 @property (nonatomic) NSArray *products;
 @property (nonatomic) NSMutableDictionary *productsByID;
+@property (nonatomic) BOOL isAlreadyListeningToTransactions;
 
 @end
 
 @implementation HMAppStore
 
--(NSArray *)allProductsIdentifiers
+-(id)init
 {
-    //NSMutableArray *products = [NSMutableArray new];
-    
-    // Products prefix
-   // NSString *prefix = [HMServer.sh pro]
-    
-    // Bundle
-    
-    // Add bundle
-    return nil;
+    self = [super init];
+    if (self) {
+        self.isAlreadyListeningToTransactions = NO;
+    }
+    return self;
 }
 
--(NSString *)productsPrefix
+-(void)dealloc
+{
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+}
+
+#pragma mark - Products identifiers
++(NSString *)productsPrefix
 {
     return [HMServer.sh productsPrefix];
 }
 
++(NSString *)productIdentifierForID:(NSString *)sID
+{
+    return [NSString stringWithFormat:@"%@_%@", [HMAppStore productsPrefix], sID];
+}
+
++(NSString *)bundleProductID
+{
+    NSString *campaignID = [HMServer.sh campaignID];
+    return [HMAppStore productIdentifierForID:campaignID];
+}
+
++(NSSet *)allProductsIdentifiers
+{
+    NSMutableSet *pids = [NSMutableSet new];
+    
+    // Add the identifier of the full bundle.
+    [pids addObject:[HMAppStore bundleProductID]];
+    
+    // Add identifiers for all the stories.
+    for (Story *story in [Story allActivePremiumStoriesInContext:DB.sh.context]) {
+        [pids addObject:story.productIdentifier];
+    }
+    return pids;
+}
+
+#pragma mark - Purchases
++(void)markProductAsPurchasedWithIdentifier:(NSString *)identifier
+{
+    [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:identifier];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)didBuyProductWithIdentifier:(NSString *)identifier
+{
+    NSNumber *purchased = [[NSUserDefaults standardUserDefaults] objectForKey:identifier];
+    if (purchased) return YES;
+    return NO;
+}
+
++(BOOL)didUnlockBundle
+{
+    NSString *productIdentifier = [HMAppStore bundleProductID];
+    return [HMAppStore didBuyProductWithIdentifier:productIdentifier];
+}
+
++(BOOL)didUnlockStoryWithID:(NSString *)storyID
+{
+    // If bundle was purchased, all stories are considered payed for.
+    if ([HMAppStore didUnlockBundle]) return YES;
+    
+    // Check if the specific story was payed for.
+    NSString *productIdentifier = [HMAppStore productIdentifierForID:storyID];
+    return [HMAppStore didBuyProductWithIdentifier:productIdentifier];
+}
+
+
+#pragma mark - StoreKit
 -(void)requestInfo
 {
-    NSSet *productIdentifiers = [NSSet setWithObjects:@"54919516454c61f4080000e5", @"54902e1014aa8e2015000c41", nil];
+    NSSet *productIdentifiers = [HMAppStore allProductsIdentifiers];
     self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
     self.productsRequest.delegate = self;
     [self.productsRequest start];
 }
 
--(NSString *)bundleProductID
+-(void)restorePurchases
 {
-    NSString *prefix = [self productsPrefix];
-    NSString *campaignID = [HMServer.sh campaignID];
-    return [NSString stringWithFormat:@"%@_%@", prefix, campaignID];
+    // Listen to transactions if not already listening
+    if (!self.isAlreadyListeningToTransactions) {
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        self.isAlreadyListeningToTransactions = YES;
+    }
+
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 
--(NSArray *)storiesProductID
+-(void)buyProductWithIdentifier:(NSString *)productIdentifier
 {
-//    NSMutableArray *pids = [NSMutableArray new];
-//    NSArray *premiumStories = [Story allPremiumStories];
-//    for (Story *story in premiumStories) {
-//        [pids addObject:story.productID];
-//    }
-//    return pids;
-    return nil;
+    // Ensure product is relevant.
+    SKProduct *product = self.productsByID[productIdentifier];
+    if (product == nil) return;
+
+    // Listen to transactions if not already listening
+    if (!self.isAlreadyListeningToTransactions) {
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        self.isAlreadyListeningToTransactions = YES;
+    }
+
+    SKPayment * payment = [SKPayment paymentWithProduct:product];
+    [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
+
 
 #pragma mark - SKProductsRequestDelegate
 -(void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
@@ -87,13 +157,104 @@
     }
     
     // Notify about updated info of products
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APP_STORE_PRODUCTS
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APP_STORE_PRODUCTS object:nil];
 }
 
 -(SKProduct *)productForIdentifier:(NSString *)productIdentifier
 {
     return self.productsByID[productIdentifier];
+}
+
+-(BOOL)isRelevantProductIdentifier:(NSString *)productIdentifier
+{
+    if (self.productsByID[productIdentifier]) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - SKPaymentTransactionObserver
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
+{
+    BOOL transactionsUpdate = NO;
+    NSMutableDictionary *transactionsInfo = [NSMutableDictionary new];
+    
+    //
+    // Iterate all the transactions
+    //
+    for (SKPaymentTransaction * transaction in transactions) {
+        // Ignore irrelevant products.
+        if (![self isRelevantProductIdentifier:transaction.payment.productIdentifier]) {
+            continue;
+        }
+
+        // Gather some info about this transaction.
+        NSString *productIdentifier = transaction.payment.productIdentifier;
+        NSDictionary *info = @{
+                               @"transaction":transaction,
+                               @"productIdentifier": productIdentifier,
+                               @"transactionState": @(transaction.transactionState)
+                               };
+        
+        // Log info.
+        HMGLogDebug(@"%@", info);
+
+        // Handle transaction states.
+        switch (transaction.transactionState)
+        {
+            case SKPaymentTransactionStatePurchased:
+                HMGLogDebug(@"TSTATE purchased: %@", transaction.transactionIdentifier);
+                [HMAppStore markProductAsPurchasedWithIdentifier:productIdentifier];
+                transactionsInfo[productIdentifier] = info;
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                transactionsUpdate = YES;
+                break;
+            case SKPaymentTransactionStateFailed:
+                HMGLogDebug(@"TSTATE failed: %@", transaction.transactionIdentifier);
+                transactionsInfo[productIdentifier] = info;
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                transactionsUpdate = YES;
+                break;
+            case SKPaymentTransactionStateRestored:
+                HMGLogDebug(@"TSTATE restored: %@", transaction.transactionIdentifier);
+                [HMAppStore markProductAsPurchasedWithIdentifier:productIdentifier];
+                transactionsInfo[productIdentifier] = info;
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                transactionsUpdate = YES;
+                break;
+            default:
+                break;
+        }
+    };
+
+    // If any of the transactions failed, purchased or restored, notify about it.
+    if (transactionsUpdate) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE
+                                                            object:nil
+                                                          userInfo:transactionsInfo];
+    }
+}
+
+-(void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    if (error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE
+                                                            object:nil
+                                                          userInfo:@{@"error":error}];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed"
+                                   message:[error localizedFailureReason]
+                                                       delegate:nil
+                                              cancelButtonTitle:LS(@"OK")
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+-(void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 @end

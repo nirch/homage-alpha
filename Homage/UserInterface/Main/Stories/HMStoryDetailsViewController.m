@@ -170,9 +170,7 @@
     self.remakesCV.bottomRefreshControl = refreshControl;
     
     // Premium content
-    if (self.story.isPremiumAndLocked && [HMServer.sh supportsInAppPurchases]) {
-        [self.guiRemakeButton setImage:[UIImage imageNamed:@"iconRemakeStoryLocked"] forState:UIControlStateNormal];
-    }
+    [self updateMakeYourOwnButton];
     
     // offset point
     if (IS_IPAD) {
@@ -335,7 +333,6 @@
 }
 
 #pragma mark refreshing remakes
-
 -(void)refetchRemakesForStoryID:(NSString *)storyID page:(NSNumber *)page
 {
     if (!page) page = @1;
@@ -382,6 +379,16 @@
     for (Remake *remake in self.fetchedResultsController.fetchedObjects)
     {
         if (!remake.stillPublic.boolValue) [DB.sh.context deleteObject:remake];
+    }
+}
+
+#pragma mark - Make your own button
+-(void)updateMakeYourOwnButton
+{
+    if (self.story.isPremiumAndLocked && [HMServer.sh supportsInAppPurchases]) {
+        [self.guiRemakeButton setImage:[UIImage imageNamed:@"iconRemakeStoryLocked"] forState:UIControlStateNormal];
+    } else {
+        [self.guiRemakeButton setImage:[UIImage imageNamed:@"remakeInverseBGButton"] forState:UIControlStateNormal];
     }
 }
 
@@ -841,13 +848,8 @@
 -(void)storeDidFinishWithInfo:(NSDictionary *)info
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        // Back from the store.
-        
-        // Just dismiss. Do nothing.
-        if (info == nil) return;
-        
         // Check if user unlocked the current premium story.
-        
+        [self updateMakeYourOwnButton];
     }];
 }
 

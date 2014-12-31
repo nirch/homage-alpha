@@ -13,4 +13,6 @@
     UICollectionViewDelegate
 >
 
+-(void)restorePurchases;
+
 @end

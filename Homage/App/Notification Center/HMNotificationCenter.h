@@ -101,6 +101,7 @@
 
 // App Store
 #define HM_NOTIFICATION_APP_STORE_PRODUCTS           @"app store products"
+#define HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE  @"app store transactions update"
 
 //ADDITIONAL CONFIGURATIONS
 #define HM_NOTIFICATION_SERVER_CONFIG @"additional confiurations"

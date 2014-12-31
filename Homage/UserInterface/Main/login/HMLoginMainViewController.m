@@ -950,6 +950,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(void)onPresentLoginCalled
 {
     [self resetTextFields];
+    self.guiIntroMovieContainerView.alpha = 0;
+    self.guiIntroMovieContainerView.hidden = YES;
     self.guiSignUpView.alpha = 1;
     self.guiSignUpView.hidden = NO;
 }

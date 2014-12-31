@@ -56,15 +56,9 @@
         [self loadCFG];
         [self loadAppDetails];
         [self initSessionManager];
-        [self initAppStore];
         self.urlsCachedInfo = [NSCache new];
     }
     return self;
-}
-
--(void)initAppStore
-{
-    _appStore = [HMAppStore new];
 }
 
 -(void)initSessionManager

@@ -9,6 +9,7 @@
 #import "Story+Logic.h"
 #import "DB.h"
 #import "HMCacheManager.h"
+#import "HMAppStore.h"
 
 @implementation Story (Logic)
 
@@ -131,7 +132,14 @@
     if (purchased) return NO;
     
     // Premium but was not purchased. Locked!
-    return YES;
+    return ![HMAppStore didUnlockStoryWithID:self.sID];
+}
+
+-(NSString *)productIdentifier
+{
+    if (self.isPremium == nil) return nil;
+    if (self.isPremium.boolValue == NO) return nil;
+    return [HMAppStore productIdentifierForID:self.sID];
 }
 
 -(BOOL)usesAudioFilesInRecorder

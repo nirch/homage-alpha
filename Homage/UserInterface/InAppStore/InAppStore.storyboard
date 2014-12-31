@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <segue destination="MbH-nu-84E" kind="embed" id="ThG-Vp-g4J"/>
+                                    <segue destination="MbH-nu-84E" kind="embed" identifier="products segue" id="ThG-Vp-g4J"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" id="9XN-ms-yFr">
@@ -43,12 +43,25 @@
                                             <action selector="onPressedDismissButton:" destination="Ucb-Z3-k9J" eventType="touchUpInside" id="Ctf-62-840"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="G8I-aZ-lDy">
+                                        <rect key="frame" x="183" y="7" width="129" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Restore purchases">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedRestorePurchases:" destination="Ucb-Z3-k9J" eventType="touchUpInside" id="AoT-By-mz4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="guiRestoreButton" destination="G8I-aZ-lDy" id="rRI-AO-YTP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrB-qF-5zQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -145,7 +158,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="o5N-cc-trm" userLabel="Products Collection View">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="o5N-cc-trm" userLabel="Products Collection View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -174,12 +187,15 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="dY4-F9-75o" customClass="HMStoreBuyButton">
                                                     <rect key="frame" x="242" y="133" width="70" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="tintColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" title="BUY">
                                                         <color key="titleColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="onPressedBuyBundleButton:" destination="MbH-nu-84E" eventType="touchUpInside" id="Ljm-Vt-EHc"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description text. Lorem Ipsum. Description text. Lorem Ipsum. Description text. Lorem Ipsum." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7fm-0D-3tB">
                                                     <rect key="frame" x="136" y="35" width="176" height="95"/>
@@ -193,7 +209,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5.99$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tUX-FQ-7YG">
-                                                    <rect key="frame" x="138" y="134" width="56" height="31"/>
+                                                    <rect key="frame" x="138" y="133" width="96" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -240,12 +256,15 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="W1X-cv-Ggj" customClass="HMStoreBuyButton">
                                                     <rect key="frame" x="242" y="15" width="70" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="tintColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" title="BUY">
                                                         <color key="titleColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="onPressedBuyStoryButton:" destination="MbH-nu-84E" eventType="touchUpInside" id="3GR-py-nPn"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description text. Description text. Lorem Ipsum. " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohm-qp-e0L">
                                                     <rect key="frame" x="103" y="18" width="134" height="24"/>

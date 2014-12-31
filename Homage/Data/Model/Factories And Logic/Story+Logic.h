@@ -84,6 +84,13 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 -(BOOL)isPremiumAndLocked;
 
 /**
+ *  <#Description#>
+ *
+ *  @return App store product identifier. If not premium, will return nil.
+ */
+-(NSString *)productIdentifier;
+
+/**
  *  Does at least one of scenes of the story uses audio files in the recorder?
  *
  *  @return YES if at least one of the scenes return usesAudioFilesInRecorder.
