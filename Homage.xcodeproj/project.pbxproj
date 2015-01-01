@@ -17,6 +17,7 @@
 		0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */; };
 		08081FB518D083DA00999068 /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
 		08081FB818D0A9EA00999068 /* close up.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08081FB718D0A9EA00999068 /* close up.ctr */; };
+		0809E6921A5580C700E7DAEE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809E6911A5580C700E7DAEE /* StoreKit.framework */; };
 		081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 081237941882CB6100DA5D23 /* ServerCFG.plist */; };
 		081237D31882DA3D00DA5D23 /* HMServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 081237D21882DA3D00DA5D23 /* HMServer.m */; };
 		081CDB1B19D97E8D00723609 /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
@@ -487,6 +488,7 @@
 		08081FB318D083DA00999068 /* HMExtractController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMExtractController.h; sourceTree = "<group>"; };
 		08081FB418D083DA00999068 /* HMExtractController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMExtractController.mm; sourceTree = "<group>"; };
 		08081FB718D0A9EA00999068 /* close up.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up.ctr"; path = "App/close up.ctr"; sourceTree = "<group>"; };
+		0809E6911A5580C700E7DAEE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		081237941882CB6100DA5D23 /* ServerCFG.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ServerCFG.plist; path = Networking/ServerCFG.plist; sourceTree = "<group>"; };
 		081237D11882DA3D00DA5D23 /* HMServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMServer.h; path = Networking/HMServer.h; sourceTree = "<group>"; };
 		081237D21882DA3D00DA5D23 /* HMServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMServer.m; path = Networking/HMServer.m; sourceTree = "<group>"; };
@@ -737,7 +739,6 @@
 		08FA97351A4634E2009B998C /* HMStoreBuyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreBuyButton.h; sourceTree = "<group>"; };
 		08FA97361A4634E2009B998C /* HMStoreBuyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoreBuyButton.m; sourceTree = "<group>"; };
 		08FA97391A46C01E009B998C /* HMStoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreDelegate.h; sourceTree = "<group>"; };
-		08FA973A1A46E6CC009B998C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		08FB4D531A40771200711835 /* Model180.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model180.xcdatamodel; sourceTree = "<group>"; };
 		08FB4D551A40C61400711835 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
 		08FB4D561A40C61400711835 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
@@ -879,6 +880,7 @@
 				086F30861A529B7100430D81 /* CoreMotion.framework in Frameworks */,
 				086F30871A529B7100430D81 /* CoreGraphics.framework in Frameworks */,
 				086F30881A529B7100430D81 /* UIKit.framework in Frameworks */,
+				0809E6921A5580C700E7DAEE /* StoreKit.framework in Frameworks */,
 				086F30891A529B7100430D81 /* Foundation.framework in Frameworks */,
 				086F308A1A529B7100430D81 /* libPods.a in Frameworks */,
 			);
@@ -944,7 +946,7 @@
 		0806FA0E18828AEB007514BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08FA973A1A46E6CC009B998C /* StoreKit.framework */,
+				0809E6911A5580C700E7DAEE /* StoreKit.framework */,
 				08333CD31A371AE000C27B56 /* AmazonInsightsSDK.framework */,
 				0875E5E219CF1DAE001E1F2D /* libicucore.dylib */,
 				08651F1D19EC107C00EF12FA /* CoreData.framework */,
@@ -1953,6 +1955,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 086F30B31A529B7100430D81 /* Build configuration list for PBXNativeTarget "Monkey Dance" */;
 			buildPhases = (
+				0871C5971A5550A3002A51FC /* Homage pre build scripts */,
 				086F2FF41A529B7100430D81 /* Sources */,
 				086F307C1A529B7100430D81 /* Frameworks */,
 				086F30B11A529B7100430D81 /* Copy Pods Resources */,
@@ -2007,10 +2010,18 @@
 							com.apple.GameCenter = {
 								enabled = 0;
 							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
 						};
 					};
 					086F2FF31A529B7100430D81 = {
 						DevelopmentTeam = 56F7YSPHC5;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					088D5FB519EC015A00075C4A = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -2166,6 +2177,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run daa34917843cd9e52b65a68cec43efac16fb680a";
+		};
+		0871C5971A5550A3002A51FC /* Homage pre build scripts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Homage pre build scripts";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "python ${SRCROOT}/tools/build/prebuild.py \\\n    \"${SRCROOT}\"\\\n    \"${TARGET_NAME}\"\\\n    \"${EFFECTIVE_PLATFORM_NAME}\"\\\n    \"${INFOPLIST_FILE}\"\\\n    \"${CONFIGURATION}\"\\";
 		};
 		08FAAB8E19E4515400E923EA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2757,8 +2782,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
@@ -2907,7 +2932,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",

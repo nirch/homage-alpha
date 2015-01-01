@@ -352,7 +352,7 @@ NSString* machineName()
     if ([deviceModel isEqualToString:@"iPhone3,1"]) {
         _slowDeviceFlag = @YES;
     }
-    
+        
     return [_slowDeviceFlag boolValue];
 }
 

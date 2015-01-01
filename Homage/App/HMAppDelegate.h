@@ -8,7 +8,7 @@
 
 #import "HMMainGUIProtocol.h"
 
-#define IS_TEST_APP YES
+#define IS_TEST_APP NO
 
 typedef NS_ENUM(NSInteger, HMPushNotificationType) {
     HMPushMovieReady,

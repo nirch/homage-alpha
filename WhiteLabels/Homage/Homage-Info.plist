@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.8.11</string>
+	<string>1.8.14</string>
 	<key>FacebookAppID</key>
 	<string>447743458659084</string>
 	<key>FacebookDisplayName</key>
@@ -40,10 +40,9 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>DINOT-CondBold.otf</string>
-		<string>jilkyway.otf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
-	<true/>
+	<false/>
 	<key>UIMainStoryboardFile</key>
 	<string>Storyboard</string>
 	<key>UIMainStoryboardFile~ipad</key>
