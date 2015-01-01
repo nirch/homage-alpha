@@ -1211,24 +1211,36 @@
 {
     NSNumber *nextSceneID = [self.remake nextReadyForFirstRetakeSceneID];
     Scene *nextScene = [self.remake.story findSceneWithID:nextSceneID];
+    Scene *finishedScene = [self.remake.story findSceneWithID:sceneID];
+
+    NSMutableDictionary *info = [NSMutableDictionary new];
+    info[@"text"] = nextScene.context;
+    info[@"sceneID"] = sceneID;
+    info[@"nextSceneID"] = nextSceneID;
+    if (finishedScene.postSceneAudio) {
+        info[@"audioMessage"] = finishedScene.postSceneAudio;
+    }
     
     NSString *eventName = [NSString stringWithFormat:@"REFinishedScene%ld" , sceneID.longValue];
     [[Mixpanel sharedInstance] track:eventName properties:@{@"story" : self.remake.story.name , @"scene_id" : [NSString stringWithFormat:@"%ld" , sceneID.longValue], @"remake_id" : self.remake.sID}];
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedScene
                        checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss
-                                          info:@{@"text":nextScene.context,
-                                                 @"sceneID":sceneID,
-                                                 @"nextSceneID":nextSceneID
-                                                 }
+                                          info:info
      ];
 }
 
 -(void)showFinishedAllScenesMessage
 {
+    NSDictionary *info = nil;
+    Scene *finishedScene = [self.remake.story findSceneWithID:self.currentSceneID];
+    if (finishedScene.postSceneAudio) {
+        info = @{@"audioMessage":finishedScene.postSceneAudio};
+    }
+    
     _recorderState = HMRecorderStateFinishedAllScenesMessage;
     [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeFinishedAllScenes
                        checkNextStateOnDismiss:YES
-                                          info:nil
+                                          info:info
      ];
 }
 

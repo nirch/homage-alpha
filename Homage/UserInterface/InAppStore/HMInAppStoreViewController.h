@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) id<HMStoreDelegate>delegate;
 
++(HMInAppStoreViewController *)storeVC;
 +(HMInAppStoreViewController *)storeVCForStory:(Story *)story;
 
 @end

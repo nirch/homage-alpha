@@ -1143,7 +1143,7 @@
                             </view>
                             <view contentMode="scaleToFill" id="dl3-qC-m7J" userLabel="buttons view">
                                 <rect key="frame" x="0.0" y="64" width="220" height="508"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nR4-uX-sgD" customClass="HMRegularFontButton">
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="54"/>
@@ -1244,6 +1244,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onPressedMonkeyShop:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="YN8-BL-26U"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

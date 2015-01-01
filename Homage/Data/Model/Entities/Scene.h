@@ -2,7 +2,7 @@
 //  Scene.h
 //  Homage
 //
-//  Created by Aviv Wolf on 12/17/14.
+//  Created by Aviv Wolf on 12/31/14.
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
@@ -16,17 +16,18 @@
 @property (nonatomic, retain) NSString * context;
 @property (nonatomic, retain) NSString * contourLocalURL;
 @property (nonatomic, retain) NSString * contourRemoteURL;
+@property (nonatomic, retain) NSString * directionAudioURL;
 @property (nonatomic, retain) NSDecimalNumber * duration;
 @property (nonatomic, retain) NSNumber * focusPointX;
 @property (nonatomic, retain) NSNumber * focusPointY;
 @property (nonatomic, retain) NSNumber * isSelfie;
+@property (nonatomic, retain) NSString * sceneAudioURL;
 @property (nonatomic, retain) NSString * script;
 @property (nonatomic, retain) NSNumber * sID;
 @property (nonatomic, retain) NSString * silhouetteURL;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * videoURL;
-@property (nonatomic, retain) NSString * sceneAudioURL;
-@property (nonatomic, retain) NSString * directionAudioURL;
+@property (nonatomic, retain) NSString * postSceneAudio;
 @property (nonatomic, retain) Story *story;
 
 @end

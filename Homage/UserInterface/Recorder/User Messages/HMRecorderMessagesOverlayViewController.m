@@ -17,6 +17,8 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMRecorderPreviewViewController.h"
 #import "mixpanel.h"
+#import <AVFoundation/AVFoundation.h>
+#import "HMCacheManager.h"
 
 @interface HMRecorderMessagesOverlayViewController ()
 
@@ -52,6 +54,10 @@
 @property (nonatomic, readonly) BOOL shouldCheckNextStateOnDismiss;
 @property (nonatomic) BOOL shouldDismissOnDecision;
 @property (nonatomic, readonly) NSDictionary *info;
+
+// message audio player
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+
 
 @end
 
@@ -195,6 +201,27 @@
     }
 }
 
+#pragma mark - Playing audio messages
+-(void)playAudioMessage:(NSString *)audioMessageURL;
+{
+    if (audioMessageURL == nil) return;
+    NSURL *soundURL = [HMCacheManager.sh urlForAudioResource:audioMessageURL];
+    
+    NSError *error;
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:&error];
+    [self.audioPlayer prepareToPlay];
+    [self.audioPlayer play];
+    self.audioPlayer.delegate = self;
+}
+
+-(void)stopAudioMessagePlayback
+{
+    if (!self.audioPlayer) return;
+    self.audioPlayer.delegate = nil;
+    [self.audioPlayer stop];
+    self.audioPlayer = nil;
+}
+
 #pragma mark - Selecting and showing messages
 -(void)showMessageOfType:(HMRecorderMessagesType)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
@@ -212,9 +239,13 @@
     self.guiAreYouSureToRetakeContainer.hidden = YES;
     
     self.guiBlurredView.alpha = 1;
-    //self.guiBlurredView.alpha = info[@"blur alpha"] ? [info[@"blur alpha"] doubleValue] : 1;
     
-    //THE HAND!!
+    // Play audio if required
+    if (info[@"audioMessage"]) {
+        [self playAudioMessage:info[@"audioMessage"]];
+    }
+    
+    // Show a message
     if (self.messageType == HMRecorderMessagesTypeGeneral) {
 
         //
@@ -339,12 +370,20 @@
     [HMServer.sh renderRemakeWithID:remakeID takeIDS:takesIDS];
 }
 
+#pragma mark - AVAudioPlayerDelegate
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    // Do something here (if required) after audio message finished playback.
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
 - (IBAction)onPressedDismissButton:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
     if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes)
     {
         sender.enabled = NO;
@@ -378,6 +417,8 @@
 
 - (IBAction)onPressedDismissAndDontShowIntroMessageAgainButton:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
     User.current.skipRecorderTutorial = @YES;
     [DB.sh save];
@@ -386,6 +427,8 @@
 
 - (IBAction)onPressedDismissAndDontShowBadBackgroundPopoup:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized background status":@YES}];
     User.current.disableBadBackgroundPopup = @YES;
     sender.hidden = YES;
@@ -397,6 +440,8 @@
 //
 - (IBAction)onPressedRetakeLastSceneButton:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
     Remake *remake = [self.remakerDelegate remake];
     NSString *sceneID = [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue];
     NSString *storyName = remake.story.name;
@@ -422,6 +467,8 @@
 
 - (IBAction)onPressedPreviewLastSceneButton:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
     [[Mixpanel sharedInstance] track:@"RESeePreview" properties:@{@"scene_number" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
     Remake *remake = [self.remakerDelegate remake];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
@@ -434,6 +481,8 @@
 
 - (IBAction)onPressedOopsDontRetakeButton:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
     [[Mixpanel sharedInstance] track:@"REOopsNope" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
     
     if (self.shouldDismissOnDecision) {
@@ -451,6 +500,8 @@
 
 - (IBAction)onPressedYeahRetakeThisScene:(UIButton *)sender
 {
+    [self stopAudioMessagePlayback];
+
      Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"YeahRetakeThisScene" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
     if (self.shouldDismissOnDecision) {
@@ -470,9 +521,9 @@
 
 - (IBAction)onPressedSeePreviewButton:(id)sender
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-   
+    [self stopAudioMessagePlayback];
     
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     Remake *remake = [self.remakerDelegate remake];
     [mixpanel track:@"RESeePreview" properties:@{@"scene_id" : [NSString stringWithFormat:@"%ld" , [self.remakerDelegate currentSceneID].longValue] , @"story" : [self.remakerDelegate remake].story.name, @"remake_id": [self.remakerDelegate remake].sID}];
     Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];

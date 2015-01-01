@@ -7,6 +7,7 @@
 //
 
 #import "HMRecorderChildInterface.h"
+#import <AVFoundation/AVFoundation.h>
 
 typedef NS_ENUM(NSInteger, HMRecorderMessagesType) {
     HMRecorderMessagesTypeGeneral,
@@ -18,7 +19,8 @@ typedef NS_ENUM(NSInteger, HMRecorderMessagesType) {
 };
 
 @interface HMRecorderMessagesOverlayViewController : UIViewController<
-    HMRecorderChildInterface
+    HMRecorderChildInterface,
+    AVAudioPlayerDelegate
 >
 
 ///

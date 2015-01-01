@@ -151,7 +151,6 @@
 		086F30231A529B7100430D81 /* MyManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF791885351800A6EF5E /* MyManagedDocument.m */; };
 		086F30241A529B7100430D81 /* HMStoreSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97321A4631DC009B998C /* HMStoreSectionView.m */; };
 		086F30251A529B7100430D81 /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE31890458E0040504D /* HMVideoCameraViewController.m */; };
-		086F30261A529B7100430D81 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 087491601A42161A0062704B /* Scene.m */; };
 		086F30271A529B7100430D81 /* HMGoogleAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB4D5F1A40C61D00711835 /* HMGoogleAPI.m */; };
 		086F30281A529B7100430D81 /* HMRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE51890458E0040504D /* HMRecorderViewController.m */; };
 		086F30291A529B7100430D81 /* HMToonBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0842A63A19F7EF43002F0D8B /* HMToonBGView.m */; };
@@ -284,7 +283,6 @@
 		086F30AE1A529B7100430D81 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0855D36F1A0A68BA004830AE /* Settings.bundle */; };
 		086F30AF1A529B7100430D81 /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 267A640319532030003DFFEA /* whatsapp@2x.png */; };
 		086F30B01A529B7100430D81 /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
-		087491611A42161A0062704B /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 087491601A42161A0062704B /* Scene.m */; };
 		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
 		0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
@@ -376,6 +374,8 @@
 		08F966B119F5573600247161 /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966AF19F5573600247161 /* HMAWS3Client.m */; };
 		08F966B419F5575100247161 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966B319F5575100247161 /* HMUploadS3Worker.m */; };
 		08F966B519F5575100247161 /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F966B319F5575100247161 /* HMUploadS3Worker.m */; };
+		08F9EBB51A5457A6000CFCAD /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
+		08F9EBB61A5457A6000CFCAD /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
 		08FA971F1A45B8C6009B998C /* InAppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FA971E1A45B8C6009B998C /* InAppStore.storyboard */; };
 		08FA97231A45D44B009B998C /* HMInAppStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */; };
 		08FA97271A45E4F2009B998C /* HMParentalControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97261A45E4F2009B998C /* HMParentalControlViewController.m */; };
@@ -596,8 +596,6 @@
 		086D949E188701EA0086C565 /* HMServer+Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Stories.m"; sourceTree = "<group>"; };
 		086F30B61A529B7100430D81 /* Monkey Dance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Monkey Dance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		086F30B81A529CA500430D81 /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Homage-Info.plist"; sourceTree = "<group>"; };
-		0874915F1A42161A0062704B /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
-		087491601A42161A0062704B /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_LocalStorage_Tests.m; sourceTree = "<group>"; };
@@ -722,6 +720,9 @@
 		08F966AF19F5573600247161 /* HMAWS3Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAWS3Client.m; sourceTree = "<group>"; };
 		08F966B219F5575100247161 /* HMUploadS3Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUploadS3Worker.h; sourceTree = "<group>"; };
 		08F966B319F5575100247161 /* HMUploadS3Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUploadS3Worker.m; sourceTree = "<group>"; };
+		08F9EBAE1A545680000CFCAD /* Model181.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model181.xcdatamodel; sourceTree = "<group>"; };
+		08F9EBB31A5457A6000CFCAD /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		08F9EBB41A5457A6000CFCAD /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		08FA971E1A45B8C6009B998C /* InAppStore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InAppStore.storyboard; sourceTree = "<group>"; };
 		08FA97211A45D44B009B998C /* HMInAppStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMInAppStoreViewController.h; sourceTree = "<group>"; };
 		08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMInAppStoreViewController.m; sourceTree = "<group>"; };
@@ -1402,8 +1403,8 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				0874915F1A42161A0062704B /* Scene.h */,
-				087491601A42161A0062704B /* Scene.m */,
+				08F9EBB31A5457A6000CFCAD /* Scene.h */,
+				08F9EBB41A5457A6000CFCAD /* Scene.m */,
 				08FB4D681A40D6AD00711835 /* Story.h */,
 				08FB4D691A40D6AD00711835 /* Story.m */,
 				08EA81431A21898A00742251 /* Footage.h */,
@@ -2280,7 +2281,6 @@
 				0840FF7A1885351800A6EF5E /* MyManagedDocument.m in Sources */,
 				08FA97331A4631DC009B998C /* HMStoreSectionView.m in Sources */,
 				08455FF91890458E0040504D /* HMVideoCameraViewController.m in Sources */,
-				087491611A42161A0062704B /* Scene.m in Sources */,
 				08FB4D601A40C61D00711835 /* HMGoogleAPI.m in Sources */,
 				08455FFB1890458E0040504D /* HMRecorderViewController.m in Sources */,
 				0842A63B19F7EF43002F0D8B /* HMToonBGView.m in Sources */,
@@ -2361,6 +2361,7 @@
 				084E5339189209D700D96258 /* HMServer+Texts.m in Sources */,
 				081E398019FD6CDC00990F50 /* HMRemakeScreenViewController.m in Sources */,
 				268A380F1974AE650016C59C /* User.m in Sources */,
+				08F9EBB51A5457A6000CFCAD /* Scene.m in Sources */,
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
 				080120171A08C045002F10B2 /* HMNavigationController.m in Sources */,
 				268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -2422,7 +2423,6 @@
 				086F30231A529B7100430D81 /* MyManagedDocument.m in Sources */,
 				086F30241A529B7100430D81 /* HMStoreSectionView.m in Sources */,
 				086F30251A529B7100430D81 /* HMVideoCameraViewController.m in Sources */,
-				086F30261A529B7100430D81 /* Scene.m in Sources */,
 				086F30271A529B7100430D81 /* HMGoogleAPI.m in Sources */,
 				086F30281A529B7100430D81 /* HMRecorderViewController.m in Sources */,
 				086F30291A529B7100430D81 /* HMToonBGView.m in Sources */,
@@ -2503,6 +2503,7 @@
 				086F30741A529B7100430D81 /* HMServer+Texts.m in Sources */,
 				086F30751A529B7100430D81 /* HMRemakeScreenViewController.m in Sources */,
 				086F30761A529B7100430D81 /* User.m in Sources */,
+				08F9EBB61A5457A6000CFCAD /* Scene.m in Sources */,
 				086F30771A529B7100430D81 /* HMExtractController.mm in Sources */,
 				086F30781A529B7100430D81 /* HMNavigationController.m in Sources */,
 				086F30791A529B7100430D81 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -3106,6 +3107,7 @@
 		0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				08F9EBAE1A545680000CFCAD /* Model181.xcdatamodel */,
 				08FB4D531A40771200711835 /* Model180.xcdatamodel */,
 				08DC661C1A1A2758006C6B2F /* Model170.xcdatamodel */,
 				081E397919FD35BB00990F50 /* Model160.xcdatamodel */,
@@ -3115,7 +3117,7 @@
 				F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */,
 				0806FB33188295CD00F0EF50 /* Model.xcdatamodel */,
 			);
-			currentVersion = 08FB4D531A40771200711835 /* Model180.xcdatamodel */;
+			currentVersion = 08F9EBAE1A545680000CFCAD /* Model181.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

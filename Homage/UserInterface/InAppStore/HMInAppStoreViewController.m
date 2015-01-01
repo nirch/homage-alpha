@@ -89,6 +89,14 @@
     return vc;
 }
 
++(HMInAppStoreViewController *)storeVC
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InAppStore" bundle:nil];
+    HMInAppStoreViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"InAppStore"];
+    return vc;
+}
+
+
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

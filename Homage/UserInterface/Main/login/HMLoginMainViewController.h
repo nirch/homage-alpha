@@ -12,6 +12,9 @@
 @interface HMLoginMainViewController : UIViewController
 
 @property id<HMLoginDelegate> delegate;
+
+@property (nonatomic) BOOL skipIntroVideo;
+
 +(HMLoginMainViewController *)instantiateLoginScreen;
 -(void)onUserLogout;
 -(void)onUserJoin;

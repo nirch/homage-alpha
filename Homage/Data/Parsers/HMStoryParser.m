@@ -82,6 +82,7 @@
     // Audio files (optional)
     scene.sceneAudioURL =           [info stringForKey:@"scene_audio"];
     scene.directionAudioURL =       [info stringForKey:@"direction_audio"];
+    scene.postSceneAudio =          [info stringForKey:@"post_scene_audio"];
 
     // Contours
     if (info[@"contours"])

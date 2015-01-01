@@ -112,6 +112,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.guiFacebookLoginContainer addSubview:loginView];
     self.guiFacebookLoginContainer.backgroundColor = [UIColor clearColor];
     
+    // Intro video
+    self.skipIntroVideo = NO;
+    
     [self initGUI];
 }
 
@@ -456,7 +459,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
     }
     
-    if (user.isFirstUse.boolValue)
+    if (user.isFirstUse.boolValue && !self.skipIntroVideo)
     {
         user.isFirstUse = @NO;
         [self displayIntroMovieView];

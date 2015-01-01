@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "HMSideBarNavigatorDelegate.h"
+#import "HMStoreDelegate.h"
 
-@interface HMSideBarViewController : UIViewController
+@interface HMSideBarViewController : UIViewController<
+    HMStoreDelegate
+>
 
 typedef NS_ENUM(NSInteger, HMAppTab) {
     HMStoriesTab,

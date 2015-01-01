@@ -234,6 +234,10 @@
             HMGLogDebug(@"Missing direction audio file: %@", scene.directionAudioURL);
             [self downloadAndCacheAudioFile:scene.directionAudioURL];
         }
+        if (![self isAudioResourceAvailableLocally:scene.postSceneAudio]) {
+            HMGLogDebug(@"Missing post scene audio file: %@", scene.postSceneAudio);
+            [self downloadAndCacheAudioFile:scene.postSceneAudio];
+        }
     }
 }
 

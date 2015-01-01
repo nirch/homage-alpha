@@ -690,6 +690,7 @@
     
     // Auto Login
     if (loginFlowType == HMLoginFlowTypeAutoGuestLogin) {
+        self.loginVC.skipIntroVideo = YES;
         [self.loginVC loginAsGuest];
     }
 }

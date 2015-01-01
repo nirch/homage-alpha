@@ -21,6 +21,7 @@
 #import "NSNotificationCenter+Utils.h"
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMServer+AppConfig.h"
+#import "HMInAppStoreViewController.h"
 
 @interface HMSideBarViewController ()
 
@@ -216,6 +217,22 @@
 
 }
 
+#pragma mark - In App Store
+-(void)openInAppStoreForCurrentStory
+{
+    HMInAppStoreViewController *vc = [HMInAppStoreViewController storeVC];
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma mark - HMStoreDelegate
+-(void)storeDidFinishWithInfo:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        // Do something here (if required) when the in app store is dismissed.
+    }];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -266,5 +283,9 @@
     [self shareApp];
 }
 
+- (IBAction)onPressedMonkeyShop:(id)sender
+{
+    [self openInAppStoreForCurrentStory];
+}
 
 @end
