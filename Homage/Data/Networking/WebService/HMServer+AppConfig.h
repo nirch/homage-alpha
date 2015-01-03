@@ -82,4 +82,7 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
  */
 -(BOOL)shouldHidePremiumStories;
 
+#pragma mark - FaceBook
+-(NSString *)facebookAppID;
+
 @end

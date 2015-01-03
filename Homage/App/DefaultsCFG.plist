@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>facebook_app_id</key>
+	<string>447743458659084</string>
 	<key>product_name</key>
 	<string>homage_ios</string>
 	<key>in_app_purchases</key>

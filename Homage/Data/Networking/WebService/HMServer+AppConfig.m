@@ -83,4 +83,11 @@
     return [self should:@"in_app_purchases_hide_premium_stories" withDefault:NO];
 }
 
+#pragma mark - FaceBook
+-(NSString *)facebookAppID
+{
+    NSString *appID = self.configurationInfo[@"facebook_app_id"];
+    return appID;
+}
+
 @end

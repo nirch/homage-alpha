@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.9.1T</string>
+	<string>1.9.2D</string>
 	<key>FacebookAppID</key>
 	<string>447743458659084</string>
 	<key>FacebookDisplayName</key>
@@ -39,7 +39,6 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>DINOT-CondBold.otf</string>
 		<string>jilkyway.otf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>

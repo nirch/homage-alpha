@@ -10,6 +10,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMUploadManager.h"
 #import "HMServer+analytics.h"
+#import "HMServer+AppConfig.h"
 #import "Mixpanel.h"
 #import "HMStyle.h"
 #import "DB.h"
@@ -34,9 +35,6 @@
 // ----------------------------------------------------------
 // Mixpanel
 #define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
-
-// Facebook
-#define FB_APP_ID @"447743458659084"
 
 // Apple ID
 #define APPLE_ID @"851746600"
@@ -262,8 +260,13 @@
             self.sessionStartFlag = YES;
         }
     }
-    [FBSettings setDefaultAppID:FB_APP_ID];
+    [FBSettings setDefaultAppID:[HMServer.sh facebookAppID]];
     [FBAppEvents activateApp];
+    
+    
+    // Facebook
+#define FB_APP_ID @"447743458659084"
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

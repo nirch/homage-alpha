@@ -18,6 +18,8 @@
 		08081FB518D083DA00999068 /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
 		08081FB818D0A9EA00999068 /* close up.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08081FB718D0A9EA00999068 /* close up.ctr */; };
 		0809E6921A5580C700E7DAEE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809E6911A5580C700E7DAEE /* StoreKit.framework */; };
+		080E02751A55C2E200F1DB1E /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0541A4F3BDA00F7AEB7 /* Style.plist */; };
+		080E02781A55C31700F1DB1E /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 080E02771A55C31700F1DB1E /* Style.plist */; };
 		081237951882CB6100DA5D23 /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 081237941882CB6100DA5D23 /* ServerCFG.plist */; };
 		081237D31882DA3D00DA5D23 /* HMServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 081237D21882DA3D00DA5D23 /* HMServer.m */; };
 		081CDB1B19D97E8D00723609 /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
@@ -265,7 +267,6 @@
 		086F30991A529B7100430D81 /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
 		086F309A1A529B7100430D81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		086F309B1A529B7100430D81 /* CacheCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08DC66171A1A23BC006C6B2F /* CacheCFG.plist */; };
-		086F309C1A529B7100430D81 /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0541A4F3BDA00F7AEB7 /* Style.plist */; };
 		086F309D1A529B7100430D81 /* HMRefreshControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080120131A069043002F10B2 /* HMRefreshControl.xib */; };
 		086F309F1A529B7100430D81 /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0856C1BA1A14BC4200735632 /* recordingEnd.wav */; };
 		086F30A01A529B7100430D81 /* HMTOSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF5218EDA4D200CA362F /* HMTOSViewController.xib */; };
@@ -479,9 +480,6 @@
 		0806FA1118828AEB007514BE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0806FA1318828AEB007514BE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0806FA2818828AEB007514BE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		0806FA3018828AEB007514BE /* HomageTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HomageTests-Info.plist"; sourceTree = "<group>"; };
-		0806FA3218828AEB007514BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		0806FA3418828AEB007514BE /* HomageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomageTests.m; sourceTree = "<group>"; };
 		0806FB291882944D00F0EF50 /* HMAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAppDelegate.h; sourceTree = "<group>"; };
 		0806FB2A1882944D00F0EF50 /* HMAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAppDelegate.m; sourceTree = "<group>"; };
 		0806FB33188295CD00F0EF50 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -489,6 +487,7 @@
 		08081FB418D083DA00999068 /* HMExtractController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMExtractController.mm; sourceTree = "<group>"; };
 		08081FB718D0A9EA00999068 /* close up.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up.ctr"; path = "App/close up.ctr"; sourceTree = "<group>"; };
 		0809E6911A5580C700E7DAEE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		080E02771A55C31700F1DB1E /* Style.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Style.plist; sourceTree = "<group>"; };
 		081237941882CB6100DA5D23 /* ServerCFG.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ServerCFG.plist; path = Networking/ServerCFG.plist; sourceTree = "<group>"; };
 		081237D11882DA3D00DA5D23 /* HMServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMServer.h; path = Networking/HMServer.h; sourceTree = "<group>"; };
 		081237D21882DA3D00DA5D23 /* HMServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HMServer.m; path = Networking/HMServer.m; sourceTree = "<group>"; };
@@ -751,7 +750,6 @@
 		08FB4D681A40D6AD00711835 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		08FB4D691A40D6AD00711835 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		1ED3A430529290A1F8D55577 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		2610133618E172A80065C72B /* HMLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLoginTests.m; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
 		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
@@ -924,12 +922,11 @@
 			isa = PBXGroup;
 			children = (
 				0806FA1518828AEB007514BE /* Homage */,
-				0806FA2E18828AEB007514BE /* HomageTests */,
 				0856C1AE1A14BC4200735632 /* WhiteLabels */,
-				088D5FB719EC015A00075C4A /* Homage App Tests */,
 				0806FA0E18828AEB007514BE /* Frameworks */,
 				0806FA0D18828AEB007514BE /* Products */,
 				06D9BA1DEC03C41D57BE8DA8 /* Pods */,
+				088D5FB719EC015A00075C4A /* Homage App Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -993,25 +990,6 @@
 			);
 			name = "Supporting Files";
 			path = ..;
-			sourceTree = "<group>";
-		};
-		0806FA2E18828AEB007514BE /* HomageTests */ = {
-			isa = PBXGroup;
-			children = (
-				0806FA3418828AEB007514BE /* HomageTests.m */,
-				2610133618E172A80065C72B /* HMLoginTests.m */,
-				0806FA2F18828AEB007514BE /* Supporting Files */,
-			);
-			path = HomageTests;
-			sourceTree = "<group>";
-		};
-		0806FA2F18828AEB007514BE /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				0806FA3018828AEB007514BE /* HomageTests-Info.plist */,
-				0806FA3118828AEB007514BE /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		0806FB281882944D00F0EF50 /* App */ = {
@@ -1086,6 +1064,14 @@
 				08C3BC321A37584600326B97 /* ABTesting */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		080E02761A55C31700F1DB1E /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				080E02771A55C31700F1DB1E /* Style.plist */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		081E397D19FD6CC000990F50 /* remake screen */ = {
@@ -1345,6 +1331,7 @@
 			isa = PBXGroup;
 			children = (
 				085AFF431A52A3880066493F /* Images.xcassets */,
+				080E02761A55C31700F1DB1E /* Styles */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -2109,11 +2096,11 @@
 				086F30951A529B7100430D81 /* Localizable.strings in Resources */,
 				086F30961A529B7100430D81 /* InAppStore.storyboard in Resources */,
 				086F30971A529B7100430D81 /* Storyboard.storyboard in Resources */,
+				080E02781A55C31700F1DB1E /* Style.plist in Resources */,
 				086F30981A529B7100430D81 /* Stay+thirsty.mp4 in Resources */,
 				086F30991A529B7100430D81 /* HMRecorderMessageGeneralView.xib in Resources */,
 				086F309A1A529B7100430D81 /* InfoPlist.strings in Resources */,
 				086F309B1A529B7100430D81 /* CacheCFG.plist in Resources */,
-				086F309C1A529B7100430D81 /* Style.plist in Resources */,
 				086F309D1A529B7100430D81 /* HMRefreshControl.xib in Resources */,
 				086F309F1A529B7100430D81 /* recordingEnd.wav in Resources */,
 				086F30A01A529B7100430D81 /* HMTOSViewController.xib in Resources */,
@@ -2130,6 +2117,7 @@
 				086F30AB1A529B7100430D81 /* close up 480.ctr in Resources */,
 				085AFF481A52A8B90066493F /* DefaultsCFG.plist in Resources */,
 				085AFF4A1A52A8B90066493F /* DefaultsCFGTest.plist in Resources */,
+				080E02751A55C2E200F1DB1E /* Style.plist in Resources */,
 				086F30AD1A529B7100430D81 /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				086F30AE1A529B7100430D81 /* Settings.bundle in Resources */,
 				086F30AF1A529B7100430D81 /* whatsapp@2x.png in Resources */,
@@ -2614,17 +2602,6 @@
 			targetProxy = 088D5FBC19EC015A00075C4A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		0806FA3118828AEB007514BE /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0806FA3218828AEB007514BE /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0806FA3618828AEB007514BE /* Debug */ = {
