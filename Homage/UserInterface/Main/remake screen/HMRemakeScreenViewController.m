@@ -15,12 +15,24 @@
 #import "HMSharing.h"
 #import "Mixpanel.h"
 #import "HMServer+Remakes.h"
+#import "HMRegularFontLabel.h"
+#import "HMRegularFontLabel.h"
+#import "HMStyle.h"
 
 #define ALERT_VIEW_TAG_SHARE_FAILED 100
 
 @interface HMRemakeScreenViewController ()
 
 @property (nonatomic) BOOL markedAsDone;
+
+// Remake button
+@property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;
+
+// More remakes headline
+@property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineBG;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiMoreRemakesHeadlineLabel;
+
 
 // Movie player & transitions
 @property (weak, nonatomic) IBOutlet UIScrollView *guiScrollView;
@@ -97,6 +109,25 @@
     // Delegates
     self.remakeMoviePlayer.delegate = self;
     self.guiScrollView.delegate = self;
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    
+    // More remakes label
+    self.guiMoreRemakesHeadlineContainer.backgroundColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_BG];
+    self.guiMoreRemakesHeadlineLabel.textColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_TEXT];
+
+    // Make your own button
+    self.guiRemakeButton.backgroundColor = [HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_BG];
+    [self.guiRemakeButton setTitleColor:[HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
+    
+    // Text labels with info overlaying the remake.
+    UIColor *textColor = [HMStyle.sh colorNamed:C_SD_REMAKE_INFO_TEXT];
+    [self.guiLikeButton setTitleColor:textColor forState:UIControlStateNormal];
+    self.guiViewsCounterLabel.textColor = textColor;
+    self.guiLikesCounterLabel.textColor = textColor;
+    self.guiUserFullName.textColor = textColor;
 }
 
 -(void)prepareForRemake:(Remake *)remake animateFromRect:(CGRect)s fromCenter:(CGPoint)fromCenter

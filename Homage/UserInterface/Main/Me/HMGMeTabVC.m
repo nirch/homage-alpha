@@ -140,7 +140,7 @@
     self.noRemakesLabel.text = LS(@"NO_REMAKES_ME_SCREEN");
     [self.noRemakesLabel setHidden:YES];
     //self.noRemakesLabel.textColor = [HMColor.sh textImpact];
-    self.title = LS(@"ME_TAB_HEADLINE_TITLE");
+    self.title = LS(@"");
     
     // Checks if need to close "opened" cells.
     self.needsCheckIfAllClosed = NO;

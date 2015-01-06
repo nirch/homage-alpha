@@ -2,26 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>paletteTest</key>
+	<key>values</key>
 	<dict>
-		<key>@clear</key>
-		<string>#00007733</string>
-		<key>@darkSeeThrough</key>
-		<string>#00FF0066</string>
-		<key>@normalText</key>
-		<string>#0000FF</string>
-		<key>@impact</key>
-		<string>#76FF56</string>
-		<key>@dark</key>
-		<string>#FF2222</string>
-		<key>@darkest</key>
-		<string>#007700</string>
-		<key>@error</key>
-		<string>#0025FF</string>
-		<key>@faded1</key>
-		<string>#FFB8B8</string>
-		<key>@faded2</key>
-		<string>#FF6868</string>
+		<key>styleClassSideBarNavigationButton</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>7</integer>
+		</dict>
+		<key>styleClassNavigationTitle</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>5</integer>
+		</dict>
+		<key>styleClassBigButtons</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>8</integer>
+		</dict>
+		<key>valueSplashActivityPosition</key>
+		<integer>170</integer>
+		<key>valueSplashActivityCirclesCount</key>
+		<string>9</string>
+		<key>valueSplashActivityCirclesRadius</key>
+		<string>7</string>
 	</dict>
 	<key>fonts</key>
 	<dict>
@@ -47,27 +50,39 @@
 		</dict>
 		<key>splash</key>
 		<dict>
+			<key>colorsArraySplashActivityIndicator</key>
+			<array>
+				<string>#6655D3</string>
+				<string>#2693D5</string>
+				<string>#FD7A29</string>
+				<string>#ED1B72</string>
+				<string>#1F9239</string>
+				<string>#FEC92F</string>
+				<string>#D81A27</string>
+			</array>
 			<key>colorSplashActivityIndicator</key>
 			<string>@impact</string>
 		</dict>
-		<key>navigation</key>
+		<key>navigation and status bar</key>
 		<dict>
+			<key>colorStatusBarBG</key>
+			<string>@darkest</string>
 			<key>colorSideNavBarSeparator</key>
-			<string>@darkest</string>
+			<string>@darkSeeThrough</string>
 			<key>colorSideNavBarOptionText</key>
-			<string>@darkest</string>
-			<key>colorSideNavBarBG</key>
 			<string>@impact</string>
+			<key>colorSideNavBarBG</key>
+			<string>@dark</string>
 			<key>colorSideNavBarLoginButton</key>
 			<string>@normalText</string>
 			<key>colorSideNavBarTopContainer</key>
-			<string>@darkest</string>
+			<string>@darker</string>
 			<key>colorSideNavBarUser</key>
 			<string>@impact</string>
 			<key>colorNavBarTitle</key>
 			<string>@impact</string>
 			<key>colorNavBarSeparator</key>
-			<string>@dark</string>
+			<string>@darker</string>
 			<key>colorNavBarBackground</key>
 			<string>@darkSeeThrough</string>
 		</dict>
@@ -111,19 +126,53 @@
 			<key>colorSettingsSectionTitleText</key>
 			<string>@darkest</string>
 		</dict>
+		<key>stories</key>
+		<dict>
+			<key>colorStoriesText</key>
+			<string>@impact</string>
+		</dict>
+		<key>story details</key>
+		<dict>
+			<key>colorSDText</key>
+			<string>@impact</string>
+			<key>colorSDDescriptionText</key>
+			<string>@impact</string>
+			<key>colorSDDescriptionBG</key>
+			<string>@brightSeeThrough</string>
+			<key>colorSDMoreRemakesTitleText</key>
+			<string>@impact</string>
+			<key>colorSDMoreRemakesTitleBG</key>
+			<string>@dark</string>
+			<key>colorSDRemakeButtonBG</key>
+			<string>@darker</string>
+			<key>colorSDRemakeButtonText</key>
+			<string>@impact</string>
+			<key>colorSDNoRemakesLabel</key>
+			<string>@impactSeeThrough</string>
+			<key>colorSDRemakeInfoText</key>
+			<string>@impact</string>
+		</dict>
 	</dict>
 	<key>palette</key>
 	<dict>
 		<key>@clear</key>
 		<string>#00000000</string>
-		<key>@darkSeeThrough</key>
-		<string>#00000066</string>
+		<key>@bright</key>
+		<string>#C76C2C</string>
+		<key>@brightSeeThrough</key>
+		<string>#C76C2C88</string>
 		<key>@normalText</key>
 		<string>#FFFFFF</string>
 		<key>@impact</key>
-		<string>#FF7656</string>
+		<string>#FDAE2B</string>
+		<key>@impactSeeThrough</key>
+		<string>#FDAE2B88</string>
+		<key>@darkSeeThrough</key>
+		<string>#36191588</string>
 		<key>@dark</key>
-		<string>#222222</string>
+		<string>#552C17</string>
+		<key>@darker</key>
+		<string>#361915</string>
 		<key>@darkest</key>
 		<string>#000000</string>
 		<key>@error</key>

@@ -13,20 +13,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBackground" id="x0z-Hs-o5j">
-                                <rect key="frame" x="-124" y="0.0" width="568" height="568"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBackground" id="x0z-Hs-o5j">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view hidden="YES" autoresizesSubviews="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" id="cmV-1U-mSO" userLabel="toon BG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="Uup-Jo-PmB" userLabel="Start Activity Indicator">
-                                        <rect key="frame" x="150" y="158" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="color" red="0.0" green="1" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </activityIndicatorView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to connect." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j5z-5u-dmP" customClass="HMRegularFontLabel">
@@ -49,14 +42,18 @@
                                     <action selector="onPressedTryAgain:" destination="MLD-eP-boa" eventType="touchUpInside" id="BFW-ws-ycV"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashTopLogo" id="wNq-yE-ztN" userLabel="Top Logo">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="179"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="guiActivity" destination="Uup-Jo-PmB" id="9dF-Dr-5Ir"/>
                         <outlet property="guiBGImage" destination="x0z-Hs-o5j" id="6tA-mD-dV3"/>
                         <outlet property="guiBGView" destination="cmV-1U-mSO" id="xUa-Wv-cqu"/>
                         <outlet property="guiFailedToConnectLabel" destination="j5z-5u-dmP" id="gN6-VL-yjQ"/>
+                        <outlet property="guiTopLogo" destination="wNq-yE-ztN" id="Rkk-5H-8DF"/>
                         <outlet property="guiTryAgainButton" destination="Tbr-5g-m4t" id="USU-BZ-LrV"/>
                     </connections>
                 </viewController>
@@ -164,18 +161,26 @@
                                                     <action selector="debugButtonPushed:" destination="Mko-4Y-5oJ" eventType="touchUpInside" id="Mng-Oz-mCw"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PcV-Lk-RmR" userLabel="nav Title Homage" customClass="HMRegularFontLabel">
-                                                <rect key="frame" x="74" y="25" width="173" height="39"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="PcV-Lk-RmR" userLabel="nav Title Homage" customClass="HMRegularFontLabel">
+                                                <rect key="frame" x="45" y="20" width="230" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassNavigationTitle"/>
+                                                </userDefinedRuntimeAttributes>
                                             </label>
                                             <view contentMode="scaleToFill" id="uEc-TN-WaH" userLabel="Bottom Sep">
                                                 <rect key="frame" x="0.0" y="63" width="320" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" id="ECS-rg-hbO" userLabel="Status Bar BG">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
                                     </view>
@@ -242,6 +247,7 @@
                         <outlet property="guiNoConnectivityLabel" destination="IDg-TI-8JI" id="78F-9E-wfy"/>
                         <outlet property="guiNoConnectivityView" destination="BGe-RC-PIs" id="uVW-lK-Tz6"/>
                         <outlet property="guiSplashView" destination="0k7-VS-RTr" id="ZmN-ah-bQo"/>
+                        <outlet property="guiStatusBarBG" destination="ECS-rg-hbO" id="IcV-5E-FD3"/>
                         <outlet property="guiTopNavContainer" destination="93F-HB-nk2" id="RzC-Wc-IY8"/>
                         <outlet property="loginContainerView" destination="S40-L8-bdb" id="pJh-pa-Jlh"/>
                         <outlet property="renderingContainerView" destination="fIN-2a-57r" id="GfI-QZ-JqM"/>
@@ -554,6 +560,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MORE_REMAKES"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <view contentMode="scaleToFill" id="ZlV-Sa-wcb" userLabel="Sep">
                                         <rect key="frame" x="0.0" y="49" width="320" height="1"/>
@@ -583,7 +592,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="xOH-ge-tPC" customClass="HMRegularFontButton">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
@@ -592,6 +601,10 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MAKE_YOUR_OWN_BUTTON"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassBigButtons"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="onPressedRemakeButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="Aih-x4-Nne"/>
                                 </connections>
@@ -622,6 +635,7 @@
                         <outlet property="guiRemakeActivity" destination="baQ-JD-y4r" id="HAW-YM-8Xh"/>
                         <outlet property="guiRemakeButton" destination="xOH-ge-tPC" id="zmm-Ke-A1B"/>
                         <outlet property="guiRemakeScreenContainer" destination="hQQ-Qc-PZX" id="XXb-qF-jR8"/>
+                        <outlet property="guiStoryDescriptionBG" destination="lZu-IA-usC" id="sPW-AO-El5"/>
                         <outlet property="guiStoryDescriptionBluryBG" destination="mlY-Qs-wJu" id="I0F-in-8Oz"/>
                         <outlet property="guiStoryDescriptionLabel" destination="znf-eH-Mpo" id="jMv-gT-bVv"/>
                         <outlet property="guiStoryMovieContainer" destination="ZjV-7o-L6U" id="Eh5-qX-ad0"/>
@@ -1140,6 +1154,11 @@
                                             <action selector="onLogoutButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="Y0C-xn-zGc"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" id="liv-R2-GGj" userLabel="Status bar background">
+                                        <rect key="frame" x="0.0" y="0.0" width="220" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1156,6 +1175,9 @@
                                         <state key="normal" title="STORIES">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassSideBarNavigationButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="onStoriesButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="71z-6d-9Fy"/>
                                         </connections>
@@ -1174,6 +1196,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassSideBarNavigationButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="onMeButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="Gmx-jh-IQg"/>
                                         </connections>
@@ -1192,6 +1217,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassSideBarNavigationButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="onSettingsButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="J2x-EZ-7IZ"/>
                                         </connections>
@@ -1210,6 +1238,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassSideBarNavigationButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="onHowToButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="73d-EQ-OdN"/>
                                         </connections>
@@ -1228,6 +1259,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassSideBarNavigationButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="onShareAppButtonPushed:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="s3I-Bg-dlk"/>
                                         </connections>
@@ -1236,13 +1270,11 @@
                                         <rect key="frame" x="162" y="224" width="50" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rXV-cA-Jo0" customClass="HMRegularFontButton">
-                                        <rect key="frame" x="8" y="459" width="204" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rXV-cA-Jo0" customClass="HMRegularFontButton">
+                                        <rect key="frame" x="8" y="354" width="204" height="146"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="MONKEY SHOP">
+                                        <state key="normal" image="navigationShopButton">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1251,7 +1283,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.49019607900000001" blue="0.37254902719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                     </view>
@@ -1267,6 +1299,7 @@
                         <outlet property="guiSettingsButton" destination="Bkd-Dk-DVo" id="Lt5-B9-NU4"/>
                         <outlet property="guiShareAppButton" destination="H1L-uE-WNf" id="Fqa-0G-QFI"/>
                         <outlet property="guiSideNavBarBG" destination="dl3-qC-m7J" id="MEw-We-Yow"/>
+                        <outlet property="guiStatusBarBG" destination="liv-R2-GGj" id="sVz-Yb-IrT"/>
                         <outlet property="guiStoreButton" destination="rXV-cA-Jo0" id="hKM-FI-QbI"/>
                         <outlet property="guiStoriesButton" destination="nR4-uX-sgD" id="6gS-67-zCe"/>
                         <outlet property="guiUserIcon" destination="SZL-qh-Cpt" id="znt-zY-RXB"/>
@@ -1570,6 +1603,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MORE_REMAKES"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <view contentMode="scaleToFill" id="yqI-bu-w1g" userLabel="Sep">
                                         <rect key="frame" x="0.0" y="49" width="320" height="1"/>
@@ -1749,7 +1785,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="OoQ-VH-3tg" customClass="HMRegularFontButton">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
@@ -1758,6 +1794,10 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MAKE_YOUR_OWN_BUTTON"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassBigButtons"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="onPressedRemakeButton:" destination="vB0-ch-lSv" eventType="touchUpInside" id="7Cj-sU-Im6"/>
                                 </connections>
@@ -1772,7 +1812,11 @@
                         <outlet property="guiLikesCounterLabel" destination="GCj-px-wJU" id="fnM-y9-71O"/>
                         <outlet property="guiLikesIcon" destination="hu1-nB-yUe" id="6oM-Iw-4UW"/>
                         <outlet property="guiMoreOptionsContainer" destination="tXY-Fw-OVD" id="s71-0T-C0t"/>
+                        <outlet property="guiMoreRemakesHeadlineBG" destination="Ygg-Pw-g8O" id="9Er-4J-uth"/>
+                        <outlet property="guiMoreRemakesHeadlineContainer" destination="ffs-5Z-LWA" id="oVC-uC-fM6"/>
+                        <outlet property="guiMoreRemakesHeadlineLabel" destination="y11-MG-UVK" id="eVj-GO-s6T"/>
                         <outlet property="guiOverlayPlayButton" destination="wyb-2t-yno" id="VkW-Wj-aAL"/>
+                        <outlet property="guiRemakeButton" destination="OoQ-VH-3tg" id="vmP-BL-WtM"/>
                         <outlet property="guiRemakeContainer" destination="Pcl-dC-mzU" id="agp-bp-cWp"/>
                         <outlet property="guiRemakeControlsConatinerBottom" destination="4c5-vm-4J2" id="n5a-qm-GqP"/>
                         <outlet property="guiRemakeControlsConatinerTop" destination="ngY-D9-gtL" id="Wwo-lG-N29"/>
@@ -1813,6 +1857,7 @@
         <image name="navIconMyStories" width="38" height="38"/>
         <image name="navIconSettings" width="38" height="38"/>
         <image name="navIconStories" width="40" height="38"/>
+        <image name="navigationShopButton" width="200" height="140"/>
         <image name="noConnectivity" width="60" height="60"/>
         <image name="progressCloseIcon" width="22" height="22"/>
         <image name="remakeInverseBGButton" width="33" height="33"/>
@@ -1821,6 +1866,7 @@
         <image name="smallGuestIcon" width="18" height="18"/>
         <image name="smallRemakeIcon" width="18" height="15"/>
         <image name="splashBackground" width="320" height="568"/>
+        <image name="splashTopLogo" width="249" height="137"/>
         <image name="subtleBackground" width="320" height="568"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
         <image name="viewsIcon" width="17" height="11"/>

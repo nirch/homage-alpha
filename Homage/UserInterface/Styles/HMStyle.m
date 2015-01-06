@@ -11,6 +11,7 @@
 
 @interface HMStyle()
 
+@property (nonatomic) NSMutableDictionary *values;
 @property (nonatomic) NSMutableDictionary *colors;
 @property (nonatomic) NSMutableDictionary *fonts;
 
@@ -26,7 +27,6 @@
     dispatch_once(&onceToken, ^{
         sharedInstance = [[HMStyle alloc] init];
     });
-    
     return sharedInstance;
 }
 
@@ -52,6 +52,9 @@
     //
     NSString * plistPath = [[NSBundle mainBundle] pathForResource:@"Style" ofType:@"plist"];
     NSDictionary *cfg = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
+    // Load values
+    self.values = cfg[@"values"];
     
     // Load the palette colors
     self.colors = [NSMutableDictionary new];
@@ -83,6 +86,11 @@
         if ([value isKindOfClass:[NSString class]]) {
             // Add a single color.
             [self addColor:value withKey:colorKey];
+        } else if ([value isKindOfClass:[NSArray class]]) {
+            // Add an array of colors with the same name.
+            // Can be used with the colorsNamed:colorAtIndex: method.
+            // (colorNamed: will return the first color in the array)
+            [self addArrayOfColors:value withKey:colorKey];
         } else if ([value isKindOfClass:[NSDictionary class]]) {
             // Call it recursively.
             [self addColorsFromDictionary:value];
@@ -92,39 +100,100 @@
 
 -(void)addColor:(NSString *)colorString withKey:(NSString *)colorKey
 {
+    UIColor *color = [self color:colorString];
+    self.colors[colorKey] = color;
+}
+
+-(void)addArrayOfColors:(NSArray *)colorsStrings withKey:(NSString *)colorKey
+{
+    NSMutableArray *colorsArray = [NSMutableArray new];
+    for (NSString *colorString in colorsStrings) {
+        [colorsArray addObject:[self color:colorString]];
+    }
+    self.colors[colorKey] = colorsArray;
+}
+
+-(UIColor *)color:(NSString *)colorString
+{
     if ([colorString hasPrefix:@"@"]) {
         if (self.colors[colorString] == nil) {
             HMGLogWarning(@"Missing color for color key: %@", colorString);
-            return;
+            return nil;
         }
-        self.colors[colorKey] = self.colors[colorString];
+        return self.colors[colorString];
     } else {
-        self.colors[colorKey] = [colorString colorFromRGBAHexString];
+        return [colorString colorFromRGBAHexString];
     }
 }
 
-//#pragma mark - Colors: General
-//-(UIColor *)main1                  {return [self colorNamed:@"main1"];}
-//-(UIColor *)main2                  {return [self colorNamed:@"main2"];}
-//-(UIColor *)text                   {return [self colorNamed:@"text"];}
-//-(UIColor *)textPlaceholder        {return [self colorNamed:@"textPlaceholder"];}
-//-(UIColor *)textImpact             {return [self colorNamed:@"textImpact"];}
-//-(UIColor *)greyLine               {return [self colorNamed:@"greyLine"];}
 //
-//#pragma mark - Colors: Recorder specific
-//-(UIColor *)recorderTableCellBackground                         {return [self colorNamed:@"recorderTableCellBackground"];}
-//-(UIColor *)recorderTableCellBackgroundHighlighted              {return [self colorNamed:@"recorderTableCellBackgroundHighlighted"];}
-//-(UIColor *)recorderEditTextPlaceHolder                         {return [self colorNamed:@"recorderEditTextPlaceHolder"];}
-//-(UIColor *)recorderEditText                                    {return [self colorNamed:@"recorderEditText"];}
-//-(UIColor *)recorderEditTextError                               {return [self colorNamed:@"recorderEditTextError"];}
+// Values
+//
+#pragma mark - style values
+-(CGFloat)floatValueForKey:(NSString *)key
+{
+    id value = self.values[key];
+    if (value == nil) return 0;
+    CGFloat floatValue = [value floatValue];
+    return floatValue;
+}
+
+-(NSInteger)integerValueForKey:(NSString *)key
+{
+    id value = self.values[key];
+    if (value == nil) return 0;
+    NSInteger integerValue = [value integerValue];
+    return integerValue;
+}
+
+-(NSDictionary *)styleClassForKey:(NSString *)key
+{
+    id value = self.values[key];
+    return value;
+}
 
 #pragma mark - Colors
 -(UIColor *)colorNamed:(NSString *)colorName
 {
-    UIColor *color = self.colors[colorName];
-    if (color) return color;
-    HMGLogError(@"Missing color named: %@", colorName);
-    return [UIColor whiteColor];
+    id color = self.colors[colorName];
+    
+    // Missing color (will return white)
+    if (color == nil) {
+        HMGLogError(@"Missing color named: %@", colorName);
+        return [UIColor whiteColor];
+    }
+    
+    // Return the color.
+    if ([color isKindOfClass:[UIColor class]]) {
+        return color;
+    }
+    
+    // Return the first color in a color array.
+    if ([color isKindOfClass:[NSArray class]]) {
+        return color[0];
+    }
+    
+    // Ha?! This shouldn't have happened.
+    HMGLogError(@"Color named:%@ of unsupported type. %@", colorName, [color class]);
+    return nil;
+}
+
+-(UIColor *)colorNamed:(NSString *)name atIndex:(NSInteger)index
+{
+    id color = self.colors[name];
+    
+    // Missing color or not an array of color (will return white)
+    if (color == nil || ![color isKindOfClass:[NSArray class]]) {
+        HMGLogError(@"Wrong color array named: %@", name);
+        return [UIColor whiteColor];
+    }
+    
+    // Color index is cyclical
+    index = index % [color count];
+
+    // Return the color by color string.
+    color = color[index];
+    return color;
 }
 
 #pragma mark - Fonts

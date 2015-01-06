@@ -13,17 +13,17 @@
 #import "HMBoldFontButton.h"
 #import "HMNotificationCenter.h"
 
+
 @interface HMSplashViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
 @property (weak, nonatomic) IBOutlet HMToonBGView *guiBGView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
-
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiFailedToConnectLabel;
 @property (weak, nonatomic) IBOutlet HMBoldFontButton *guiTryAgainButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiTopLogo;
 
-
-
+@property (weak, nonatomic) MONActivityIndicatorView *activityView;
 
 @end
 
@@ -34,12 +34,48 @@
     [self initGUI];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self revealAnimations];
+}
+
 -(void)initGUI
 {
     // ************
     // *  STYLES  *
     // ************
-    self.guiActivity.color = [HMStyle.sh colorNamed:C_SPLASH_ACTIVITY_INDICATOR];
+
+    // The activity view.
+    MONActivityIndicatorView *activityView = [[MONActivityIndicatorView alloc] init];
+    [self.view addSubview:activityView];
+    activityView.numberOfCircles = [HMStyle.sh floatValueForKey:V_SPLASH_ACTIVITY_CIRCLES_COUNT];
+    activityView.radius = [HMStyle.sh floatValueForKey:V_SPLASH_ACTIVITY_CIRCLES_RADIUS];
+    activityView.internalSpacing = 3;
+    activityView.duration = 0.5;
+    activityView.delegate = self;
+    self.activityView = activityView;
+
+    // Position the activity view.
+    CGPoint p = self.view.center;
+    p.y = [HMStyle.sh floatValueForKey:V_SPLASH_ACTIVITY_POSITION];
+    activityView.center = p;
+}
+
+-(void)revealAnimations
+{
+    [UIView animateWithDuration:0.2
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.7
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         self.guiTopLogo.transform = CGAffineTransformMakeScale(1.2, 1.1);
+                     } completion:^(BOOL finished) {
+                        [UIView animateWithDuration:0.5 animations:^{
+                            self.guiTopLogo.transform = CGAffineTransformIdentity;
+                        }];
+                     }];
 }
 
 -(void)prepare
@@ -49,7 +85,7 @@
 
 -(void)start
 {
-    [self.guiActivity startAnimating];
+    [self.activityView startAnimating];
 }
 
 -(void)done
@@ -62,6 +98,15 @@
     [self.guiActivity stopAnimating];
     self.guiFailedToConnectLabel.hidden = NO;
     self.guiTryAgainButton.hidden = NO;
+}
+
+#pragma mark - MONActivityIndicatorViewDelegate
+-(UIColor *)activityIndicatorView:(MONActivityIndicatorView *)activityIndicatorView circleBackgroundColorAtIndex:(NSUInteger)index
+{
+    UIColor *color;
+    color = [HMStyle.sh colorNamed:C_ARRAY_SPLASH_ACTIVITY_INDICATOR
+                           atIndex:index];
+    return color;
 }
 
 #pragma mark - IB Actions

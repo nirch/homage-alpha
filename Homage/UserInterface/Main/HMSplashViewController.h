@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MONActivityIndicatorView/MONActivityIndicatorView.h>
 
-@interface HMSplashViewController : UIViewController
+@interface HMSplashViewController : UIViewController<
+    MONActivityIndicatorViewDelegate
+>
+
 
 -(void)prepare;
 -(void)start;

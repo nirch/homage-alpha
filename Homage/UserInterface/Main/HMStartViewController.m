@@ -47,6 +47,8 @@
 // Navigation bar
 @property (weak, nonatomic) IBOutlet UIView *guiTopNavContainer;
 
+@property (weak, nonatomic) IBOutlet UIView *guiStatusBarBG;
+
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiNavTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiNavBackground;
@@ -178,6 +180,7 @@
     self.guiNavBackground.backgroundColor = [HMStyle.sh colorNamed:C_NAV_BAR_BACKGROUND];
     self.guiNavBarSeparator.backgroundColor = [HMStyle.sh colorNamed:C_NAV_BAR_SEPARATOR];
     self.guiNavTitleLabel.textColor = [HMStyle.sh colorNamed:C_NAV_BAR_TITLE];
+    self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
 }
 
 -(void)initObservers
@@ -820,7 +823,7 @@
     vc.entityType = [NSNumber numberWithInteger:HMHowTo];
     vc.entityID = @"none";
     vc.resetStateWhenVideoEnds = YES;
-    [vc play];
+    [vc play];    
 }
 
 
@@ -835,16 +838,16 @@
 {
     switch (index) {
         case HMStoriesTab:
-            self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
+            self.title = LS(@"NAV_STORIES");
             break;
         case HMMeTab:
-            self.title = LS(@"ME_TAB_HEADLINE_TITLE");
+            self.title = LS(@"NAV_MY_STORIES");
             break;
         case HMSettingsTab:
-            self.title = LS(@"SETTINGS_TAB_HEADLINE TITLE");
+            self.title = LS(@"NAV_SETTINGS");
             break;
         default:
-            self.title = LS(@"STORIES_TAB_HEADLINE_TITLE");
+            self.title = LS(@"NAV_STORIES");
             break;
     }
 }

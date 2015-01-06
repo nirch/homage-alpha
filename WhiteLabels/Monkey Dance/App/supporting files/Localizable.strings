@@ -48,22 +48,45 @@
 "MISSING_SEGMENTS_ERROR" = "why you no film segments: %@";
 
 /*these are the strings appearing to the user when he wants to delete a remake from his personal area*/
-"DELETE_REMAKE" = "Delete clip";
-"APPROVE_DELETION" = "Would you like to delete this clip?";
+"DELETE_REMAKE" = "Delete remake";
+"APPROVE_DELETION" = "Would you like to delete this remake?";
 "YES" = "Yes";
 "NO" = "No";
 
 /*in me screen, when you have no remakes, this label will show*/
-"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST CLIP!";
-"REMAKE_MORE_STORIES" = "MAKE MORE CLIPS!";
-"REMAKE_A_STORY" = "MAKE A CLIP!";
+"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST STORY!";
+"REMAKE_MORE_STORIES" = "REMAKE MORE STORIES!";
+"REMAKE_A_STORY" = "REMAKE A STORY!";
 
 /*in the story details screen, when no remakes available, this label will show*/
-"NO_REMAKES_STORY_DETAILS" = "Be the first to make a video";
+"NO_REMAKES_STORY_DETAILS" = "Be the first to make a clip";
+"MORE_REMAKES" = "MORE";
+"MAKE_YOUR_OWN_BUTTON" = "MAKE YOUE OWN";
 
 /*in stories tab ,when you have no stories, this label will show*/
 "NO_STORIES" = "(no stories)";
 
+/* 
+    It is possible to define the texts in nav buttons
+    and screen titles, separately
+*/
+
+/*sidebar navigation sections*/
+"NAV_STORIES_BUTTON" = "CLIPS";
+"NAV_MY_STORIES_BUTTON" = "MY CLIPS";
+"NAV_SETTINGS_BUTTON" = "SETTINGS";
+"NAV_HOWTO_BUTTON" = "HOW TO";
+"NAV_SHARE_APP_BUTTON" = "SHARE APP";
+
+/*app navigation sections*/
+"NAV_STORIES" = "CLIPS";
+"NAV_MY_STORIES" = "MY CLIPS";
+"NAV_SETTINGS" = "SETTINGS";
+
+/*this is the headline title of "me" and "stories" tab*/
+"ME_TAB_HEADLINE_TITLE" = "MY STORIES";
+"STORIES_TAB_HEADLINE_TITLE" = "STORIES";
+"SETTINGS_TAB_HEADLINE TITLE" = "SETTINGS";
 /*a message to the user, notifing him that the movie is ready*/
 "REMAKE_READY_CLICK" = "Your Movie is Ready! Click to watch";
 
@@ -159,6 +182,6 @@
 "STORE_ITEM_UNLOCKED" = "Unlocked";
 "STORE_MISSING_PRODUCT_TEXT" = "The product is temporarily unavailable. Try again later.";
 "STORE_TITLE" = "MONKEY STORE";
-"STORE_STORIES_TITLE" = "CLIPS";
+"STORE_STORIES_TITLE" = "STORIES";
 
 

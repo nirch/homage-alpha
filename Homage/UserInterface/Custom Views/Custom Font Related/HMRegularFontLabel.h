@@ -11,7 +11,7 @@
 
 @interface HMRegularFontLabel : THLabel
 
-// Optional customized stroke. If not set, uses default values set in style.
--(void)customizeStrokeSize:(CGFloat)size color:(UIColor *)color;
+@property (nonatomic) NSString *styleClass;
+@property (nonatomic) NSString *stringKey;
 
 @end

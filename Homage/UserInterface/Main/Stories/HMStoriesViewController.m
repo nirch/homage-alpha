@@ -39,14 +39,15 @@
 // A weak reference to the refresh controll (The owner will be it's superview - storiesCV)
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 
+// Text color for this screen
+@property (weak, nonatomic) UIColor *textColor;
+
 // TODO: make sure this is a correct implementation.
 @property (weak,nonatomic) Story *preRequestedStory;
 
 @end
 
 @implementation HMStoriesViewController
-
-#define DIVE_SCHOOL "52de83db8bc427751c000305";
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -77,6 +78,16 @@
 {
     [super viewDidAppear:animated];
     [self updateRenderingBarState];
+    self.title = LS(@"NAV_STORIES");
+}
+
+-(void)setTitle:(NSString *)title
+{
+    [super setTitle:title];
+    id<HMMainGUIProtocol> vc = (id<HMMainGUIProtocol>)[UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([vc respondsToSelector:@selector(updateTitle:)]) {
+        [vc updateTitle:title];
+    }
 }
 
 #pragma mark initializations
@@ -102,6 +113,11 @@
     self.storiesCV.alwaysBounceVertical = YES;
     self.noStoriesLabel.text = LS(@"NO_STORIES");
     [self.noStoriesLabel setHidden:YES];
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    self.textColor = [HMStyle.sh colorNamed:C_STORIES_TEXT];
 }
 
 -(void)initContent
@@ -319,6 +335,8 @@
             [[Mixpanel sharedInstance] track:@"SelectedAStory" properties:@{@"story" : story.name , @"index" : [NSString stringWithFormat:@"%ld" , (long)indexPath.item]}];
         }
         
+        self.title = vc.story.name;
+        
     } else {
         HMGLogWarning(@"Segue not implemented:%@",segue.identifier);
     }
@@ -429,6 +447,8 @@
     cell.guiStoryNameLabel.text = story.name;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     cell.guiThumbImage.alpha = 0;
+    cell.guiStoryNameLabel.textColor = self.textColor;
+
     
     // Lazy load thumb image.
     NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];

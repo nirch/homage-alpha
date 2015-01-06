@@ -10,4 +10,7 @@
 
 @interface HMRegularFontButton : UIButton
 
+@property (nonatomic) NSString *styleClass;
+@property (nonatomic) NSString *stringKey;
+
 @end

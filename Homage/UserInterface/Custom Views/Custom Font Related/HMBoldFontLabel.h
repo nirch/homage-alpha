@@ -11,4 +11,7 @@
 
 @interface HMBoldFontLabel : THLabel
 
+@property (nonatomic) NSString *styleClass;
+@property (nonatomic) NSString *stringKey;
+
 @end

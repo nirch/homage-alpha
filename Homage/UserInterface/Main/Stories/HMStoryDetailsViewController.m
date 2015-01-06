@@ -35,9 +35,10 @@
 // Remakes collection view
 @property (weak, nonatomic) IBOutlet UICollectionView *remakesCV;
 
-// Story label
+// Story description label
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiStoryDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiStoryDescriptionBluryBG;
+@property (weak, nonatomic) IBOutlet UIView *guiStoryDescriptionBG;
 
 // More remakes headline
 @property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineContainer;
@@ -161,6 +162,7 @@
     
     // More remakes headline
     [[AMBlurView new] insertIntoView:self.guiMoreRemakesHeadlineBG];
+    self.guiMoreRemakesHeadlineBG.alpha = 0.3;
     
     // Pull up to refresh
     UIRefreshControl *refreshControl = [UIRefreshControl new];
@@ -178,6 +180,25 @@
     } else {
         self.offsetPoint = MORE_REMAKES_OFFSET_POINT;
     }
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    
+    // Story description
+    self.guiStoryDescriptionLabel.textColor = [HMStyle.sh colorNamed:C_SD_DESCRIPTION_TEXT];
+    self.guiStoryDescriptionBG.backgroundColor = [HMStyle.sh colorNamed:C_SD_DESCRIPTION_BG];
+    
+    // More remakes label
+    self.guiMoreRemakesHeadlineContainer.backgroundColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_BG];
+    self.guiMoreRemakesHeadlineLabel.textColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_TEXT];
+    
+    // Make your own button
+    self.guiRemakeButton.backgroundColor = [HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_BG];
+    [self.guiRemakeButton setTitleColor:[HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
+    
+    // No remakes
+    self.noRemakesLabel.textColor = [HMStyle.sh colorNamed:C_SD_NO_REMAKES_LABEL];
 }
 
 -(void)loadAnotherRemakesPage

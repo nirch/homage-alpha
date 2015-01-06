@@ -108,6 +108,9 @@
     // Initialize AB Testing.
     _abTester = [HMABTester new];
     
+    // Some apple stupidity handling here.
+    [self preloadKeyboardView];
+    
     return YES;
 }
 
@@ -388,6 +391,18 @@ NSString* machineName()
 //    }
 //    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
     #endif
+}
+
+-(void)preloadKeyboardView
+{
+    // This silly hack preloads keyboard so there's no lag on initial keyboard appearance.
+    // Problem is a known silly bug by apple. iOS 7 + 8.
+    // Apple? Why?! :-)
+    UITextField *lagFreeField = [[UITextField alloc] init];
+    [self.window addSubview:lagFreeField];
+    [lagFreeField becomeFirstResponder];
+    [lagFreeField resignFirstResponder];
+    [lagFreeField removeFromSuperview];
 }
 
 @end

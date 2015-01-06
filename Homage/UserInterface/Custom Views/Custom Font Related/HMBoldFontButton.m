@@ -12,20 +12,34 @@
 
 @implementation HMBoldFontButton
 
--(id)initWithCoder:(NSCoder *)decoder
+-(void)awakeFromNib
 {
-    if (self = [super initWithCoder:decoder])
-    {
-        [self initCustomFont];
-    }
-    return self;
+    [self initCustomFont];
 }
 
 -(void)initCustomFont
 {
+    // Get font name and size.
     NSString *fontName = [HMStyle.sh boldFontName];
+    CGFloat fontSize = self.titleLabel.font.pointSize;
+    
+    // If a style class was set for this font, make some updates.
+    if (self.styleClass) {
+        // Get the style class.
+        NSDictionary *styleAttrs = [HMStyle.sh styleClassForKey:self.styleClass];
+        if (styleAttrs[S_FONT_RESIZE]) {
+            fontSize += [styleAttrs[S_FONT_RESIZE] floatValue];
+        }
+    }
+    
+    // Localized strings
+    if (self.stringKey) {
+        [self setTitle:LS(self.stringKey) forState:UIControlStateNormal];
+    }
+
+    // Set the font name and size.
     self.titleLabel.font = [UIFont fontWithName:fontName
-                                           size:self.titleLabel.font.pointSize];
+                                           size:fontSize];
     
 }
 

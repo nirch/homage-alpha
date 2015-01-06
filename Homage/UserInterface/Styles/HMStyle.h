@@ -20,6 +20,7 @@
  *  @return UIColor defined in style sheet.
  */
 -(UIColor *)colorNamed:(NSString *)name;
+-(UIColor *)colorNamed:(NSString *)name atIndex:(NSInteger)index;
 
 #pragma mark - Fonts
 
@@ -31,13 +32,34 @@
 #define K_FONT_BOLD_DEFAULT_STROKE_SIZE @"fontBoldDefaultStrokeSize"
 #define K_FONT_BOLD_DEFAULT_STROKE_COLOR @"fontBoldDefaultStrokeColor"
 
+#pragma mark - Style classes & attributes
+#define S_FONT_RESIZE @"fontResize"
+
+#pragma mark - Values
+//
+// Values
+//
+-(CGFloat)floatValueForKey:(NSString *)key;
+-(NSInteger)integerValueForKey:(NSString *)key;
+-(NSDictionary *)styleClassForKey:(NSString *)key;
+
+// Splash screen
+#define V_SPLASH_ACTIVITY_POSITION @"valueSplashActivityPosition"
+#define V_SPLASH_ACTIVITY_CIRCLES_COUNT @"valueSplashActivityCirclesCount"
+#define V_SPLASH_ACTIVITY_CIRCLES_RADIUS @"valueSplashActivityCirclesRadius"
+
+
 #pragma mark - Colors
+//
+// Colors
+//
 
 // Misc
 #define C_REFRESH_CONTROL_TINT @"colorRefreshControlTint"
 
 // Splash screen
 #define C_SPLASH_ACTIVITY_INDICATOR @"colorSplashActivityIndicator"
+#define C_ARRAY_SPLASH_ACTIVITY_INDICATOR @"colorsArraySplashActivityIndicator"
 
 // Login screen
 #define C_LOGIN_BACKGROUND @"colorLoginBackground"
@@ -54,7 +76,9 @@
 #define C_LOGIN_FADED_TEXT @"colorLoginFadedText"
 #define C_LOGIN_FADED_LINKS @"colorLoginFadedLinks"
 
-// Navigation
+// Navigation and status bar
+#define C_STATUS_BAR_BG @"colorStatusBarBG"
+
 #define C_NAV_BAR_TITLE @"colorNavBarTitle"
 #define C_NAV_BAR_BACKGROUND @"colorNavBarBackground"
 #define C_NAV_BAR_SEPARATOR @"colorNavBarSeparator"
@@ -66,11 +90,19 @@
 #define C_SIDE_NAV_BAR_OPTION_TEXT @"colorSideNavBarOptionText"
 #define C_SIDE_NAV_BAR_SEPARATOR @"colorSideNavBarSeparator"
 
+// Stories
+#define C_STORIES_TEXT @"colorStoriesText"
+
 // Story details
-#define C_SD_TEXT @"colorSDText"
-#define C_SD_MORE_REMAKES_TITLE @"colorSDMoreRemakesTitle"
+#define C_SD_DESCRIPTION_TEXT @"colorSDDescriptionText"
+#define C_SD_DESCRIPTION_BG @"colorSDDescriptionBG"
+#define C_SD_MORE_REMAKES_TITLE_TEXT @"colorSDMoreRemakesTitleText"
+#define C_SD_MORE_REMAKES_TITLE_BG @"colorSDMoreRemakesTitleBG"
 #define C_SD_REMAKE_BUTTON_BG @"colorSDRemakeButtonBG"
 #define C_SD_REMAKE_BUTTON_TEXT @"colorSDRemakeButtonText"
+#define C_SD_NO_REMAKES_LABEL @"colorSDNoRemakesLabel"
+#define C_SD_REMAKE_INFO_TEXT @"colorSDRemakeInfoText"
+
 
 // Settings screen
 #define C_SETTINGS_BG @"colorSettingsBG"
@@ -100,10 +132,18 @@
  */
 -(NSString *)regularFontName;
 
-//
+/**
+ *  The default stroke size for the regular font.
+ *
+ *  @return CGFloat size of the stoke
+ */
 -(CGFloat)regularFontDefaultStrokeSize;
 
-//
+/**
+ *  The default stroke color for the regular font.
+ *
+ *  @return UIColor color of the regular font.
+ */
 -(UIColor *)regularFontDefaultStrokeColor;
 
 /**
@@ -114,10 +154,18 @@
  */
 -(NSString *)boldFontName;
 
-//
+/**
+ *  The default stroke size for the bold font.
+ *
+ *  @return CGFloat size of the stoke
+ */
 -(CGFloat)boldFontDefaultStrokeSize;
 
-//
+/**
+ *  The default stroke color for the bold font.
+ *
+ *  @return UIColor color of the bold font.
+ */
 -(UIColor *)boldFontDefaultStrokeColor;
 
 @end

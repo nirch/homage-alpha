@@ -25,6 +25,9 @@
 
 @interface HMSideBarViewController ()
 
+
+@property (weak, nonatomic) IBOutlet UIView *guiStatusBarBG;
+
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiStoriesButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiMeButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiSettingsButton;
@@ -67,6 +70,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initStrings];
     [self initGUI];
 }
 
@@ -101,8 +105,13 @@
     // *  STYLES  *
     // ************
 
+    // Status 
+    
     // Background color
     self.guiSideNavBarBG.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_BG];
+    
+    // Status bar background color
+    self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
     
     // Nav Buttons
     UIColor *bottomBorderColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_SEPARATOR];
@@ -126,12 +135,18 @@
     
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Localized strings
+-(void)initStrings
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.guiStoriesButton setTitle:LS(@"NAV_STORIES_BUTTON") forState:UIControlStateNormal];
+    [self.guiMeButton setTitle:LS(@"NAV_MY_STORIES_BUTTON") forState:UIControlStateNormal];
+    [self.guiSettingsButton setTitle:LS(@"NAV_SETTINGS_BUTTON") forState:UIControlStateNormal];
+    [self.guiHowToButton setTitle:LS(@"NAV_HOWTO_BUTTON") forState:UIControlStateNormal];
+    [self.guiShareAppButton setTitle:LS(@"NAV_SHARE_APP_BUTTON") forState:UIControlStateNormal];
 }
 
+
+#pragma mark - (Give some logical order to yoav's mess)
 -(void)selectButton:(UIButton *)sender
 {
     [UIView animateWithDuration:0.1 animations:

@@ -11,32 +11,40 @@
 
 @implementation HMBoldFontLabel
 
--(id)initWithCoder:(NSCoder *)decoder
+-(void)awakeFromNib
 {
-    if (self = [super initWithCoder:decoder])
-    {
-        [self initCustomFont];
-    }
-    return self;
+    [self initCustomFont];
 }
-
 
 -(void)initCustomFont
 {
+    // Get font name and size.
     NSString *fontName = [HMStyle.sh boldFontName];
-    [self setFont:[UIFont fontWithName:fontName size:self.font.pointSize]];
-    self.contentMode = UIViewContentModeCenter;
-
+    CGFloat fontSize = self.font.pointSize;
+    
     // Default styles.
-    self.strokeSize = [HMStyle.sh boldFontDefaultStrokeSize];
-    self.strokeColor = [HMStyle.sh boldFontDefaultStrokeColor];
-}
-
--(void)customizeStrokeSize:(CGFloat)size
-                     color:(UIColor *)color
-{
-    self.strokeSize = size;
-    self.strokeColor = color;
+    CGFloat strokeSize = [HMStyle.sh regularFontDefaultStrokeSize];
+    UIColor *strokeColor = [HMStyle.sh regularFontDefaultStrokeColor];
+    
+    // If a style class was set for this font, make some updates.
+    if (self.styleClass) {
+        // Get the style class.
+        NSDictionary *styleAttrs = [HMStyle.sh styleClassForKey:self.styleClass];
+        if (styleAttrs[S_FONT_RESIZE]) {
+            fontSize += [styleAttrs[S_FONT_RESIZE] floatValue];
+        }
+    }
+    
+    // Localized strings
+    if (self.stringKey) {
+        self.text = LS(self.stringKey);
+    }
+    
+    // Set the styles.
+    self.strokeSize = strokeSize;
+    self.strokeColor = strokeColor;
+    [self setFont:[UIFont fontWithName:fontName size:fontSize]];
+    self.contentMode = UIViewContentModeCenter;
 }
 
 @end
