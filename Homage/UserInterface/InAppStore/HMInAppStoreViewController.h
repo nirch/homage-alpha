@@ -7,10 +7,13 @@
 //
 
 #import "HMStoreDelegate.h"
+#import "HMStoreManagerDelegate.h"
 
 @class Story;
 
-@interface HMInAppStoreViewController : UIViewController
+@interface HMInAppStoreViewController : UIViewController<
+    HMStoreManagerDelegate
+>
 
 @property (nonatomic, weak) id<HMStoreDelegate>delegate;
 

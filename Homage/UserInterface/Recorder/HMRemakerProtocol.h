@@ -37,9 +37,9 @@ typedef NS_ENUM(NSInteger, HMRecorderState) {
      */
     HMRecorderStateJustStarted,
     /**
-     *  1 - The introduction message displayed to the user.
+     *  1 - The recorder was initialized and chosen next/first scene.
      */
-    HMRecorderStateGeneralMessage,
+    HMRecorderStateInitialized,
     /**
      *  2 - A description message for the user about the current scene to retake.
      */

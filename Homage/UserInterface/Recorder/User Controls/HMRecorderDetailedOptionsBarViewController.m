@@ -23,6 +23,7 @@
 #import "HMServer+analytics.h"
 #import "HMAppDelegate.h"
 #import "HMABTester.h"
+#import "HMStyle.h"
 
 @interface HMRecorderDetailedOptionsBarViewController ()
 
@@ -32,14 +33,22 @@
 @property (weak, nonatomic) IBOutlet UIView *guiMoreDetailsBar;
 @property (weak, nonatomic) IBOutlet UIView *guiLessDetailsBar;
 @property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
-@property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneDurationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *guiCurrentSceneLabel;
+
+
+
+// Separator line in drawer
+@property (weak, nonatomic) IBOutlet UIView *guiSepLineSmall;
+@property (weak, nonatomic) IBOutlet UIView *guiSepLine;
+
+// Current scene
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiSceneLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiCurrentSceneLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiSceneDurationLabel;
+@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiCurrentSceneDurationLabel;
+
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiMicrophoneUnauthorizedLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiNoConnectivityView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiGetInspiredIcon;
-
-//deprecated. set GUI outlet if you need to debug background detection
-@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiBadBGLabel;
 
 // Table of scenes
 @property (weak, nonatomic) IBOutlet UITableView *guiTableView;
@@ -140,15 +149,37 @@
     // Countdown delegate
     self.guiRoundCountdownLabal.delegate = self;
     
-    //bad BG label
-    self.guiBadBGLabel.hidden = YES;
-    
     // Round border for record button
     UIView *b = self.guiRoundBorder;
     b.backgroundColor = [UIColor clearColor];
     b.layer.cornerRadius = b.bounds.size.width/2.0f;
-    b.layer.borderColor = [UIColor whiteColor].CGColor;
-    b.layer.borderWidth = 3;
+    b.layer.borderWidth = [HMStyle.sh floatValueForKey:V_RECORDER_RECORD_BUTTON_OUTLINE];
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    
+    // Record button and outline
+    self.guiRecordButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON];
+    b.layer.borderColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_OUTLINE].CGColor;
+
+    // Drawer
+    self.guiSepLine.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_DRAWER_SEP_LINE];
+    self.guiSepLineSmall.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_DRAWER_SEP_LINE];
+    
+    // Current scene
+    self.guiSceneLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_SCENE_INFO_TITLE];
+    self.guiCurrentSceneLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_SCENE_INFO_DATA];
+
+    self.guiCurrentSceneDurationLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_SCENE_INFO_DATA];
+    self.guiSceneDurationLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_SCENE_INFO_TITLE];
+    
+    // Buttons
+    self.guiShowScriptButtonContainer.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_BG];
+    [self.guiShowScriptButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_TEXT] forState:UIControlStateNormal];
+
+    self.guiSceneDirectionButtonContainer.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_BG];
+    [self.guiSceneDirectionButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_TEXT] forState:UIControlStateNormal];    
 }
 
 -(void)initABTesting
@@ -436,13 +467,13 @@
 {
     Scene *scene = [self.remake.story findSceneWithID:sceneID];
     Footage *footage = [self.remake footageWithSceneID:sceneID];
-    self.guiCurrentSceneLabel.text = [scene titleForSceneID];
+    self.guiCurrentSceneLabel.text = [scene stringForSceneID];
     if ([footage readyState] == HMFootageReadyStateReadyForFirstRetake) {
         //self.guiCurrentSceneLabel.textColor = HMColor.sh.text;
     } else {
         //self.guiCurrentSceneLabel.textColor = HMColor.sh.textImpact;
     }
-    self.guiCurrentSceneDurationLabel.text = [scene titleForTime];
+    self.guiCurrentSceneDurationLabel.text = [scene stringForTime];
     
     // Current scene "OUR TAKE" video.
     [self.sceneVideoVC setVideoURL:scene.videoURL];
@@ -517,12 +548,20 @@
     HMFootageReadyState footageReadyState = [self.footagesReadyStates[index] integerValue];
     
     cell.guiSceneLabel.text = [Scene titleForSceneBySceneID:scene.sID];
-    cell.readyState = footageReadyState;
     cell.guiSceneTimeLabel.text = scene.titleForTime;
+    
+    cell.readyState = footageReadyState;
     cell.guiSelectRowButton.tag = indexPath.row;
     cell.guiRetakeSceneButton.tag = indexPath.row;
     cell.guiRowIndicatorImage.alpha = [scene.sID isEqualToNumber:self.sceneID] ? 1 : 0;
     cell.guiRowIndicatorImage.transform = CGAffineTransformIdentity;
+
+    // ************
+    // *  STYLES  *
+    // ************
+    cell.guiSceneLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_SCENE_INFO_TITLE];
+    cell.guiSceneTimeLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_SCENE_INFO_DATA];
+    
 }
 
 -(void)snapIndicatorIntoPlaceAtIndexPath:(NSIndexPath *)indexPath
@@ -794,21 +833,21 @@
 }
 
 
--(void)showBadBackgroundLabel
-{
-    if (!self.guiBadBGLabel.hidden) return;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.guiBadBGLabel.hidden = NO;
-    });
-}
-
--(void)hideBadBackgroundLabel
-{
-    if (self.guiBadBGLabel.hidden) return;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.guiBadBGLabel.hidden = YES;
-    });
-}
+//-(void)showBadBackgroundLabel
+//{
+//    if (!self.guiBadBGLabel.hidden) return;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        self.guiBadBGLabel.hidden = NO;
+//    });
+//}
+//
+//-(void)hideBadBackgroundLabel
+//{
+//    if (self.guiBadBGLabel.hidden) return;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        self.guiBadBGLabel.hidden = YES;
+//    });
+//}
 
 //make comment should you want to hide status bar
 - (BOOL)prefersStatusBarHidden

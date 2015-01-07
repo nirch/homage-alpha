@@ -220,6 +220,8 @@
     // End frame
     f.size.width = self.width;
     _endFrame = f;
+    
+    self.progressIndicator.backgroundColor = self.indicatorTintColor;
 }
 
 #pragma mark - Progress animation

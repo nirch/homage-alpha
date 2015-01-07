@@ -10,6 +10,9 @@
                 <outlet property="guiAreYouSureToRetakeContainer" destination="9QY-BT-dsp" id="GsU-dZ-iPF"/>
                 <outlet property="guiAreYouSureToRetakeIcon" destination="Li9-fA-Pko" id="kGm-Jd-cBY"/>
                 <outlet property="guiAreYouSureYouWantToRetakeLabel" destination="w79-E1-3MA" id="Svd-jm-XkK"/>
+                <outletCollection property="guiImpactButtons" destination="eNF-Ee-yGn" id="VgS-XY-Ern"/>
+                <outletCollection property="guiImpactButtons" destination="o8h-6j-Ic0" id="F4v-JB-PeW"/>
+                <outletCollection property="guiImpactButtons" destination="kgd-5U-Ri7" id="WsT-HG-ViJ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -25,7 +28,7 @@
                             <rect key="frame" x="225" y="59" width="85" height="52"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ARE YOU SURE YOU WANT TO RETAKE THIS SCENE?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w79-E1-3MA" customClass="HMBoldFontLabel">
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ARE YOU SURE YOU WANT TO RETAKE THIS SCENE?" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" id="w79-E1-3MA" customClass="HMBoldFontLabel">
                             <rect key="frame" x="90" y="119" width="355" height="82"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="27"/>
@@ -95,8 +98,8 @@
     </objects>
     <resources>
         <image name="iconRetakeMedium" width="36" height="36"/>
-        <image name="iconSmallPreviewBlack" width="28" height="19"/>
-        <image name="iconSmallRetakeSceneBlack" width="20" height="20"/>
+        <image name="iconSmallPreviewBlack" width="30" height="19"/>
+        <image name="iconSmallRetakeSceneBlack" width="21" height="21"/>
         <image name="iconSmallXBlack" width="12" height="17"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

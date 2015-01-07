@@ -619,21 +619,32 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 -(NSDictionary *)getDeviceInformation
 {
     NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-
+    NSString *appBuild = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    
     UIDevice *device = [UIDevice currentDevice];
     NSDictionary *deviceDictionary =  @{
                                         @"name": device.name,
                                         @"system_name": device.systemName,
                                         @"system_version": device.systemVersion,
-                                        @"model": device.model,
+                                        @"model": [HMAppDelegate deviceModelName],
                                         @"identifier_for_vendor": [device.identifierForVendor UUIDString],
-                                        @"app_version": appVersion
+                                        @"app_version": appVersion,
+                                        @"app_build": appBuild
                                         };
     
     NSData *pushToken = self.myAppDelegate.pushToken;
     if (pushToken)
     {
-        deviceDictionary =  @{@"name" : device.name , @"system_name" : device.systemName , @"system_version" : device.systemVersion , @"model" : device.model , @"identifier_for_vendor" : [device.identifierForVendor UUIDString] , @"push_token" : pushToken};
+        deviceDictionary =  @{
+                              @"name" : device.name ,
+                              @"system_name" : device.systemName ,
+                              @"system_version" : device.systemVersion ,
+                              @"model" : [HMAppDelegate deviceModelName] ,
+                              @"identifier_for_vendor" : [device.identifierForVendor UUIDString] ,
+                              @"app_version": appVersion,
+                              @"app_build": appBuild,
+                              @"push_token" : pushToken
+                              };
     }
     return deviceDictionary;
 }

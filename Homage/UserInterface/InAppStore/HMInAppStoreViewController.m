@@ -11,10 +11,17 @@
 #import "HMStoreProductsViewController.h"
 #import "HMNotificationCenter.h"
 #import "HMAppStore.h"
+#import "AMBlurView.h"
+#import "HMParentalControlViewController.h"
 
 @interface HMInAppStoreViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *guiParentalControlContainer;
+
+@property (weak, nonatomic) IBOutlet UIView *guiActionsBar;
+@property (weak, nonatomic) IBOutlet UIView *guiActionsBarBlurredView;
 @property (weak, nonatomic) IBOutlet UIButton *guiRestoreButton;
+
 @property (weak) HMStoreProductsViewController *productsVC;
 
 @end
@@ -24,7 +31,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.guiRestoreButton.hidden = YES;
+    [self initGUI];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -37,6 +44,20 @@
 {
     [super viewDidDisappear:animated];
     [self removeObservers];
+}
+
+-(void)initGUI
+{
+    self.guiRestoreButton.hidden = YES;
+    self.guiRestoreButton.userInteractionEnabled = NO;
+    self.guiRestoreButton.alpha = 0.3;
+    [[AMBlurView new] insertIntoView:self.guiActionsBarBlurredView];
+}
+
+#pragma mark - Status bar
+-(BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 #pragma mark - Observers
@@ -101,7 +122,15 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"products segue"]) {
+        
+        // A weak reference to the product VC
         self.productsVC = segue.destinationViewController;
+        
+    } else if ([segue.identifier isEqualToString:@"parent control segue"]) {
+        
+        HMParentalControlViewController *vc = segue.destinationViewController;
+        vc.delegate = self;
+        
     }
 }
 
@@ -114,6 +143,18 @@
 -(void)done
 {
     [self.delegate storeDidFinishWithInfo:nil];
+}
+
+#pragma mark - HMStoreManagerDelegate
+-(void)parentalControlValidatedSuccessfully
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiParentalControlContainer.alpha = 0;
+        self.guiRestoreButton.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        self.guiParentalControlContainer.hidden = YES;
+        self.guiRestoreButton.userInteractionEnabled = YES;
+    }];
 }
 
 #pragma mark - IB Actions

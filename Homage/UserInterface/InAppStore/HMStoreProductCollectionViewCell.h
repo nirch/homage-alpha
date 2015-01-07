@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiText;
 @property (weak, nonatomic) IBOutlet UILabel *guiPrice;
 @property (weak, nonatomic) IBOutlet UIButton *guiBuyButton;
+@property (weak, nonatomic) IBOutlet UIView *guiSepLine;
 
 @end

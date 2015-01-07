@@ -60,6 +60,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiRemakeScreenContainer;
 @property (weak, nonatomic) HMRemakeScreenViewController *remakeScreenVC;
 @property (nonatomic) BOOL ignoreRemakeSelections;
+@property (nonatomic) UIColor *remakesInfoTextColor;
 
 // Data
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -199,6 +200,10 @@
     
     // No remakes
     self.noRemakesLabel.textColor = [HMStyle.sh colorNamed:C_SD_NO_REMAKES_LABEL];
+    
+    // Information text on remakes
+    self.remakesInfoTextColor = [HMStyle.sh colorNamed:C_SD_REMAKE_INFO_TEXT];
+
 }
 
 -(void)loadAnotherRemakesPage
@@ -407,7 +412,7 @@
 -(void)updateMakeYourOwnButton
 {
     if (self.story.isPremiumAndLocked && [HMServer.sh supportsInAppPurchases]) {
-        [self.guiRemakeButton setImage:[UIImage imageNamed:@"iconRemakeStoryLocked"] forState:UIControlStateNormal];
+        [self.guiRemakeButton setImage:[UIImage imageNamed:@"storyLockedIconSmall"] forState:UIControlStateNormal];
     } else {
         [self.guiRemakeButton setImage:[UIImage imageNamed:@"remakeInverseBGButton"] forState:UIControlStateNormal];
     }
@@ -493,6 +498,7 @@
     //
     
     // Likes counter
+    cell.guiLikesCountLabel.textColor = self.remakesInfoTextColor;
     if (remake.likesCount && remake.likesCount.integerValue > 0) {
         cell.guiLikesCountLabel.text = [NSString stringWithFormat:@"%@", remake.likesCount];
         cell.guiLikesCountLabel.alpha = 1.0;
@@ -504,6 +510,7 @@
     }
     
     // Views counter
+    cell.guiViewsCountLabel.textColor = self.remakesInfoTextColor;
     if (remake.viewsCount && remake.viewsCount.integerValue > 0) {
         cell.guiViewsCountLabel.text = [NSString stringWithFormat:@"%@", remake.viewsCount];
         cell.guiViewsCountLabel.alpha = 1.0;

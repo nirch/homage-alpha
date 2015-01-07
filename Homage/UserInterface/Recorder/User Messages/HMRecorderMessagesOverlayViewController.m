@@ -19,6 +19,7 @@
 #import "mixpanel.h"
 #import <AVFoundation/AVFoundation.h>
 #import "HMCacheManager.h"
+#import "HMStyle.h"
 
 @interface HMRecorderMessagesOverlayViewController ()
 
@@ -50,6 +51,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiAreYouSureToRetakeIcon;
 @property (weak, nonatomic) IBOutlet UILabel *guiAreYouSureYouWantToRetakeLabel;
 
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *guiImpactButtons;
+
+
 @property (nonatomic, readonly) HMRecorderMessagesType messageType;
 @property (nonatomic, readonly) BOOL shouldCheckNextStateOnDismiss;
 @property (nonatomic) BOOL shouldDismissOnDecision;
@@ -68,7 +72,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadSubviews];  
+    [self loadSubviews];
     [self.guiDismissButton addMotionEffectWithAmount:15];
     [self.guiTextMessageIcon addMotionEffectWithAmount:15];
     [self.guiTextMessageTitleLabel addMotionEffectWithAmount:15];
@@ -145,6 +149,34 @@
     
     // Mark that GUI already initialized once.
     _alreadyInitializedGUI = YES;
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    self.guiActivity.tintColor = [HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT];
+    self.guiAreYouSureYouWantToRetakeLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
+    self.guiTextMessageTitleLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
+    self.guiTextMessageLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TEXT];
+    [self.guiGeneralMessageOKButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TEXT_BUTTON] forState:UIControlStateNormal];
+    self.guiBigImageTextLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
+    
+    // Finished scene retake button
+    self.guiFinishedSceneRetakeButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_BG];
+    [self.guiFinishedSceneRetakeButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_TEXT] forState:UIControlStateNormal];
+
+    // Finished scene see preview button
+    self.guiFinishedScenePreviewButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_BG];
+    [self.guiFinishedScenePreviewButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_TEXT] forState:UIControlStateNormal];
+    
+    // More impact buttons
+    for (UIButton *button in self.guiImpactButtons) {
+        button.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_BG];
+        [button setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_TEXT] forState:UIControlStateNormal];
+    }
+
+    // The dismiss/action button
+    [self.guiDismissButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_MESSAGE_ACTION_BUTTON] forState:UIControlStateNormal];
+    [self.guiBigImagedismissButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_MESSAGE_ACTION_BUTTON] forState:UIControlStateNormal];
 }
 
 #pragma mark - Obesrvers

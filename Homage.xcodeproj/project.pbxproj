@@ -592,6 +592,7 @@
 		086D949E188701EA0086C565 /* HMServer+Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+Stories.m"; sourceTree = "<group>"; };
 		086F30B61A529B7100430D81 /* Monkey Dance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Monkey Dance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		086F30B81A529CA500430D81 /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Homage-Info.plist"; sourceTree = "<group>"; };
+		087052881A5CFFD800E22066 /* HMStoreManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreManagerDelegate.h; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_LocalStorage_Tests.m; sourceTree = "<group>"; };
@@ -1029,6 +1030,7 @@
 				0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */,
 				0864E04F1A4F3B5600F7AEB7 /* Styles */,
 				08DF23051892704300912657 /* Main */,
+				08FA971D1A45B853009B998C /* InAppStore */,
 				08455FDE1890458E0040504D /* Recorder */,
 				0884566418848D3300B94267 /* Custom Views & Controls */,
 				0842A63219F7E64E002F0D8B /* ToonBG */,
@@ -1624,7 +1626,6 @@
 				08DF23151892704300912657 /* Stories */,
 				081E397D19FD6CC000990F50 /* remake screen */,
 				084E90D11A00E10400779030 /* sharing */,
-				08FA971D1A45B853009B998C /* InAppStore */,
 				08EA81371A2139E900742251 /* Tutorials */,
 			);
 			path = Main;
@@ -1726,6 +1727,7 @@
 			children = (
 				08FA971E1A45B8C6009B998C /* InAppStore.storyboard */,
 				08FA97391A46C01E009B998C /* HMStoreDelegate.h */,
+				087052881A5CFFD800E22066 /* HMStoreManagerDelegate.h */,
 				08FA97211A45D44B009B998C /* HMInAppStoreViewController.h */,
 				08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */,
 				08FA97251A45E4F2009B998C /* HMParentalControlViewController.h */,

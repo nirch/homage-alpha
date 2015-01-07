@@ -447,8 +447,6 @@
     cell.guiStoryNameLabel.text = story.name;
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
     cell.guiThumbImage.alpha = 0;
-    cell.guiStoryNameLabel.textColor = self.textColor;
-
     
     // Lazy load thumb image.
     NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];
@@ -483,6 +481,12 @@
     } else {
         cell.guiStoryLockedContainer.hidden = YES;
     }
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    cell.guiStoryNameLabel.textColor = self.textColor;
+    cell.guiNumOfRemakes.textColor = self.textColor;
 }
 
 #pragma mark - Collection View configuration

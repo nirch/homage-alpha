@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "HMStoreManagerDelegate.h"
+
 @interface HMParentalControlViewController : UIViewController
+
+@property (nonatomic) id<HMStoreManagerDelegate>delegate;
 
 @end

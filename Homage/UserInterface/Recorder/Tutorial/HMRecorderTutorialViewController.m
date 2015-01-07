@@ -11,6 +11,7 @@
 #import "DB.h"
 #import "HMAppDelegate.h"
 #import "HMABTester.h"
+#import "HMStyle.h"
 
 @interface HMRecorderTutorialViewController ()
 
@@ -62,6 +63,18 @@
     self.guiUseSolidBGLabel.text = LS(@"HELP_LABEL_SOLID_BG");
     self.guiPlaceActorHereLabel.text = LS(@"HELP_LABEL_PLACE_ACTOR");
     self.guiGetInspiredLabel.text = LS(@"HELP_LABEL_GET_INSPIRED");
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    UIColor *textColor = [HMStyle.sh colorNamed:C_RECORDER_TUTORIAL_TEXT];
+    self.guiSceneDurationLabel.textColor = textColor;
+    self.guiUseSolidBGLabel.textColor = textColor;
+    self.guiPlaceActorHereLabel.textColor = textColor;
+    self.guiGetInspiredLabel.textColor = textColor;
+    
+    UIColor *buttonsColor = [HMStyle.sh colorNamed:C_RECORDER_TUTORIAL_BUTTON];
+    [self.guiContinueButton setTitleColor:buttonsColor forState:UIControlStateNormal];
 }
 
 -(void)initABTesting

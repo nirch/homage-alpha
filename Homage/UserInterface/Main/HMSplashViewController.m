@@ -12,13 +12,14 @@
 #import "HMRegularFontLabel.h"
 #import "HMBoldFontButton.h"
 #import "HMNotificationCenter.h"
+#import "HMAppDelegate.h"
 
 
 @interface HMSplashViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
 @property (weak, nonatomic) IBOutlet HMToonBGView *guiBGView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+//@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiFailedToConnectLabel;
 @property (weak, nonatomic) IBOutlet HMBoldFontButton *guiTryAgainButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiTopLogo;
@@ -64,18 +65,23 @@
 
 -(void)revealAnimations
 {
-    [UIView animateWithDuration:0.2
-                          delay:0
-         usingSpringWithDamping:0.7
-          initialSpringVelocity:0.7
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^{
-                         self.guiTopLogo.transform = CGAffineTransformMakeScale(1.2, 1.1);
-                     } completion:^(BOOL finished) {
-                        [UIView animateWithDuration:0.5 animations:^{
-                            self.guiTopLogo.transform = CGAffineTransformIdentity;
-                        }];
-                     }];
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    if (app.isSlowDevice) {
+
+    } else {
+        [UIView animateWithDuration:1.0
+                              delay:0.3
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0.6
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             self.guiTopLogo.transform = CGAffineTransformMakeScale(1.2, 1.1);
+                         } completion:^(BOOL finished) {
+                            [UIView animateWithDuration:0.5 animations:^{
+                                self.guiTopLogo.transform = CGAffineTransformIdentity;
+                            }];
+                         }];
+    }
 }
 
 -(void)prepare
@@ -90,12 +96,14 @@
 
 -(void)done
 {
-    [self.guiActivity stopAnimating];
+    //[self.guiActivity stopAnimating];
+    [self.activityView stopAnimating];
 }
 
 -(void)showFailedToConnectMessage
 {
-    [self.guiActivity stopAnimating];
+    //[self.guiActivity stopAnimating];
+    [self.activityView stopAnimating];
     self.guiFailedToConnectLabel.hidden = NO;
     self.guiTryAgainButton.hidden = NO;
 }
@@ -117,7 +125,8 @@
 {
     self.guiTryAgainButton.hidden = YES;
     self.guiFailedToConnectLabel.hidden = YES;
-    [self.guiActivity startAnimating];
+    //[self.guiActivity startAnimating];
+    [self.activityView startAnimating];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST
                                                         object:nil
                                                       userInfo:nil];

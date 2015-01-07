@@ -15,6 +15,7 @@
 #import "DB.h"
 #import "HMMotionDetector.h"
 #import "HMCacheManager.h"
+#import "HMStyle.h"
 
 @interface HMWhileRecordingOverlayViewController ()
 
@@ -40,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor clearColor];
+    [self initGUI];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -55,6 +56,16 @@
     [self removeObservers];
 }
 
+
+-(void)initGUI
+{
+    self.view.backgroundColor = [UIColor clearColor];
+
+    // ************
+    // *  STYLES  *
+    // ************
+    self.guiTimeProgressView.indicatorTintColor = [HMStyle.sh colorNamed:C_RECORDER_RECORDING_PROGRESS_BAR];
+}
 
 #pragma mark - Script UI
 -(void)update

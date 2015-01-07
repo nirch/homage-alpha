@@ -47,7 +47,8 @@
 #define V_SPLASH_ACTIVITY_POSITION @"valueSplashActivityPosition"
 #define V_SPLASH_ACTIVITY_CIRCLES_COUNT @"valueSplashActivityCirclesCount"
 #define V_SPLASH_ACTIVITY_CIRCLES_RADIUS @"valueSplashActivityCirclesRadius"
-
+#define V_STORE_THUMBS_CORNER_RADIUS @"valueStoreThumbsCornerRadius"
+#define V_RECORDER_RECORD_BUTTON_OUTLINE @"valueRecorderButtonOutline"
 
 #pragma mark - Colors
 //
@@ -56,6 +57,8 @@
 
 // Misc
 #define C_REFRESH_CONTROL_TINT @"colorRefreshControlTint"
+#define C_ACTIVITY_CONTROL_TINT @"colorActivityControlTint"
+
 
 // Splash screen
 #define C_SPLASH_ACTIVITY_INDICATOR @"colorSplashActivityIndicator"
@@ -103,6 +106,11 @@
 #define C_SD_NO_REMAKES_LABEL @"colorSDNoRemakesLabel"
 #define C_SD_REMAKE_INFO_TEXT @"colorSDRemakeInfoText"
 
+// Me screen
+#define C_ME_TEXT @"colorMeText"
+#define C_ME_CREATE_FIRST_VIDEO_TEXT @"colorMeCreateFirstVideoText"
+#define C_ME_REMAKE_BUTTON_BG @"colorMeRemakeButtonBG"
+#define C_ME_REMAKE_BUTTON_TEXT @"colorMeRemakeButtonText"
 
 // Settings screen
 #define C_SETTINGS_BG @"colorSettingsBG"
@@ -113,16 +121,46 @@
 #define C_SETTINGS_SECTION_TITLE_TEXT @"colorSettingsSectionTitleText"
 
 // Recorder
+#define C_RECORDER_TUTORIAL_TEXT @"colorRecorderTutorialText"
+#define C_RECORDER_TUTORIAL_BUTTON @"colorRecorderTutorialButton"
+
 #define C_RECORDER_RECORD_BUTTON @"colorRecorderRecordButton"
 #define C_RECORDER_RECORD_BUTTON_OUTLINE @"colorRecorderRecordButtonOutline"
+#define C_RECORDER_DRAWER_SEP_LINE @"colorRecorderDrawerSepLine"
+
 #define C_RECORDER_IMPACT_BUTTON_BG @"colorRecorderImpactButtonBG"
 #define C_RECORDER_IMPACT_BUTTON_TEXT @"colorRecorderImpactButtonText"
-#define C_RECORDER_TEXT_BUTTON @"colorRecorderTextButton"
-#define C_RECORDER_TEXT @"colorRecorderText"
+
 #define C_RECORDER_MESSAGE_TITLE @"colorRecorderMessageTitle"
 #define C_RECORDER_MESSAGE_TEXT @"colorRecorderMessageText"
-#define C_RECORDER_IMPACT_TEXT @"colorRecorderImpactText"
+#define C_RECORDER_MESSAGE_ACTION_BUTTON @"colorRecorderMessageActionButton"
+#define C_RECORDER_MESSAGE_TEXT_BUTTON @"colorRecorderMessageTextButton"
+
 #define C_RECORDER_RECORDING_PROGRESS_BAR @"colorRecorderRecordingProgressBar"
+
+#define C_RECORDER_SCENE_INFO_TITLE @"colorRecorderSceneInfoTitle"
+#define C_RECORDER_SCENE_INFO_DATA @"colorRecorderSceneInfoData"
+
+#define C_VIDEO_TITLES @"colorVideoTitles"
+
+// Store
+#define C_STORE_PRODUCT_TITLE @"colorStoreProductTitle"
+#define C_STORE_PRODUCT_DESCRIPTION @"colorStoreProductDescription"
+#define C_STORE_PRODUCT_PRICE @"colorStoreProductPrice"
+#define C_STORE_PRODUCT_LINE @"colorStoreProductLine"
+#define C_STORE_PRODUCT_BUY_BUTTON_TEXT @"colorStoreProductBuyButtonText"
+#define C_STORE_PRODUCT_BUY_BUTTON_BG @"colorStoreProductBuyButtonBG"
+#define C_STORE_PRODUCT_BUY_BUTTON_STROKE @"colorStoreProductBuyButtonStroke"
+
+#define C_STORE_PC_NUM_KEY_BG @"colorPCNumKeyBG"
+#define C_STORE_PC_NUM_KEY_STROKE @"colorPCNumKeyStroke"
+#define C_STORE_PC_NUM_KEY_TEXT @"colorPCNumKeyText"
+
+#define C_STORE_PC_TITLE @"colorPCTitle"
+#define C_STORE_PC_TEXT @"colorPCText"
+#define C_STORE_PC_INPUT_TEXT @"colorPCInputText"
+#define C_STORE_PC_INPUT_BORDER @"colorPCInputBorder"
+
 
 /**
  *  The regular font name defined in the style.

@@ -310,6 +310,11 @@
 }
 
 #pragma mark - App Info
++(NSString *)deviceModelName
+{
+    return machineName();
+}
+
 NSString* machineName()
 {
     /*

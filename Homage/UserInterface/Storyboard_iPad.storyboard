@@ -1679,11 +1679,11 @@
         <image name="myStoriesPlayButton" width="44" height="44"/>
         <image name="myStoriesRemakeButton" width="44" height="44"/>
         <image name="myStoriesShareButton" width="44" height="44"/>
-        <image name="navAppIcon" width="38" height="38"/>
-        <image name="navIconHowto" width="38" height="38"/>
-        <image name="navIconMyStories" width="38" height="38"/>
-        <image name="navIconSettings" width="38" height="38"/>
-        <image name="navIconStories" width="40" height="38"/>
+        <image name="navAppIcon" width="35" height="37"/>
+        <image name="navIconHowto" width="36" height="36"/>
+        <image name="navIconMyStories" width="37" height="37"/>
+        <image name="navIconSettings" width="37" height="37"/>
+        <image name="navIconStories" width="39" height="36"/>
         <image name="noConnectivity" width="60" height="60"/>
         <image name="progressCloseIcon" width="22" height="22"/>
         <image name="remakeInverseBGButton" width="33" height="33"/>

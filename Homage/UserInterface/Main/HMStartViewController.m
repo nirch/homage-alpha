@@ -854,8 +854,18 @@
 
 -(void)setTitle:(NSString *)title
 {
-    [super setTitle:title];
-    self.guiNavTitleLabel.text = title;
+    [super setTitle:title];    
+    [UIView animateWithDuration:0.1 animations:^{
+        self.guiNavTitleLabel.alpha = 0;
+        self.guiNavTitleLabel.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    } completion:^(BOOL finished) {
+        self.guiNavTitleLabel.text = title;
+        [UIView animateWithDuration:0.1 animations:^{
+            self.guiNavTitleLabel.alpha = 1;
+            self.guiNavTitleLabel.transform = CGAffineTransformIdentity;
+        }];
+    }];
+    
 }
 
 -(void)showRenderingView

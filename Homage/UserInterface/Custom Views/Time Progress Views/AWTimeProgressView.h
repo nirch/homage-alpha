@@ -10,6 +10,11 @@
 
 @interface AWTimeProgressView : UIView
 
+/**
+ *  The color of the progress indicator.
+ */
+@property UIColor *indicatorTintColor;
+
 ///
 /**
 *  The duration from start till finish of the timed progress as NSTimeInterval.

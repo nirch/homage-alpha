@@ -283,12 +283,22 @@
     // The flow state machine.
     // Moves to next stage according to current state.
     //
+    
+    // -----------------------------------------
+    // DEPRECATED the general message screen.
+    // Will start with the tutorial screens (or just go straight to making a scene)
+    // if (self.recorderState == HMRecorderStateJustStarted) {
+    // 0 - HMRecorderStateJustStarted --> 1 - HMRecorderStateGeneralMessage
+    // [self stateShowGeneralIntroStateIfNeeded];
+    // -----------------------------------------
     if (self.recorderState == HMRecorderStateJustStarted) {
         
-        // 0 - HMRecorderStateJustStarted --> 1 - HMRecorderStateGeneralMessage
-        [self stateShowGeneralIntroStateIfNeeded];
+        // Initialize the state of the recorder
+        // (it may start at the first scene, or later scene if
+        // this is remake in progress).
+        [self stateJustStartedSoInitialize];
         
-    } else if (self.recorderState == HMRecorderStateGeneralMessage) {
+    } else if (self.recorderState == HMRecorderStateInitialized) {
         
         BOOL debugAlwaysSkipHelpScreens = NO; // Set to NO or remove this for correct behavior.
         BOOL debugAlwaysShowHelpScreens = NO;  // Set to NO or remove this for correct behavior.
@@ -361,9 +371,37 @@
     }
 }
 
--(void)stateShowGeneralIntroStateIfNeeded
+//-(void)stateShowGeneralIntroStateIfNeeded
+//{
+//    // HMRecorderStateJustStarted --> HMRecorderStateGeneralMessage
+//    
+//    //
+//    // Select the first scene requiring a first retake.
+//    // If none found (all footages already taken by the user),
+//    // will select the last scene for this remake instead.
+//    //
+//    _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
+//    if (!self.currentSceneID)
+//    {
+//       _currentSceneID = [self.remake lastSceneID];
+//    }
+//    [self updateUIForSceneID:self.currentSceneID];
+//    
+//    // Just started. Show general message.
+//    // But if user chosen not to show that message, skip it.
+//    _recorderState = HMRecorderStateGeneralMessage;
+//    if ([User.current.skipRecorderTutorial isEqualToNumber:@YES]) {
+//        // Skip to next state without showing the general message.
+//        [self advanceState];
+//    } else {
+//        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral checkNextStateOnDismiss:YES info:nil];
+//    }
+//    
+//}
+
+-(void)stateJustStartedSoInitialize
 {
-    // HMRecorderStateJustStarted --> HMRecorderStateGeneralMessage
+    // HMRecorderStateJustStarted --> HMRecorderStateInitialized
     
     //
     // Select the first scene requiring a first retake.
@@ -373,20 +411,14 @@
     _currentSceneID = [self.remake nextReadyForFirstRetakeSceneID];
     if (!self.currentSceneID)
     {
-       _currentSceneID = [self.remake lastSceneID];
+        _currentSceneID = [self.remake lastSceneID];
     }
     [self updateUIForSceneID:self.currentSceneID];
     
-    // Just started. Show general message.
-    // But if user chosen not to show that message, skip it.
-    _recorderState = HMRecorderStateGeneralMessage;
-    if ([User.current.skipRecorderTutorial isEqualToNumber:@YES]) {
-        // Skip to next state without showing the general message.
-        [self advanceState];
-    } else {
-        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeGeneral checkNextStateOnDismiss:YES info:nil];
-    }
-    
+    // Initialized after starting.
+    // Advance to next state.
+    _recorderState = HMRecorderStateInitialized;
+    [self advanceState];
 }
 
 -(void)stateShowContextForNextScene

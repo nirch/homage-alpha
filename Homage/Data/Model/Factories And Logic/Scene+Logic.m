@@ -17,9 +17,19 @@
     return [NSString stringWithFormat:@"SCENE %ld", (long)sceneID.integerValue];
 }
 
++(NSString *)stringForSceneBySceneID:(NSNumber *)sceneID
+{
+    return [NSString stringWithFormat:@"%ld", (long)sceneID.integerValue];
+}
+
 -(NSString *)titleForSceneID
 {
     return [Scene titleForSceneBySceneID:self.sID];
+}
+
+-(NSString *)stringForSceneID
+{
+    return [Scene stringForSceneBySceneID:self.sID];
 }
 
 -(NSString *)titleForTime
@@ -30,6 +40,16 @@
     NSString *secondsString = [numberFormatter stringFromNumber:@(seconds)];
     return [NSString stringWithFormat:@"%@ SEC", secondsString];
 }
+
+-(NSString *)stringForTime
+{
+    double seconds = self.duration.doubleValue / 1000.0f;
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    numberFormatter.roundingMode = NSNumberFormatterRoundHalfUp;
+    NSString *secondsString = [numberFormatter stringFromNumber:@(seconds)];
+    return [NSString stringWithFormat:@"%@", secondsString];
+}
+
 
 -(NSTimeInterval)durationInSeconds
 {

@@ -21,6 +21,7 @@
  *  @return Title as a string.
  */
 +(NSString *)titleForSceneBySceneID:(NSNumber *)sceneID;
++(NSString *)stringForSceneBySceneID:(NSNumber *)sceneID;
 
 ///
 /**
@@ -29,6 +30,8 @@
  *  @return Title as a string.
  */
 -(NSString *)titleForSceneID;
+-(NSString *)stringForSceneID;
+
 
 ///
 /**
@@ -37,6 +40,7 @@
  *  @return Title as a string. Time in seconds and tenths of a second ==> @"#.#"
  */
 -(NSString *)titleForTime;
+-(NSString *)stringForTime;
 
 ///
 /**

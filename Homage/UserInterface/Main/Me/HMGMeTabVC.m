@@ -154,6 +154,9 @@
     // *  STYLES  *
     // ************
     self.refreshControl.tintColor = [HMStyle.sh colorNamed:C_REFRESH_CONTROL_TINT];
+    self.guiRemakeMoreStoriesButton.backgroundColor = [HMStyle.sh colorNamed:C_ME_REMAKE_BUTTON_BG];
+    [self.guiRemakeMoreStoriesButton setTitleColor:[HMStyle.sh colorNamed:C_ME_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
+    
     
 }
 

@@ -22,7 +22,8 @@
 "OK" = "OK";
 "OK_GOT_IT" = "OK, GOT IT";
 "SORRY" = "Sorry!";
-"STORY_NOT_AVAILABLE" = "This story is no longer available. if you loved it, do tell us about it in the feedback section (->Settings)";
+"STORY_NOT_AVAILABLE" = "This clip is no longer available. if you loved it, do tell us about it in the feedback section (->Settings)";
+"DONT_SHOW_THIS_AGAIN" = "Don't show this again";
 
 "VIDEO_SAVED" = "Video Saved";
 
@@ -48,15 +49,19 @@
 "MISSING_SEGMENTS_ERROR" = "why you no film segments: %@";
 
 /*these are the strings appearing to the user when he wants to delete a remake from his personal area*/
-"DELETE_REMAKE" = "Delete remake";
-"APPROVE_DELETION" = "Would you like to delete this remake?";
+"DELETE_REMAKE" = "Delete clip";
+"APPROVE_DELETION" = "Would you like to delete this clip?";
 "YES" = "Yes";
 "NO" = "No";
 
 /*in me screen, when you have no remakes, this label will show*/
-"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST STORY!";
-"REMAKE_MORE_STORIES" = "REMAKE MORE STORIES!";
-"REMAKE_A_STORY" = "REMAKE A STORY!";
+"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST CLIP!";
+"REMAKE_MORE_STORIES" = "REMAKE MORE CLIPS!";
+"REMAKE_A_STORY" = "REMAKE A CLIP!";
+
+/*me screen buttons for each user's remake*/
+"ME_REMAKE_DELETE" = "Delete clip";
+"ME_REMAKE_RETAKE" = "Retake clip";
 
 /*in the story details screen, when no remakes available, this label will show*/
 "NO_REMAKES_STORY_DETAILS" = "Be the first to make a clip";
@@ -64,7 +69,7 @@
 "MAKE_YOUR_OWN_BUTTON" = "MAKE YOUE OWN";
 
 /*in stories tab ,when you have no stories, this label will show*/
-"NO_STORIES" = "(no stories)";
+"NO_STORIES" = "NO CLIPS :-(";
 
 /* 
     It is possible to define the texts in nav buttons
@@ -75,7 +80,7 @@
 "NAV_STORIES_BUTTON" = "CLIPS";
 "NAV_MY_STORIES_BUTTON" = "MY CLIPS";
 "NAV_SETTINGS_BUTTON" = "SETTINGS";
-"NAV_HOWTO_BUTTON" = "HOW TO";
+"NAV_HOWTO_BUTTON" = "HELP";
 "NAV_SHARE_APP_BUTTON" = "SHARE APP";
 
 /*app navigation sections*/
@@ -88,13 +93,13 @@
 "STORIES_TAB_HEADLINE_TITLE" = "STORIES";
 "SETTINGS_TAB_HEADLINE TITLE" = "SETTINGS";
 /*a message to the user, notifing him that the movie is ready*/
-"REMAKE_READY_CLICK" = "Your Movie is Ready! Click to watch";
+"REMAKE_READY_CLICK" = "Your clip is Ready! Click to watch";
 
 /*a message to the user, notifing him that the movie creation has failed*/
-"REMAKE_FAILED_CLICK" = "Your movie creation Failed. Click to dismiss";
+"REMAKE_FAILED_CLICK" = "Your clip creation Failed. Click to dismiss";
 
 /*a message to the user, notifing him that the movie is now rendering*/
-"RENDERING_MOVIE_MESSAGE" = "Preparing your movie: %@";
+"RENDERING_MOVIE_MESSAGE" = "Preparing your clip!";
 
 /*the title for an alert view that pops when the user chooses of to make a new remake or continue from last sabed point*/
 "CONTINUE_WITH_REMAKE" = "Continue Remake";
@@ -106,14 +111,15 @@
 "LEAVE_RECORDER_TITLE"="Leave recorder";
 "LEAVE_RECORDER_MESSAGE" = "This will close the recorder. Are you sure?";
 "WATCH_OUR_SCENE" = "WATCH OUR SCENE";
-"WATCH_OUR_STORY" = "WATCH OUR STORY";
+"WATCH_OUR_STORY" = "WATCH OUR CLIP";
 "HIDE_SCRIPT" = "HIDE SCRIPT";
 "SHOW_SCRIPT" = "SHOW SCRIPT";
 "GREAT_JOB" = "GREAT JOB!";
 "AT_THE_NEXT_SCENE" = "At the next scene %@";
-"NAILED_ALL_SCENES" = "You nailed all scenes. lets finish the movie";
-"CREATE_MOVIE" = "CREATE MOVIE";
+"NAILED_ALL_SCENES" = "You nailed all scenes. lets finish the clip!";
+"CREATE_MOVIE" = "CREATE CLIP!";
 "SHOW_YOUR_TAKE" = "SHOW YOUR TAKE";
+"RECORDER_TITLE_SCENE" = "SCENE";
 
 /*recorder tutorial*/
 "HELP_LABEL_SOLID_BG" = "Use solid backgrounds";
@@ -122,6 +128,7 @@
 "HELP_LABEL_GET_INSPIRED" = "Get inspired";
 "HELP_BUTTON_NEXT" = "NEXT";
 "HELP_BUTTON_FINISH" = "FINISH";
+
 
 /*go to next scene button*/
 "NEXT_SCENE" = "Shoot Scene!";
@@ -158,30 +165,34 @@
 "DEFUALT_SHARE_MSG_BODY" = "Check my video \"%@\": \n\n %@";
 "SHARE_MSG_BODY_HASHTAGS" = " #Homage #Homage%@ #%@";
 
-"SHARING_APP_SUBJECT" = "Join me in making awesome videos!";
-"SHARING_APP_BODY_MESSAGE" = "Keep calm and download homage:\n\n iPhone: %@\nAndroid: %@";
+"SHARING_APP_SUBJECT" = "Join me in making awesome clips!";
+"SHARING_APP_BODY_MESSAGE" = "Monkey Dance!\n\n iPhone: %@\nAndroid: %@";
 
 //share alerts
-"SHARE_REMAKE_FAILED_TITLE" = "Failed sharing remake";
-"SHARE_REMAKE_FAILED_BODY" = "Failed sharing remake. Check connection and try again.";
+"SHARE_REMAKE_FAILED_TITLE" = "Failed sharing clip";
+"SHARE_REMAKE_FAILED_BODY" = "Failed sharing clip. Check connection and try again.";
 
 /*remake options menu*/
 "OPTIONS" = "Options";
 "MARK_AS_INAPPROPRIATE" = "Mark as inappropriate";
-"MARK_AS_INAPPROPRIATE_QUESTION" = "Are you sure you to flag this remake as inappropriate";
+"MARK_AS_INAPPROPRIATE_QUESTION" = "Are you sure you to flag this clip as inappropriate";
 
 /*Social*/
 "LIKE_BUTTON_LABEL" = "Like";
 "UNLIKE_BUTTON_LABEL" = "Liked";
 
 /*In app store*/
+"STORE_RESTORE_PURCHASES_BUTTON" = "Restore purchases";
 "STORE_BUY_BUTTON" = "BUY";
 "STORE_UNAVAILABLE_BUTTON" = "Disabled";
-"STORE_PROCESSING_BUTTON" = "Processing";
+"STORE_PROCESSING_BUTTON" = "...";
 "STORE_MISSING_PRODUCT_TITLE" = "Missing product";
 "STORE_ITEM_UNLOCKED" = "Unlocked";
 "STORE_MISSING_PRODUCT_TEXT" = "The product is temporarily unavailable. Try again later.";
 "STORE_TITLE" = "MONKEY STORE";
 "STORE_STORIES_TITLE" = "STORIES";
+"STORE_PLEASE_WAIT" = "Monkey Store...";
 
-
+/*Parental Control*/
+"STORE_PARENTAL_CTRL_TITLE" = "Grown-Ups Only!";
+"STORE_PARENTAL_CTRL_ACCESS_TITLE" = "To access, please enter the numbers:";

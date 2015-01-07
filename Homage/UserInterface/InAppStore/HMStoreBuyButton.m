@@ -8,6 +8,8 @@
 
 #import "HMStoreBuyButton.h"
 
+#import "HMStyle.h"
+
 @implementation HMStoreBuyButton
 
 -(id)initWithFrame:(CGRect)frame
@@ -31,8 +33,15 @@
 -(void)initGUI
 {
     self.layer.borderColor = self.tintColor.CGColor;
-    self.layer.borderWidth = 1;
+    self.layer.borderWidth = 2;
     self.layer.cornerRadius = 5;
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    self.layer.borderColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_BUY_BUTTON_STROKE].CGColor;
+    self.backgroundColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_BUY_BUTTON_BG];
+    [self setTitleColor:[HMStyle.sh colorNamed:C_STORE_PRODUCT_BUY_BUTTON_TEXT] forState:UIControlStateNormal];
 }
 
 @end

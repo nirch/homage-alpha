@@ -14,16 +14,19 @@
 #import "HMStoreSectionView.h"
 #import "HMServer+AppConfig.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "HMStyle.h"
+#import "UIView+MotionEffect.h"
 
 
 @interface HMStoreProductsViewController ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *guiBackgroundImage;
+@property (weak, nonatomic) IBOutlet UIView *guiLogoContainer;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiProductsCV;
 @property (weak, nonatomic) IBOutlet UILabel *guiLoadingLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 @property (weak, nonatomic) IBOutlet UIView *guiActivityContainer;
-
-
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) HMAppStore *appStore;
@@ -99,28 +102,16 @@
 {
     self.inTransactions = NO;
     self.guiProductsCV.hidden = YES;
-    self.guiActivityContainer.hidden = NO;
-    self.guiActivityContainer.alpha = 0;
-    self.guiActivityContainer.transform = CGAffineTransformMakeTranslation(0, 80);
-    [self.guiActivity startAnimating];
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:0.7 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.guiActivityContainer.alpha = 1;
-        self.guiActivityContainer.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-    }];
+    self.guiActivityContainer.layer.cornerRadius = 10;
+    
+    [self.guiBackgroundImage addMotionEffectWithAmount:-30];
+    
+    [self showActivity];
 }
 
 -(void)showProducts
 {
-    [UIView animateWithDuration:0.2
-                          delay:0.3
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                         self.guiActivityContainer.transform = CGAffineTransformMakeTranslation(0, -700);
-                     } completion:^(BOOL finished) {
-                         self.guiActivityContainer.hidden = YES;
-                     }];
-    
+    [self hideActivity];
     self.guiProductsCV.hidden = NO;
     self.guiProductsCV.alpha = 0;
     [UIView animateWithDuration:0.8 animations:^{
@@ -131,6 +122,30 @@
     [self.guiProductsCV reloadData];
 }
 
+-(void)showActivity
+{
+    self.guiActivityContainer.transform = CGAffineTransformIdentity;
+    self.guiActivityContainer.alpha = 0;
+    self.guiActivityContainer.hidden = NO;
+    [self.guiActivity startAnimating];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiActivityContainer.alpha = 1;
+    }];
+}
+
+-(void)hideActivity
+{
+    [UIView animateWithDuration:0.2
+                          delay:0.3
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         self.guiActivityContainer.transform = CGAffineTransformMakeTranslation(0, -300);
+                         self.guiActivityContainer.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         self.guiActivityContainer.hidden = YES;
+                         [self.guiActivity stopAnimating];
+                     }];
+}
 
 #pragma mark - App Store
 -(void)initAppStore
@@ -228,12 +243,22 @@
     cell.guiTitle.alpha = 1.0;
     cell.guiImage.alpha = 1.0;
     cell.guiBuyButton.alpha = 1.0;
+    cell.guiBuyButton.enabled = YES;
+
     
     // If already purchased.
     if ([HMAppStore didUnlockBundle]) {
         cell.guiBuyButton.hidden = YES;
         cell.guiPrice.text = LS(@"STORE_ITEM_UNLOCKED");
     }
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    cell.guiTitle.textColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_TITLE];
+    cell.guiText.textColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_DESCRIPTION];
+    cell.guiSepLine.backgroundColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_LINE];
+    cell.guiImage.layer.cornerRadius = [HMStyle.sh floatValueForKey:V_STORE_THUMBS_CORNER_RADIUS];
 }
 
 
@@ -256,6 +281,8 @@
     cell.guiTitle.alpha = 1.0;
     cell.guiImage.alpha = 1.0;
     cell.guiBuyButton.alpha = 1.0;
+    cell.guiBuyButton.enabled = YES;
+
     
     NSURL *url = [NSURL URLWithString:story.thumbnailURL];
     [cell.guiImage sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -267,6 +294,14 @@
         cell.guiBuyButton.hidden = YES;
         cell.guiPrice.text = LS(@"STORE_ITEM_UNLOCKED");
     }
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    cell.guiTitle.textColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_TITLE];
+    cell.guiText.textColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_DESCRIPTION];
+    cell.guiSepLine.backgroundColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_LINE];
+    cell.guiImage.layer.cornerRadius = [HMStyle.sh floatValueForKey:V_STORE_THUMBS_CORNER_RADIUS];
 }
 
 -(void)unavailableProductInCell:(HMStoreProductCollectionViewCell *)cell
@@ -282,43 +317,67 @@
     cell.guiTitle.alpha = 0.2;
     cell.guiImage.alpha = 0.2;
     cell.guiBuyButton.alpha = 0.2;
+    cell.guiBuyButton.enabled = NO;
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    cell.guiImage.layer.cornerRadius = [HMStyle.sh floatValueForKey:V_STORE_THUMBS_CORNER_RADIUS];
+    cell.guiSepLine.backgroundColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_LINE];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return CGSizeMake(320, 170);
+        return CGSizeMake(320, 140);
     } else {
-        return CGSizeMake(320, 60);
+        return CGSizeMake(320, 80);
     }
-}
-
--(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-          viewForSupplementaryElementOfKind:(NSString *)kind
-                                atIndexPath:(NSIndexPath *)indexPath
-{
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter])
-        return nil;
-
-    static NSString *identifier = @"section header view";
-    HMStoreSectionView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                        withReuseIdentifier:identifier
-                                                                               forIndexPath:indexPath];
-    
-    if (indexPath.section == 0) {
-        view.guiTitle.text = LS(@"STORE_TITLE");
-    } else {
-        view.guiTitle.text = LS(@"STORE_STORIES_TITLE");
-    }
-    
-    return view;
 }
 
 #pragma mark - UICollectionViewDelegate
 
+#pragma mark - Scroll View Delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSInteger y =  scrollView.contentInset.top + scrollView.contentOffset.y;
+    if (y <= 1) {
+        [self showStoreLogoIfNotShown];
+    } else {
+        [self hideStoreLogoIfShown];
+    }
+}
+
+-(void)showStoreLogoIfNotShown
+{
+    if (self.guiLogoContainer.alpha==1) return;
+    
+    [UIView animateWithDuration:0.7
+                          delay:0
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0.1
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.guiLogoContainer.alpha = 1;
+                         self.guiLogoContainer.transform = CGAffineTransformIdentity;;
+                     } completion:nil];
+}
+
+-(void)hideStoreLogoIfShown
+{
+    if (self.guiLogoContainer.alpha==0) return;
+    [UIView animateWithDuration:0.2 animations:^{
+        CGAffineTransform t = CGAffineTransformMakeScale(1.2,1.2);
+        t = CGAffineTransformTranslate(t, 0, -30);
+        self.guiLogoContainer.transform = t;
+        self.guiLogoContainer.alpha = 0;
+    }];
+}
+
 #pragma mark - In transaction flow
 -(void)startTransactions
 {
+    [self showActivity];
     self.inTransactions = YES;
     self.guiProductsCV.userInteractionEnabled = NO;
     [UIView animateWithDuration:1.0 animations:^{
@@ -338,6 +397,7 @@
     // Stay in the store and allow user to buy more stuff.
     self.inTransactions = NO;
     self.guiProductsCV.userInteractionEnabled = YES;
+    [self hideActivity];
     [UIView animateWithDuration:1.0 animations:^{
         self.guiProductsCV.alpha = 1.0;
     }];

@@ -18,6 +18,7 @@
 #import "HMAppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMCacheManager.h"
+#import "HMStyle.h"
 
 
 @implementation UIDevice (ALSystemVersion)
@@ -146,6 +147,11 @@
             [self play];
         });
     }
+
+    // ************
+    // *  STYLES  *
+    // ************
+    self.videoView.guiVideoLabel.textColor = [HMStyle.sh colorNamed:C_VIDEO_TITLES];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -435,6 +441,7 @@
 -(void)setVideoLabelText:(NSString *)videoLabelText
 {
     self.videoView.guiVideoLabel.text = videoLabelText;
+    self.videoView.guiVideoLabel.textColor = [HMStyle.sh colorNamed:C_VIDEO_TITLES];
 }
 
 -(void)updateUIToPlayVideoState
