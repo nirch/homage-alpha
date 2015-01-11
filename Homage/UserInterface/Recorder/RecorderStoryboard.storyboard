@@ -660,6 +660,11 @@
                                             <action selector="onPressedRecordButton:" destination="m2k-fx-mZd" eventType="touchUpInside" id="5uq-if-vp1"/>
                                         </connections>
                                     </button>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" id="5hP-ri-VbF" userLabel="Lock record button view">
+                                        <rect key="frame" x="1" y="29" width="63" height="7"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <view hidden="YES" contentMode="scaleToFill" id="cwP-eK-oSv" userLabel="Count Down Container">
                                         <rect key="frame" x="5" y="5" width="55" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -707,6 +712,7 @@
                         <outlet property="guiCurrentSceneLabel" destination="aHo-I2-osw" id="LcP-T7-CzH"/>
                         <outlet property="guiGetInspiredIcon" destination="e4Y-rA-xzv" id="hfh-gj-bdT"/>
                         <outlet property="guiLessDetailsBar" destination="ncI-xc-Aml" id="Ouz-GT-L7i"/>
+                        <outlet property="guiLockRecordButtonView" destination="5hP-ri-VbF" id="zhF-ck-t6j"/>
                         <outlet property="guiMicrophoneUnauthorizedLabel" destination="0rs-gk-Y7Y" id="BT9-94-uup"/>
                         <outlet property="guiMoreDetailsBar" destination="NcZ-Uk-buY" id="n6c-D3-Irr"/>
                         <outlet property="guiNoConnectivityView" destination="SmQ-On-bze" id="LF4-cG-baq"/>

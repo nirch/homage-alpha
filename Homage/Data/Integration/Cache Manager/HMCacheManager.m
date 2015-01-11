@@ -127,6 +127,11 @@
     dispatch_async(dispatch_get_main_queue(), ^() {
         [weakSelf _checkIfNeedsToDownloadAudioForStories];
     });
+    
+    // Downloading and caching user remakes
+    dispatch_async(dispatch_get_main_queue(), ^() {
+        [weakSelf _checkIfNeedsToDownloadMoviesForUserRemakes];
+    });
 }
 
 -(void)pauseDownloads

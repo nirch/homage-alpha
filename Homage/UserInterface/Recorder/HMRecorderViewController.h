@@ -12,7 +12,12 @@
 #import "HMRecorderDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define UNRECOGNIZED_MARK -9999
+#define BBG_MARK_NOISY -11
+#define BBG_MARK_DARK -10
+#define BBG_MARK_SILHOUETTE -5
+#define BBG_MARK_SHADOW -4
+#define BBG_MARK_CLOTH -2
+#define BBG_MARK_UNRECOGNIZED -9999
 
 @interface HMRecorderViewController : UIViewController<
     HMRemakerProtocol,

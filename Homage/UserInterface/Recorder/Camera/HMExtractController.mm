@@ -458,10 +458,12 @@
         //
         // Bad backgrounds make the algorithm very very sad :-(
         //
-        NSDictionary *info = @{K_BAD_BACKGROUND_MARK:@(bgMark)};
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND
-                                                            object:self
-                                                          userInfo:info];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *info = @{K_BAD_BACKGROUND_MARK:@(bgMark)};
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND
+                                                                object:self
+                                                              userInfo:info];
+        });
 
         // TODO: check if this is really needed / doesn't hinder performance.
         // Reporting to server for every bad background frame?
@@ -474,11 +476,12 @@
         //
         // Good background :-) YEY!
         //
-        NSDictionary *info = @{K_GOOD_BACKGROUND_MARK:@(bgMark)};
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND
-                                                            object:self
-                                                          userInfo:info];
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *info = @{K_GOOD_BACKGROUND_MARK:@(bgMark)};
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND
+                                                                object:self
+                                                              userInfo:info];
+        });
     }
 
 }

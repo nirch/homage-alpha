@@ -95,9 +95,12 @@
                      animations:^{
                          self.guiStoreButton.transform = CGAffineTransformMakeScale(1.2, 1.1);
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:2.0 animations:^{
-                             self.guiStoreButton.transform = CGAffineTransformIdentity;
-                         } completion:nil];
+                         [UIView animateWithDuration:2.0
+                                               delay:0
+                                             options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
+                                          animations:^{
+                                              self.guiStoreButton.transform = CGAffineTransformIdentity;
+                                          } completion:nil];
                      }];
 }
 -(void)viewWillDisappear:(BOOL)animated

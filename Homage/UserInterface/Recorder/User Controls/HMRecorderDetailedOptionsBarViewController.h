@@ -19,5 +19,7 @@
     HMSimpleVideoPlayerDelegate
 >
 
+-(void)shouldLockRecordButton;
+-(void)shouldUnlockRecordButton;
 
 @end

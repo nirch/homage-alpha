@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+#define LOCK_IND_TRANSFORM CGAffineTransformMakeRotation(M_PI_4)
+
 @import AVFoundation;
 
 #import "HMRecorderDetailedOptionsBarViewController.h"
@@ -34,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIView *guiLessDetailsBar;
 @property (weak, nonatomic) IBOutlet UIButton *guiCloseButton;
 
+// Record Button
+@property (weak, nonatomic) IBOutlet UIView *guiLockRecordButtonView;
 
 
 // Separator line in drawer
@@ -154,6 +158,10 @@
     b.backgroundColor = [UIColor clearColor];
     b.layer.cornerRadius = b.bounds.size.width/2.0f;
     b.layer.borderWidth = [HMStyle.sh floatValueForKey:V_RECORDER_RECORD_BUTTON_OUTLINE];
+
+    // Lock indicator of record button
+    self.guiLockRecordButtonView.transform = LOCK_IND_TRANSFORM;
+    self.guiLockRecordButtonView.alpha = 0.1;
     
     // ************
     // *  STYLES  *
@@ -162,7 +170,8 @@
     // Record button and outline
     self.guiRecordButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON];
     b.layer.borderColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_OUTLINE].CGColor;
-
+    self.guiLockRecordButtonView.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_OUTLINE];
+    
     // Drawer
     self.guiSepLine.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_DRAWER_SEP_LINE];
     self.guiSepLineSmall.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_DRAWER_SEP_LINE];
@@ -305,42 +314,23 @@
                      name:HM_NOTIFICATION_UPLOAD_PROGRESS
                    object:nil];
     
-    //uncomment if we want to display "bad background label" in the menu bar
-    //observe bad background
-    /*[nc addUniqueObserver:self
-                 selector:@selector(showBadBackgroundLabel)
-                     name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
-                   object:nil];
-    
-    //observe good background
-    [nc addUniqueObserver:self
-                 selector:@selector(hideBadBackgroundLabel)
-                     name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
-                   object:nil];
-    
-    [nc addUniqueObserver:self
-                 selector:@selector(hideBadBackgroundLabel)
-                     name:HM_DISABLE_BG_DETECTION
-                   object:nil];*/
-    
     // Observe reachability status changes
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onReachabilityStatusChange:)
-                                                       name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
-                                                     object:HMServer.sh];
+    [nc addUniqueObserver:self
+                 selector:@selector(onReachabilityStatusChange:)
+                     name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE
+                   object:HMServer.sh];
     
-    //observe camera movment
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onPressedCancelCountdownButton:)
-                                                       name:HM_NOTIFICATION_CAMERA_NOT_STABLE
-                                                     object:nil];
+    // Observe camera not stable (should cancel recording!)
+    [nc addUniqueObserver:self
+                 selector:@selector(onPressedCancelCountdownButton:)
+                     name:HM_NOTIFICATION_CAMERA_NOT_STABLE
+                   object:nil];
     
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onPressedCancelCountdownButton:)
-                                                       name:HM_APP_WILL_RESIGN_ACTIVE
-                                                     object:nil];
-    
-    
+    // Observe app will resign active (should cancel recording!)
+    [nc addUniqueObserver:self
+                 selector:@selector(onPressedCancelCountdownButton:)
+                     name:HM_APP_WILL_RESIGN_ACTIVE
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -351,13 +341,10 @@
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENING object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED object:nil];
     [nc removeObserver:self name:HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
-    /*[nc removeObserver:self name:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND object:nil];
-    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND object:nil];
-    [nc removeObserver:self name:HM_DISABLE_BG_DETECTION object:nil];*/
-    
-    
 }
 
 #pragma mark - Observers handlers
@@ -366,6 +353,7 @@
     self.guiLessDetailsBar.hidden = NO;
     self.guiMoreDetailsBar.hidden = YES;
     self.guiRecordButton.hidden = NO;
+    self.guiLockRecordButtonView.hidden = NO;
     
     self.guiRecordButton.enabled = YES;
     self.guiCloseButton.enabled= NO;
@@ -384,8 +372,10 @@
     self.guiRecordButton.enabled = NO;
     self.guiCloseButton.enabled= NO;
     self.guiRecordButton.hidden = NO;
+    self.guiLockRecordButtonView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
         self.guiRecordButton.transform = CGAffineTransformIdentity;
+        self.guiLockRecordButtonView.transform = LOCK_IND_TRANSFORM;
         self.guiLessDetailsBar.alpha = 1;
         self.guiMoreDetailsBar.alpha = 0;
     } completion:^(BOOL finished) {
@@ -430,11 +420,15 @@
     [UIView animateWithDuration:0.5 animations:^{
         self.guiMoreDetailsBar.alpha = 1;
     } completion:^(BOOL finished) {
-        if (finished) self.guiRecordButton.hidden = YES;
+        if (finished) {
+            self.guiRecordButton.hidden = YES;
+            self.guiLockRecordButtonView.hidden = YES;
+        }
     }];
     
     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.guiRecordButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        //self.guiLockRecordButtonView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:nil];
 }
 
@@ -655,6 +649,20 @@
     [self.storyVideoVC done];
 }
 
+#pragma mark - Lock/Unlock record button
+-(void)shouldLockRecordButton
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiLockRecordButtonView.alpha = 1;
+    }];
+}
+
+-(void)shouldUnlockRecordButton
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiLockRecordButtonView.alpha = 0;
+    }];
+}
 
 #pragma mark - IB Actions
 // ===========
@@ -687,6 +695,12 @@
 
 - (IBAction)onPressedRecordButton:(UIButton *)sender
 {
+    // Don't allow recording if record button marked as locked.
+    if (self.guiLockRecordButtonView.alpha == 1) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_PRESSING_LOCKED_RECORD_BUTTON object:nil];
+        return;
+    }
+    
     // Countdown before actual recording starts.
     // (user can cancel this action before the countdown ends)
     [HMMotionDetector.sh start];
@@ -831,23 +845,6 @@
     if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
-
-
-//-(void)showBadBackgroundLabel
-//{
-//    if (!self.guiBadBGLabel.hidden) return;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        self.guiBadBGLabel.hidden = NO;
-//    });
-//}
-//
-//-(void)hideBadBackgroundLabel
-//{
-//    if (self.guiBadBGLabel.hidden) return;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        self.guiBadBGLabel.hidden = YES;
-//    });
-//}
 
 //make comment should you want to hide status bar
 - (BOOL)prefersStatusBarHidden

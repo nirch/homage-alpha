@@ -13,11 +13,15 @@
 #define HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENING        @"Recorder detailed options opening"
 #define HM_UI_NOTIFICATION_RECORDER_DETAILED_OPTIONS_OPENED         @"Recorder detailed options opened"
 
+//#define HM_UI_NOTIFICATION_RECORDER_SHOULD_LOCK_RECORD_BUTTON       @"Recorder should lock record button"
+//#define HM_UI_NOTIFICATION_RECORDER_SHOULD_UNLOCK_RECORD_BUTTON     @"Recorder should unlock record button"
+
 #define HM_UI_NOTIFICATION_RECORDER_CURRENT_SCENE                   @"Recorder current scene"
 
 // START and STOP mean a request to start a recording operation / a request to stop a recording operation.
 // Can be sent by a user request, by a successful recording or by an error during recording.
 // Don't use these notifications to inform that a recording was stopped.
+#define HM_NOTIFICATION_RECORDER_PRESSING_LOCKED_RECORD_BUTTON      @"Recorder User Pressed Locked Record Button"
 #define HM_NOTIFICATION_RECORDER_START_RECORDING                    @"Recorder Start Recording"
 #define HM_NOTIFICATION_RECORDER_STOP_RECORDING                     @"Recorder Stop Recording"
 #define HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING   @"Recorder Start Countdown Before Recording"

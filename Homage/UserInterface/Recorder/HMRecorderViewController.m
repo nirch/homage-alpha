@@ -35,6 +35,7 @@
 #import "HMAppDelegate.h"
 #import "HMServer+AppConfig.h"
 #import "HMExtractController.h"
+#import "HMRecorderDetailedOptionsBarViewController.h"
 
 @interface HMRecorderViewController () <UIAlertViewDelegate>
 
@@ -67,6 +68,7 @@
 @property (weak, nonatomic, readonly) HMRecorderEditTextsViewController *editingTextsVC;
 @property (weak, nonatomic, readonly) HMRecorderTutorialViewController *tutorialVC;
 @property (weak, nonatomic, readonly) HMVideoCameraViewController *videoCameraVC;
+@property (weak, nonatomic, readonly) HMRecorderDetailedOptionsBarViewController *optionsBarVC;
 
 // UI State
 @property (nonatomic, readonly) BOOL detailedOptionsOpened;
@@ -211,15 +213,15 @@
 
 -(void)initBadBackgroundsPolicy
 {
-    self.lastBadBackgroundMark = UNRECOGNIZED_MARK;
+    self.lastBadBackgroundMark = BBG_MARK_UNRECOGNIZED;
     
     self.badBackgroundTextsMappings = @{
-                                        @(-11):@"RECORDER_BBG_NOISY",
-                                        @(-10):@"RECORDER_BBG_DARK",
-                                        @(-5):@"RECORDER_BBG_SILHOUETTE",
-                                        @(-4):@"RECORDER_BBG_SHADOW",
-                                        @(-2):@"RECORDER_BBG_CLOTH",
-                                        @(UNRECOGNIZED_MARK):@"RECORDER_BBG_GENERAL_MESSAGE",
+                                        @(BBG_MARK_NOISY):@"RECORDER_BBG_NOISY",
+                                        @(BBG_MARK_DARK):@"RECORDER_BBG_DARK",
+                                        @(BBG_MARK_SILHOUETTE):@"RECORDER_BBG_SILHOUETTE",
+                                        @(BBG_MARK_SHADOW):@"RECORDER_BBG_SHADOW",
+                                        @(BBG_MARK_CLOTH):@"RECORDER_BBG_CLOTH",
+                                        @(BBG_MARK_UNRECOGNIZED):@"RECORDER_BBG_GENERAL_MESSAGE",
                                         };
 }
 
@@ -259,6 +261,9 @@
     self.backgroundStatusCounter = 0;
     self.guiBackgroundStatusButton.alpha = 0;
     self.isBadBackgroundWarningOn = NO;
+    
+    // Drawer
+    self.guiDetailedOptionsBarContainer.layer.shouldRasterize = NO;
     
     // iPad specific
     if (IS_IPAD) {
@@ -636,6 +641,11 @@
                      name:HM_APP_WILL_RESIGN_ACTIVE
                    object:nil];
     
+    [nc addUniqueObserver:self
+                 selector:@selector(onPressedLockedRecordButton:)
+                     name:HM_NOTIFICATION_RECORDER_PRESSING_LOCKED_RECORD_BUTTON
+                   object:nil];
+    
 }
 
 -(void)removeObservers
@@ -649,9 +659,15 @@
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_CAMERA_BAD_BACKGROUND object:nil];
     [nc removeObserver:self name:HM_CAMERA_GOOD_BACKGROUND object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_PRESSING_LOCKED_RECORD_BUTTON object:nil];
 }
 
 #pragma mark - Observers handlers
+-(void)onPressedLockedRecordButton:(NSNotification *)notification
+{
+    [self presentBadBackgroundAlert];
+}
+
 -(void)onStartedCountingDownToRecording:(NSNotification *)notification
 {
     if (self.directionAudioPlayer) [self stopSceneDirectionAudioPlayback];
@@ -878,6 +894,16 @@
     }
     self.guiTextsEditingContainer.hidden = YES;
     [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
+
+    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    HMABTester *abTester = app.abTester;
+    if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
+        // Finished remake flow event.
+        [abTester reportEventType:@"finishedRemakeFlow"];
+        
+        // Finished remake flow event and user used good backgrounds.
+        // TODO: implement.
+    }
 }
 
 #pragma mark - Scenes selection
@@ -1058,6 +1084,8 @@
         _tutorialVC = segue.destinationViewController;
     } else if ([segue.identifier isEqualToString:@"video camera containment segue"]) {
         _videoCameraVC = segue.destinationViewController;
+    } else if ([segue.identifier isEqualToString:@"recorder detailed options bar containment segue"]) {
+        _optionsBarVC = segue.destinationViewController;
     }
 }
 
@@ -1512,16 +1540,15 @@
     if ([stringKey isKindOfClass:[NSString class]]) return stringKey;
 
     // If mapping not found, return the string key for the general bad background message.
-    return self.badBackgroundTextsMappings[@(UNRECOGNIZED_MARK)];
+    return self.badBackgroundTextsMappings[@(BBG_MARK_UNRECOGNIZED)];
 }
 
 -(void)presentBadBackgroundAlert
 {
     NSString *badBackgroundMessageStringKey = [self badBackgroundStringKeyForMark:self.lastBadBackgroundMark];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                       @"icon name":@"storeIcon1",
+                                                                                       @"icon name":@"badBackground",
                                                                                        @"title":LS(@"BAD_BACKGROUND_TITLE"),
                                                                                        @"message":LS(badBackgroundMessageStringKey),
                                                                                        @"ok button text":LS(@"OK_GOT_IT"),
@@ -1728,7 +1755,11 @@
             self.backgroundStatusCounter = 0;
         }
         self.backgroundStatusCounter--;
+
+        // lock record button if required
+        [self lockRecordButtonIfRequiredByBadBackgroundPolicy];
         
+        // Show bad background indicator if needed.
         if (self.backgroundAlertDisplaying) return;
         [self setBGStatusButtonCrossfade:YES];
         self.backgroundAlertDisplaying = YES;
@@ -1744,6 +1775,7 @@
 {
     if (self.backgroundStatusCounter >= GOOD_BACKGROUND_TH)
     {
+        [self unlockRecordButton];
         if (!self.backgroundAlertDisplaying) return;
         [self setBGStatusButtonCrossfade:NO];
         self.backgroundAlertDisplaying = NO;
@@ -1787,10 +1819,10 @@
 
 -(void)setBGStatusButtonCrossfade:(BOOL)activate
 {
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         if (activate)
         {
+            // Show the bad background indicator.
             self.isBadBackgroundWarningOn = YES;
             [UIView animateWithDuration:0.3 animations:^{
                 self.guiBackgroundStatusButton.alpha = 1;
@@ -1805,14 +1837,69 @@
                 crossFade.fillMode = kCAFillModeForwards;
                 [self.guiBackgroundStatusButton.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
             }];
+            
         } else {
+            // Unlock record button.
+            [self unlockRecordButton];
+            
+            // Remove the bad background indicator.
             [self.guiBackgroundStatusButton.imageView.layer removeAllAnimations];
             self.isBadBackgroundWarningOn = NO;
             [UIView animateWithDuration:0.1 animations:^{
                 self.guiBackgroundStatusButton.alpha = 0;
             }];
+            [self unlockRecordButton];
         }
     });
+}
+
+-(void)unlockRecordButton
+{
+    [self.optionsBarVC shouldUnlockRecordButton];
+}
+
+-(void)lockRecordButtonIfRequiredByBadBackgroundPolicy
+{
+    // Tolerant policy.
+    // Warn the users, but let them shoot videos on bad backgrounds.
+    if (self.badBackgroundPolicy == HMBadBackgroundPolicyTolerant) {
+        [self unlockRecordButton];
+        return;
+    }
+    
+    // Strict policy.
+    // Lock the record button in noisy or dark backgrounds.
+    if (self.badBackgroundPolicy == HMBadBackgroundPolicyStrict) {
+        if (self.lastBadBackgroundMark == BBG_MARK_NOISY ||
+            self.lastBadBackgroundMark == BBG_MARK_DARK) {
+            [self _lockRecordButton];
+            return;
+        }
+        [self unlockRecordButton];
+        return;
+    }
+
+    // BBG Nazi.
+    // Lock the record button like a good old fashion dictator,
+    // on bad background marks.
+    if (self.badBackgroundPolicy == HMBadBackgroundPolicyNazi) {
+        if (self.lastBadBackgroundMark == BBG_MARK_NOISY ||
+            self.lastBadBackgroundMark == BBG_MARK_DARK ||
+            self.lastBadBackgroundMark == BBG_MARK_SILHOUETTE ||
+            self.lastBadBackgroundMark == BBG_MARK_SHADOW) {
+            [self _lockRecordButton];
+            return;
+        }
+        [self unlockRecordButton];
+        return;
+    }
+    
+    
+}
+
+-(void)_lockRecordButton
+{
+    [self.optionsBarVC shouldLockRecordButton];
 }
 
 @end
