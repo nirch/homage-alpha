@@ -12,10 +12,25 @@
 #import "HMRecorderDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 
+#define UNRECOGNIZED_MARK -9999
+
 @interface HMRecorderViewController : UIViewController<
     HMRemakerProtocol,
     AVAudioPlayerDelegate
 >
+
+//
+// Levels of how strict is the policy of bad background detection.
+//
+// HMBadBackgroundPolicyTolerant: warnings, but lets the user shoot videos.
+// HMBadBackgroundPolicyStrict: warnings and blocks recording on -10 and -11
+// HMBadBackgroundPolicyNazi: warnings and blocks on -10, -11, -5, -4
+typedef NS_ENUM(NSInteger, HMBadBackgroundPolicy) {
+    HMBadBackgroundPolicyTolerant,
+    HMBadBackgroundPolicyStrict,
+    HMBadBackgroundPolicyNazi
+};
+
 
 ///
 /**

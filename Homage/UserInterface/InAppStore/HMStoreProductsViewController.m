@@ -16,7 +16,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMStyle.h"
 #import "UIView+MotionEffect.h"
-
+#import <Mixpanel.h>
 
 @interface HMStoreProductsViewController ()
 
@@ -424,6 +424,15 @@
     
     // Disable collection view while handling purchase.
     [self startTransactions];
+
+    // Report to mixpanel
+    NSDictionary *info = @{
+                           @"product_id":[HMAppStore bundleProductID],
+                           @"product_type":@"bundle",
+                           @"object_id":[HMServer.sh campaignID]
+                           };
+    [[Mixpanel sharedInstance] track:@"StoreProductClicked" properties:info];
+
     
     // Make the purchase.
     [self.appStore buyProductWithIdentifier:[HMAppStore bundleProductID]];
@@ -438,6 +447,14 @@
     
     // Disable collection view while handling purchase.
     [self startTransactions];
+    
+    // Report to mixpanel
+    NSDictionary *info = @{
+                           @"product_id":story.productIdentifier,
+                           @"product_type":@"story",
+                           @"object_id":story.sID
+                           };
+    [[Mixpanel sharedInstance] track:@"StoreProductClicked" properties:info];
     
     // Make the purchase.
     [self.appStore buyProductWithIdentifier:story.productIdentifier];

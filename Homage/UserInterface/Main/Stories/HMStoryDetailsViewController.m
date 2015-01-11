@@ -29,6 +29,7 @@
 #import <UIScrollView+BottomRefreshControl.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMServer+AppConfig.h"
+#import "HMAppStore.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -869,6 +870,7 @@
     
     HMInAppStoreViewController *vc = [HMInAppStoreViewController storeVCForStory:self.story];
     vc.delegate = self;
+    vc.openedFor = HMStoreOpenedForStoryDetailsRemakeButton;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -953,7 +955,12 @@
         // User doesn't have and old remake for this story in local storage.
         // Will create a new remake.
         //
-        [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:@{@"story" : self.story.name}];
+        NSDictionary *info = @{
+                               @"story": self.story.name,
+                               @"story_id": self.story.sID,
+                               @"is_locked": @(self.story.isPremiumAndLocked)
+                               };
+        [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:info];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
     }
 }

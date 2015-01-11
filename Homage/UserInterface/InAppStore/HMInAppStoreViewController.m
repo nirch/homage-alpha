@@ -13,6 +13,7 @@
 #import "HMAppStore.h"
 #import "AMBlurView.h"
 #import "HMParentalControlViewController.h"
+#import <Mixpanel.h>
 
 @interface HMInAppStoreViewController ()
 
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRestoreButton;
 
 @property (weak) HMStoreProductsViewController *productsVC;
+@property (nonatomic) NSInteger purchasesMadeInSession;
 
 @end
 
@@ -76,6 +78,12 @@
                  selector:@selector(onTransactionsUpdate:)
                      name:HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE
                    object:nil];
+
+    // Observe purchases made
+    [nc addUniqueObserver:self
+                 selector:@selector(onPurchaseMade:)
+                     name:HM_NOTIFICATION_APP_STORE_PURCHASED_ITEM
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -83,6 +91,7 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_APP_STORE_PRODUCTS object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_APP_STORE_PURCHASED_ITEM object:nil];
 }
 
 #pragma mark - Observer handlers
@@ -96,6 +105,11 @@
     [self updateRestoreButton];
 }
 
+-(void)onPurchaseMade:(NSNotification *)notification
+{
+    self.purchasesMadeInSession += 1;
+}
+
 #pragma mark - Restore button
 -(void)updateRestoreButton
 {
@@ -103,13 +117,6 @@
 }
 
 #pragma mark - Store
-+(HMInAppStoreViewController *)storeVCForStory:(Story *)story
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InAppStore" bundle:nil];
-    HMInAppStoreViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"InAppStore"];
-    return vc;
-}
-
 +(HMInAppStoreViewController *)storeVC
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InAppStore" bundle:nil];
@@ -117,6 +124,12 @@
     return vc;
 }
 
++(HMInAppStoreViewController *)storeVCForStory:(Story *)story
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InAppStore" bundle:nil];
+    HMInAppStoreViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"InAppStore"];
+    return vc;
+}
 
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -142,12 +155,16 @@
 
 -(void)done
 {
-    [self.delegate storeDidFinishWithInfo:nil];
+    NSDictionary *info = @{
+                           K_STORE_PURCHASES_COUNT:@(self.purchasesMadeInSession),
+                           K_STORE_OPENED_FOR:@(self.openedFor)
+                           };
+    [self.delegate storeDidFinishWithInfo:info];
 }
 
 #pragma mark - HMStoreManagerDelegate
 -(void)parentalControlValidatedSuccessfully
-{
+{    
     [UIView animateWithDuration:0.2 animations:^{
         self.guiParentalControlContainer.alpha = 0;
         self.guiRestoreButton.alpha = 1.0;
@@ -163,11 +180,16 @@
 // ===========
 - (IBAction)onPressedDismissButton:(id)sender
 {
+    // Report to mixpanel
+    [[Mixpanel sharedInstance] track:@"StoreDismissButtonClicked"];
+
+    // Done
     [self done];
 }
 
 - (IBAction)onPressedRestorePurchases:(UIButton *)sender
 {
+    // Rstore puschases
     sender.hidden = YES;
     [self.productsVC restorePurchases];
 }

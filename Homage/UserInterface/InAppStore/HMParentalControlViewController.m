@@ -12,6 +12,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "HMRegularFontLabel.h"
 #import "HMBoldFontLabel.h"
+#import <Mixpanel.h>
 
 #define MAX_LENGTH 3
 
@@ -168,6 +169,12 @@
 {
     // Validate what was entered.
     if ([self.enteredNumberString isEqualToString:self.requiredNumberString]) {
+        // Validated!
+        
+        // Report to mixpanel
+        [[Mixpanel sharedInstance] track:@"StoreParentalControlCheck" properties:@{@"answer_validated" : @YES}];
+
+        // Tell the delegate to dismiss parental control and enter the store.
         [self.delegate parentalControlValidatedSuccessfully];
         return;
     }
@@ -177,6 +184,9 @@
     if (self.enteredNumberString.length >= MAX_LENGTH) {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
+        // Report to mixpanel
+        [[Mixpanel sharedInstance] track:@"StoreParentalControlCheck" properties:@{@"answer_validated" : @NO}];
+        
         // Shake the wrong number
         CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
         anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ] ] ;

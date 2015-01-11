@@ -22,9 +22,9 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "HMServer+AppConfig.h"
 #import "HMInAppStoreViewController.h"
+#import "HMABTester.h"
 
 @interface HMSideBarViewController ()
-
 
 @property (weak, nonatomic) IBOutlet UIView *guiStatusBarBG;
 
@@ -54,6 +54,12 @@
 
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiStoreButton;
 
+
+@property (weak, nonatomic) HMABTester *abTester;
+
+@property (nonatomic) BOOL shouldAnimateStoreIcon;
+@property (nonatomic) NSString *storeIconName;
+
 @end
 
 @implementation HMSideBarViewController
@@ -80,21 +86,26 @@
     [self initObservers];
 }
 
+-(void)storeIconAnimate {
+    [UIView animateWithDuration:1.0
+                          delay:0.0
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0.6
+                        options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.guiStoreButton.transform = CGAffineTransformMakeScale(1.2, 1.1);
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:2.0 animations:^{
+                             self.guiStoreButton.transform = CGAffineTransformIdentity;
+                         } completion:nil];
+                     }];
+}
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self removeObservers];
 }
 
--(void)initObservers
-{
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self selector:@selector(onSwitchedTab:) name:HM_MAIN_SWITCHED_TAB object:nil];
-}
-
--(void)removeObservers
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HM_MAIN_SWITCHED_TAB object:nil];
-}
 
 -(void)initGUI
 {
@@ -135,6 +146,79 @@
     
 }
 
+#pragma mark - Observers
+-(void)initObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+
+    [nc addUniqueObserver:self selector:@selector(onSwitchedTab:) name:HM_MAIN_SWITCHED_TAB object:nil];
+    [nc addUniqueObserver:self selector:@selector(onSideBarShown:) name:HM_NOTIFICATION_UI_SIDE_BAR_SHOWN object:nil];
+    [nc addUniqueObserver:self selector:@selector(onABTestingVariantsUpdated:) name:HM_NOTIFICATION_AB_TESTING_VARIATIONS_UPDATED object:nil];
+}
+
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_MAIN_SWITCHED_TAB object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_UI_SIDE_BAR_SHOWN object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_AB_TESTING_VARIATIONS_UPDATED object:nil];
+}
+
+#pragma mark - Observers handlers
+-(void)onSwitchedTab:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSNumber *tabIndex = info[@"tab"];
+    NSInteger tabIndexInt = tabIndex.integerValue;
+    
+    switch (tabIndexInt) {
+        case HMStoriesTab:
+            [self onStoriesButtonPushed:self.guiStoriesButton];
+            break;
+        case HMMeTab:
+            [self onMeButtonPushed:self.guiMeButton];
+            break;
+        case HMSettingsTab:
+            [self onSettingsButtonPushed:self.guiSettingsButton];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)onSideBarShown:(NSNotification *)notification
+{
+    [self.abTester reportEventType:@"sidebarShown"];
+    if (self.shouldAnimateStoreIcon)
+        [self storeIconAnimate];
+}
+
+-(void)onABTestingVariantsUpdated:(NSNotification *)notification
+{
+    [self initABTesting];
+}
+
+#pragma mark - AB Testing
+-(void)initABTesting
+{
+    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.abTester = app.abTester;
+    
+    // Get the variant variables or use defaults.
+    self.shouldAnimateStoreIcon = [self.abTester boolValueForProject:AB_PROJECT_STORE_ICONS
+                                                             varName:@"storeIconAnimation"
+                                               hardCodedDefaultValue:NO];
+
+    self.storeIconName = [self.abTester stringValueForProject:AB_PROJECT_STORE_ICONS
+                                                      varName:@"storeIconName"
+                                        hardCodedDefaultValue:@"storeIcon1"];
+    
+    // Set the store icon.
+    UIImage *buttonImage = [UIImage imageNamed:self.storeIconName];
+    [self.guiStoreButton setImage:buttonImage
+                         forState:UIControlStateNormal];
+}
+
 #pragma mark - Localized strings
 -(void)initStrings
 {
@@ -156,27 +240,6 @@
      }];
     
     self.selectedButton = sender;
-}
-
--(void)onSwitchedTab:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    NSNumber *tabIndex = info[@"tab"];
-    NSInteger tabIndexInt = tabIndex.integerValue;
-    
-    switch (tabIndexInt) {
-        case HMStoriesTab:
-            [self onStoriesButtonPushed:self.guiStoriesButton];
-            break;
-        case HMMeTab:
-            [self onMeButtonPushed:self.guiMeButton];
-            break;
-        case HMSettingsTab:
-            [self onSettingsButtonPushed:self.guiSettingsButton];
-            break;
-        default:
-            break;
-    }
 }
 
 -(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
@@ -233,10 +296,11 @@
 }
 
 #pragma mark - In App Store
--(void)openInAppStoreForCurrentStory
+-(void)openInAppStore
 {
     HMInAppStoreViewController *vc = [HMInAppStoreViewController storeVC];
     vc.delegate = self;
+    vc.openedFor = HMStoreOpenedForSideBarStoreButton;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -246,6 +310,20 @@
     [self dismissViewControllerAnimated:YES completion:^{
         // Do something here (if required) when the in app store is dismissed.
     }];
+    
+    // Check the info returned from the store.
+    if (info == nil) return;
+    
+    // AB Test (conversion - user made a purchase in the store in current session)
+    // Report that the user purchased something while in store.
+    HMStoreOpenedFor storeOpenedFor = [info[K_STORE_OPENED_FOR] integerValue];
+    if (storeOpenedFor != HMStoreOpenedForSideBarStoreButton) return;
+    NSInteger purchasesMade = [info[K_STORE_PURCHASES_COUNT] integerValue];
+    if (purchasesMade > 0) {
+        // At least one purchase was made.
+        // Report about it as a conversion event.
+        [self.abTester reportEventType:@"userPurchasedItemAfterPressingStoreButton"];
+    }
 }
 
 #pragma mark - IB Actions
@@ -300,7 +378,15 @@
 
 - (IBAction)onPressedMonkeyShop:(id)sender
 {
-    [self openInAppStoreForCurrentStory];
+    // Report to AB testing service
+    // TODO: remove this when experiment is over.
+    [self.abTester reportEventType:@"userPressedStoreButton"];
+    
+    // Report to mixpanel
+    [[Mixpanel sharedInstance] track:@"StoreSideBarButtonClicked"];
+
+    // Open the in app store.
+    [self openInAppStore];
 }
 
 @end

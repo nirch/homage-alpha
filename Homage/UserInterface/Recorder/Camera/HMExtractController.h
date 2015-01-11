@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+#define K_BAD_BACKGROUND_MARK @"bad background mark"
+#define K_GOOD_BACKGROUND_MARK @"good background mark"
+
 @interface HMExtractController : NSObject <
     AVCaptureVideoDataOutputSampleBufferDelegate,AVCaptureAudioDataOutputSampleBufferDelegate
 >

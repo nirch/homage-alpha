@@ -1,0 +1,28 @@
+------------------------------------------------
+AmazonInsights SDK for iOS (2.1.17.0)
+------------------------------------------------
+    New Features:
+      * Adds support for the arm64 build architecture. If the Architectures setting of your app includes arm64, you will need to target iOS 5.1.1 or greater when you deploy your app.
+
+      
+    Resolved Issues:
+      * Fixes compile errors that occurred when including another version of the Reachability library.
+
+      * Removes unused classes.
+
+------------------------------------------------
+AmazonInsights SDK for iOS (2.1.11.0)
+------------------------------------------------
+    New Features:
+      * Session Timeouts: Sessions now timeout after 5 seconds of inactivity in the Background, rather than being immediately stopped. If the app comes back into the foreground within 5 seconds, the session will be continued. This makes session timeout logic consistent with Android.
+
+      * Removed Dependency on CoreTelephony.framework
+
+------------------------------------------------
+AmazonInsights SDK for iOS (2.1.6.0)
+------------------------------------------------
+    Initial Release
+
+
+
+Found a bug? Please submit a bug to the Amazon Insights Team: analytics-beta@amazon.com.

@@ -39,8 +39,11 @@
 
 @property (strong, nonatomic) IBOutlet UIView *guiBigImageViewContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBigImageViewImage;
-@property (weak, nonatomic) IBOutlet UILabel *guiBigImageTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiBigImageTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiBigImageMessageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiBigImagedismissButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiBigImageHelpButton;
+@property (weak, nonatomic) IBOutlet UILabel *guiBigImageHelpButtonLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *guiFinishedSceneButtonsContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiFinishedSceneRetakeButton;
@@ -149,7 +152,7 @@
     
     // Mark that GUI already initialized once.
     _alreadyInitializedGUI = YES;
-    
+        
     // ************
     // *  STYLES  *
     // ************
@@ -158,7 +161,11 @@
     self.guiTextMessageTitleLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
     self.guiTextMessageLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TEXT];
     [self.guiGeneralMessageOKButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TEXT_BUTTON] forState:UIControlStateNormal];
-    self.guiBigImageTextLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
+    
+    // Big image messages screen.
+    self.guiBigImageTitleLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
+    self.guiBigImageMessageLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TEXT];
+    self.guiBigImageHelpButtonLabel.textColor = [HMStyle.sh colorNamed:C_RECORDER_MESSAGE_TITLE];
     
     // Finished scene retake button
     self.guiFinishedSceneRetakeButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_IMPACT_BUTTON_BG];
@@ -322,32 +329,19 @@
         self.guiTextMessageIcon.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"iconGotIt"];;
         
         self.guiDismissButton.alpha = 1;
-        /*HMGLogDebug(@"alpha started");
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [UIView animateWithDuration:0.1 animations:^{
-                self.guiDismissButton.alpha = 1;
-            }];
-        });*/
         
     } else if (self.messageType == HMRecorderMessagesTypeBigImage) {
         
-        self.guiBigImageTextLabel.text = info[@"text"];
+        //
+        //  A message with a big icon at the top
+        //
+        self.guiBigImageTitleLabel.text = info[@"title"];
+        self.guiBigImageMessageLabel.text = info[@"message"];
         NSString *iconName = info[@"icon name"];
         self.guiBigImageViewImage.image = iconName ? [UIImage imageNamed:iconName] : [UIImage imageNamed:@"badBackground"];
         [self.guiDismissButton setTitle:info[@"ok button text"] forState:UIControlStateNormal];
         [self.guiDismissButton setImage:[UIImage imageNamed:@"iconGotIt"] forState:UIControlStateNormal];
-    
         self.guiBigImagedismissButton.alpha = 1;
-        /*HMGLogDebug(@"alpha started");
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [UIView animateWithDuration:0.1 animations:^{
-                self.guiBigImagedismissButton.alpha = 1;
-            }];
-        });*/
 
     } else if (self.messageType == HMRecorderMessagesTypeFinishedScene ) {
         
@@ -577,6 +571,11 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+- (IBAction)onPressedHelpButton:(id)sender
+{
+    
 }
 
 @end

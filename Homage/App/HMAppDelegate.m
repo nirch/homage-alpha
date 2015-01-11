@@ -46,8 +46,6 @@
 #pragma mark - Application life cycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self initRequiredServices];
-    
     //  TODO: handle old known push token here.
     //    // Get push token from previous app launches.
     //    if (!self.pushToken)
@@ -292,10 +290,12 @@
     
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
     BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    
+        
     // You can add your app-specific url handling code here if needed
     return wasHandled;
 }
+
+
 
 
 #pragma mark - App States

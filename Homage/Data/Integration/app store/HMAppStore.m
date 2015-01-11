@@ -11,6 +11,8 @@
 #import "HMNotificationCenter.h"
 #import "HMServer+AppConfig.h"
 #import "DB.h"
+#import "HMAppDelegate.h"
+#import <Mixpanel.h>
 
 @interface HMAppStore()
 
@@ -59,13 +61,24 @@
     NSMutableSet *pids = [NSMutableSet new];
     
     // Add the identifier of the full bundle.
-    [pids addObject:[HMAppStore bundleProductID]];
+    NSString *bundlePID = [HMAppStore bundleProductID];
+    [pids addObject:bundlePID];
     
     // Add identifiers for all the stories.
     for (Story *story in [Story allActivePremiumStoriesInContext:DB.sh.context]) {
         [pids addObject:story.productIdentifier];
     }
     return pids;
+}
+
+-(NSString *)productTypeByPID:(NSString *)pid
+{
+    if ([pid isEqualToString:[HMAppStore bundleProductID]]) {
+        return @"bundle";
+    }
+    return @"story";
+    
+    // TODO: save to camera roll token implementation.
 }
 
 #pragma mark - Purchases
@@ -199,28 +212,59 @@
         // Log info.
         HMGLogDebug(@"%@", info);
 
+        NSDictionary *tInfo;
+        tInfo = @{
+                  @"product_id":productIdentifier,
+                  @"product_type":[self productTypeByPID:productIdentifier],
+                  @"transaction_id":transaction.transactionIdentifier
+                  };
+        
         // Handle transaction states.
         switch (transaction.transactionState)
         {
             case SKPaymentTransactionStatePurchased:
+                
+                //
+                // Purchase
+                //
                 HMGLogDebug(@"TSTATE purchased: %@", transaction.transactionIdentifier);
                 [HMAppStore markProductAsPurchasedWithIdentifier:productIdentifier];
                 transactionsInfo[productIdentifier] = info;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 transactionsUpdate = YES;
+                [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_APP_STORE_PURCHASED_ITEM object:self userInfo:nil];
+                
+                // Notify mixpanel about purchase event.
+                [[Mixpanel sharedInstance] track:@"StoreProductPurchased" properties:tInfo];
+                
                 break;
             case SKPaymentTransactionStateFailed:
+                
+                //
+                // Transaction failed
+                //
                 HMGLogDebug(@"TSTATE failed: %@", transaction.transactionIdentifier);
                 transactionsInfo[productIdentifier] = info;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 transactionsUpdate = YES;
+
+                // Notify mixpanel about purchase event.
+                [[Mixpanel sharedInstance] track:@"StoreProductTransactionFailed" properties:tInfo];
+                
                 break;
             case SKPaymentTransactionStateRestored:
+                //
+                //  Product Restored
+                //
                 HMGLogDebug(@"TSTATE restored: %@", transaction.transactionIdentifier);
                 [HMAppStore markProductAsPurchasedWithIdentifier:productIdentifier];
                 transactionsInfo[productIdentifier] = info;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 transactionsUpdate = YES;
+
+                // Notify mixpanel about purchase event.
+                [[Mixpanel sharedInstance] track:@"StoreProductRestored" properties:tInfo];
+
                 break;
             default:
                 break;

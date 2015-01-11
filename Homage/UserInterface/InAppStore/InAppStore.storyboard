@@ -261,7 +261,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" id="Wwj-o6-Hng" userLabel="Stretchable container">
-                                        <rect key="frame" x="8" y="172.00000970954926" width="304" height="67"/>
+                                        <rect key="frame" x="8" y="172" width="304" height="67.000003172799808"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" id="e0j-pF-ceS" userLabel="Numbers container">

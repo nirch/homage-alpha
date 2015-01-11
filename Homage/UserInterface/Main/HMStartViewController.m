@@ -502,7 +502,7 @@
         //self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth-currentAppWrapperCenterX,0);
         [self.appWrapperView setFrame:CGRectMake(sideBarWidth, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
     } completion:^(BOOL finished) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_SIDE_BAR_HIDDEN object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_SIDE_BAR_SHOWN object:nil];
     }];
     
     self.guiAppWrapperHideView.hidden = NO;

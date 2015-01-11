@@ -129,12 +129,19 @@
 "HELP_BUTTON_NEXT" = "NEXT";
 "HELP_BUTTON_FINISH" = "FINISH";
 
+/*bad background messages*/
+"BAD_BACKGROUND_TITLE" = "IMPROPER BACKGROUND";
+"RECORDER_BBG_NOISY" = "Use a solid color wall!";
+"RECORDER_BBG_DARK" = "Use well lit areas!";
+"RECORDER_BBG_SILHOUETTE" = "Align correctly with the silhouette!";
+"RECORDER_BBG_SHADOW" = "Minimize your shadows!";
+"RECORDER_BBG_CLOTH" = "Don't dress like the wall!";
+"RECORDER_BBG_GENERAL_MESSAGE" = "Use a solid color wall!";
+"BAD_BACKGROUND_HELP_BUTTON_TEXT" = "Help!";
 
 /*go to next scene button*/
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
-"BAD_BACKGROUND_TITLE" = "IMPROPER BACKGROUND";
-"BAD_BACKGROUND_ADVICE" = "Improper background. For optimal results, use a solid color wall";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
 "CAMERA_NOT_STABLE_TITLE" = "Steady now...";

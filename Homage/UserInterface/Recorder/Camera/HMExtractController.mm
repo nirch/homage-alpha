@@ -87,6 +87,7 @@
 {
     self = [super init];
     if (self) {
+        // Recording duration.
         _recordingDuration = 0;
         
         // Is slow device?
@@ -436,29 +437,48 @@
     // SampleBuffer to PixelBuffer
     CVPixelBufferRef originalPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     
-    if (self.session.sessionPreset == AVCaptureSessionPreset640x480)
-    {
+    // Resize image to expected size.
+    if (self.session.sessionPreset == AVCaptureSessionPreset640x480) {
+        // 640x480 - needs to be cropped to 16/9 360p image.
         int x = 0;
         int y = (480 - OUTPUT_HEIGHT) / 2;
         m_original_image = CVtool::CVPixelBufferRef_to_image_crop(originalPixelBuffer, x, y, OUTPUT_WIDTH, OUTPUT_HEIGHT, m_original_image);
-    }
-    else // assuming this is 720X1280
-    {
+    } else {
+        // assuming this is 720X1280
         m_original_image = CVtool::CVPixelBufferRef_to_image_sample2(originalPixelBuffer, m_original_image);
     }
     
-    int result = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
-    if (result < EXTRACT_TH)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND object:self];
-        if (result == EXTRACT_EXCEPTION)
-        {
+    // Process the background.
+    int bgMark = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+
+    // If result is lower than allowed threshold,
+    // then we got a bad background on our hands!
+    if (bgMark < EXTRACT_TH) {
+       
+        //
+        // Bad backgrounds make the algorithm very very sad :-(
+        //
+        NSDictionary *info = @{K_BAD_BACKGROUND_MARK:@(bgMark)};
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_BAD_BACKGROUND
+                                                            object:self
+                                                          userInfo:info];
+
+        // TODO: check if this is really needed / doesn't hinder performance.
+        // Reporting to server for every bad background frame?
+        // Is this really needed?
+        if (bgMark == EXTRACT_EXCEPTION)
             [self reportBackgroundExceptionToServer];
-            
-        }
-    } else
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND object:self];
+        
+    } else {
+        
+        //
+        // Good background :-) YEY!
+        //
+        NSDictionary *info = @{K_GOOD_BACKGROUND_MARK:@(bgMark)};
+        [[NSNotificationCenter defaultCenter] postNotificationName:HM_CAMERA_GOOD_BACKGROUND
+                                                            object:self
+                                                          userInfo:info];
+        
     }
 
 }

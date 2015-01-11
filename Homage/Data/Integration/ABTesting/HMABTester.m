@@ -8,6 +8,8 @@
 
 #import "HMABTester.h"
 #import <AmazonInsightsSDK/AmazonInsightsSDK.h>
+#import "HMNotificationCenter.h"
+#import "NSString+Utilities.h"
 
 // Amazon insights
 #define K_CFG_PRIVATE_KEY @"private_key"
@@ -34,7 +36,6 @@
     self = [super init];
     if (self) {
         [self initializeABTestingClient];
-        [self initializeVariants];
     }
     return self;
 }
@@ -55,14 +56,23 @@
     id<AIInsightsCredentials> credentials = [AIAmazonInsights credentialsWithApplicationKey:self.amazonInsightsPublicKey
                                                                              withPrivateKey:self.amazonInsightsPrivateKey];
     
+    
     // Create an options object to enable event collection and WAN delivery.
     id<AIInsightsOptions>options = [AIAmazonInsights optionsWithAllowEventCollection:YES withAllowWANDelivery:YES];
     
     // Initialize a new instance of AmazonInsights specifically for your application.
     self.insights = [AIAmazonInsights insightsWithCredentials: credentials withOptions:options];
-    self.abClient = self.insights.abTestClient;
-    self.eventClient = self.insights.eventClient;
+    [AIAmazonInsights insightsWithCredentials:credentials
+                                  withOptions:options];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.abClient = self.insights.abTestClient;
+        self.eventClient = self.insights.eventClient;
+        [self initializeVariants];
+    });
 }
+
+
 
 -(void)initializeVariants
 {
@@ -84,10 +94,23 @@
                                   HMGLogDebug(@"AB Testing Project:%@" , projectName);
                                   HMGLogDebug(@"Variations:%@" , vars);
                               }
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self postGotVariations];
+                              });
                           }];
+    
+// Just for debuggin
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self postGotVariations];
+//    });
 }
 
-// Returns a variant 
+-(void)postGotVariations
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_AB_TESTING_VARIATIONS_UPDATED object:self userInfo:nil];
+}
+
+// Returns a variant
 -(NSString *)stringValueForProject:(NSString *)projectName varName:(NSString *)varName hardCodedDefaultValue:(id)hardCodedDefaultValue;
 {
     id defaultValue = [self defaultValueForProject:projectName varName:varName hardCodedDefaultValue:hardCodedDefaultValue];
@@ -98,6 +121,33 @@
     NSString *stringValue = [vars variableAsString:varName withDefault:defaultValue];
     return stringValue;
 }
+
+-(BOOL)boolValueForProject:(NSString *)projectName varName:(NSString *)varName hardCodedDefaultValue:(BOOL)hardCodedDefaultValue
+{
+    NSString *sVal = [self stringValueForProject:projectName
+                                         varName:varName
+                           hardCodedDefaultValue:hardCodedDefaultValue ? @"1" : @"0"];
+    
+    sVal = [sVal stringWithATrim];
+    
+    // Return YES if equals to "1" or "true" string.
+    if ([sVal isEqualToString:@"1"] || [sVal isEqualToString:@"true"]) {
+        return YES;
+    }
+    
+    // In all other cases, return no.
+    return NO;
+}
+
+-(NSInteger)integerValueForProject:(NSString *)projectName varName:(NSString *)varName hardCodedDefaultValue:(NSInteger)hardCodedDefaultValue
+{
+    NSString *sVal = [self stringValueForProject:projectName
+                                         varName:varName
+                           hardCodedDefaultValue:[NSString stringWithFormat:@"%ld", (long)hardCodedDefaultValue]];
+    sVal = [sVal stringWithATrim];
+    return [sVal integerValue];
+}
+
 
 -(BOOL)isABTestingProject:(NSString *)projectName
 {

@@ -104,7 +104,7 @@
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 "BAD_BACKGROUND_TITLE" = "IMPROPER BACKGROUND";
-"BAD_BACKGROUND_ADVICE" = "Improper background. For optimal results, use a solid color wall";
+"BAD_BACKGROUND_ADVICE" = "For optimal results, use a solid color wall";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
 "CAMERA_NOT_STABLE_TITLE" = "Steady now...";

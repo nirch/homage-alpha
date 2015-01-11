@@ -34,6 +34,7 @@
 #import "HMABTester.h"
 #import "HMAppDelegate.h"
 #import "HMServer+AppConfig.h"
+#import "HMExtractController.h"
 
 @interface HMRecorderViewController () <UIAlertViewDelegate>
 
@@ -87,10 +88,16 @@
 //THE HAND!!!
 @property (nonatomic,readwrite) BOOL showHand;
 
+// Good and bad backgrounds
 @property (nonatomic) NSInteger backgroundStatusCounter;
 @property (nonatomic) BOOL      backgroundAlertDisplaying;
 @property (nonatomic) BOOL      isBadBackgroundWarningOn;
+@property (nonatomic) HMBadBackgroundPolicy badBackgroundPolicy;
+@property (nonatomic) NSDictionary *badBackgroundTextsMappings;
+@property (nonatomic) NSDictionary *badBackgroundIconsMappings;
+@property (nonatomic) NSInteger lastBadBackgroundMark;
 
+// Preloading
 @property (nonatomic) NSMutableArray *preloadedImageViews;
 
 @end
@@ -135,6 +142,7 @@
     [self initRemakerState];
     [self initOptions];
     [self initGUI];
+    [self initBadBackgroundsPolicy];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -182,12 +190,37 @@
     HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
     HMABTester *abTester = app.abTester;
     
-    // Report about entering the recorder, if in testing.
-    if ([abTester isABTestingProject:@"recorder icons"]) {
+    // Defaults
+    self.badBackgroundPolicy = HMBadBackgroundPolicyTolerant;
+    
+    // Report about entering the recorder, if relevant test requires.
+    if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS] ||
+        [abTester isABTestingProject:AB_PROJECT_RECORDER_ICONS]) {
         // We care about reporting a view of the recorder, only if
         // the recorder interface provided a variant.
         [abTester reportEventType:@"enteredRecorder"];
     }
+    
+    // Bad background policy variants
+    if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
+        self.badBackgroundPolicy = [abTester integerValueForProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS
+                                                            varName:@"badBackgroundStrictPolicy"
+                                              hardCodedDefaultValue:self.badBackgroundPolicy];
+    }
+}
+
+-(void)initBadBackgroundsPolicy
+{
+    self.lastBadBackgroundMark = UNRECOGNIZED_MARK;
+    
+    self.badBackgroundTextsMappings = @{
+                                        @(-11):@"RECORDER_BBG_NOISY",
+                                        @(-10):@"RECORDER_BBG_DARK",
+                                        @(-5):@"RECORDER_BBG_SILHOUETTE",
+                                        @(-4):@"RECORDER_BBG_SHADOW",
+                                        @(-2):@"RECORDER_BBG_CLOTH",
+                                        @(UNRECOGNIZED_MARK):@"RECORDER_BBG_GENERAL_MESSAGE",
+                                        };
 }
 
 #pragma mark - UI initializations
@@ -1213,7 +1246,12 @@
 #pragma mark - User messages
 -(void)revealMessagesOverlayWithMessageType:(NSInteger)messageType checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
-    [self.messagesOverlayVC showMessageOfType:messageType checkNextStateOnDismiss:checkNextStateOnDismiss info:info];
+    //
+    // Setup the message.
+    //
+    [self.messagesOverlayVC showMessageOfType:messageType
+                      checkNextStateOnDismiss:checkNextStateOnDismiss
+                                         info:info];
     
     //
     // Show animated
@@ -1466,17 +1504,31 @@
 }
 
 #pragma mark - Bad background
+-(NSString *)badBackgroundStringKeyForMark:(NSInteger)mark
+{
+    NSString *stringKey = self.badBackgroundTextsMappings[@(mark)];
+    
+    // If a mapping exists, return it.
+    if ([stringKey isKindOfClass:[NSString class]]) return stringKey;
+
+    // If mapping not found, return the string key for the general bad background message.
+    return self.badBackgroundTextsMappings[@(UNRECOGNIZED_MARK)];
+}
+
 -(void)presentBadBackgroundAlert
 {
+    NSString *badBackgroundMessageStringKey = [self badBackgroundStringKeyForMark:self.lastBadBackgroundMark];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                       @"icon name":@"badBackground",
-                                                                                       @"text":LS(@"BAD_BACKGROUND_TITLE"),
+                                                                                       @"icon name":@"storeIcon1",
+                                                                                       @"title":LS(@"BAD_BACKGROUND_TITLE"),
+                                                                                       @"message":LS(badBackgroundMessageStringKey),
                                                                                        @"ok button text":LS(@"OK_GOT_IT"),
                                                                                        
                                                                                        @"blur alpha":@0.85,
                                                                                        @"minimized background status":@YES
-                                                                                       
+                
                                                                                        }];
         [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeBigImage
                            checkNextStateOnDismiss:NO
@@ -1550,12 +1602,9 @@
     [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:NO info:@{@"blur alpha":@0.85,@"minimized scene direction":@YES}];
 }
 
-
 - (IBAction)onPressedBGStatusButton:(id)sender
 {
-    
     [self presentBadBackgroundAlert];
-    
 }
 
 - (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
@@ -1664,13 +1713,17 @@
 
 -(void)onBadBackgroundDetected:(NSNotification *)notification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_BAD_BACKGROUND
-                                                        object:self];
-    
     if (self.backgroundStatusCounter <= BAD_BACKGROUND_TH)
     {
-        if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH && ![User.current.disableBadBackgroundPopup isEqualToNumber:@YES])
-        {
+        // Store the latest bad background mark.
+        NSNumber *badBackgroundMark = notification.userInfo[K_BAD_BACKGROUND_MARK];
+        if (badBackgroundMark)
+            self.lastBadBackgroundMark = [badBackgroundMark integerValue];
+        
+        // When the number of notifications about a bad background reach a given
+        // threshold, popup a message to the user about the bad background.
+        if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH &&
+            ![User.current.disableBadBackgroundPopup isEqualToNumber:@YES]) {
             [self presentBadBackgroundAlert];
             self.backgroundStatusCounter = 0;
         }
@@ -1689,9 +1742,6 @@
 
 -(void)onGoodBackgroundDetected:(NSNotification *)notification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND
-                                                        object:self];
-    
     if (self.backgroundStatusCounter >= GOOD_BACKGROUND_TH)
     {
         if (!self.backgroundAlertDisplaying) return;

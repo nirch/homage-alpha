@@ -61,8 +61,9 @@
 #define HM_NOTIFICATION_CAMERA_NOT_STABLE           @"Camera not stable"
 #define HM_CAMERA_BAD_BACKGROUND @"camera bad background"
 #define HM_CAMERA_GOOD_BACKGROUND @"camera good background"
-#define HM_NOTIFICATION_RECORDER_BAD_BACKGROUND @"recorder bad background"
-#define HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND @"recorder good background"
+
+//#define HM_NOTIFICATION_RECORDER_BAD_BACKGROUND @"recorder bad background"
+//#define HM_NOTIFICATION_RECORDER_GOOD_BACKGROUND @"recorder good background"
 
 //push notifications
 #define HM_NOTIFICATION_PUSH_NOTIFICATION_MOVIE_STATUS @"push notification when user's movie is ready or failed to render"
@@ -102,6 +103,10 @@
 // App Store
 #define HM_NOTIFICATION_APP_STORE_PRODUCTS           @"app store products"
 #define HM_NOTIFICATION_APP_STORE_TRANSACTIONS_UPDATE  @"app store transactions update"
+#define HM_NOTIFICATION_APP_STORE_PURCHASED_ITEM  @"app store purchased item"
+
+// AB Testing
+#define HM_NOTIFICATION_AB_TESTING_VARIATIONS_UPDATED @"got variations"
 
 //ADDITIONAL CONFIGURATIONS
 #define HM_NOTIFICATION_SERVER_CONFIG @"additional confiurations"

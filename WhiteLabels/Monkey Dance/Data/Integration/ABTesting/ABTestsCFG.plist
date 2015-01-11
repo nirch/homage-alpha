@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>identifier</key>
+	<string>Monkey Dance iOS</string>
+	<key>private_key</key>
+	<string>mFp3W5VVfyvtY9zhTphGmpoQna3ADjNg/EguCTzOUjo=</string>
+	<key>public_key</key>
+	<string>0185d17909d745e29472f948398eabe1</string>
+	<key>projects</key>
+	<dict>
+		<key>recorder bad background</key>
+		<dict>
+			<key>view_event</key>
+			<string>enteredRecorder</string>
+			<key>defaults</key>
+			<dict>
+				<key>badBackgroundStrictPolicy</key>
+				<string>0</string>
+			</dict>
+		</dict>
+		<key>recorder icons</key>
+		<dict>
+			<key>view_event</key>
+			<string>enteredRecorder</string>
+			<key>defaults</key>
+			<dict>
+				<key>getInspiredIcon</key>
+				<string>iconUpArrow</string>
+			</dict>
+		</dict>
+		<key>sidebar store icons</key>
+		<dict>
+			<key>view_event</key>
+			<string>sidebarShown</string>
+			<key>goals</key>
+			<dict>
+				<key>userPressedStoreButton</key>
+				<string>user pressed the store button</string>
+				<key>userPurchasedItemAfterPressingStoreButton</key>
+				<string>user purchased after pressing the store button</string>
+			</dict>
+			<key>defaults</key>
+			<dict>
+				<key>storeIconName</key>
+				<string>storeIcon1</string>
+				<key>storeIconAnimation</key>
+				<string>0</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>
