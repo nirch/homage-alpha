@@ -36,7 +36,11 @@
 	<integer>0</integer>
 	<key>login_flow_skip_intro_video</key>
 	<false/>
-	<key>login_guest_as_public</key>
+	<key>guest_public_as_default</key>
+	<false/>
+	<key>guest_allow_public</key>
+	<false/>
+	<key>guest_allow_share</key>
 	<false/>
 </dict>
 </plist>

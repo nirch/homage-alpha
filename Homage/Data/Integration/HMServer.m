@@ -133,7 +133,7 @@
 }
 
 #pragma mark - provide server woth request context
--(void)updateServerWithCurrentUser:(NSString *)userID
+-(void)chooseCurrentUserID:(NSString *)userID
 {
     self.currentUserID = userID;
 }

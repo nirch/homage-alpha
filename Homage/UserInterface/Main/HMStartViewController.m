@@ -287,22 +287,37 @@
     NSString *userID = [User current].userID;
     if (!userID) return;
     
+    // Get current user preferences.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL shareRemakes = [defaults boolForKey:@"remakesArePublic"];
+    
+    // Special handling for guest users.
     if (shareRemakes && [[User current] isGuestUser])
     {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
-        shareRemakes = NO;
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES") delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
-        //alertView.tag = SHARE_ALERT_VIEW_TAG;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alertView show];
-        });
+        // The user is a guest user.
+        // Allow guest users to be public, only if allowed for this app/label.
+        BOOL allowPublicGuest = [HMServer.sh.configurationInfo[@"guest_allow_public"] boolValue];
+        if (!allowPublicGuest) {
+            // Public guest is not allowed.
+            
+            // Set public to NO.
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
+            shareRemakes = NO;
+
+            // Frown at the user!
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES") delegate:self cancelButtonTitle:LS(@"OK_GOT_IT") otherButtonTitles:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [alertView show];
+            });
+        }
     }
     
+    // TODO: ask why is this set as string values? "YES" and "NO"? Why not send a boolean or number?
     NSString *shareValue = shareRemakes ? @"YES" : @"NO";
-    [HMServer.sh updateUserPreferences:@{@"user_id" : userID , @"is_public" : shareValue}];
+    [HMServer.sh updateUserPreferences:@{
+                                         @"user_id":userID,
+                                         @"is_public":shareValue
+                                         }];
 }
 
 #pragma mark - HMMainGUIProtocol
@@ -670,7 +685,7 @@
     
     //Mixpanel analytics
     User *user = [User current];
-    [HMServer.sh updateServerWithCurrentUser:user.userID];
+    [HMServer.sh chooseCurrentUserID:user.userID];
     [self.loginVC registerLoginAnalyticsForUser:user];
     [self onUserLoginStateChange:user];
     

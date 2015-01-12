@@ -276,6 +276,30 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     return YES;
 }
 
+-(void)presentUserCreationErrorWithNotification:(NSNotification *)notification
+{
+    // Get the error code.
+    NSDictionary *userInfo = notification.userInfo;
+    NSError *error = userInfo[@"error"];
+    NSDictionary *body = error.userInfo[@"body"];
+    long errorCode = [body[@"error_code"] longValue];
+    
+    //
+    // Show a relevant message, depending on the error code.
+    //
+    switch (errorCode) {
+        case 1001: //incorrect password
+            [self presentErrorLabelWithReason:HMIncorrectPassword];
+            break;
+        case 1004: //existing fb user
+            [self presentErrorLabelWithReason:HMExistingFacebookUser];
+            break;
+        default:
+            [self presentErrorLabelWithReason:HMUnknownError];
+            break;
+    }
+}
+
 -(void)presentErrorLabelWithReason:(NSInteger)reason
 {
     switch (reason) {
@@ -378,12 +402,17 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)loginAsGuest
 {
-    // Determine according to cfg, if guest users are public or private by default.
-    //NSNumber *guestsHMServer.sh.configurationInfo[@"guests_public_by_default"];
+    // User will signup as a public guest, only if the two following settings are
+    // set to yes: guest_public_as_default + guest_allow_public
+    BOOL allowPublic = [HMServer.sh.configurationInfo[@"guest_allow_public"] boolValue];
+    BOOL defaultToPublic = [HMServer.sh.configurationInfo[@"guest_public_as_default"] boolValue];
+    BOOL willSignupAsPublic = allowPublic && defaultToPublic;
     
-    
-    NSDictionary *deviceInfo = [self getDeviceInformation];
-    NSDictionary *guestDictionary = @{@"is_public" : @NO , @"device" : deviceInfo};
+    // Build the info about the guest user.
+    NSDictionary *guestDictionary = @{
+                                      @"is_public" : @(willSignupAsPublic),
+                                      @"device" : [self getDeviceInformation]
+                                      };
     [HMServer.sh createUserWithDictionary:guestDictionary];
 }
 
@@ -401,51 +430,27 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.delegate dismissLoginScreen];
 }
 
-
 -(void)onUserCreated:(NSNotification *)notification
 {
+    // If got a notificatin about an error,
+    // show a message to the user and do nothing.
     if (notification.isReportingError)
     {
-        NSDictionary *userInfo = notification.userInfo;
-        NSError *error = userInfo[@"error"];
-        NSDictionary *body = error.userInfo[@"body"];
-        long errorCode = [body[@"error_code"] longValue];
-        
-        switch (errorCode) {
-            case 1001: //incorrect password
-                [self presentErrorLabelWithReason:HMIncorrectPassword];
-                return;
-                break;
-            case 1004: //existing fb user
-                [self presentErrorLabelWithReason:HMExistingFacebookUser];
-                return;
-                break;
-            default:
-                [self presentErrorLabelWithReason:HMUnknownError];
-                return;
-                break;
-        }
+        [self presentUserCreationErrorWithNotification:notification];
+        return;
     }
 
+    // Get info about the user and the user object in local storage.
     NSDictionary *userInfo = notification.userInfo;
     NSString *userID = userInfo[@"userID"];
+    User *user = [User userWithID:userID inContext:DB.sh.context];
     HMGLogDebug(@"user created with userID: %@" , userID);
     
-    User *user = [User userWithID:userID inContext:DB.sh.context];
-    
-    // This makes the current ID (an auto-generated GUID)
-    // and 'joe@example.com' interchangeable distinct ids.
-    
-    //[mixpanel createAlias:user.userID
-      //      forDistinctID:mixpanel.distinctId];
-    
-    // You must call identify if you haven't already
-    // (e.g., when your app launches).
-    //[mixpanel identify:mixpanel.distinctId];
-    
-    //IMPORTANT !!!! this must be called before changing the user isfirstuse property further on!
+    // IMPORTANT! this must be called before changing the user
+    // isfirstuse property further on!
     [self registerLoginAnalyticsForUser:user];
     
+    // Session
     if (!self.myAppDelegate.sessionStartFlag)
     {
         self.myAppDelegate.currentSessionHomageID = [HMServer.sh generateBSONID];
@@ -454,13 +459,19 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }
     
     [user loginInContext:DB.sh.context];
-    [HMServer.sh updateServerWithCurrentUser:user.userID];
+    [HMServer.sh chooseCurrentUserID:user.userID];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     [[NSUserDefaults standardUserDefaults] setBool:user.isPublic.boolValue forKey:@"remakesArePublic"];
     
+    // Special handling to guest users.
     if (user.isGuestUser)
     {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
+        // Force remakes as public to no, in case settings don't allow
+        // guest users to be public.
+        BOOL allowPublicGuest = [HMServer.sh.configurationInfo[@"guest_allow_public"] boolValue];
+        if (!allowPublicGuest) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"remakesArePublic"];
+        }
     }
     
     if (user.isFirstUse.boolValue && !self.skipIntroVideo)
@@ -538,7 +549,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     
     [user loginInContext:DB.sh.context];
-    [HMServer.sh updateServerWithCurrentUser:user.userID];
+    [HMServer.sh chooseCurrentUserID:user.userID];
     [self.delegate onUserLoginStateChange:[User current]];
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_REFRESH_USER_DATA object:nil userInfo:nil];
     

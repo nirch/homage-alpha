@@ -20,5 +20,11 @@
 	<true/>
 	<key>login_flow_type</key>
 	<integer>1</integer>
+	<key>guest_public_as_default</key>
+	<true/>
+	<key>guest_allow_public</key>
+	<true/>
+	<key>guest_allow_share</key>
+	<true/>
 </dict>
 </plist>

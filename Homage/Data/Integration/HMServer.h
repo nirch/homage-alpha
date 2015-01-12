@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(NSString *)relativeURLNamed:(NSString *)relativeURLName withSuffix:(NSString *)suffix;
 
 #pragma mark - provide server with request context
--(void)updateServerWithCurrentUser:(NSString *)userID;
+-(void)chooseCurrentUserID:(NSString *)userID;
 -(void)updateConfiguration:(NSDictionary *)info;
 
 #pragma mark - bucket name

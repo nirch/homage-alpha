@@ -1021,9 +1021,14 @@
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.lastShareButtonPressed = button;
     
-    
-    if ([[User current] isGuestUser])
+    //
+    // Special handling for guest users (but only if guest users not allowed to share).
+    //
+    BOOL guestUsersAllowedToShare = [HMServer.sh.configurationInfo[@"guest_allow_share"] boolValue];
+    if ([[User current] isGuestUser] && !guestUsersAllowedToShare)
     {
+
+        // Share not allowed for guest users in this app configuration.
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
         alertView.tag = SHARE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1031,6 +1036,7 @@
         });
         
     } else {
+        
         // Allow sharing one at a time.
         if (self.currentSharer) return;
         
@@ -1038,6 +1044,7 @@
         [self shareRemakeRequestForRemake:remakeToShare thumb:cell.guiThumbImage.image];
         cell.shareButton.hidden = YES;
         [cell.shareActivity startAnimating];
+        
     }
 }
 
