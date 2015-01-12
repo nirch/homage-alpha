@@ -13,9 +13,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBackground" id="x0z-Hs-o5j">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBackground" id="x0z-Hs-o5j">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <view hidden="YES" autoresizesSubviews="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" id="cmV-1U-mSO" userLabel="toon BG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -43,7 +43,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashTopLogo" id="wNq-yE-ztN" userLabel="Top Logo">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -151,7 +151,7 @@
                                                     <action selector="sideBarButtonPushed:" destination="Mko-4Y-5oJ" eventType="touchUpInside" id="nE2-8C-cFJ"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="u5h-8y-mgz" userLabel="debug button button">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="u5h-8y-mgz" userLabel="debug button button">
                                                 <rect key="frame" x="52" y="20" width="52" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="more">
@@ -177,6 +177,16 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="2tF-Un-TXf" userLabel="music play mute button">
+                                                <rect key="frame" x="268" y="20" width="52" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="playMusicIcon">
+                                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onPressedMusicLoopToggleButton:" destination="Mko-4Y-5oJ" eventType="touchUpInside" id="XlK-ME-ma8"/>
+                                                </connections>
+                                            </button>
                                             <view contentMode="scaleToFill" id="ECS-rg-hbO" userLabel="Status Bar BG">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -246,6 +256,7 @@
                         <outlet property="guiNavTitleLabel" destination="PcV-Lk-RmR" id="ON1-MU-dAR"/>
                         <outlet property="guiNoConnectivityLabel" destination="IDg-TI-8JI" id="78F-9E-wfy"/>
                         <outlet property="guiNoConnectivityView" destination="BGe-RC-PIs" id="uVW-lK-Tz6"/>
+                        <outlet property="guiPlayMuteSongLoopButton" destination="2tF-Un-TXf" id="40p-Sc-poj"/>
                         <outlet property="guiSplashView" destination="0k7-VS-RTr" id="ZmN-ah-bQo"/>
                         <outlet property="guiStatusBarBG" destination="ECS-rg-hbO" id="IcV-5E-FD3"/>
                         <outlet property="guiTopNavContainer" destination="93F-HB-nk2" id="RzC-Wc-IY8"/>
@@ -703,8 +714,8 @@
                                                             <rect key="frame" x="165" y="0.0" width="152" height="96"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
-                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000000000000009" id="PBd-7c-2kj" customClass="HMRegularFontLabel">
-                                                                    <rect key="frame" x="0.0" y="5" width="152" height="40"/>
+                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000000000000009" id="PBd-7c-2kj" customClass="HMRegularFontLabel">
+                                                                    <rect key="frame" x="8" y="5" width="136" height="40"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1047,12 +1058,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prepering your movie: &lt;movie name&gt;.                                     we will notify you when we're done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZP7-sA-lhY" customClass="HMRegularFontLabel">
+                                    <label clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prepering clip!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" id="ZP7-sA-lhY" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="50" y="0.0" width="220" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassRenderingBar"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fcH-Ks-RJd" userLabel="close button">
                                         <rect key="frame" x="270" y="0.0" width="50" height="50"/>
@@ -1072,15 +1086,18 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="rrX-ch-KhL" userLabel="doneView">
-                                <rect key="frame" x="50" y="0.0" width="270" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your movie is done!  Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwU-c8-CZT" customClass="HMRegularFontLabel">
-                                        <rect key="frame" x="0.0" y="0.0" width="270" height="50"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your clip is ready!  Click Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" id="VwU-c8-CZT" customClass="HMRegularFontLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassRenderingBar"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1090,7 +1107,7 @@
                                 </connections>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <toolbarItems/>
                     <connections>
@@ -1865,13 +1882,14 @@
         <image name="myStoriesPlayButton" width="44" height="44"/>
         <image name="myStoriesRemakeButton" width="44" height="44"/>
         <image name="myStoriesShareButton" width="44" height="44"/>
-        <image name="navAppIcon" width="35" height="37"/>
-        <image name="navIconHowto" width="36" height="36"/>
-        <image name="navIconMyStories" width="37" height="37"/>
-        <image name="navIconSettings" width="37" height="37"/>
-        <image name="navIconStories" width="39" height="36"/>
+        <image name="navAppIcon" width="38" height="38"/>
+        <image name="navIconHowto" width="38" height="38"/>
+        <image name="navIconMyStories" width="38" height="38"/>
+        <image name="navIconSettings" width="38" height="38"/>
+        <image name="navIconStories" width="40" height="38"/>
         <image name="navSidebarBG" width="273" height="568"/>
         <image name="noConnectivity" width="60" height="60"/>
+        <image name="playMusicIcon" width="33" height="33"/>
         <image name="progressCloseIcon" width="22" height="22"/>
         <image name="remakeInverseBGButton" width="33" height="33"/>
         <image name="shareButton" width="44" height="44"/>

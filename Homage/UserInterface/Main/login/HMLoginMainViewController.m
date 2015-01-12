@@ -378,6 +378,10 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)loginAsGuest
 {
+    // Determine according to cfg, if guest users are public or private by default.
+    //NSNumber *guestsHMServer.sh.configurationInfo[@"guests_public_by_default"];
+    
+    
     NSDictionary *deviceInfo = [self getDeviceInformation];
     NSDictionary *guestDictionary = @{@"is_public" : @NO , @"device" : deviceInfo};
     [HMServer.sh createUserWithDictionary:guestDictionary];

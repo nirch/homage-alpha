@@ -930,14 +930,23 @@
         return _cachedVideoURL;
     }
     
-    // Check if video cached in caches folder.
+    // Check if video cached in one of the caches folder.
+    NSURL *cachedURL;
     HMCacheManager *cm = HMCacheManager.sh;
-    NSURL *cachedURL = [cm urlForCachedResource:_videoURL cachePath:cm.storiesCachePath];
+    
+    // Cached stories
+    if (!cachedURL) cachedURL = [cm urlForCachedResource:_videoURL cachePath:cm.storiesCachePath];
+    
+    // Cached remakes
+    if (!cachedURL) cachedURL = [cm urlForCachedResource:_videoURL cachePath:cm.remakesCachePath];
+    
+    // If found in cache, return it.
     if (cachedURL) {
         _cachedVideoURL = [cachedURL description];
         return _cachedVideoURL;
     }
     
+    // Not cached.
     return nil;
 }
 

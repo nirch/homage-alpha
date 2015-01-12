@@ -93,10 +93,10 @@
 "STORIES_TAB_HEADLINE_TITLE" = "STORIES";
 "SETTINGS_TAB_HEADLINE TITLE" = "SETTINGS";
 /*a message to the user, notifing him that the movie is ready*/
-"REMAKE_READY_CLICK" = "Your clip is Ready! Click to watch";
+"REMAKE_READY_CLICK" = "Your clip is Ready! Click here";
 
 /*a message to the user, notifing him that the movie creation has failed*/
-"REMAKE_FAILED_CLICK" = "Your clip creation Failed. Click to dismiss";
+"REMAKE_FAILED_CLICK" = "Clip creation Failed.";
 
 /*a message to the user, notifing him that the movie is now rendering*/
 "RENDERING_MOVIE_MESSAGE" = "Preparing your clip!";

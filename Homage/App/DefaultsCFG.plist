@@ -2,16 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>cache_stories_videos</key>
+	<true/>
+	<key>cache_audio</key>
+	<true/>
+	<key>cache_user_remakes_videos</key>
+	<true/>
+	<key>cache_stories_videos_max_count</key>
+	<integer>10</integer>
 	<key>facebook_app_id</key>
 	<string>447743458659084</string>
-	<key>product_name</key>
+	<key>application</key>
 	<string>homage_ios</string>
 	<key>in_app_purchases</key>
 	<false/>
 	<key>in_app_purchases_hide_premium_stories</key>
 	<false/>
-	<key>remakes_save_to_device</key>
-	<integer>0</integer>
+	<key>user_remakes_download_to_device</key>
+	<true/>
 	<key>campaign_id</key>
 	<string>544ead1e454c610d1600000f</string>
 	<key>mirror_selfie_silhouette</key>
@@ -27,6 +35,8 @@
 	<key>login_flow_type</key>
 	<integer>0</integer>
 	<key>login_flow_skip_intro_video</key>
+	<false/>
+	<key>login_guest_as_public</key>
 	<false/>
 </dict>
 </plist>

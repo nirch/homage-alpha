@@ -46,6 +46,10 @@
 #pragma mark - Application life cycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Init localization.
+    [self initLocalizationWithOptions:launchOptions];
+    
+    
     //  TODO: handle old known push token here.
     //    // Get push token from previous app launches.
     //    if (!self.pushToken)
@@ -408,6 +412,17 @@ NSString* machineName()
     [lagFreeField becomeFirstResponder];
     [lagFreeField resignFirstResponder];
     [lagFreeField removeFromSuperview];
+}
+
+#pragma mark - Localisation
+-(void)initLocalizationWithOptions:(NSDictionary *)options
+{
+    NSArray *preferredLocalizations = [[NSBundle mainBundle] preferredLocalizations];
+    if (preferredLocalizations == nil || preferredLocalizations.count == 0) {
+        _prefferedLanguage = nil;
+        return;
+    }
+    _prefferedLanguage = preferredLocalizations[0];
 }
 
 @end

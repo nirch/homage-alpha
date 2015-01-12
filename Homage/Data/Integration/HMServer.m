@@ -73,6 +73,8 @@
 
 -(void)chooseSerializerForParser:(HMParser *)parser
 {
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    
     self.session.requestSerializer = [AFHTTPRequestSerializer new];
     
     // Add app information to the headers.
@@ -85,9 +87,21 @@
         [self.session.requestSerializer setValue:campaignID forHTTPHeaderField:@"CAMPAIGN_ID"];
     }
     
+    // Add homage's internal application identifier
+    NSString *applicationIdentifier = self.configurationInfo[@"application"];
+    if (applicationIdentifier) {
+        [NSString stringWithFormat:@"Homage:%@", applicationIdentifier];
+        [self.session.requestSerializer setValue:applicationIdentifier forHTTPHeaderField:@"HOMAGE_CLIENT"];
+    }
+    
     // Add current user id to the headers (if set)
     if (self.currentUserID) {
          [self.session.requestSerializer setValue:self.currentUserID forHTTPHeaderField:@"USER_ID"];
+    }
+    
+    // Add preffered language to the headers (if available)
+    if (app.prefferedLanguage) {
+        [self.session.requestSerializer setValue:app.prefferedLanguage forHTTPHeaderField:@"Accept-Language"];
     }
     
     // Set the session response serializer and set the acceptable content types

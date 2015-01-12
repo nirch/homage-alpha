@@ -215,8 +215,7 @@
         NSDictionary *tInfo;
         tInfo = @{
                   @"product_id":productIdentifier,
-                  @"product_type":[self productTypeByPID:productIdentifier],
-                  @"transaction_id":transaction.transactionIdentifier
+                  @"product_type":[self productTypeByPID:productIdentifier]
                   };
         
         // Handle transaction states.

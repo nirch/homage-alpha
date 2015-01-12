@@ -151,4 +151,11 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
  */
 -(NSArray *)allTakenTakesIDS;
 
+/**
+ *  Return if the video of this remake was downloaded and is cached on the device.
+ *
+ *  @return A boolean value indicating if video is available or not on the device.
+ */
+-(BOOL)isVideoAvailableLocally;
+
 @end

@@ -42,6 +42,10 @@
 #import "HMServer+analytics.h"
 #import <SDWebImage/SDWebImageDownloader.h>
 
+@import MediaPlayer;
+
+#define SONG_LOOP_VOLUME 0.15;
+
 @interface HMStartViewController () <HMSideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
 
 // Navigation bar
@@ -74,6 +78,9 @@
 @property (weak, nonatomic) IBOutlet UIView *guiSplashView;
 @property (weak,nonatomic) HMSplashViewController *splashVC;
 
+// loop song player
+@property (weak, nonatomic) IBOutlet UIButton *guiPlayMuteSongLoopButton;
+@property (nonatomic) AVAudioPlayer *songLoopPlayer;
 
 @property (weak, nonatomic) UIView *guiVideoContainer;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
@@ -136,6 +143,8 @@
     [super viewDidAppear:animated];
     
     // Prepare local storage and start the App.
+    [self playAccordingToUserPreference];
+    
     if (!self.justStarted) return;
     
     [DB.sh useDocumentWithSuccessHandler:^{
@@ -149,6 +158,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.songLoopPlayer pause];
 }
 
 -(void)initGUI
@@ -251,6 +261,25 @@
                                                    selector:@selector(onUserWantsToRetryLoginAsGuest:)
                                                        name:HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST
                                                      object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onMoviePlayerPlaybackStateDidChange:)
+                                                       name:MPMoviePlayerPlaybackStateDidChangeNotification
+                                                     object:nil];
+
+}
+
+-(void)onMoviePlayerPlaybackStateDidChange:(NSNotification *)notification
+{
+    if (self.songLoopPlayer == nil) return;
+    
+    __weak MPMoviePlayerController *mp = notification.object;
+    if (mp.playbackState == MPMoviePlaybackStatePlaying) {
+        [self.songLoopPlayer pause];
+    } else {
+        [self playAccordingToUserPreference];
+    }
 }
 
 -(void)updateUserPreferences
@@ -726,8 +755,81 @@
         self.guiBlurryOverlay.alpha = 0;
         self.guiDarkOverlay.alpha = 0;
     }];
+    
+    // After hiding login screen, Play song loop if required.
+    // (depending on label settings)
+    [self playSongLoopIfRequired];
 }
 
+-(void)playSongLoopIfRequired
+{
+    if (self.songLoopPlayer) {
+        return;
+    }
+    
+    // Need to initialize player.
+    NSString *songLoop = HMServer.sh.configurationInfo[@"song_loop"];
+    if (songLoop) {
+        NSArray *components = [songLoop componentsSeparatedByString:@"."];
+        if (components.count == 2) {
+            NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:components[0] ofType:components[1]];
+            NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+            NSError *error;
+            self.songLoopPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:&error];
+            self.songLoopPlayer.numberOfLoops = -1; // Repeat forever.
+            [self playAccordingToUserPreference];
+        }
+    }
+}
+
+-(void)playAccordingToUserPreference
+{
+    if (self.songLoopPlayer == nil) return;
+    
+    // Play if user didn't prefer loop to be muted.
+    if ([self userPrefersMusicPlayback]) {
+        self.songLoopPlayer.volume = SONG_LOOP_VOLUME;
+        
+        [self.songLoopPlayer play];
+        [self updatePlayMuteSongLoopButton];
+    }
+    [self updatePlayMuteSongLoopButton];
+}
+
+-(BOOL)userPrefersMusicPlayback
+{
+    NSNumber *userPreviousPreference = [[NSUserDefaults standardUserDefaults] objectForKey:@"loopPlaying"];
+    return (userPreviousPreference == nil || [userPreviousPreference boolValue]);
+}
+
+-(void)toggleSongPlayback
+{
+    // Play / mute toggle.
+    if ([self userPrefersMusicPlayback]) {
+        [self.songLoopPlayer pause];
+    } else {
+        self.songLoopPlayer.volume = SONG_LOOP_VOLUME;
+        [self.songLoopPlayer play];
+    }
+    [self updatePlayMuteSongLoopButton];
+    
+    // Save user preference for the future.
+    BOOL isPlaying = self.songLoopPlayer.isPlaying;
+    [[NSUserDefaults standardUserDefaults] setObject:@(isPlaying)
+                                              forKey:@"loopPlaying"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)updatePlayMuteSongLoopButton
+{
+    UIImage *icon;
+    if (self.songLoopPlayer.isPlaying) {
+        icon = [UIImage imageNamed:@"playMusicIcon"];
+    } else {
+        icon = [UIImage imageNamed:@"muteMusicIcon"];
+    }
+    [self.guiPlayMuteSongLoopButton setImage:icon forState:UIControlStateNormal];
+}
 
 -(void)failedStartingApplication
 {
@@ -1168,5 +1270,20 @@
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedMusicLoopToggleButton:(UIButton *)sender
+{
+    // If no loop to play, hide the button.
+    if (!self.songLoopPlayer) {
+        self.guiPlayMuteSongLoopButton.hidden = YES;
+        return;
+    }
+    [self toggleSongPlayback];
+}
+
 
 @end

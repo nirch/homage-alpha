@@ -81,6 +81,11 @@
 		085AFF4E1A52A9EB0066493F /* LabelDefaultsCFGTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085AFF4C1A52A9EB0066493F /* LabelDefaultsCFGTest.plist */; };
 		085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */; };
 		085D78251A617EFC001D835E /* ABTestsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D78241A617EFC001D835E /* ABTestsCFG.plist */; };
+		085D782B1A626F3D001D835E /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 085D78271A626F3D001D835E /* cinemaCountdown_oneLast.wav */; };
+		085D782C1A626F3D001D835E /* howtoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 085D78281A626F3D001D835E /* howtoVideo.mp4 */; };
+		085D782D1A626F3D001D835E /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 085D78291A626F3D001D835E /* introVideo.mp4 */; };
+		085D782E1A626F3D001D835E /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 085D782A1A626F3D001D835E /* recordingEnd.wav */; };
+		085D78301A626F8A001D835E /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 085D782F1A626F8A001D835E /* songLoop.m4a */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		0864E0521A4F3B6E00F7AEB7 /* HMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */; };
 		0864E0551A4F3BDA00F7AEB7 /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0541A4F3BDA00F7AEB7 /* Style.plist */; };
@@ -229,19 +234,15 @@
 		086F30891A529B7100430D81 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA0F18828AEB007514BE /* Foundation.framework */; };
 		086F308A1A529B7100430D81 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		086F308D1A529B7100430D81 /* close up.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08081FB718D0A9EA00999068 /* close up.ctr */; };
-		086F308E1A529B7100430D81 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0856C1B71A14BC4200735632 /* cinemaCountdown_oneLast.wav */; };
-		086F30911A529B7100430D81 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0856C1B91A14BC4200735632 /* introVideo.mp4 */; };
 		086F30931A529B7100430D81 /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
 		086F30961A529B7100430D81 /* InAppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FA971E1A45B8C6009B998C /* InAppStore.storyboard */; };
 		086F30971A529B7100430D81 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3718EDA46400CA362F /* Storyboard.storyboard */; };
 		086F30991A529B7100430D81 /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
 		086F309A1A529B7100430D81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		086F309D1A529B7100430D81 /* HMRefreshControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080120131A069043002F10B2 /* HMRefreshControl.xib */; };
-		086F309F1A529B7100430D81 /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0856C1BA1A14BC4200735632 /* recordingEnd.wav */; };
 		086F30A01A529B7100430D81 /* HMTOSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF5218EDA4D200CA362F /* HMTOSViewController.xib */; };
 		086F30A11A529B7100430D81 /* RecorderStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08455FE91890458E0040504D /* RecorderStoryboard.storyboard */; };
 		086F30A21A529B7100430D81 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0571A4F42E900F7AEB7 /* DINOT-CondBold.otf */; };
-		086F30A31A529B7100430D81 /* howtoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0856C1B81A14BC4200735632 /* howtoVideo.mp4 */; };
 		086F30A41A529B7100430D81 /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		086F30A61A529B7100430D81 /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
 		086F30A71A529B7100430D81 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
@@ -297,8 +298,6 @@
 		08DA742F1A5EA9AD007EFE69 /* HMABTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73F71A5EA9AD007EFE69 /* HMABTester.m */; };
 		08DA74301A5EA9AD007EFE69 /* HMAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73FA1A5EA9AD007EFE69 /* HMAppStore.m */; };
 		08DA74311A5EA9AD007EFE69 /* HMAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73FA1A5EA9AD007EFE69 /* HMAppStore.m */; };
-		08DA74321A5EA9AD007EFE69 /* CacheCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08DA73FC1A5EA9AD007EFE69 /* CacheCFG.plist */; };
-		08DA74331A5EA9AD007EFE69 /* CacheCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08DA73FC1A5EA9AD007EFE69 /* CacheCFG.plist */; };
 		08DA74341A5EA9AD007EFE69 /* HMCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73FE1A5EA9AD007EFE69 /* HMCacheManager.m */; };
 		08DA74351A5EA9AD007EFE69 /* HMCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73FE1A5EA9AD007EFE69 /* HMCacheManager.m */; };
 		08DA74381A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74031A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.m */; };
@@ -543,6 +542,11 @@
 		085BF6ED18C36AC2009D79C5 /* HMRecorderTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderTutorialViewController.h; sourceTree = "<group>"; };
 		085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderTutorialViewController.m; sourceTree = "<group>"; };
 		085D78241A617EFC001D835E /* ABTestsCFG.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ABTestsCFG.plist; sourceTree = "<group>"; };
+		085D78271A626F3D001D835E /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
+		085D78281A626F3D001D835E /* howtoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = howtoVideo.mp4; sourceTree = "<group>"; };
+		085D78291A626F3D001D835E /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
+		085D782A1A626F3D001D835E /* recordingEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = recordingEnd.wav; sourceTree = "<group>"; };
+		085D782F1A626F8A001D835E /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
 		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
 		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		0864E0501A4F3B6E00F7AEB7 /* HMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStyle.h; sourceTree = "<group>"; };
@@ -624,7 +628,6 @@
 		08DA73F71A5EA9AD007EFE69 /* HMABTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMABTester.m; sourceTree = "<group>"; };
 		08DA73F91A5EA9AD007EFE69 /* HMAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAppStore.h; sourceTree = "<group>"; };
 		08DA73FA1A5EA9AD007EFE69 /* HMAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAppStore.m; sourceTree = "<group>"; };
-		08DA73FC1A5EA9AD007EFE69 /* CacheCFG.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CacheCFG.plist; sourceTree = "<group>"; };
 		08DA73FD1A5EA9AD007EFE69 /* HMCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCacheManager.h; sourceTree = "<group>"; };
 		08DA73FE1A5EA9AD007EFE69 /* HMCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMCacheManager.m; sourceTree = "<group>"; };
 		08DA74021A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+ReachabilityMonitor.h"; sourceTree = "<group>"; };
@@ -1274,6 +1277,7 @@
 				0820926E1A6135EB00603008 /* Data */,
 				085AFF371A529E1F0066493F /* App */,
 				085AFF421A52A3880066493F /* User Interface */,
+				085D78261A626F3D001D835E /* media resources */,
 			);
 			path = "Monkey Dance";
 			sourceTree = "<group>";
@@ -1345,6 +1349,18 @@
 				085D78241A617EFC001D835E /* ABTestsCFG.plist */,
 			);
 			path = ABTesting;
+			sourceTree = "<group>";
+		};
+		085D78261A626F3D001D835E /* media resources */ = {
+			isa = PBXGroup;
+			children = (
+				085D78271A626F3D001D835E /* cinemaCountdown_oneLast.wav */,
+				085D78281A626F3D001D835E /* howtoVideo.mp4 */,
+				085D78291A626F3D001D835E /* introVideo.mp4 */,
+				085D782A1A626F3D001D835E /* recordingEnd.wav */,
+				085D782F1A626F8A001D835E /* songLoop.m4a */,
+			);
+			path = "media resources";
 			sourceTree = "<group>";
 		};
 		0864E04F1A4F3B5600F7AEB7 /* Styles */ = {
@@ -1570,7 +1586,6 @@
 		08DA73FB1A5EA9AD007EFE69 /* Cache Manager */ = {
 			isa = PBXGroup;
 			children = (
-				08DA73FC1A5EA9AD007EFE69 /* CacheCFG.plist */,
 				08DA73FD1A5EA9AD007EFE69 /* HMCacheManager.h */,
 				08DA73FE1A5EA9AD007EFE69 /* HMCacheManager.m */,
 			);
@@ -2057,7 +2072,6 @@
 				080E027B1A5966B300F1DB1E /* Localizable.strings in Resources */,
 				085AFF491A52A8B90066493F /* DefaultsCFGTest.plist in Resources */,
 				0864E0551A4F3BDA00F7AEB7 /* Style.plist in Resources */,
-				08DA74321A5EA9AD007EFE69 /* CacheCFG.plist in Resources */,
 				080120141A069043002F10B2 /* HMRefreshControl.xib in Resources */,
 				0856C1C11A14BC4200735632 /* recordingEnd.wav in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
@@ -2087,25 +2101,23 @@
 			files = (
 				085AFF4D1A52A9EB0066493F /* LabelDefaultsCFG.plist in Resources */,
 				086F308D1A529B7100430D81 /* close up.ctr in Resources */,
-				086F308E1A529B7100430D81 /* cinemaCountdown_oneLast.wav in Resources */,
-				086F30911A529B7100430D81 /* introVideo.mp4 in Resources */,
-				08DA74331A5EA9AD007EFE69 /* CacheCFG.plist in Resources */,
+				085D782C1A626F3D001D835E /* howtoVideo.mp4 in Resources */,
 				085AFF4E1A52A9EB0066493F /* LabelDefaultsCFGTest.plist in Resources */,
 				085AFF441A52A3880066493F /* Images.xcassets in Resources */,
+				085D782E1A626F3D001D835E /* recordingEnd.wav in Resources */,
 				086F30931A529B7100430D81 /* HMRecorderMessageBigImageView.xib in Resources */,
 				085AFF3B1A529E1F0066493F /* jilkyway.otf in Resources */,
 				086F30961A529B7100430D81 /* InAppStore.storyboard in Resources */,
 				086F30971A529B7100430D81 /* Storyboard.storyboard in Resources */,
 				080E02781A55C31700F1DB1E /* Style.plist in Resources */,
+				085D782B1A626F3D001D835E /* cinemaCountdown_oneLast.wav in Resources */,
 				086F30991A529B7100430D81 /* HMRecorderMessageGeneralView.xib in Resources */,
 				086F309A1A529B7100430D81 /* InfoPlist.strings in Resources */,
 				086F309D1A529B7100430D81 /* HMRefreshControl.xib in Resources */,
 				082092751A61360F00603008 /* ABTestsCFG.plist in Resources */,
-				086F309F1A529B7100430D81 /* recordingEnd.wav in Resources */,
 				086F30A01A529B7100430D81 /* HMTOSViewController.xib in Resources */,
 				086F30A11A529B7100430D81 /* RecorderStoryboard.storyboard in Resources */,
 				086F30A21A529B7100430D81 /* DINOT-CondBold.otf in Resources */,
-				086F30A31A529B7100430D81 /* howtoVideo.mp4 in Resources */,
 				086F30A41A529B7100430D81 /* HMRecorderMessageCommonView.xib in Resources */,
 				086F30A61A529B7100430D81 /* HMMeVideoPlayer.xib in Resources */,
 				086F30A71A529B7100430D81 /* Storyboard_iPad.storyboard in Resources */,
@@ -2119,7 +2131,9 @@
 				086F30AD1A529B7100430D81 /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				08DA74431A5EA9AD007EFE69 /* ServerCFG.plist in Resources */,
 				086F30AE1A529B7100430D81 /* Settings.bundle in Resources */,
+				085D78301A626F8A001D835E /* songLoop.m4a in Resources */,
 				086F30AF1A529B7100430D81 /* whatsapp@2x.png in Resources */,
+				085D782D1A626F3D001D835E /* introVideo.mp4 in Resources */,
 				086F30B01A529B7100430D81 /* HMStoriesTutorial.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

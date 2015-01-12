@@ -10,13 +10,14 @@
 #import "DB.h"
 #import <AFNetworking/AFHTTPSessionManager.h>
 #import "HMNotificationCenter.h"
+#import "HMServer+AppConfig.h"
 
 @interface HMCacheManager()
 
-@property (nonatomic, readonly) NSDictionary *cfg;
-
-@property (nonatomic, readonly) BOOL cfgShouldCacheStoriesVideos;
-@property (nonatomic, readonly) NSInteger cfgCacheStoriesVideosMaxCount;
+@property (nonatomic) BOOL cfgShouldCacheStoriesVideos;
+@property (nonatomic) BOOL cfgShouldCacheUserRemakesVideos;
+@property (nonatomic) BOOL cfgShouldCacheAudio;
+@property (nonatomic) NSInteger cfgCacheStoriesVideosMaxCount;
 
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
 @property (nonatomic) BOOL shouldPauseDownloads;
@@ -63,13 +64,10 @@
 
 -(void)loadCFG
 {
-    //
-    // Loads cache configurations from the CacheCFG.plist file.
-    //
-    NSString * plistPath = [[NSBundle mainBundle] pathForResource:@"CacheCFG" ofType:@"plist"];
-    _cfg = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
-    _cfgShouldCacheStoriesVideos = [_cfg[@"cacheStoriesVideos"] boolValue];
-    _cfgCacheStoriesVideosMaxCount = [_cfg[@"cacheStoriesVideosMaxCount"] integerValue];
+    self.cfgShouldCacheStoriesVideos = [HMServer.sh.configurationInfo[@"cache_stories_videos"] boolValue];
+    self.cfgShouldCacheUserRemakesVideos = [HMServer.sh.configurationInfo[@"cache_user_remakes_videos"] boolValue];
+    self.cfgShouldCacheAudio = [HMServer.sh.configurationInfo[@"cache_audio"] boolValue];
+    self.cfgCacheStoriesVideosMaxCount = [HMServer.sh.configurationInfo[@"cache_stories_videos_max_count"] integerValue];
 }
 
 -(void)initPaths
@@ -81,10 +79,14 @@
 
     // Cache folder for stories videos
     _storiesCachePath = [_cachePath URLByAppendingPathComponent:@"stories"];
+    _remakesCachePath = [_cachePath URLByAppendingPathComponent:@"remakes"];
     _audioCachePath = [_cachePath URLByAppendingPathComponent:@"audio"];
     
     // Ensure stories cache folder exists (create it if it doesn't)
     [self createFolderIfMissingAtURL:_storiesCachePath];
+
+    // Ensure remakes cache folder exists (create it if it doesn't)
+    [self createFolderIfMissingAtURL:_remakesCachePath];
     
     // Ensure audio cache folder exists (create it if it doesn't)
     [self createFolderIfMissingAtURL:_audioCachePath];
@@ -108,7 +110,7 @@
     
     __weak id weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf _checkIfNeedsToDownloadMoviesForStories];
+        [weakSelf _checkIfNeedsToDownloadAndCacheVideos];
     });
 }
 
@@ -118,19 +120,14 @@
     HMGLogDebug(@"Checking if needs to download resources.");
     __weak id weakSelf = self;
     
-    // Downloading and caching videos for stories.
+    // Downloading and caching videos for stories and remakes.
     dispatch_async(dispatch_get_main_queue(), ^() {
-        [weakSelf _checkIfNeedsToDownloadMoviesForStories];
+        [weakSelf _checkIfNeedsToDownloadAndCacheVideos];
     });
     
     // Downloading and caching audio files for scenes of stories (that use them)
     dispatch_async(dispatch_get_main_queue(), ^() {
         [weakSelf _checkIfNeedsToDownloadAudioForStories];
-    });
-    
-    // Downloading and caching user remakes
-    dispatch_async(dispatch_get_main_queue(), ^() {
-        [weakSelf _checkIfNeedsToDownloadMoviesForUserRemakes];
     });
 }
 
@@ -142,67 +139,122 @@
     [self.downloadTask cancel];
 }
 
--(void)_checkIfNeedsToDownloadMoviesForStories
+-(void)_checkIfNeedsToDownloadAndCacheVideos
 {
-    if (!self.cfgShouldCacheStoriesVideos) return;
+    if (!self.cfgShouldCacheStoriesVideos && !self.cfgShouldCacheUserRemakesVideos)
+        return;
+
+    // Because of historical reasons, the user setting is store in user defaults as "cacheStoriesVideos"
+    // but currently it also effects the downloading and caching of user's remakes videos.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *cacheStoriesVideos = [defaults objectForKey:@"cacheStoriesVideos"];
-    BOOL shouldCacheStoriesVideosUserSetting = cacheStoriesVideos ? [cacheStoriesVideos boolValue] : YES;
-    if (!shouldCacheStoriesVideosUserSetting) return;
+    NSNumber *cacheVideosUserSetting = [defaults objectForKey:@"cacheStoriesVideos"];
+    if (cacheVideosUserSetting && ![cacheVideosUserSetting boolValue]) {
+        // User doesn't want to download and cache videos on the device.
+        return;
+    }
     
     // Serial downloads in this simple implementation.
+    // Videos are downloaded one at a time.
     if (self.downloadTask) {
-        // Currently the simple downloader will download only one story at a time.
         HMGLogDebug(@"Currently downloading. Will not download any more videos now.");
         return;
     }
     
-    HMGLogDebug(@"Checking if needs to download and cache movies for stories.");
+    HMGLogDebug(@"Checking if needs to download and cache videos.");
     self.shouldPauseDownloads = NO;
-    
-    NSArray *stories = [Story allActiveStoriesInContext:DB.sh.context];
-    
     NSDate *now = [NSDate date];
     
-    for (Story *story in stories) {
+    //
+    // Gather the resource objects.
+    //
+    
+    // Resource objects list.
+    NSMutableArray *resourcesObjects = [NSMutableArray new];
+    
+    // Add all active stories to the list (if setting is to cache stories)
+    NSArray *stories;
+    if (self.cfgShouldCacheStoriesVideos) {
+        stories = [Story allActiveStoriesInContext:DB.sh.context];
+        if (stories && stories.count > 0)
+            [resourcesObjects addObjectsFromArray:stories];
+    }
+    
+    // Add all user's "Done" remakes to the list (if setting is to cache remakes)
+    User *currentUser = [User current];
+    NSArray *remakes;
+    if (currentUser) {
+        remakes = [Remake allRemakesForUser:currentUser
+                                 withStatus:HMGRemakeStatusDone
+                                  inContext:DB.sh.context];
+        if (remakes && remakes.count > 0)
+            [resourcesObjects addObjectsFromArray:remakes];
+    }
+
+    //
+    //  Iterate the resource objects.
+    //
+    
+    for (id resourceObject in resourcesObjects) {
         // Skip if already available locally.
-        if ([story isVideoAvailableLocally]) continue;
+        if ([resourceObject isVideoAvailableLocally]) continue;
         
-        // Skip this long video (hard coded in test env).
-        if ([story.videoURL rangeOfString:@"Messi+Vs+Tomer"].location != NSNotFound) {
+        // Get the url string of the resource.
+        NSString *url = [[resourceObject videoURL] stringByReplacingOccurrencesOfString:@"%20" withString:@"+"];
+        
+        // Just a hack. Skip this long video (hard coded in test env).
+        if ([[resourceObject videoURL] rangeOfString:@"Messi+Vs+Tomer"].location != NSNotFound) {
             continue;
         }
         
         // Ignore videos already tried to download lately
-        NSDate *latestAttempt = self.latestDownloadAttemptTimeForURL[story.videoURL];
+        NSDate *latestAttempt = self.latestDownloadAttemptTimeForURL[url];
         if (latestAttempt) {
             NSTimeInterval timePassed = [now timeIntervalSinceDate:latestAttempt];
             if (timePassed < 10000) continue;
         }
 
-        // If not over the limit, will just download the video.
-        if (![self storiesCacheCountReachedLimit]) {
-            [self downloadAndCacheStoryResourceFromURL:story.videoURL];
+        //
+        // Handling remakes videos.
+        //
+        
+        // No limit to the number of user remakes videos to download.
+        if ([resourceObject isKindOfClass:[Remake class]]) {
+            [self downloadAndCacheVideoResourceFromURL:url
+                                             cachePath:self.remakesCachePath];
             break;
         }
-
+        
+        //
+        // Handling stories videos.
+        //
+        
+        // If not over the limit, will just download the video.
+        if (![self storiesCacheCountReachedLimit]) {
+            [self downloadAndCacheVideoResourceFromURL:url
+                                             cachePath:self.storiesCachePath];
+            break;
+        }
+        
         // If over the limit size, will delete oldest video first and only than download the new one.
         // (The deleted video should be lower in the list than the one we want to cache - otherwise do nothing)
         NSInteger count = [self folderFilesCount:self.storiesCachePath.path];
         NSInteger filesToDeleteCount = count - self.cfgCacheStoriesVideosMaxCount + 1;
         
-        if ([self couldRemoveCachedStories:stories beforeStory:story count:filesToDeleteCount]) {
-            //
+        if ([self couldRemoveCachedStories:stories
+                               beforeStory:resourceObject
+                                     count:filesToDeleteCount]) {
+
+            
             // Could delete some videos. Download the newer one and cache it.
-            //
-            [self downloadAndCacheStoryResourceFromURL:story.videoURL];
+            [self downloadAndCacheVideoResourceFromURL:url
+                                             cachePath:self.storiesCachePath];
             break;
         } else {
-            //
+
             // Cache over the limit and no older stories. Abort.
-            //
             HMGLogDebug(@"Over the limit and can't make enough room. Abort download.");
             return;
+            
         }
     }
 }
@@ -292,8 +344,8 @@
     [downloadTask resume];
 }
 
-#pragma mark - Download story videos
--(void)downloadAndCacheStoryResourceFromURL:(NSString *)url
+#pragma mark - Download videos
+-(void)downloadAndCacheVideoResourceFromURL:(NSString *)url cachePath:(NSURL *)cachePath
 {
     HMGLogDebug(@"DL & cache video:%@", url);
 
@@ -307,20 +359,19 @@
     self.downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
 
         // The local url to download to.
-        NSURL *path = [self.storiesCachePath URLByAppendingPathComponent:[response suggestedFilename]];
+        NSURL *path = [cachePath URLByAppendingPathComponent:[response suggestedFilename]];
         return path;
 
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
 
         // When finished.
         if (error) {
-            HMGLogError(@"Error while downloading story video. %@", [error localizedDescription]);
-            
+            HMGLogError(@"Error while downloading video. %@", [error localizedDescription]);
         }
         
-        // Notify about finished upload.
+        // Notify about finished download.
         dispatch_async(dispatch_get_main_queue(), ^{
-            HMGLogDebug(@"File downloaded and cached: %@", filePath);
+            HMGLogDebug(@"File downloaded and saved to cache: %@", filePath);
             [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_DOWNLOAD_VIDEO_RESOURCE_FINISHED object:nil];
         });
         
@@ -358,6 +409,7 @@
 
 -(BOOL)isResourceCachedLocallyForURL:(NSString *)url cachePath:(NSURL *)cachePath
 {
+    url = [url stringByReplacingOccurrencesOfString:@"%20" withString:@"+"];
     NSURL *cachedResourceURL = [self urlForCachedResource:url cachePath:cachePath];
     if (cachedResourceURL) return YES;
     return NO;
@@ -365,6 +417,8 @@
 
 -(NSURL *)urlForCachedResource:(NSString *)url cachePath:(NSURL *)cachePath
 {
+    url = [url stringByReplacingOccurrencesOfString:@"%20" withString:@"+"];
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *cachedURL = self.cachedResourcesURLS[url];
     if (cachedURL) {

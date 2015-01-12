@@ -11,6 +11,20 @@
 
 @implementation Remake (Factory)
 
++(NSArray *)allRemakesForUser:(User *)user withStatus:(NSInteger)status inContext:(NSManagedObjectContext  *)context
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_REMAKE];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"user=%@ AND status=%@", user, @(status)];
+    
+    // Perform the fetch.
+    NSError *error;
+    NSArray *remakes = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) return nil;
+    
+    // Return the array of story objects.
+    return remakes;
+}
+
 +(Remake *)remakeWithID:(NSString *)sID story:(Story *)story user:(User *)user inContext:(NSManagedObjectContext *)context
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sID=%@ AND story=%@",sID, story];

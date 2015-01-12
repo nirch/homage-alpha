@@ -22,6 +22,7 @@
 
 @property (nonatomic, readonly) NSURL *cachePath;
 @property (nonatomic, readonly) NSURL *storiesCachePath;
+@property (nonatomic, readonly) NSURL *remakesCachePath;
 @property (nonatomic, readonly) NSURL *audioCachePath;
 
 

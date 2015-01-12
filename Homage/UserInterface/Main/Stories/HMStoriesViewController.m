@@ -297,6 +297,8 @@
             UIEdgeInsets c = self.storiesCV.contentInset;
             c.top = [app.mainVC renderingViewHeight];
             self.storiesCV.contentInset = c;
+            if (self.storiesCV.contentOffset.y == 0)
+                [self.storiesCV scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
         } else {
             UIEdgeInsets c = self.storiesCV.contentInset;
             c.top = 0;

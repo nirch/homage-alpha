@@ -117,7 +117,8 @@
         return YES;
     
     // Check if video downloaded and cached locally.
-    if ([HMCacheManager.sh isResourceCachedLocallyForURL:self.videoURL cachePath:HMCacheManager.sh.storiesCachePath])
+    if ([HMCacheManager.sh isResourceCachedLocallyForURL:self.videoURL
+                                               cachePath:HMCacheManager.sh.storiesCachePath])
         return YES;
     
     // Not bundled and not cached.

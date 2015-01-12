@@ -352,6 +352,8 @@
             UIEdgeInsets c = self.userRemakesCV.contentInset;
             c.top = [app.mainVC renderingViewHeight];
             self.userRemakesCV.contentInset = c;
+            if (self.userRemakesCV.contentOffset.y == 0)
+                [self.userRemakesCV scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
         } else {
             UIEdgeInsets c = self.userRemakesCV.contentInset;
             c.top = 0;

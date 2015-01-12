@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger, HMPushNotificationType) {
 
 @property (nonatomic, readonly) HMABTester *abTester;
 
+@property (nonatomic, readonly) NSString *prefferedLanguage;
+
 -(BOOL)isSlowDevice;
 +(NSString *)deviceModelName;
 

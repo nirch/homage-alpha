@@ -24,10 +24,20 @@
 			<key>fontResize</key>
 			<integer>8</integer>
 		</dict>
+		<key>styleClassTextBanner</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>5</integer>
+		</dict>
+		<key>styleClassRenderingBar</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>7</integer>
+		</dict>
 		<key>valueSplashActivityPosition</key>
-		<integer>160</integer>
+		<integer>190</integer>
 		<key>valueSplashActivityCirclesCount</key>
-		<string>9</string>
+		<string>7</string>
 		<key>valueSplashActivityCirclesRadius</key>
 		<string>7</string>
 		<key>valueStoreThumbsCornerRadius</key>
@@ -93,6 +103,13 @@
 			<string>@bright</string>
 			<key>colorRefreshControlTint</key>
 			<string>@bright</string>
+		</dict>
+		<key>rendering bar</key>
+		<dict>
+			<key>colorRenderingBarBG</key>
+			<string>@bright</string>
+			<key>colorRenderingBarText</key>
+			<string>@impact</string>
 		</dict>
 		<key>splash</key>
 		<dict>
@@ -195,7 +212,7 @@
 			<key>colorSDDescriptionText</key>
 			<string>@impact</string>
 			<key>colorSDDescriptionBG</key>
-			<string>@brightSeeThrough</string>
+			<string>@bright</string>
 			<key>colorSDMoreRemakesTitleText</key>
 			<string>@impact</string>
 			<key>colorSDMoreRemakesTitleBG</key>

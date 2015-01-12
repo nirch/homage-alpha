@@ -54,6 +54,13 @@
     self.guiDoneRenderingView.hidden = YES;
     self.guiInProgressView.alpha = 1;
     self.guiInProgressView.hidden = NO;
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    self.guiTopView.backgroundColor = [HMStyle.sh colorNamed:C_RENDERING_BAR_BG];
+    self.guiInProgressLabel.textColor = [HMStyle.sh colorNamed:C_RENDERING_BAR_TEXT];
+    self.guiDoneLabel.textColor = [HMStyle.sh colorNamed:C_RENDERING_BAR_TEXT];
 }
 
 #pragma mark - Observers

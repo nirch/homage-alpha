@@ -30,19 +30,19 @@
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMPROPER BACKGROUND" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Cv-fg-RFd" customClass="HMRegularFontLabel">
-                            <rect key="frame" x="58" y="110" width="452" height="36"/>
+                            <rect key="frame" x="115" y="98" width="339" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="BAD_BACKGROUND_TITLE"/>
                             </userDefinedRuntimeAttributes>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For optimal results, use a solid color wall, and some more text blah blah blah blah." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qDl-56-UVo" customClass="HMRegularFontLabel">
-                            <rect key="frame" x="68" y="154" width="432" height="54"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use a solid color wall" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="qDl-56-UVo" customClass="HMRegularFontLabel">
+                            <rect key="frame" x="49" y="123" width="470" height="85"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="40"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
@@ -113,9 +113,9 @@
         </view>
     </objects>
     <resources>
-        <image name="badBackground" width="85" height="95"/>
-        <image name="iconGotIt" width="34" height="34"/>
-        <image name="navIconHowto" width="36" height="36"/>
+        <image name="badBackground" width="212" height="46"/>
+        <image name="iconGotIt" width="32" height="32"/>
+        <image name="navIconHowto" width="38" height="38"/>
         <image name="smallCloseIcon" width="17" height="17"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

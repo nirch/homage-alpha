@@ -9,6 +9,7 @@
 #import "Remake+Logic.h"
 #import "DB.h"
 #import "NSString+Utilities.h"
+#import "HMCacheManager.h"
 
 @implementation Remake (Logic)
 
@@ -189,6 +190,17 @@
         [takeIDS addObject:takeID];
     }
     return takeIDS;
+}
+
+-(BOOL)isVideoAvailableLocally
+{
+    // Check if video downloaded and cached locally.
+    if ([HMCacheManager.sh isResourceCachedLocallyForURL:self.videoURL
+                                               cachePath:HMCacheManager.sh.remakesCachePath])
+        return YES;
+    
+    // Not bundled and not cached.
+    return NO;
 }
 
 @end

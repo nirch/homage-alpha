@@ -59,6 +59,10 @@
 #define C_REFRESH_CONTROL_TINT @"colorRefreshControlTint"
 #define C_ACTIVITY_CONTROL_TINT @"colorActivityControlTint"
 
+// Movie rendering bar
+#define C_RENDERING_BAR_BG @"colorRenderingBarBG"
+#define C_RENDERING_BAR_TEXT @"colorRenderingBarText"
+
 
 // Splash screen
 #define C_SPLASH_ACTIVITY_INDICATOR @"colorSplashActivityIndicator"
