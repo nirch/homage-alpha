@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *guiLikesCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiViewsIcon;
 @property (weak, nonatomic) IBOutlet UITextView *guiViewsCountLabel;
+@property (weak, nonatomic) IBOutlet UIView *guiContainer;
 
 @end

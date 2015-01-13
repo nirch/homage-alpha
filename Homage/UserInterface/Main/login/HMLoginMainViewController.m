@@ -114,6 +114,9 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     
     // Intro video
     self.skipIntroVideo = NO;
+    if ([HMServer.sh.configurationInfo[@"login_flow_skip_intro_video"] boolValue]) {
+        self.skipIntroVideo = YES;
+    }
     
     [self initGUI];
 }
@@ -474,6 +477,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
         }
     }
     
+    // If first use (and shouldn't skip intro video)
+    // Will show the intro video to the user.
     if (user.isFirstUse.boolValue && !self.skipIntroVideo)
     {
         user.isFirstUse = @NO;

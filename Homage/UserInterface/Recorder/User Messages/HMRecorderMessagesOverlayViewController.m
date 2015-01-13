@@ -237,6 +237,10 @@
         Remake *remake = [self.remakerDelegate remake];
         Footage *footage = [remake footageWithSceneID:[self.remakerDelegate currentSceneID]];
         vc.footage = footage;
+    } else if ([segue.identifier isEqualToString:@"see howto segue"]) {
+        HMRecorderPreviewViewController *vc = segue.destinationViewController;
+        vc.footage = nil;
+        vc.videoURL = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"howtoVideo" ofType:@"mp4"]] absoluteString];
     }
 }
 
@@ -480,12 +484,25 @@
                             };
     
     [[Mixpanel sharedInstance] track:@"RERetakeLast" properties:props];
-    
+
+    // User pressed the retake last scene button.
+    // According to label settings, decide if to show to the user
+    // the are you sure message or just immediatly jump to the shooting a scene
+    // state of the recorder.
+    if ([HMServer.sh.configurationInfo[@"recorder_skip_are_you_sure_in_good_job_message"] boolValue]) {
+        //
+        // Just stay in the same scene and allow user to retake.
+        //
+        [self.remakerDelegate updateUIForCurrentScene];
+        [self.remakerDelegate dismissOverlayAdvancingState:NO fromState:HMRecorderStateMakingAScene info:nil];
+        return;
+    }
+
+    // Show the "Are you sure?" message screen.
     NSDictionary *info = @{
                            @"sceneID":[self.remakerDelegate currentSceneID],
                            @"dismissOnDecision":@NO
                            };
-    
     HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
     [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
     
@@ -575,7 +592,7 @@
 
 - (IBAction)onPressedHelpButton:(id)sender
 {
-    
+    [[Mixpanel sharedInstance] track:@"REUserPressedHelpButton"];
+    [self performSegueWithIdentifier:@"see howto segue" sender:nil];
 }
-
 @end

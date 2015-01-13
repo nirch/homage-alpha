@@ -26,5 +26,7 @@
 	<true/>
 	<key>guest_allow_share</key>
 	<true/>
+	<key>recorder_skip_are_you_sure_in_good_job_message</key>
+	<true/>
 </dict>
 </plist>

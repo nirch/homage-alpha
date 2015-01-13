@@ -14,12 +14,15 @@
 #import "HMBoldFontButton.h"
 #import "HMRemakePresenterDelegate.h"
 #import "HMStoreDelegate.h"
+#import <MONActivityIndicatorView/MONActivityIndicatorView.h>
 
 @interface HMStoryDetailsViewController : UIViewController<
     HMStoryPresenterProtocol,
     NSFetchedResultsControllerDelegate,
     HMRemakePresenterDelegate,
-    HMStoreDelegate
+    HMStoreDelegate,
+    UICollectionViewDelegateFlowLayout,
+    MONActivityIndicatorViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeButton;

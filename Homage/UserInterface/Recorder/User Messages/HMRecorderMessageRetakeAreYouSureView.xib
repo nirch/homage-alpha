@@ -98,8 +98,8 @@
     </objects>
     <resources>
         <image name="iconRetakeMedium" width="36" height="36"/>
-        <image name="iconSmallPreviewBlack" width="30" height="19"/>
-        <image name="iconSmallRetakeSceneBlack" width="21" height="21"/>
+        <image name="iconSmallPreviewBlack" width="28" height="19"/>
+        <image name="iconSmallRetakeSceneBlack" width="20" height="20"/>
         <image name="iconSmallXBlack" width="12" height="17"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

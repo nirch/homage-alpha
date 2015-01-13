@@ -195,6 +195,14 @@
     // Defaults
     self.badBackgroundPolicy = HMBadBackgroundPolicyTolerant;
     
+    // If should force a policy, skip this AB Test
+    // (used for debugging. Shouldn't happen on a release build)
+    NSNumber *forcedPolicy = HMServer.sh.configurationInfo[@"recorder_forced_bbg_policy"];
+    if (forcedPolicy) {
+        self.badBackgroundPolicy = [forcedPolicy integerValue];
+        return;
+    }
+    
     // Report about entering the recorder, if relevant test requires.
     if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS] ||
         [abTester isABTestingProject:AB_PROJECT_RECORDER_ICONS]) {

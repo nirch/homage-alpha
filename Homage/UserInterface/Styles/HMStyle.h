@@ -109,6 +109,8 @@
 #define C_SD_REMAKE_BUTTON_TEXT @"colorSDRemakeButtonText"
 #define C_SD_NO_REMAKES_LABEL @"colorSDNoRemakesLabel"
 #define C_SD_REMAKE_INFO_TEXT @"colorSDRemakeInfoText"
+#define C_ARRAY_SD_MORE_REMAKES_ACTIVITY_INDICATOR @"colorsArraySDMoreRemakesActivityIndicator"
+
 
 // Me screen
 #define C_ME_TEXT @"colorMeText"

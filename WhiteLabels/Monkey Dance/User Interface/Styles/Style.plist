@@ -34,6 +34,11 @@
 			<key>fontResize</key>
 			<integer>7</integer>
 		</dict>
+		<key>styleClassSDDescriptionText</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>3</integer>
+		</dict>
 		<key>valueSplashActivityPosition</key>
 		<integer>190</integer>
 		<key>valueSplashActivityCirclesCount</key>
@@ -225,6 +230,11 @@
 			<string>@impactSeeThrough</string>
 			<key>colorSDRemakeInfoText</key>
 			<string>@impact</string>
+			<key>colorsArraySDMoreRemakesActivityIndicator</key>
+			<array>
+				<string>#552C17</string>
+				<string>#361915</string>
+			</array>
 		</dict>
 		<key>store</key>
 		<dict>

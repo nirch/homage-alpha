@@ -115,10 +115,10 @@
         </view>
     </objects>
     <resources>
-        <image name="iconGotIt" width="34" height="34"/>
+        <image name="iconGotIt" width="32" height="32"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
-        <image name="iconSmallPreviewBlack" width="30" height="19"/>
-        <image name="iconSmallRetakeSceneBlack" width="21" height="21"/>
+        <image name="iconSmallPreviewBlack" width="28" height="19"/>
+        <image name="iconSmallRetakeSceneBlack" width="20" height="20"/>
         <image name="iconTrophy" width="30" height="46"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -26,10 +26,10 @@
 #import "AMBlurView.h"
 #import "DB.h"
 #import "HMInAppStoreViewController.h"
-#import <UIScrollView+BottomRefreshControl.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMServer+AppConfig.h"
 #import "HMAppStore.h"
+#import <MONActivityIndicatorView/MONActivityIndicatorView.h>
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -45,6 +45,10 @@
 @property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineBG;
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiMoreRemakesHeadlineLabel;
+
+@property (nonatomic) BOOL fetchingMoreRemakes;
+
+@property (weak, nonatomic) MONActivityIndicatorView *activityView;
 
 // Remake button
 @property (weak,nonatomic)  IBOutlet UIView *guiRemakeVideoContainer;
@@ -166,13 +170,6 @@
     [[AMBlurView new] insertIntoView:self.guiMoreRemakesHeadlineBG];
     self.guiMoreRemakesHeadlineBG.alpha = 0.3;
     
-    // Pull up to refresh
-    UIRefreshControl *refreshControl = [UIRefreshControl new];
-    [refreshControl addTarget:self action:@selector(loadAnotherRemakesPage) forControlEvents:UIControlEventValueChanged];
-    //[refreshControl setTintColor:[HMColor.sh main2]];
-    refreshControl.layer.zPosition = -1;
-    self.remakesCV.bottomRefreshControl = refreshControl;
-    
     // Premium content
     [self updateMakeYourOwnButton];
     
@@ -209,6 +206,11 @@
 
 -(void)loadAnotherRemakesPage
 {
+    if (self.fetchingMoreRemakes)
+        return;
+
+    self.fetchingMoreRemakes = YES;
+    [self.activityView startAnimating];
     self.shownRemakesPages++;
     [self refetchRemakesForStoryID:self.story.sID page:@(self.shownRemakesPages)];
 }
@@ -321,8 +323,11 @@
 -(void)onRemakesRefetched:(NSNotification *)notification
 {
     self.fetchedFirstPageFromServer = YES;
+    self.fetchingMoreRemakes = NO;
     
-    [self.remakesCV.bottomRefreshControl endRefreshing];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.activityView stopAnimating];        
+    });
     
     //
     // Backend notifies that local storage was updated with remakes.
@@ -453,21 +458,58 @@
      numberOfItemsInSection:(NSInteger)section
 {
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
-    return self.fetchedResultsController.fetchedObjects.count;
+    return self.fetchedResultsController.fetchedObjects.count+1;
     
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger index = indexPath.item;
     
+    if (index == self.fetchedResultsController.fetchedObjects.count) {
+        // Load more cell
+        HMRemakeCell *cell = [self.remakesCV dequeueReusableCellWithReuseIdentifier:@"MoreRemakesCell"
+                                                                       forIndexPath:indexPath];
+        [self updateLoadMoreRemakesCell:cell];
+        return cell;
+    }
+    
+    // Remake cell.
     HMRemakeCell *cell = [self.remakesCV dequeueReusableCellWithReuseIdentifier:@"RemakeCell"
-                                                                              forIndexPath:indexPath];
+                                                                   forIndexPath:indexPath];
     [self updateCell:cell forIndexPath:indexPath];
-    
     return cell;
 }
 
+-(void)updateLoadMoreRemakesCell:(HMRemakeCell *)cell
+{
+    if (cell.guiContainer.subviews.count > 0) return;
+
+    // The activity view.
+    MONActivityIndicatorView *activityView = [[MONActivityIndicatorView alloc] init];
+    activityView.numberOfCircles = 3;
+    activityView.radius = 8;
+    activityView.internalSpacing = 5;
+    activityView.duration = 0.2;
+    activityView.delegate = self;
+    self.activityView = activityView;
+    [cell.guiContainer addSubview:activityView];
+    activityView.frame = cell.guiContainer.bounds;
+    activityView.center = CGPointMake(180, 24);
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView
+                 layout:(UICollectionViewLayout *)collectionViewLayout
+ sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger index = indexPath.item;
+    if (index == self.fetchedResultsController.fetchedObjects.count) {
+        return CGSizeMake(320, 45);
+    } else {
+        return CGSizeMake(156, 90);
+    }
+}
 
 - (void)updateCell:(HMRemakeCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
@@ -527,6 +569,11 @@
 {
     // Check if ignore flag not set.
     if (self.ignoreRemakeSelections) return;
+    
+    if (indexPath.item == self.fetchedResultsController.fetchedObjects.count) {
+        [self loadAnotherRemakesPage];
+        return;
+    }
     
     // Get the related remake (ignore if for some reason not found);
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -784,6 +831,16 @@
     self.guiMoreRemakesHeadlineContainer.userInteractionEnabled = currentOffset >= self.offsetPoint;
 }
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentOffset.y+scrollView.bounds.size.height;
+    CGFloat contentHeight = scrollView.contentSize.height;
+    
+    if (contentHeight - offset <= 50) {
+        [self loadAnotherRemakesPage];
+    }
+}
+
 -(void)_iPadScrollViewDidScroll:(UIScrollView *)scrollView
 {
 
@@ -963,6 +1020,15 @@
         [[Mixpanel sharedInstance] track:@"SDNewRemake" properties:info];
         [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
     }
+}
+
+#pragma mark - MONActivityIndicatorViewDelegate
+-(UIColor *)activityIndicatorView:(MONActivityIndicatorView *)activityIndicatorView circleBackgroundColorAtIndex:(NSUInteger)index
+{
+    UIColor *color;
+    color = [HMStyle.sh colorNamed:C_ARRAY_SD_MORE_REMAKES_ACTIVITY_INDICATOR
+                           atIndex:index];
+    return color;
 }
 
 #pragma mark - IB Actions

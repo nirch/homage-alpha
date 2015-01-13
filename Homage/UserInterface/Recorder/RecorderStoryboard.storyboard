@@ -201,6 +201,7 @@
                     <connections>
                         <outlet property="guiBlurredView" destination="MYM-6F-YAT" id="1NL-MS-zUW"/>
                         <segue destination="tXs-Kq-hUw" kind="modal" identifier="see preview segue" modalTransitionStyle="crossDissolve" id="DmU-xm-yNH"/>
+                        <segue destination="tXs-Kq-hUw" kind="modal" identifier="see howto segue" modalTransitionStyle="crossDissolve" id="bMe-HO-hQU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tFd-9k-m3b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1103,7 +1104,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="badBackgroundWarningIcon" width="27" height="27"/>
+        <image name="badBackgroundWarningIcon" width="26" height="26"/>
         <image name="helpContour" width="356" height="265"/>
         <image name="helpDownIndicator" width="55" height="83"/>
         <image name="helpScreenBG" width="480" height="270"/>
@@ -1113,7 +1114,7 @@
         <image name="iconCheck" width="19" height="14"/>
         <image name="iconClose" width="46" height="46"/>
         <image name="iconCreateMovieSmall" width="30" height="30"/>
-        <image name="iconGotIt" width="34" height="34"/>
+        <image name="iconGotIt" width="32" height="32"/>
         <image name="iconMediumPlayerStop" width="35" height="35"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconRowIndicator" width="10" height="23"/>
@@ -1122,7 +1123,7 @@
         <image name="iconSceneRetake" width="20" height="20"/>
         <image name="iconSceneScriptLighter" width="22" height="20"/>
         <image name="iconUpArrow" width="24" height="10"/>
-        <image name="nextIcon" width="34" height="34"/>
+        <image name="nextIcon" width="32" height="32"/>
         <image name="sceneDirectionIcon" width="34" height="27"/>
         <image name="showScriptIcon" width="27" height="22"/>
         <image name="textPlate" width="375" height="14"/>
@@ -1133,4 +1134,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="bMe-HO-hQU"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -14,6 +14,7 @@
     HMSimpleVideoPlayerDelegate
 >
 
+@property (nonatomic) NSString *videoURL;
 @property (nonatomic) Footage *footage;
 
 @end

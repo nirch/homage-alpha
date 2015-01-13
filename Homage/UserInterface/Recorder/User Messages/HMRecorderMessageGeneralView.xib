@@ -95,7 +95,7 @@
         </view>
     </objects>
     <resources>
-        <image name="iconGotIt" width="34" height="34"/>
+        <image name="iconGotIt" width="32" height="32"/>
         <image name="iconSwipeUp" width="29" height="43"/>
         <image name="iconUpArrow" width="24" height="10"/>
         <image name="tutorialSilhouette1" width="568" height="320"/>

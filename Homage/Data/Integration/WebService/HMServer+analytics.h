@@ -43,6 +43,7 @@ typedef NS_ENUM(NSInteger, HMOrigScreen) {
     HMHowTo,
     HMRecorderPreview,
     HMRecorderMenu,
+    HMRecorderMessage
 };
 
 -(NSString *)generateBSONID;

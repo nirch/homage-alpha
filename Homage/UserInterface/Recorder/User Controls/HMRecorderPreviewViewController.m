@@ -20,6 +20,7 @@
 
 @end
 
+// TODO: rename this class (general name for playing videos in full screen in recorder)
 @implementation HMRecorderPreviewViewController
 
 - (void)viewDidLoad
@@ -31,11 +32,18 @@
                                                                               containerView:self.guiContainerView rotationSensitive:NO
                                        ];
     vc.delegate = self;
-    vc.videoLabelText = LS(@"SHOW_YOUR_TAKE");
-    vc.videoURL = [NSString stringWithFormat:@"file://%@", self.footage.rawLocalFile];
+    
+    if (self.footage) {
+        vc.videoLabelText = LS(@"SHOW_YOUR_TAKE");
+        vc.videoURL = [NSString stringWithFormat:@"file://%@", self.footage.rawLocalFile];
+        vc.originatingScreen = [NSNumber numberWithInteger:HMRecorderPreview];
+    } else if (self.videoURL) {
+        vc.videoURL = self.videoURL;
+        vc.originatingScreen = [NSNumber numberWithInteger:HMRecorderMessage];
+    }
+    
     vc.resetStateWhenVideoEnds = NO;
     vc.delegate = self;
-    vc.originatingScreen = [NSNumber numberWithInteger:HMRecorderPreview];
     vc.entityType = [NSNumber numberWithInteger:HMScene];
     vc.entityID = @"none";
     [vc extractThumbFromVideo];
