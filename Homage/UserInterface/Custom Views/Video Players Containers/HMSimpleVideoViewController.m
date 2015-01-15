@@ -67,7 +67,6 @@
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 
 @property (nonatomic) BOOL playPortrait;
-@property (nonatomic) UIDeviceOrientation previousOrientation;
 @property (nonatomic) BOOL userPaused;
 
 @property (nonatomic) BOOL reportedMovieStartedPlaying;
@@ -623,7 +622,7 @@
 
 - (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated forOrientation:(UIInterfaceOrientation)orientation {
     _isFullscreen = fullscreen;
-    CGFloat fullscreenAnimationDuration = 0.4;
+    CGFloat fullscreenAnimationDuration = 0.1;
     if (fullscreen) {
         [[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerWillEnterFullscreenNotification object:nil];
         
@@ -733,61 +732,31 @@
     if (!self.waitingToStartPlayingTheFile && !self.isPlaying) return;
     
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    NSLog(@"device orientation is now: %ld" , (long)[[UIDevice currentDevice] orientation]);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        switch (orientation) {
-            case UIDeviceOrientationLandscapeLeft:
-                if (self.playPortrait)
-                {
-                    [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
-                    //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
-                }
-                self.playPortrait = NO;
-                self.previousOrientation = orientation;
-                break;
-            case UIDeviceOrientationLandscapeRight:
-                if (self.playPortrait)
-                {
-                    [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeLeft];
-                    //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationLandscapeRight animated:YES completion:nil];
-                }
-                self.playPortrait = NO;
-                self.previousOrientation = orientation;
-                break;
-            case UIDeviceOrientationPortrait:
-                if (self.playPortrait)
-                {
-                    self.previousOrientation = orientation;
-                    break;
-                }
-                if (CGRectEqualToRect(self.containerView.frame , CGRectZero))
-                {
-                    [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
-                    //[self rotateMoviePlayerForOrientation:UIInterfaceOrientationPortrait animated:NO completion:nil];
-                } else {
-                    [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
-                }
-                self.previousOrientation = orientation;
-                self.playPortrait = YES;
-                break;
-            default:
-                if (self.previousOrientation == UIDeviceOrientationPortrait || self.previousOrientation == UIDeviceOrientationFaceDown || self.previousOrientation == UIDeviceOrientationFaceUp)
-                {
-                    self.playPortrait = YES;
-                } else
-                {
-                    self.playPortrait = NO;
-                }
-                self.previousOrientation = orientation;
-                break;
-        }
+    HMGLogDebug(@"device orientation is now: %ld" , (long)[[UIDevice currentDevice] orientation]);
+
+    switch (orientation) {
+        case UIDeviceOrientationLandscapeLeft:
+            [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeRight];
+            break;
         
-        HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
-        app.shouldAllowStatusBar = !UIDeviceOrientationIsLandscape(orientation);
-        [self setNeedsStatusBarAppearanceUpdate];
+        case UIDeviceOrientationLandscapeRight:
+            [self setFullScreenForOrientation:UIInterfaceOrientationLandscapeLeft];
+            break;
         
-    });
+        case UIDeviceOrientationPortrait:
+            if (CGRectEqualToRect(self.containerView.frame , CGRectZero)) {
+                [self setFullScreen:YES animated:YES forOrientation:UIInterfaceOrientationPortrait];
+            } else {
+                [self setFullScreen:NO animated:YES forOrientation:UIInterfaceOrientationPortrait];
+            }
+            break;
+        default:
+            break;
+    }
+
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    app.shouldAllowStatusBar = !UIDeviceOrientationIsLandscape(orientation) && orientation != UIDeviceOrientationFaceUp;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 

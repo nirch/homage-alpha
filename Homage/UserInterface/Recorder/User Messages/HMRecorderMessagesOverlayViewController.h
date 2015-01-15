@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, HMRecorderMessagesType) {
     HMRecorderMessagesTypeFinishedScene,
     HMRecorderMessagesTypeFinishedAllScenes,
     HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene,
-    HMRecorderMessagesTypeBigImage
+    HMRecorderMessagesTypeBadBG
 };
 
 @interface HMRecorderMessagesOverlayViewController : UIViewController<

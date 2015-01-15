@@ -63,6 +63,25 @@
     activityView.center = p;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    // Fixing layout
+    [self fixLayout];
+}
+
+-(void)fixLayout
+{
+    if (!IS_IPHONE_5) {
+        CGRect f = self.guiTopLogo.frame;
+        f.size.height -= 60;
+        self.guiTopLogo.frame = f;
+        
+        CGPoint p = self.activityView.center;
+        p.y -= 30;
+        self.activityView.center = p;
+    }
+}
+
 -(void)revealAnimations
 {
     HMAppDelegate *app = [[UIApplication sharedApplication] delegate];

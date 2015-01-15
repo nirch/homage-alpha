@@ -225,7 +225,7 @@
     NSString *port;
     NSString *protocol;
     NSString *host;
-    
+
     #ifndef DEBUG
     if (IS_TEST_APP) {
         // Use test server on test apps

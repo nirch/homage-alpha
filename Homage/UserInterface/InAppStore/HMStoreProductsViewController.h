@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class Story;
+
 @interface HMStoreProductsViewController : UIViewController<
     UICollectionViewDataSource,
     UICollectionViewDelegate
 >
+
+@property (nonatomic) Story *prioritizedStory;
 
 -(void)restorePurchases;
 

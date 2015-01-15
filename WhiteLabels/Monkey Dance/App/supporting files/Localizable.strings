@@ -1,6 +1,10 @@
 /* This string is used only for testing the localizable file */
 "TEST_LOCAL" = "Testing localization";
 
+/* Privacy policy and TOS */
+"PRIVACY_POLICY_TITLE" = "Monkey Dance Privacy Policy";
+"TOS_TITLE" = "Terms and Conditions";
+
 /* Login screen */
 "EMAIL_PLACEHOLDER_TEXT" = "Email";
 "PASSWORD_PLACEHOLDER_TEXT" = "Password";

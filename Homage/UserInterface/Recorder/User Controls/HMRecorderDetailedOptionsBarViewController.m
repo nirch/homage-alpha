@@ -124,6 +124,7 @@
 {
     [self initGUIOnceAfterFirstAppearance];
     [super viewDidAppear:animated];
+
     [self initVideoControllers];
 }
 
@@ -161,7 +162,7 @@
 
     // Lock indicator of record button
     self.guiLockRecordButtonView.transform = LOCK_IND_TRANSFORM;
-    self.guiLockRecordButtonView.alpha = 0.1;
+    self.guiLockRecordButtonView.alpha = 0.02;
     
     // ************
     // *  STYLES  *
@@ -209,15 +210,19 @@
 
     // Scene
     HMSimpleVideoViewController *vc;
-    _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiSceneVideoContainerView rotationSensitive:NO];
+    _sceneVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self
+                                                                             containerView:self.guiSceneVideoContainerView
+                                                                         rotationSensitive:NO];
     self.sceneVideoVC.videoLabelText = LS(@"WATCH_OUR_SCENE");
     self.sceneVideoVC.delegate = self;
     self.sceneVideoVC.originatingScreen = [NSNumber numberWithInteger:HMRecorderMenu];
     self.sceneVideoVC.entityType = [NSNumber numberWithInteger:HMScene];
     self.sceneVideoVC.entityID = @"none";
-
+    
     // Story
-    _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self containerView:self.guiStoryVideoContainerView rotationSensitive:NO];
+    _storyVideoVC = vc = [[HMSimpleVideoViewController alloc] initWithDefaultNibInParentVC:self
+                                                                             containerView:self.guiStoryVideoContainerView
+                                                                         rotationSensitive:NO];
     self.storyVideoVC.videoLabelText = LS(@"WATCH_OUR_STORY");
     self.storyVideoVC.videoURL = self.remake.story.videoURL;
     self.storyVideoVC.delegate = self;
@@ -246,21 +251,6 @@
     
     self.guiOriginalTakesPageControl.numberOfPages = videosPages;
     self.guiOriginalTakesPageControl.currentPage = 0;
-    
-    //THE HAND!!!
-    /*self.guiPointingHand.hidden = YES;
-    if (![User current].skipRecorderTutorial && self.remakerDelegate.showHand == YES);
-    {
-        self.guiPointingHand.hidden = NO;
-        self.guiPointingHand.transform = CGAffineTransformMakeTranslation(0, 5);
-        double delayInSeconds = 0.5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [UIView animateWithDuration:1.3 delay:0 options:HM_ANIMATION_OPTION_PING_PONG animations:^{
-                self.guiPointingHand.transform = CGAffineTransformMakeTranslation(0, -5);
-            } completion:nil];
-        });
-    }*/
     
     // Mark that GUI already initialized once.
     _alreadyInitializedGUI = YES;
@@ -361,6 +351,8 @@
     self.guiLessDetailsBar.alpha = 1;
     self.guiMoreDetailsBar.alpha = 0;
     
+    // Reset
+    [self updateOriginalTakesPageContol];
     [self.sceneVideoVC done];
     [self.storyVideoVC done];
 }
@@ -408,6 +400,18 @@
     // Report AB Test conversion event - The drawer was opened.
     HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
     [app.abTester reportEventType:@"onOpenedRecorderDrawer"];
+    
+    // Reset
+    [self updateOriginalTakesPageContol];
+    [self.sceneVideoVC done];
+    [self.storyVideoVC done];
+    
+    // Show indicator animation on current scene.
+    [self.remakerDelegate selectSceneID:self.sceneID];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.guiOriginalTakesVideosScrollView.alpha = 1;
+    }];
 }
 
 -(void)onRecorderDetailedOptionsOpening:(NSNotification *)notification
@@ -416,6 +420,7 @@
     self.guiMoreDetailsBar.hidden = NO;
     self.guiRecordButton.enabled = NO;
     self.guiCloseButton.enabled= NO;
+    self.guiOriginalTakesVideosScrollView.alpha = 0;
     
     [UIView animateWithDuration:0.5 animations:^{
         self.guiMoreDetailsBar.alpha = 1;
@@ -585,6 +590,32 @@
     [self.storyVideoVC done];
 }
 
+#pragma mark - Counting down
+-(void)playCountdownSound
+{
+    NSError *error;
+    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown_oneLast" ofType:@"wav"]];
+    self.audioPlayer = [[AVAudioPlayer alloc]
+                        initWithContentsOfURL:cinemaCountdownURL error:&error];
+    NSLog(@"error: %@" , error);
+    [self.audioPlayer prepareToPlay];
+    [self.audioPlayer play];
+}
+
+-(void)cancelCountdown
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
+    [self.guiRoundCountdownLabal cancel];
+    [HMMotionDetector.sh stopWithNotification:NO];
+    [self postEnableBGDetectionNotification];
+    [[Mixpanel sharedInstance] track:@"RECancelRecord" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
+    self.guiCountdownContainer.hidden = YES;
+    [self.audioPlayer stop];
+    
+    
+}
+
+
 #pragma mark - HMCountDownDelegate
 -(void)countDownDidFinish
 {
@@ -664,6 +695,22 @@
     }];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+-(void)postDisableBGdetectionNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_DISABLE_BG_DETECTION object:self];
+}
+
+-(void)postEnableBGDetectionNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:HM_ENABLE_BG_DETECTION object:self];
+}
+
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -718,34 +765,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil userInfo:userInfo];
 }
 
--(void)playCountdownSound
-{
-    NSError *error;
-    NSURL *cinemaCountdownURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"cinemaCountdown_oneLast" ofType:@"wav"]];
-    self.audioPlayer = [[AVAudioPlayer alloc]
-                        initWithContentsOfURL:cinemaCountdownURL error:&error];
-    NSLog(@"error: %@" , error);
-    [self.audioPlayer prepareToPlay];
-    [self.audioPlayer play];
-}
-
 - (IBAction)onPressedCancelCountdownButton:(UIButton *)sender
 {
     [self cancelCountdown];
 }
 
--(void)cancelCountdown
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING object:nil];
-    [self.guiRoundCountdownLabal cancel];
-    [HMMotionDetector.sh stopWithNotification:NO];
-    [self postEnableBGDetectionNotification];
-    [[Mixpanel sharedInstance] track:@"RECancelRecord" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
-    self.guiCountdownContainer.hidden = YES;
-    [self.audioPlayer stop];
-    
-    
-}
 
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
@@ -833,7 +857,6 @@
     //
     Scene *scene = self.scenesOrdered[index];
     [self.remakerDelegate selectSceneID:scene.sID];
-    
 }
 
 - (IBAction)onPressedRetakeButton:(UIButton *)sender
@@ -845,22 +868,5 @@
     if (footage.readyState != HMFootageReadyStateReadyForSecondRetake) return;
     [self.remakerDelegate updateWithUpdateType:HMRemakerUpdateTypeRetakeScene info:@{@"sceneID":scene.sID}];
 }
-
-//make comment should you want to hide status bar
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
--(void)postDisableBGdetectionNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_DISABLE_BG_DETECTION object:self];
-}
-
--(void)postEnableBGDetectionNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:HM_ENABLE_BG_DETECTION object:self];
-}
-
 
 @end

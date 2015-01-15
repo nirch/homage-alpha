@@ -13,15 +13,25 @@
 @interface Remake (Factory)
 
 /**
- *  Get all the remakes of the user in local storage.
+ *  Get all the remakes of the user in local storage (with a given status).
  *
- *  @param user  The id object of the user.
+ *  @param user  The object of the user.
  *  @param status The status of the remakes to retrieve.
- *  @param context The manages object context.
+ *  @param context The managed object context.
  *
  *  @return An array of found remakes.
  */
 +(NSArray *)allRemakesForUser:(User *)user withStatus:(NSInteger)status inContext:(NSManagedObjectContext  *)context;
+
+/**
+ *  Get all the remakes of the user in local storage.
+ *
+ *  @param user    The object of the user.
+ *  @param context The managed object context.
+ *
+ *  @return An array of found remakes.
+ */
++(NSArray *)allRemakesForUser:(User *)user inContext:(NSManagedObjectContext  *)context;
 
 ///
 /**

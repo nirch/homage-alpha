@@ -7,6 +7,7 @@
 //
 
 #import "HMRemakeParser.h"
+#import "HMCacheManager.h"
 
 @implementation HMRemakeParser
 
@@ -45,6 +46,14 @@
         // Delete remake from local storage (if exists)
         Remake *remakeToDelete = [Remake findWithID:remakeID inContext:self.ctx];
         if (!remakeToDelete) return;
+        
+        // Delete temp files if exist
+        [HMCacheManager.sh clearTempFilesForRemake:remakeToDelete];
+        
+        // Delete cached resources if exist
+        [HMCacheManager.sh clearCachedResourcesForRemake:remakeToDelete];
+        
+        // Delete the object.
         [self.ctx deleteObject:remakeToDelete];
         [DB.sh save];
         return;

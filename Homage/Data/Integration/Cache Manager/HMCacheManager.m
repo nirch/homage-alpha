@@ -407,10 +407,18 @@
     return nil;
 }
 
--(BOOL)isResourceCachedLocallyForURL:(NSString *)url cachePath:(NSURL *)cachePath
+-(NSURL *)cachedResourceURLForURL:(NSString *)url cachePath:(NSURL *)cachePath
 {
+    if (url == nil) return nil;
     url = [url stringByReplacingOccurrencesOfString:@"%20" withString:@"+"];
     NSURL *cachedResourceURL = [self urlForCachedResource:url cachePath:cachePath];
+    return cachedResourceURL;
+}
+
+-(BOOL)isResourceCachedLocallyForURL:(NSString *)url cachePath:(NSURL *)cachePath
+{
+    if (url == nil) return NO;
+    NSURL *cachedResourceURL = [self cachedResourceURLForURL:url cachePath:cachePath];
     if (cachedResourceURL) return YES;
     return NO;
 }
@@ -536,6 +544,44 @@
     }
     
     return NO;
+}
+
+-(void)clearTempFilesForFootage:(Footage *)footage
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (footage.rawLocalFile == nil) return;
+    HMGLogDebug(@"Check if temp file exists @ %@", footage.rawLocalFile);
+    if ([fm fileExistsAtPath:footage.rawLocalFile]) {
+        HMGLogDebug(@"temp file exists @ %@", footage.rawLocalFile);
+        [fm removeItemAtPath:footage.rawLocalFile error:nil];
+        if (![fm fileExistsAtPath:footage.rawLocalFile]) {
+            HMGLogDebug(@"temp file removed from %@", footage.rawLocalFile);
+        }
+    } else {
+        HMGLogDebug(@"Not found :-(");
+    }
+}
+
+-(void)clearTempFilesForRemake:(Remake *)remake
+{
+    NSArray *footages = [remake footagesOrdered];
+    for (Footage *footage in footages) {
+        [self clearTempFilesForFootage:footage];
+    }
+}
+
+-(void)clearCachedResourcesForRemake:(Remake *)remake
+{
+    if ([remake isVideoAvailableLocally]) {
+        HMGLogDebug(@"Cached video for remake should be removed @ %@", remake.videoURL);
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSURL *resourceURL = [self cachedResourceURLForURL:remake.videoURL
+                                                 cachePath:self.remakesCachePath];
+        [fm removeItemAtURL:resourceURL error:nil];
+        if (![remake isVideoAvailableLocally]) {
+            HMGLogDebug(@"Removed cached video for remake from %@", remake.videoURL);            
+        }
+    }
 }
 
 @end

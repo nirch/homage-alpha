@@ -18,6 +18,7 @@
 #import "HMRegularFontLabel.h"
 #import "HMRegularFontLabel.h"
 #import "HMStyle.h"
+#import "HMServer+AppConfig.h"
 
 #define ALERT_VIEW_TAG_SHARE_FAILED 100
 
@@ -141,6 +142,10 @@
     // Update remake info
     [self updateInfoForRemake];
     
+    // Update the make your own button (opened or locked?)
+    [self updateMakeYourOwnButton];
+
+    
     // Init the transform for the reveal animation
     CGRect t = self.guiRemakeContainer.frame;
     CGPoint toCenter = self.guiScrollView.center;
@@ -162,6 +167,7 @@
     [UIView animateWithDuration:0.3 delay:0.1 usingSpringWithDamping:0.75 initialSpringVelocity:0.3 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         self.guiRemakeContainer.transform = CGAffineTransformIdentity;
     } completion:nil];
+    
 }
 
 -(void)updateInfoForRemake
@@ -297,6 +303,17 @@
         self.currentSharer = nil;
     });
 }
+
+#pragma mark - Make your own button
+-(void)updateMakeYourOwnButton
+{
+    if (self.remake.story.isPremiumAndLocked && [HMServer.sh supportsInAppPurchases]) {
+        [self.guiRemakeButton setImage:[UIImage imageNamed:@"storyLockedIconSmall"] forState:UIControlStateNormal];
+    } else {
+        [self.guiRemakeButton setImage:[UIImage imageNamed:@"remakeInverseBGButton"] forState:UIControlStateNormal];
+    }
+}
+
 
 #pragma mark - Alert view delegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

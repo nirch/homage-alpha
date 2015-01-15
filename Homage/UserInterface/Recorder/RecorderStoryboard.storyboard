@@ -1075,6 +1075,16 @@
                                     <action selector="onPressedNextButton:" destination="xmX-EA-Pjz" eventType="touchUpInside" id="LBh-dS-CqL"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="t7r-fQ-Gpf" userLabel="Next cover all button">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedNextButton:" destination="xmX-EA-Pjz" eventType="touchUpInside" id="yDw-fk-iHc"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconUpArrow" id="P9a-rt-RRV">
                                 <rect key="frame" x="517" y="278" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -1090,6 +1100,7 @@
                         <outlet property="guiGetInspiredIcon" destination="P9a-rt-RRV" id="HQH-ov-kA5"/>
                         <outlet property="guiGetInspiredLabel" destination="wAX-iT-Vho" id="Lsf-FD-O24"/>
                         <outlet property="guiInspiredIndicatorContainer" destination="TH0-br-zg9" id="EK2-vI-xLY"/>
+                        <outlet property="guiNextCoverAllButton" destination="t7r-fQ-Gpf" id="ax0-k6-nUT"/>
                         <outlet property="guiPlaceActorHereLabel" destination="gK8-0X-jRA" id="7Xs-iA-8ev"/>
                         <outlet property="guiSceneDurationLabel" destination="QI9-qg-KTn" id="xVd-Zr-Y6H"/>
                         <outlet property="guiSceneIndicatorContainer" destination="VBD-8T-FuI" id="fzk-rq-Kru"/>

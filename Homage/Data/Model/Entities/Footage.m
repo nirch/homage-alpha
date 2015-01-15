@@ -2,8 +2,8 @@
 //  Footage.m
 //  Homage
 //
-//  Created by Aviv Wolf on 11/23/14.
-//  Copyright (c) 2014 Homage. All rights reserved.
+//  Created by Aviv Wolf on 1/14/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
 //
 
 #import "Footage.h"
@@ -17,13 +17,14 @@
 @dynamic lastUploadAttemptTime;
 @dynamic lastUploadFailedErrorDescription;
 @dynamic processedVideoS3Key;
+@dynamic rawIsSelfie;
 @dynamic rawLocalFile;
 @dynamic rawUploadedFile;
 @dynamic rawVideoS3Key;
 @dynamic sceneID;
 @dynamic status;
 @dynamic uploadsFailedCounter;
-@dynamic rawIsSelfie;
+@dynamic shotWithBadBG;
 @dynamic remake;
 
 @end

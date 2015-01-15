@@ -8,6 +8,7 @@
 
 #import "HMServer+Render.h"
 #import "HMNotificationCenter.h"
+#import "HMRemakeParser.h"
 
 @implementation HMServer (Render)
 
@@ -35,7 +36,7 @@
                     parameters:parameters
               notificationName:HM_NOTIFICATION_SERVER_RENDER
                           info:@{@"remakeID":remakeID}
-                        parser:nil
+                        parser:[HMRemakeParser new]
      ];
 }
 

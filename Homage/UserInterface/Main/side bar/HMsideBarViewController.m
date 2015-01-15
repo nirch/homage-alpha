@@ -39,7 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 
-@property (weak, nonatomic) IBOutlet UIView *guiSideNavBarBG;
+@property (weak, nonatomic) IBOutlet UIView *guiSideNavBarContainer;
 
 
 @property (weak, nonatomic) IBOutlet UIView *guiNavTitleContainer;
@@ -122,7 +122,7 @@
     // Status 
     
     // Background color
-    self.guiSideNavBarBG.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_BG];
+    self.guiSideNavBarContainer.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_BG];
     
     // Status bar background color
     self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
@@ -211,7 +211,7 @@
     self.shouldAnimateStoreIcon = [self.abTester boolValueForProject:AB_PROJECT_STORE_ICONS
                                                              varName:@"storeIconAnimation"
                                                hardCodedDefaultValue:NO];
-
+    
     self.storeIconName = [self.abTester stringValueForProject:AB_PROJECT_STORE_ICONS
                                                       varName:@"storeIconName"
                                         hardCodedDefaultValue:@"storeIcon1"];

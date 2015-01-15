@@ -81,6 +81,7 @@
     [self.guiTextMessageTitleLabel addMotionEffectWithAmount:15];
     [self.guiGeneralMessageOKButton addMotionEffectWithAmount:15];
     [self.guiAreYouSureYouWantToRetakeLabel addMotionEffectWithAmount:15];
+    [self.guiBigImageMessageLabel addMotionEffectWithAmount:15];
 }
 
 -(void)loadSubviews
@@ -275,8 +276,8 @@
     //THE HAND!!!
     //self.guiGeneralMessageSwipeUpIcon.hidden = messageType != HMRecorderMessagesTypeGeneral;
     self.guiGeneralMessageSwipeUpIcon.hidden = messageType == HMRecorderMessagesTypeGeneral;
-    self.guiTextMessageContainer.hidden = messageType == HMRecorderMessagesTypeGeneral || messageType == HMRecorderMessagesTypeBigImage;
-    self.guiBigImageViewContainer.hidden = messageType != HMRecorderMessagesTypeBigImage;
+    self.guiTextMessageContainer.hidden = messageType == HMRecorderMessagesTypeGeneral || messageType == HMRecorderMessagesTypeBadBG;
+    self.guiBigImageViewContainer.hidden = messageType != HMRecorderMessagesTypeBadBG;
     
     self.guiFinishedSceneButtonsContainer.hidden = messageType != HMRecorderMessagesTypeFinishedScene && messageType != HMRecorderMessagesTypeFinishedAllScenes ;
     self.guiAreYouSureToRetakeContainer.hidden = YES;
@@ -334,7 +335,7 @@
         
         self.guiDismissButton.alpha = 1;
         
-    } else if (self.messageType == HMRecorderMessagesTypeBigImage) {
+    } else if (self.messageType == HMRecorderMessagesTypeBadBG) {
         
         //
         //  A message with a big icon at the top
@@ -414,33 +415,26 @@
 {
     [self stopAudioMessagePlayback];
 
-    if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes)
-    {
+    if (self.messageType == HMRecorderMessagesTypeFinishedAllScenes) {
+        
+        // Create movie button.
         sender.enabled = NO;
-        
-        /*if (!HMServer.sh.isReachable)
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                            message:LS(@"NO_CONNECTIVITY")                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil
-                                  ];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [alert show];
-            });
-        }*/
-        
         [self serverCreateMovie];
         return;
-    } else if (self.messageType == HMRecorderMessagesTypeSceneContext)
-    {
+        
+    } else if (self.messageType == HMRecorderMessagesTypeSceneContext) {
+        
+        // Dismiss screen description button pressed.
         [[Mixpanel sharedInstance] track: @"RESceneDescriptionDone"];
         [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized scene direction":@YES}];
         return;
-    } else if (self.messageType == HMRecorderMessagesTypeBigImage)
-    {
+        
+    } else if (self.messageType == HMRecorderMessagesTypeBadBG) {
+        
+        // Dismiss BBG message button pressed.
         [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss info:@{@"minimized background status":@YES}];
         return;
+        
     }
     [self.remakerDelegate dismissOverlayAdvancingState:self.shouldCheckNextStateOnDismiss];
 }
@@ -487,15 +481,15 @@
 
     // User pressed the retake last scene button.
     // According to label settings, decide if to show to the user
-    // the are you sure message or just immediatly jump to the shooting a scene
+    // the "are you sure?" message or just immediatly jump to shooting a scene
     // state of the recorder.
     if ([HMServer.sh.configurationInfo[@"recorder_skip_are_you_sure_in_good_job_message"] boolValue]) {
-        //
+
         // Just stay in the same scene and allow user to retake.
-        //
         [self.remakerDelegate updateUIForCurrentScene];
         [self.remakerDelegate dismissOverlayAdvancingState:NO fromState:HMRecorderStateMakingAScene info:nil];
         return;
+        
     }
 
     // Show the "Are you sure?" message screen.
@@ -503,6 +497,7 @@
                            @"sceneID":[self.remakerDelegate currentSceneID],
                            @"dismissOnDecision":@NO
                            };
+    
     HMRecorderMessagesType messageType = HMRecorderMessagesTypeAreYouSureYouWantToRetakeScene;
     [self showMessageOfType:messageType checkNextStateOnDismiss:NO info:info];
     
@@ -577,6 +572,13 @@
     }
 }
 
+- (IBAction)onPressedHelpButton:(id)sender
+{
+    [[Mixpanel sharedInstance] track:@"REUserPressedHelpButton"];
+    [self performSegueWithIdentifier:@"see howto segue" sender:nil];
+}
+
+
 // ============
 // Rewind segue
 // ============
@@ -590,9 +592,4 @@
     return YES;
 }
 
-- (IBAction)onPressedHelpButton:(id)sender
-{
-    [[Mixpanel sharedInstance] track:@"REUserPressedHelpButton"];
-    [self performSegueWithIdentifier:@"see howto segue" sender:nil];
-}
 @end

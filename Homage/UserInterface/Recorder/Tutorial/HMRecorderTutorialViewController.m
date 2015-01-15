@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiSceneIndicatorContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiInspiredIndicatorContainer;
 @property (weak, nonatomic) IBOutlet UIButton *guiContinueButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiNextCoverAllButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *guiSceneDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guiUseSolidBGLabel;
@@ -93,6 +94,7 @@
 -(void)hideAllAnimated:(BOOL)animated
 {
     if (!animated) {
+        self.guiNextCoverAllButton.alpha = 0;
         self.guiContinueButton.alpha = 0;
         self.guiDarkOverlay.alpha = 0;
         self.guiInspiredIndicatorContainer.alpha = 0;
@@ -150,6 +152,8 @@
 {
     [self fadeInView:self.guiDarkOverlay delay:0.0];
     [self fadeInView:self.guiContinueButton delay:0.3];
+    [self fadeInView:self.guiNextCoverAllButton delay:0.3];
+
     if (self.index==0) {
     
         [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_NEXT") forState:UIControlStateNormal];

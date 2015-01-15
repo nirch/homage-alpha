@@ -74,6 +74,7 @@
 
 // Paging
 @property (nonatomic) NSInteger shownRemakesPages;
+@property (nonatomic) NSInteger previousRemakesCount;
 
 // Fetched from server
 @property (nonatomic) BOOL fetchedFirstPageFromServer;
@@ -195,6 +196,7 @@
     // Make your own button
     self.guiRemakeButton.backgroundColor = [HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_BG];
     [self.guiRemakeButton setTitleColor:[HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
+    [self.guiRemakeActivity setColor:[HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT]];
     
     // No remakes
     self.noRemakesLabel.textColor = [HMStyle.sh colorNamed:C_SD_NO_REMAKES_LABEL];
@@ -246,6 +248,7 @@
 
 -(void)initContent
 {
+    self.previousRemakesCount = -1;
     self.shownRemakesPages = 1;
     self.noRemakesLabel.alpha = 0;
     self.remakesCV.alpha = 0;
@@ -401,9 +404,28 @@
         return;
     }
     
+    // How many new remakes loaded?
+    // If nothing new loaded, scroll the activity cell out of the view.
+    NSInteger currentCount = self.fetchedResultsController.fetchedObjects.count;
+    NSInteger delta = currentCount - self.previousRemakesCount;
+    self.previousRemakesCount = currentCount;
+    if (delta == 0 && currentCount > 8 && self.previousRemakesCount>-1) {
+        [self scrollActivityOutOfView];
+    }
+    
+    // Reload data
     [self.remakesCV reloadData];
     [self handleNoRemakes];
     
+}
+
+-(void)scrollActivityOutOfView
+{
+    CGFloat y = self.remakesCV.contentOffset.y + self.remakesCV.contentInset.top;
+    if (y<=0) return;
+    y = y - 45;
+    CGRect rect = CGRectMake(0, y, 1, 1);
+    [self.remakesCV scrollRectToVisible:rect animated:YES];
 }
 
 -(void)cleanPrivateRemakes
@@ -458,8 +480,11 @@
      numberOfItemsInSection:(NSInteger)section
 {
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
-    return self.fetchedResultsController.fetchedObjects.count+1;
-    
+    if (self.fetchedResultsController.fetchedObjects.count >= NUMBER_OF_REMAKES_PER_PAGE ) {
+        return self.fetchedResultsController.fetchedObjects.count+1;
+    } else {
+        return self.fetchedResultsController.fetchedObjects.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -750,18 +775,29 @@
         switch (buttonIndex)
         {
             case 0:
+                
+                // Do nothing.
                 self.guiRemakeActivity.hidden = YES;
                 [self.guiRemakeActivity stopAnimating];
                 self.guiRemakeButton.enabled = YES;
                 break;
+                
             case 1:
+                
+                // Continue old remake.
                 [self initRecorderWithRemake:self.oldRemakeInProgress completion:nil];
                 [[Mixpanel sharedInstance] track:@"doOldRemake" properties:@{@"story" : self.story.name}];
                 break;
+                
             case 2:
+                
                 [[Mixpanel sharedInstance] track:@"doNewRemakeOld" properties:@{@"story" : self.story.name}];
                 NSString *remakeIDToDelete = self.oldRemakeInProgress.sID;
+                
+                // Out with the old
                 [HMServer.sh deleteRemakeWithID:remakeIDToDelete];
+                
+                // In with the new.
                 [HMServer.sh createRemakeForStoryWithID:self.story.sID forUserID:User.current.userID withResolution:@"360"];
                 self.oldRemakeInProgress = nil;
         }
@@ -995,12 +1031,19 @@
     {
         //
         // User already have a remake for this story in local storage.
+        // If user already
         //
-        if (self.oldRemakeInProgress.status.integerValue == HMGRemakeStatusNew)
-        {
+        if ([self.oldRemakeInProgress noFootagesTakenYet]) {
+            
+            // This remake is still clean.
+            // User didn't take any footages for this remake yet.
             [self initRecorderWithRemake:self.oldRemakeInProgress];
-        } else
-        {
+            
+        } else {
+            
+            // Some footages taken in the previous remake.
+            // Let the user decide if she want to continue that remake
+            // or start from scratch.
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"CONTINUE_WITH_REMAKE") message:LS(@"CONTINUE_OR_START_FROM_SCRATCH") delegate:self cancelButtonTitle:LS(@"CANCEL") otherButtonTitles:LS(@"OLD_REMAKE"), LS(@"NEW_REMAKE") , nil];
             dispatch_async(dispatch_get_main_queue(), ^{
                 alertView.tag = REMAKE_ALERT_TAG;

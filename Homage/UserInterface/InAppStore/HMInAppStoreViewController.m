@@ -25,6 +25,7 @@
 
 @property (weak) HMStoreProductsViewController *productsVC;
 @property (nonatomic) NSInteger purchasesMadeInSession;
+@property (nonatomic) Story *prioritizedStory;
 
 @end
 
@@ -128,6 +129,7 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InAppStore" bundle:nil];
     HMInAppStoreViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"InAppStore"];
+    vc.prioritizedStory = story;
     return vc;
 }
 
@@ -138,6 +140,7 @@
         
         // A weak reference to the product VC
         self.productsVC = segue.destinationViewController;
+        self.productsVC.prioritizedStory = self.prioritizedStory;
         
     } else if ([segue.identifier isEqualToString:@"parent control segue"]) {
         

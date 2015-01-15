@@ -10,6 +10,8 @@
 
 @interface HMTOSViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *guiTitle;
+@property (weak, nonatomic) IBOutlet UITextView *guiContent;
 
 @end
 
@@ -27,14 +29,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initContent];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Content
+-(void)initContent
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    // The text file for this label.
+    NSString *fPath = [[NSBundle mainBundle] pathForResource:@"LabelTOS" ofType:@"txt"];
+    
+    // Check if such file exists.
+    if ([fm fileExistsAtPath:fPath]) {
+        [self loadContentFromFileAtPath:fPath];
+    }
+}
+
+-(void)loadContentFromFileAtPath:(NSString *)fPath
+{
+    NSString *text = [NSString stringWithContentsOfFile:fPath encoding:NSUTF8StringEncoding error:nil];
+    if (text == nil) return;
+    self.guiContent.text = text;
 }
 
 @end

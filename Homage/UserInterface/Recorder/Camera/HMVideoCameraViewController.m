@@ -93,13 +93,9 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     //
     // initialize the camera
     //
+    self.view.alpha = 0;
     [self initCameraSettings];
     [self initCamera];
-
-    //
-    // Reveal the preview slowly for a nicer effect.
-    //
-    [self slowReveal];
 }
 
 
@@ -112,7 +108,7 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
     
     [self initAVObservers];
     [self initAppObservers];
-    [self refreshCameraFeedWithFlip:NO];
+    //[self refreshCameraFeedWithFlip:NO];
 }
 
 //
@@ -121,7 +117,10 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateOrientation:(UIInterfaceOrientation)[UIDevice currentDevice].orientation];
+    [self slowReveal];
+    
+    // Starting 1.9.x locks orientation.
+    [self updateOrientation:UIInterfaceOrientationLandscapeRight];
 }
 
 //

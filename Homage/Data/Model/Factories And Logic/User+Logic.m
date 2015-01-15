@@ -84,13 +84,19 @@
 
 -(Remake *)userPreviousRemakeForStory:(NSString *)storyID
 {
-    for (Remake *remake in self.remakes)
+    NSArray *userRemakes = [Remake allRemakesForUser:[User current]
+                                           inContext:DB.sh.context];
+    
+    for (Remake *remake in userRemakes)
     {
         NSInteger remakeStatus = remake.status.integerValue;
-        if (remake.story.sID == storyID && (remakeStatus == HMGRemakeStatusInProgress || remakeStatus == HMGRemakeStatusTimeout || remakeStatus == HMGRemakeStatusNew))
-        {
-            return remake;
-        }
+        if (remake.story.sID == storyID &&
+            (remakeStatus == HMGRemakeStatusInProgress ||
+             remakeStatus == HMGRemakeStatusTimeout ||
+             remakeStatus == HMGRemakeStatusNew)) {
+                // Found an older unfinished remake.
+                return remake;
+            }
     }
     return nil;
 }

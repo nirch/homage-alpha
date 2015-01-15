@@ -42,6 +42,10 @@
 // Custom managed object contexts
 -(NSManagedObjectContext *)managedObjectContext
 {
+    if (![[NSThread currentThread] isEqual:[NSThread mainThread]] ) {
+        NSLog(@">>XXX> %@", [NSThread currentThread]);
+    }
+    
     NSManagedObjectContext *context = [super managedObjectContext];
     return context;
 }

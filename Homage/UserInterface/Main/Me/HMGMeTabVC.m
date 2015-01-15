@@ -26,6 +26,7 @@
 #import "UIView+Hierarchy.h"
 #import "HMSharing.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "HMCacheManager.h"
 
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
@@ -382,6 +383,13 @@
     }
     [self.userRemakesCV reloadData];
     [self handleRemakesCount];
+
+    //
+    // Check if needs to download and cache resources
+    //
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [HMCacheManager.sh checkIfNeedsToDownloadAndCacheResources];
+    });
 }
 
 -(void)onPulledToRefetch
@@ -942,11 +950,14 @@
     
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
     HMGLogInfo(@"the user selected remake at index: %d" , indexPath.item);
-    //HMGUserRemakeCVCell *cell = (HMGUserRemakeCVCell *)[self.userRemakesCV cellForItemAtIndexPath:indexPath];
+
+    NSString *storyName = remake.story.name ? remake.story.name : @"unknown";
+    NSString *remakeID = remake.sID ? remake.sID : @"unknown";
+
     switch (remake.status.integerValue)
     {
         case HMGRemakeStatusDone:
-            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story" : remake.story.name , @"remake_id" : remake.sID}];
+            [[Mixpanel sharedInstance] track:@"MEPlayRemake" properties:@{@"story":storyName , @"remake_id" : remakeID}];
             [self playRemakeVideoWithURL:remake.videoURL inCell:cell withIndexPath:indexPath];
             break;
         case HMGRemakeStatusInProgress:

@@ -76,6 +76,11 @@
     return nil;
 }
 
+-(BOOL)noFootagesTakenYet
+{
+    return [[self nextReadyForFirstRetakeSceneID] isEqualToNumber:@1];
+}
+
 -(BOOL)allScenesTaken
 {
     NSNumber *nextReadySceneID = [self nextReadyForFirstRetakeSceneID];
@@ -194,6 +199,8 @@
 
 -(BOOL)isVideoAvailableLocally
 {
+    if (self.videoURL == nil) return NO;
+
     // Check if video downloaded and cached locally.
     if ([HMCacheManager.sh isResourceCachedLocallyForURL:self.videoURL
                                                cachePath:HMCacheManager.sh.remakesCachePath])
@@ -201,6 +208,38 @@
     
     // Not bundled and not cached.
     return NO;
+}
+
+-(HMGRemakeBGQuality)footagesBGQuality
+{
+    NSArray *footages = [self footagesOrdered];
+    
+    BOOL someGood = NO;
+    BOOL someBad = NO;
+    for (Footage *footage in footages) {
+        // All footages must already be taken or returns nil.
+        if (footage.shotWithBadBG == nil)
+            return HMGRemakeBGQualityUndefined;
+        
+        if ([footage.shotWithBadBG boolValue]) {
+            someBad = YES;
+        } else {
+            someGood = YES;
+        }
+    }
+    
+    if (someGood) {
+        if (someBad) {
+            // Some takes with good backgrounds and some with good backgrounds.
+            return HMGRemakeBGQualityOK;
+        }
+        
+        // All takes with good backgrounds.
+        return HMGRemakeBGQualityGood;
+    }
+
+    // All takes with bad background.
+    return HMGRemakeBGQualityBad;
 }
 
 @end

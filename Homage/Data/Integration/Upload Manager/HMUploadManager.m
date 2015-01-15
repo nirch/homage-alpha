@@ -12,6 +12,7 @@
 #import "HMServer+ReachabilityMonitor.h"
 #import "mixPanel.h"
 #import "HMServer+AppConfig.h"
+#import "HMCacheManager.h"
 
 #define MAX_NUMBER_OF_SERVER_UPDATE_ATTEMPTS 3
 
@@ -208,6 +209,7 @@
     // If failed to update the server about the successful upload, will attempt again after a delay.
     if ([HMServer.sh shouldUploaderReportUploads]) {
         HMGLogDebug(@"Will inform server about upload success: %@", footage.takeID);
+        [HMCacheManager.sh clearTempFilesForFootage:footage];
         [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
                                                    sceneID:footage.sceneID
                                                     takeID:[footage takeID]

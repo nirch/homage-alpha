@@ -21,10 +21,16 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
     HMGRemakeStatusClientRequestedDeletion
 };
 
+typedef NS_ENUM(NSInteger, HMGRemakeBGQuality) {
+    HMGRemakeBGQualityUndefined,
+    HMGRemakeBGQualityBad,
+    HMGRemakeBGQualityOK,
+    HMGRemakeBGQualityGood
+};
+
 
 @interface Remake (Logic)
 
-    
 ///
 /**
  *  An array of footages of this remake, ordered by the related sceneID.
@@ -60,6 +66,12 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
  */
 -(NSNumber *)nextReadyForFirstRetakeSceneID;
 
+/**
+ *  Check if at least one footage was taken for this remake.
+ *
+ *  @return YES if user still didn't do any take (nextReadyForFirstRetakeSceneID is 1).
+ */
+-(BOOL)noFootagesTakenYet;
 
 ///
 /**
@@ -157,5 +169,17 @@ typedef NS_ENUM(NSInteger, HMGRemakeStatus) {
  *  @return A boolean value indicating if video is available or not on the device.
  */
 -(BOOL)isVideoAvailableLocally;
+
+/**
+ *  Iterates footages and according to good/bad bg of all footages, returns
+ *
+ *      HMGRemakeBGQualityUndefined - one of the footages (or more) not taken yet
+ *      HMGRemakeBGQualityBad - all footages shot with bad background.
+ *      HMGRemakeBGQualityOK - some of the footages shot with good and some with bad bg.
+ *      HMGRemakeBGQualityGood - all footages shot with good background.
+ *
+ *  @return HMGRemakeBGQuality number
+ */
+-(HMGRemakeBGQuality)footagesBGQuality;
 
 @end

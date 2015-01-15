@@ -46,7 +46,18 @@
 
 #define SONG_LOOP_VOLUME 0.15;
 
-@interface HMStartViewController () <HMSideBarNavigatorDelegate,HMRenderingViewControllerDelegate,HMLoginDelegate,UINavigationControllerDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate,UIGestureRecognizerDelegate>
+#define HIDDEN_SIDE_BAR_TRANSFORM CGAffineTransformMakeScale(0.95, 0.95)
+
+
+@interface HMStartViewController () <
+    HMSideBarNavigatorDelegate,
+    HMRenderingViewControllerDelegate,
+    HMLoginDelegate,
+    UINavigationControllerDelegate,
+    HMVideoPlayerDelegate,
+    HMSimpleVideoPlayerDelegate,
+    UIGestureRecognizerDelegate
+>
 
 // Navigation bar
 @property (weak, nonatomic) IBOutlet UIView *guiTopNavContainer;
@@ -56,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiNavButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiNavTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *guiNavBackground;
+@property (weak, nonatomic) IBOutlet UIView *guiNavCover;
 @property (weak, nonatomic) IBOutlet UIView *guiNavBarSeparator;
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
@@ -177,13 +189,18 @@
     [self changeTitleByIndex:self.selectedTab];
     
     self.appEnabled = 0; // counter. if == 0, app should be enabled
-    self.guiAppHideView.hidden = YES;
+    self.guiAppHideView.alpha = 0;
+    self.guiNavCover.alpha = 0;
+
     
     UIPanGestureRecognizer *panRecognizer = self.guiAppMainPanGestureRecognizer;
     [panRecognizer setMinimumNumberOfTouches:1];
 	[panRecognizer setMaximumNumberOfTouches:1];
 	[panRecognizer setDelegate:self];
 
+    // Sidebar is hidden when app starts
+    self.sideBarVC.view.transform = HIDDEN_SIDE_BAR_TRANSFORM;
+    
     // ************
     // *  STYLES  *
     // ************
@@ -412,10 +429,11 @@
     if ([self isMainAppHidden]) return;
     
     self.guiAppHideView.alpha = 0;
-    self.guiAppHideView.hidden = NO;
+    self.guiNavCover.alpha = 0;
     
     [UIView animateWithDuration:0.1 animations:^{
         self.guiAppHideView.alpha = 1;
+        self.guiNavCover.alpha = 1;
     } completion:nil];
     
 }
@@ -426,16 +444,14 @@
 
     [UIView animateWithDuration:0.1 animations:^{
         self.guiAppHideView.alpha = 0;
-    } completion:^(BOOL finished){
-        if (finished)
-        {
-            self.guiAppHideView.hidden = YES;
-        }}];
+        self.guiNavCover.alpha = 0;
+
+    } completion:nil];
 }
 
 -(BOOL)isMainAppHidden
 {
-    return !self.guiAppHideView.hidden;
+    return !self.guiAppHideView.alpha==0;
 }
 
 -(BOOL)isSideBarHidden
@@ -530,11 +546,11 @@
 -(void)showMainAppView
 {
     [UIView animateWithDuration:0.3 animations:^{
-        //CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
         [self.appWrapperView setFrame:CGRectMake(0, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
-        //self.appWrapperView.transform = CGAffineTransformMakeTranslation(0,0);
-    } completion:nil];
-    
+        self.guiAppHideView.alpha = 0;
+        self.guiNavCover.alpha = 0;
+        self.sideBarVC.view.transform = HIDDEN_SIDE_BAR_TRANSFORM;
+    } completion:nil];    
     self.guiAppWrapperHideView.hidden = YES;
     self.sideBarVisible = NO;
 }
@@ -545,6 +561,10 @@
         CGFloat sideBarWidth = self.sideBarContainerView.frame.size.width;
         //self.appWrapperView.transform = CGAffineTransformMakeTranslation(sideBarWidth-currentAppWrapperCenterX,0);
         [self.appWrapperView setFrame:CGRectMake(sideBarWidth, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
+        self.guiAppHideView.alpha = 1;
+        self.guiNavCover.alpha = 1;
+        self.sideBarVC.view.transform = CGAffineTransformIdentity;
+        
     } completion:^(BOOL finished) {
         [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_SIDE_BAR_SHOWN object:nil];
     }];

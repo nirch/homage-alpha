@@ -1,5 +1,5 @@
 //
-//  HMDownloadManager.h
+//  HMCacheManager.h
 //  Homage
 //
 //  Created by Aviv Wolf on 11/16/14.
@@ -8,15 +8,16 @@
 //  For now, the download manager implementation is a very simplistic serialized downloading
 //  of story video files.
 //
-//  1) Will download only on wifi networks.
-//  2) Will download story movies and save them to the caches folder.
+//  1) Will download and cache story videos.
+//  2) Will download user remakes.
 //  3) Will only download if user didn't turn off stories caches.
-//  4) Pause downloads when streaming videos.
 //
 
 #import <Foundation/Foundation.h>
 
 @class Story;
+@class Remake;
+@class Footage;
 
 @interface HMCacheManager : NSObject
 
@@ -32,6 +33,10 @@
 // Just an alias for sharedInstance for shorter writing.
 +(HMCacheManager *)sh;
 
+#pragma mark - clearing caches
+-(void)clearTempFilesForRemake:(Remake *)remake;
+-(void)clearCachedResourcesForRemake:(Remake *)remake;
+-(void)clearTempFilesForFootage:(Footage *)footage;
 
 #pragma mark - Caching resources
 -(BOOL)isResourceBundledLocallyForURL:(NSString *)url;

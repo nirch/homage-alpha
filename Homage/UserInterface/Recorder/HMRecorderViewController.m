@@ -63,6 +63,9 @@
 @property (weak, nonatomic) IBOutlet UIView *guiTopScriptView;
 @property (weak, nonatomic) IBOutlet UILabel *guiScriptLabel;
 
+// AB tests
+@property (weak, nonatomic) HMABTester *abTester;
+
 // Weak pointers to child view controllers
 @property (weak, nonatomic, readonly) HMRecorderMessagesOverlayViewController *messagesOverlayVC;
 @property (weak, nonatomic, readonly) HMRecorderEditTextsViewController *editingTextsVC;
@@ -140,6 +143,7 @@
     // Initalize AB Testing
     [self initABTesting];
     
+    
     // More initializations.
     [self initRemakerState];
     [self initOptions];
@@ -152,7 +156,7 @@
     [super viewWillAppear:animated];
     
     [self initObservers];
-    [self.videoCameraVC attachCameraIO];
+    //[self.videoCameraVC attachCameraIO];
 }
 
 
@@ -166,7 +170,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self fixLayout];
+    [self fixLayout];    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -189,8 +193,9 @@
 #pragma mark - AB Testing
 -(void)initABTesting
 {
-    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
-    HMABTester *abTester = app.abTester;
+    // AB Tester
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    self.abTester = app.abTester;
     
     // Defaults
     self.badBackgroundPolicy = HMBadBackgroundPolicyTolerant;
@@ -204,16 +209,17 @@
     }
     
     // Report about entering the recorder, if relevant test requires.
-    if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS] ||
-        [abTester isABTestingProject:AB_PROJECT_RECORDER_ICONS]) {
+    if ([self.abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS] ||
+        [self.abTester isABTestingProject:AB_PROJECT_RECORDER_ICONS]) {
         // We care about reporting a view of the recorder, only if
         // the recorder interface provided a variant.
-        [abTester reportEventType:@"enteredRecorder"];
+        [self.abTester reportEventType:@"enteredRecorder"];
     }
-    
-    // Bad background policy variants
-    if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
-        self.badBackgroundPolicy = [abTester integerValueForProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS
+
+    // An ab test with variance on the bad background policy.
+    if ([self.abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
+        // Bad background policy chosen by ab test.
+        self.badBackgroundPolicy = [self.abTester integerValueForProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS
                                                             varName:@"badBackgroundStrictPolicy"
                                               hardCodedDefaultValue:self.badBackgroundPolicy];
     }
@@ -725,18 +731,40 @@
     _lockedAutoRotation = YES;
     _stopRecordingFired = NO;
     
+    Footage *footage = [self.remake footageWithSceneID:self.currentSceneID];
+    NSString *remakeID = self.remake.sID? self.remake.sID:@"unknown";
+    NSString *storyName = self.remake.story.name? self.remake.story.name:@"unknown";
+    NSNumber *sceneID = self.currentSceneID? self.currentSceneID:@0;
+    NSNumber *badBGDisplaying = [NSNumber numberWithBool:self.backgroundAlertDisplaying];
     
-    NSDictionary *info = @{@"remake_id" : self.remake.sID , @"story" : self.remake.story.name , @"scene_id" : self.currentSceneID};
-    if (self.backgroundAlertDisplaying)
-    {
+    NSDictionary *info = @{
+                           @"remake_id": remakeID,
+                           @"story": storyName,
+                           @"scene_id": sceneID
+                           };
+    
+    if (self.backgroundAlertDisplaying) {
+        
+        // Report about shooting the scene with bad background.
         [[Mixpanel sharedInstance] track:@"REShootSceneWithBadBackground" properties:info];
-    } else
-    {
+        [self.abTester reportEventType:@"shootSceneWithBadBackground"];
+        footage.shotWithBadBG = @YES;
+        
+    } else {
+        
+        // Shooting the scene with good background.
         [[Mixpanel sharedInstance] track:@"REShootSceneWithGoodBackground" properties:info];
+        [self.abTester reportEventType:@"shootSceneWithGoodBackground"];
+        footage.shotWithBadBG = @NO;
+        
     }
     
-    
-    [[Mixpanel sharedInstance] track:@"REStartRecording" properties:@{@"bad_background" : [NSNumber numberWithBool:self.backgroundAlertDisplaying], @"remake_id" : self.remake.sID , @"story" : self.remake.story.name , @"scene_id" : self.currentSceneID}];
+    [[Mixpanel sharedInstance] track:@"REStartRecording" properties:@{
+                                                                      @"bad_background": badBGDisplaying,
+                                                                      @"remake_id": remakeID,
+                                                                      @"story": storyName,
+                                                                      @"scene_id": sceneID
+                                                                      }];
     
     [self presentRecordingUI];
 }
@@ -903,14 +931,25 @@
     self.guiTextsEditingContainer.hidden = YES;
     [self dismissWithReason:HMRecorderDismissReasonFinishedRemake];
 
-    HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
-    HMABTester *abTester = app.abTester;
-    if ([abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
+    if ([self.abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
         // Finished remake flow event.
-        [abTester reportEventType:@"finishedRemakeFlow"];
+        [self.abTester reportEventType:@"finishedRemakeFlow"];
         
-        // Finished remake flow event and user used good backgrounds.
-        // TODO: implement.
+        // Finished remake flow event, report about bg quality.
+        HMGRemakeBGQuality quality = [self.remake footagesBGQuality];
+        switch (quality) {
+            case HMGRemakeBGQualityGood:
+                [self.abTester reportEventType:@"finishedAllGoodBGRemakeFlow"];
+                break;
+            case HMGRemakeBGQualityOK:
+                [self.abTester reportEventType:@"finishedSomeOKBGRemakeFlow"];
+                break;
+            case HMGRemakeBGQualityBad:
+                [self.abTester reportEventType:@"finishedAllBadBGRemakeFlow"];
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -1036,19 +1075,23 @@
 #pragma mark - Orientations
 -(BOOL)shouldAutorotate
 {
-    return !self.lockedAutoRotation;
+    //return !self.lockedAutoRotation;
+    return NO;
 }
 
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    // Lock orientation on iOS8 for now (because willRotateToInterfaceOrientation was deprecated)
-    if ([self respondsToSelector:@selector(willTransitionToTraitCollection:withTransitionCoordinator:)]){
-        return UIInterfaceOrientationMaskLandscapeRight;
-    }
+//    // Lock orientation on iOS8 for now (because willRotateToInterfaceOrientation was deprecated)
+//    if ([self respondsToSelector:@selector(willTransitionToTraitCollection:withTransitionCoordinator:)]){
+//        return UIInterfaceOrientationMaskLandscapeRight;
+//    }
+//    
+//    // iOS7
+//    return UIInterfaceOrientationMaskLandscape;
     
-    // iOS7
-    return UIInterfaceOrientationMaskLandscape;
+    // Locking orientation to all iOS versions starting 1.9.x
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 
@@ -1261,7 +1304,13 @@
 
 -(void)showSceneContextMessageForSceneID:(NSNumber *)sceneID checkNextStateOnDismiss:(BOOL)checkNextStateOnDismiss info:(NSDictionary *)info
 {
-    Scene *scene = [self.remake.story findSceneWithID:sceneID];
+    Scene *scene = [Scene sceneWithID:sceneID story:self.remake.story inContext:DB.sh.context];
+    if (scene.directionAudioURL) {
+        // If direction with audio, will toggle audio playback.
+        [self toggleSceneDirectionAudioPlayback];
+        return;
+    }
+    
     [[Mixpanel sharedInstance] track:@"RESceneDescriptionStart" properties:@{@"story" : self.remake.story.name ,@"remake_id": self.remake.sID, @"scene_id" : [NSString stringWithFormat:@"%ld" , sceneID.longValue]}];
     
     NSMutableDictionary *allInfo = [NSMutableDictionary dictionaryWithDictionary:@{
@@ -1522,6 +1571,10 @@
 #pragma mark - Dismiss
 -(void)dismissWithReason:(HMRecorderDismissReason)reason
 {
+    if (reason == HMRecorderDismissReasonFinishedRemake) {
+        [HMCacheManager.sh clearTempFilesForRemake:self.remake];
+    }
+    
     if (self.delegate) {
         [self.delegate recorderAsksDismissalWithReason:reason
                                              remakeID:self.remake.sID
@@ -1565,7 +1618,7 @@
                                                                                        @"minimized background status":@YES
                 
                                                                                        }];
-        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeBigImage
+        [self revealMessagesOverlayWithMessageType:HMRecorderMessagesTypeBadBG
                            checkNextStateOnDismiss:NO
                                               info:allInfo
          ];
@@ -1625,16 +1678,13 @@
 // ===========
 - (IBAction)onPressedSceneDirectionButton:(id)sender
 {
-    Scene *scene = [Scene sceneWithID:self.currentSceneID story:self.remake.story inContext:DB.sh.context];
-    if (scene.directionAudioURL) {
-        // If direction with audio, will toggle audio playback.
-        [self toggleSceneDirectionAudioPlayback];
-        return;
-    }
-    
     // Scene direction has no audio. Will show a textual direction screen.
     // Show the scene context message for current scene.
-    [self showSceneContextMessageForSceneID:self.currentSceneID checkNextStateOnDismiss:NO info:@{@"blur alpha":@0.85,@"minimized scene direction":@YES}];
+    [self showSceneContextMessageForSceneID:self.currentSceneID
+                    checkNextStateOnDismiss:NO
+                                       info:@{
+                                              @"blur alpha":@0.85,
+                                              @"minimized scene direction":@YES}];
 }
 
 - (IBAction)onPressedBGStatusButton:(id)sender
@@ -1733,8 +1783,18 @@
 
     //leave recorder
     if (buttonIndex == 1) {
-        [[Mixpanel sharedInstance] track:@"UserClosedRecorder" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
+        NSString *storyName = self.remake.story.name ? self.remake.story.name : @"unknown";
+        NSString *remakeID = self.remake.sID ? self.remake.sID : @"unknown";
+        [[Mixpanel sharedInstance] track:@"UserClosedRecorder" properties:@{@"story": storyName, @"remake_id": remakeID}];
         [self dismissWithReason:HMRecorderDismissReasonUserAbortedPressingX];
+        
+        // Report about user exiting the recorder, if relevant test requires.
+        if ([self.abTester isABTestingProject:AB_PROJECT_RECORDER_BAD_BACKGROUNDS]) {
+            [self.abTester reportEventType:@"dismissedRecorderWithExitButton"];
+            if ([self.currentSceneID integerValue] == 1) {
+                [self.abTester reportEventType:@"dismissedRecorderOnFirstScene"];
+            }
+        }
     }
 }
 

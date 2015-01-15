@@ -19,6 +19,13 @@
 			<key>fontResize</key>
 			<integer>7</integer>
 		</dict>
+		<key>styleClassStoreTitle</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>4</integer>
+			<key>strokeSize</key>
+			<string>0</string>
+		</dict>
 		<key>styleClassBigButtons</key>
 		<dict>
 			<key>fontResize</key>
@@ -37,7 +44,9 @@
 		<key>styleClassSDDescriptionText</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>3</integer>
+			<integer>5</integer>
+			<key>strokeSize</key>
+			<integer>2</integer>
 		</dict>
 		<key>valueSplashActivityPosition</key>
 		<integer>190</integer>
@@ -46,7 +55,7 @@
 		<key>valueSplashActivityCirclesRadius</key>
 		<string>7</string>
 		<key>valueStoreThumbsCornerRadius</key>
-		<integer>10</integer>
+		<integer>6</integer>
 		<key>valueRecorderButtonOutline</key>
 		<integer>7</integer>
 	</dict>
@@ -67,6 +76,15 @@
 	</dict>
 	<key>colors</key>
 	<dict>
+		<key>misc</key>
+		<dict>
+			<key>colorVideoTitles</key>
+			<string>@impact</string>
+			<key>colorActivityControlTint</key>
+			<string>@impact</string>
+			<key>colorRefreshControlTint</key>
+			<string>@bright</string>
+		</dict>
 		<key>recorder</key>
 		<dict>
 			<key>colorRecorderTutorialText</key>
@@ -99,15 +117,6 @@
 			<string>@bright</string>
 			<key>colorRecorderSceneInfoData</key>
 			<string>@impact</string>
-		</dict>
-		<key>misc</key>
-		<dict>
-			<key>colorVideoTitles</key>
-			<string>@impact</string>
-			<key>colorActivityControlTint</key>
-			<string>@bright</string>
-			<key>colorRefreshControlTint</key>
-			<string>@bright</string>
 		</dict>
 		<key>rendering bar</key>
 		<dict>
@@ -152,7 +161,7 @@
 			<key>colorNavBarSeparator</key>
 			<string>@darker</string>
 			<key>colorNavBarBackground</key>
-			<string>@darkSeeThrough</string>
+			<string>@darker</string>
 		</dict>
 		<key>login</key>
 		<dict>
@@ -289,7 +298,7 @@
 		<key>@dark</key>
 		<string>#552C17</string>
 		<key>@darker</key>
-		<string>#361915</string>
+		<string>#351914</string>
 		<key>@veryDark</key>
 		<string>#1E0E0D</string>
 		<key>@darkest</key>

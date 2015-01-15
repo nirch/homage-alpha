@@ -355,54 +355,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     }];
 }
 
-
-
--(IBAction)onPressedSignUpLogin:(UIButton *)sender
-{
-    if (self.guiActivityView.isAnimating) return;
-    
-    self.loginMethod = HMMailConnect;
-    self.guiLoginErrorLabel.text = @"";
-    
-    if (!HMServer.sh.isReachable)
-    {
-        [self presentErrorLabelWithReason:HMNoConnectivity];
-        return;
-    }
-    
-    if (![self checkCredentials]) return;
-    
-    [self.view endEditing:YES];
-    NSDictionary *deviceInfo = [self getDeviceInformation];
-    NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
-    
-    if (!self.myAppDelegate.userJoinFlow)
-    {
-       [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
-    } else if(self.myAppDelegate.userJoinFlow && [User current])
-    {
-        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo};
-        [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
-    }
-}
-
-- (IBAction)onPressedGuest:(UIButton *)sender
-{
-    if (self.guiActivityView.isAnimating) return;
-    
-    self.loginMethod = HMGuestConnect;
-    
-    if (!HMServer.sh.isReachable)
-    {
-        [self presentErrorLabelWithReason:HMNoConnectivity];
-        return;
-    }
-    
-    [self.view endEditing:YES];
-    [self.guiActivityView startAnimating];
-    [self loginAsGuest];
-}
-
 -(void)loginAsGuest
 {
     // User will signup as a public guest, only if the two following settings are
@@ -435,8 +387,11 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)onUserCreated:(NSNotification *)notification
 {
+    [self.guiActivityView stopAnimating];
+
     // If got a notificatin about an error,
     // show a message to the user and do nothing.
+
     if (notification.isReportingError)
     {
         [self presentUserCreationErrorWithNotification:notification];
@@ -493,6 +448,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 
 -(void)onUserUpdated:(NSNotification *)notification
 {
+    [self.guiActivityView stopAnimating];
 
     if (notification.isReportingError)
     {
@@ -864,41 +820,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 }
 
 
-- (IBAction)cancelButtonPushed:(id)sender
-{
-    [self.delegate dismissLoginScreen];
-    self.guiCancelButton.hidden = YES;
-    [self hideErrorLabel];
-    self.myAppDelegate.userJoinFlow = NO;
-}
-
-- (IBAction)termsOfServicePushed:(id)sender
-{
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
-    [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
-    self.tosVC.navigationItem.hidesBackButton = YES;
-    self.tosVC.navigationItem.leftBarButtonItem = doneButton;
-    UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
-    self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
-    self.tosVC.navigationItem.hidesBackButton = YES;
-    [self presentViewController:self.legalNavVC animated:YES completion:nil];
-}
-
-
-
-- (IBAction)privacyPolicyPushed:(id)sender
-{
-   UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
-    [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
-    self.privacyVC.navigationItem.hidesBackButton = YES;
-    self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
-    UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
-    self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
-    self.privacyVC.navigationItem.hidesBackButton = YES;
-    [self presentViewController:self.legalNavVC animated:YES completion:nil];
-}
-
-
 -(void)dismissLegalNavcontroller:(UIBarButtonItem *)sender
 {
     [self.legalNavVC dismissViewControllerAnimated:YES completion:nil];
@@ -989,5 +910,95 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     self.guiSignUpView.alpha = 1;
     self.guiSignUpView.hidden = NO;
 }
+
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+-(IBAction)onPressedSignUpLogin:(UIButton *)sender
+{
+    if (self.guiActivityView.isAnimating) return;
+    
+    self.loginMethod = HMMailConnect;
+    self.guiLoginErrorLabel.text = @"";
+    
+    if (!HMServer.sh.isReachable)
+    {
+        [self presentErrorLabelWithReason:HMNoConnectivity];
+        return;
+    }
+    
+    if (![self checkCredentials]) return;
+    
+    [self.view endEditing:YES];
+    NSDictionary *deviceInfo = [self getDeviceInformation];
+    NSDictionary *mailSignUpDictionary = @{@"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo };
+    
+    if (!self.myAppDelegate.userJoinFlow)
+    {
+        
+        [HMServer.sh createUserWithDictionary:mailSignUpDictionary];
+        [self.guiActivityView startAnimating];
+
+    } else if(self.myAppDelegate.userJoinFlow && [User current]) {
+
+        NSDictionary *mailSignUpDictionary = @{@"user_id" : [User current].userID , @"email" : self.guiMailTextField.text , @"password" : self.guiPasswordTextField.text , @"is_public" : @YES , @"device" : deviceInfo};
+        [HMServer.sh updateUserUponJoin:mailSignUpDictionary];
+        [self.guiActivityView startAnimating];
+        
+    }
+}
+
+- (IBAction)onPressedGuest:(UIButton *)sender
+{
+    if (self.guiActivityView.isAnimating) return;
+    
+    self.loginMethod = HMGuestConnect;
+    
+    if (!HMServer.sh.isReachable)
+    {
+        [self presentErrorLabelWithReason:HMNoConnectivity];
+        return;
+    }
+    
+    [self.view endEditing:YES];
+    [self.guiActivityView startAnimating];
+    [self loginAsGuest];
+}
+
+- (IBAction)cancelButtonPushed:(id)sender
+{
+    [self.delegate dismissLoginScreen];
+    self.guiCancelButton.hidden = YES;
+    [self hideErrorLabel];
+    self.myAppDelegate.userJoinFlow = NO;
+}
+
+- (IBAction)termsOfServicePushed:(id)sender
+{
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
+    self.tosVC.navigationItem.hidesBackButton = YES;
+    self.tosVC.navigationItem.leftBarButtonItem = doneButton;
+    UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
+    self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
+    self.tosVC.navigationItem.hidesBackButton = YES;
+    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+}
+
+
+- (IBAction)privacyPolicyPushed:(id)sender
+{
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
+    self.privacyVC.navigationItem.hidesBackButton = YES;
+    self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
+    UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
+    self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
+    self.privacyVC.navigationItem.hidesBackButton = YES;
+    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+}
+
 
 @end

@@ -33,6 +33,9 @@
         if (styleAttrs[S_FONT_RESIZE]) {
             fontSize += [styleAttrs[S_FONT_RESIZE] floatValue];
         }
+        if (styleAttrs[S_STROKE_SIZE]) {
+            strokeSize = [styleAttrs[S_STROKE_SIZE] floatValue];
+        }
     }
     
     // Localized strings

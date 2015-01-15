@@ -34,6 +34,7 @@
 
 #pragma mark - Style classes & attributes
 #define S_FONT_RESIZE @"fontResize"
+#define S_STROKE_SIZE @"strokeSize"
 
 #pragma mark - Values
 //

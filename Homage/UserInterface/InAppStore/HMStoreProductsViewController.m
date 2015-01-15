@@ -28,15 +28,14 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 @property (weak, nonatomic) IBOutlet UIView *guiActivityContainer;
 
-@property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) HMAppStore *appStore;
 @property (nonatomic) BOOL inTransactions;
+
+@property (nonatomic) NSMutableArray *premiumStories;
 
 @end
 
 @implementation HMStoreProductsViewController
-
-@synthesize fetchedResultsController = _fetchedResultsController;
 
 -(void)viewDidLoad
 {
@@ -154,28 +153,6 @@
     [self.appStore requestInfo];
 }
 
-#pragma mark - NSFetchedResultsController
-// Lazy instantiation of the fetched results controller.
--(NSFetchedResultsController *)fetchedResultsController
-{
-    // If already exists, just return it.
-    if (_fetchedResultsController) return _fetchedResultsController;
-    
-    // Define fetch request.
-    // Fetches all premium stories with isActive=@(YES) and isPremium=@(YES)
-    // Orders them by orderID (ascending order)
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:HM_STORY];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND isPremium=%@", @(YES), @(YES)];
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"orderID" ascending:YES]];
-    fetchRequest.fetchBatchSize = 20;
-    
-    // Create the fetched results controller and return it.
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
-    //_fetchedResultsController.delegate = self;
-    
-    return _fetchedResultsController;
-}
-
 -(NSString *)priceLabelForPrice:(NSDecimalNumber *)price locale:(NSLocale *)locale
 {
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
@@ -185,16 +162,25 @@
     return [numberFormatter stringFromNumber:price];
 }
 
--(void)resetFetchedResultsController
-{
-    _fetchedResultsController = nil;
-}
-
 -(void)refreshFromLocalStorage
 {
-    NSError *error;
-    _fetchedResultsController = nil;
-    [self.fetchedResultsController performFetch:&error];
+    self.premiumStories = [NSMutableArray arrayWithArray:[Story allActivePremiumStoriesInContext:DB.sh.context]];
+
+    if (self.prioritizedStory == nil) return;
+    
+    // Put prioritized story on top of the list.
+    NSInteger pStoryIndex = -1;
+    for (NSInteger i=0;i<self.premiumStories.count;i++) {
+        if ([[self.premiumStories[i] sID] isEqualToString:self.prioritizedStory.sID]) {
+            pStoryIndex = i;
+            break;
+        }
+    }
+    
+    if (pStoryIndex>=0) {
+        [self.premiumStories removeObjectAtIndex:pStoryIndex];
+        [self.premiumStories insertObject:self.prioritizedStory atIndex:0];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -206,7 +192,7 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (section ==0) return 1;
-    NSInteger count = self.fetchedResultsController.fetchedObjects.count;
+    NSInteger count = self.premiumStories.count;
     return count;
 }
 
@@ -264,7 +250,7 @@
 
 -(void)configureStoryCell:(HMStoreProductCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    Story *story = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:indexPath.item inSection:0]];
+    Story *story = self.premiumStories[indexPath.item];
     SKProduct *product = [self.appStore productForIdentifier:story.productIdentifier];
     if (product == nil) {
         [self unavailableProductInCell:cell];
@@ -440,7 +426,7 @@
 
 - (IBAction)onPressedBuyStoryButton:(UIButton *)sender
 {
-    Story *story = self.fetchedResultsController.fetchedObjects[sender.tag];
+    Story *story = self.premiumStories[sender.tag];
     if (!story) return;
     
     [sender setTitle:LS(@"STORE_PROCESSING_BUTTON") forState:UIControlStateNormal];

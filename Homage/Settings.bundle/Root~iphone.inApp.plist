@@ -10,7 +10,7 @@
 			<key>Key</key>
 			<string>version</string>
 			<key>Title</key>
-			<string>VERSION</string>
+			<string>Version</string>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 		</dict>
@@ -24,7 +24,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>HOMAGE_SHARE</string>
+			<string>Remakes are public</string>
 			<key>Key</key>
 			<string>remakesArePublic</string>
 			<key>DefaultValue</key>
@@ -40,7 +40,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>CACHE_STORIES_VIDEOS</string>
+			<string>Videos cached locally</string>
 			<key>Key</key>
 			<string>cacheStoriesVideos</string>
 			<key>DefaultValue</key>
@@ -70,7 +70,7 @@
 				<string>yoav@homage.it</string>
 			</array>
 			<key>Title</key>
-			<string>FEEDBACK</string>
+			<string>Feedback us</string>
 			<key>Type</key>
 			<string>IASKMailComposeSpecifier</string>
 		</dict>
