@@ -592,6 +592,7 @@
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
+            cell.guiDownloadButton.hidden = YES;
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
@@ -605,6 +606,7 @@
             [cell.actionButton setHidden:NO];
             cell.actionButton.enabled = YES;
             [cell.shareButton setHidden:NO];
+            cell.guiDownloadButton.hidden = NO;
             cell.shareButton.enabled = YES;
             cell.remakeButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
@@ -617,6 +619,7 @@
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
+            cell.guiDownloadButton.hidden = YES;
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
@@ -627,6 +630,7 @@
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
+            cell.guiDownloadButton.hidden = YES;
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
@@ -637,6 +641,7 @@
             cell.actionButton.enabled = NO;
             [cell.actionButton setHidden:YES];
             [cell.shareButton setHidden:YES];
+            cell.guiDownloadButton.hidden = YES;
             cell.shareButton.enabled = NO;
             cell.remakeButton.enabled = YES;
             cell.guiActivityOverlay.alpha = 0;
