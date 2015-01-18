@@ -138,7 +138,7 @@
 "RECORDER_BBG_NOISY" = "Use a solid color wall!";
 "RECORDER_BBG_DARK" = "Use well lit areas!";
 "RECORDER_BBG_SILHOUETTE" = "Align correctly with the silhouette!";
-"RECORDER_BBG_SHADOW" = "Minimize your shadows!";
+"RECORDER_BBG_SHADOW" = "Minimize noisy background or shadows";
 "RECORDER_BBG_CLOTH" = "Don't dress like the wall!";
 "RECORDER_BBG_GENERAL_MESSAGE" = "Use a solid color wall!";
 "BAD_BACKGROUND_HELP_BUTTON_TEXT" = "Help!";
@@ -207,3 +207,22 @@
 /*Parental Control*/
 "STORE_PARENTAL_CTRL_TITLE" = "Grown-Ups Only!";
 "STORE_PARENTAL_CTRL_ACCESS_TITLE" = "To access, please enter the numbers:";
+
+/*Download*/
+"DOWNLOAD_MY_VIDEO_TITLE" = "Download My Clip!";
+"DOWNLOADING" = "Downloading clip...";
+"DOWNLOAD_REMAKES_SAVED_TITLE" = "Clip saved!";
+"DOWNLOAD_REMAKES_SAVED_MESSAGE" = "Your clip was saved successfully to camera roll.";
+
+"DOWNLOAD_FAILED_TITLE" = "Download failed";
+"DOWNLOAD_FAILED_PREMIUM_MESSAGE" = "Failed to download clip. Check connectivity and retry downloading (You will not be charged again for retrying).";
+"DOWNLOAD_FAILED_MESSAGE" = "Failed to download clip. Check connectivity and retry downloading.";
+
+"DOWNLOAD_NOT_ALLOWED_TITLE" = "Not allowed";
+"DOWNLOAD_NOT_ALLOWED_PREMIUM_MESSAGE" = "You are not allowed save to camera roll. Please purchase the full bundle or a download token from the monkey store.";
+
+"DOWNLOAD_SAVE_PREMIUM_TITLE" = "Save to camera roll";
+"DOWNLOAD_SAVE_PREMIUM_MESSAGE" = "Pay for a single download or buy the full bundle for unrestricted access.";
+
+"DOWNLOAD_STORE" = "Open Monkey Store";
+"DOWNLOAD_CANCEL" = "Cancel";

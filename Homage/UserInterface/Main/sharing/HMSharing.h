@@ -53,6 +53,7 @@
  *  @param parentVC       The parent view controller for the opened view controller.
  *  @param trackEventName Analytics tracking event name.
  *  @param thumbnail      Thumbnail.
+ *  @param sourceView     The source view (if needed for iPad UI).
  */
 -(void)shareRemakeBundle:(NSDictionary *)shareBundle
                 parentVC:(UIViewController *)parentVC
@@ -60,5 +61,21 @@
                thumbnail:(UIImage *)thumbnail
               sourceView:(UIView *)sourceView;
 
+/**
+ *  Share remake UI for share remake bundle.
+ *
+ *  @param shareBundle              Info about the share (link, remakeID etc).
+ *  @param parentVC                 The parent view controller for the opened view controller.
+ *  @param trackEventName           Analytics tracking event name.
+ *  @param thumbnail                Thumbnail.
+ *  @param sourceView               The source view (if needed for iPad UI).
+ *  @param saveToDeviceActivity     If set to YES, will include a DOWNLOAD MY VIDEO activity.
+ */
+-(void)shareRemakeBundle:(NSDictionary *)shareBundle
+                parentVC:(UIViewController *)parentVC
+          trackEventName:(NSString *)trackEventName
+               thumbnail:(UIImage *)thumbnail
+              sourceView:(UIView *)sourceView
+    saveToDeviceActivity:(BOOL)saveToDeviceActivity;
 
 @end

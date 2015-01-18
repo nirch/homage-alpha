@@ -25,6 +25,9 @@
 
 @interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *guiPreloadingImagesView;
+
 // The collection view displaying the list of stories
 @property (weak, nonatomic) IBOutlet UICollectionView *storiesCV;
 
@@ -118,6 +121,7 @@
     // *  STYLES  *
     // ************
     self.textColor = [HMStyle.sh colorNamed:C_STORIES_TEXT];
+    self.refreshControl.tintColor = [HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT];
 }
 
 -(void)initContent
@@ -229,14 +233,19 @@
 -(void)preloadStoriesThumbs
 {
     for (Story *story in self.fetchedResultsController.fetchedObjects) {
-        HMGLogDebug(@"Preloading image from:%@", story.thumbnailURL);
-        UIImageView *imageView = [UIImageView new];
         NSURL *thumbURL =[NSURL URLWithString:story.thumbnailURL];
-        [imageView sd_setImageWithURL:thumbURL placeholderImage:nil
+        [self.guiPreloadingImagesView sd_setImageWithURL:thumbURL placeholderImage:nil
                               options:SDWebImageRetryFailed|SDWebImageContinueInBackground|SDWebImageHighPriority
-                            completed:nil];
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                if (error) {
+                                    HMGLogDebug(@"Failed preloading image from:%@ %@", imageURL, [error localizedDescription]);
+                                } else {
+                                    HMGLogDebug(@"Preloaded image from:%@", imageURL);
+                                }
+                            }];
     }
 }
+
 
 //-(void)onStoryThumbnailLoaded:(NSNotification *)notification
 //{

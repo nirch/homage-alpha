@@ -13,6 +13,8 @@
 #import "HMServer+AppConfig.h"
 #import "JBWhatsAppActivity.h"
 #import "mixPanel.h"
+#import "HMSaveToDeviceActivity.h"
+#import "HMNotificationCenter.h"
 
 @implementation HMSharing
 
@@ -80,7 +82,22 @@
                 parentVC:(UIViewController *)parentVC
           trackEventName:(NSString *)trackEventName
                thumbnail:(UIImage *)thumbnail
-              sourceView:(UIView *)sourceView {
+              sourceView:(UIView *)sourceView
+{
+    [self shareRemakeBundle:shareBundle
+                   parentVC:parentVC
+             trackEventName:trackEventName
+                  thumbnail:thumbnail sourceView:sourceView
+       saveToDeviceActivity:NO];
+}
+
+-(void)shareRemakeBundle:(NSDictionary *)shareBundle
+                parentVC:(UIViewController *)parentVC
+          trackEventName:(NSString *)trackEventName
+               thumbnail:(UIImage *)thumbnail
+              sourceView:(UIView *)sourceView
+    saveToDeviceActivity:(BOOL)saveToDeviceActivity
+{
 
     // Gather info about the share
     NSString *generalShareSubject = shareBundle[K_SHARE_SUBJECT];
@@ -92,13 +109,34 @@
     
     // Create the activity items array.
     NSMutableArray *activityItems = [NSMutableArray new];
-    if (generalShareBody) [activityItems addObject:generalShareBody];
-    if (whatAppMessage) [activityItems addObject:[[WhatsAppMessage alloc] initWithMessage:whatAppMessage forABID:nil]];
-    if (thumbnail) [activityItems addObject:thumbnail];
+    
+    // General share body
+    if (generalShareBody)
+        [activityItems addObject:generalShareBody];
+    
+    // Whatsapp
+    if (whatAppMessage)
+        [activityItems addObject:[[WhatsAppMessage alloc] initWithMessage:whatAppMessage forABID:nil]];
+    
+    // Thumbnail
+    if (thumbnail)
+        [activityItems addObject:thumbnail];
 
-    //
-    NSArray *applicationActivities = @[[[JBWhatsAppActivity alloc] init]];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
+    // Application activities.
+    NSMutableArray *applicationActivities = [NSMutableArray new];
+    
+    // Whatsapp activity.
+    [applicationActivities addObject:[JBWhatsAppActivity new]];
+    
+    // Save to device activity
+    if (saveToDeviceActivity)
+        [applicationActivities addObject:[HMSaveToDeviceActivity new]];
+    
+    
+    // The activityViewController
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                                                                         applicationActivities:applicationActivities];
+    
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
         NSNumber *shareMethod = [self getShareMethod:activityType];
 
@@ -122,10 +160,24 @@
                                               };
             [[Mixpanel sharedInstance] track:trackEventName properties:trackProperties];
         }
+        
+        if (shareMethod.integerValue == HMShareMethodSaveToCameraRoll) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_USER_WANTS_TO_SAVE_REMAKE
+                                                                object:self
+                                                              userInfo:@{@"remake_id":shareBundle[K_REMAKE_ID]}];
+
+        }
     };
 
     [activityViewController setValue:generalShareSubject forKey:@"subject"];
-    activityViewController.excludedActivityTypes = @[UIActivityTypePrint,UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList];
+    activityViewController.excludedActivityTypes = @[
+                                                     UIActivityTypePrint,
+                                                     UIActivityTypeAssignToContact,
+                                                     UIActivityTypeSaveToCameraRoll,
+                                                     UIActivityTypeAddToReadingList,
+                                                     UIActivityTypeCopyToPasteboard,
+                                                     UIActivityTypeAirDrop
+                                                     ];
     
     if (IS_IPAD && sourceView) {
         activityViewController.popoverPresentationController.sourceView = sourceView;
@@ -141,20 +193,22 @@
 -(NSNumber *)getShareMethod:(NSString *)activityType
 {
     if ([activityType isEqualToString:@"com.apple.UIKit.activity.CopyToPasteboard"])
-        return [NSNumber numberWithInt:HMShareMethodCopyToPasteboard];
+        return @(HMShareMethodCopyToPasteboard);
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToFacebook"])
-        return [NSNumber numberWithInt:HMShareMethodPostToFacebook];
+        return @(HMShareMethodPostToFacebook);
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWhatsApp"])
-        return [NSNumber numberWithInt:HMShareMethodPostToWhatsApp];
+        return @(HMShareMethodPostToWhatsApp);
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Mail"])
-        return [NSNumber numberWithInt:HMShareMethodEmail];
+        return @(HMShareMethodEmail);
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Message"])
-        return [NSNumber numberWithInt:HMShareMethodMessage];
+        return @(HMShareMethodMessage);
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToWeibo"])
-        return [NSNumber numberWithInt:HMShareMethodPostToWeibo];
+        return @(HMShareMethodPostToWeibo);
     else if ([activityType isEqualToString:@"com.apple.UIKit.activity.PostToTwitter"])
-        return [NSNumber numberWithInt:HMShareMethodPostToTwitter];
-    else return [NSNumber numberWithInt:999];
+        return @(HMShareMethodPostToTwitter);
+    else if ([activityType isEqualToString:[NSString stringWithFormat:@"%@.DownloadVideoToDeviceActivity", [[NSBundle mainBundle] bundleIdentifier]]])
+        return @(HMShareMethodSaveToCameraRoll);
+    else return @(999);
 }
 
 @end

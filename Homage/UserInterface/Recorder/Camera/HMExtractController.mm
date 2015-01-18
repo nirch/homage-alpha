@@ -391,6 +391,7 @@
                     _postedStopRequest = YES;
                 }
             } else {
+                
                 if (!self.isSlowDevice && [self shouldFlipVideo]) {
                     // Process and rotate the video 180Deg if required before saving.
                     CVPixelBufferRef bufferRef = CMSampleBufferGetImageBuffer(sampleBuffer);

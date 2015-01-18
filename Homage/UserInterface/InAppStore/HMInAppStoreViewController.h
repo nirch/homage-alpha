@@ -10,13 +10,15 @@
 #import "HMStoreManagerDelegate.h"
 
 @class Story;
+@class Remake;
 
 #define K_STORE_PURCHASES_COUNT @"store purchases count"
 #define K_STORE_OPENED_FOR @"store opened for"
 
 typedef NS_ENUM(NSInteger, HMStoreOpenedFor) {
     HMStoreOpenedForStoryDetailsRemakeButton,
-    HMStoreOpenedForSideBarStoreButton
+    HMStoreOpenedForSideBarStoreButton,
+    HMStoreOpenedForSaveRemakeToCameraRoll
 };
 
 @interface HMInAppStoreViewController : UIViewController<
@@ -25,8 +27,10 @@ typedef NS_ENUM(NSInteger, HMStoreOpenedFor) {
 
 @property (nonatomic, weak) id<HMStoreDelegate>delegate;
 @property (nonatomic) HMStoreOpenedFor openedFor;
+@property (nonatomic) Remake *remake;
 
 +(HMInAppStoreViewController *)storeVC;
 +(HMInAppStoreViewController *)storeVCForStory:(Story *)story;
++(HMInAppStoreViewController *)storeVCForRemake:(Remake *)remake;
 
 @end

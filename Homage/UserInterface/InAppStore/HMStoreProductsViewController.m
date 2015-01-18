@@ -18,6 +18,8 @@
 #import "UIView+MotionEffect.h"
 #import <Mixpanel.h>
 
+#define TAG_SAVE_TO_CAMERA_ROLL_PRODUCT 10000
+
 @interface HMStoreProductsViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBackgroundImage;
@@ -186,14 +188,28 @@
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    if (self.remake) {
+        return 3;
+    }
+    
     return 2;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    // The big bundle section.
     if (section ==0) return 1;
-    NSInteger count = self.premiumStories.count;
-    return count;
+    
+    // Stories count
+    NSInteger storiesCount = self.premiumStories.count;
+
+    if (self.remake) {
+        // The section for purchasing a download token
+        // for a remake.
+        if (section == 1) return 1;
+    }
+    
+    return storiesCount;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -207,7 +223,11 @@
         // Main Bundle
         [self configureBundleCell:cell forIndexPath:indexPath];
     } else {
-        [self configureStoryCell:cell forIndexPath:indexPath];
+        if (self.remake && indexPath.section == 1) {
+            [self configureRemakeCell:cell forIndexPath:indexPath];
+        } else {
+            [self configureStoryCell:cell forIndexPath:indexPath];
+        }
     }
     return cell;
 }
@@ -226,12 +246,12 @@
     cell.guiText.text = product.localizedDescription;
     cell.guiPrice.text = [self priceLabelForPrice:product.price locale:product.priceLocale];
     cell.guiText.alpha = 1.0;
+    cell.guiText.contentMode = UIViewContentModeTop;
     cell.guiTitle.alpha = 1.0;
     cell.guiImage.alpha = 1.0;
     cell.guiBuyButton.alpha = 1.0;
     cell.guiBuyButton.enabled = YES;
 
-    
     // If already purchased.
     if ([HMAppStore didUnlockBundle]) {
         cell.guiBuyButton.hidden = YES;
@@ -247,9 +267,53 @@
     cell.guiImage.layer.cornerRadius = [HMStyle.sh floatValueForKey:V_STORE_THUMBS_CORNER_RADIUS];
 }
 
+-(void)configureRemakeCell:(HMStoreProductCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+    cell.guiBuyButton.tag = TAG_SAVE_TO_CAMERA_ROLL_PRODUCT;
+    
+    SKProduct *product = [self.appStore productForIdentifier:[HMAppStore saveUserRemakesTokenProductID]];
+    if (product == nil) {
+        [self unavailableProductInCell:cell];
+        return;
+    }
+
+    cell.guiTitle.text = product.localizedTitle;
+    [cell.guiBuyButton setTitle:LS(@"STORE_BUY_BUTTON") forState:UIControlStateNormal];
+    cell.guiBuyButton.hidden = NO;
+    cell.guiText.text = product.localizedDescription;
+    cell.guiText.alpha = 1.0;
+    cell.guiPrice.text = [self priceLabelForPrice:product.price locale:product.priceLocale];
+    cell.guiTitle.alpha = 1.0;
+    cell.guiImage.alpha = 1.0;
+    cell.guiBuyButton.alpha = 1.0;
+    cell.guiBuyButton.enabled = YES;
+    
+    NSURL *url = [NSURL URLWithString:self.remake.thumbnailURL];
+    [cell.guiImage sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        cell.guiImage.image = image;
+    }];
+    
+    // If already purchased.
+    if ([HMAppStore didUnlockBundle]) {
+        cell.guiBuyButton.hidden = YES;
+        cell.guiPrice.text = LS(@"STORE_ITEM_UNLOCKED");
+    }
+
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    cell.guiTitle.textColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_TITLE];
+    cell.guiText.textColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_DESCRIPTION];
+    cell.guiSepLine.backgroundColor = [HMStyle.sh colorNamed:C_STORE_PRODUCT_LINE];
+    cell.guiImage.layer.cornerRadius = [HMStyle.sh floatValueForKey:V_STORE_THUMBS_CORNER_RADIUS];
+
+}
 
 -(void)configureStoryCell:(HMStoreProductCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
+    cell.guiBuyButton.tag = indexPath.item;
+
     Story *story = self.premiumStories[indexPath.item];
     SKProduct *product = [self.appStore productForIdentifier:story.productIdentifier];
     if (product == nil) {
@@ -259,7 +323,6 @@
     
     cell.guiTitle.text = product.localizedTitle;
     [cell.guiBuyButton setTitle:LS(@"STORE_BUY_BUTTON") forState:UIControlStateNormal];
-    cell.guiBuyButton.tag = indexPath.item;
     cell.guiBuyButton.hidden = NO;
     cell.guiText.text = product.localizedDescription;
     cell.guiText.alpha = 1.0;
@@ -400,6 +463,51 @@
     [self.appStore restorePurchases];
 }
 
+#pragma mark - Buying
+-(void)buyStoryAtIndex:(NSInteger)index
+{
+    Story *story = self.premiumStories[index];
+    if (!story) return;
+    
+    // Disable collection view while handling purchase.
+    [self startTransactions];
+    
+    // Report to mixpanel
+    NSDictionary *info = @{
+                           @"product_id":story.productIdentifier,
+                           @"product_type":@"story",
+                           @"object_id":story.sID
+                           };
+    [[Mixpanel sharedInstance] track:@"StoreProductClicked" properties:info];
+    
+    // Make the purchase.
+    [self.appStore buyProductWithIdentifier:story.productIdentifier];
+}
+
+-(void)buySaveRemakeToken
+{
+    // Disable collection view while handling purchase.
+    [self startTransactions];
+    
+    // Report to mixpanel
+    NSDictionary *info = @{
+                           @"product_id":[HMAppStore saveUserRemakesTokenProductID],
+                           @"product_type":@"save_token",
+                           @"object_id":self.remake.sID
+                           };
+    [[Mixpanel sharedInstance] track:@"StoreProductClicked" properties:info];
+
+    // Make the purchase.
+    [self.appStore buyProductWithIdentifier:[HMAppStore saveUserRemakesTokenProductID]];
+}
+
+#pragma mark - Cleanup
+-(void)cleanUp
+{
+    self.appStore = nil;
+    [self removeObservers];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -424,26 +532,15 @@
     [self.appStore buyProductWithIdentifier:[HMAppStore bundleProductID]];
 }
 
-- (IBAction)onPressedBuyStoryButton:(UIButton *)sender
+- (IBAction)onPressedBuyProductButton:(UIButton *)sender
 {
-    Story *story = self.premiumStories[sender.tag];
-    if (!story) return;
-    
     [sender setTitle:LS(@"STORE_PROCESSING_BUTTON") forState:UIControlStateNormal];
-    
-    // Disable collection view while handling purchase.
-    [self startTransactions];
-    
-    // Report to mixpanel
-    NSDictionary *info = @{
-                           @"product_id":story.productIdentifier,
-                           @"product_type":@"story",
-                           @"object_id":story.sID
-                           };
-    [[Mixpanel sharedInstance] track:@"StoreProductClicked" properties:info];
-    
-    // Make the purchase.
-    [self.appStore buyProductWithIdentifier:story.productIdentifier];
+
+    if (sender.tag == TAG_SAVE_TO_CAMERA_ROLL_PRODUCT) {
+        [self buySaveRemakeToken];
+    } else {
+        [self buyStoryAtIndex:sender.tag];
+    }
 }
 
 

@@ -168,6 +168,11 @@
 #define C_STORE_PC_INPUT_TEXT @"colorPCInputText"
 #define C_STORE_PC_INPUT_BORDER @"colorPCInputBorder"
 
+// Downloading
+#define C_DOWNLOAD_CONTAINER @"colorDownloadContainer"
+#define C_DOWNLOAD_ACTIVITY @"colorDownloadActivity"
+#define C_DOWNLOAD_TITLE @"colorDownloadTitle"
+
 
 /**
  *  The regular font name defined in the style.

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Story;
+@class Remake;
 
 @interface HMStoreProductsViewController : UIViewController<
     UICollectionViewDataSource,
@@ -16,7 +17,9 @@
 >
 
 @property (nonatomic) Story *prioritizedStory;
+@property (nonatomic) Remake *remake;
 
 -(void)restorePurchases;
+-(void)cleanUp;
 
 @end

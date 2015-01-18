@@ -140,7 +140,7 @@
     
     // Init look
     [self initGUI];
-    [self initObservers];
+    [self initPermanentObservers];
     
     // Splash screen.
     [self prepareSplashView];
@@ -153,6 +153,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self initObservers];
     
     // Prepare local storage and start the App.
     [self playAccordingToUserPreference];
@@ -171,6 +173,7 @@
 {
     [super viewWillDisappear:animated];
     [self.songLoopPlayer pause];
+    [self removeObservers];
 }
 
 -(void)initGUI
@@ -210,7 +213,17 @@
     self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
 }
 
+#pragma mark - Observers
 -(void)initObservers
+{
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onMoviePlayerPlaybackStateDidChange:)
+                                                       name:MPMoviePlayerPlaybackStateDidChangeNotification
+                                                     object:nil];
+
+}
+
+-(void)initPermanentObservers
 {
     // Observe rendering begining
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
@@ -270,7 +283,7 @@
     
     
     [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(settingsDidChange:)
+                                                   selector:@selector(onSettingsDidChange:)
                                                        name:kIASKAppSettingChanged
                                                      object:nil];
     
@@ -279,14 +292,15 @@
                                                        name:HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST
                                                      object:nil];
     
-    
-    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
-                                                   selector:@selector(onMoviePlayerPlaybackStateDidChange:)
-                                                       name:MPMoviePlayerPlaybackStateDidChangeNotification
-                                                     object:nil];
-
 }
 
+-(void)removeObservers
+{
+    __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+}
+
+#pragma mark - Observers handlers
 -(void)onMoviePlayerPlaybackStateDidChange:(NSNotification *)notification
 {
     if (self.songLoopPlayer == nil) return;
@@ -299,6 +313,110 @@
     }
 }
 
+-(void)onRemakeFinishedSuccesfuly:(NSNotification *)notification
+{
+    [self storiesButtonPushed];
+    NSDictionary *info = notification.userInfo;
+    NSString *remakeID = info[@"remakeID"];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self storiesButtonPushed];
+    } completion:^(BOOL finished) {
+        [self showRenderingView];
+        [self.renderingVC renderStartedWithRemakeID:remakeID];
+    }];
+}
+
+-(void)onReachabilityStatusChange:(NSNotification *)notification
+{
+    if (!HMServer.sh.isReachable) {
+        [self showNoConnectivity];
+    } else {
+        [self hideNoConnectivity];
+    }
+}
+
+-(void)onUserPreferencesUpdate:(NSNotification *)notification
+{
+    
+    if (notification.isReportingError && HMServer.sh.isReachable)
+    {
+        HMGLogError(@"error details is: %@" , notification.reportedError.localizedDescription);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
+                                                        message:@"Failed updating preferences.\n\nTry again in a few moments."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [alert show];
+        });
+        NSError *error = notification.userInfo[@"error"];
+        HMGLogError(@"error: %@" , [error localizedDescription]);
+    }
+}
+
+-(void)onUserLoginStateChange:(User *)user
+{
+    NSString *userName;
+    NSString *fbProfileID;
+    if (user.firstName) {
+        userName = user.firstName;
+    } else if (user.email)
+    {
+        userName = [self getLoginName:user.email];
+        
+    } else {
+        userName = @"Guest";
+    }
+    
+    if (user.fbID)
+    {
+        fbProfileID = user.fbID;
+    } else {
+        fbProfileID = nil;
+    }
+    
+    [self.sideBarVC updateSideBarGUIWithName:userName FBProfile:fbProfileID];
+    
+}
+
+-(void)onConfigurationDataAvailable:(NSNotification *)notification
+{
+    if (notification.isReportingError) {
+        // Wait for a few seconds and retry fetching configuration from server.
+        HMGLogDebug(@"CFG fetch from server failed. Refetch configurations from server in %@ seconds.", @(self.retryFetchCFGWaitTime));
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.retryFetchCFGWaitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //
+            // Loading client configurations set on the server side.
+            //
+            [HMServer.sh loadAdditionalConfig];
+        });
+        self.retryFetchCFGWaitTime *= 2;
+        return;
+    }
+    
+    // Store the config values fetched from the server.
+    // (the values fetched from the server override the default
+    // values that are configured in the app bundle).
+    [HMServer.sh storeFetchedConfiguration:notification.userInfo];
+}
+
+
+-(void)onUserWantsToRetryLoginAsGuest:(NSNotificationCenter *)notification
+{
+    [self.loginVC loginAsGuest];
+}
+
+-(void)onRequestToShowSideBar:(NSNotificationCenter *)notification
+{
+    [self showSideBar];
+}
+
+-(void)onSettingsDidChange:(NSNotification *)notification
+{
+    [self updateUserPreferences];
+}
+
+#pragma mark - Preferences
 -(void)updateUserPreferences
 {
     NSString *userID = [User current].userID;
@@ -1049,51 +1167,7 @@
     [self hideRenderingView];
 }
 
--(void)onRemakeFinishedSuccesfuly:(NSNotification *)notification
-{
-    [self storiesButtonPushed];
-    NSDictionary *info = notification.userInfo;
-    NSString *remakeID = info[@"remakeID"];
-    [UIView animateWithDuration:0.3 animations:^{
-        [self storiesButtonPushed];
-    } completion:^(BOOL finished) {
-        [self showRenderingView];
-        [self.renderingVC renderStartedWithRemakeID:remakeID];
-    }];
-}
-
-
--(void)onReachabilityStatusChange:(NSNotification *)notification
-{
-    if (!HMServer.sh.isReachable) {
-        [self showNoConnectivity];
-    } else {
-        [self hideNoConnectivity];
-    }
-}
-
--(void)onUserPreferencesUpdate:(NSNotification *)notification
-{
-    
-    if (notification.isReportingError && HMServer.sh.isReachable)
-    {
-        HMGLogError(@"error details is: %@" , notification.reportedError.localizedDescription);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops"
-                                                        message:@"Failed updating preferences.\n\nTry again in a few moments."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
-        NSError *error = notification.userInfo[@"error"];
-        HMGLogError(@"error: %@" , [error localizedDescription]);
-    }
-}
-
-
-
-#pragma mark push notifications handler
+#pragma mark - Push notifications handler
 -(void)onUserMovieFinishedRendering:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
@@ -1152,61 +1226,6 @@
     {
         [self switchToTab:HMStoriesTab];
     }
-}
-
--(void)onUserLoginStateChange:(User *)user
-{
-    NSString *userName;
-    NSString *fbProfileID;
-    if (user.firstName) {
-        userName = user.firstName;
-    } else if (user.email)
-    {
-        userName = [self getLoginName:user.email];
-        
-    } else {
-        userName = @"Guest";
-    }
-    
-    if (user.fbID)
-    {
-        fbProfileID = user.fbID;
-    } else {
-        fbProfileID = nil;
-    }
-    
-    [self.sideBarVC updateSideBarGUIWithName:userName FBProfile:fbProfileID];
-    
-}
-
--(void)onConfigurationDataAvailable:(NSNotification *)notification
-{
-    if (notification.isReportingError) {
-        // Wait for a few seconds and retry fetching configuration from server.
-        HMGLogDebug(@"CFG fetch from server failed. Refetch configurations from server in %@ seconds.", @(self.retryFetchCFGWaitTime));
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.retryFetchCFGWaitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //
-            // Loading client configurations set on the server side.
-            //
-            [HMServer.sh loadAdditionalConfig];
-        });
-        self.retryFetchCFGWaitTime *= 2;
-        return;
-    }
-    
-    
-    NSDictionary *info = notification.userInfo;
-    [HMServer.sh updateConfiguration:info];
-}
-
--(void)onUserWantsToRetryLoginAsGuest:(NSNotificationCenter *)notification
-{
-    [self.loginVC loginAsGuest];
-}
-
--(void)onRequestToShowSideBar:(NSNotificationCenter *)notification
-{
-    [self showSideBar];
 }
 
 -(void)logoutPushed
@@ -1273,11 +1292,6 @@
     loginName = [mailAddress substringWithRange:[match rangeAtIndex:1]];
 
     return loginName;
-}
-
--(void)settingsDidChange:(NSNotification *)notification
-{
-    [self updateUserPreferences];
 }
 
 #pragma mark HMSimpleVideoViewController delegate

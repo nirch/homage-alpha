@@ -44,5 +44,9 @@
 	<false/>
 	<key>recorder_skip_are_you_sure_in_good_job_message</key>
 	<false/>
+	<key>user_save_remakes_policy</key>
+	<integer>0</integer>
+	<key>user_save_remakes_token</key>
+	<string>save_token</string>
 </dict>
 </plist>

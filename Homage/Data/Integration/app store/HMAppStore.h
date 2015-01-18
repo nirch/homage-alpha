@@ -17,6 +17,7 @@
 +(NSString *)productsPrefix;
 +(NSString *)productIdentifierForID:(NSString *)sID;
 +(NSString *)bundleProductID;
++(NSString *)saveUserRemakesTokenProductID;
 +(NSSet *)allProductsIdentifiers;
 
 #pragma mark - Purchases
@@ -24,6 +25,8 @@
 +(BOOL)didBuyProductWithIdentifier:(NSString *)identifier;
 +(BOOL)didUnlockBundle;
 +(BOOL)didUnlockStoryWithID:(NSString *)storyID;
++(BOOL)maySaveAnotherRemakeToDevice;
++(void)userUsedOneSaveRemakeToken;
 
 #pragma mark - StoreKit
 -(void)restorePurchases;

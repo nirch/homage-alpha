@@ -409,10 +409,10 @@
     NSInteger currentCount = self.fetchedResultsController.fetchedObjects.count;
     NSInteger delta = currentCount - self.previousRemakesCount;
     self.previousRemakesCount = currentCount;
-    if (delta == 0 && currentCount > 8 && self.previousRemakesCount>-1) {
+    if (delta == 0 && currentCount > 14 && self.previousRemakesCount>-1) {
         [self scrollActivityOutOfView];
     }
-    
+        
     // Reload data
     [self.remakesCV reloadData];
     [self handleNoRemakes];

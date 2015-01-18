@@ -28,5 +28,9 @@
 	<true/>
 	<key>recorder_skip_are_you_sure_in_good_job_message</key>
 	<true/>
+	<key>user_save_remakes_policy</key>
+	<integer>2</integer>
+	<key>_recorder_forced_bbg_policy</key>
+	<integer>2</integer>
 </dict>
 </plist>

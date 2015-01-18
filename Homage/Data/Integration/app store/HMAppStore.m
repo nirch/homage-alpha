@@ -56,6 +56,20 @@
     return [HMAppStore productIdentifierForID:campaignID];
 }
 
++(NSString *)saveUserRemakesTokenProductID
+{
+    NSString *saveTokenProductName = HMServer.sh.configurationInfo[@"user_save_remakes_token"];
+    return [HMAppStore productIdentifierForID:saveTokenProductName];
+}
+
++(NSInteger)saveUserRemakesTokensCount
+{
+    NSString *productIdentifier = [HMAppStore saveUserRemakesTokenProductID];
+    NSNumber *tokens = [[NSUserDefaults standardUserDefaults] objectForKey:productIdentifier];
+    if (tokens == nil) return 0;
+    return tokens.integerValue;
+}
+
 +(NSSet *)allProductsIdentifiers
 {
     NSMutableSet *pids = [NSMutableSet new];
@@ -68,6 +82,10 @@
     for (Story *story in [Story allActivePremiumStoriesInContext:DB.sh.context]) {
         [pids addObject:story.productIdentifier];
     }
+
+    // Save remake video consumubles
+    [pids addObject:[HMAppStore saveUserRemakesTokenProductID]];
+    
     return pids;
 }
 
@@ -75,10 +93,10 @@
 {
     if ([pid isEqualToString:[HMAppStore bundleProductID]]) {
         return @"bundle";
+    } else if ([pid isEqualToString:[HMAppStore saveUserRemakesTokenProductID]]) {
+        return @"save_token";
     }
     return @"story";
-    
-    // TODO: save to camera roll token implementation.
 }
 
 #pragma mark - Purchases
@@ -111,6 +129,51 @@
     return [HMAppStore didBuyProductWithIdentifier:productIdentifier];
 }
 
++(BOOL)maySaveAnotherRemakeToDevice
+{
+    // If bundle was purchased, user can save her remakes videos without limitations.
+    if ([HMAppStore didUnlockBundle]) return YES;
+    
+    // Check if any download/save tokens are still available.
+    NSInteger tokensLeft = [HMAppStore saveUserRemakesTokensCount];
+    if (tokensLeft > 0) return YES;
+    
+    // No tokens left.
+    // User will have to buy more before
+    // being allowed to download more remakes.
+    return NO;
+}
+
++(void)userUsedOneSaveRemakeToken
+{
+    // Check if this is relevant to the save to device policy in settings.
+    // If settings not configured to premium save to device, do nothing.
+    HMUserSaveToDevicePolicy savePolicy = [HMServer.sh.configurationInfo[@"user_save_remakes_policy"] integerValue];
+    if (savePolicy != HMUserSaveToDevicePolicyPremium) return;
+    
+    // If bundle was purchased, nothing to do.
+    // User can download unlimited number of remakes.
+    if ([HMAppStore didUnlockBundle]) return;
+
+    // Use up one save token.
+    NSInteger tokensLeft = [HMAppStore saveUserRemakesTokensCount];
+    tokensLeft = MAX(0, tokensLeft-1);
+    NSString *productIdentifier = [HMAppStore saveUserRemakesTokenProductID];
+    [[NSUserDefaults standardUserDefaults] setObject:@(tokensLeft) forKey:productIdentifier];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(void)saveUserRemakesTokensIncreaseBy:(NSInteger)increaseAmount
+{
+    // Add tokens by amount.
+    NSInteger tokensLeft = [HMAppStore saveUserRemakesTokensCount];
+    tokensLeft += increaseAmount;
+    
+    // Save.
+    NSString *productIdentifier = [HMAppStore saveUserRemakesTokenProductID];
+    [[NSUserDefaults standardUserDefaults] setObject:@(tokensLeft) forKey:productIdentifier];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 #pragma mark - StoreKit
 -(void)requestInfo
@@ -213,9 +276,11 @@
         HMGLogDebug(@"%@", info);
 
         NSDictionary *tInfo;
+        NSString *productType = [self productTypeByPID:productIdentifier];
+        
         tInfo = @{
                   @"product_id":productIdentifier,
-                  @"product_type":[self productTypeByPID:productIdentifier]
+                  @"product_type":productType
                   };
         
         // Handle transaction states.
@@ -227,7 +292,17 @@
                 // Purchase
                 //
                 HMGLogDebug(@"TSTATE purchased: %@", transaction.transactionIdentifier);
-                [HMAppStore markProductAsPurchasedWithIdentifier:productIdentifier];
+                
+                if ([productType isEqualToString:@"bundle"] ||
+                    [productType isEqualToString:@"story"]) {
+                    // Non consumable product
+                    [HMAppStore markProductAsPurchasedWithIdentifier:productIdentifier];
+                } else {
+                    // Consumable save to device token.
+                    [HMAppStore saveUserRemakesTokensIncreaseBy:1];
+                }
+
+                // Gather info.
                 transactionsInfo[productIdentifier] = info;
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 transactionsUpdate = YES;
@@ -235,7 +310,6 @@
                 
                 // Notify mixpanel about purchase event.
                 [[Mixpanel sharedInstance] track:@"StoreProductPurchased" properties:tInfo];
-                
                 break;
             case SKPaymentTransactionStateFailed:
                 

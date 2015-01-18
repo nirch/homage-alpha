@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredBG;
 
+@property (weak, nonatomic) IBOutlet UIImageView *guiLogo;
+
 // Titles
 @property (weak, nonatomic) IBOutlet HMBoldFontLabel *guiTitle;
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiInstructions;
@@ -72,6 +74,11 @@
     self.guiNumbersContainer.layer.borderColor = [UIColor whiteColor].CGColor;
     self.guiNumbersContainer.layer.borderWidth = 3;
     self.guiNumbersContainer.layer.cornerRadius = 5;
+    
+    
+    if (!IS_IPHONE_5) {
+        self.guiLogo.hidden = YES;
+    }
     
     // ************
     // *  STYLES  *

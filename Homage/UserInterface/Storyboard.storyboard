@@ -146,7 +146,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zUe-p0-Ug6" userLabel="nav menu button">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zUe-p0-Ug6" userLabel="nav menu button">
                                                 <rect key="frame" x="0.0" y="20" width="52" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="more">
@@ -182,7 +182,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="2tF-Un-TXf" userLabel="music play mute button">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="2tF-Un-TXf" userLabel="music play mute button">
                                                 <rect key="frame" x="268" y="20" width="52" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="playMusicIcon">
@@ -315,6 +315,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bcn-GE-WHv" userLabel="preloading images">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C7L-Hb-oGt" userLabel="Label - no remakes label" customClass="HMRegularFontLabel">
                                 <rect key="frame" x="14" y="258" width="291" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -434,6 +438,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Cxz-90-Kf7"/>
                     <connections>
+                        <outlet property="guiPreloadingImagesView" destination="bcn-GE-WHv" id="65q-Ip-I3N"/>
                         <outlet property="noStoriesLabel" destination="C7L-Hb-oGt" id="6FN-NC-M4Z"/>
                         <outlet property="storiesCV" destination="HkM-dd-oCy" id="PZM-ef-a60"/>
                         <segue destination="ZiT-ur-2sF" kind="push" identifier="story details segue" id="SE0-H8-uAl"/>
@@ -754,7 +759,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="152" height="94"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="zVP-Pe-Sxq" userLabel="Remake Button">
+                                                                        <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zVP-Pe-Sxq" userLabel="Remake Button">
                                                                             <rect key="frame" x="0.0" y="0.0" width="152" height="94"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <inset key="imageEdgeInsets" minX="-1" minY="40" maxX="0.0" maxY="0.0"/>
@@ -766,7 +771,7 @@
                                                                                 <action selector="onRemakeButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="01f-Bq-dTV"/>
                                                                             </connections>
                                                                         </button>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="M0A-XO-3Ed" userLabel="Share Button">
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="M0A-XO-3Ed" userLabel="Share Button">
                                                                             <rect key="frame" x="0.0" y="0.0" width="152" height="93"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <inset key="contentEdgeInsets" minX="0.0" minY="35" maxX="0.0" maxY="0.0"/>
@@ -775,6 +780,17 @@
                                                                             </state>
                                                                             <connections>
                                                                                 <action selector="onShareButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="9wK-JO-NkY"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fld-A2-GaN" userLabel="Download Button">
+                                                                            <rect key="frame" x="0.0" y="1" width="152" height="93"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <inset key="contentEdgeInsets" minX="0.0" minY="35" maxX="0.0" maxY="0.0"/>
+                                                                            <state key="normal" image="myStoriesDownloadButton">
+                                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="onDownloadButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="ZqW-8F-n7f"/>
                                                                             </connections>
                                                                         </button>
                                                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="wAI-0I-iDw">
@@ -890,7 +906,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="168" height="95"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="K1r-AP-wTJ" userLabel="Play Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="K1r-AP-wTJ" userLabel="Play Button">
                                                             <rect key="frame" x="0.0" y="0.0" width="168" height="95"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -932,6 +948,7 @@
                                             <outlet property="buttonsView" destination="LUz-op-R46" id="Fm6-xe-pTj"/>
                                             <outlet property="guiActivity" destination="MTf-qW-a6Y" id="PqA-QK-EbZ"/>
                                             <outlet property="guiActivityOverlay" destination="Yqc-kA-eYK" id="2S4-fl-ICF"/>
+                                            <outlet property="guiDownloadButton" destination="fld-A2-GaN" id="tYX-kP-BM8"/>
                                             <outlet property="guiHighlightOverlay" destination="nUh-vj-K1h" id="hdd-ar-IDY"/>
                                             <outlet property="guiScrollView" destination="9lC-38-A51" id="Aa3-jY-Rvk"/>
                                             <outlet property="guiThumbContainer" destination="E2A-Jk-ZZI" id="40Z-ya-B0L"/>
@@ -1741,7 +1758,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="n8M-kD-km2" userLabel="Like Button" customClass="HMRegularFontButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="n8M-kD-km2" userLabel="Like Button" customClass="HMRegularFontButton">
                                                         <rect key="frame" x="0.0" y="8" width="66" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1769,7 +1786,7 @@
                                                             <action selector="onPressedPlayButton:" destination="vB0-ch-lSv" eventType="touchUpInside" id="mX5-SK-fLA"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="D2W-gJ-4Lc" userLabel="Share Button" customClass="HMRegularFontButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="D2W-gJ-4Lc" userLabel="Share Button" customClass="HMRegularFontButton">
                                                         <rect key="frame" x="276" y="0.0" width="44" height="44"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1787,7 +1804,7 @@
                                                         <rect key="frame" x="288" y="12" width="20" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </activityIndicatorView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="DnM-3l-8xa" userLabel="More Options Button" customClass="HMRegularFontButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="DnM-3l-8xa" userLabel="More Options Button" customClass="HMRegularFontButton">
                                                         <rect key="frame" x="223" y="8" width="30" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1815,7 +1832,7 @@
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="dys-x7-tEz" userLabel="report button">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="dys-x7-tEz" userLabel="report button">
                                                         <rect key="frame" x="73" y="55" width="175" height="70"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <state key="normal" image="flagIcon">
@@ -1909,6 +1926,7 @@
         <image name="more" width="20" height="15"/>
         <image name="moreOptionsIcon" width="12" height="2"/>
         <image name="myStoriesDeleteButton" width="44" height="44"/>
+        <image name="myStoriesDownloadButton" width="44" height="44"/>
         <image name="myStoriesPlayButton" width="44" height="44"/>
         <image name="myStoriesRemakeButton" width="44" height="44"/>
         <image name="myStoriesShareButton" width="44" height="44"/>

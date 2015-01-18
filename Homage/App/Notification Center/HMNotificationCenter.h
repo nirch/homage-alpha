@@ -21,6 +21,7 @@
 
 #define HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST  @"user retries login as guest"
 
+#define HM_NOTIFICATION_UI_USER_WANTS_TO_SAVE_REMAKE  @"user wants to save remake"
 
 // Fetches from the REST API.
 #define HM_NOTIFICATION_SERVER_USER_CREATION        @"Server New User"

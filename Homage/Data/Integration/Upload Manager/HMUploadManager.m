@@ -209,7 +209,6 @@
     // If failed to update the server about the successful upload, will attempt again after a delay.
     if ([HMServer.sh shouldUploaderReportUploads]) {
         HMGLogDebug(@"Will inform server about upload success: %@", footage.takeID);
-        [HMCacheManager.sh clearTempFilesForFootage:footage];
         [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
                                                    sceneID:footage.sceneID
                                                     takeID:[footage takeID]

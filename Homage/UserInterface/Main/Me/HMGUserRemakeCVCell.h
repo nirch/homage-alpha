@@ -9,22 +9,29 @@
 #import <UIKit/UIKit.h>
 
 @interface HMGUserRemakeCVCell : UICollectionViewCell
+
+@property (nonatomic) BOOL layoutInitialized;
+
+// Thumb
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
 @property (weak, nonatomic) IBOutlet UIView *buttonsView;
-
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *shareActivity;
-@property (weak, nonatomic) IBOutlet UIButton *remakeButton;
-@property (weak, nonatomic) IBOutlet UIButton *actionButton;
 @property (weak, nonatomic) IBOutlet UILabel *storyNameLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *guiActivityOverlay;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
-
+// Overlays
 @property (weak, nonatomic) IBOutlet UIView *guiHighlightOverlay;
-
 @property (weak, nonatomic) IBOutlet UIScrollView *guiScrollView;
 @property (weak, nonatomic) IBOutlet UIView *guiThumbContainer;
+
+// Actions on the remake.
+@property (weak, nonatomic) IBOutlet UIButton *actionButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet UIButton *remakeButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiDownloadButton;
+
+// Activity
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *shareActivity;
+@property (weak, nonatomic) IBOutlet UIView *guiActivityOverlay;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 -(void)closeAnimated:(BOOL)animated;
 -(void)disableInteractionForAShortWhile;

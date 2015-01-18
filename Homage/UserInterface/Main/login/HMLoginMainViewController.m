@@ -217,7 +217,7 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
     [self.guiPrivacyPolicyLink setTitleColor:[HMStyle.sh colorNamed:C_LOGIN_FADED_LINKS] forState:UIControlStateNormal];
     
     //
-//    self.guiActivityView
+    self.guiActivityView.color = [HMStyle.sh colorNamed:C_LOGIN_ACTIVITY_INDICATOR];
 }
 
 -(void)initObservers

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Ucb-Z3-k9J">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
@@ -316,6 +315,7 @@
                     <connections>
                         <outlet property="guiBlurredBG" destination="Sij-pA-DOS" id="bgY-Ah-LB0"/>
                         <outlet property="guiInstructions" destination="o3Q-Wb-w75" id="QcF-vl-VeU"/>
+                        <outlet property="guiLogo" destination="h33-EB-Z7e" id="aiI-CS-xzc"/>
                         <outlet property="guiNumbersContainer" destination="e0j-pF-ceS" id="FZd-d6-JUq"/>
                         <outlet property="guiNumbersLabel" destination="laY-yF-AQN" id="aW5-xF-0g6"/>
                         <outlet property="guiRequiredNumbersLabel" destination="KKB-xS-8lE" id="keR-Gs-6it"/>
@@ -414,8 +414,8 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description text. Lorem Ipsum. Description text. Lorem Ipsum.  text." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7fm-0D-3tB">
-                                                    <rect key="frame" x="135" y="22" width="155" height="58"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description text. Lorem Ipsum. Description text. Lorem Ipsum.  text." lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7fm-0D-3tB">
+                                                    <rect key="frame" x="135" y="22" width="155" height="82"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -469,7 +469,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="onPressedBuyStoryButton:" destination="MbH-nu-84E" eventType="touchUpInside" id="3GR-py-nPn"/>
+                                                        <action selector="onPressedBuyProductButton:" destination="MbH-nu-84E" eventType="touchUpInside" id="bYc-KW-4Wh"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.99$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n9k-Lh-1db">

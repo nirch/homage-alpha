@@ -189,7 +189,7 @@
     self.videoView.guiPlayPauseButton.selected = NO;
     if (self.isFullscreen) {
         UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-        [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
+        [self setFullScreen:NO animated:NO forOrientation:currentOrientation];
     }
     
     if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabelContainer.hidden = NO;
@@ -536,7 +536,7 @@
     self.videoView.guiPlayPauseButton.selected = NO;
     if (self.isFullscreen) {
         UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-        [self setFullScreen:NO animated:YES forOrientation:currentOrientation];
+        [self setFullScreen:NO animated:NO forOrientation:currentOrientation];
     }
 
     if (self.shouldDisplayVideoLabel) self.videoView.guiVideoLabelContainer.hidden = NO;
@@ -617,7 +617,7 @@
 
 -(void)setFullScreenForOrientation:(UIInterfaceOrientation)orientation
 {
-    [self setFullScreen:YES animated:YES forOrientation:orientation];
+    [self setFullScreen:YES animated:NO forOrientation:orientation];
 }
 
 - (void)setFullScreen:(BOOL)fullscreen animated:(BOOL)animated forOrientation:(UIInterfaceOrientation)orientation {
@@ -951,7 +951,7 @@
 - (IBAction)onPressedFullScreenButton:(id)sender
 {
     UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    [self setFullScreen:!self.isFullscreen animated:YES forOrientation:currentOrientation];
+    [self setFullScreen:!self.isFullscreen animated:NO forOrientation:currentOrientation];
 }
 
 - (IBAction)onPressedToggleControls:(id)sender

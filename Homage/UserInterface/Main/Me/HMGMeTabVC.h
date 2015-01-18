@@ -7,9 +7,14 @@
 //
 
 #import "DB.h"
+#import "HMStoreDelegate.h"
+#import "HMDownloadDelegate.h"
 
-
-@interface HMGMeTabVC : UIViewController <UITextViewDelegate>
+@interface HMGMeTabVC : UIViewController <
+    UITextViewDelegate,
+    HMStoreDelegate,
+    HMDownloadDelegate
+>
 
 // For now, removed the faulty NSFetchedResultsController implementation <-- NSFetchedResultsControllerDelegate
 

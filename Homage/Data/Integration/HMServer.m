@@ -138,26 +138,15 @@
     self.currentUserID = userID;
 }
 
--(void)updateConfiguration:(NSDictionary *)info
+-(void)storeFetchedConfiguration:(NSDictionary *)info
 {
-    self.configurationInfo = info;
-}
-
--(void)setConfigurationInfo:(NSDictionary *)configurationInfo
-{
-    if (!configurationInfo) return;
-    
-    // First load the defaults and update from local storage.
-    NSMutableDictionary *storedConfiguration = [NSMutableDictionary dictionaryWithDictionary:self.configurationInfo];    
-    
-    // Update with new values
-    [storedConfiguration addEntriesFromDictionary:configurationInfo];
-    
-    // Store in memory.
-    _configurationInfo = storedConfiguration;
-    
     // Store in local storage for future use.
-    [[NSUserDefaults standardUserDefaults] setValue:_configurationInfo forKey:@"config"];
+    [[NSUserDefaults standardUserDefaults] setValue:info forKey:@"config"];
+    
+    // Also update the configuration in memory.
+    NSMutableDictionary *cfg = [NSMutableDictionary dictionaryWithDictionary:[self configurationInfo]];
+    [cfg addEntriesFromDictionary:info];
+    _configurationInfo = cfg;
 }
 
 -(NSDictionary *)configurationInfo
@@ -165,7 +154,7 @@
     // If in memory, return configuration from memory.
     if (_configurationInfo) return _configurationInfo;
     
-    // Not in memory. Load defaults.
+    // Not in memory. Load hard coded defaults from app bundle.
     NSMutableDictionary *configuration;
     NSString * plistPath = [[NSBundle mainBundle] pathForResource:self.defaultsFileName ofType:@"plist"];
     configuration = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
@@ -175,14 +164,14 @@
     plistPath = [[NSBundle mainBundle] pathForResource:labelDefaultsFile ofType:@"plist"];
     [configuration addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:plistPath]];
     
-    // After loading defaults, update values stored in local storage.
-    // Some values may have changed and stored in local storage.
+    // After loading defaults, override values stored in local storage.
+    // (The values stored in local storage are values fetched from the server in the past)
     NSDictionary *storedValues = [[NSUserDefaults standardUserDefaults] valueForKey:@"config"];
     if (storedValues) {
         [configuration addEntriesFromDictionary:storedValues];
     }
     
-    // Return the configuration info dictionary.
+    // Return the configuration info dictionary (and store it in memory).
     _configurationInfo = configuration;
     return _configurationInfo;
 }

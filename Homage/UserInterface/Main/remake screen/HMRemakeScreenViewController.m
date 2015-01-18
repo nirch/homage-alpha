@@ -163,6 +163,9 @@
     self.guiRemakeContainer.transform = transform;
     self.dismissTransform = transform;
     
+    // Enable buttons
+    self.guiLikeButton.userInteractionEnabled = YES;
+    
     // Animate to the target position defined by layout.
     [UIView animateWithDuration:0.3 delay:0.1 usingSpringWithDamping:0.75 initialSpringVelocity:0.3 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         self.guiRemakeContainer.transform = CGAffineTransformIdentity;
@@ -204,18 +207,18 @@
     }
     
     // Update Like Button
-    if ([self.remake isLikedByCurrentUser]) {
+    [self updateLikeButtonToState:[self.remake isLikedByCurrentUser]];
+}
+
+-(void)updateLikeButtonToState:(BOOL)liked
+{
+    if (liked) {
         [self.guiLikeButton setTitle:LS(@"UNLIKE_BUTTON_LABEL") forState:UIControlStateNormal];
         [self.guiLikeButton setImage:[UIImage imageNamed:@"likedIcon"] forState:UIControlStateNormal];
     } else {
         [self.guiLikeButton setTitle:LS(@"LIKE_BUTTON_LABEL") forState:UIControlStateNormal];
         [self.guiLikeButton setImage:[UIImage imageNamed:@"likesIcon"] forState:UIControlStateNormal];
     }
-    [UIView animateWithDuration:0.3 animations:^{
-        self.guiLikeButton.alpha = 1;
-    } completion:^(BOOL finished) {
-        self.guiLikeButton.userInteractionEnabled = YES;
-    }];
 }
 
 #pragma mark - Observers
@@ -254,6 +257,7 @@
 #pragma mark - Observers handlers
 -(void)onLikeStatusUpdated:(NSNotification *)notification
 {
+    self.guiLikeButton.userInteractionEnabled = YES;
     NSDictionary *info = notification.userInfo;
     NSString *remakeID = info[@"remake_id"];
     Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
@@ -440,11 +444,13 @@
 #pragma mark - Like / Unlike
 -(void)likeRemake
 {
+    [self updateLikeButtonToState:YES];
     [HMServer.sh likeRemakeWithID:self.remake.sID userID:User.current.userID];
 }
 
 -(void)unlikeRemake
 {
+    [self updateLikeButtonToState:NO];
     [HMServer.sh unlikeRemakeWithID:self.remake.sID userID:User.current.userID];
 }
 
@@ -493,11 +499,7 @@
 - (IBAction)onPressedLikeToggleButton:(UIButton *)likeButton
 {
     likeButton.userInteractionEnabled = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-        likeButton.alpha = 0;
-    } completion:^(BOOL finished) {
-        likeButton.userInteractionEnabled = YES;
-    }];
+    likeButton.alpha = 0.8;
 
     if ([self.remake isLikedByCurrentUser]) {
         [self unlikeRemake];

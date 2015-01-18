@@ -76,6 +76,15 @@
 	</dict>
 	<key>colors</key>
 	<dict>
+		<key>downloading</key>
+		<dict>
+			<key>colorDownloadContainer</key>
+			<string>@darker</string>
+			<key>colorDownloadActivity</key>
+			<string>@impact</string>
+			<key>colorDownloadTitle</key>
+			<string>@impact</string>
+		</dict>
 		<key>misc</key>
 		<dict>
 			<key>colorVideoTitles</key>

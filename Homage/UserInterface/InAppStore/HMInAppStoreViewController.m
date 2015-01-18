@@ -133,6 +133,14 @@
     return vc;
 }
 
++(HMInAppStoreViewController *)storeVCForRemake:(Remake *)remake
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InAppStore" bundle:nil];
+    HMInAppStoreViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"InAppStore"];
+    vc.remake = remake;
+    return vc;
+}
+
 #pragma mark - segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -141,6 +149,7 @@
         // A weak reference to the product VC
         self.productsVC = segue.destinationViewController;
         self.productsVC.prioritizedStory = self.prioritizedStory;
+        self.productsVC.remake = self.remake;
         
     } else if ([segue.identifier isEqualToString:@"parent control segue"]) {
         
@@ -162,6 +171,7 @@
                            K_STORE_PURCHASES_COUNT:@(self.purchasesMadeInSession),
                            K_STORE_OPENED_FOR:@(self.openedFor)
                            };
+    [self.productsVC cleanUp];
     [self.delegate storeDidFinishWithInfo:info];
 }
 

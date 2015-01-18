@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 @property (nonatomic) NSString *connectionLabel;
 
 // More info
-@property (strong,nonatomic) NSDictionary *configurationInfo;
+@property (strong,nonatomic, readonly) NSDictionary *configurationInfo;
 
 #pragma mark - URL named
 -(NSString *)absoluteURLNamed:(NSString *)urlName;
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 
 #pragma mark - provide server with request context
 -(void)chooseCurrentUserID:(NSString *)userID;
--(void)updateConfiguration:(NSDictionary *)info;
+-(void)storeFetchedConfiguration:(NSDictionary *)info;
 
 #pragma mark - bucket name
 @property (nonatomic) NSString *bucketName;

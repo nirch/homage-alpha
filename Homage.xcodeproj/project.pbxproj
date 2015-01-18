@@ -30,6 +30,8 @@
 		082D3E131A66CC760020D12E /* HMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E121A66CC760020D12E /* HMLabel.m */; };
 		082D3E141A66CC760020D12E /* HMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E121A66CC760020D12E /* HMLabel.m */; };
 		082D3E161A66CFC60020D12E /* LabelTOS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 082D3E151A66CFC60020D12E /* LabelTOS.txt */; };
+		082D3E1A1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */; };
+		082D3E1B1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */; };
 		0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
 		08333CD41A371AE000C27B56 /* AmazonInsightsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08333CD31A371AE000C27B56 /* AmazonInsightsSDK.framework */; };
 		0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8D918D04E1700222997 /* CoreMedia.framework */; };
@@ -92,6 +94,10 @@
 		085D782D1A626F3D001D835E /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 085D78291A626F3D001D835E /* introVideo.mp4 */; };
 		085D782E1A626F3D001D835E /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 085D782A1A626F3D001D835E /* recordingEnd.wav */; };
 		085D78301A626F8A001D835E /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 085D782F1A626F8A001D835E /* songLoop.m4a */; };
+		085E2AAA1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */; };
+		085E2AAB1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */; };
+		085E2AAD1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
+		085E2AAE1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		0864E0521A4F3B6E00F7AEB7 /* HMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */; };
 		0864E0551A4F3BDA00F7AEB7 /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0541A4F3BDA00F7AEB7 /* Style.plist */; };
@@ -483,6 +489,8 @@
 		082D3E111A66CC760020D12E /* HMLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLabel.h; sourceTree = "<group>"; };
 		082D3E121A66CC760020D12E /* HMLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLabel.m; sourceTree = "<group>"; };
 		082D3E151A66CFC60020D12E /* LabelTOS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LabelTOS.txt; sourceTree = "<group>"; };
+		082D3E181A67BC410020D12E /* HMSaveToDeviceActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSaveToDeviceActivity.h; sourceTree = "<group>"; };
+		082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSaveToDeviceActivity.m; sourceTree = "<group>"; };
 		0831C7E21885ECD30024406B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		08333CD31A371AE000C27B56 /* AmazonInsightsSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonInsightsSDK.framework; path = Homage/Frameworks/AmazonInsightsSDK.framework; sourceTree = "<group>"; };
@@ -558,6 +566,10 @@
 		085D78291A626F3D001D835E /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
 		085D782A1A626F3D001D835E /* recordingEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = recordingEnd.wav; sourceTree = "<group>"; };
 		085D782F1A626F8A001D835E /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
+		085E2AA81A6AD3AA00058272 /* HMDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDownloadViewController.h; sourceTree = "<group>"; };
+		085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDownloadViewController.m; sourceTree = "<group>"; };
+		085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMDownloadViewController.xib; sourceTree = "<group>"; };
+		085E2AAF1A6AF7AB00058272 /* HMDownloadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDownloadDelegate.h; sourceTree = "<group>"; };
 		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
 		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		0864E0501A4F3B6E00F7AEB7 /* HMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStyle.h; sourceTree = "<group>"; };
@@ -1027,6 +1039,7 @@
 				08FA971D1A45B853009B998C /* InAppStore */,
 				08455FDE1890458E0040504D /* Recorder */,
 				0884566418848D3300B94267 /* Custom Views & Controls */,
+				082D3E171A67BBEF0020D12E /* SaveToDevice */,
 				0842A63219F7E64E002F0D8B /* ToonBG */,
 			);
 			path = UserInterface;
@@ -1072,6 +1085,19 @@
 				082092741A61360F00603008 /* ABTestsCFG.plist */,
 			);
 			path = ABTesting;
+			sourceTree = "<group>";
+		};
+		082D3E171A67BBEF0020D12E /* SaveToDevice */ = {
+			isa = PBXGroup;
+			children = (
+				082D3E181A67BC410020D12E /* HMSaveToDeviceActivity.h */,
+				082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */,
+				085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */,
+				085E2AAF1A6AF7AB00058272 /* HMDownloadDelegate.h */,
+				085E2AA81A6AD3AA00058272 /* HMDownloadViewController.h */,
+				085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */,
+			);
+			path = SaveToDevice;
 			sourceTree = "<group>";
 		};
 		0831C7E11885ECD30024406B /* UIImage Effects */ = {
@@ -2100,6 +2126,7 @@
 				2655DF6E18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib in Resources */,
 				08DF230318926E3900912657 /* HMSimpleVideoViewController.xib in Resources */,
 				F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */,
+				085E2AAD1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */,
 				08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
 				0855D3701A0A68BA004830AE /* Settings.bundle in Resources */,
 				085D78251A617EFC001D835E /* ABTestsCFG.plist in Resources */,
@@ -2115,6 +2142,7 @@
 				085AFF4D1A52A9EB0066493F /* LabelDefaultsCFG.plist in Resources */,
 				086F308D1A529B7100430D81 /* close up.ctr in Resources */,
 				085D782C1A626F3D001D835E /* howtoVideo.mp4 in Resources */,
+				085E2AAE1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */,
 				085AFF4E1A52A9EB0066493F /* LabelDefaultsCFGTest.plist in Resources */,
 				085AFF441A52A3880066493F /* Images.xcassets in Resources */,
 				085D782E1A626F3D001D835E /* recordingEnd.wav in Resources */,
@@ -2309,6 +2337,7 @@
 				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,
+				082D3E1A1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */,
 				08DA74561A5EA9AD007EFE69 /* HMServer+Stories.m in Sources */,
 				08DA74521A5EA9AD007EFE69 /* HMServer+Remakes.m in Sources */,
 				268341F718FFFD40002E8CB7 /* IASKSettingsReader.m in Sources */,
@@ -2385,6 +2414,7 @@
 				08DA744E1A5EA9AD007EFE69 /* HMServer+Footages.m in Sources */,
 				08DA744C1A5EA9AD007EFE69 /* HMServer+AppConfig.m in Sources */,
 				08DF23201892704300912657 /* HMStartViewController.m in Sources */,
+				085E2AAA1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */,
 				08FA97231A45D44B009B998C /* HMInAppStoreViewController.m in Sources */,
 				0806FB2B1882944D00F0EF50 /* HMAppDelegate.m in Sources */,
 				08B958901891678600BCCF8C /* Text+Factory.m in Sources */,
@@ -2451,6 +2481,7 @@
 				086F30041A529B7100430D81 /* HMStoriesParser.m in Sources */,
 				086F30051A529B7100430D81 /* Scene+Factory.m in Sources */,
 				086F30061A529B7100430D81 /* HMStoryCell.m in Sources */,
+				082D3E1B1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */,
 				08DA74571A5EA9AD007EFE69 /* HMServer+Stories.m in Sources */,
 				08DA74531A5EA9AD007EFE69 /* HMServer+Remakes.m in Sources */,
 				086F30071A529B7100430D81 /* IASKSettingsReader.m in Sources */,
@@ -2527,6 +2558,7 @@
 				08DA744F1A5EA9AD007EFE69 /* HMServer+Footages.m in Sources */,
 				08DA744D1A5EA9AD007EFE69 /* HMServer+AppConfig.m in Sources */,
 				086F30561A529B7100430D81 /* HMStartViewController.m in Sources */,
+				085E2AAB1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */,
 				086F30571A529B7100430D81 /* HMInAppStoreViewController.m in Sources */,
 				086F30581A529B7100430D81 /* HMAppDelegate.m in Sources */,
 				086F30591A529B7100430D81 /* Text+Factory.m in Sources */,
@@ -2890,6 +2922,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 				);
@@ -2964,6 +2997,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 				);

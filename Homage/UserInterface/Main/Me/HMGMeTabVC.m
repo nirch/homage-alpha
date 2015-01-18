@@ -27,13 +27,17 @@
 #import "HMSharing.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMCacheManager.h"
+#import "HMServer+AppConfig.h"
+#import "HMAppStore.h"
+#import "HMInAppStoreViewController.h"
+#import "HMDownloadViewController.h"
 
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
 
-#define ALERT_VIEW_TAG_SHARE_FAILED 200
-
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
+
+@property (weak, nonatomic) HMDownloadViewController *downloadVC;
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
 @property (weak, nonatomic) IBOutlet UIButton *lastShareButtonPressed;
@@ -44,8 +48,8 @@
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSString *currentFetchedResultsUser;
 
-@property (weak,nonatomic) Remake *remakeToContinueWith;
-@property (weak,nonatomic) Remake *remakeToShare;
+@property (nonatomic) Remake *remakeToContinueWith;
+@property (nonatomic) Remake *remakeToSave;
 
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *noRemakesLabel;
 @property (nonatomic,weak) UIView *guiVideoContainer;
@@ -59,6 +63,8 @@
 // Yes, the name of the variable is long because it is funny. deal with it!
 @property (nonatomic) CGFloat bottomButtonAppearanceThresholdThatIsUsedToDetermineWhenToShowOrHideIt;
 
+@property (nonatomic) BOOL userAllowedToSaveRemakeVideosToDevice;
+
 @end
 
 @implementation HMGMeTabVC
@@ -66,6 +72,9 @@
 #define REMAKE_ALERT_VIEW_TAG 100
 #define TRASH_ALERT_VIEW_TAG  200
 #define SHARE_ALERT_VIEW_TAG  300
+#define ALERT_VIEW_TAG_SAVE_REMAKE_SHOULD_OPEN_STORE 400
+
+#define ALERT_VIEW_TAG_SHARE_FAILED 1200
 
 //#define HOMAGE_APPSTORE_LINK @"https://itunes.apple.com/us/app/homage/id851746600?l=iw&ls=1&mt=8"
 
@@ -76,8 +85,7 @@
 {
     [super viewDidLoad];
     
-    //self.remakesToDeleteInfo = [NSMutableDictionary new];
-    
+    [self initSettings];
     [self initGUI];
     [self initContent];
     [self initPermanentObservers];
@@ -122,6 +130,15 @@
 }
 
 #pragma mark initializations
+-(void)initSettings
+{
+    // Determine if user is allowed to download and save remakes videos to camera roll.
+    HMUserSaveToDevicePolicy policy = [HMServer.sh.configurationInfo[@"user_save_remakes_policy"] integerValue];
+    self.userAllowedToSaveRemakeVideosToDevice =    policy == HMUserSaveToDevicePolicyAllowed ||
+                                                    policy == HMUserSaveToDevicePolicyPremium;
+
+}
+
 -(void)initGUI
 {
     //init refresh control
@@ -221,6 +238,14 @@
                                                    selector:@selector(onShareRemakeRequest:)
                                                        name:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST
                                                      object:nil];
+
+    // Observe share request
+    [[NSNotificationCenter defaultCenter] addUniqueObserver:self
+                                                   selector:@selector(onUserWantToSaveRemakeVideo:)
+                                                       name:HM_NOTIFICATION_UI_USER_WANTS_TO_SAVE_REMAKE
+                                                     object:nil];
+    
+    
 }
 
 -(void)removeObservers
@@ -320,6 +345,11 @@
         return;
     }
     
+    // Download remakes to device allowed?
+    HMUserSaveToDevicePolicy saveToDevicePolicy = [HMServer.sh.configurationInfo[@"user_save_remakes_policy"] integerValue];
+    BOOL saveToDeviceAllowed = saveToDevicePolicy == HMUserSaveToDevicePolicyAllowed ||
+                               saveToDevicePolicy == HMUserSaveToDevicePolicyPremium;
+    
     // No error reported.
     // The share bundle is ready for sharing.
     // Open the ui for the user.
@@ -328,12 +358,31 @@
                                  parentVC:self
                            trackEventName:@"MEShareRemake"
                                 thumbnail:self.currentSharer.image
-                                    sourceView:self.lastShareButtonPressed];
+                                    sourceView:self.lastShareButtonPressed
+                     saveToDeviceActivity:saveToDeviceAllowed];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self stopShareActivity];
         self.currentSharer = nil;
     });
+}
+
+-(void)onUserWantToSaveRemakeVideo:(NSNotification *)notification
+{
+    NSString *remakeID = notification.userInfo[@"remake_id"];
+    Remake *remake = [Remake findWithID:remakeID inContext:DB.sh.context];
+    if (!remake) return;
+    
+    // Make sure remake is in the right status.
+    if (remake.status.integerValue != HMGRemakeStatusDone) {
+        return;
+    }
+    
+    // We have a remake is a user's ready video to download
+    // and save to camera roll.
+    self.remakeToSave = remake;
+    self.userRemakesCV.userInteractionEnabled = NO;
+    [self downloadUserRemake:remake];
 }
 
 -(void)stopShareActivity
@@ -390,6 +439,13 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [HMCacheManager.sh checkIfNeedsToDownloadAndCacheResources];
     });
+    
+    // Clear temp files for remakes in "DONE" status
+    for (Remake *remake in self.fetchedResultsController.fetchedObjects) {
+        if (remake.status && remake.status.integerValue == HMGRemakeStatusDone) {
+            [remake deleteRawLocalFiles];
+        }
+    }
 }
 
 -(void)onPulledToRefetch
@@ -458,21 +514,11 @@
 
 - (void)updateCell:(HMGUserRemakeCVCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
+    // Get the remake.
     Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    //saving indexPath of cell in buttons tags, for easy acsess to index when buttons pushed
-    /*cell.shareButton.tag = indexPath.item;
-    cell.actionButton.tag = indexPath.item;
-    cell.remakeButton.tag = indexPath.item;
-    cell.closeMovieButton.tag = indexPath.item;
-    cell.deleteButton.tag = indexPath.item;
-    cell.tag = indexPath.item;*/
-    //
-    
+    // Thumb image
     cell.guiThumbImage.transform = CGAffineTransformIdentity;
-    if (cell.guiScrollView.delegate == nil) cell.guiScrollView.delegate = self;
-    [cell closeAnimated:NO];
-    
     cell.guiThumbImage.alpha = 0;
     NSURL *thumbURL = [NSURL URLWithString:remake.thumbnailURL];
     [cell.guiThumbImage sd_setImageWithURL:thumbURL placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -488,8 +534,47 @@
         }
     }];
     
+    // Allow scrolling of the cell (for more options/buttons)
+    if (cell.guiScrollView.delegate == nil) cell.guiScrollView.delegate = self;
+    [cell closeAnimated:NO];
+    
+    
+    // The name of the story.
     cell.storyNameLabel.text = remake.story.name;
+    
+    // Update the cell according to the status of the remake.
     [self updateUIOfRemakeCell:cell withStatus: remake.status];
+    
+    // Handle showing/hiding the save remake to device, depending on the setting of this label/app.
+    [self updateOptionToDownloadVideoInCell:cell];
+    
+    // ************
+    // *  STYLES  *
+    // ************
+    [cell.shareActivity setColor:[HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT]];
+    [cell.guiActivity setColor:[HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT]];
+}
+
+-(void)updateOptionToDownloadVideoInCell:(HMGUserRemakeCVCell *)cell
+{
+    if (!self.userAllowedToSaveRemakeVideosToDevice) {
+        cell.guiDownloadButton.hidden = YES;
+        return;
+    }
+
+    // If already initialized the layout, nothing to do here.
+    if (cell.layoutInitialized) return;
+
+    // Initialize the layout for showing the share button
+    // and download button side by side.
+    CGRect f = cell.shareButton.frame;
+    f.size.width = f.size.width / 2.0;
+    cell.shareButton.frame = f;
+    f.origin.x += f.size.width;
+    cell.guiDownloadButton.frame = f;
+    
+    // Mark it so it will not be initialized again.
+    cell.layoutInitialized = YES;
 }
 
 -(void)updateUIOfRemakeCell:(HMGUserRemakeCVCell *)cell withStatus:(NSNumber *)status
@@ -618,13 +703,10 @@
 
 -(void)configureCellForMoviePlaying:(HMGUserRemakeCVCell *)cell active:(BOOL)active
 {
-    if (active)
-    {
-        //[cell.moviePlaceHolder insertSubview:self.moviePlayer.view belowSubview:cell.closeMovieButton];
+    if (active) {
         [cell.guiThumbImage setHidden:YES];
         [cell.buttonsView setHidden:YES];
-    } else
-    {
+    } else {
         [cell.guiThumbImage setHidden:NO];
         [cell.buttonsView setHidden:NO];
     }
@@ -684,19 +766,18 @@
     if (recorderVC) [self presentViewController:recorderVC animated:YES completion:nil];
 }
 
-
-#pragma mark UITextView delegate
+#pragma mark - AlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == REMAKE_ALERT_VIEW_TAG)
     {
         //
-        //remake button pushed
+        // remake button pushed
         //
         
         if (buttonIndex == 0)
         {
-           //cancel
+            //cancel
         }
         
         //continue with old remake
@@ -713,7 +794,7 @@
             self.remakeToContinueWith = nil;
         }
         //[self.userRemakesCV reloadData];
-    
+        
     } else if (alertView.tag == TRASH_ALERT_VIEW_TAG) {
         
         //
@@ -725,7 +806,7 @@
             AWAlertView *av = (AWAlertView *)alertView;
             NSIndexPath *indexPath = av.awContextObject;
             if (!indexPath) return;
-
+            
             Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
             if (!remake || !remake.sID) return;
             
@@ -748,24 +829,25 @@
         }
         
     } else if (alertView.tag == SHARE_ALERT_VIEW_TAG) {
-        //
-        // 
-        //
-        
-        //dont join
-        if (buttonIndex == 0)
-        {
-            self.remakeToShare = nil;
-        }
         //join now!
         if (buttonIndex == 1)
         {
             [self closeAllCellsExceptCell:nil animated:NO];
             [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_USER_JOIN object:nil userInfo:nil];
         }
+    } else if (alertView.tag == ALERT_VIEW_TAG_SAVE_REMAKE_SHOULD_OPEN_STORE) {
+        if (buttonIndex == 1) {
+            HMInAppStoreViewController *vc = [HMInAppStoreViewController storeVCForRemake:self.remakeToSave];
+            vc.delegate = self;
+            vc.openedFor = HMStoreOpenedForSaveRemakeToCameraRoll;
+            [self presentViewController:vc animated:YES completion:nil];
+        } else {
+            [self finishedDownloadFlowForRemake:self.remakeToSave];
+        }
     }
 }
 
+#pragma mark - UITextView delegate
 -(UICollectionViewCell *)getCellFromCollectionView:(UICollectionView *)collectionView atIndex:(NSInteger)index atSection:(NSInteger)section
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:section];
@@ -925,6 +1007,18 @@
     }
 }
 
+#pragma mark - Share & download activity
+-(void)startAnimatingActivityInCell:(HMGUserRemakeCVCell *)cell forButton:(UIButton *)button
+{
+    // Will start animating the activity
+    // But will also position it horizontally to match
+    // the related button position.
+    CGPoint p = cell.shareActivity.center;
+    p.x = button.center.x;
+    cell.shareActivity.center = p;
+    [cell.shareActivity startAnimating];
+}
+
 #pragma mark - Share remake
 -(void)shareRemakeRequestForRemake:(Remake *)remake thumb:(UIImage *)thumb
 {
@@ -935,6 +1029,193 @@
                                                                originatingScreen:@(HMMyStories)];
     [self.currentSharer requestShareWithBundle:shareBundle];
 }
+
+#pragma mark - Download remake flow
+-(void)startDownloadFlowForRemake:(Remake *)remake
+{
+    if ([remake isVideoAvailableLocally]) {
+        // The video is already available locally.
+        // We just need to save it to the camera roll.
+        NSURL *localVideoURL = [HMCacheManager.sh urlForCachedResource:remake.videoURL
+                                                             cachePath:HMCacheManager.sh.remakesCachePath];
+        UISaveVideoAtPathToSavedPhotosAlbum(localVideoURL.path,
+                                            self,
+                                            @selector(video:didFinishSavingWithError:contextInfo:),
+                                            NULL);
+        return;
+    }
+    
+    // Video is not available locally.
+    // Will need to download video.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    HMDownloadViewController *vc = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
+    vc.delegate = self;
+    vc.info = @{
+                @"remake":remake
+                };
+    
+    NSURL *remakeVideoURL = [NSURL URLWithString:[remake.videoURL stringByReplacingOccurrencesOfString:@"%20" withString:@"+"]];
+    [vc startDownloadResourceFromURL:remakeVideoURL toLocalFolder:HMCacheManager.sh.remakesCachePath];
+    self.downloadVC = vc;
+}
+
+-(void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    // Finish the flow
+    [self finishedDownloadFlowForRemake:self.remakeToSave];
+    
+    // If error, show the failed download message.
+    // on error, will not use the user's save token
+    // so she may try to download the remake again.
+    if (error) {
+        [self downloadFailedMessage];
+        return;
+    }
+    
+    // No error. All is well.
+    // Remake video saved successfully to camera roll.
+    // User spent a save token (irrelevant if user purchased full bundle)
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"DOWNLOAD_REMAKES_SAVED_TITLE")
+                                                    message:LS(@"DOWNLOAD_REMAKES_SAVED_MESSAGE")
+                                                   delegate:nil
+                                          cancelButtonTitle:LS(@"OK")
+                                          otherButtonTitles:nil];
+    [alert show];
+    [HMAppStore userUsedOneSaveRemakeToken];
+}
+
+-(void)finishedDownloadFlowForRemake:(Remake *)remake
+{
+    self.remakeToSave = nil;
+    self.userRemakesCV.userInteractionEnabled = YES;
+    [self.userRemakesCV reloadData];
+}
+
+-(void)downloadUserRemake:(Remake *)remake
+{
+    HMUserSaveToDevicePolicy savePolicy = [HMServer.sh.configurationInfo[@"user_save_remakes_policy"] integerValue];
+    if (savePolicy == HMUserSaveToDevicePolicyNotAllowed) {
+        [self finishedDownloadFlowForRemake:remake];
+        return;
+    }
+    
+    // If app allows users to download and save
+    // videos to camera roll freely,
+    // start the download flow.
+    if (savePolicy == HMUserSaveToDevicePolicyAllowed) {
+        [self startDownloadFlowForRemake:remake];
+        return;
+    }
+    
+    // Premium downloads.
+    // Allow user to download a remake,
+    // if app configured to allow premium downloads
+    // and user already made a purchase that allows her
+    // to do so.
+    if ([HMAppStore maySaveAnotherRemakeToDevice]) {
+        [self startDownloadFlowForRemake:remake];
+        return;
+    }
+    
+    // User isn't allowed to make a premium download yet.
+    // Open the in app store.
+    // Show us the monkey!
+    [self buyBeforeDownloadMessage];
+}
+
+-(void)downloadFailedMessage
+{
+    //
+    // Show a message to the user about the failed download.
+    //
+    HMUserSaveToDevicePolicy policy = [HMServer.sh.configurationInfo[@"user_save_remakes_policy"] integerValue];
+    NSString *failedMessage;
+    if (policy == HMUserSaveToDevicePolicyPremium) {
+        failedMessage = LS(@"DOWNLOAD_FAILED_PREMIUM_MESSAGE");
+    } else {
+        failedMessage = LS(@"DOWNLOAD_FAILED_MESSAGE");
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"DOWNLOAD_FAILED_TITLE")
+                                                    message:failedMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:LS(@"OK")
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+-(void)notAllowedToDownloadPremiumRemakeVideosMessage
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"DOWNLOAD_NOT_ALLOWED_TITLE")
+                                                    message:LS(@"DOWNLOAD_NOT_ALLOWED_PREMIUM_MESSAGE")
+                                                   delegate:nil
+                                          cancelButtonTitle:LS(@"OK")
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+-(void)buyBeforeDownloadMessage
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"DOWNLOAD_SAVE_PREMIUM_TITLE")
+                                                    message:LS(@"DOWNLOAD_SAVE_PREMIUM_MESSAGE")
+                                                   delegate:self
+                                          cancelButtonTitle:LS(@"DOWNLOAD_CANCEL")
+                                          otherButtonTitles:LS(@"DOWNLOAD_STORE"), nil];
+    alert.tag = ALERT_VIEW_TAG_SAVE_REMAKE_SHOULD_OPEN_STORE;
+    alert.delegate = self;
+    [alert show];
+}
+
+#pragma mark - HMDownloadDelegate
+-(void)downloadFinishedWithError:(NSError *)error info:(NSDictionary *)info
+{
+    // Download failed.
+    // Notify user and make sure she understands
+    // she can download the video layer, without paying for it again.
+    [self.downloadVC dismiss];
+    self.downloadVC = nil;
+    Remake *remake = info[@"remake"];
+    [self finishedDownloadFlowForRemake:remake];
+    [self downloadFailedMessage];
+}
+
+-(void)downloadFinishedSuccessfullyWithInfo:(NSDictionary *)info
+{
+    // Download was successful. Try to copy the file to camera roll.
+    [self.downloadVC dismiss];
+    self.downloadVC = nil;
+    NSString *localPath = info[@"file_path"];
+    UISaveVideoAtPathToSavedPhotosAlbum(localPath,
+                                        self,
+                                        @selector(video:didFinishSavingWithError:contextInfo:),
+                                        NULL);
+
+}
+
+#pragma mark - HMStoreDelegate
+-(void)storeDidFinishWithInfo:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.remakeToSave == nil) return;
+
+        // Finished with the in app store.
+        // Check if user now has permission to download and
+        // save to camera roll.
+        // If she paid for the download, continue with the download flow.
+        // [self startDownloadFlowForRemake:remake];
+        
+        // If still not allowed to download and save remake video
+        // Will show the "not allowed" message and finish the download flow.
+        if (![HMAppStore maySaveAnotherRemakeToDevice]) {
+            [self notAllowedToDownloadPremiumRemakeVideosMessage];
+            [self finishedDownloadFlowForRemake:self.remakeToSave];
+            return;
+        }
+        
+        // User is allowed to download to device.
+        [self startDownloadFlowForRemake:self.remakeToSave];
+    }];
+}
+
 
 #pragma mark - IB Actions
 // ===========
@@ -1028,6 +1309,7 @@
 {
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
     if (!cell) return;
+    
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
     self.lastShareButtonPressed = button;
@@ -1054,8 +1336,7 @@
         // Share request for the remake. (Homage server needs to create a share object first)
         [self shareRemakeRequestForRemake:remakeToShare thumb:cell.guiThumbImage.image];
         cell.shareButton.hidden = YES;
-        [cell.shareActivity startAnimating];
-        
+        [self startAnimatingActivityInCell:cell forButton:button];
     }
 }
 
@@ -1065,5 +1346,28 @@
     [self hideRemakeMoreStoriesButtonMovingToStories:YES];
 }
 
+- (IBAction)onDownloadButtonPushed:(UIButton *)button
+{
+    // Allow only one download at a time.
+    if (self.remakeToSave) return;
+    
+    HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
+    if (!cell) return;
+
+    // Get the remake object.
+    NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
+    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    // Make sure remake is in the right status.
+    if (remake.status.integerValue != HMGRemakeStatusDone) {
+        return;
+    }
+
+    // We have a remake is a user's ready video to download
+    // and save to camera roll.
+    self.remakeToSave = remake;
+    self.userRemakesCV.userInteractionEnabled = NO;
+    [self downloadUserRemake:remake];
+}
 
 @end

@@ -101,6 +101,7 @@
 @property (nonatomic) NSDictionary *badBackgroundTextsMappings;
 @property (nonatomic) NSDictionary *badBackgroundIconsMappings;
 @property (nonatomic) NSInteger lastBadBackgroundMark;
+@property (nonatomic) NSMutableDictionary *usedBadBackgroundMarks;
 
 // Preloading
 @property (nonatomic) NSMutableArray *preloadedImageViews;
@@ -128,6 +129,9 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.usedBadBackgroundMarks = [NSMutableDictionary new];
+    
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
     
@@ -156,7 +160,7 @@
     [super viewWillAppear:animated];
     
     [self initObservers];
-    //[self.videoCameraVC attachCameraIO];
+    [self.videoCameraVC attachCameraIO];
 }
 
 
@@ -1572,7 +1576,8 @@
 -(void)dismissWithReason:(HMRecorderDismissReason)reason
 {
     if (reason == HMRecorderDismissReasonFinishedRemake) {
-        [HMCacheManager.sh clearTempFilesForRemake:self.remake];
+        // TODO: fix this
+        //[HMCacheManager.sh clearTempFilesForRemake:self.remake];
     }
     
     if (self.delegate) {
@@ -1817,8 +1822,15 @@
         
         // When the number of notifications about a bad background reach a given
         // threshold, popup a message to the user about the bad background.
+        
+        // Also, don't open a popup if user asked not to show again
+        // or a popup for that bbg mark was already opened.
         if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH &&
-            ![User.current.disableBadBackgroundPopup isEqualToNumber:@YES]) {
+            ![User.current.disableBadBackgroundPopup isEqualToNumber:@YES] &&
+            !self.usedBadBackgroundMarks[@(self.lastBadBackgroundMark)]) {
+            
+            // Present the bad background alert.
+            self.usedBadBackgroundMarks[@(self.lastBadBackgroundMark)]= @YES;
             [self presentBadBackgroundAlert];
             self.backgroundStatusCounter = 0;
         }
