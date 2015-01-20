@@ -65,7 +65,9 @@
     layer.shadowRadius = 10;
     layer.shadowOpacity = 1;
     
-    
+    // Start time
+    self.startTime = [NSDate date];
+   
     // ************
     // *  STYLES  *
     // ************
@@ -79,8 +81,7 @@
 #pragma mark - Downloading.
 -(void)startDownloadResourceFromURL:(NSURL *)url toLocalFolder:(NSURL *)localFolder
 {
-    self.startTime = [NSDate date];
-    
+    self.guiDownloadingLabel.text = LS(@"DOWNLOADING");
     [self.guiDownloadingActivity startAnimating];
     [UIView animateWithDuration:0.2 animations:^{
         self.view.alpha = 1;
@@ -118,8 +119,29 @@
         });
         
     }];
+    self.guiProgressView.hidden = NO;
     [self.guiProgressView setProgressWithDownloadProgressOfTask:downloadTask animated:YES];
     [downloadTask resume];
+}
+
+-(void)startSavingToCameraRoll
+{
+    self.guiDownloadingLabel.text = LS(@"DOWNLOAD_SAVING_REMAKE");
+    self.guiProgressView.hidden = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.view.alpha = 1;
+    }];
+    [self.guiDownloadingActivity startAnimating];
+}
+
+-(void)cancel
+{
+    self.guiDownloadingLabel.text = LS(@"DOWNLOAD_CANCELED");
+    self.guiProgressView.hidden = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.view.alpha = 1;
+    }];
+    [self.guiDownloadingActivity startAnimating];
 }
 
 -(void)dismiss
@@ -127,12 +149,13 @@
     NSDate *now = [NSDate date];
     CGFloat delay = 0;
     
-    // Easy!
+    // Easy, not too fast!
     // If download too quick, wait a bit before dimissing UI
     // We don't want an ungraceful flashing of the UI.
     // Sometime, slower is better. What's the rush?
-    if ([now timeIntervalSinceDate:self.startTime] < 2000) {
-        delay = 1.5;
+    NSTimeInterval timePassed = [now timeIntervalSinceDate:self.startTime];
+    if ( timePassed < 500) {
+        delay = (500 - timePassed) / 1000.0f;
     }
     
     [UIView animateWithDuration:0.3

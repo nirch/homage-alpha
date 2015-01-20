@@ -15,5 +15,6 @@
 -(void)videoPlayerDidStop;
 -(void)videoPlayerDidFinishPlaying;
 -(void)videoPlayerIsShowingPlaybackControls:(NSNumber *)controlsShown;
+-(void)videoPlayerIsDone;
 
 @end

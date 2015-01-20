@@ -95,6 +95,7 @@
 @property (nonatomic) AVAudioPlayer *songLoopPlayer;
 
 @property (weak, nonatomic) UIView *guiVideoContainer;
+@property (nonatomic) BOOL isVideoPlaying;
 @property (weak,nonatomic) UITabBarController *appTabBarController;
 @property (weak,nonatomic) HMRenderingViewController *renderingVC;
 @property (weak,nonatomic) HMSideBarViewController *sideBarVC;
@@ -153,7 +154,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
     [self initObservers];
     
     // Prepare local storage and start the App.
@@ -178,6 +179,8 @@
 
 -(void)initGUI
 {
+    self.isVideoPlaying = NO;
+    
     // Make the top navigation bar blurry
     [[AMBlurView new] insertIntoView:self.guiTopNavContainer];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -308,7 +311,9 @@
     __weak MPMoviePlayerController *mp = notification.object;
     if (mp.playbackState == MPMoviePlaybackStatePlaying) {
         [self.songLoopPlayer pause];
+        self.isVideoPlaying = YES;
     } else {
+        self.isVideoPlaying = NO;
         [self playAccordingToUserPreference];
     }
 }
@@ -365,7 +370,7 @@
         userName = [self getLoginName:user.email];
         
     } else {
-        userName = @"Guest";
+        userName = LS(@"NAV_USER_NAME_GUEST");
     }
     
     if (user.fbID)
@@ -496,17 +501,20 @@
 
 -(void)dismissSplashScreenAfterAShortAnimation
 {
-    NSTimeInterval timeIntervalSinceLaunch = [[NSDate date] timeIntervalSinceDate:self.launchDateTime];
-    double delayInSeconds = timeIntervalSinceLaunch > 3.0 ? 0 : 3.0 - timeIntervalSinceLaunch;
+    CGFloat animationTime = 0.3;
+    CGFloat delayTime = 0.7;
     
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [UIView animateWithDuration:0.3 animations:^{
-            self.guiSplashView.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.guiSplashView.hidden = YES;
-            [self.splashVC done];
-        }];
+    [UIView animateWithDuration:animationTime
+                          delay:delayTime
+                        options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionAllowAnimatedContent
+                     animations:^{
+                         self.guiSplashView.alpha = 0;
+                     } completion:nil];
+    
+    CGFloat timeTillHiding = animationTime + delayTime + 0.1;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeTillHiding * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.guiSplashView.hidden = YES;
+        [self.splashVC done];
     });
 }
 
@@ -940,43 +948,47 @@
     if (self.songLoopPlayer == nil) return;
     
     // Play if user didn't prefer loop to be muted.
+    // But only if video is not currently playing.
     if ([self userPrefersMusicPlayback]) {
         self.songLoopPlayer.volume = SONG_LOOP_VOLUME;
         
-        [self.songLoopPlayer play];
-        [self updatePlayMuteSongLoopButton];
+        if (!self.isVideoPlaying)
+            [self.songLoopPlayer play];
+    } else {
+            [self.songLoopPlayer pause];
     }
+    
+    // Update the button
     [self updatePlayMuteSongLoopButton];
 }
 
 -(BOOL)userPrefersMusicPlayback
 {
-    NSNumber *userPreviousPreference = [[NSUserDefaults standardUserDefaults] objectForKey:@"loopPlaying"];
-    return (userPreviousPreference == nil || [userPreviousPreference boolValue]);
+    NSNumber *userPreference = [[NSUserDefaults standardUserDefaults] objectForKey:@"loopPlaying"];
+    return (userPreference == nil || [userPreference boolValue]);
 }
 
--(void)toggleSongPlayback
+-(void)toggleSongPlaybackPreference
 {
-    // Play / mute toggle.
-    if ([self userPrefersMusicPlayback]) {
-        [self.songLoopPlayer pause];
-    } else {
-        self.songLoopPlayer.volume = SONG_LOOP_VOLUME;
-        [self.songLoopPlayer play];
-    }
-    [self updatePlayMuteSongLoopButton];
+    // Get current user preference.
+    BOOL userPreference = [self userPrefersMusicPlayback];
+
+    // Toggle preference
+    userPreference = !userPreference;
     
-    // Save user preference for the future.
-    BOOL isPlaying = self.songLoopPlayer.isPlaying;
-    [[NSUserDefaults standardUserDefaults] setObject:@(isPlaying)
+    // Save toggled preference.
+    [[NSUserDefaults standardUserDefaults] setObject:@(userPreference)
                                               forKey:@"loopPlaying"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // Update the button
+    [self updatePlayMuteSongLoopButton];
 }
 
 -(void)updatePlayMuteSongLoopButton
 {
     UIImage *icon;
-    if (self.songLoopPlayer.isPlaying) {
+    if ([self userPrefersMusicPlayback]) {
         icon = [UIImage imageNamed:@"playMusicIcon"];
     } else {
         icon = [UIImage imageNamed:@"muteMusicIcon"];
@@ -1331,7 +1343,10 @@
         self.guiPlayMuteSongLoopButton.hidden = YES;
         return;
     }
-    [self toggleSongPlayback];
+
+    [self toggleSongPlaybackPreference];
+    [self playAccordingToUserPreference];
+
 }
 
 

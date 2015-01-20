@@ -21,7 +21,7 @@
                     <rect key="frame" x="0.0" y="34" width="320" height="534"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <mutableString key="text">Welcome to Homage. The following User Terms and Conditions (the "Terms") 
+                    <string key="text">Welcome to Homage. The following User Terms and Conditions (the "Terms") 
 explain how you can use the Homage mobile app ("Homage" or the "App."), 
 provided to you by Homage Technology Ltd. ("we" or "us").
 Please read and get acquainted with these Terms before you get started. They apply 
@@ -326,13 +326,13 @@ Please contact us at tomer@homage.it for any questions regarding these Terms.
 Last Modified:04/09/2014 
 
 © Homage Technology Ltd., 2014
-</mutableString>
+</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage User Terms and Conditions " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xfs-wk-Gye" customClass="HMLabel">
                     <rect key="frame" x="19" y="11" width="283" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>

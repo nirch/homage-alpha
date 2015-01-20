@@ -9,6 +9,13 @@
 			<key>fontResize</key>
 			<integer>7</integer>
 		</dict>
+		<key>styleClassRecorderRecordCountDown</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>-18</integer>
+			<key>strokeSize</key>
+			<string>0</string>
+		</dict>
 		<key>styleClassNavigationTitle</key>
 		<dict>
 			<key>fontResize</key>
@@ -47,6 +54,18 @@
 			<integer>5</integer>
 			<key>strokeSize</key>
 			<integer>2</integer>
+		</dict>
+		<key>styleClassSideBarUserTitle</key>
+		<dict>
+			<key>strokeSize</key>
+			<integer>0</integer>
+		</dict>
+		<key>styleClassRecorderDrawerCreateClipLabel</key>
+		<dict>
+			<key>fontResize</key>
+			<integer>1</integer>
+			<key>strokeSize</key>
+			<string>0</string>
 		</dict>
 		<key>valueSplashActivityPosition</key>
 		<integer>190</integer>
@@ -96,6 +115,8 @@
 		</dict>
 		<key>recorder</key>
 		<dict>
+			<key>colorRecorderCloseButtonX</key>
+			<string>@impact</string>
 			<key>colorRecorderTutorialText</key>
 			<string>@impact</string>
 			<key>colorRecorderTutorialButton</key>
@@ -104,6 +125,10 @@
 			<string>@record</string>
 			<key>colorRecorderRecordButtonOutline</key>
 			<string>@darker</string>
+			<key>colorRecorderRecordButtonCountDownBG1</key>
+			<string>@record</string>
+			<key>colorRecorderRecordButtonCountDownBG2</key>
+			<string>@veryDark</string>
 			<key>colorRecorderImpactButtonBG</key>
 			<string>@darker</string>
 			<key>colorRecorderImpactButtonText</key>
@@ -239,7 +264,7 @@
 			<key>colorSDMoreRemakesTitleText</key>
 			<string>@impact</string>
 			<key>colorSDMoreRemakesTitleBG</key>
-			<string>@dark</string>
+			<string>@darker</string>
 			<key>colorSDRemakeButtonBG</key>
 			<string>@darker</string>
 			<key>colorSDRemakeButtonText</key>

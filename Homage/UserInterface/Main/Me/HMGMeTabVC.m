@@ -37,8 +37,6 @@
 
 @interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
 
-@property (weak, nonatomic) HMDownloadViewController *downloadVC;
-
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
 @property (weak, nonatomic) IBOutlet UIButton *lastShareButtonPressed;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
@@ -48,6 +46,8 @@
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSString *currentFetchedResultsUser;
 
+
+@property (weak, nonatomic) HMDownloadViewController *saveVC;
 @property (nonatomic) Remake *remakeToContinueWith;
 @property (nonatomic) Remake *remakeToSave;
 
@@ -842,11 +842,14 @@
         }
     } else if (alertView.tag == ALERT_VIEW_TAG_SAVE_REMAKE_SHOULD_OPEN_STORE) {
         if (buttonIndex == 1) {
+            // 
             HMInAppStoreViewController *vc = [HMInAppStoreViewController storeVCForRemake:self.remakeToSave];
             vc.delegate = self;
             vc.openedFor = HMStoreOpenedForSaveRemakeToCameraRoll;
             [self presentViewController:vc animated:YES completion:nil];
         } else {
+            // Canceled entering the store from buying a save token.
+            [self.saveVC cancel];
             [self finishedDownloadFlowForRemake:self.remakeToSave];
         }
     }
@@ -1047,21 +1050,14 @@
                                             self,
                                             @selector(video:didFinishSavingWithError:contextInfo:),
                                             NULL);
+        [self.saveVC startSavingToCameraRoll];
         return;
     }
     
     // Video is not available locally.
     // Will need to download video.
-    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
-    HMDownloadViewController *vc = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
-    vc.delegate = self;
-    vc.info = @{
-                @"remake":remake
-                };
-    
     NSURL *remakeVideoURL = [NSURL URLWithString:[remake.videoURL stringByReplacingOccurrencesOfString:@"%20" withString:@"+"]];
-    [vc startDownloadResourceFromURL:remakeVideoURL toLocalFolder:HMCacheManager.sh.remakesCachePath];
-    self.downloadVC = vc;
+    [self.saveVC startDownloadResourceFromURL:remakeVideoURL toLocalFolder:HMCacheManager.sh.remakesCachePath];
 }
 
 -(void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
@@ -1092,8 +1088,9 @@
 -(void)finishedDownloadFlowForRemake:(Remake *)remake
 {
     self.remakeToSave = nil;
-    self.userRemakesCV.userInteractionEnabled = YES;
     [self.userRemakesCV reloadData];
+    [self.saveVC dismiss];
+    self.saveVC = nil;
 }
 
 -(void)downloadUserRemake:(Remake *)remake
@@ -1176,8 +1173,6 @@
     // Download failed.
     // Notify user and make sure she understands
     // she can download the video layer, without paying for it again.
-    [self.downloadVC dismiss];
-    self.downloadVC = nil;
     Remake *remake = info[@"remake"];
     [self finishedDownloadFlowForRemake:remake];
     [self downloadFailedMessage];
@@ -1186,8 +1181,7 @@
 -(void)downloadFinishedSuccessfullyWithInfo:(NSDictionary *)info
 {
     // Download was successful. Try to copy the file to camera roll.
-    [self.downloadVC dismiss];
-    self.downloadVC = nil;
+    [self.saveVC startSavingToCameraRoll];
     NSString *localPath = info[@"file_path"];
     UISaveVideoAtPathToSavedPhotosAlbum(localPath,
                                         self,
@@ -1368,10 +1362,15 @@
         return;
     }
 
-    // We have a remake is a user's ready video to download
-    // and save to camera roll.
+    // Start the flow of saving/downloading clip.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    self.saveVC = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
+    self.saveVC.delegate = self;
+    self.saveVC.info = @{
+                         @"remake":remake
+                         };
+    [self.saveVC startSavingToCameraRoll];
     self.remakeToSave = remake;
-    self.userRemakesCV.userInteractionEnabled = NO;
     [self downloadUserRemake:remake];
 }
 

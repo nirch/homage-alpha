@@ -461,6 +461,7 @@
 		080120131A069043002F10B2 /* HMRefreshControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRefreshControl.xib; sourceTree = "<group>"; };
 		080120151A08C045002F10B2 /* HMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNavigationController.h; sourceTree = "<group>"; };
 		080120161A08C045002F10B2 /* HMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMNavigationController.m; sourceTree = "<group>"; };
+		0802CB431A6D285200EE1781 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		0806FA0C18828AEB007514BE /* Homage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0806FA0F18828AEB007514BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0806FA1118828AEB007514BE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -966,6 +967,7 @@
 		0806FA1518828AEB007514BE /* Homage */ = {
 			isa = PBXGroup;
 			children = (
+				0802CB431A6D285200EE1781 /* README.md */,
 				08E50EC0188685E1001A8B75 /* Readme.txt */,
 				0806FB281882944D00F0EF50 /* App */,
 				0806FB2F188294CE00F0EF50 /* UserInterface */,

@@ -21,5 +21,6 @@
 
 -(void)shouldLockRecordButton;
 -(void)shouldUnlockRecordButton;
+-(void)checkMicrophoneAuthorization;
 
 @end

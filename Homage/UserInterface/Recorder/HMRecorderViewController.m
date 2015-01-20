@@ -174,7 +174,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self fixLayout];    
+    [self fixLayout];
+    [self.optionsBarVC checkMicrophoneAuthorization];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -660,6 +661,11 @@
                    object:nil];
     
     [nc addUniqueObserver:self
+                 selector:@selector(onAppDidEnterForeground:)
+                     name:HM_APP_WILL_ENTER_FOREGROUND
+                   object:nil];
+    
+    [nc addUniqueObserver:self
                  selector:@selector(onPressedLockedRecordButton:)
                      name:HM_NOTIFICATION_RECORDER_PRESSING_LOCKED_RECORD_BUTTON
                    object:nil];
@@ -669,6 +675,10 @@
 -(void)removeObservers
 {
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_CONTOUR_FILE_RECIEVED object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_USING_BACK_CAMERA object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_USING_FRONT_CAMERA object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_START_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_STOP_RECORDING object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_RAW_FOOTAGE_FILE_AVAILABLE object:nil];
@@ -677,6 +687,8 @@
     [nc removeObserver:self name:HM_NOTIFICATION_CAMERA_NOT_STABLE object:nil];
     [nc removeObserver:self name:HM_CAMERA_BAD_BACKGROUND object:nil];
     [nc removeObserver:self name:HM_CAMERA_GOOD_BACKGROUND object:nil];
+    [nc removeObserver:self name:HM_APP_WILL_RESIGN_ACTIVE object:nil];
+    [nc removeObserver:self name:HM_APP_WILL_ENTER_FOREGROUND object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_RECORDER_PRESSING_LOCKED_RECORD_BUTTON object:nil];
 }
 
@@ -1352,7 +1364,7 @@
     
     if (info[@"minimized scene direction"]) {
         animationDuration = 0.2;
-        self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiSceneDirectionButton];
+        self.guiMessagesOverlayContainer.transform = [self minimizedButtonTransform:self.guiSceneDirectionButtonContainer];
     }
     
     if (info[@"minimized background status"]) {
@@ -1677,110 +1689,6 @@
     [self stopSceneDirectionAudioPlayback];
 }
 
-#pragma mark - IB Actions
-// ===========
-// IB Actions.
-// ===========
-- (IBAction)onPressedSceneDirectionButton:(id)sender
-{
-    // Scene direction has no audio. Will show a textual direction screen.
-    // Show the scene context message for current scene.
-    [self showSceneContextMessageForSceneID:self.currentSceneID
-                    checkNextStateOnDismiss:NO
-                                       info:@{
-                                              @"blur alpha":@0.85,
-                                              @"minimized scene direction":@YES}];
-}
-
-- (IBAction)onPressedBGStatusButton:(id)sender
-{
-    [self presentBadBackgroundAlert];
-}
-
-- (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
-{
-    [self stopSceneDirectionAudioPlayback]; // Stop if playing. Nothing otherwise.
-
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"LEAVE_RECORDER_TITLE") message:LS(@"LEAVE_RECORDER_MESSAGE") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES") , nil];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [alertView show];
-    });
-
-}
-
-
-- (IBAction)onPressedFlipCameraButton:(UIButton *)sender
-{
-    [[Mixpanel sharedInstance] track:@"REFlipCamera" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
-    [self flipCamera];
-}
-
-
-- (IBAction)onTappedDetailedOptionsBar:(UITapGestureRecognizer *)sender
-{
- 
-    [self toggleOptionsAnimated:YES];
-}
-
-- (IBAction)onDraggingDetailedOptionsBar:(UIPanGestureRecognizer *)sender
-{
-    static double previousY;
-    static double lastYChange;
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        self.startPanningY = self.guiDetailedOptionsBarContainer.transform.ty;
-        previousY = self.startPanningY;
-        lastYChange = 0;
-    } else if (sender.state == UIGestureRecognizerStateChanged) {
-        //
-        // Drag it around
-        //
-        CGPoint delta = [sender translationInView:self.view];
-        double y = MAX(MIN(self.startPanningY + delta.y, OPTIONS_BAR_TRANSFORM_MAX),0);
-        self.guiDetailedOptionsBarContainer.transform = CGAffineTransformMakeTranslation(0, y);
-        lastYChange = y-previousY;
-        previousY = y;
-        
-        // Transform the bad background warning icon
-        CGFloat scale = MAX(MIN(1-(self.startPanningY-y)/30.0f,1.0f),0);
-        CGAffineTransform t = CGAffineTransformMakeTranslation(0, y-self.startPanningY);
-        t = CGAffineTransformScale(t, scale, scale);
-        self.guiBackgroundStatusButton.transform = t;
-
-    } else if (sender.state == UIGestureRecognizerStateCancelled || sender.state == UIGestureRecognizerStateEnded) {
-        //
-        // Determine if to open or close at the end of the drag.
-        //
-        CGPoint delta = [sender translationInView:self.view];
-        double y = MAX(MIN(self.startPanningY + delta.y, OPTIONS_BAR_TRANSFORM_MAX),0);
-        lastYChange = y-previousY;
-        if (lastYChange > 2.0f) {
-            [self closeDetailedOptionsAnimated:YES];
-        } else if (lastYChange < -2.0f) {
-            [self openDetailedOptionsAnimated:YES];
-        } else if (y>=OPTIONS_BAR_TRANSFORM_MAX/2.0f) {
-            [self closeDetailedOptionsAnimated:YES];
-        } else {
-            [self openDetailedOptionsAnimated:YES];
-        }
-    }
-}
-
-- (IBAction)onPressedDebugButton:(id)sender
-{
-//    CGAffineTransform transform;
-//    if (self.flagForDebugging) {
-//        transform = CGAffineTransformMakeRotation(M_PI/2);
-//    } else {
-//        transform = CGAffineTransformMakeRotation(M_PI/2*3);
-//    }
-//    [UIView beginAnimations:@"View Flip" context:nil];
-//    [UIView setAnimationDuration:0.5f];
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-//    self.view.transform =transform;
-//    [UIView commitAnimations];
-//    self.flagForDebugging = !self.flagForDebugging;
-}
-
 #pragma mark UITextView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -1876,6 +1784,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_RECORDER_STOP_RECORDING
                                                         object:self
                                                       userInfo:info];
+}
+
+-(void)onAppDidEnterForeground:(NSNotification *)notification
+{
+    [self.optionsBarVC checkMicrophoneAuthorization];
 }
 
 -(void)postDisableBGdetectionNotification
@@ -1980,6 +1893,110 @@
 -(void)_lockRecordButton
 {
     [self.optionsBarVC shouldLockRecordButton];
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedSceneDirectionButton:(id)sender
+{
+    // Scene direction has no audio. Will show a textual direction screen.
+    // Show the scene context message for current scene.
+    [self showSceneContextMessageForSceneID:self.currentSceneID
+                    checkNextStateOnDismiss:NO
+                                       info:@{
+                                              @"blur alpha":@0.85,
+                                              @"minimized scene direction":@YES}];
+}
+
+- (IBAction)onPressedBGStatusButton:(id)sender
+{
+    [self presentBadBackgroundAlert];
+}
+
+- (IBAction)onPressedDismissRecorderButton:(UIButton *)sender
+{
+    [self stopSceneDirectionAudioPlayback]; // Stop if playing. Nothing otherwise.
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"LEAVE_RECORDER_TITLE") message:LS(@"LEAVE_RECORDER_MESSAGE") delegate:self cancelButtonTitle:LS(@"NO") otherButtonTitles:LS(@"YES") , nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alertView show];
+    });
+    
+}
+
+
+- (IBAction)onPressedFlipCameraButton:(UIButton *)sender
+{
+    [[Mixpanel sharedInstance] track:@"REFlipCamera" properties:@{@"story" : self.remake.story.name, @"remake_id": self.remake.sID}];
+    [self flipCamera];
+}
+
+
+- (IBAction)onTappedDetailedOptionsBar:(UITapGestureRecognizer *)sender
+{
+    
+    [self toggleOptionsAnimated:YES];
+}
+
+- (IBAction)onDraggingDetailedOptionsBar:(UIPanGestureRecognizer *)sender
+{
+    static double previousY;
+    static double lastYChange;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        self.startPanningY = self.guiDetailedOptionsBarContainer.transform.ty;
+        previousY = self.startPanningY;
+        lastYChange = 0;
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
+        //
+        // Drag it around
+        //
+        CGPoint delta = [sender translationInView:self.view];
+        double y = MAX(MIN(self.startPanningY + delta.y, OPTIONS_BAR_TRANSFORM_MAX),0);
+        self.guiDetailedOptionsBarContainer.transform = CGAffineTransformMakeTranslation(0, y);
+        lastYChange = y-previousY;
+        previousY = y;
+        
+        // Transform the bad background warning icon
+        CGFloat scale = MAX(MIN(1-(self.startPanningY-y)/30.0f,1.0f),0);
+        CGAffineTransform t = CGAffineTransformMakeTranslation(0, y-self.startPanningY);
+        t = CGAffineTransformScale(t, scale, scale);
+        self.guiBackgroundStatusButton.transform = t;
+        
+    } else if (sender.state == UIGestureRecognizerStateCancelled || sender.state == UIGestureRecognizerStateEnded) {
+        //
+        // Determine if to open or close at the end of the drag.
+        //
+        CGPoint delta = [sender translationInView:self.view];
+        double y = MAX(MIN(self.startPanningY + delta.y, OPTIONS_BAR_TRANSFORM_MAX),0);
+        lastYChange = y-previousY;
+        if (lastYChange > 2.0f) {
+            [self closeDetailedOptionsAnimated:YES];
+        } else if (lastYChange < -2.0f) {
+            [self openDetailedOptionsAnimated:YES];
+        } else if (y>=OPTIONS_BAR_TRANSFORM_MAX/2.0f) {
+            [self closeDetailedOptionsAnimated:YES];
+        } else {
+            [self openDetailedOptionsAnimated:YES];
+        }
+    }
+}
+
+- (IBAction)onPressedDebugButton:(id)sender
+{
+    //    CGAffineTransform transform;
+    //    if (self.flagForDebugging) {
+    //        transform = CGAffineTransformMakeRotation(M_PI/2);
+    //    } else {
+    //        transform = CGAffineTransformMakeRotation(M_PI/2*3);
+    //    }
+    //    [UIView beginAnimations:@"View Flip" context:nil];
+    //    [UIView setAnimationDuration:0.5f];
+    //    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    //    self.view.transform =transform;
+    //    [UIView commitAnimations];
+    //    self.flagForDebugging = !self.flagForDebugging;
 }
 
 @end

@@ -192,7 +192,7 @@
     // More remakes label
     self.guiMoreRemakesHeadlineContainer.backgroundColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_BG];
     self.guiMoreRemakesHeadlineLabel.textColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_TEXT];
-    
+   
     // Make your own button
     self.guiRemakeButton.backgroundColor = [HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_BG];
     [self.guiRemakeButton setTitleColor:[HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];

@@ -49,7 +49,7 @@
 // in the background.
 -(void)checkIfNeedsToDownloadAndCacheResources;
 -(void)pauseDownloads;
--(void)clearStoriesCache;
+-(void)clearVideosCache;
 -(void)ensureAudioFilesAvailableForStory:(Story *)story;
 
 

@@ -19,8 +19,11 @@
 #import <Mixpanel.h>
 
 #define TAG_SAVE_TO_CAMERA_ROLL_PRODUCT 10000
+#define TAG_ARE_YOU_SURE_PURCHASE_TOKEN 10100
 
-@interface HMStoreProductsViewController ()
+@interface HMStoreProductsViewController () <
+    UIAlertViewDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBackgroundImage;
 @property (weak, nonatomic) IBOutlet UIView *guiLogoContainer;
@@ -287,16 +290,22 @@
     cell.guiImage.alpha = 1.0;
     cell.guiBuyButton.alpha = 1.0;
     cell.guiBuyButton.enabled = YES;
+    cell.guiDownloadTokenContainer.hidden = YES;
     
-    NSURL *url = [NSURL URLWithString:self.remake.thumbnailURL];
-    [cell.guiImage sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        cell.guiImage.image = image;
-    }];
+    cell.guiImage.image = [UIImage imageNamed:@"storeDownloadTokens"];
     
     // If already purchased.
     if ([HMAppStore didUnlockBundle]) {
         cell.guiBuyButton.hidden = YES;
         cell.guiPrice.text = LS(@"STORE_ITEM_UNLOCKED");
+
+    } else {
+        // Show number of tokens, if user owns some.
+        NSInteger tokensCount = [HMAppStore saveUserRemakesTokensCount];
+        if (tokensCount > 0) {
+            cell.guiDownloadTokenContainer.hidden = NO;
+            cell.guiDownloadTokenCountLabel.text = [NSString stringWithFormat:@"%@", @(tokensCount)];
+        }
     }
 
     
@@ -331,6 +340,7 @@
     cell.guiImage.alpha = 1.0;
     cell.guiBuyButton.alpha = 1.0;
     cell.guiBuyButton.enabled = YES;
+    cell.guiDownloadTokenContainer.hidden = YES;
 
     
     NSURL *url = [NSURL URLWithString:story.thumbnailURL];
@@ -367,6 +377,7 @@
     cell.guiImage.alpha = 0.2;
     cell.guiBuyButton.alpha = 0.2;
     cell.guiBuyButton.enabled = NO;
+    cell.guiDownloadTokenContainer.hidden = YES;
     
     // ************
     // *  STYLES  *
@@ -438,11 +449,6 @@
 {
     if (!self.inTransactions) return;
     
-    if (shouldExitStore) {
-        // Dismiss the store.
-        return;
-    }
-    
     // Stay in the store and allow user to buy more stuff.
     self.inTransactions = NO;
     self.guiProductsCV.userInteractionEnabled = YES;
@@ -486,6 +492,20 @@
 
 -(void)buySaveRemakeToken
 {
+    [self buySaveRemakeTokenUserConfirmed:NO];
+}
+
+-(void)buySaveRemakeTokenUserConfirmed:(BOOL)userConfirmed
+{
+    // If not first token and user didn't confirm yet
+    // alert user that she already has some unused tokens
+    // and ask her for confirmation.
+    NSInteger tokensCount = [HMAppStore saveUserRemakesTokensCount];
+    if (tokensCount > 0 && userConfirmed == NO) {
+        [self alertUserAboutUnusedTokensAmount:tokensCount];
+        return;
+    }
+    
     // Disable collection view while handling purchase.
     [self startTransactions];
     
@@ -501,11 +521,43 @@
     [self.appStore buyProductWithIdentifier:[HMAppStore saveUserRemakesTokenProductID]];
 }
 
+-(void)alertUserAboutUnusedTokensAmount:(NSInteger)amount
+{
+    if (amount <= 0) return;
+    
+    NSString *message;
+    if (amount > 1) {
+        message = [NSString stringWithFormat:LS(@"STORE_ALREADY_HAVE_DOWNLOAD_TOKENS"), @(amount)];
+    } else {
+        message = LS(@"STORE_ALREADY_HAVE_DOWNLOAD_TOKEN");
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"STORE_ALREADY_HAVE_DOWNLOAD_TOKENS_TITLE")
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:LS(@"NO")
+                                          otherButtonTitles:LS(@"YES"), nil];
+    alert.tag = TAG_ARE_YOU_SURE_PURCHASE_TOKEN;
+    [alert show];
+}
+
+#pragma mark - Alert delegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == TAG_ARE_YOU_SURE_PURCHASE_TOKEN) {
+        if (buttonIndex == 1) {
+            [self buySaveRemakeTokenUserConfirmed:YES];
+        }
+        [self.guiProductsCV reloadData];
+    }
+}
+
 #pragma mark - Cleanup
 -(void)cleanUp
 {
-    self.appStore = nil;
+    [self.appStore cleanup];
     [self removeObservers];
+    self.appStore = nil;
 }
 
 #pragma mark - IB Actions

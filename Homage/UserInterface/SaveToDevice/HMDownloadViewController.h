@@ -17,6 +17,8 @@
 +(HMDownloadViewController *)downloadVCInParentVC:(UIViewController *)parentVC;
 -(id)initWithDefaultNibInParentVC:(UIViewController *)parentVC;
 -(void)startDownloadResourceFromURL:(NSURL *)url toLocalFolder:(NSURL *)localFolder;
+-(void)startSavingToCameraRoll;
+-(void)cancel;
 -(void)dismiss;
 
 @end

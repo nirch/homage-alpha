@@ -110,7 +110,7 @@
                                         <rect key="frame" x="0.0" y="64" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnectivity" id="vUV-gb-yMF">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" id="vUV-gb-yMF">
                                                 <rect key="frame" x="51" y="3" width="25" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
@@ -597,7 +597,7 @@
                                     <view contentMode="scaleToFill" id="MZr-Vm-Cn1" userLabel="Description Dark bg">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MORE REMAKES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="86L-1d-fyN" userLabel="More remakes headline label" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="8" y="0.0" width="304" height="50"/>
@@ -615,7 +615,7 @@
                                         <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="9iU-or-JZM" userLabel="Back to story movie button">
                                 <rect key="frame" x="242" y="114" width="80" height="50"/>
@@ -627,9 +627,9 @@
                                     <action selector="onPressedScrollToTopButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="1lE-NU-IDL"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMRegularFontLabel">
-                                <rect key="frame" x="10" y="352" width="300" height="158"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMRegularFontLabel">
+                                <rect key="frame" x="10" y="352.00000212237796" width="300" height="158"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1193,6 +1193,9 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                         <color key="textColor" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassSideBarUserTitle"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <view contentMode="scaleToFill" id="0hW-jc-Mh0" customClass="FBProfilePictureView">
                                         <rect key="frame" x="15" y="25" width="31" height="31"/>
@@ -1673,7 +1676,7 @@
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" id="Ygg-Pw-g8O" userLabel="Description Dark bg">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MORE REMAKES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y11-MG-UVK" userLabel="Story Description Text" customClass="HMRegularFontLabel">
                                         <rect key="frame" x="8" y="0.0" width="304" height="50"/>
@@ -1691,7 +1694,7 @@
                                         <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" id="GL9-IJ-X5A">
                                 <rect key="frame" x="0.0" y="164" width="320" height="180"/>
@@ -1890,7 +1893,6 @@
                         <outlet property="guiLikesCounterLabel" destination="GCj-px-wJU" id="fnM-y9-71O"/>
                         <outlet property="guiLikesIcon" destination="hu1-nB-yUe" id="6oM-Iw-4UW"/>
                         <outlet property="guiMoreOptionsContainer" destination="tXY-Fw-OVD" id="s71-0T-C0t"/>
-                        <outlet property="guiMoreRemakesHeadlineBG" destination="Ygg-Pw-g8O" id="9Er-4J-uth"/>
                         <outlet property="guiMoreRemakesHeadlineContainer" destination="ffs-5Z-LWA" id="oVC-uC-fM6"/>
                         <outlet property="guiMoreRemakesHeadlineLabel" destination="y11-MG-UVK" id="eVj-GO-s6T"/>
                         <outlet property="guiOverlayPlayButton" destination="wyb-2t-yno" id="VkW-Wj-aAL"/>
@@ -1936,7 +1938,6 @@
         <image name="navIconSettings" width="38" height="38"/>
         <image name="navIconStories" width="40" height="38"/>
         <image name="navSidebarBG" width="273" height="568"/>
-        <image name="noConnectivity" width="60" height="60"/>
         <image name="playMusicIcon" width="33" height="33"/>
         <image name="progressCloseIcon" width="22" height="22"/>
         <image name="remakeInverseBGButton" width="33" height="33"/>
@@ -1951,6 +1952,7 @@
         <image name="subtleBackground" width="320" height="568"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
         <image name="viewsIcon" width="17" height="11"/>
+        <image name="wifi" width="64" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -104,7 +104,6 @@
 {
     [super viewDidLoad];
     _remake = [self.remakerDelegate remake];
-    [self checkMicrophoneAuthorization];
     [self initGUI];
     [self initABTesting];
     [self initObservers];
@@ -115,7 +114,6 @@
 {
     [super viewWillAppear:animated];
     
-    [self checkMicrophoneAuthorization];
     [self initObservers];
     [self updateTableHeader];
 }
@@ -124,7 +122,6 @@
 {
     [self initGUIOnceAfterFirstAppearance];
     [super viewDidAppear:animated];
-
     [self initVideoControllers];
 }
 
@@ -171,6 +168,8 @@
     // Record button and outline
     self.guiRecordButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON];
     b.layer.borderColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_OUTLINE].CGColor;
+    self.guiCloseButton.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_OUTLINE];
+    [self.guiCloseButton setTitleColor:[HMStyle.sh colorNamed:C_RECORDER_CLOSE_BUTTON_X] forState:UIControlStateNormal];
     self.guiLockRecordButtonView.backgroundColor = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_OUTLINE];
     
     // Drawer

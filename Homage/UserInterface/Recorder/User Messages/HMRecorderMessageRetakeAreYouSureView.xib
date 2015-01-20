@@ -53,6 +53,9 @@
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="OOPS_NOPE"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onPressedOopsDontRetakeButton:" destination="-1" eventType="touchUpInside" id="Pp5-ZE-M6g"/>
                             </connections>
@@ -68,6 +71,9 @@
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="YEAH_START_ROLLING"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onPressedYeahRetakeThisScene:" destination="-1" eventType="touchUpInside" id="J2A-KD-loI"/>
                             </connections>
@@ -83,6 +89,9 @@
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="CAN_I_SEE_A_PREVIEW"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onPressedSeePreviewButton:" destination="-1" eventType="touchUpInside" id="UGi-Zw-G4V"/>
                             </connections>

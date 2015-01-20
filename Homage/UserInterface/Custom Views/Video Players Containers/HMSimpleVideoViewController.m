@@ -19,6 +19,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "HMCacheManager.h"
 #import "HMStyle.h"
+#import "HMTOSViewController.h"
+
 
 
 @implementation UIDevice (ALSystemVersion)
@@ -559,6 +561,11 @@
     HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
     app.shouldAllowStatusBar = YES;
     [self setNeedsStatusBarAppearanceUpdate];
+
+    
+    if ([self.delegate respondsToSelector:@selector(videoPlayerIsDone)]) {
+        [self.delegate performSelector:@selector(videoPlayerIsDone)];
+    }
 
 }
 

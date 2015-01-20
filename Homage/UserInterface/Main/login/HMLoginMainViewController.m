@@ -80,7 +80,6 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiTOSLink;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiPrivacyPolicyLink;
 
-
 @property (strong , nonatomic) id<FBGraphUser> cachedUser;
 @property (strong,nonatomic) HMIntroMovieViewController *introMovieController;
 @property (nonatomic) UINavigationController *legalNavVC;

@@ -25,6 +25,7 @@
 +(BOOL)didBuyProductWithIdentifier:(NSString *)identifier;
 +(BOOL)didUnlockBundle;
 +(BOOL)didUnlockStoryWithID:(NSString *)storyID;
++(NSInteger)saveUserRemakesTokensCount;
 +(BOOL)maySaveAnotherRemakeToDevice;
 +(void)userUsedOneSaveRemakeToken;
 
@@ -33,5 +34,6 @@
 -(void)buyProductWithIdentifier:(NSString *)productIdentifier;
 -(void)requestInfo;
 -(SKProduct *)productForIdentifier:(NSString *)productIdentifier;
+-(void)cleanup;
 
 @end

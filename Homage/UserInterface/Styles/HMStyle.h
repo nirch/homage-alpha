@@ -133,7 +133,15 @@
 
 #define C_RECORDER_RECORD_BUTTON @"colorRecorderRecordButton"
 #define C_RECORDER_RECORD_BUTTON_OUTLINE @"colorRecorderRecordButtonOutline"
+
+#define C_RECORDER_RECORD_BUTTON_COUNT_DOWN_BG_1 @"colorRecorderRecordButtonCountDownBG1"
+#define C_RECORDER_RECORD_BUTTON_COUNT_DOWN_BG_2 @"colorRecorderRecordButtonCountDownBG2"
+
+
+
+#define C_RECORDER_CLOSE_BUTTON_X @"colorRecorderCloseButtonX"
 #define C_RECORDER_DRAWER_SEP_LINE @"colorRecorderDrawerSepLine"
+
 
 #define C_RECORDER_IMPACT_BUTTON_BG @"colorRecorderImpactButtonBG"
 #define C_RECORDER_IMPACT_BUTTON_TEXT @"colorRecorderImpactButtonText"

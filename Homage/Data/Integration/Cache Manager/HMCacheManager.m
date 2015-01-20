@@ -497,10 +497,16 @@
 }
 
 #pragma mark - Cleaning up
--(void)clearStoriesCache
+-(void)clearVideosCache
+{
+    [self clearFilesInCacheFolder:self.storiesCachePath];
+    [self clearFilesInCacheFolder:self.remakesCachePath];
+}
+
+-(void)clearFilesInCacheFolder:(NSURL *)cacheFolder
 {
     NSError *error;
-    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:self.storiesCachePath.path error:&error];
+    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:cacheFolder.path error:&error];
     if (error) {
         HMGLogError(@"clear cache error %@", [error localizedDescription]);
         return;
@@ -510,7 +516,7 @@
     NSString *fileName;
     while (fileName = [filesEnumerator nextObject]) {
         NSError *error = nil;
-        NSString *path = [self.storiesCachePath.path stringByAppendingPathComponent:fileName];
+        NSString *path = [cacheFolder.path stringByAppendingPathComponent:fileName];
         [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
         if (error) {
             HMGLogError(@"Failed removing %@", path);

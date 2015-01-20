@@ -293,7 +293,7 @@
 {
     if (notification.userInfo[@"cacheStoriesVideos"]) {
         BOOL cacheStoriesVideos = [notification.userInfo[@"cacheStoriesVideos"] boolValue];
-        if (!cacheStoriesVideos) [HMCacheManager.sh clearStoriesCache];
+        if (!cacheStoriesVideos) [HMCacheManager.sh clearVideosCache];
     }
 }
 

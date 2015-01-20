@@ -60,8 +60,8 @@
 
 /*in me screen, when you have no remakes, this label will show*/
 "NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST CLIP!";
-"REMAKE_MORE_STORIES" = "REMAKE MORE CLIPS!";
-"REMAKE_A_STORY" = "REMAKE A CLIP!";
+"REMAKE_MORE_STORIES" = "CREATE MORE CLIPS!";
+"REMAKE_A_STORY" = "CREATE A CLIP!";
 
 /*me screen buttons for each user's remake*/
 "ME_REMAKE_DELETE" = "Delete clip";
@@ -70,7 +70,7 @@
 /*in the story details screen, when no remakes available, this label will show*/
 "NO_REMAKES_STORY_DETAILS" = "Be the first to make a clip";
 "MORE_REMAKES" = "MORE";
-"MAKE_YOUR_OWN_BUTTON" = "MAKE YOUE OWN";
+"MAKE_YOUR_OWN_BUTTON" = "MAKE YOUR OWN";
 
 /*in stories tab ,when you have no stories, this label will show*/
 "NO_STORIES" = "NO CLIPS :-(";
@@ -81,6 +81,8 @@
 */
 
 /*sidebar navigation sections*/
+"NAV_USER_NAME_GUEST" = "Friend";
+
 "NAV_STORIES_BUTTON" = "CLIPS";
 "NAV_MY_STORIES_BUTTON" = "MY CLIPS";
 "NAV_SETTINGS_BUTTON" = "SETTINGS";
@@ -130,11 +132,11 @@
 "HELP_LABEL_PLACE_ACTOR" = "Place the actor here";
 "HELP_LABEL_SCENE_DURATION" = "Scene duration";
 "HELP_LABEL_GET_INSPIRED" = "Get inspired";
-"HELP_BUTTON_NEXT" = "NEXT";
-"HELP_BUTTON_FINISH" = "FINISH";
+"HELP_BUTTON_NEXT" = "CONTINUE";
+"HELP_BUTTON_FINISH" = "CONTINUE";
 
 /*bad background messages*/
-"BAD_BACKGROUND_TITLE" = "IMPROPER BACKGROUND";
+"BAD_BACKGROUND_TITLE" = "Oops... Bad Background!";
 "RECORDER_BBG_NOISY" = "Use a solid color wall!";
 "RECORDER_BBG_DARK" = "Use well lit areas!";
 "RECORDER_BBG_SILHOUETTE" = "Align correctly with the silhouette!";
@@ -143,12 +145,12 @@
 "RECORDER_BBG_GENERAL_MESSAGE" = "Use a solid color wall!";
 "BAD_BACKGROUND_HELP_BUTTON_TEXT" = "Help!";
 
-/*go to next scene button*/
+/*recorder*/
 "NEXT_SCENE" = "Shoot Scene!";
 "SCENE_TITLE" = "Scene No. %d";
 
 "CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
-"CAMERA_NOT_STABLE_TITLE" = "Steady now...";
+"CAMERA_NOT_STABLE_TITLE" = "Oops... Keep it steady!";
 
 "EPIC_FAIL_MESSAGE" = "Something went wrong. Please try again";
 "EPIC_FAIL_TITLE" = "Epic Fail...";
@@ -169,6 +171,12 @@
 "ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES" = "Only signed in users can publish remakes. Please sign in to continue";
 "NOT_NOW" = "Not now";
 "JOIN_NOW" = "Join now!";
+
+"RETAKE_LAST_SCENE" = "RETAKE";
+"CAN_I_SEE_A_PREVIEW" = "PREVIEW";
+"OOPS_NOPE" = "NO";
+"YEAH_START_ROLLING" = "YES";
+
 
 //share activity
 "DEFAULT_SHARE_MSG_SUBJECT" = "Check my awesome video \"%@\" : \n";
@@ -204,11 +212,18 @@
 "STORE_STORIES_TITLE" = "STORIES";
 "STORE_PLEASE_WAIT" = "Monkey Store...";
 
+"STORE_ALREADY_HAVE_DOWNLOAD_TOKENS_TITLE" = "Are you sure?";
+"STORE_ALREADY_HAVE_DOWNLOAD_TOKEN" = "You already have an unused download token. You can use it in the 'My Clips' screen. Are you sure you want to purchase another one?";
+"STORE_ALREADY_HAVE_DOWNLOAD_TOKENS" = "You already have %@ unused download tokens. You can use them in the 'My Clips' screen. Are you sure you want to purchase another one?";
+
+
 /*Parental Control*/
 "STORE_PARENTAL_CTRL_TITLE" = "Grown-Ups Only!";
 "STORE_PARENTAL_CTRL_ACCESS_TITLE" = "To access, please enter the numbers:";
 
 /*Download*/
+"DOWNLOAD_SAVING_REMAKE" = "Saving clip...";
+"DOWNLOAD_CANCELED" = "Canceled...";
 "DOWNLOAD_MY_VIDEO_TITLE" = "Download My Clip!";
 "DOWNLOADING" = "Downloading clip...";
 "DOWNLOAD_REMAKES_SAVED_TITLE" = "Clip saved!";

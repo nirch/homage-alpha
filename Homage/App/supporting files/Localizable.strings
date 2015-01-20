@@ -97,8 +97,8 @@
 "HELP_LABEL_PLACE_ACTOR" = "Place the actor here";
 "HELP_LABEL_SCENE_DURATION" = "Scene duration";
 "HELP_LABEL_GET_INSPIRED" = "Get inspired";
-"HELP_BUTTON_NEXT" = "NEXT";
-"HELP_BUTTON_FINISH" = "FINISH";
+"HELP_BUTTON_NEXT" = "CONTINUE";
+"HELP_BUTTON_FINISH" = "AGREE";
 
 /*go to next scene button*/
 "NEXT_SCENE" = "Shoot Scene!";

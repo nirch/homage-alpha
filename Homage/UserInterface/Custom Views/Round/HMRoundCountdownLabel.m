@@ -9,6 +9,7 @@
 #import "HMRoundCountdownLabel.h"
 #import "AWPieSliceView.h"
 #import "HMAppDelegate.h"
+#import "HMStyle.h"
 
 @interface HMRoundCountdownLabel()
 
@@ -16,6 +17,9 @@
 @property (nonatomic, readonly) AWPieSliceView *pieSlice;
 @property (nonatomic, readonly) UILabel *label;
 @property (nonatomic, readonly) BOOL isSlowDevice;
+
+@property (nonatomic) UIColor *colorRecorderRecordButtonCountDownBG1;
+@property (nonatomic) UIColor *colorRecorderRecordButtonCountDownBG2;
 
 @end
 
@@ -25,11 +29,13 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        [self initGUI];
         self.countDownStartValue = self.text.integerValue;
         self.layer.cornerRadius = self.bounds.size.width/2.0f;
         self.text = @"";
         HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
         _isSlowDevice = [app isSlowDevice];
+        [self initGUI];
     }
     return self;
 }
@@ -43,8 +49,18 @@
         self.text = @"";
         HMAppDelegate *app = (HMAppDelegate *)[[UIApplication sharedApplication] delegate];
         _isSlowDevice = [app isSlowDevice];
+        [self initGUI];
     }
     return self;
+}
+
+-(void)initGUI
+{
+    // ************
+    // *  STYLES  *
+    // ************
+    self.colorRecorderRecordButtonCountDownBG1 = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_COUNT_DOWN_BG_1];
+    self.colorRecorderRecordButtonCountDownBG2 = [HMStyle.sh colorNamed:C_RECORDER_RECORD_BUTTON_COUNT_DOWN_BG_2];
 }
 
 -(void)initCountdownState
@@ -87,7 +103,7 @@
     if (!self.isSlowDevice) {
         _pieSlice = [[AWPieSliceView alloc] initWithFrame:self.bounds];
         self.pieSlice.value = 0.0f;
-        self.pieSlice.backgroundColor = [UIColor whiteColor];
+        self.pieSlice.backgroundColor = self.colorRecorderRecordButtonCountDownBG1;
         self.pieSlice.alpha = 0.6;
         [self addSubview:self.pieSlice];
         double delayInSeconds = 0.01;

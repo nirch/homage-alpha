@@ -23,16 +23,18 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb447743458659084</string>
+				<string>fb474040282727650</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.9.16D</string>
+	<string>1.9.18T</string>
 	<key>FacebookAppID</key>
-	<string>447743458659084</string>
+	<string>474040282727650</string>
 	<key>FacebookDisplayName</key>
 	<string>Monkey Dance</string>
 	<key>LSRequiresIPhoneOS</key>

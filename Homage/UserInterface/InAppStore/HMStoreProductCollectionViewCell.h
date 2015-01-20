@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiPrice;
 @property (weak, nonatomic) IBOutlet UIButton *guiBuyButton;
 @property (weak, nonatomic) IBOutlet UIView *guiSepLine;
+@property (weak, nonatomic) IBOutlet UIView *guiDownloadTokenContainer;
+@property (weak, nonatomic) IBOutlet UILabel *guiDownloadTokenCountLabel;
 
 @end

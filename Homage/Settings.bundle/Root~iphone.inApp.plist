@@ -80,7 +80,7 @@
 			<key>IASKViewControllerSelector</key>
 			<string>init</string>
 			<key>Title</key>
-			<string>Terms Of Service</string>
+			<string>Terms of service</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -90,7 +90,7 @@
 			<key>IASKViewControllerSelector</key>
 			<string>init</string>
 			<key>Title</key>
-			<string>Privacy Policy</string>
+			<string>Privacy policy</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

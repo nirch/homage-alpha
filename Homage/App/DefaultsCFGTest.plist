@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ios_mixpanel_token</key>
+	<string>bab0997e7171d56daf35df751f523962</string>
+	<key>ios_crashlytics_token</key>
+	<string>daa34917843cd9e52b65a68cec43efac16fb680a</string>
+	<key>share_link_prefix</key>
+	<string>http://play-test.homage.it</string>
 	<key>cache_stories_videos</key>
 	<true/>
 	<key>cache_audio</key>
@@ -24,8 +30,6 @@
 	<string>544ead1e454c610d1600000f</string>
 	<key>mirror_selfie_silhouette</key>
 	<false/>
-	<key>share_link_prefix</key>
-	<string>http://play-test.homage.it</string>
 	<key>significant_view_pct_threshold</key>
 	<real>0.5</real>
 	<key>recorder_first_scene_context_message</key>

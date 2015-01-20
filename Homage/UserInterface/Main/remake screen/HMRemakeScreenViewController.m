@@ -166,6 +166,8 @@
     // Enable buttons
     self.guiLikeButton.userInteractionEnabled = YES;
     
+    [self resetRemakeVideoPlayer];
+    
     // Animate to the target position defined by layout.
     [UIView animateWithDuration:0.3 delay:0.1 usingSpringWithDamping:0.75 initialSpringVelocity:0.3 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         self.guiRemakeContainer.transform = CGAffineTransformIdentity;
@@ -251,7 +253,7 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_LIKED_REMAKE object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_USER_UNLIKED_REMAKE object:nil];
-    
+    [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -422,9 +424,25 @@
 
 -(void)videoPlayerDidStop
 {
+    [self resetRemakeVideoPlayer];
+}
+
+-(void)videoPlayerIsDone
+{
+    [self resetRemakeVideoPlayer];
+}
+
+-(void)videoPlayerDidFinishPlaying
+{
+    [self resetRemakeVideoPlayer];
+}
+
+-(void)resetRemakeVideoPlayer
+{
     self.guiOverlayPlayButton.userInteractionEnabled = YES;
     self.guiRemakeControlsConatinerTop.hidden = NO;
 }
+
 
 #pragma mark - Scroll view delegate
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView

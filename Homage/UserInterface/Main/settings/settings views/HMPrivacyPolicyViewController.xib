@@ -21,7 +21,7 @@
                     <rect key="frame" x="0.0" y="34" width="320" height="534"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <mutableString key="text">Homage Technology Ltd. ("we" or "us") provides this Privacy Policy to inform you of our 
+                    <string key="text">Homage Technology Ltd. ("we" or "us") provides this Privacy Policy to inform you of our 
 policies and procedures regarding the collection, use and disclosure of personal information we 
 receive when you use Homage mobile App. or visiting the Homage web-site, or registering to the 
 Homage service ("App." or "Homage"). By using Homage, you are consenting to the terms and 
@@ -165,13 +165,13 @@ Tomer@homage.it.
 
 Last Modified:04/09/2014 
 © Homage Technology Ltd., 2014
-</mutableString>
+</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homage Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Umm-kX-9O3" customClass="HMLabel">
                     <rect key="frame" x="9" y="11" width="303" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                     <userDefinedRuntimeAttributes>

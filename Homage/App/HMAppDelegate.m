@@ -30,17 +30,12 @@
 @implementation HMAppDelegate
 
 #pragma mark - keys
-// ----------------------------------------------------------
+// -------------------------------------------------------------------------------------
 // Tokens, private and public keys.
-// ----------------------------------------------------------
-// Mixpanel
-#define MIXPANEL_TOKEN @"7d575048f24cb2424cd5c9799bbb49b1"
-
+// TODO: move to config or (even better) implement token per session if service supports
+// -------------------------------------------------------------------------------------
 // Apple ID
 #define APPLE_ID @"851746600"
-
-// Crashlytics
-#define CRASHLYTICS_API_KEY @"daa34917843cd9e52b65a68cec43efac16fb680a"
 // ----------------------------------------------------------
 
 #pragma mark - Application life cycle
@@ -49,7 +44,9 @@
     // Init localization.
     [self initLocalizationWithOptions:launchOptions];
     
-    
+    // Required services
+    [self initRequiredServices];
+
     //  TODO: handle old known push token here.
     //    // Get push token from previous app launches.
     //    if (!self.pushToken)
@@ -161,7 +158,6 @@
     // post a NSNotificationCenter notification here, and whatever UI in the app that want to handle it, will just
     // add an observer for it.
     
-    // Initilize mixpanl if required.
     [self initRequiredServices];
     
     NSMutableDictionary *info = [userInfo mutableCopy];
@@ -379,27 +375,34 @@ NSString* machineName()
         // ----------------------------------------------------------
         // Release Build
         // ----------------------------------------------------------
+        NSString *mixpanelToken = HMServer.sh.configurationInfo[@"ios_mixpanel_token"];
         if ([Mixpanel sharedInstance] == nil) {
-            HMGLogDebug(@"Initializing mixpanel with token: %@", MIXPANEL_TOKEN);
-            [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+            HMGLogDebug(@"Initializing mixpanel with token: %@", mixpanelToken);
+            [Mixpanel sharedInstanceWithToken:mixpanelToken];
         } else {
             HMGLogDebug(@"Mixpanel already initialized.");
         }
     
         //crashlytics crash reporting
-        [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
+        [Crashlytics startWithAPIKey:HMServer.sh.configurationInfo[@"crashlytics_token"]];
     #else
     // ----------------------------------------------------------
     // Debug Build
     // ----------------------------------------------------------
-//    if ([Mixpanel sharedInstance] == nil) {
-//        HMGLogDebug(@"Initializing mixpanel with token: %@", MIXPANEL_TOKEN);
-//        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-//    } else {
-//        HMGLogDebug(@"Mixpanel already initialized.");
-//    }
-//    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+    NSString *mixpanelToken = HMServer.sh.configurationInfo[@"ios_mixpanel_token"];
+    if ([Mixpanel sharedInstance] == nil) {
+        HMGLogDebug(@"Initializing mixpanel with token: %@", mixpanelToken);
+        [Mixpanel sharedInstanceWithToken:mixpanelToken];
+    } else {
+        HMGLogDebug(@"Mixpanel already initialized.");
+    }
     #endif
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel registerSuperProperties:@{
+                                        @"Campaign ID":HMServer.sh.configurationInfo[@"campaign_id"],
+                                        @"App":HMServer.sh.configurationInfo[@"application"]
+                                        }];
 }
 
 -(void)preloadKeyboardView

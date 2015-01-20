@@ -59,6 +59,7 @@
 
     // Position the activity view.
     CGPoint p = self.view.center;
+    p.x = 160;
     p.y = [HMStyle.sh floatValueForKey:V_SPLASH_ACTIVITY_POSITION];
     activityView.center = p;
 }
@@ -84,23 +85,24 @@
 
 -(void)revealAnimations
 {
-    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
-    if (app.isSlowDevice) {
-
-    } else {
-        [UIView animateWithDuration:1.0
-                              delay:0.3
-             usingSpringWithDamping:0.3
-              initialSpringVelocity:0.6
-                            options:UIViewAnimationOptionCurveLinear
-                         animations:^{
-                             self.guiTopLogo.transform = CGAffineTransformMakeScale(1.2, 1.1);
-                         } completion:^(BOOL finished) {
-                            [UIView animateWithDuration:0.5 animations:^{
-                                self.guiTopLogo.transform = CGAffineTransformIdentity;
-                            }];
-                         }];
-    }
+    // For now deprecated. Make this more dynamic and configurable.
+//    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+//    if (app.isSlowDevice) {
+//
+//    } else {
+//        [UIView animateWithDuration:1.0
+//                              delay:0.3
+//             usingSpringWithDamping:0.3
+//              initialSpringVelocity:0.6
+//                            options:UIViewAnimationOptionCurveLinear
+//                         animations:^{
+//                             self.guiTopLogo.transform = CGAffineTransformMakeScale(1.2, 1.1);
+//                         } completion:^(BOOL finished) {
+//                            [UIView animateWithDuration:0.5 animations:^{
+//                                self.guiTopLogo.transform = CGAffineTransformIdentity;
+//                            }];
+//                         }];
+//    }
 }
 
 -(void)prepare

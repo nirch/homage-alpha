@@ -89,7 +89,7 @@
                                         <rect key="frame" x="0.0" y="64" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnectivity" id="tVf-TY-hac">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi" id="tVf-TY-hac">
                                                 <rect key="frame" x="51" y="3" width="25" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
@@ -1684,7 +1684,6 @@
         <image name="navIconMyStories" width="38" height="38"/>
         <image name="navIconSettings" width="38" height="38"/>
         <image name="navIconStories" width="40" height="38"/>
-        <image name="noConnectivity" width="60" height="60"/>
         <image name="progressCloseIcon" width="22" height="22"/>
         <image name="remakeInverseBGButton" width="33" height="33"/>
         <image name="shareButton" width="44" height="44"/>
@@ -1695,6 +1694,7 @@
         <image name="subtleBackground" width="320" height="568"/>
         <image name="tp_pause_button.png" width="568" height="568"/>
         <image name="viewsIcon" width="17" height="11"/>
+        <image name="wifi" width="64" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

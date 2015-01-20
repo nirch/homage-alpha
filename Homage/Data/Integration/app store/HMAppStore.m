@@ -374,4 +374,10 @@
                                                       userInfo:nil];
 }
 
+-(void)cleanup
+{
+    self.productsRequest.delegate = nil;
+    self.productsRequest = nil;
+}
+
 @end

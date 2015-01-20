@@ -7,8 +7,9 @@
 //
 
 #import "HMCountDownDelegate.h"
+#import "HMBoldFontLabel.h"
 
-@interface HMRoundCountdownLabel : UILabel
+@interface HMRoundCountdownLabel : HMBoldFontLabel
 
 @property (nonatomic, readonly) NSInteger countDown;
 @property (nonatomic) NSInteger countDownStartValue;

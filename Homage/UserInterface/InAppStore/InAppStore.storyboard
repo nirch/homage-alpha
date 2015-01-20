@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Ucb-Z3-k9J">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
@@ -480,7 +481,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description text. Description text. Lorem Ipsum. " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohm-qp-e0L">
-                                                    <rect key="frame" x="135" y="22" width="155" height="24"/>
+                                                    <rect key="frame" x="135" y="22" width="103" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -491,6 +492,23 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
+                                                <view contentMode="scaleToFill" id="QSQ-6c-7iN" userLabel="Download token container">
+                                                    <rect key="frame" x="253" y="16" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storeDownloadToken" id="azU-0T-x1i">
+                                                            <rect key="frame" x="-4" y="-3" width="32" height="32"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cPt-ZB-0Xy">
+                                                            <rect key="frame" x="-4" y="-3" width="32" height="32"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -498,6 +516,8 @@
                                         <size key="customSize" width="320" height="80"/>
                                         <connections>
                                             <outlet property="guiBuyButton" destination="W1X-cv-Ggj" id="Jgt-nd-hDA"/>
+                                            <outlet property="guiDownloadTokenContainer" destination="QSQ-6c-7iN" id="oae-La-j9K"/>
+                                            <outlet property="guiDownloadTokenCountLabel" destination="cPt-ZB-0Xy" id="eM4-Ls-rsC"/>
                                             <outlet property="guiImage" destination="Ufc-Ja-Tux" id="hnf-rs-I6b"/>
                                             <outlet property="guiPrice" destination="n9k-Lh-1db" id="b5D-Ld-1xg"/>
                                             <outlet property="guiText" destination="Ohm-qp-e0L" id="RWh-OA-pcp"/>
@@ -564,6 +584,7 @@
     <resources>
         <image name="storeBigLogo" width="226" height="118"/>
         <image name="storeBundleThumb" width="108" height="126"/>
+        <image name="storeDownloadToken" width="32" height="32"/>
         <image name="storeProductsBG" width="320" height="568"/>
         <image name="storeProductsCloseButton" width="25" height="25"/>
     </resources>
