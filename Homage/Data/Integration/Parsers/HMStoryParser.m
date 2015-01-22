@@ -15,6 +15,13 @@
     // The info of a single story.
     NSDictionary *info = self.objectToParse;
     
+//    NSString *name = [info stringForKey:@"name"];
+//    if ([name containsString:@"Street"]) {
+//        NSLog(@"!!!!");
+//    }
+
+//    NSLog(@">>>>>> %@", info[@"name"]);
+    
     //
     // Parse a story.
     //
@@ -27,14 +34,13 @@
         // The story is not active in all versions!.
         story.isActive = @NO;
     } else {
-        story.isActive = @YES;
-//        NSString *firstVersionActive = [info stringForKey:@"active_from"] ? [info stringForKey:@"active_from"] : nil;
-//        NSString *lastVersionActive =  [info stringForKey:@"active_until"] ? [info stringForKey:@"active_until"] : nil;
-//        NSString *currentVersion = 
-//        story.isActive =               [self isActiveStory:story
-//                                                forVersion:currentVersion
-//                                        firstVersionActive:firstVersionActive
-//                                         lastVersionActive:lastVersionActive];
+        NSString *firstVersionActive = [info stringForKey:@"active_from"] ? [info stringForKey:@"active_from"] : nil;
+        NSString *lastVersionActive =  [info stringForKey:@"active_until"] ? [info stringForKey:@"active_until"] : nil;
+        NSString *currentAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        story.isActive =               [self isActiveStory:story
+                                                forVersion:currentAppVersion
+                                        firstVersionActive:firstVersionActive
+                                         lastVersionActive:lastVersionActive];
     }
 
     story.remakesNumber =       [info numberForKey:@"remakes_num"];
