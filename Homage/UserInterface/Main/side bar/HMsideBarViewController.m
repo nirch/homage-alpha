@@ -23,6 +23,7 @@
 #import "HMServer+AppConfig.h"
 #import "HMInAppStoreViewController.h"
 #import "HMABTester.h"
+#import "DB.h"
 
 @interface HMSideBarViewController ()
 
@@ -245,22 +246,17 @@
     self.selectedButton = sender;
 }
 
--(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID
+-(void)updateSideBarGUIWithUser:(User *)user
+                       userName:(NSString *)userName
+                      FBProfile:(NSString *)fbProfileID
 {
     self.guiProfilePictureView.profileID = fbProfileID;
     self.guiProfilePictureView.hidden = fbProfileID == nil;
     self.guiUserIcon.hidden = !self.guiProfilePictureView.hidden;
-    
     self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO_USER") , userName];
-    if (![userName isEqualToString:@"Guest"])
-    {
-        self.guiJoinButton.hidden = YES;
-        self.guiLogoutButton.hidden = NO;
-    } else
-    {
-        self.guiJoinButton.hidden = NO;
-        self.guiLogoutButton.hidden = YES;
-    }
+
+    self.guiJoinButton.hidden = !user.isGuestUser;
+    self.guiLogoutButton.hidden = user.isGuestUser;    
 }
 
 -(void)shareApp

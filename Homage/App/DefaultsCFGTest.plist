@@ -6,6 +6,8 @@
 	<string>bab0997e7171d56daf35df751f523962</string>
 	<key>ios_crashlytics_token</key>
 	<string>daa34917843cd9e52b65a68cec43efac16fb680a</string>
+	<key>remakes_per_page</key>
+	<integer>16</integer>
 	<key>share_link_prefix</key>
 	<string>http://play-test.homage.it</string>
 	<key>cache_stories_videos</key>

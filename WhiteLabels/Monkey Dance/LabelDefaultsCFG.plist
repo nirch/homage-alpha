@@ -4,6 +4,8 @@
 <dict>
 	<key>song_loop</key>
 	<string>songLoop.m4a</string>
+	<key>song_loop_volume</key>
+	<real>0.7</real>
 	<key>facebook_app_id</key>
 	<string>474040282727650</string>
 	<key>application</key>

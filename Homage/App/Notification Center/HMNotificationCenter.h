@@ -39,8 +39,9 @@
 #define HM_NOTIFICATION_SERVER_TEXT                 @"Server Text"
 #define HM_NOTIFICATION_SERVER_RENDER               @"Server Render"
 
-#define HM_NOTIFICATION_SERVER_USER_UPDATED             @"user was guest and updated to signed account"
-#define HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE  @"user changed settings"
+#define HM_NOTIFICATION_SERVER_USER_UPDATED             @"Server user was guest and updated to signed account"
+#define HM_NOTIFICATION_SERVER_USER_PREFERENCES_UPDATE  @"Server user changed settings"
+#define HM_NOTIFICATION_SERVER_PUSH_TOKEN               @"Server user push token update"
 
 // Reachability
 #define HM_NOTIFICATION_SERVER_REACHABILITY_STATUS_CHANGE @"Server Reachability Status Change"

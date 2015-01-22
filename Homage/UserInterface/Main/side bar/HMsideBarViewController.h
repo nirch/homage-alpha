@@ -10,6 +10,8 @@
 #import "HMSideBarNavigatorDelegate.h"
 #import "HMStoreDelegate.h"
 
+@class User;
+
 @interface HMSideBarViewController : UIViewController<
     HMStoreDelegate
 >
@@ -21,6 +23,8 @@ typedef NS_ENUM(NSInteger, HMAppTab) {
 };
 
 @property id<HMSideBarNavigatorDelegate> delegate;
--(void)updateSideBarGUIWithName:(NSString *)userName FBProfile:(NSString *)fbProfileID;
+-(void)updateSideBarGUIWithUser:(User *)user
+                       userName:(NSString *)userName
+                      FBProfile:(NSString *)fbProfileID;
 
 @end

@@ -65,7 +65,6 @@
     remake.videoURL = [info stringForKey:@"video"];
     remake.shareURL = [info stringForKey:@"share_link"];
     remake.grade = [info numberForKey:@"grade"] ? [info numberForKey:@"grade"] : [NSNumber numberWithInt:0];
-    remake.stillPublic = @YES;
     remake.viewsCount = [info numberForKey:@"views"];
     remake.userFullName = [info stringForKey:@"user_fullname"];
     

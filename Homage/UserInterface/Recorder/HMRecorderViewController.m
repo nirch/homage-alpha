@@ -83,6 +83,7 @@
 @property (nonatomic) BOOL flagForDebugging;
 @property (nonatomic) BOOL stopRecordingFired;
 @property (nonatomic) BOOL isSelfie;
+@property (nonatomic) BOOL interactionWithUser;
 
 // scene direction audio player
 @property (strong,nonatomic) AVAudioPlayer *directionAudioPlayer;
@@ -131,6 +132,7 @@
     [super viewDidLoad];
     
     self.usedBadBackgroundMarks = [NSMutableDictionary new];
+    self.interactionWithUser = YES;
     
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
@@ -607,6 +609,14 @@
                  selector:@selector(onStartedCountingDownToRecording:)
                      name:HM_NOTIFICATION_RECORDER_START_COUNTDOWN_BEFORE_RECORDING
                    object:nil];
+
+    // Observe user pressing the cancel record countdown button
+    [nc addUniqueObserver:self
+                 selector:@selector(onStopCountingDownToRecording:)
+                     name:HM_NOTIFICATION_RECORDER_CANCEL_COUNTDOWN_BEFORE_RECORDING
+                   object:nil];
+    
+    
     
     // Observe started recording
     [nc addUniqueObserver:self
@@ -700,7 +710,15 @@
 
 -(void)onStartedCountingDownToRecording:(NSNotification *)notification
 {
+    self.interactionWithUser = NO;
     if (self.directionAudioPlayer) [self stopSceneDirectionAudioPlayback];
+    [self hideTopButtons];
+}
+
+-(void)onStopCountingDownToRecording:(NSNotificationCenter *)notification
+{
+    self.interactionWithUser = YES;
+    [self showTopButtons];
 }
 
 -(void)onBackCameraSelected:(NSNotification *)notification
@@ -1735,7 +1753,8 @@
         // or a popup for that bbg mark was already opened.
         if (self.backgroundStatusCounter <= BAD_BACKGROUND_PRESENT_POPUP_TH &&
             ![User.current.disableBadBackgroundPopup isEqualToNumber:@YES] &&
-            !self.usedBadBackgroundMarks[@(self.lastBadBackgroundMark)]) {
+            !self.usedBadBackgroundMarks[@(self.lastBadBackgroundMark)] &&
+            self.interactionWithUser) {
             
             // Present the bad background alert.
             self.usedBadBackgroundMarks[@(self.lastBadBackgroundMark)]= @YES;

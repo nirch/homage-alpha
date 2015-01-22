@@ -11,6 +11,7 @@
 #import "HMUploadManager.h"
 #import "HMServer+analytics.h"
 #import "HMServer+AppConfig.h"
+#import "HMServer+Users.h"
 #import "Mixpanel.h"
 #import "HMStyle.h"
 #import "DB.h"
@@ -206,13 +207,25 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-	HMGLogDebug(@"Registered to remote notifications with token: %@", deviceToken);
     self.pushToken = deviceToken;
     
     // Remmember push notification token for future app starts
     [[NSUserDefaults standardUserDefaults] setValue:deviceToken forKey:@"deviceToken"];
     
-    // TODO: handle cases where push token changed for already logged in user.
+    // User already logged in.
+    // Report token to server for this device of this user.
+    HMGLogDebug(@"Will report new push token to server");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // Check if user already logged in.
+        User *user = [User current];
+        HMGLogDebug(@"Registered to remote notifications with token:%@ for user_id:%@", deviceToken, user.userID);
+        if (user == nil) {
+            // No user yet.
+            // Skip. (send the push notification info when user logs in).
+            return;
+        }
+        [HMServer.sh updatePushToken:deviceToken forUser:user];
+    });
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
@@ -384,7 +397,8 @@ NSString* machineName()
         }
     
         //crashlytics crash reporting
-        [Crashlytics startWithAPIKey:HMServer.sh.configurationInfo[@"crashlytics_token"]];
+        NSString *crashlyticsToken = HMServer.sh.configurationInfo[@"ios_crashlytics_token"];
+        [Crashlytics startWithAPIKey:crashlyticsToken];
     #else
     // ----------------------------------------------------------
     // Debug Build

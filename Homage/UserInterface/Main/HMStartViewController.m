@@ -44,8 +44,6 @@
 
 @import MediaPlayer;
 
-#define SONG_LOOP_VOLUME 0.15;
-
 #define HIDDEN_SIDE_BAR_TRANSFORM CGAffineTransformMakeScale(0.95, 0.95)
 
 
@@ -362,26 +360,16 @@
 -(void)onUserLoginStateChange:(User *)user
 {
     NSString *userName;
-    NSString *fbProfileID;
     if (user.firstName) {
         userName = user.firstName;
-    } else if (user.email)
-    {
+    } else if (user.email) {
         userName = [self getLoginName:user.email];
-        
     } else {
         userName = LS(@"NAV_USER_NAME_GUEST");
     }
-    
-    if (user.fbID)
-    {
-        fbProfileID = user.fbID;
-    } else {
-        fbProfileID = nil;
-    }
-    
-    [self.sideBarVC updateSideBarGUIWithName:userName FBProfile:fbProfileID];
-    
+
+    NSString *fbProfileID = user.fbID ? user.fbID : nil;
+    [self.sideBarVC updateSideBarGUIWithUser:user userName:userName FBProfile:fbProfileID];
 }
 
 -(void)onConfigurationDataAvailable:(NSNotification *)notification
@@ -950,7 +938,7 @@
     // Play if user didn't prefer loop to be muted.
     // But only if video is not currently playing.
     if ([self userPrefersMusicPlayback]) {
-        self.songLoopPlayer.volume = SONG_LOOP_VOLUME;
+        self.songLoopPlayer.volume = [HMServer.sh.configurationInfo[@"song_loop_volume"] floatValue];
         
         if (!self.isVideoPlaying)
             [self.songLoopPlayer play];

@@ -118,7 +118,7 @@
     if ([colorString hasPrefix:@"@"]) {
         if (self.colors[colorString] == nil) {
             HMGLogWarning(@"Missing color for color key: %@", colorString);
-            return nil;
+            return [UIColor whiteColor];
         }
         return self.colors[colorString];
     } else {

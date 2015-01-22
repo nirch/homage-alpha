@@ -347,7 +347,6 @@
         });
         HMGLogError(@">>> error in story details onRemakesRefetched %@", notification.reportedError.localizedDescription);
     } else {
-        [self cleanPrivateRemakes];
         [self refreshFromLocalStorage];
     }
 }
@@ -379,18 +378,6 @@
     [HMServer.sh refetchRemakesWithStoryID:storyID
                         likesInfoForUserID:User.current.userID
                                       page:page.integerValue];
-}
-
--(void)markCurrentRemakesAsNonPublic
-{
-    return;
-    for (Remake *remake in self.fetchedResultsController.fetchedObjects)
-    {
-        if (remake)
-        {
-            remake.stillPublic = @NO;
-        }
-    }
 }
 
 -(void)refreshFromLocalStorage
@@ -426,14 +413,6 @@
     y = y - 45;
     CGRect rect = CGRectMake(0, y, 1, 1);
     [self.remakesCV scrollRectToVisible:rect animated:YES];
-}
-
--(void)cleanPrivateRemakes
-{
-    for (Remake *remake in self.fetchedResultsController.fetchedObjects)
-    {
-        if (!remake.stillPublic.boolValue) [DB.sh.context deleteObject:remake];
-    }
 }
 
 #pragma mark - Make your own button

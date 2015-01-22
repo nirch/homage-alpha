@@ -8,6 +8,8 @@
 
 #import "HMServer.h"
 
+@class User;
+
 @interface HMServer (Users)
 
 ///
@@ -28,5 +30,6 @@
 -(void)createUserWithDictionary:(NSDictionary *)userParams;
 -(void)updateUserUponJoin:(NSDictionary *)userParams;
 -(void)updateUserPreferences:(NSDictionary *)userParams;
+-(void)updatePushToken:(NSData *)pushToken forUser:(User *)user;
 
 @end

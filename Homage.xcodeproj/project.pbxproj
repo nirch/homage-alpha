@@ -20,7 +20,6 @@
 		0809E6921A5580C700E7DAEE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809E6911A5580C700E7DAEE /* StoreKit.framework */; };
 		080E02781A55C31700F1DB1E /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 080E02771A55C31700F1DB1E /* Style.plist */; };
 		080E027A1A5966A800F1DB1E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 080E02791A5966A800F1DB1E /* Localizable.strings */; };
-		080E027B1A5966B300F1DB1E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385937189550DC003A7B3D /* Localizable.strings */; };
 		081CDB1B19D97E8D00723609 /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
 		081E398019FD6CDC00990F50 /* HMRemakeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 081E397F19FD6CDC00990F50 /* HMRemakeScreenViewController.m */; };
 		082092751A61360F00603008 /* ABTestsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 082092741A61360F00603008 /* ABTestsCFG.plist */; };
@@ -37,6 +36,28 @@
 		0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8D918D04E1700222997 /* CoreMedia.framework */; };
 		0838E8DC18D04E2400222997 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DB18D04E2400222997 /* CoreVideo.framework */; };
 		0838E8DE18D04E4600222997 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DD18D04E4600222997 /* AVFoundation.framework */; };
+		083E74AC1A70369900B4164D /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749B1A70369900B4164D /* HMConfigurationParser.m */; };
+		083E74AD1A70369900B4164D /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749B1A70369900B4164D /* HMConfigurationParser.m */; };
+		083E74AE1A70369900B4164D /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749D1A70369900B4164D /* HMParser.m */; };
+		083E74AF1A70369900B4164D /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749D1A70369900B4164D /* HMParser.m */; };
+		083E74B01A70369900B4164D /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749F1A70369900B4164D /* HMRemakeParser.m */; };
+		083E74B11A70369900B4164D /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749F1A70369900B4164D /* HMRemakeParser.m */; };
+		083E74B21A70369900B4164D /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A11A70369900B4164D /* HMRemakesParser.m */; };
+		083E74B31A70369900B4164D /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A11A70369900B4164D /* HMRemakesParser.m */; };
+		083E74B41A70369900B4164D /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A31A70369900B4164D /* HMStoriesParser.m */; };
+		083E74B51A70369900B4164D /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A31A70369900B4164D /* HMStoriesParser.m */; };
+		083E74B61A70369900B4164D /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A51A70369900B4164D /* HMStoryParser.m */; };
+		083E74B71A70369900B4164D /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A51A70369900B4164D /* HMStoryParser.m */; };
+		083E74B81A70369900B4164D /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A71A70369900B4164D /* HMTextUpdateParser.m */; };
+		083E74B91A70369900B4164D /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A71A70369900B4164D /* HMTextUpdateParser.m */; };
+		083E74BA1A70369900B4164D /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A91A70369900B4164D /* HMUserParser.m */; };
+		083E74BB1A70369900B4164D /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A91A70369900B4164D /* HMUserParser.m */; };
+		083E74BC1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */; };
+		083E74BD1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */; };
+		083E74C21A70444300B4164D /* Monkey+-+Warm+Up.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */; };
+		083E74C31A70444300B4164D /* monkey+dance+-+lake+song.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74C01A70444300B4164D /* monkey+dance+-+lake+song.mp4 */; };
+		083E74C41A70444300B4164D /* monkey+dance+jungle.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74C11A70444300B4164D /* monkey+dance+jungle.mp4 */; };
+		083E74C81A704BD300B4164D /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 083E74C71A704BD300B4164D /* songLoop.m4a */; };
 		0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */; };
 		0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF63188518ED00A6EF5E /* AWPieSliceView.m */; };
 		0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF6C188527C600A6EF5E /* UIView+MotionEffect.m */; };
@@ -58,7 +79,6 @@
 		084E532E1891D84800D96258 /* HMRecorderEditTextsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E532D1891D84800D96258 /* HMRecorderEditTextsViewController.m */; };
 		084E53311891E3D100D96258 /* HMSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53301891E3D100D96258 /* HMSceneCell.m */; };
 		084E53351891E6C100D96258 /* HMRecorderEditingTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53341891E6C100D96258 /* HMRecorderEditingTextCell.m */; };
-		084E533D18920B5100D96258 /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E533C18920B5100D96258 /* HMTextUpdateParser.m */; };
 		084E90D41A00E12800779030 /* HMSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E90D31A00E12800779030 /* HMSharing.m */; };
 		084E90D51A00E12800779030 /* HMSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E90D31A00E12800779030 /* HMSharing.m */; };
 		08537F0A19EC094600EBACA4 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF811885356A00A6EF5E /* DB.m */; };
@@ -93,14 +113,12 @@
 		085D782C1A626F3D001D835E /* howtoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 085D78281A626F3D001D835E /* howtoVideo.mp4 */; };
 		085D782D1A626F3D001D835E /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 085D78291A626F3D001D835E /* introVideo.mp4 */; };
 		085D782E1A626F3D001D835E /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 085D782A1A626F3D001D835E /* recordingEnd.wav */; };
-		085D78301A626F8A001D835E /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 085D782F1A626F8A001D835E /* songLoop.m4a */; };
 		085E2AAA1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */; };
 		085E2AAB1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */; };
 		085E2AAD1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
 		085E2AAE1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		0864E0521A4F3B6E00F7AEB7 /* HMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */; };
-		0864E0551A4F3BDA00F7AEB7 /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0541A4F3BDA00F7AEB7 /* Style.plist */; };
 		0864E0581A4F42E900F7AEB7 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0571A4F42E900F7AEB7 /* DINOT-CondBold.otf */; };
 		08651F1419EC09B400EF12FA /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
 		08651F1519EC09B700EF12FA /* Text+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958851891678600BCCF8C /* Text+Factory.m */; };
@@ -113,12 +131,6 @@
 		08651F1F19EC10BB00EF12FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1318828AEB007514BE /* UIKit.framework */; };
 		08651F2019EC11A200EF12FA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1118828AEB007514BE /* CoreGraphics.framework */; };
 		086A343219DD6EE400B60BB5 /* AWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 086A343119DD6EE400B60BB5 /* AWAlertView.m */; };
-		086D93CF1886C8BB0086C565 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
-		086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CC1886C8BB0086C565 /* HMRemakeParser.m */; };
-		086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CE1886C8BB0086C565 /* HMStoriesParser.m */; };
-		086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */; };
-		086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94441886E2CC0086C565 /* HMRemakesParser.m */; };
-		086F2FF51A529B7100430D81 /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 		086F2FF61A529B7100430D81 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		086F2FF71A529B7100430D81 /* HMNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */; };
 		086F2FF81A529B7100430D81 /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EF18FFFD40002E8CB7 /* IASKSlider.m */; };
@@ -130,9 +142,7 @@
 		086F2FFF1A529B7100430D81 /* HMBoldFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMBoldFontButton.m */; };
 		086F30001A529B7100430D81 /* Story+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958831891678600BCCF8C /* Story+Factory.m */; };
 		086F30011A529B7100430D81 /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A640219532030003DFFEA /* JBWhatsAppActivity.m */; };
-		086F30021A529B7100430D81 /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 269409671968786500EC4726 /* HMStoryParser.m */; };
 		086F30031A529B7100430D81 /* HMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */; };
-		086F30041A529B7100430D81 /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CE1886C8BB0086C565 /* HMStoriesParser.m */; };
 		086F30051A529B7100430D81 /* Scene+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958811891678600BCCF8C /* Scene+Factory.m */; };
 		086F30061A529B7100430D81 /* HMStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231B1892704300912657 /* HMStoryCell.m */; };
 		086F30071A529B7100430D81 /* IASKSettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DE18FFFD40002E8CB7 /* IASKSettingsReader.m */; };
@@ -147,7 +157,6 @@
 		086F30121A529B7100430D81 /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */; };
 		086F30131A529B7100430D81 /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E618FFFD40002E8CB7 /* IASKSpecifier.m */; };
 		086F30141A529B7100430D81 /* HMRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */; };
-		086F30151A529B7100430D81 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
 		086F30161A529B7100430D81 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		086F30171A529B7100430D81 /* IASKSettingsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E018FFFD40002E8CB7 /* IASKSettingsStore.m */; };
 		086F30191A529B7100430D81 /* HMRecorderEditingTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53341891E6C100D96258 /* HMRecorderEditingTextCell.m */; };
@@ -167,15 +176,12 @@
 		086F302A1A529B7100430D81 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
 		086F302B1A529B7100430D81 /* HMSimpleVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22F918926E3900912657 /* HMSimpleVideoView.m */; };
 		086F302C1A529B7100430D81 /* HMRecorderEditTextsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E532D1891D84800D96258 /* HMRecorderEditTextsViewController.m */; };
-		086F302D1A529B7100430D81 /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CC1886C8BB0086C565 /* HMRemakeParser.m */; };
 		086F302E1A529B7100430D81 /* HMGMeTabVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230C1892704300912657 /* HMGMeTabVC.m */; };
-		086F302F1A529B7100430D81 /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA812E1A1DF2FE00742251 /* Remake.m */; };
 		086F30301A529B7100430D81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF3418EDA37100CA362F /* main.m */; };
 		086F30311A529B7100430D81 /* User+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958871891678600BCCF8C /* User+Factory.m */; };
 		086F30321A529B7100430D81 /* Remake+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B95895189167A000BCCF8C /* Remake+Logic.m */; };
 		086F30331A529B7100430D81 /* HMIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */; };
 		086F30341A529B7100430D81 /* HMSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53301891E3D100D96258 /* HMSceneCell.m */; };
-		086F30351A529B7100430D81 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */; };
 		086F30361A529B7100430D81 /* HMPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */; };
 		086F30371A529B7100430D81 /* HMSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E90D31A00E12800779030 /* HMSharing.m */; };
 		086F30381A529B7100430D81 /* Text+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A5189167EE00BCCF8C /* Text+Logic.m */; };
@@ -196,7 +202,6 @@
 		086F304E1A529B7100430D81 /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
 		086F304F1A529B7100430D81 /* AWPieSliceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */; };
 		086F30511A529B7100430D81 /* IASKSettingsStoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E218FFFD40002E8CB7 /* IASKSettingsStoreFile.m */; };
-		086F30531A529B7100430D81 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
 		086F30551A529B7100430D81 /* Scene+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9589D189167C700BCCF8C /* Scene+Logic.m */; };
 		086F30561A529B7100430D81 /* HMStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23071892704300912657 /* HMStartViewController.m */; };
 		086F30571A529B7100430D81 /* HMInAppStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */; };
@@ -207,8 +212,6 @@
 		086F305C1A529B7100430D81 /* HMToonBGStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0842A64019F80B61002F0D8B /* HMToonBGStyleKit.m */; };
 		086F305E1A529B7100430D81 /* HMTOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5118EDA4D200CA362F /* HMTOSViewController.m */; };
 		086F305F1A529B7100430D81 /* Contour.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C448C192F4E5E00AD82EC /* Contour.m */; };
-		086F30601A529B7100430D81 /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94441886E2CC0086C565 /* HMRemakesParser.m */; };
-		086F30611A529B7100430D81 /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E533C18920B5100D96258 /* HMTextUpdateParser.m */; };
 		086F30631A529B7100430D81 /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FF61890458E0040504D /* HMRecorderMessagesOverlayViewController.m */; };
 		086F30641A529B7100430D81 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF9318854F6C00A6EF5E /* NSNotificationCenter+Utils.m */; };
 		086F30651A529B7100430D81 /* AWPieSliceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF63188518ED00A6EF5E /* AWPieSliceView.m */; };
@@ -267,21 +270,16 @@
 		086F30B01A529B7100430D81 /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
 		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
+		08832E9F1A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
+		08832EA01A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
 		0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
 		0888CE9119EC3DFA003D7249 /* Homage_LocalStorage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */; };
 		0888CE9419EC3EAC003D7249 /* Homage_Parsing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0888CE9319EC3EAC003D7249 /* Homage_Parsing_Tests.m */; };
 		0888CEA419EC7DC2003D7249 /* stories.json in Resources */ = {isa = PBXBuildFile; fileRef = 0888CEA319EC7DC2003D7249 /* stories.json */; };
-		0888CEA519ECFA89003D7249 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CA1886C8BB0086C565 /* HMParser.m */; };
-		0888CEA619ECFA8D003D7249 /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CC1886C8BB0086C565 /* HMRemakeParser.m */; };
-		0888CEA719ECFA91003D7249 /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D94441886E2CC0086C565 /* HMRemakesParser.m */; };
-		0888CEA819ECFA95003D7249 /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D93CE1886C8BB0086C565 /* HMStoriesParser.m */; };
-		0888CEA919ECFA9A003D7249 /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E533C18920B5100D96258 /* HMTextUpdateParser.m */; };
-		0888CEAA19ECFA9F003D7249 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */; };
-		0888CEAB19ECFAA4003D7249 /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
-		0888CEAC19ECFAA8003D7249 /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 269409671968786500EC4726 /* HMStoryParser.m */; };
 		0888CEAD19ED206E003D7249 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA0F18828AEB007514BE /* Foundation.framework */; };
 		0888CEAF19ED7FD4003D7249 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */; };
 		088D5FBB19EC015A00075C4A /* Homage_App_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 088D5FBA19EC015A00075C4A /* Homage_App_Tests.m */; };
+		0891ED1D1A6E5A5900C847A0 /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0891ED1C1A6E5A5900C847A0 /* Style.plist */; };
 		08ACB7AE188C631C00C0EE27 /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
 		08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7D2188D293E00C0EE27 /* HMRoundCountdownLabel.m */; };
 		08ACB849188EEC8100C0EE27 /* AWTimeProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB848188EEC8100C0EE27 /* AWTimeProgressView.m */; };
@@ -298,8 +296,6 @@
 		08B958A2189167D800BCCF8C /* User+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A1189167D800BCCF8C /* User+Logic.m */; };
 		08B958A6189167EE00BCCF8C /* Text+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A5189167EE00BCCF8C /* Text+Logic.m */; };
 		08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
-		08BE816619F4589100840CD9 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
-		08BE816719F4589100840CD9 /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE816519F4589100840CD9 /* HMConfigurationParser.m */; };
 		08C1CD3A19F917E300FF0770 /* HMSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C1CD3919F917E300FF0770 /* HMSplashViewController.m */; };
 		08CA48F81A50305C00E99258 /* HMSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CA48F71A50305C00E99258 /* HMSideBarViewController.m */; };
 		08CDF83A1897F6B100A9D235 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
@@ -364,7 +360,6 @@
 		08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
 		08E9D8A218DDDB7200B9D8CF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */; };
 		08EA3B3319D9DD8A00B074DA /* HMRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */; };
-		08EA812F1A1DF2FE00742251 /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA812E1A1DF2FE00742251 /* Remake.m */; };
 		08EA813A1A213EB400742251 /* HMStoriesTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA81391A213EB400742251 /* HMStoriesTutorial.m */; };
 		08EA813C1A213ED400742251 /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
 		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
@@ -410,7 +405,6 @@
 		2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F118FFFD40002E8CB7 /* IASKSwitch.m */; };
 		2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
 		268A380F1974AE650016C59C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A380E1974AE650016C59C /* User.m */; };
-		269409681968786500EC4726 /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 269409671968786500EC4726 /* HMStoryParser.m */; };
 		269DEA2B1944A45A00C9397F /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
 		26B448F51947E28800BC6317 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F41947E28800BC6317 /* SystemConfiguration.framework */; };
 		26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
@@ -420,7 +414,6 @@
 		65C10D9318A265DC00A65917 /* HMBoldFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMBoldFontButton.m */; };
 		69D8F3A17FBC4462870CA983 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
 		BD41893D6E156DB90AB62B24 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
-		F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F13FA51E1899497F0026EA5F /* HMUserParser.m */; };
 		F182B6DF18F407FB00A89B79 /* close up 480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = F182B6DE18F407FB00A89B79 /* close up 480.ctr */; };
 /* End PBXBuildFile section */
 
@@ -498,6 +491,28 @@
 		0838E8D918D04E1700222997 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0838E8DB18D04E2400222997 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		0838E8DD18D04E4600222997 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		083E749A1A70369900B4164D /* HMConfigurationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMConfigurationParser.h; sourceTree = "<group>"; };
+		083E749B1A70369900B4164D /* HMConfigurationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMConfigurationParser.m; sourceTree = "<group>"; };
+		083E749C1A70369900B4164D /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
+		083E749D1A70369900B4164D /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
+		083E749E1A70369900B4164D /* HMRemakeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeParser.h; sourceTree = "<group>"; };
+		083E749F1A70369900B4164D /* HMRemakeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakeParser.m; sourceTree = "<group>"; };
+		083E74A01A70369900B4164D /* HMRemakesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakesParser.h; sourceTree = "<group>"; };
+		083E74A11A70369900B4164D /* HMRemakesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakesParser.m; sourceTree = "<group>"; };
+		083E74A21A70369900B4164D /* HMStoriesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesParser.h; sourceTree = "<group>"; };
+		083E74A31A70369900B4164D /* HMStoriesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoriesParser.m; sourceTree = "<group>"; };
+		083E74A41A70369900B4164D /* HMStoryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryParser.h; sourceTree = "<group>"; };
+		083E74A51A70369900B4164D /* HMStoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryParser.m; sourceTree = "<group>"; };
+		083E74A61A70369900B4164D /* HMTextUpdateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTextUpdateParser.h; sourceTree = "<group>"; };
+		083E74A71A70369900B4164D /* HMTextUpdateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTextUpdateParser.m; sourceTree = "<group>"; };
+		083E74A81A70369900B4164D /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
+		083E74A91A70369900B4164D /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
+		083E74AA1A70369900B4164D /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
+		083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
+		083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Monkey+-+Warm+Up.mp4"; sourceTree = "<group>"; };
+		083E74C01A70444300B4164D /* monkey+dance+-+lake+song.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "monkey+dance+-+lake+song.mp4"; sourceTree = "<group>"; };
+		083E74C11A70444300B4164D /* monkey+dance+jungle.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "monkey+dance+jungle.mp4"; sourceTree = "<group>"; };
+		083E74C71A704BD300B4164D /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
 		0840FF60188518ED00A6EF5E /* AWPieSliceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPieSliceLayer.h; sourceTree = "<group>"; };
 		0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPieSliceLayer.m; sourceTree = "<group>"; };
 		0840FF62188518ED00A6EF5E /* AWPieSliceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPieSliceView.h; sourceTree = "<group>"; };
@@ -542,8 +557,6 @@
 		084E53301891E3D100D96258 /* HMSceneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSceneCell.m; sourceTree = "<group>"; };
 		084E53331891E6C100D96258 /* HMRecorderEditingTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderEditingTextCell.h; sourceTree = "<group>"; };
 		084E53341891E6C100D96258 /* HMRecorderEditingTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecorderEditingTextCell.m; sourceTree = "<group>"; };
-		084E533B18920B5100D96258 /* HMTextUpdateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMTextUpdateParser.h; sourceTree = "<group>"; };
-		084E533C18920B5100D96258 /* HMTextUpdateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMTextUpdateParser.m; sourceTree = "<group>"; };
 		084E90D21A00E12800779030 /* HMSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSharing.h; sourceTree = "<group>"; };
 		084E90D31A00E12800779030 /* HMSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSharing.m; sourceTree = "<group>"; };
 		0855D36F1A0A68BA004830AE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -566,7 +579,6 @@
 		085D78281A626F3D001D835E /* howtoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = howtoVideo.mp4; sourceTree = "<group>"; };
 		085D78291A626F3D001D835E /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
 		085D782A1A626F3D001D835E /* recordingEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = recordingEnd.wav; sourceTree = "<group>"; };
-		085D782F1A626F8A001D835E /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
 		085E2AA81A6AD3AA00058272 /* HMDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDownloadViewController.h; sourceTree = "<group>"; };
 		085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDownloadViewController.m; sourceTree = "<group>"; };
 		085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMDownloadViewController.xib; sourceTree = "<group>"; };
@@ -575,32 +587,24 @@
 		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		0864E0501A4F3B6E00F7AEB7 /* HMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStyle.h; sourceTree = "<group>"; };
 		0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStyle.m; sourceTree = "<group>"; };
-		0864E0541A4F3BDA00F7AEB7 /* Style.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Style.plist; sourceTree = "<group>"; };
 		0864E0571A4F42E900F7AEB7 /* DINOT-CondBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINOT-CondBold.otf"; path = "App/supporting files/DINOT-CondBold.otf"; sourceTree = "<group>"; };
 		08651F1D19EC107C00EF12FA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		086A343019DD6EE400B60BB5 /* AWAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWAlertView.h; sourceTree = "<group>"; };
 		086A343119DD6EE400B60BB5 /* AWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWAlertView.m; sourceTree = "<group>"; };
-		086D93C91886C8BB0086C565 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
-		086D93CA1886C8BB0086C565 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
-		086D93CB1886C8BB0086C565 /* HMRemakeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakeParser.h; sourceTree = "<group>"; };
-		086D93CC1886C8BB0086C565 /* HMRemakeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakeParser.m; sourceTree = "<group>"; };
-		086D93CD1886C8BB0086C565 /* HMStoriesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesParser.h; sourceTree = "<group>"; };
-		086D93CE1886C8BB0086C565 /* HMStoriesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoriesParser.m; sourceTree = "<group>"; };
-		086D940E1886DACE0086C565 /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
-		086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
-		086D94431886E2CC0086C565 /* HMRemakesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRemakesParser.h; sourceTree = "<group>"; };
-		086D94441886E2CC0086C565 /* HMRemakesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRemakesParser.m; sourceTree = "<group>"; };
 		086F30B61A529B7100430D81 /* Monkey Dance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Monkey Dance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		086F30B81A529CA500430D81 /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Homage-Info.plist"; sourceTree = "<group>"; };
 		087052881A5CFFD800E22066 /* HMStoreManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreManagerDelegate.h; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		08832E9D1A6E8AC200E7772A /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
+		08832E9E1A6E8AC200E7772A /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_LocalStorage_Tests.m; sourceTree = "<group>"; };
 		0888CE9319EC3EAC003D7249 /* Homage_Parsing_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_Parsing_Tests.m; sourceTree = "<group>"; };
 		0888CEA319EC7DC2003D7249 /* stories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stories.json; sourceTree = "<group>"; };
 		088D5FB619EC015A00075C4A /* Homage App Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Homage App Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		088D5FB919EC015A00075C4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		088D5FBA19EC015A00075C4A /* Homage_App_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Homage_App_Tests.m; sourceTree = "<group>"; };
+		0891ED1C1A6E5A5900C847A0 /* Style.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Style.plist; sourceTree = "<group>"; };
 		08ACB7AC188C631C00C0EE27 /* HMAnimationsFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnimationsFX.h; sourceTree = "<group>"; };
 		08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnimationsFX.m; sourceTree = "<group>"; };
 		08ACB7D1188D293E00C0EE27 /* HMRoundCountdownLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRoundCountdownLabel.h; sourceTree = "<group>"; };
@@ -636,8 +640,6 @@
 		08B958A81891685300BCCF8C /* Story+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Story+Logic.h"; sourceTree = "<group>"; };
 		08B958A91891685300BCCF8C /* Story+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Story+Logic.m"; sourceTree = "<group>"; };
 		08B958AC18917CE000BCCF8C /* HMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecorderDelegate.h; sourceTree = "<group>"; };
-		08BE816419F4589100840CD9 /* HMConfigurationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMConfigurationParser.h; sourceTree = "<group>"; };
-		08BE816519F4589100840CD9 /* HMConfigurationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMConfigurationParser.m; sourceTree = "<group>"; };
 		08C1CD3819F917E300FF0770 /* HMSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSplashViewController.h; sourceTree = "<group>"; };
 		08C1CD3919F917E300FF0770 /* HMSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSplashViewController.m; sourceTree = "<group>"; };
 		08CA48F51A50305C00E99258 /* HMSideBarNavigatorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HMSideBarNavigatorDelegate.h; path = "side bar/HMSideBarNavigatorDelegate.h"; sourceTree = "<group>"; };
@@ -725,8 +727,6 @@
 		08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		08EA3B3119D9DD8A00B074DA /* HMRegularFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRegularFontButton.h; sourceTree = "<group>"; };
 		08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRegularFontButton.m; sourceTree = "<group>"; };
-		08EA812D1A1DF2FE00742251 /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
-		08EA812E1A1DF2FE00742251 /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		08EA81381A213EB400742251 /* HMStoriesTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesTutorial.h; sourceTree = "<group>"; };
 		08EA81391A213EB400742251 /* HMStoriesTutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoriesTutorial.m; sourceTree = "<group>"; };
 		08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMStoriesTutorial.xib; sourceTree = "<group>"; };
@@ -756,7 +756,6 @@
 		1ED3A430529290A1F8D55577 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
-		26385937189550DC003A7B3D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "App/supporting files/Localizable.strings"; sourceTree = "<group>"; };
 		263C4482192E6BA400AD82EC /* Contour+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contour+Factory.h"; sourceTree = "<group>"; };
 		263C4483192E6BA400AD82EC /* Contour+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contour+Factory.m"; sourceTree = "<group>"; };
 		263C448B192F4E5E00AD82EC /* Contour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contour.h; sourceTree = "<group>"; };
@@ -816,8 +815,6 @@
 		268341F318FFFD40002E8CB7 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		268A380D1974AE650016C59C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		268A380E1974AE650016C59C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		269409661968786500EC4726 /* HMStoryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryParser.h; sourceTree = "<group>"; };
-		269409671968786500EC4726 /* HMStoryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoryParser.m; sourceTree = "<group>"; };
 		269551241958260C0017FDC1 /* Model130.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model130.xcdatamodel; sourceTree = "<group>"; };
 		269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageBigImageView.xib; sourceTree = "<group>"; };
 		26B448F41947E28800BC6317 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -832,8 +829,6 @@
 		65C10D9118A265DC00A65917 /* HMBoldFontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBoldFontLabel.h; sourceTree = "<group>"; };
 		C6B4A0D3661F7086E1C965A9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F12571C819054883001255A2 /* Model104.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model104.xcdatamodel; sourceTree = "<group>"; };
-		F13FA51D1899497F0026EA5F /* HMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMUserParser.h; sourceTree = "<group>"; };
-		F13FA51E1899497F0026EA5F /* HMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMUserParser.m; sourceTree = "<group>"; };
 		F15EE53A1932370400593636 /* Model110.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model110.xcdatamodel; sourceTree = "<group>"; };
 		F182B6DE18F407FB00A89B79 /* close up 480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "close up 480.ctr"; path = "App/supporting files/close up 480.ctr"; sourceTree = "<group>"; };
 		F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model102.xcdatamodel; sourceTree = "<group>"; };
@@ -986,7 +981,6 @@
 				2655DF3318EDA37100CA362F /* Homage-Prefix.pch */,
 				2655DF3418EDA37100CA362F /* main.m */,
 				26385936189550DC003A7B3D /* InfoPlist.strings */,
-				26385937189550DC003A7B3D /* Localizable.strings */,
 				0864E0571A4F42E900F7AEB7 /* DINOT-CondBold.otf */,
 			);
 			name = "Supporting Files";
@@ -1012,7 +1006,6 @@
 			children = (
 				0806FB2D1882947E00F0EF50 /* Model */,
 				08DA73F31A5EA9AD007EFE69 /* Integration */,
-				086D93C81886C8BB0086C565 /* Parsers */,
 				0840FF771885351800A6EF5E /* ManagedDocument */,
 			);
 			path = Data;
@@ -1109,6 +1102,41 @@
 				0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */,
 			);
 			path = "UIImage Effects";
+			sourceTree = "<group>";
+		};
+		083E74991A70369900B4164D /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				083E749A1A70369900B4164D /* HMConfigurationParser.h */,
+				083E749B1A70369900B4164D /* HMConfigurationParser.m */,
+				083E749C1A70369900B4164D /* HMParser.h */,
+				083E749D1A70369900B4164D /* HMParser.m */,
+				083E749E1A70369900B4164D /* HMRemakeParser.h */,
+				083E749F1A70369900B4164D /* HMRemakeParser.m */,
+				083E74A01A70369900B4164D /* HMRemakesParser.h */,
+				083E74A11A70369900B4164D /* HMRemakesParser.m */,
+				083E74A21A70369900B4164D /* HMStoriesParser.h */,
+				083E74A31A70369900B4164D /* HMStoriesParser.m */,
+				083E74A41A70369900B4164D /* HMStoryParser.h */,
+				083E74A51A70369900B4164D /* HMStoryParser.m */,
+				083E74A61A70369900B4164D /* HMTextUpdateParser.h */,
+				083E74A71A70369900B4164D /* HMTextUpdateParser.m */,
+				083E74A81A70369900B4164D /* HMUserParser.h */,
+				083E74A91A70369900B4164D /* HMUserParser.m */,
+				083E74AA1A70369900B4164D /* NSDictionary+TypeSafeValues.h */,
+				083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		083E74BE1A7043B800B4164D /* bundled stories */ = {
+			isa = PBXGroup;
+			children = (
+				083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */,
+				083E74C01A70444300B4164D /* monkey+dance+-+lake+song.mp4 */,
+				083E74C11A70444300B4164D /* monkey+dance+jungle.mp4 */,
+			);
+			path = "bundled stories";
 			sourceTree = "<group>";
 		};
 		0840FF5F188518ED00A6EF5E /* Pie Slice */ = {
@@ -1283,17 +1311,9 @@
 				086F30B81A529CA500430D81 /* Homage-Info.plist */,
 				085D78211A617EFC001D835E /* Data */,
 				085AFF3F1A52A2850066493F /* User Interface */,
-				0856C1B01A14BC4200735632 /* bundled stories */,
 				0856C1B61A14BC4200735632 /* media resources */,
 			);
 			path = Homage;
-			sourceTree = "<group>";
-		};
-		0856C1B01A14BC4200735632 /* bundled stories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "bundled stories";
 			sourceTree = "<group>";
 		};
 		0856C1B61A14BC4200735632 /* media resources */ = {
@@ -1344,6 +1364,7 @@
 			isa = PBXGroup;
 			children = (
 				085AFF401A52A2850066493F /* Images.xcassets */,
+				0891ED1B1A6E5A5900C847A0 /* Styles */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -1393,11 +1414,12 @@
 		085D78261A626F3D001D835E /* media resources */ = {
 			isa = PBXGroup;
 			children = (
+				083E74BE1A7043B800B4164D /* bundled stories */,
 				085D78271A626F3D001D835E /* cinemaCountdown_oneLast.wav */,
 				085D78281A626F3D001D835E /* howtoVideo.mp4 */,
 				085D78291A626F3D001D835E /* introVideo.mp4 */,
 				085D782A1A626F3D001D835E /* recordingEnd.wav */,
-				085D782F1A626F8A001D835E /* songLoop.m4a */,
+				083E74C71A704BD300B4164D /* songLoop.m4a */,
 			);
 			path = "media resources";
 			sourceTree = "<group>";
@@ -1405,7 +1427,6 @@
 		0864E04F1A4F3B5600F7AEB7 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
-				0864E0541A4F3BDA00F7AEB7 /* Style.plist */,
 				0864E0501A4F3B6E00F7AEB7 /* HMStyle.h */,
 				0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */,
 			);
@@ -1421,42 +1442,17 @@
 			path = "Alert View";
 			sourceTree = "<group>";
 		};
-		086D93C81886C8BB0086C565 /* Parsers */ = {
-			isa = PBXGroup;
-			children = (
-				08BE816419F4589100840CD9 /* HMConfigurationParser.h */,
-				08BE816519F4589100840CD9 /* HMConfigurationParser.m */,
-				086D93C91886C8BB0086C565 /* HMParser.h */,
-				086D93CA1886C8BB0086C565 /* HMParser.m */,
-				086D93CB1886C8BB0086C565 /* HMRemakeParser.h */,
-				086D93CC1886C8BB0086C565 /* HMRemakeParser.m */,
-				086D94431886E2CC0086C565 /* HMRemakesParser.h */,
-				086D94441886E2CC0086C565 /* HMRemakesParser.m */,
-				086D93CD1886C8BB0086C565 /* HMStoriesParser.h */,
-				086D93CE1886C8BB0086C565 /* HMStoriesParser.m */,
-				084E533B18920B5100D96258 /* HMTextUpdateParser.h */,
-				084E533C18920B5100D96258 /* HMTextUpdateParser.m */,
-				086D940E1886DACE0086C565 /* NSDictionary+TypeSafeValues.h */,
-				086D940F1886DACE0086C565 /* NSDictionary+TypeSafeValues.m */,
-				F13FA51D1899497F0026EA5F /* HMUserParser.h */,
-				F13FA51E1899497F0026EA5F /* HMUserParser.m */,
-				269409661968786500EC4726 /* HMStoryParser.h */,
-				269409671968786500EC4726 /* HMStoryParser.m */,
-			);
-			path = Parsers;
-			sourceTree = "<group>";
-		};
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				08832E9D1A6E8AC200E7772A /* Remake.h */,
+				08832E9E1A6E8AC200E7772A /* Remake.m */,
 				082D3E0B1A668D930020D12E /* Footage.h */,
 				082D3E0C1A668D930020D12E /* Footage.m */,
 				08F9EBB31A5457A6000CFCAD /* Scene.h */,
 				08F9EBB41A5457A6000CFCAD /* Scene.m */,
 				08FB4D681A40D6AD00711835 /* Story.h */,
 				08FB4D691A40D6AD00711835 /* Story.m */,
-				08EA812D1A1DF2FE00742251 /* Remake.h */,
-				08EA812E1A1DF2FE00742251 /* Remake.m */,
 				268A380D1974AE650016C59C /* User.h */,
 				268A380E1974AE650016C59C /* User.m */,
 				263C448B192F4E5E00AD82EC /* Contour.h */,
@@ -1518,6 +1514,14 @@
 				088D5FB919EC015A00075C4A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0891ED1B1A6E5A5900C847A0 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				0891ED1C1A6E5A5900C847A0 /* Style.plist */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		08ACB7AB188C62ED00C0EE27 /* Animations FX */ = {
@@ -1594,6 +1598,7 @@
 				08DA74021A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.h */,
 				08DA74031A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.m */,
 				08DA74191A5EA9AD007EFE69 /* WebService */,
+				083E74991A70369900B4164D /* Parsers */,
 				08DA73FB1A5EA9AD007EFE69 /* Cache Manager */,
 				08DA73F81A5EA9AD007EFE69 /* app store */,
 				08DA74061A5EA9AD007EFE69 /* json */,
@@ -2065,7 +2070,7 @@
 						};
 					};
 					086F2FF31A529B7100430D81 = {
-						DevelopmentTeam = 56F7YSPHC5;
+						DevelopmentTeam = ZUV343FTV5;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -2110,9 +2115,8 @@
 				2655DF3818EDA46400CA362F /* Storyboard.storyboard in Resources */,
 				08CDF8451898124000A9D235 /* HMRecorderMessageGeneralView.xib in Resources */,
 				26385938189550DC003A7B3D /* InfoPlist.strings in Resources */,
-				080E027B1A5966B300F1DB1E /* Localizable.strings in Resources */,
+				0891ED1D1A6E5A5900C847A0 /* Style.plist in Resources */,
 				085AFF491A52A8B90066493F /* DefaultsCFGTest.plist in Resources */,
-				0864E0551A4F3BDA00F7AEB7 /* Style.plist in Resources */,
 				080120141A069043002F10B2 /* HMRefreshControl.xib in Resources */,
 				0856C1C11A14BC4200735632 /* recordingEnd.wav in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
@@ -2146,6 +2150,7 @@
 				085D782C1A626F3D001D835E /* howtoVideo.mp4 in Resources */,
 				085E2AAE1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */,
 				085AFF4E1A52A9EB0066493F /* LabelDefaultsCFGTest.plist in Resources */,
+				083E74C81A704BD300B4164D /* songLoop.m4a in Resources */,
 				085AFF441A52A3880066493F /* Images.xcassets in Resources */,
 				085D782E1A626F3D001D835E /* recordingEnd.wav in Resources */,
 				086F30931A529B7100430D81 /* HMRecorderMessageBigImageView.xib in Resources */,
@@ -2157,12 +2162,14 @@
 				086F30991A529B7100430D81 /* HMRecorderMessageGeneralView.xib in Resources */,
 				086F309A1A529B7100430D81 /* InfoPlist.strings in Resources */,
 				086F309D1A529B7100430D81 /* HMRefreshControl.xib in Resources */,
+				083E74C21A70444300B4164D /* Monkey+-+Warm+Up.mp4 in Resources */,
 				082092751A61360F00603008 /* ABTestsCFG.plist in Resources */,
 				086F30A01A529B7100430D81 /* HMTOSViewController.xib in Resources */,
 				086F30A11A529B7100430D81 /* RecorderStoryboard.storyboard in Resources */,
 				086F30A21A529B7100430D81 /* DINOT-CondBold.otf in Resources */,
 				086F30A41A529B7100430D81 /* HMRecorderMessageCommonView.xib in Resources */,
 				086F30A61A529B7100430D81 /* HMMeVideoPlayer.xib in Resources */,
+				083E74C41A70444300B4164D /* monkey+dance+jungle.mp4 in Resources */,
 				086F30A71A529B7100430D81 /* Storyboard_iPad.storyboard in Resources */,
 				086F30A81A529B7100430D81 /* HMPrivacyPolicyViewController.xib in Resources */,
 				086F30A91A529B7100430D81 /* HMRecorderBigVideoPlayerView.xib in Resources */,
@@ -2175,7 +2182,7 @@
 				08DA74431A5EA9AD007EFE69 /* ServerCFG.plist in Resources */,
 				086F30AE1A529B7100430D81 /* Settings.bundle in Resources */,
 				082D3E101A66CC0C0020D12E /* LabelPrivacyPolicy.txt in Resources */,
-				085D78301A626F8A001D835E /* songLoop.m4a in Resources */,
+				083E74C31A70444300B4164D /* monkey+dance+-+lake+song.mp4 in Resources */,
 				082D3E161A66CFC60020D12E /* LabelTOS.txt in Resources */,
 				086F30AF1A529B7100430D81 /* whatsapp@2x.png in Resources */,
 				085D782D1A626F3D001D835E /* introVideo.mp4 in Resources */,
@@ -2317,11 +2324,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				08DA74381A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.m in Sources */,
-				F13FA51F1899497F0026EA5F /* HMUserParser.m in Sources */,
 				08E50ED318869ADD001A8B75 /* AMBlurView.m in Sources */,
 				0840FF99188553BF00A6EF5E /* HMNotificationCenter.m in Sources */,
 				268341FF18FFFD40002E8CB7 /* IASKSlider.m in Sources */,
 				08DF230118926E3900912657 /* HMSimpleVideoViewController.m in Sources */,
+				083E74B61A70369900B4164D /* HMStoryParser.m in Sources */,
 				08E50ECF1886994A001A8B75 /* HMRoundButton.m in Sources */,
 				08DA74441A5EA9AD007EFE69 /* HMAWS3Client.m in Sources */,
 				08DA74461A5EA9AD007EFE69 /* HMUploadS3Worker.m in Sources */,
@@ -2331,12 +2338,11 @@
 				085BF6EF18C36AC2009D79C5 /* HMRecorderTutorialViewController.m in Sources */,
 				65C10D9318A265DC00A65917 /* HMBoldFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
+				083E74BC1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */,
 				08DA744A1A5EA9AD007EFE69 /* HMServer+analytics.m in Sources */,
 				267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */,
-				269409681968786500EC4726 /* HMStoryParser.m in Sources */,
 				08DA74581A5EA9AD007EFE69 /* HMServer+Texts.m in Sources */,
 				0864E0521A4F3B6E00F7AEB7 /* HMStyle.m in Sources */,
-				086D93D31886C8BB0086C565 /* HMStoriesParser.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
 				08DF23321892704300912657 /* HMStoryCell.m in Sources */,
 				082D3E1A1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */,
@@ -2348,13 +2354,15 @@
 				08CDF83A1897F6B100A9D235 /* Text.m in Sources */,
 				268341FA18FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				08FA97371A4634E2009B998C /* HMStoreBuyButton.m in Sources */,
+				08832E9F1A6E8AC200E7772A /* Remake.m in Sources */,
 				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
 				08FB4D6A1A40D6AD00711835 /* Story.m in Sources */,
 				08C1CD3A19F917E300FF0770 /* HMSplashViewController.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
 				08EA3B3319D9DD8A00B074DA /* HMRegularFontButton.m in Sources */,
-				08BE816619F4589100840CD9 /* HMConfigurationParser.m in Sources */,
+				083E74B01A70369900B4164D /* HMRemakeParser.m in Sources */,
+				083E74AC1A70369900B4164D /* HMConfigurationParser.m in Sources */,
 				08DA742E1A5EA9AD007EFE69 /* HMABTester.m in Sources */,
 				0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */,
 				268341F818FFFD40002E8CB7 /* IASKSettingsStore.m in Sources */,
@@ -2366,6 +2374,7 @@
 				08DA74541A5EA9AD007EFE69 /* HMServer+Render.m in Sources */,
 				08ACB7D3188D293E00C0EE27 /* HMRoundCountdownLabel.m in Sources */,
 				0840FF6D188527C600A6EF5E /* UIView+MotionEffect.m in Sources */,
+				083E74BA1A70369900B4164D /* HMUserParser.m in Sources */,
 				08B958881891678600BCCF8C /* Footage+Factory.m in Sources */,
 				08DF232E1892704300912657 /* HMRemakeCell.m in Sources */,
 				08B9589A189167B500BCCF8C /* Footage+Logic.m in Sources */,
@@ -2378,16 +2387,13 @@
 				2683420118FFFD40002E8CB7 /* IASKTextField.m in Sources */,
 				08DF22FF18926E3900912657 /* HMSimpleVideoView.m in Sources */,
 				084E532E1891D84800D96258 /* HMRecorderEditTextsViewController.m in Sources */,
-				086D93D11886C8BB0086C565 /* HMRemakeParser.m in Sources */,
 				08DF23241892704300912657 /* HMGMeTabVC.m in Sources */,
 				08DA74341A5EA9AD007EFE69 /* HMCacheManager.m in Sources */,
-				08EA812F1A1DF2FE00742251 /* Remake.m in Sources */,
 				2655DF3618EDA37100CA362F /* main.m in Sources */,
 				08B958921891678600BCCF8C /* User+Factory.m in Sources */,
 				08B95896189167A000BCCF8C /* Remake+Logic.m in Sources */,
 				2655DF5E18EDA50600CA362F /* HMIntroMovieViewController.m in Sources */,
 				084E53311891E3D100D96258 /* HMSceneCell.m in Sources */,
-				086D94101886DACE0086C565 /* NSDictionary+TypeSafeValues.m in Sources */,
 				2655DF5318EDA4D200CA362F /* HMPrivacyPolicyViewController.m in Sources */,
 				084E90D41A00E12800779030 /* HMSharing.m in Sources */,
 				08DA743C1A5EA9AD007EFE69 /* BSONIdGenerator.m in Sources */,
@@ -2396,22 +2402,24 @@
 				08DA743A1A5EA9AD007EFE69 /* HMServer.m in Sources */,
 				08D03F88189450B800DEBDBC /* HMRecorderPreviewViewController.m in Sources */,
 				0840FF8718853FB400A6EF5E /* HMGLog.m in Sources */,
+				083E74AE1A70369900B4164D /* HMParser.m in Sources */,
 				263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */,
 				08E50ECB188697CE001A8B75 /* HMRoundView.m in Sources */,
 				2655DF5F18EDA50600CA362F /* HMLoginMainViewController.m in Sources */,
 				08DF23341892704300912657 /* HMStoryDetailsViewController.m in Sources */,
 				08FA972B1A460367009B998C /* HMStoreProductsViewController.m in Sources */,
+				083E74B21A70369900B4164D /* HMRemakesParser.m in Sources */,
 				08DA74301A5EA9AD007EFE69 /* HMAppStore.m in Sources */,
 				08CA48F81A50305C00E99258 /* HMSideBarViewController.m in Sources */,
 				08DF23301892704300912657 /* HMStoriesViewController.m in Sources */,
 				08B9588A1891678600BCCF8C /* Remake+Factory.m in Sources */,
 				268341FE18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				086A343219DD6EE400B60BB5 /* AWAlertView.m in Sources */,
+				083E74B81A70369900B4164D /* HMTextUpdateParser.m in Sources */,
 				084560051890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				081CDB1B19D97E8D00723609 /* HMRegularFontLabel.m in Sources */,
 				0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */,
 				268341F918FFFD40002E8CB7 /* IASKSettingsStoreFile.m in Sources */,
-				086D93CF1886C8BB0086C565 /* HMParser.m in Sources */,
 				08B9589E189167C700BCCF8C /* Scene+Logic.m in Sources */,
 				08DA744E1A5EA9AD007EFE69 /* HMServer+Footages.m in Sources */,
 				08DA744C1A5EA9AD007EFE69 /* HMServer+AppConfig.m in Sources */,
@@ -2427,8 +2435,6 @@
 				263C448D192F4E5E00AD82EC /* Contour.m in Sources */,
 				08DA74481A5EA9AD007EFE69 /* HMUploadManager.m in Sources */,
 				082D3E0D1A668D930020D12E /* Footage.m in Sources */,
-				086D94451886E2CD0086C565 /* HMRemakesParser.m in Sources */,
-				084E533D18920B5100D96258 /* HMTextUpdateParser.m in Sources */,
 				084560091890458E0040504D /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
@@ -2445,6 +2451,7 @@
 				268341F518FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m in Sources */,
 				2683420018FFFD40002E8CB7 /* IASKSwitch.m in Sources */,
 				0806FB34188295CD00F0EF50 /* Model.xcdatamodeld in Sources */,
+				083E74B41A70369900B4164D /* HMStoriesParser.m in Sources */,
 				081E398019FD6CDC00990F50 /* HMRemakeScreenViewController.m in Sources */,
 				268A380F1974AE650016C59C /* User.m in Sources */,
 				08F9EBB51A5457A6000CFCAD /* Scene.m in Sources */,
@@ -2461,11 +2468,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				08DA74391A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.m in Sources */,
-				086F2FF51A529B7100430D81 /* HMUserParser.m in Sources */,
 				086F2FF61A529B7100430D81 /* AMBlurView.m in Sources */,
 				086F2FF71A529B7100430D81 /* HMNotificationCenter.m in Sources */,
 				086F2FF81A529B7100430D81 /* IASKSlider.m in Sources */,
 				086F2FF91A529B7100430D81 /* HMSimpleVideoViewController.m in Sources */,
+				083E74B71A70369900B4164D /* HMStoryParser.m in Sources */,
 				086F2FFA1A529B7100430D81 /* HMRoundButton.m in Sources */,
 				08DA74451A5EA9AD007EFE69 /* HMAWS3Client.m in Sources */,
 				08DA74471A5EA9AD007EFE69 /* HMUploadS3Worker.m in Sources */,
@@ -2475,12 +2482,11 @@
 				086F2FFE1A529B7100430D81 /* HMRecorderTutorialViewController.m in Sources */,
 				086F2FFF1A529B7100430D81 /* HMBoldFontButton.m in Sources */,
 				086F30001A529B7100430D81 /* Story+Factory.m in Sources */,
+				083E74BD1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */,
 				08DA744B1A5EA9AD007EFE69 /* HMServer+analytics.m in Sources */,
 				086F30011A529B7100430D81 /* JBWhatsAppActivity.m in Sources */,
-				086F30021A529B7100430D81 /* HMStoryParser.m in Sources */,
 				08DA74591A5EA9AD007EFE69 /* HMServer+Texts.m in Sources */,
 				086F30031A529B7100430D81 /* HMStyle.m in Sources */,
-				086F30041A529B7100430D81 /* HMStoriesParser.m in Sources */,
 				086F30051A529B7100430D81 /* Scene+Factory.m in Sources */,
 				086F30061A529B7100430D81 /* HMStoryCell.m in Sources */,
 				082D3E1B1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */,
@@ -2492,13 +2498,15 @@
 				086F300B1A529B7100430D81 /* Text.m in Sources */,
 				086F300C1A529B7100430D81 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				086F300D1A529B7100430D81 /* HMStoreBuyButton.m in Sources */,
+				08832EA01A6E8AC200E7772A /* Remake.m in Sources */,
 				086F300E1A529B7100430D81 /* HMMotionDetector.m in Sources */,
 				086F300F1A529B7100430D81 /* Story.m in Sources */,
 				086F30111A529B7100430D81 /* HMSplashViewController.m in Sources */,
 				086F30121A529B7100430D81 /* HMGUserRemakeCVCell.m in Sources */,
 				086F30131A529B7100430D81 /* IASKSpecifier.m in Sources */,
 				086F30141A529B7100430D81 /* HMRegularFontButton.m in Sources */,
-				086F30151A529B7100430D81 /* HMConfigurationParser.m in Sources */,
+				083E74B11A70369900B4164D /* HMRemakeParser.m in Sources */,
+				083E74AD1A70369900B4164D /* HMConfigurationParser.m in Sources */,
 				08DA742F1A5EA9AD007EFE69 /* HMABTester.m in Sources */,
 				086F30161A529B7100430D81 /* NSNotification+Utils.m in Sources */,
 				086F30171A529B7100430D81 /* IASKSettingsStore.m in Sources */,
@@ -2510,6 +2518,7 @@
 				08DA74551A5EA9AD007EFE69 /* HMServer+Render.m in Sources */,
 				086F301D1A529B7100430D81 /* HMRoundCountdownLabel.m in Sources */,
 				086F301E1A529B7100430D81 /* UIView+MotionEffect.m in Sources */,
+				083E74BB1A70369900B4164D /* HMUserParser.m in Sources */,
 				086F301F1A529B7100430D81 /* Footage+Factory.m in Sources */,
 				086F30201A529B7100430D81 /* HMRemakeCell.m in Sources */,
 				086F30211A529B7100430D81 /* Footage+Logic.m in Sources */,
@@ -2522,16 +2531,13 @@
 				086F302A1A529B7100430D81 /* IASKTextField.m in Sources */,
 				086F302B1A529B7100430D81 /* HMSimpleVideoView.m in Sources */,
 				086F302C1A529B7100430D81 /* HMRecorderEditTextsViewController.m in Sources */,
-				086F302D1A529B7100430D81 /* HMRemakeParser.m in Sources */,
 				086F302E1A529B7100430D81 /* HMGMeTabVC.m in Sources */,
 				08DA74351A5EA9AD007EFE69 /* HMCacheManager.m in Sources */,
-				086F302F1A529B7100430D81 /* Remake.m in Sources */,
 				086F30301A529B7100430D81 /* main.m in Sources */,
 				086F30311A529B7100430D81 /* User+Factory.m in Sources */,
 				086F30321A529B7100430D81 /* Remake+Logic.m in Sources */,
 				086F30331A529B7100430D81 /* HMIntroMovieViewController.m in Sources */,
 				086F30341A529B7100430D81 /* HMSceneCell.m in Sources */,
-				086F30351A529B7100430D81 /* NSDictionary+TypeSafeValues.m in Sources */,
 				086F30361A529B7100430D81 /* HMPrivacyPolicyViewController.m in Sources */,
 				086F30371A529B7100430D81 /* HMSharing.m in Sources */,
 				08DA743D1A5EA9AD007EFE69 /* BSONIdGenerator.m in Sources */,
@@ -2540,22 +2546,24 @@
 				08DA743B1A5EA9AD007EFE69 /* HMServer.m in Sources */,
 				086F303B1A529B7100430D81 /* HMRecorderPreviewViewController.m in Sources */,
 				086F303D1A529B7100430D81 /* HMGLog.m in Sources */,
+				083E74AF1A70369900B4164D /* HMParser.m in Sources */,
 				086F303E1A529B7100430D81 /* Contour+Factory.m in Sources */,
 				086F303F1A529B7100430D81 /* HMRoundView.m in Sources */,
 				086F30411A529B7100430D81 /* HMLoginMainViewController.m in Sources */,
 				086F30421A529B7100430D81 /* HMStoryDetailsViewController.m in Sources */,
 				086F30431A529B7100430D81 /* HMStoreProductsViewController.m in Sources */,
+				083E74B31A70369900B4164D /* HMRemakesParser.m in Sources */,
 				08DA74311A5EA9AD007EFE69 /* HMAppStore.m in Sources */,
 				086F30441A529B7100430D81 /* HMSideBarViewController.m in Sources */,
 				086F30451A529B7100430D81 /* HMStoriesViewController.m in Sources */,
 				086F30461A529B7100430D81 /* Remake+Factory.m in Sources */,
 				086F30491A529B7100430D81 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				086F304A1A529B7100430D81 /* AWAlertView.m in Sources */,
+				083E74B91A70369900B4164D /* HMTextUpdateParser.m in Sources */,
 				086F304C1A529B7100430D81 /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
 				086F304E1A529B7100430D81 /* HMRegularFontLabel.m in Sources */,
 				086F304F1A529B7100430D81 /* AWPieSliceLayer.m in Sources */,
 				086F30511A529B7100430D81 /* IASKSettingsStoreFile.m in Sources */,
-				086F30531A529B7100430D81 /* HMParser.m in Sources */,
 				086F30551A529B7100430D81 /* Scene+Logic.m in Sources */,
 				08DA744F1A5EA9AD007EFE69 /* HMServer+Footages.m in Sources */,
 				08DA744D1A5EA9AD007EFE69 /* HMServer+AppConfig.m in Sources */,
@@ -2571,8 +2579,6 @@
 				086F305F1A529B7100430D81 /* Contour.m in Sources */,
 				08DA74491A5EA9AD007EFE69 /* HMUploadManager.m in Sources */,
 				082D3E0E1A668D930020D12E /* Footage.m in Sources */,
-				086F30601A529B7100430D81 /* HMRemakesParser.m in Sources */,
-				086F30611A529B7100430D81 /* HMTextUpdateParser.m in Sources */,
 				086F30631A529B7100430D81 /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				086F30641A529B7100430D81 /* NSNotificationCenter+Utils.m in Sources */,
 				086F30651A529B7100430D81 /* AWPieSliceView.m in Sources */,
@@ -2589,6 +2595,7 @@
 				086F30701A529B7100430D81 /* IASKAppSettingsWebViewController.m in Sources */,
 				086F30711A529B7100430D81 /* IASKSwitch.m in Sources */,
 				086F30721A529B7100430D81 /* Model.xcdatamodeld in Sources */,
+				083E74B51A70369900B4164D /* HMStoriesParser.m in Sources */,
 				086F30751A529B7100430D81 /* HMRemakeScreenViewController.m in Sources */,
 				086F30761A529B7100430D81 /* User.m in Sources */,
 				08F9EBB61A5457A6000CFCAD /* Scene.m in Sources */,
@@ -2607,12 +2614,9 @@
 				08537F1319EC099300EBACA4 /* Footage+Logic.m in Sources */,
 				08537F0B19EC097900EBACA4 /* User.m in Sources */,
 				08651F1919EC09C300EF12FA /* Contour+Factory.m in Sources */,
-				0888CEA719ECFA91003D7249 /* HMRemakesParser.m in Sources */,
 				08537F1019EC098800EBACA4 /* Text.m in Sources */,
-				0888CEA819ECFA95003D7249 /* HMStoriesParser.m in Sources */,
 				08651F1419EC09B400EF12FA /* Story+Logic.m in Sources */,
 				0888CE9119EC3DFA003D7249 /* Homage_LocalStorage_Tests.m in Sources */,
-				0888CEAC19ECFAA8003D7249 /* HMStoryParser.m in Sources */,
 				08651F1619EC09BA00EF12FA /* Text+Logic.m in Sources */,
 				08537F1819EC09A200EBACA4 /* Story+Factory.m in Sources */,
 				08651F1A19EC0A1300EF12FA /* MyManagedDocument.m in Sources */,
@@ -2622,19 +2626,13 @@
 				0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */,
 				084E90D51A00E12800779030 /* HMSharing.m in Sources */,
 				08537F0E19EC098200EBACA4 /* Contour.m in Sources */,
-				0888CEAB19ECFAA4003D7249 /* HMUserParser.m in Sources */,
 				08651F1819EC09C000EF12FA /* User+Logic.m in Sources */,
 				08651F1519EC09B700EF12FA /* Text+Factory.m in Sources */,
 				0888CEAF19ED7FD4003D7249 /* Model.xcdatamodeld in Sources */,
-				0888CEAA19ECFA9F003D7249 /* NSDictionary+TypeSafeValues.m in Sources */,
 				08537F1619EC099B00EBACA4 /* Scene+Factory.m in Sources */,
-				0888CEA919ECFA9A003D7249 /* HMTextUpdateParser.m in Sources */,
 				08651F1719EC09BD00EF12FA /* User+Factory.m in Sources */,
 				088D5FBB19EC015A00075C4A /* Homage_App_Tests.m in Sources */,
-				0888CEA619ECFA8D003D7249 /* HMRemakeParser.m in Sources */,
-				08BE816719F4589100840CD9 /* HMConfigurationParser.m in Sources */,
 				08537F0A19EC094600EBACA4 /* DB.m in Sources */,
-				0888CEA519ECFA89003D7249 /* HMParser.m in Sources */,
 				08537F1419EC099600EBACA4 /* Remake+Factory.m in Sources */,
 				08537F1719EC099F00EBACA4 /* Scene+Logic.m in Sources */,
 			);
@@ -2971,8 +2969,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",

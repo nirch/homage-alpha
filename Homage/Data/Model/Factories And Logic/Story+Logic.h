@@ -62,14 +62,6 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 -(BOOL)isADirector;
 
 /**
- *  gets two app version, and see if the current version is in the middle. if so - story is active
- *
- *  @return BOOL value indicating if the story is active
- */
--(NSNumber *)isActiveInCurrentVersionFirstVersion:(NSString *)firstVersionActive LastVersionActive:(NSString *)lastVersionActive;
-
-
-/**
  *  returns if the video for this story is cached (or bundled) locally on the device.
  *
  *  @return BOOL value indicating if the story video is available locally on the device.
@@ -84,7 +76,7 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
 -(BOOL)isPremiumAndLocked;
 
 /**
- *  <#Description#>
+ *  The identifier of the premium product.
  *
  *  @return App store product identifier. If not premium, will return nil.
  */

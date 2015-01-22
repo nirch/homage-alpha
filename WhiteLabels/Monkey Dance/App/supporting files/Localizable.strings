@@ -241,3 +241,7 @@
 
 "DOWNLOAD_STORE" = "Open Monkey Store";
 "DOWNLOAD_CANCEL" = "Cancel";
+
+"DOWNLOAD_FAILED_TO_SAVE_TO_CR_TITLE" = "Failed to save";
+"DOWNLOAD_FAILED_TO_SAVE_TO_CR_MESSAGE" = "Failed to save to camera roll. Please ensure you allowed app to save to camera roll. (You will not be charged again for retrying to save clip).";
+

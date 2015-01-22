@@ -31,6 +31,7 @@
 #import "HMAppStore.h"
 #import "HMInAppStoreViewController.h"
 #import "HMDownloadViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
@@ -75,6 +76,7 @@
 #define ALERT_VIEW_TAG_SAVE_REMAKE_SHOULD_OPEN_STORE 400
 
 #define ALERT_VIEW_TAG_SHARE_FAILED 1200
+#define ALERT_VIEW_TAG_SAVE_TO_CM_FAILED 1300
 
 //#define HOMAGE_APPSTORE_LINK @"https://itunes.apple.com/us/app/homage/id851746600?l=iw&ls=1&mt=8"
 
@@ -378,10 +380,15 @@
         return;
     }
     
-    // We have a remake is a user's ready video to download
-    // and save to camera roll.
+    // Start the flow of saving/downloading clip.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    self.saveVC = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
+    self.saveVC.delegate = self;
+    self.saveVC.info = @{
+                         @"remake":remake
+                         };
+    [self.saveVC startSavingToCameraRoll];
     self.remakeToSave = remake;
-    self.userRemakesCV.userInteractionEnabled = NO;
     [self downloadUserRemake:remake];
 }
 
@@ -852,6 +859,13 @@
             [self.saveVC cancel];
             [self finishedDownloadFlowForRemake:self.remakeToSave];
         }
+    } else if (alertView.tag == ALERT_VIEW_TAG_SAVE_TO_CM_FAILED) {
+        if (buttonIndex == 1) {
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
     }
 }
 
@@ -1069,7 +1083,13 @@
     // on error, will not use the user's save token
     // so she may try to download the remake again.
     if (error) {
-        [self downloadFailedMessage];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"DOWNLOAD_FAILED_TO_SAVE_TO_CR_TITLE")
+                                                        message:LS(@"DOWNLOAD_FAILED_TO_SAVE_TO_CR_MESSAGE")
+                                                       delegate:self
+                                              cancelButtonTitle:LS(@"OK")
+                                              otherButtonTitles:LS(@"SETTINGS"), nil];
+        alert.tag = ALERT_VIEW_TAG_SAVE_TO_CM_FAILED;
+        [alert show];
         return;
     }
     
@@ -1197,10 +1217,6 @@
         if (self.remakeToSave == nil) return;
 
         // Finished with the in app store.
-        // Check if user now has permission to download and
-        // save to camera roll.
-        // If she paid for the download, continue with the download flow.
-        // [self startDownloadFlowForRemake:remake];
         
         // If still not allowed to download and save remake video
         // Will show the "not allowed" message and finish the download flow.

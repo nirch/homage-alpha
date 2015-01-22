@@ -12,7 +12,7 @@
 
 -(void)parse
 {
-    // Iterate all stories info
+    // The info of a single story.
     NSDictionary *info = self.objectToParse;
     
     //
@@ -21,11 +21,22 @@
     NSString *sID = info[@"_id"][@"$oid"];
     
     Story *story = [Story storyWithID:sID inContext:self.ctx];
-    
-    NSString *firstVersionActive = [info stringForKey:@"active_from"] ? [info stringForKey:@"active_from"] : nil;
-    NSString *lastVersionActive =  [info stringForKey:@"active_until"] ? [info stringForKey:@"active_until"] : nil;
-    
-    story.isActive =            [story isActiveInCurrentVersionFirstVersion:firstVersionActive LastVersionActive:lastVersionActive];
+
+    NSNumber *isActive = [info boolNumberForKey:@"active"];
+    if (![isActive isEqualToNumber:@YES]) {
+        // The story is not active in all versions!.
+        story.isActive = @NO;
+    } else {
+        story.isActive = @YES;
+//        NSString *firstVersionActive = [info stringForKey:@"active_from"] ? [info stringForKey:@"active_from"] : nil;
+//        NSString *lastVersionActive =  [info stringForKey:@"active_until"] ? [info stringForKey:@"active_until"] : nil;
+//        NSString *currentVersion = 
+//        story.isActive =               [self isActiveStory:story
+//                                                forVersion:currentVersion
+//                                        firstVersionActive:firstVersionActive
+//                                         lastVersionActive:lastVersionActive];
+    }
+
     story.remakesNumber =       [info numberForKey:@"remakes_num"];
     story.orderID =             [info numberForKey:@"order_id"];
     story.name =                [info stringForKey:@"name"];
@@ -139,6 +150,50 @@
     text.name =                     [info stringForKey:@"name"];
     text.descriptionText =          [info stringForKey:@"description"];
 }
+
+-(NSNumber *)isActiveStory:(Story *)story
+                forVersion:(NSString *)version
+        firstVersionActive:(NSString *)firstVersionActive
+         lastVersionActive:(NSString *)lastVersionActive
+{
+    // TODO: fix this strange logic when possible and be in sync with server side data.
+    
+    if (firstVersionActive == nil) return @NO;
+    
+    NSComparisonResult result = [version compare:firstVersionActive options:NSNumericSearch];
+    
+    if (( result == NSOrderedDescending || result == NSOrderedSame) && lastVersionActive == nil)
+    {
+        // firstVersionActive <= currentAppVersion and lastVersionActive == nil
+        return @YES;
+    }
+    
+    NSComparisonResult lowerBorderResult = [version compare:firstVersionActive options:NSNumericSearch];
+    NSComparisonResult upperBorderResult = [lastVersionActive compare:version options:NSNumericSearch];
+    
+    if ((lowerBorderResult == NSOrderedDescending || lowerBorderResult == NSOrderedSame) && (upperBorderResult == NSOrderedDescending || upperBorderResult == NSOrderedSame)) {
+        // firstVersionActive <= currentAppVersion <= lastVersionActive
+        return @YES;
+    }
+    
+    if ([firstVersionActive compare:version options:NSNumericSearch] == NSOrderedDescending)
+    {
+        //currentAppVersion < firstVersionActive
+        return @NO;
+    }
+    
+    if ([version compare:lastVersionActive options:NSNumericSearch] == NSOrderedDescending)
+    {
+        // lastVersionActive < currentAppVersion
+        return @NO;
+    }
+    
+    // unknown - (shouldn't happen. This is an error in the logic. debug this).
+    HMGLogDebug(@"firstVersionActive: %@ , currentAppVersion: %@ lastVersionActive: %@" , firstVersionActive , version , lastVersionActive);
+    return @NO;
+    
+}
+
 
 
 /**

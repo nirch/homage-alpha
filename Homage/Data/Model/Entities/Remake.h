@@ -2,8 +2,8 @@
 //  Remake.h
 //  Homage
 //
-//  Created by Aviv Wolf on 11/20/14.
-//  Copyright (c) 2014 Homage. All rights reserved.
+//  Created by Aviv Wolf on 1/20/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -21,7 +21,7 @@
 @property (nonatomic, retain) NSString * shareURL;
 @property (nonatomic, retain) NSString * sID;
 @property (nonatomic, retain) NSNumber * status;
-@property (nonatomic, retain) NSNumber * stillPublic;
+@property (nonatomic, retain) NSNumber * isPublic;
 @property (nonatomic, retain) id texts;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * userFullName;

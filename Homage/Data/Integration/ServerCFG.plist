@@ -26,6 +26,8 @@
 	<string>10</string>
 	<key>urls</key>
 	<dict>
+		<key>update push token</key>
+		<string>user/push_token</string>
 		<key>additional config</key>
 		<string>config</string>
 		<key>like remake</key>
