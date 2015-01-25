@@ -126,6 +126,7 @@
 
 -(void)deleteRawLocalFiles
 {
+    return; // TODO: finish implementation of delete local files.
     for (Footage *footage in self.footages)
         [footage deleteRawLocalFile];
 }

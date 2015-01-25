@@ -447,12 +447,12 @@
         [HMCacheManager.sh checkIfNeedsToDownloadAndCacheResources];
     });
     
-    // Clear temp files for remakes in "DONE" status
-    for (Remake *remake in self.fetchedResultsController.fetchedObjects) {
-        if (remake.status && remake.status.integerValue == HMGRemakeStatusDone) {
-            [remake deleteRawLocalFiles];
-        }
-    }
+//    // Clear temp files for remakes in "DONE" status
+//    for (Remake *remake in self.fetchedResultsController.fetchedObjects) {
+//        if (remake.status && remake.status.integerValue == HMGRemakeStatusDone) {
+//            [remake deleteRawLocalFiles];
+//        }
+//    }
 }
 
 -(void)onPulledToRefetch

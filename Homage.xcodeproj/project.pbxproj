@@ -55,8 +55,6 @@
 		083E74BC1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */; };
 		083E74BD1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */; };
 		083E74C21A70444300B4164D /* Monkey+-+Warm+Up.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */; };
-		083E74C31A70444300B4164D /* monkey+dance+-+lake+song.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74C01A70444300B4164D /* monkey+dance+-+lake+song.mp4 */; };
-		083E74C41A70444300B4164D /* monkey+dance+jungle.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74C11A70444300B4164D /* monkey+dance+jungle.mp4 */; };
 		083E74C81A704BD300B4164D /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 083E74C71A704BD300B4164D /* songLoop.m4a */; };
 		0840FF64188518ED00A6EF5E /* AWPieSliceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */; };
 		0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF63188518ED00A6EF5E /* AWPieSliceView.m */; };
@@ -510,8 +508,6 @@
 		083E74AA1A70369900B4164D /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
 		083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
 		083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Monkey+-+Warm+Up.mp4"; sourceTree = "<group>"; };
-		083E74C01A70444300B4164D /* monkey+dance+-+lake+song.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "monkey+dance+-+lake+song.mp4"; sourceTree = "<group>"; };
-		083E74C11A70444300B4164D /* monkey+dance+jungle.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "monkey+dance+jungle.mp4"; sourceTree = "<group>"; };
 		083E74C71A704BD300B4164D /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
 		0840FF60188518ED00A6EF5E /* AWPieSliceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPieSliceLayer.h; sourceTree = "<group>"; };
 		0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPieSliceLayer.m; sourceTree = "<group>"; };
@@ -1133,8 +1129,6 @@
 			isa = PBXGroup;
 			children = (
 				083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */,
-				083E74C01A70444300B4164D /* monkey+dance+-+lake+song.mp4 */,
-				083E74C11A70444300B4164D /* monkey+dance+jungle.mp4 */,
 			);
 			path = "bundled stories";
 			sourceTree = "<group>";
@@ -2169,7 +2163,6 @@
 				086F30A21A529B7100430D81 /* DINOT-CondBold.otf in Resources */,
 				086F30A41A529B7100430D81 /* HMRecorderMessageCommonView.xib in Resources */,
 				086F30A61A529B7100430D81 /* HMMeVideoPlayer.xib in Resources */,
-				083E74C41A70444300B4164D /* monkey+dance+jungle.mp4 in Resources */,
 				086F30A71A529B7100430D81 /* Storyboard_iPad.storyboard in Resources */,
 				086F30A81A529B7100430D81 /* HMPrivacyPolicyViewController.xib in Resources */,
 				086F30A91A529B7100430D81 /* HMRecorderBigVideoPlayerView.xib in Resources */,
@@ -2182,7 +2175,6 @@
 				08DA74431A5EA9AD007EFE69 /* ServerCFG.plist in Resources */,
 				086F30AE1A529B7100430D81 /* Settings.bundle in Resources */,
 				082D3E101A66CC0C0020D12E /* LabelPrivacyPolicy.txt in Resources */,
-				083E74C31A70444300B4164D /* monkey+dance+-+lake+song.mp4 in Resources */,
 				082D3E161A66CFC60020D12E /* LabelTOS.txt in Resources */,
 				086F30AF1A529B7100430D81 /* whatsapp@2x.png in Resources */,
 				085D782D1A626F3D001D835E /* introVideo.mp4 in Resources */,
@@ -2680,8 +2672,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2720,8 +2712,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2894,8 +2886,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tomer Harry (Y4D2J2HYEK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tomer Harry (Y4D2J2HYEK)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
@@ -2956,7 +2948,7 @@
 					UIKit,
 				);
 				PRODUCT_NAME = "Monkey Dance";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4b5bba94-0236-49cb-8ce6-41377b45e9ff";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
@@ -2969,8 +2961,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Smartoonz";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Smartoonz";
 				FRAMEWORK_SEARCH_PATHS = (
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
@@ -3031,7 +3023,7 @@
 					UIKit,
 				);
 				PRODUCT_NAME = "Monkey Dance";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b5621615-a1a4-4769-b1c5-20bf530b4d69";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WRAPPER_EXTENSION = app;
