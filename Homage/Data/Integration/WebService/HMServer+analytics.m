@@ -63,7 +63,7 @@
                              @"share_method":shareMethod,
                              @"share_status":success,
                              @"user_id":userID,
-                             @"application":application
+                             @"application":application?application:@"unknown"
                              };
     
     [self putRelativeURLNamed:@"share remake"

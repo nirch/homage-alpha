@@ -1495,9 +1495,6 @@
         return;
     }
     
-    // Allow sharing one at a time.
-    if (self.currentSharer) return;
-
     // Start the sharing flow.
     [self userWantsToShareRemake:remakeToShare];
 }
