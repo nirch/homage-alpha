@@ -54,14 +54,16 @@
          forRemake:(NSString *)remakeID
        shareMethod:(NSNumber *)shareMethod
       shareSuccess:(BOOL)shareSuccess
+       application:(NSString *)application
               info:(NSDictionary *)info {
-    NSNumber *success = [NSNumber numberWithBool:shareSuccess];
+    NSNumber *success = @(shareSuccess);
     // Parameters of the request
     NSDictionary *params = @{
                              @"share_id":shareID,
                              @"share_method":shareMethod,
                              @"share_status":success,
-                             @"user_id":userID
+                             @"user_id":userID,
+                             @"application":application
                              };
     
     [self putRelativeURLNamed:@"share remake"

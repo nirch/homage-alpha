@@ -23,6 +23,9 @@
 
 #define HM_NOTIFICATION_UI_USER_WANTS_TO_SAVE_REMAKE  @"user wants to save remake"
 
+#define HM_NOTIFICATION_UI_USER_WANTS_TO_SHARE_VIDEO_FILE_USING_WHATSAPP @"user wants to share video using whatsapp"
+
+
 // Fetches from the REST API.
 #define HM_NOTIFICATION_SERVER_USER_CREATION        @"Server New User"
 
@@ -110,7 +113,7 @@
 // AB Testing
 #define HM_NOTIFICATION_AB_TESTING_VARIATIONS_UPDATED @"got variations"
 
-//ADDITIONAL CONFIGURATIONS
+// ADDITIONAL CONFIGURATIONS
 #define HM_NOTIFICATION_SERVER_CONFIG @"additional confiurations"
 
 @interface HMNotificationCenter : NSObject

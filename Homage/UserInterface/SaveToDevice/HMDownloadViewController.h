@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "HMDownloadDelegate.h"
 
+typedef NS_ENUM(NSInteger, HMDownloadFlow) {
+    HMDownloadFlowSaveToCameraRoll,
+    HMDownloadFlowShare
+};
+
+
 @interface HMDownloadViewController : UIViewController
 
+@property (nonatomic) NSInteger downloadFlow;
 @property (nonatomic) id<HMDownloadDelegate> delegate;
 @property (nonatomic) NSDictionary *info;
 

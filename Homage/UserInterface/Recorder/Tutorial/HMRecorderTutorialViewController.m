@@ -12,6 +12,7 @@
 #import "HMAppDelegate.h"
 #import "HMABTester.h"
 #import "HMStyle.h"
+#import "HMServer+AppConfig.h"
 
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
@@ -41,6 +42,7 @@
 @property (nonatomic) UINavigationController *legalNavVC;
 @property (nonatomic) HMTOSViewController *tosVC;
 @property (nonatomic) HMPrivacyPolicyViewController *privacyVC;
+@property (nonatomic) NSInteger screensCount;
 
 @end
 
@@ -51,7 +53,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.index = 0;
+    self.screensCount = 2;
+    if ([HMServer.sh.configurationInfo[@"recorder_disclaimer"] boolValue]) {
+        self.screensCount += 1;
+    }
+    
+    
     [self hideAllAnimated:NO];
 }
 
@@ -156,7 +165,7 @@
 #pragma mark - Showing tutorial messages
 -(void)handleState
 {
-    if (self.index >= 3) {
+    if (self.index >= self.screensCount) {
         [self done];
         return;
     }

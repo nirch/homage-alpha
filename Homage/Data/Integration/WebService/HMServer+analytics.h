@@ -34,7 +34,8 @@ typedef NS_ENUM(NSInteger, HMShareMethod) {
     HMShareMethodMessage,
     HMShareMethodPostToWeibo,
     HMShareMethodPostToTwitter,
-    HMShareMethodSaveToCameraRoll
+    HMShareMethodSaveToCameraRoll,
+    HMShareMethodSendOrUploadVideoFile
 };
 
 typedef NS_ENUM(NSInteger, HMOrigScreen) {
@@ -86,6 +87,7 @@ typedef NS_ENUM(NSInteger, HMOrigScreen) {
          forRemake:(NSString *)remakeID
        shareMethod:(NSNumber *)shareMethod
       shareSuccess:(BOOL)shareSuccess
+       application:(NSString *)application
               info:(NSDictionary *)info;
 
 @end

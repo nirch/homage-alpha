@@ -215,17 +215,17 @@
     NSString *protocol;
     NSString *host;
 
-    #ifndef DEBUG
-    if (IS_TEST_APP) {
-        // Use test server on test apps
-        // (even on "Release" compilation)
-        self.bucketName = self.cfg[@"bucket_name"];
-        port = self.cfg[@"port"];
-        protocol = self.cfg[@"protocol"];
-        host = self.cfg[@"host"];
-        self.defaultsFileName = @"DefaultsCFGTest";
-        HMGLogNotice(@"Using test server (release app):%@", host);
-    } else {
+//    #ifndef DEBUG
+//    if (IS_TEST_APP) {
+//        // Use test server on test apps
+//        // (even on "Release" compilation)
+//        self.bucketName = self.cfg[@"bucket_name"];
+//        port = self.cfg[@"port"];
+//        protocol = self.cfg[@"protocol"];
+//        host = self.cfg[@"host"];
+//        self.defaultsFileName = @"DefaultsCFGTest";
+//        HMGLogNotice(@"Using test server (release app):%@", host);
+//    } else {
         // Release app for production.
         // Use production server urls and settings
         self.bucketName = self.cfg[@"prod_bucket_name"];
@@ -234,17 +234,17 @@
         host = self.cfg[@"prod_host"];
         self.defaultsFileName = @"DefaultsCFG";
         HMGLogNotice(@"Using prod server (release app):%@", host);
-    }
-    #else
-        // Just debugging the app. Use test server.
-        self.bucketName = self.cfg[@"bucket_name"];
-        port = self.cfg[@"port"];
-        protocol = self.cfg[@"protocol"];
-        host = self.cfg[@"host"];
-        self.defaultsFileName = @"DefaultsCFGTest";
-    HMGLogNotice(@"Using test server (debug app):%@", host);
-    #endif
-    
+//    }
+//    #else
+//        // Just debugging the app. Use test server.
+//        self.bucketName = self.cfg[@"bucket_name"];
+//        port = self.cfg[@"port"];
+//        protocol = self.cfg[@"protocol"];
+//        host = self.cfg[@"host"];
+//        self.defaultsFileName = @"DefaultsCFGTest";
+//    HMGLogNotice(@"Using test server (debug app):%@", host);
+//    #endif
+
     if (port) {
         _serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@", protocol, host, port]];
     } else {

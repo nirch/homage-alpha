@@ -2,7 +2,7 @@
 "TEST_LOCAL" = "Testing localization";
 
 /* Privacy policy and TOS */
-"PRIVACY_POLICY_TITLE" = "Monkey Dance Privacy Policy";
+"PRIVACY_POLICY_TITLE" = "Homage Privacy Policy";
 "TOS_TITLE" = "Terms and Conditions";
 
 /* Login screen */
@@ -179,13 +179,13 @@
 
 
 //share activity
-"DEFAULT_SHARE_MSG_SUBJECT" = "Check my awesome clip \"%@\" : \n";
+"DEFAULT_SHARE_MSG_SUBJECT" = "Check my awesome video \"%@\" : \n";
 "SHARE_MSG_BODY" = "%@: \n %@";
-"DEFUALT_SHARE_MSG_BODY" = "Check my clip \"%@\": \n\n %@";
+"DEFUALT_SHARE_MSG_BODY" = "Check my video \"%@\": \n\n %@";
 "SHARE_MSG_BODY_HASHTAGS" = " #Homage #Homage%@ #%@";
 
-"SHARING_APP_SUBJECT" = "Let's Monkey See Monkey Dance!";
-"SHARING_APP_BODY_MESSAGE" = "Let's Monkey Dance!\n\n iPhone: %@\nAndroid: %@";
+"SHARING_APP_SUBJECT" = "Join me in making awesome clips!";
+"SHARING_APP_BODY_MESSAGE" = "Keep calm and download homage\n\n iPhone: %@\nAndroid: %@";
 
 //share alerts
 "SHARE_REMAKE_FAILED_TITLE" = "Failed sharing clip";
@@ -196,6 +196,8 @@
 "SHARE_ITEM_OPTION_FILE" = "Share video file";
 "SHARE_ITEM_OPTION_LINK" = "Share a link";
 "SHARE_ITEM_OPTION_SAVE_TO_CR" = "Save to camera roll";
+
+
 
 /*remake options menu*/
 "OPTIONS" = "Options";
@@ -214,9 +216,9 @@
 "STORE_MISSING_PRODUCT_TITLE" = "Missing product";
 "STORE_ITEM_UNLOCKED" = "Unlocked";
 "STORE_MISSING_PRODUCT_TEXT" = "The product is temporarily unavailable. Try again later.";
-"STORE_TITLE" = "MONKEY STORE";
+"STORE_TITLE" = "IN APP STORE";
 "STORE_STORIES_TITLE" = "STORIES";
-"STORE_PLEASE_WAIT" = "Monkey Store...";
+"STORE_PLEASE_WAIT" = "Opening Store...";
 
 "STORE_ALREADY_HAVE_DOWNLOAD_TOKENS_TITLE" = "Are you sure?";
 "STORE_ALREADY_HAVE_DOWNLOAD_TOKEN" = "You already have an unused download token. You can use it in the 'My Clips' screen. Are you sure you want to purchase another one?";
@@ -240,12 +242,12 @@
 "DOWNLOAD_FAILED_MESSAGE" = "Failed to download clip. Check connectivity and retry downloading.";
 
 "DOWNLOAD_NOT_ALLOWED_TITLE" = "Not allowed";
-"DOWNLOAD_NOT_ALLOWED_PREMIUM_MESSAGE" = "You are not allowed save to camera roll. Please purchase the full bundle or a download token from the monkey store.";
+"DOWNLOAD_NOT_ALLOWED_PREMIUM_MESSAGE" = "You are not allowed to save to camera roll. Please purchase the full bundle or a download token from the store.";
 
 "DOWNLOAD_SAVE_PREMIUM_TITLE" = "Save to camera roll";
 "DOWNLOAD_SAVE_PREMIUM_MESSAGE" = "Pay for a single download or buy the full bundle for unrestricted access.";
 
-"DOWNLOAD_STORE" = "Open Monkey Store";
+"DOWNLOAD_STORE" = "Open Store";
 "DOWNLOAD_CANCEL" = "Cancel";
 
 "DOWNLOAD_FAILED_TO_SAVE_TO_CR_TITLE" = "Failed to save";

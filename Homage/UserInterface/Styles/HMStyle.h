@@ -57,6 +57,7 @@
 //
 
 // Misc
+#define C_HIDE_APP_VIEW_BG @"colorHideAppViewBG"
 #define C_REFRESH_CONTROL_TINT @"colorRefreshControlTint"
 #define C_ACTIVITY_CONTROL_TINT @"colorActivityControlTint"
 
@@ -179,6 +180,11 @@
 // Downloading
 #define C_DOWNLOAD_CONTAINER @"colorDownloadContainer"
 #define C_DOWNLOAD_ACTIVITY @"colorDownloadActivity"
+
+#define C_DOWNLOAD_CANCEL_BUTTON_BG @"colorDownloadCancelButtonBG"
+#define C_DOWNLOAD_CANCEL_BUTTON_X @"colorDownloadCancelButtonX"
+#define C_DOWNLOAD_CANCEL_BUTTON_BORDER @"colorDownloadCancelButtonBorder"
+
 #define C_DOWNLOAD_TITLE @"colorDownloadTitle"
 
 

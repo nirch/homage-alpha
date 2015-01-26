@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080066B61A74E85000FD9857 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 080066B51A74E85000FD9857 /* Localizable.strings */; };
 		080120121A068F11002F10B2 /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120111A068F11002F10B2 /* HMRefreshControl.m */; };
 		080120141A069043002F10B2 /* HMRefreshControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080120131A069043002F10B2 /* HMRefreshControl.xib */; };
 		080120171A08C045002F10B2 /* HMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120161A08C045002F10B2 /* HMNavigationController.m */; };
@@ -150,7 +151,6 @@
 		086F300C1A529B7100430D81 /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E418FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m */; };
 		086F300D1A529B7100430D81 /* HMStoreBuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97361A4634E2009B998C /* HMStoreBuyButton.m */; };
 		086F300E1A529B7100430D81 /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
-		086F300F1A529B7100430D81 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB4D691A40D6AD00711835 /* Story.m */; };
 		086F30111A529B7100430D81 /* HMSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C1CD3919F917E300FF0770 /* HMSplashViewController.m */; };
 		086F30121A529B7100430D81 /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */; };
 		086F30131A529B7100430D81 /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E618FFFD40002E8CB7 /* IASKSpecifier.m */; };
@@ -268,6 +268,8 @@
 		086F30B01A529B7100430D81 /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
 		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
+		08793D2A1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
+		08793D2B1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
 		08832E9F1A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
 		08832EA01A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
 		0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
@@ -371,7 +373,6 @@
 		08FA972F1A46120E009B998C /* HMStoreProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA972E1A46120E009B998C /* HMStoreProductCollectionViewCell.m */; };
 		08FA97331A4631DC009B998C /* HMStoreSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97321A4631DC009B998C /* HMStoreSectionView.m */; };
 		08FA97371A4634E2009B998C /* HMStoreBuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97361A4634E2009B998C /* HMStoreBuyButton.m */; };
-		08FB4D6A1A40D6AD00711835 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB4D691A40D6AD00711835 /* Story.m */; };
 		26385938189550DC003A7B3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
 		263C4484192E6BA400AD82EC /* Contour+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C4483192E6BA400AD82EC /* Contour+Factory.m */; };
 		263C448D192F4E5E00AD82EC /* Contour.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C448C192F4E5E00AD82EC /* Contour.m */; };
@@ -447,6 +448,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080066B51A74E85000FD9857 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		080120101A068F11002F10B2 /* HMRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRefreshControl.h; sourceTree = "<group>"; };
 		080120111A068F11002F10B2 /* HMRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRefreshControl.m; sourceTree = "<group>"; };
 		080120131A069043002F10B2 /* HMRefreshControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRefreshControl.xib; sourceTree = "<group>"; };
@@ -592,6 +594,8 @@
 		087052881A5CFFD800E22066 /* HMStoreManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreManagerDelegate.h; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		08793D281A75474100B2F91C /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
+		08793D291A75474100B2F91C /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		08832E9D1A6E8AC200E7772A /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		08832E9E1A6E8AC200E7772A /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_LocalStorage_Tests.m; sourceTree = "<group>"; };
@@ -713,6 +717,7 @@
 		08DF231C1892704300912657 /* HMStoryDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMStoryDetailsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		08DF231D1892704300912657 /* HMStoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HMStoryDetailsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DF231E1892704300912657 /* HMStoryPresenterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoryPresenterProtocol.h; sourceTree = "<group>"; };
+		08E440A61A7542E00076DB35 /* Model191.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model191.xcdatamodel; sourceTree = "<group>"; };
 		08E50EC0188685E1001A8B75 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme.txt; sourceTree = "<group>"; };
 		08E50EC9188697CE001A8B75 /* HMRoundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRoundView.h; sourceTree = "<group>"; };
 		08E50ECA188697CE001A8B75 /* HMRoundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRoundView.m; sourceTree = "<group>"; };
@@ -720,6 +725,7 @@
 		08E50ECE1886994A001A8B75 /* HMRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRoundButton.m; sourceTree = "<group>"; };
 		08E50ED118869ADD001A8B75 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		08E50ED218869ADD001A8B75 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
+		08E761511A76C1D000A87DA9 /* HMSharingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSharingDelegate.h; sourceTree = "<group>"; };
 		08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		08EA3B3119D9DD8A00B074DA /* HMRegularFontButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRegularFontButton.h; sourceTree = "<group>"; };
 		08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRegularFontButton.m; sourceTree = "<group>"; };
@@ -747,8 +753,6 @@
 		08FA97361A4634E2009B998C /* HMStoreBuyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoreBuyButton.m; sourceTree = "<group>"; };
 		08FA97391A46C01E009B998C /* HMStoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreDelegate.h; sourceTree = "<group>"; };
 		08FB4D531A40771200711835 /* Model180.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model180.xcdatamodel; sourceTree = "<group>"; };
-		08FB4D681A40D6AD00711835 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
-		08FB4D691A40D6AD00711835 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		1ED3A430529290A1F8D55577 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2638593518954AA4003A7B3D /* HMSimpleVideoPlayerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSimpleVideoPlayerDelegate.h; sourceTree = "<group>"; };
 		26385936189550DC003A7B3D /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "App/supporting files/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -897,6 +901,22 @@
 				C6B4A0D3661F7086E1C965A9 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		080066B31A74E85000FD9857 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				080066B41A74E85000FD9857 /* supporting files */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		080066B41A74E85000FD9857 /* supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				080066B51A74E85000FD9857 /* Localizable.strings */,
+			);
+			path = "supporting files";
 			sourceTree = "<group>";
 		};
 		0801200F1A068EEC002F10B2 /* Custom Refresh View */ = {
@@ -1284,6 +1304,7 @@
 		084E90D11A00E10400779030 /* sharing */ = {
 			isa = PBXGroup;
 			children = (
+				08E761511A76C1D000A87DA9 /* HMSharingDelegate.h */,
 				084E90D21A00E12800779030 /* HMSharing.h */,
 				084E90D31A00E12800779030 /* HMSharing.m */,
 			);
@@ -1303,6 +1324,7 @@
 			isa = PBXGroup;
 			children = (
 				086F30B81A529CA500430D81 /* Homage-Info.plist */,
+				080066B31A74E85000FD9857 /* App */,
 				085D78211A617EFC001D835E /* Data */,
 				085AFF3F1A52A2850066493F /* User Interface */,
 				0856C1B61A14BC4200735632 /* media resources */,
@@ -1439,14 +1461,14 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				08793D281A75474100B2F91C /* Story.h */,
+				08793D291A75474100B2F91C /* Story.m */,
 				08832E9D1A6E8AC200E7772A /* Remake.h */,
 				08832E9E1A6E8AC200E7772A /* Remake.m */,
 				082D3E0B1A668D930020D12E /* Footage.h */,
 				082D3E0C1A668D930020D12E /* Footage.m */,
 				08F9EBB31A5457A6000CFCAD /* Scene.h */,
 				08F9EBB41A5457A6000CFCAD /* Scene.m */,
-				08FB4D681A40D6AD00711835 /* Story.h */,
-				08FB4D691A40D6AD00711835 /* Story.m */,
 				268A380D1974AE650016C59C /* User.h */,
 				268A380E1974AE650016C59C /* User.m */,
 				263C448B192F4E5E00AD82EC /* Contour.h */,
@@ -2113,6 +2135,7 @@
 				085AFF491A52A8B90066493F /* DefaultsCFGTest.plist in Resources */,
 				080120141A069043002F10B2 /* HMRefreshControl.xib in Resources */,
 				0856C1C11A14BC4200735632 /* recordingEnd.wav in Resources */,
+				080066B61A74E85000FD9857 /* Localizable.strings in Resources */,
 				2655DF5618EDA4D200CA362F /* HMTOSViewController.xib in Resources */,
 				08455FFF1890458E0040504D /* RecorderStoryboard.storyboard in Resources */,
 				0864E0581A4F42E900F7AEB7 /* DINOT-CondBold.otf in Resources */,
@@ -2348,7 +2371,6 @@
 				08FA97371A4634E2009B998C /* HMStoreBuyButton.m in Sources */,
 				08832E9F1A6E8AC200E7772A /* Remake.m in Sources */,
 				26B498AA18B5FD7100026401 /* HMMotionDetector.m in Sources */,
-				08FB4D6A1A40D6AD00711835 /* Story.m in Sources */,
 				08C1CD3A19F917E300FF0770 /* HMSplashViewController.m in Sources */,
 				08DF23261892704300912657 /* HMGUserRemakeCVCell.m in Sources */,
 				268341FB18FFFD40002E8CB7 /* IASKSpecifier.m in Sources */,
@@ -2436,6 +2458,7 @@
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
 				08EA813A1A213EB400742251 /* HMStoriesTutorial.m in Sources */,
+				08793D2A1A75474100B2F91C /* Story.m in Sources */,
 				268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */,
 				08DA745A1A5EA9AD007EFE69 /* HMServer+Users.m in Sources */,
 				080120121A068F11002F10B2 /* HMRefreshControl.m in Sources */,
@@ -2492,7 +2515,6 @@
 				086F300D1A529B7100430D81 /* HMStoreBuyButton.m in Sources */,
 				08832EA01A6E8AC200E7772A /* Remake.m in Sources */,
 				086F300E1A529B7100430D81 /* HMMotionDetector.m in Sources */,
-				086F300F1A529B7100430D81 /* Story.m in Sources */,
 				086F30111A529B7100430D81 /* HMSplashViewController.m in Sources */,
 				086F30121A529B7100430D81 /* HMGUserRemakeCVCell.m in Sources */,
 				086F30131A529B7100430D81 /* IASKSpecifier.m in Sources */,
@@ -2580,6 +2602,7 @@
 				086F306A1A529B7100430D81 /* IASKAppSettingsViewController.m in Sources */,
 				086F306B1A529B7100430D81 /* UIImage+ImageEffects.m in Sources */,
 				086F306C1A529B7100430D81 /* HMStoriesTutorial.m in Sources */,
+				08793D2B1A75474100B2F91C /* Story.m in Sources */,
 				086F306D1A529B7100430D81 /* IASKSpecifierValuesViewController.m in Sources */,
 				08DA745B1A5EA9AD007EFE69 /* HMServer+Users.m in Sources */,
 				086F306E1A529B7100430D81 /* HMRefreshControl.m in Sources */,
@@ -3163,6 +3186,7 @@
 		0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				08E440A61A7542E00076DB35 /* Model191.xcdatamodel */,
 				082D3E0A1A668CC40020D12E /* Model190.xcdatamodel */,
 				08F9EBAE1A545680000CFCAD /* Model181.xcdatamodel */,
 				08FB4D531A40771200711835 /* Model180.xcdatamodel */,
@@ -3174,7 +3198,7 @@
 				F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */,
 				0806FB33188295CD00F0EF50 /* Model.xcdatamodel */,
 			);
-			currentVersion = 082D3E0A1A668CC40020D12E /* Model190.xcdatamodel */;
+			currentVersion = 08E440A61A7542E00076DB35 /* Model191.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

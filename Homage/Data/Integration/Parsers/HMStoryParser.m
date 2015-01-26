@@ -15,13 +15,6 @@
     // The info of a single story.
     NSDictionary *info = self.objectToParse;
     
-//    NSString *name = [info stringForKey:@"name"];
-//    if ([name containsString:@"Street"]) {
-//        NSLog(@"!!!!");
-//    }
-
-//    NSLog(@">>>>>> %@", info[@"name"]);
-    
     //
     // Parse a story.
     //
@@ -52,6 +45,7 @@
     story.thumbnailURL =        [info stringForKey:@"thumbnail"];
     story.shareMessage =        [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
     story.isPremium =           [info boolNumberForKey:@"is_premium"];
+    story.sharingVideoAllowed = @YES; //[info boolNumberForKey:@"sharing_video_allowed"];
     
     // Parse the scenes of this story.
     BOOL allScenesAreSelfie = YES;

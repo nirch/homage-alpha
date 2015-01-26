@@ -20,8 +20,10 @@
 @property (weak, nonatomic) IBOutlet HMBoldFontLabel *guiDownloadingLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiDownloadingActivity;
 @property (weak, nonatomic) IBOutlet UIProgressView *guiProgressView;
+@property (weak, nonatomic) IBOutlet UIButton *guiCancelButton;
 
 @property (nonatomic) NSDate *startTime;
+@property (nonatomic) NSURLSessionDownloadTask *downloadTask;
 
 @end
 
@@ -31,6 +33,7 @@
 +(HMDownloadViewController *)downloadVCInParentVC:(UIViewController *)parentVC
 {
     HMDownloadViewController *vc = [[HMDownloadViewController alloc] initWithDefaultNibInParentVC:parentVC];
+    vc.downloadFlow = HMDownloadFlowSaveToCameraRoll;
     return vc;
 }
 
@@ -49,6 +52,13 @@
     [self initGUI];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.guiCancelButton.center = self.guiDownloadContainer.frame.origin;
+}
+
+
 -(void)initGUI
 {
     [[AMBlurView new] insertIntoView:self.view];
@@ -64,6 +74,11 @@
     layer.shadowOffset = CGSizeMake(10,10);
     layer.shadowRadius = 10;
     layer.shadowOpacity = 1;
+   
+    // Cancel button
+    CALayer *cbLayer = self.guiCancelButton.layer;
+    cbLayer.cornerRadius = cbLayer.bounds.size.width / 2;
+    cbLayer.borderWidth = 2;
     
     // Start time
     self.startTime = [NSDate date];
@@ -75,8 +90,17 @@
     self.guiDownloadingLabel.textColor = [HMStyle.sh colorNamed:C_DOWNLOAD_TITLE];
     self.guiDownloadingActivity.color = [HMStyle.sh colorNamed:C_DOWNLOAD_ACTIVITY];
     self.guiProgressView.progressTintColor = [HMStyle.sh colorNamed:C_DOWNLOAD_TITLE];
+
+    self.guiCancelButton.backgroundColor = [HMStyle.sh colorNamed:C_DOWNLOAD_CANCEL_BUTTON_BG];
+    [self.guiCancelButton setTitleColor:[HMStyle.sh colorNamed:C_DOWNLOAD_CANCEL_BUTTON_X] forState:UIControlStateNormal];
+    cbLayer.borderColor = [HMStyle.sh colorNamed:C_DOWNLOAD_CANCEL_BUTTON_BORDER].CGColor;
 }
 
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.guiCancelButton.center = self.guiDownloadContainer.frame.origin;
+}
 
 #pragma mark - Downloading.
 -(void)startDownloadResourceFromURL:(NSURL *)url toLocalFolder:(NSURL *)localFolder
@@ -92,8 +116,8 @@
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+
+    self.downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         
         // The local url to download to.
         NSURL *path = [remakesCachePath URLByAppendingPathComponent:[response suggestedFilename]];
@@ -120,8 +144,9 @@
         
     }];
     self.guiProgressView.hidden = NO;
-    [self.guiProgressView setProgressWithDownloadProgressOfTask:downloadTask animated:YES];
-    [downloadTask resume];
+    [self.guiProgressView setProgressWithDownloadProgressOfTask:self.downloadTask
+                                                       animated:YES];
+    [self.downloadTask resume];
 }
 
 -(void)startSavingToCameraRoll
@@ -167,6 +192,12 @@
                          [self.view removeFromSuperview];
                          [self removeFromParentViewController];
                      }];
+}
+
+- (IBAction)onPressedCancelButton:(id)sender
+{
+    [self cancel];
+    [self.downloadTask cancel];
 }
 
 @end

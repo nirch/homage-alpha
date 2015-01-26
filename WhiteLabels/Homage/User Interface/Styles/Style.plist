@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>fonts</key>
+	<dict>
+		<key>fontRegular</key>
+		<string>Avenir Book</string>
+		<key>fontRegularDefaultStrokeSize</key>
+		<integer>0</integer>
+		<key>fontRegularDefaultStrokeColor</key>
+		<string>@clear</string>
+		<key>fontBold</key>
+		<string>DINOT-CondBold</string>
+		<key>fontBoldDefaultStrokeSize</key>
+		<string>0</string>
+		<key>fontBoldDefaultStrokeColor</key>
+		<string>@clear</string>
+	</dict>
 	<key>values</key>
 	<dict>
 		<key>_styleClassSideBarNavigationButton</key>
@@ -9,17 +24,17 @@
 			<key>fontResize</key>
 			<integer>7</integer>
 		</dict>
-		<key>_styleClassRecorderRecordCountDown</key>
+		<key>styleClassRecorderRecordCountDown</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>-18</integer>
+			<integer>-12</integer>
 			<key>strokeSize</key>
-			<string>0</string>
+			<string>3</string>
 		</dict>
-		<key>_styleClassNavigationTitle</key>
+		<key>styleClassNavigationTitle</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>5</integer>
+			<integer>3</integer>
 		</dict>
 		<key>_styleClassBigTitle</key>
 		<dict>
@@ -33,20 +48,20 @@
 			<key>strokeSize</key>
 			<string>0</string>
 		</dict>
-		<key>_styleClassBigButtons</key>
+		<key>styleClassBigButtons</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>8</integer>
+			<integer>3</integer>
 		</dict>
 		<key>_styleClassTextBanner</key>
 		<dict>
 			<key>fontResize</key>
 			<integer>5</integer>
 		</dict>
-		<key>_styleClassRenderingBar</key>
+		<key>styleClassRenderingBar</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>7</integer>
+			<integer>4</integer>
 		</dict>
 		<key>_styleClassSDDescriptionText</key>
 		<dict>
@@ -68,55 +83,46 @@
 			<string>0</string>
 		</dict>
 		<key>valueSplashActivityPosition</key>
-		<integer>190</integer>
+		<integer>270</integer>
 		<key>valueSplashActivityCirclesCount</key>
-		<string>7</string>
+		<string>5</string>
 		<key>valueSplashActivityCirclesRadius</key>
-		<string>7</string>
+		<string>6</string>
 		<key>valueStoreThumbsCornerRadius</key>
 		<integer>6</integer>
 		<key>valueRecorderButtonOutline</key>
-		<integer>7</integer>
-	</dict>
-	<key>fonts</key>
-	<dict>
-		<key>fontRegular</key>
-		<string>Avenir Book</string>
-		<key>fontRegularDefaultStrokeSize</key>
-		<integer>0</integer>
-		<key>fontRegularDefaultStrokeColor</key>
-		<string>@clear</string>
-		<key>fontBold</key>
-		<string>DINOT-CondBold</string>
-		<key>fontBoldDefaultStrokeSize</key>
-		<string>0</string>
-		<key>fontBoldDefaultStrokeColor</key>
-		<string>@clear</string>
+		<integer>3</integer>
 	</dict>
 	<key>colors</key>
 	<dict>
-		<key>downloading</key>
-		<dict>
-			<key>colorDownloadContainer</key>
-			<string>@darker</string>
-			<key>colorDownloadActivity</key>
-			<string>@impact</string>
-			<key>colorDownloadTitle</key>
-			<string>@impact</string>
-		</dict>
 		<key>misc</key>
 		<dict>
 			<key>colorVideoTitles</key>
 			<string>@impact</string>
+			<key>colorHideAppViewBG</key>
+			<string>@theVoid</string>
 			<key>colorActivityControlTint</key>
 			<string>@impact</string>
 			<key>colorRefreshControlTint</key>
-			<string>@bright</string>
+			<string>@impact</string>
+		</dict>
+		<key>downloading</key>
+		<dict>
+			<key>colorDownloadContainer</key>
+			<string>@darkest</string>
+			<key>colorDownloadActivity</key>
+			<string>@impact</string>
+			<key>colorDownloadCancelButtonBG</key>
+			<string>@darker</string>
+			<key>colorDownloadCancelButtonX</key>
+			<string>@impact</string>
+			<key>colorDownloadCancelButtonBorder</key>
+			<string>@impact</string>
+			<key>colorDownloadTitle</key>
+			<string>@impact</string>
 		</dict>
 		<key>recorder</key>
 		<dict>
-			<key>colorRecorderCloseButtonX</key>
-			<string>@impact</string>
 			<key>colorRecorderTutorialText</key>
 			<string>@impact</string>
 			<key>colorRecorderTutorialButton</key>
@@ -124,7 +130,9 @@
 			<key>colorRecorderRecordButton</key>
 			<string>@record</string>
 			<key>colorRecorderRecordButtonOutline</key>
-			<string>@darker</string>
+			<string>@bright</string>
+			<key>colorRecorderCloseButtonX</key>
+			<string>@darkest</string>
 			<key>colorRecorderRecordButtonCountDownBG1</key>
 			<string>@record</string>
 			<key>colorRecorderRecordButtonCountDownBG2</key>
@@ -134,42 +142,38 @@
 			<key>colorRecorderImpactButtonText</key>
 			<string>@darkest</string>
 			<key>colorRecorderMessageTitle</key>
-			<string>@impact</string>
+			<string>@bright</string>
 			<key>colorRecorderMessageText</key>
 			<string>@normalText</string>
 			<key>colorRecorderMessageActionButton</key>
 			<string>@impact</string>
 			<key>colorRecorderRecordingProgressBar</key>
-			<string>@impactSeeThrough</string>
+			<string>@brightSeeThrough</string>
 			<key>colorRecorderVideoTitles</key>
 			<string>@impact</string>
 			<key>colorRecorderDrawerBG</key>
-			<string>#ff000055</string>
-			<key>colorRecorderDrawerSepLine</key>
 			<string>@darkSeeThrough</string>
+			<key>colorRecorderDrawerSepLine</key>
+			<string>@bright</string>
 			<key>colorRecorderSceneInfoTitle</key>
-			<string>@impact</string>
+			<string>@bright</string>
 			<key>colorRecorderSceneInfoData</key>
 			<string>@impact</string>
 		</dict>
 		<key>rendering bar</key>
 		<dict>
 			<key>colorRenderingBarBG</key>
-			<string>@bright</string>
-			<key>colorRenderingBarText</key>
 			<string>@impact</string>
+			<key>colorRenderingBarText</key>
+			<string>@darkest</string>
 		</dict>
 		<key>splash</key>
 		<dict>
 			<key>colorsArraySplashActivityIndicator</key>
 			<array>
-				<string>#6655D3</string>
-				<string>#2693D5</string>
-				<string>#FD7A29</string>
-				<string>#ED1B72</string>
-				<string>#1F9239</string>
-				<string>#FEC92F</string>
-				<string>#D81A27</string>
+				<string>#FF7656</string>
+				<string>#EE7656</string>
+				<string>#DD7656</string>
 			</array>
 			<key>colorSplashActivityIndicator</key>
 			<string>@impact</string>
@@ -179,11 +183,11 @@
 			<key>colorStatusBarBG</key>
 			<string>@darkest</string>
 			<key>colorSideNavBarSeparator</key>
-			<string>@bright</string>
+			<string>@darkest</string>
 			<key>colorSideNavBarOptionText</key>
-			<string>@impact</string>
+			<string>@darkest</string>
 			<key>colorSideNavBarBG</key>
-			<string>@veryDark</string>
+			<string>@impact</string>
 			<key>colorSideNavBarLoginButton</key>
 			<string>@normalText</string>
 			<key>colorSideNavBarTopContainer</key>
@@ -195,7 +199,7 @@
 			<key>colorNavBarSeparator</key>
 			<string>@darker</string>
 			<key>colorNavBarBackground</key>
-			<string>@darker</string>
+			<string>@darkSeeThrough</string>
 		</dict>
 		<key>login</key>
 		<dict>
@@ -240,43 +244,43 @@
 		<key>stories</key>
 		<dict>
 			<key>colorStoriesText</key>
-			<string>@impact</string>
+			<string>@normalText</string>
 		</dict>
 		<key>me screen</key>
 		<dict>
 			<key>colorMeText</key>
 			<string>@normalText</string>
 			<key>colorMeRemakeButtonBG</key>
-			<string>@darker</string>
-			<key>colorMeRemakeButtonText</key>
 			<string>@impact</string>
+			<key>colorMeRemakeButtonText</key>
+			<string>@darkest</string>
 			<key>colorMeCreateFirstVideoText</key>
 			<string>@impact</string>
 		</dict>
 		<key>story details</key>
 		<dict>
 			<key>colorSDText</key>
-			<string>@impact</string>
+			<string>@normalText</string>
 			<key>colorSDDescriptionText</key>
-			<string>@impact</string>
+			<string>@normalText</string>
 			<key>colorSDDescriptionBG</key>
-			<string>@bright</string>
+			<string>@darkest</string>
 			<key>colorSDMoreRemakesTitleText</key>
 			<string>@impact</string>
 			<key>colorSDMoreRemakesTitleBG</key>
-			<string>@darker</string>
+			<string>@darkest</string>
 			<key>colorSDRemakeButtonBG</key>
-			<string>@darker</string>
-			<key>colorSDRemakeButtonText</key>
 			<string>@impact</string>
+			<key>colorSDRemakeButtonText</key>
+			<string>@darkest</string>
 			<key>colorSDNoRemakesLabel</key>
 			<string>@impactSeeThrough</string>
 			<key>colorSDRemakeInfoText</key>
-			<string>@impact</string>
+			<string>@normalText</string>
 			<key>colorsArraySDMoreRemakesActivityIndicator</key>
 			<array>
-				<string>#552C17</string>
-				<string>#361915</string>
+				<string>#FF7656</string>
+				<string>#EE7656</string>
 			</array>
 		</dict>
 		<key>store</key>
@@ -313,28 +317,38 @@
 	</dict>
 	<key>palette</key>
 	<dict>
+		<key>@theVoid</key>
+		<string>#00000077</string>
 		<key>@clear</key>
 		<string>#00000000</string>
-		<key>@darkSeeThrough</key>
-		<string>#00000066</string>
+		<key>@record</key>
+		<string>#FF7656</string>
 		<key>@normalText</key>
-		<string>#FFFFFF</string>
-		<key>@bright</key>
 		<string>#FFFFFF</string>
 		<key>@impact</key>
 		<string>#FF7656</string>
 		<key>@impactSeeThrough</key>
 		<string>#FF765699</string>
+		<key>@darkSeeThrough</key>
+		<string>#00000044</string>
 		<key>@dark</key>
+		<string>#000000</string>
+		<key>@darker</key>
 		<string>#222222</string>
+		<key>@veryDark</key>
+		<string>#000000</string>
 		<key>@darkest</key>
 		<string>#000000</string>
+		<key>@darkOverlay</key>
+		<string>#00000022</string>
 		<key>@error</key>
 		<string>#FF2523</string>
 		<key>@faded1</key>
 		<string>#B8B8B8</string>
 		<key>@faded2</key>
 		<string>#686868</string>
+		<key>@faded3</key>
+		<string>#949695</string>
 	</dict>
 </dict>
 </plist>

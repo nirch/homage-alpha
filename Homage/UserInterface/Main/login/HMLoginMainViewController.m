@@ -886,7 +886,8 @@ typedef NS_ENUM(NSInteger, HMLoginError) {
                              @"nir.channes@gmail.com",
                              @"ranpeer@gmail.com",
                              @"tomer.harry@gmail.com",
-                             @"hiorit@gmail.com"
+                             @"hiorit@gmail.com",
+                            // @"aviv.israel@gmail.com"
                              ];
     for (NSString *toBeExcludedMail in excludeList)
     {

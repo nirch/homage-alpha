@@ -101,6 +101,12 @@
 			<string>@darker</string>
 			<key>colorDownloadActivity</key>
 			<string>@impact</string>
+			<key>colorDownloadCancelButtonBG</key>
+			<string>@darker</string>
+			<key>colorDownloadCancelButtonX</key>
+			<string>@bright</string>
+			<key>colorDownloadCancelButtonBorder</key>
+			<string>@bright</string>
 			<key>colorDownloadTitle</key>
 			<string>@impact</string>
 		</dict>
@@ -111,7 +117,7 @@
 			<key>colorActivityControlTint</key>
 			<string>@impact</string>
 			<key>colorRefreshControlTint</key>
-			<string>@bright</string>
+			<string>@impact</string>
 		</dict>
 		<key>recorder</key>
 		<dict>
@@ -140,7 +146,7 @@
 			<key>colorRecorderMessageActionButton</key>
 			<string>@impact</string>
 			<key>colorRecorderRecordingProgressBar</key>
-			<string>@brightSeeThrough</string>
+			<string>@impactSeeThrough</string>
 			<key>colorRecorderVideoTitles</key>
 			<string>@impact</string>
 			<key>colorRecorderDrawerBG</key>

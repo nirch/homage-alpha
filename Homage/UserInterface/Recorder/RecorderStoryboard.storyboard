@@ -1189,7 +1189,7 @@
         <image name="iconMediumPlayerStop" width="35" height="35"/>
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="iconRowIndicator" width="10" height="23"/>
-        <image name="iconSceneDescriptionBW" width="46" height="46"/>
+        <image name="iconSceneDescriptionBW" width="27" height="22"/>
         <image name="iconSceneLocked" width="45" height="45"/>
         <image name="iconSceneRetake" width="20" height="20"/>
         <image name="iconSceneScriptLighter" width="22" height="20"/>

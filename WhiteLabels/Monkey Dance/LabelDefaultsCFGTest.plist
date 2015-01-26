@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>share_link_prefix</key>
+	<string>http://play-test.homage.it</string>
 	<key>song_loop</key>
 	<string>songLoop.m4a</string>
 	<key>song_loop_volume</key>
@@ -34,5 +36,11 @@
 	<integer>2</integer>
 	<key>_recorder_forced_bbg_policy</key>
 	<integer>0</integer>
+	<key>recorder_disclaimer</key>
+	<true/>
+	<key>download_app_ios_url</key>
+	<string>http://app-test.homage.it/ios?src=ios</string>
+	<key>download_app_android_url</key>
+	<string>http://app-test.homage.it/android?src=ios</string>
 </dict>
 </plist>

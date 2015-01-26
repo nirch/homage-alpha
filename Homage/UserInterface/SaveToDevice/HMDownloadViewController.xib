@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HMDownloadViewController">
             <connections>
+                <outlet property="guiCancelButton" destination="eB1-gq-5XQ" id="8ng-Qq-Z2n"/>
                 <outlet property="guiDownloadContainer" destination="qhF-nL-1Sr" id="KAI-Gy-QQh"/>
                 <outlet property="guiDownloadingActivity" destination="6Zb-rI-50j" id="N8L-Ji-Uia"/>
                 <outlet property="guiDownloadingLabel" destination="MRt-GX-hJY" id="vaK-7w-ygz"/>
@@ -24,25 +25,37 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MRt-GX-hJY" customClass="HMBoldFontLabel">
-                            <rect key="frame" x="53" y="0.0" width="205" height="77"/>
+                            <rect key="frame" x="53" y="16" width="205" height="36"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="23"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="6Zb-rI-50j">
-                            <rect key="frame" x="17" y="28" width="20" height="20"/>
+                            <rect key="frame" x="17" y="23" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="color" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </activityIndicatorView>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" id="bBT-kz-Y9R">
-                            <rect key="frame" x="8" y="65" width="250" height="2"/>
+                            <rect key="frame" x="8" y="60" width="250" height="2"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="trackTintColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                         </progressView>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eB1-gq-5XQ">
+                    <rect key="frame" x="14" y="232" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="X">
+                        <color key="titleColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onPressedCancelButton:" destination="-1" eventType="touchUpInside" id="5Sp-i6-Run"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>

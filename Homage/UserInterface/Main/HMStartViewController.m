@@ -69,10 +69,14 @@
 @property (weak, nonatomic) IBOutlet UIView *guiNavBarSeparator;
 
 @property (weak, nonatomic) IBOutlet UIView *appWrapperView;
+
+//
 @property (weak, nonatomic) IBOutlet UIView *guiAppWrapperHideView;
-@property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
+
+//
 @property (weak, nonatomic) IBOutlet UIView *guiAppHideView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *guiAppBGImageView;
 @property (weak, nonatomic) IBOutlet UIView *renderingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sideBarContainerView;
 @property (weak, nonatomic) IBOutlet UIView *loginContainerView;
@@ -202,6 +206,13 @@
 	[panRecognizer setMaximumNumberOfTouches:1];
 	[panRecognizer setDelegate:self];
 
+    // A subtle shadow
+    CALayer *layer = self.guiAppMainView.layer;
+    layer.shadowColor = [UIColor blackColor].CGColor;
+    layer.shadowOpacity = 1.0;
+    layer.shadowRadius = 5;
+    layer.shadowPath = [UIBezierPath bezierPathWithRect:layer.bounds].CGPath;
+    
     // Sidebar is hidden when app starts
     self.sideBarVC.view.transform = HIDDEN_SIDE_BAR_TRANSFORM;
     
@@ -212,6 +223,7 @@
     self.guiNavBarSeparator.backgroundColor = [HMStyle.sh colorNamed:C_NAV_BAR_SEPARATOR];
     self.guiNavTitleLabel.textColor = [HMStyle.sh colorNamed:C_NAV_BAR_TITLE];
     self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
+    self.guiAppHideView.backgroundColor = [HMStyle.sh colorNamed:C_HIDE_APP_VIEW_BG];
 }
 
 #pragma mark - Observers
@@ -661,11 +673,11 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.appWrapperView setFrame:CGRectMake(0, 0, self.appWrapperView.frame.size.width, self.appWrapperView.frame.size.height)];
-        self.guiAppHideView.alpha = 0;
+        self.guiAppHideView.alpha = [HMServer.sh isReachable] ? 0 : 1;
         self.guiNavCover.alpha = 0;
         self.sideBarVC.view.transform = HIDDEN_SIDE_BAR_TRANSFORM;
     } completion:nil];    
-    self.guiAppWrapperHideView.hidden = YES;
+    self.guiAppWrapperHideView.hidden = [HMServer.sh isReachable];
     self.sideBarVisible = NO;
 }
 

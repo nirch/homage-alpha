@@ -32,21 +32,33 @@
 #import "HMInAppStoreViewController.h"
 #import "HMDownloadViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <PSTAlertController/PSTAlertController.h>
+#import "HMSharingDelegate.h"
 
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
 
-@interface HMGMeTabVC () < UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,HMVideoPlayerDelegate,HMSimpleVideoPlayerDelegate>
+@interface HMGMeTabVC () <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    HMRecorderDelegate,
+    HMVideoPlayerDelegate,
+    HMSimpleVideoPlayerDelegate,
+    UIActionSheetDelegate,
+    HMSharingDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
-@property (weak, nonatomic) IBOutlet UIButton *lastShareButtonPressed;
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
+
+@property (nonatomic) UIDocumentInteractionController *documentInteractionController;
+
+@property (weak, nonatomic) HMGUserRemakeCVCell *lastSharedRemakeCell;
 
 @property (weak,nonatomic) UIRefreshControl *refreshControl;
 @property (nonatomic) NSInteger playingMovieIndex;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSString *currentFetchedResultsUser;
-
 
 @property (weak, nonatomic) HMDownloadViewController *saveVC;
 @property (nonatomic) Remake *remakeToContinueWith;
@@ -247,7 +259,6 @@
                                                        name:HM_NOTIFICATION_UI_USER_WANTS_TO_SAVE_REMAKE
                                                      object:nil];
     
-    
 }
 
 -(void)removeObservers
@@ -255,6 +266,7 @@
     __weak NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_REMAKE_CREATION object:nil];
     [nc removeObserver:self name:HM_NOTIFICATION_SERVER_SHARE_REMAKE_REQUEST object:nil];
+    [nc removeObserver:self name:HM_NOTIFICATION_UI_USER_WANTS_TO_SAVE_REMAKE object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -347,25 +359,29 @@
         return;
     }
     
-    // Download remakes to device allowed?
-    HMUserSaveToDevicePolicy saveToDevicePolicy = [HMServer.sh.configurationInfo[@"user_save_remakes_policy"] integerValue];
-    BOOL saveToDeviceAllowed = saveToDevicePolicy == HMUserSaveToDevicePolicyAllowed ||
-                               saveToDevicePolicy == HMUserSaveToDevicePolicyPremium;
-    
     // No error reported.
     // The share bundle is ready for sharing.
     // Open the ui for the user.
+    UIButton *button = self.lastSharedRemakeCell.shareButton;
     NSDictionary *shareBundle = notification.userInfo[@"share_bundle"];
-    [self.currentSharer shareRemakeBundle:shareBundle
-                                 parentVC:self
-                           trackEventName:@"MEShareRemake"
-                                thumbnail:self.currentSharer.image
-                                    sourceView:self.lastShareButtonPressed
-                     saveToDeviceActivity:saveToDeviceAllowed];
+    
+    if (shareBundle[K_REMAKE_LOCAL_VIDEO_URL]) {
+        [self.currentSharer shareVideoFileInRemakeBundle:shareBundle
+                                                parentVC:self
+                                          trackEventName:@"MEShareRemake"
+                                              sourceView:button];
+    } else {
+        // User sharing link.
+        [self.currentSharer shareRemakeBundle:shareBundle
+                                     parentVC:self
+                               trackEventName:@"MEShareRemake"
+                                    thumbnail:self.currentSharer.image
+                                   sourceView:button];
+    }
+
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self stopShareActivity];
-        self.currentSharer = nil;
     });
 }
 
@@ -1029,7 +1045,8 @@
     }
 }
 
-#pragma mark - Share & download activity
+
+#pragma mark - Share remake
 -(void)startAnimatingActivityInCell:(HMGUserRemakeCVCell *)cell forButton:(UIButton *)button
 {
     // Will start animating the activity
@@ -1039,17 +1056,137 @@
     p.x = button.center.x;
     cell.shareActivity.center = p;
     [cell.shareActivity startAnimating];
+    button.hidden = YES;
 }
 
-#pragma mark - Share remake
 -(void)shareRemakeRequestForRemake:(Remake *)remake thumb:(UIImage *)thumb
 {
     self.currentSharer = [HMSharing new];
+    self.currentSharer.delegate = self;
     self.currentSharer.image = thumb;
     NSDictionary *shareBundle = [self.currentSharer generateShareBundleForRemake:remake
                                                                   trackEventName:@"MEShareRemake"
                                                                originatingScreen:@(HMMyStories)];
     [self.currentSharer requestShareWithBundle:shareBundle];
+}
+
+-(void)shareRemakeVideoFileRequestForRemake:(Remake *)remake
+{
+    self.currentSharer = [HMSharing new];
+    self.currentSharer.delegate = self;
+    self.currentSharer.shareAsFile = YES;
+    NSDictionary *shareBundle = [self.currentSharer generateShareBundleForRemake:remake
+                                                                  trackEventName:@"MEShareRemake"
+                                                               originatingScreen:@(HMMyStories)];
+    [self.currentSharer requestShareWithBundle:shareBundle];
+}
+
+-(void)userWantsToShareRemake:(Remake *)remakeToShare
+{
+    // If allowed to share videos as attachment in this story,
+    // will ask the user what she want to share (a link or the actual video file).
+    Story *story = remakeToShare.story;
+
+    // Share options.
+    PSTAlertController *ac = [PSTAlertController alertControllerWithTitle:remakeToShare.story.name
+                                                                  message:LS(@"SHARE_OPTIONS_MESSAGE")
+                                                           preferredStyle:PSTAlertControllerStyleActionSheet];
+
+    // Option 1 - Save to camera roll.
+    if (self.userAllowedToSaveRemakeVideosToDevice) {
+        [ac addAction:[PSTAlertAction actionWithTitle:LS(@"SHARE_ITEM_OPTION_SAVE_TO_CR") handler:^(PSTAlertAction *action) {
+            [self userWantsToSaveRemakeToCameraRoll:remakeToShare];
+        }]];
+    }
+
+    // Option 2 - Share as a link.
+    [ac addAction:[PSTAlertAction actionWithTitle:LS(@"SHARE_ITEM_OPTION_LINK") handler:^(PSTAlertAction *action) {
+        [self userWantsToShareRemakeAsLink:remakeToShare];
+    }]];
+    
+    // Option 3 - Share as a video file.
+    if (story.sharingVideoAllowed.boolValue) {
+        [ac addAction:[PSTAlertAction actionWithTitle:LS(@"SHARE_ITEM_OPTION_FILE") handler:^(PSTAlertAction *action) {
+            [self userWantsToShareRemakeAsVideoFile:remakeToShare];
+        }]];
+    }
+    
+    // If more than one option, will let the user choose.
+    // Otherwise, will just share a link.
+    if (ac.actions.count > 1) {
+        [ac addCancelActionWithHandler:nil];
+        [ac showWithSender:nil controller:self animated:YES completion:nil];
+        return;
+    }
+    
+    // Allowed to only share links to the remake.
+    // No need to let the user choose an option.
+    [self userWantsToShareRemakeAsLink:remakeToShare];
+}
+
+-(void)userWantsToShareRemakeAsLink:(Remake *)remakeToShare
+{
+    HMGUserRemakeCVCell *cell = self.lastSharedRemakeCell;
+    UIButton *button = cell.shareButton;
+    
+    // Share request for the remake.
+    // (Homage server needs to create a share object first)
+    [self shareRemakeRequestForRemake:remakeToShare thumb:cell.guiThumbImage.image];
+    [self startAnimatingActivityInCell:cell forButton:button];
+}
+
+-(void)userWantsToShareRemakeAsVideoFile:(Remake *)remakeToShare
+{
+    HMGUserRemakeCVCell *cell = self.lastSharedRemakeCell;
+    UIButton *button = cell.shareButton;
+
+    // User wants to share remake as video file.
+    // But the file must be available on local storage first.
+    if (remakeToShare.isVideoAvailableLocally) {
+        // The video is available in local storage.
+        // Share the video file.
+        [self shareRemakeVideoFileRequestForRemake:remakeToShare];
+        [self startAnimatingActivityInCell:cell forButton:button];
+        return;
+    }
+    
+    // The video is not available locally yet.
+    // Will need to download the video before being able to share the file.
+    // Start the flow of downloading remake and sharing it as a file
+    // when downloaded successfuly.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    self.saveVC = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
+    self.saveVC.delegate = self;
+    self.saveVC.info = @{
+                         @"remake":remakeToShare
+                         };
+    NSURL *remakeVideoURL = [NSURL URLWithString:[remakeToShare.videoURL stringByReplacingOccurrencesOfString:@"%20" withString:@"+"]];
+    self.saveVC.downloadFlow = HMDownloadFlowShare;
+    [self.saveVC startDownloadResourceFromURL:remakeVideoURL
+                                toLocalFolder:HMCacheManager.sh.remakesCachePath];
+}
+
+-(void)userWantsToSaveRemakeToCameraRoll:(Remake *)remakeToSave
+{
+    // Start the flow of saving/downloading clip.
+    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    self.saveVC = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
+    self.saveVC.delegate = self;
+    self.saveVC.info = @{
+                         @"remake":remakeToSave
+                         };
+    [self.saveVC startSavingToCameraRoll];
+    self.remakeToSave = remakeToSave;
+    [self downloadUserRemake:remakeToSave];
+}
+
+#pragma mark - HMSharingDelegate
+-(void)sharingDidFinishWithShareBundle:(NSDictionary *)shareBundle
+{
+    self.currentSharer.delegate = nil;
+    self.currentSharer = nil;
+    [self refreshFromLocalStorage];
+    [self.userRemakesCV reloadData];
 }
 
 #pragma mark - Download remake flow
@@ -1195,19 +1332,33 @@
     // she can download the video layer, without paying for it again.
     Remake *remake = info[@"remake"];
     [self finishedDownloadFlowForRemake:remake];
-    [self downloadFailedMessage];
+    
+    if (error.code != NSURLErrorCancelled) {
+        [self downloadFailedMessage];
+    }
 }
 
 -(void)downloadFinishedSuccessfullyWithInfo:(NSDictionary *)info
 {
     // Download was successful. Try to copy the file to camera roll.
-    [self.saveVC startSavingToCameraRoll];
     NSString *localPath = info[@"file_path"];
-    UISaveVideoAtPathToSavedPhotosAlbum(localPath,
-                                        self,
-                                        @selector(video:didFinishSavingWithError:contextInfo:),
-                                        NULL);
-
+    
+    if (self.saveVC.downloadFlow == HMDownloadFlowSaveToCameraRoll) {
+        [self.saveVC startSavingToCameraRoll];
+        UISaveVideoAtPathToSavedPhotosAlbum(localPath,
+                                            self,
+                                            @selector(video:didFinishSavingWithError:contextInfo:),
+                                            NULL);
+    } else if (self.saveVC.downloadFlow == HMDownloadFlowShare) {
+        // Dismiss the download UI.
+        [self.saveVC dismiss];
+        self.saveVC = nil;
+        
+        // Share request for the remake. (Homage server needs to create a share object first)
+        // In this flow we are sharing a video file available locally (and not a link)
+        Remake *remakeToShare = info[@"remake"];
+        [self shareRemakeVideoFileRequestForRemake:remakeToShare];
+    }
 }
 
 #pragma mark - HMStoreDelegate
@@ -1324,35 +1475,31 @@
 {
     HMGUserRemakeCVCell *cell = [self getParentCollectionViewCellOfButton:button];
     if (!cell) return;
-    
+
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
     Remake *remakeToShare = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    self.lastShareButtonPressed = button;
+    self.lastSharedRemakeCell = cell;
     
     //
     // Special handling for guest users (but only if guest users not allowed to share).
     //
     BOOL guestUsersAllowedToShare = [HMServer.sh.configurationInfo[@"guest_allow_share"] boolValue];
-    if ([[User current] isGuestUser] && !guestUsersAllowedToShare)
+    if (User.current.isGuestUser && !guestUsersAllowedToShare)
     {
-
         // Share not allowed for guest users in this app configuration.
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle: LS(@"SIGN_UP_NOW") message:LS(@"ONLY_SIGN_IN_USERS_CAN_SHARE") delegate:self cancelButtonTitle:LS(@"NOT_NOW") otherButtonTitles:LS(@"JOIN_NOW"), nil];
         alertView.tag = SHARE_ALERT_VIEW_TAG;
         dispatch_async(dispatch_get_main_queue(), ^{
             [alertView show];
         });
-        
-    } else {
-        
-        // Allow sharing one at a time.
-        if (self.currentSharer) return;
-        
-        // Share request for the remake. (Homage server needs to create a share object first)
-        [self shareRemakeRequestForRemake:remakeToShare thumb:cell.guiThumbImage.image];
-        cell.shareButton.hidden = YES;
-        [self startAnimatingActivityInCell:cell forButton:button];
+        return;
     }
+    
+    // Allow sharing one at a time.
+    if (self.currentSharer) return;
+
+    // Start the sharing flow.
+    [self userWantsToShareRemake:remakeToShare];
 }
 
 - (IBAction)onRemakeMoreStoriesButtonPushed:(id)sender
@@ -1371,23 +1518,15 @@
 
     // Get the remake object.
     NSIndexPath *indexPath = [self.userRemakesCV indexPathForCell:cell];
-    Remake *remake = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Remake *remakeToSave = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     // Make sure remake is in the right status.
-    if (remake.status.integerValue != HMGRemakeStatusDone) {
+    if (remakeToSave.status.integerValue != HMGRemakeStatusDone) {
         return;
     }
-
-    // Start the flow of saving/downloading clip.
-    HMAppDelegate *app = [[UIApplication sharedApplication] delegate];
-    self.saveVC = [HMDownloadViewController downloadVCInParentVC:app.mainVC];
-    self.saveVC.delegate = self;
-    self.saveVC.info = @{
-                         @"remake":remake
-                         };
-    [self.saveVC startSavingToCameraRoll];
-    self.remakeToSave = remake;
-    [self downloadUserRemake:remake];
+    
+    // And start the save flow.
+    [self userWantsToSaveRemakeToCameraRoll:remakeToSave];
 }
 
 @end

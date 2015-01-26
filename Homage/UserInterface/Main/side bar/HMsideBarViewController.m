@@ -261,26 +261,9 @@
 
 -(void)shareApp
 {
-    //
     // Get the urls for downloading iOS and android app from CFG file
-    //
-    #ifndef DEBUG
-    NSString *urlIOS;
-    NSString *urlAndroid;
-    
-    if (IS_TEST_APP) {
-        // Release, but just a beta test application.
-        urlIOS = [HMServer.sh absoluteURLNamed:@"test_download_app_ios_url"];
-        urlAndroid = [HMServer.sh absoluteURLNamed:@"test_download_app_android_url"];
-    } else {
-        // Release app for production.
-        urlIOS = [HMServer.sh absoluteURLNamed:@"prod_download_app_ios_url"];
-        urlAndroid = [HMServer.sh absoluteURLNamed:@"prod_download_app_android_url"];
-    }
-    #else
-        NSString *urlIOS = [HMServer.sh absoluteURLNamed:@"test_download_app_ios_url"];
-        NSString *urlAndroid = [HMServer.sh absoluteURLNamed:@"test_download_app_android_url"];
-    #endif
+    NSString *urlIOS = HMServer.sh.configurationInfo[@"download_app_ios_url"];
+    NSString *urlAndroid = HMServer.sh.configurationInfo[@"download_app_android_url"];
 
     // Build the message text.
     NSString *sharingBodyText = [NSString stringWithFormat:LS(@"SHARING_APP_BODY_MESSAGE"), urlIOS, urlAndroid];
