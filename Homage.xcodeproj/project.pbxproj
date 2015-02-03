@@ -2770,10 +2770,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"$(PROJECT_DIR)",
@@ -2795,10 +2795,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/WhiteLabels/Homage/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Homage/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/VimGui/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Core/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Tracking/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -2848,10 +2848,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"$(PROJECT_DIR)",
