@@ -45,7 +45,7 @@
     story.thumbnailURL =        [info stringForKey:@"thumbnail"];
     story.shareMessage =        [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
     story.isPremium =           [info boolNumberForKey:@"is_premium"];
-    story.sharingVideoAllowed = @YES; //[info boolNumberForKey:@"sharing_video_allowed"];
+    story.sharingVideoAllowed = [info boolNumberForKey:@"sharing_video_allowed"];
     
     // Parse the scenes of this story.
     BOOL allScenesAreSelfie = YES;

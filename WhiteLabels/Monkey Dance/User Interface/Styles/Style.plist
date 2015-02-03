@@ -118,6 +118,8 @@
 			<string>@impact</string>
 			<key>colorRefreshControlTint</key>
 			<string>@impact</string>
+			<key>colorHideAppViewBG</key>
+			<string>@theVoid</string>
 		</dict>
 		<key>recorder</key>
 		<dict>
@@ -319,6 +321,8 @@
 	</dict>
 	<key>palette</key>
 	<dict>
+		<key>@theVoid</key>
+		<string>#00000077</string>
 		<key>@clear</key>
 		<string>#00000000</string>
 		<key>@record</key>

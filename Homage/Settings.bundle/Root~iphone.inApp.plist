@@ -53,28 +53,6 @@
 			<string>SUPPORT</string>
 		</dict>
 		<dict>
-			<key>DefaultValue</key>
-			<string></string>
-			<key>IASKMailComposeBccRecipents</key>
-			<array/>
-			<key>IASKMailComposeBody</key>
-			<string></string>
-			<key>IASKMailComposeBodyIsHTML</key>
-			<string>NO</string>
-			<key>IASKMailComposeCcRecipents</key>
-			<array/>
-			<key>IASKMailComposeSubject</key>
-			<string>feedback please!</string>
-			<key>IASKMailComposeToRecipents</key>
-			<array>
-				<string>yoav@homage.it</string>
-			</array>
-			<key>Title</key>
-			<string>Feedback us</string>
-			<key>Type</key>
-			<string>IASKMailComposeSpecifier</string>
-		</dict>
-		<dict>
 			<key>IASKViewControllerClass</key>
 			<string>HMTOSViewController</string>
 			<key>IASKViewControllerSelector</key>

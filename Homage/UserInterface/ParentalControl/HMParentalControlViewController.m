@@ -24,7 +24,7 @@
 
 // Titles
 @property (weak, nonatomic) IBOutlet HMBoldFontLabel *guiTitle;
-@property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiInstructions;
+@property (weak, nonatomic) IBOutlet UILabel *guiInstructions;
 @property (weak, nonatomic) IBOutlet HMBoldFontLabel *guiRequiredNumbersLabel;
 
 // Input
@@ -118,7 +118,9 @@
     
     [self initRandomDigitsStringOfLength:MAX_LENGTH];
     self.enteredNumberString = [NSMutableString new];
-    self.guiRequiredNumbersLabel.text = [self.requiredDigitsAsWordsArray componentsJoinedByString:@", "];
+    
+    NSString *requiredDigitsString = [self.requiredDigitsAsWordsArray componentsJoinedByString:@", "];
+    self.guiRequiredNumbersLabel.text = [NSString stringWithFormat:@"Enter: %@", requiredDigitsString];
 }
 
 -(void)initRandomDigitsStringOfLength:(NSInteger)length
@@ -226,6 +228,20 @@
 {
     [self removeLastNumber];
     [self animateKeyPress:sender];
+}
+
+- (IBAction)onPressedPrivacyPolicyButton:(UIButton *)sender
+{
+    if ([self.delegate respondsToSelector:@selector(parentalControlActionWithInfo:)]) {
+        [self.delegate parentalControlActionWithInfo:@{@"action":@"privacy"}];
+    }
+}
+
+- (IBAction)onPressedTOSButton:(UIButton *)sender
+{
+    if ([self.delegate respondsToSelector:@selector(parentalControlActionWithInfo:)]) {
+        [self.delegate parentalControlActionWithInfo:@{@"action":@"tos"}];
+    }
 }
 
 @end

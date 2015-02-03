@@ -56,8 +56,9 @@
 
 -(void)refetchRemakesWithStoryID:(NSString *)storyID likesInfoForUserID:(NSString *)userID page:(NSInteger)page
 {
-    NSInteger skip = NUMBER_OF_REMAKES_PER_PAGE * (page-1);
-    NSInteger limit = NUMBER_OF_REMAKES_PER_PAGE;
+    NSInteger numberOfRemakesPerPage = [self.configurationInfo[@"remakes_per_page"] integerValue];
+    NSInteger skip = numberOfRemakesPerPage * (page-1);
+    NSInteger limit = numberOfRemakesPerPage;
     [self refetchRemakesWithStoryID:storyID likesInfoForUserID:userID limit:@(limit) skip:@(skip)];
 }
 

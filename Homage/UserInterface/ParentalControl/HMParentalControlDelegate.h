@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HMStoreManagerDelegate <NSObject>
+@protocol HMParentalControlDelegate <NSObject>
 
+@required
 -(void)parentalControlValidatedSuccessfully;
+
+@optional
+-(void)parentalControlActionWithInfo:(NSDictionary *)info;
 
 @end

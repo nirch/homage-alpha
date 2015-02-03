@@ -84,6 +84,7 @@
 @property (nonatomic) BOOL stopRecordingFired;
 @property (nonatomic) BOOL isSelfie;
 @property (nonatomic) BOOL interactionWithUser;
+@property (nonatomic) BOOL makingASceneForTheFirstTime;
 
 // scene direction audio player
 @property (strong,nonatomic) AVAudioPlayer *directionAudioPlayer;
@@ -133,6 +134,7 @@
     
     self.usedBadBackgroundMarks = [NSMutableDictionary new];
     self.interactionWithUser = YES;
+    self.makingASceneForTheFirstTime = YES;
     
     HMGLogInfo(@"Opened recorder for remake:%@ story:%@",self.remake.sID, self.remake.story.name);
     [[Mixpanel sharedInstance] track:@"REEnterRecorder" properties:@{@"remakeID" : self.remake.sID , @"story" : self.remake.story.name}];
@@ -169,7 +171,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
     [self removeObservers];
 }
 
@@ -519,7 +520,15 @@
     // Some scenes play scene direction as audio
     Scene *scene = [self.remake.story findSceneWithID:self.currentSceneID];
     if (scene.directionAudioURL) {
-        [self startSceneDirectionAudioPlayback];
+        if (self.makingASceneForTheFirstTime) {
+            __weak HMRecorderViewController *weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf startSceneDirectionAudioPlayback];
+                weakSelf.makingASceneForTheFirstTime = NO;
+            });
+        } else {
+            [self startSceneDirectionAudioPlayback];
+        }
     }
     
     // Now the user has control of the flow...

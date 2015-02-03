@@ -113,6 +113,7 @@
 -(void)start
 {
     [self.activityView startAnimating];
+    
 }
 
 -(void)done

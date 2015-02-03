@@ -1,303 +1,129 @@
-Welcome to Homage. The following User Terms and Conditions (the "Terms")
-explain how you can use the Homage mobile app ("Homage" or the "App."),
+Welcome to Homage. The following User Terms and Conditions (the "Terms") explain how you can use the Homage mobile app ("Homage" or the "App."),
 provided to you by Homage Technology Ltd. ("we" or "us").
-Please read and get acquainted with these Terms before you get started. They apply
-to any users who access Homage, whether by signing up as a user or by using it as a
-guest ("users"), including you. By using Homage, whether by signing up as a user or
-by using it as a guest, you agree to be bound by all of these Terms and to other terms
-regarding the collection and use of your information, which are set in our Privacy
-Policy.
+
+Please read and get acquainted with these Terms before you get started. They apply to any users who access Homage, whether by signing up as a user or by using it as a guest ("users"), including you. By using Homage, whether by signing up as a user or by using it as a guest, you agree to be bound by all of these Terms and to other terms regarding the collection and use of your information, which are set in our Privacy Policy.
 
 1) What is Homage
 
-Homage is a mobile video-app that provides short video stories for its users, that
-allow the user to interact with the story and add video shots of themselves making the
-user the star of the video-clip ("Clip").
+Homage is a mobile video-app that provides short video stories for its users, that allow the user to interact with the story and add video shots of themselves making the user the star of the video-clip ("Clip").
 
 2) User Obligations
 
-By using Homage, whether by signing up as a user or by using it as a guest, you agree
-to provide accurate information at all times, and assume responsibility for all activity
-taking place in your Homage account, and for safeguarding any passwords that you
-use. Homage reserves the right to refuse to allow a user to open an account for any
-reason, or to limit the number of accounts a user can establish on the App., all at
-Homage’s sole discretion
-You can only use Homage if you are over the age of 18 and you can form a legally
-binding contract with us under the laws that apply to you, according to wherever
-you are. You can use Homage only in compliance with these Terms and all laws and
+By using Homage, whether by signing up as a user or by using it as a guest, you agree to provide accurate information at all times, and assume responsibility for all activity taking place in your Homage account, and for safeguarding any passwords that you use. Homage reserves the right to refuse to allow a user to open an account for any reason, or to limit the number of accounts a user can establish on the App., all at
+Homage’s sole discretion You can only use Homage if you are over the age of 18 and you can form a legally binding contract with us under the laws that apply to you, according to wherever you are. You can use Homage only in compliance with these Terms and all laws and
 regulations applicable to you.
-We trust you to use Homage and our services responsibly – and there are several
-specific and obvious things that you agree not to do:
-• Violate any applicable law in any way, or violate the privacy of others, or
-defame or disparage others.
-• Interfere with Homage or the operation of the services, or disrupt any user,
-host, or network.
-• Try to access another user's account without explicit permission, or access
-your account using a method other than the interface and instructions provided
-by Homage.
-• Copy, distribute, or disclose any part of Homage by any medium, reverse
-engineer or attempt to extract the source code of Homage software, or sell,
-trade, resell or otherwise exploit for any unauthorized commercial purpose or
 
-transfer any property of Homage.
-• Upload a virus, overload, spam, or mail-bomb any part of Homage, or plant
-malware or use Homage to distribute malware.
-• Submit, upload or share any content that is inappropriate or infringes (or
-results in the infringement of) Homage's or any third party’s intellectual
-property rights, moral rights, or other rights.
-• Breach or circumvent any security or authentication measures, or probe, scan,
-or test any system or network for vulnerabilities.
-• Use Homage in any manner that is fraudulent, misleading, or infringes
-another's rights; or provide Homage with deceptive or false source-identifying
-information, including "spoofing" and "phishing".
-We may permanently or temporarily revoke or suspend your access to Homage
-without notice and liability for any reason, including a violation of these Terms.
-These terms will continue to apply and bind you upon termination, for any reason or
-no reason.
+We trust you to use Homage and our services responsibly – and there are several specific and obvious things that you agree not to do:
+• Violate any applicable law in any way, or violate the privacy of others, or defame or disparage others.
+• Interfere with Homage or the operation of the services, or disrupt any user, host, or network.
+• Try to access another user's account without explicit permission, or access your account using a method other than the interface and instructions provided by Homage.
+• Copy, distribute, or disclose any part of Homage by any medium, reverse engineer or attempt to extract the source code of Homage software, or sell, trade, resell or otherwise exploit for any unauthorized commercial purpose or transfer any property of Homage.
+• Upload a virus, overload, spam, or mail-bomb any part of Homage, or plant malware or use Homage to distribute malware.
+• Submit, upload or share any content that is inappropriate or infringes (or results in the infringement of) Homage's or any third party’s intellectual property rights, moral rights, or other rights.
+• Breach or circumvent any security or authentication measures, or probe, scan, or test any system or network for vulnerabilities.
+• Use Homage in any manner that is fraudulent, misleading, or infringes another's rights; or provide Homage with deceptive or false source-identifying information, including "spoofing" and "phishing". We may permanently or temporarily revoke or suspend your access to Homage without notice and liability for any reason, including a violation of these Terms.
+
+These terms will continue to apply and bind you upon termination, for any reason or no reason.
 
 3) Security and Privacy
 
-When you access Homage (whether by signing up as a user or by using it as a guest),
-you authorize us to securely access your details in order to provide you with full
-access to the Homage functionalities. Homage may securely store your details,
-including user name and password, in order to provide you with the service, or use
-other authentication methods to avoid storing your user name and password.
-While using Homage, you may be allowed to forward, post, share, embed or email
-Clips (or links to such Clips), and Homage may provide you with the ability to
-download or modify any Clip; in addition, if such option shall be enabled by you
-during your registration process, some of your Clips may be presented to third parties
-or other users. All such shares and posts of Clips shall be done in accordance with
-your instructions and shall remain under your sole responsibility. In that respect, you
-may be able to watch Clips prepared by other Homage users, and to the maximum
-extent permitted by applicable law, Homage cannot be held responsible for, and
-disclaims all liabilities and warranties with respect to, such Clips.
-We place the greatest importance on protecting your privacy and maintaining the
-security and integrity of your personal information. Please carefully review our
-Privacy Policy, which explains exactly the measures we use when collecting and
-storing your information.
-However, like any application or service provider, we can't guarantee that our security
-measures will never be defeated or breached by unauthorized third parties seeking
-to use your personal information for improper purposes. You acknowledge that you
-provide your personal information at your own risk.
+When you access Homage (whether by signing up as a user or by using it as a guest), you authorize us to securely access your details in order to provide you with full access to the Homage functionalities. Homage may securely store your details, including user name and password, in order to provide you with the service, or use other authentication methods to avoid storing your user name and password.
+
+While using Homage, you may be allowed to forward, post, share, embed or email Clips (or links to such Clips), and Homage may provide you with the ability to download or modify any Clip; in addition, if such option shall be enabled by you during your registration process, some of your Clips may be presented to third parties or other users. All such shares and posts of Clips shall be done in accordance with your instructions and shall remain under your sole responsibility. In that respect, you may be able to watch Clips prepared by other Homage users, and to the maximum extent permitted by applicable law, Homage cannot be held responsible for, and disclaims all liabilities and warranties with respect to, such Clips.
+
+We place the greatest importance on protecting your privacy and maintaining the security and integrity of your personal information. Please carefully review our Privacy Policy, which explains exactly the measures we use when collecting and storing your information.
+
+However, like any application or service provider, we can't guarantee that our security measures will never be defeated or breached by unauthorized third parties seeking to use your personal information for improper purposes. You acknowledge that you provide your personal information at your own risk.
 
 4) Software and License
 
-Use of the Homage application requires you to download the App. To use Homage
-you must have a compatible mobile device, and we can't guarantee that the
-application will work on your device.
-Subject to your compliance with these Terms, we hereby give you a limited, non-
-exclusive, non-transferable, non-sub-licensable, freely revocable license to use
-Homage and its application, for your personal and noncommercial use only. Your
-license is automatically revoked if you violate these Terms. From time to time, we
-may issue upgraded versions of the application. You agree that these Terms will apply
-to all such upgrades.
-Any third-party code that may be incorporated in the application is covered by the
-applicable open source or third-party license EULA, if any, authorizing use of such
-code.
+Use of the Homage application requires you to download the App. To use Homage you must have a compatible mobile device, and we can't guarantee that the application will work on your device. Subject to your compliance with these Terms, we hereby give you a limited, non- exclusive, non-transferable, non-sub-licensable, freely revocable license to use Homage and its application, for your personal and noncommercial use only. Your license is automatically revoked if you violate these Terms. From time to time, we may issue upgraded versions of the application. You agree that these Terms will apply to all such upgrades.
+
+Any third-party code that may be incorporated in the application is covered by the applicable open source or third-party license EULA, if any, authorizing use of such code.
 
 5) Homage's Content and Property
 
-We retain our right, title and interest in Homage and all its components, including,
-without limitation, patents, trademarks, service marks, copyrights, know how,
-software, text, design, the Clips, graphics, logos and all intellectual property rights
-related to all of these (the "Homage Rights").
-We reserve all rights not expressly granted in these Terms in Homage and the
-Homage Rights. These Terms do not provide you with any rights to use our
-trademarks, logos, domain names, or any other brand features. Use of Homage Rights
-for any purpose not expressly permitted by these Terms is strictly prohibited.
-You may choose to give us feedback about Homage, including ideas and
-improvements. We welcome and look forward to such submissions. By using
-Homage, you agree that Homage is free to use any such feedback (or a similar
-concept developed internally by Homage or obtained from another source) or share
-it with others, at any time, and you will not be entitled to any compensation or
-recognition for Homage's usage of your feedback.
-You, and any other user of Homage may and are hereby encouraged to report us,
-through the following link _______, of any content that is inappropriate or infringes
-any copyright of a third party. We operate a clear copyright and social responsibility
-policy in relation with any content which is alleged to infringe the copyright of a third
-party or to be inappropriate content, and under which we preserve our right to remove
-any content that is so alleged; in addition, as part of our policy, we may terminate or
-block user access to Homage if a user has been determined to be a repeating infringer.
+We retain our right, title and interest in Homage and all its components, including, without limitation, patents, trademarks, service marks, copyrights, know how, software, text, design, the Clips, graphics, logos and all intellectual property rights related to all of these (the "Homage Rights").
+
+We reserve all rights not expressly granted in these Terms in Homage and the Homage Rights. These Terms do not provide you with any rights to use our trademarks, logos, domain names, or any other brand features. Use of Homage Rights for any purpose not expressly permitted by these Terms is strictly prohibited.
+
+You may choose to give us feedback about Homage, including ideas and improvements. We welcome and look forward to such submissions. By using Homage, you agree that Homage is free to use any such feedback (or a similar concept developed internally by Homage or obtained from another source) or share it with others, at any time, and you will not be entitled to any compensation or recognition for Homage's usage of your feedback.
+
+You, and any other user of Homage may and are hereby encouraged to report us, through the following link _______, of any content that is inappropriate or infringes any copyright of a third party. We operate a clear copyright and social responsibility policy in relation with any content which is alleged to infringe the copyright of a third party or to be inappropriate content, and under which we preserve our right to remove any content that is so alleged; in addition, as part of our policy, we may terminate or block user access to Homage if a user has been determined to be a repeating infringer.
 
 6) Your Content and Property
 
-By using Homage, you allow Homage to help manage your data (including content,
-information, images and other attachments in such data) which you submit, upload,
-embed in the Clips or transmit through Homage ("User Data"). We don't gain any
+By using Homage, you allow Homage to help manage your data (including content, information, images and other attachments in such data) which you submit, upload, embed in the Clips or transmit through Homage ("User Data"). We don't gain any ownership in the User Data - you retain ownership of any intellectual property rights that you hold in the User Data. These Terms do not give us any rights to the contents of your User Data, except for the limited rights we need to provide Homage to you, as explained in these Terms and as detailed below.
 
-ownership in the User Data - you retain ownership of any intellectual property rights
-that you hold in the User Data. These Terms do not give us any rights to the contents
-of your User Data, except for the limited rights we need to provide Homage to you, as
-explained in these Terms and as detailed below.
-You expressly agree that you shall observe all applicable laws, regulations and rules
-of other third party internet sites and services in forwarding, embedding or posting
-Clips, or links to such Clips; you shall not forward, post or link to any Clip that
-violates these Terms; you may not embed any Clip in any third party site if such third
-party site contains any Clip that would violate these Terms.
-You further understand and agree that you are solely responsible and liable for your
-own content and User Data and for anything you send, modify, forward, post, copy,
-share, upload, download, attach, embed in Clips or otherwise do while using Homage,
-and for the consequences of submitting or uploading such content or embedding
-it in Clips, including in respect of any third party intellectual property rights or
-moral rights in such Clips. Homage cannot accept any liability in respect of your
-modifications of any Clip. You shall fully indemnify Homage for any breach of the
-terms set forth in this paragraph.
+You expressly agree that you shall observe all applicable laws, regulations and rules of other third party internet sites and services in forwarding, embedding or posting Clips, or links to such Clips; you shall not forward, post or link to any Clip that violates these Terms; you may not embed any Clip in any third party site if such third party site contains any Clip that would violate these Terms.
 
-As a Homage user you may submit or upload content; you understand that Homage
-does not guarantee any confidentiality with respect to any such content submitted or
-uploaded; you further represent and warrant that you have (and will continue to have
-during your use of Homage) all necessary licenses, rights, consents, and permissions
-which are required to use and to enable Homage to use the User Data on or through
-Homage in the manner contemplated by these Terms.
-Homage does not endorse any content or any opinion, recommendation, or advice
-expressed therein, and we expressly disclaim any and all liability in connection with
-such User Data.
-By using Homage, you give us permission to take actions if you ask Homage to
-perform them on your User Data, for example, (i) hosting or sharing your data as you
-direct it to through Homage, (ii) granting limited license rights to Homage and other
-users of watch and rate the Clips created or shares by you (if such option was enabled
-by you during your registration process) (iii) using your data to plan and create
-shopping sprees, and (iv) creating backups of your data to ensure they are safe and
-accessible to you. By using Homage, you give us the permissions needed to provide
-you with these services, including extending that permission to trusted third parties
-that help us to run Homage. Please read the Privacy Policy to understand exactly what
-information we may share with third parties, and how.
+You further understand and agree that you are solely responsible and liable for your own content and User Data and for anything you send, modify, forward, post, copy, share, upload, download, attach, embed in Clips or otherwise do while using Homage, and for the consequences of submitting or uploading such content or embedding it in Clips, including in respect of any third party intellectual property rights or moral rights in such Clips. Homage cannot accept any liability in respect of your modifications of any Clip. You shall fully indemnify Homage for any breach of the terms set forth in this paragraph.
 
-Without limiting the generality of the aforesaid, you may not post content or Clips
-that:
+As a Homage user you may submit or upload content; you understand that Homage does not guarantee any confidentiality with respect to any such content submitted or uploaded; you further represent and warrant that you have (and will continue to have during your use of Homage) all necessary licenses, rights, consents, and permissions which are required to use and to enable Homage to use the User Data on or through Homage in the manner contemplated by these Terms.
 
-• Impersonates another person or entity in a manner that does or is intended to
+Homage does not endorse any content or any opinion, recommendation, or advice expressed therein, and we expressly disclaim any and all liability in connection with such User Data.
 
-mislead, confuse, or deceive others;
-• Violates the rights of a third party, including copyright, trademark, privacy,
-and publicity rights;
+By using Homage, you give us permission to take actions if you ask Homage to perform them on your User Data, for example, (i) hosting or sharing your data as you direct it to through Homage, (ii) granting limited license rights to Homage and other users of watch and rate the Clips created or shares by you (if such option was enabled by you during your registration process) (iii) using your data to plan and create shopping sprees, and (iv) creating backups of your data to ensure they are safe and accessible to you. By using Homage, you give us the permissions needed to provide you with these services, including extending that permission to trusted third parties that help us to run Homage. Please read the Privacy Policy to understand exactly what information we may share with third parties, and how.
+
+Without limiting the generality of the aforesaid, you may not post content or Clips that:
+
+• Impersonates another person or entity in a manner that does or is intended to mislead, confuse, or deceive others;
+• Violates the rights of a third party, including copyright, trademark, privacy, and publicity rights;
 • Is a direct and specific threat of violence to others;
 • Is pornographic or sexually explicit;
 • Acts in furtherance of illegal activities; or
 • Is harassing, abusive, or constitutes spam.
 
-[This repeats text from the Privacy Policy but no reason it can't be here as
-well]
+[This repeats text from the Privacy Policy but no reason it can't be here as well]
 
 7) Copyright Infringement
 
-You are responsible and liable for the User Data and anything you send, receive,
-copy, share, upload, download, embed in Clips, attach or otherwise do while using
-Homage. If we receive notices of alleged copyright infringement, we will respond
-according to the process set in the U.S. Digital Millennium Copyright Act. We reserve
-the right to suspend your account, delete or disable content alleged to be infringing,
-and terminate the account of a repeated infringer.
+You are responsible and liable for the User Data and anything you send, receive, copy, share, upload, download, embed in Clips, attach or otherwise do while using Homage. If we receive notices of alleged copyright infringement, we will respond according to the process set in the U.S. Digital Millennium Copyright Act. We reserve the right to suspend your account, delete or disable content alleged to be infringing, and terminate the account of a repeated infringer.
 
 8) Representations and Warranties
 
-While we make our best efforts to provide you with satisfactory services, we can't
-promise that there will never be problems. Homage is provided to you on an "AS-IS"
-and "AS AVAILABLE" basis, to be used at your own risk and responsibility. To the
-maximum extent permitted by applicable law, Homage is provided without warranties
-of any kind, whether expressed or implied, including, but not limited to, implied
-warranties of non-infringement, merchantability or fitness for a particular purpose.
-Without limiting the foregoing, we do not warrant that the content is accurate, reliable
-or correct; that the Clips do not infringe third party rights; that any defects or errors
-will be corrected; that Homage will be available at any particular time or location,
-uninterrupted or secure; or that Homage is free of viruses, malware or other harmful
-components. Any content downloaded, uploaded, sent by you to other users, or
-otherwise obtained through the use of Homage is downloaded at your own risk and
-you will be responsible for any damage to your mobile device, cell phone or other
-system, or for any loss of data resulting from such download or use of Homage.
-Homage is controlled and operated from facilities in Israel. We make no
-representations that Homage is appropriate or available for use in any other specific
-location. If you access or use Homage from other jurisdictions you are entirely
-responsible for compliance with all applicable local and Israeli laws and regulations,
+While we make our best efforts to provide you with satisfactory services, we can't promise that there will never be problems. Homage is provided to you on an "AS-IS" and "AS AVAILABLE" basis, to be used at your own risk and responsibility. To the maximum extent permitted by applicable law, Homage is provided without warranties of any kind, whether expressed or implied, including, but not limited to, implied warranties of non-infringement, merchantability or fitness for a particular purpose.
+
+Without limiting the foregoing, we do not warrant that the content is accurate, reliable or correct; that the Clips do not infringe third party rights; that any defects or errors will be corrected; that Homage will be available at any particular time or location, uninterrupted or secure; or that Homage is free of viruses, malware or other harmful components. Any content downloaded, uploaded, sent by you to other users, or otherwise obtained through the use of Homage is downloaded at your own risk and you will be responsible for any damage to your mobile device, cell phone or other system, or for any loss of data resulting from such download or use of Homage. 
+
+Homage is controlled and operated from facilities in Israel. We make no representations that Homage is appropriate or available for use in any other specific location. If you access or use Homage from other jurisdictions you are entirely responsible for compliance with all applicable local and Israeli laws and regulations,
 including but not limited to export and import regulations.
 
 9) Limitation of Liability
 
-To the maximum extent permitted by law, in no event will we or our affiliates,
-officers, employees, agents, suppliers or licensors be liable for (a) any indirect,
-special, incidental, punitive, exemplary or consequential (including loss of use,
-data, business, or profits) damages, regardless of legal theory, whether or not we
-have been warned of the possibility of such damages, and even if a remedy fails of
-its essential purpose; (b) any claims, proceedings, liabilities, obligations, damages,
-losses or costs in an amount exceeding the amounts paid by you to us in order to use
-Homage (if any) for the past three months. Some jurisdictions do not allow the types
-of limitations in this paragraph, so they may not apply to you.
+To the maximum extent permitted by law, in no event will we or our affiliates, officers, employees, agents, suppliers or licensors be liable for (a) any indirect, special, incidental, punitive, exemplary or consequential (including loss of use, data, business, or profits) damages, regardless of legal theory, whether or not we have been warned of the possibility of such damages, and even if a remedy fails of its essential purpose; (b) any claims, proceedings, liabilities, obligations, damages, losses or costs in an amount exceeding the amounts paid by you to us in order to use Homage (if any) for the past three months. Some jurisdictions do not allow the types of limitations in this paragraph, so they may not apply to you.
 
 10) Indemnity
 
-You agree to defend, indemnify and hold harmless us and our affiliates, officers,
-employees, agents, suppliers or licensors, from and against any and all claims,
-damages, obligations, losses, liabilities, costs or debt, and expenses (including but
-not limited to attorney's fees) arising from: (i) your use of and access to Homage,
-including any data or content transmitted or received by you; (ii) your violation of any
-term of these Terms; (iii) your violation of any third party right, including without
-limitation any right of privacy or intellectual property rights; (iv) your violation of
-any applicable law, rule or regulation; (v) any of your User Data or anything that is
-submitted through your account; or (vi) any other party's access and use of Homage
-with your username, password or other security code.
+You agree to defend, indemnify and hold harmless us and our affiliates, officers, employees, agents, suppliers or licensors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees) arising from: (i) your use of and access to Homage, including any data or content transmitted or received by you; (ii) your violation of any term of these Terms; (iii) your violation of any third party right, including without limitation any right of privacy or intellectual property rights; (iv) your violation of any applicable law, rule or regulation; (v) any of your User Data or anything that is submitted through your account; or (vi) any other party's access and use of Homage with your username, password or other security code.
 
 11) Changes and Modifications
 
-We are constantly changing and improving Homage and the services. We may add
-or remove features, and while we will attempt to give advance notice of any major
-changes, we may stop, suspend, change, or remove content from Homage at any time
-at our discretion and without prior notice.
+We are constantly changing and improving Homage and the services. We may add or remove features, and while we will attempt to give advance notice of any major changes, we may stop, suspend, change, or remove content from Homage at any time at our discretion and without prior notice.
 
-We may, in our sole discretion, modify or update these Terms from time to time, so
-you should review this page periodically. When we change the Terms in a material
-manner, we will update the 'last modified' date at the bottom of this page. Your
-
-continued use of Homage after any such change constitutes your acceptance of the
-new Terms of Service. If you do not agree to any of these or any future Terms, do not
-use or continue to access Homage.
+We may, in our sole discretion, modify or update these Terms from time to time, so you should review this page periodically. When we change the Terms in a material manner, we will update the 'last modified' date at the bottom of this page. Your continued use of Homage after any such change constitutes your acceptance of the new Terms of Service. If you do not agree to any of these or any future Terms, do not use or continue to access Homage.
 
 12) Notifications
 
-We may provide to you notifications, whether required by law or for marketing or
+We may provide to you notifications, whether required by law or for marketing or other business related purposes, via email notice, written or hard copy notice, or through posting of such notice on our website, as determined in our sole discretion. We reserve the right to determine the form and means of providing notifications to our users, provided that you may opt out of certain means of notification as described in these Terms. We shall not be responsible for any automatic filter which you or your network provider may apply to email notifications we send to the email address you provide us.
 
-other business related purposes, via email notice, written or hard copy notice, or
-through posting of such notice on our website, as determined in our sole discretion.
-We reserve the right to determine the form and means of providing notifications to
-our users, provided that you may opt out of certain means of notification as described
-in these Terms. We shall not be responsible for any automatic filter which you or your
-network provider may apply to email notifications we send to the email address you
-provide us.
-Homage or any of its affiliates may send you, from time to time and mostly through
-emails, communications or data of various purposes, including, without limitation-
-newsletters and commercial and promotional materials and communications, and
-by using Homage you hereby affirmatively approve Homage to send you such
-communications. You may opt-out of receiving such information by following the
-
-opt-out instructions provided in those emails. You may also opt-out of receiving
-such information and other communications from us at any time by emailing
-
-tomer@homage.it.
+Homage or any of its affiliates may send you, from time to time and mostly through emails, communications or data of various purposes, including, without limitation-newsletters and commercial and promotional materials and communications, and by using Homage you hereby affirmatively approve Homage to send you such communications. You may opt-out of receiving such information by following the opt-out instructions provided in those emails. You may also opt-out of receiving such information and other communications from us at any time by emailing tomer@homage.it.
 
 13) Governing Law and Arbitration
 
-These Terms shall be governed by the laws of the State of Israel, without giving effect
-to their conflict of law principles. You consent to the exclusive jurisdiction and venue
-of competent courts in Tel Aviv, Israel for any dispute arising from or relating to
-these Terms or the Homage services.
+These Terms shall be governed by the laws of the State of Israel, without giving effect to their conflict of law principles. You consent to the exclusive jurisdiction and venue of competent courts in Tel Aviv, Israel for any dispute arising from or relating to these Terms or the Homage services.
 
 14) Miscellaneous
 
-These Terms constitute the entire and exclusive agreement between you and us with
-respect to Homage, and supersede and replace any other agreements, terms and
-conditions applicable to Homage.
+These Terms constitute the entire and exclusive agreement between you and us with respect to Homage, and supersede and replace any other agreements, terms and conditions applicable to Homage.
 
 These Terms create no third party beneficiary rights.
-Our failure to enforce a provision is not a waiver of our right to do so later. If a
-provision is found unenforceable the remaining provisions of these Terms will remain
-in full effect and an enforceable term will be substituted reflecting our intent as
-closely as possible.
-You may not assign any of your rights in these Terms, and any such attempt is
-void, but the Terms may be assigned by us without restriction. Any attempt by you
-to transfer any of the rights, duties or obligations hereunder, except as expressly
-provided for in these Terms, is void.
 
-We and you are not legal partners or agents; instead, our relationship is that of
+Our failure to enforce a provision is not a waiver of our right to do so later. If a provision is found unenforceable the remaining provisions of these Terms will remain in full effect and an enforceable term will be substituted reflecting our intent as closely as possible.
+You may not assign any of your rights in these Terms, and any such attempt is void, but the Terms may be assigned by us without restriction. Any attempt by you to transfer any of the rights, duties or obligations hereunder, except as expressly provided for in these Terms, is void.
 
-independent contractors.
+We and you are not legal partners or agents; instead, our relationship is that of independent contractors.
+
 Please contact us at tomer@homage.it for any questions regarding these Terms.
 
 Last Modified:04/09/2014

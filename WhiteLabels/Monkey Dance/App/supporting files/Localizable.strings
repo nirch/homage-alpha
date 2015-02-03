@@ -136,13 +136,14 @@
 "HELP_BUTTON_FINISH" = "CONTINUE";
 
 /*bad background messages*/
-"BAD_BACKGROUND_TITLE" = "Oops... Bad Background!";
-"RECORDER_BBG_NOISY" = "Use a solid color wall!";
-"RECORDER_BBG_DARK" = "Use well lit areas!";
-"RECORDER_BBG_SILHOUETTE" = "Align correctly with the silhouette!";
-"RECORDER_BBG_SHADOW" = "Minimize noisy background or shadows";
-"RECORDER_BBG_CLOTH" = "Don't dress like the wall!";
-"RECORDER_BBG_GENERAL_MESSAGE" = "Use a solid color wall!";
+"BAD_BACKGROUND_TITLE"          = "Oops... Bad Background!";
+"RECORDER_BBG_NOISY"            = "Use a solid color wall!";
+"RECORDER_BBG_DARK"             = "Use well lit areas!";
+"RECORDER_BBG_SILHOUETTE"       = "Make sure you're inside the silhouette!";
+"RECORDER_BBG_SHADOW"           = "There is a shadow behind you! step a bit forward!";
+"RECORDER_BBG_CLOTH"            = "Your shirt is too similar to the wall!";
+"RECORDER_BBG_GENERAL_MESSAGE"  = "Make sure you're in front of a solid color wall!";
+
 "BAD_BACKGROUND_HELP_BUTTON_TEXT" = "Help!";
 
 /*recorder*/
@@ -226,6 +227,9 @@
 /*Parental Control*/
 "STORE_PARENTAL_CTRL_TITLE" = "Grown-Ups Only!";
 "STORE_PARENTAL_CTRL_ACCESS_TITLE" = "To access, please enter the numbers:";
+
+"RECORDER_PARENTAL_CTRL_ACCESS_TITLE" = "To continue, enter the following numbers:";
+"RECORDER_PARENTAL_CTRL_DISCLAIMER" = "By continuing to use the app you agree to our";
 
 /*Download*/
 "DOWNLOAD_SAVING_REMAKE" = "Saving clip...";

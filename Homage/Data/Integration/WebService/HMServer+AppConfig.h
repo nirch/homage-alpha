@@ -19,6 +19,11 @@ typedef NS_ENUM(NSInteger, HMLoginFlowType) {
     HMLoginFlowTypeAutoGuestLogin           // Skips login screen (Auto Login as guest)
 };
 
+typedef NS_ENUM(NSInteger, HMSignupType) {
+    HMSignupTypeDisabled,                       // Totally removes signup options from the app.
+    HMSignupTypeNormal                          // Normal signup (always allowed)
+};
+
 #pragma mark - User save to device policy
 typedef NS_ENUM(NSInteger, HMUserSaveToDevicePolicy) {
     HMUserSaveToDevicePolicyNotAllowed,     // Not allowed to save to camera roll.

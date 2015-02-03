@@ -4,6 +4,10 @@
 <dict>
 	<key>share_link_prefix</key>
 	<string>http://play-test.homage.it</string>
+	<key>share_app_button</key>
+	<false/>
+	<key>signup</key>
+	<integer>0</integer>
 	<key>song_loop</key>
 	<string>songLoop.m4a</string>
 	<key>song_loop_volume</key>

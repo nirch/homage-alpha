@@ -33,6 +33,8 @@
 		082D3E1A1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */; };
 		082D3E1B1A67BC410020D12E /* HMSaveToDeviceActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */; };
 		0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
+		0833346C1A80D659008AC771 /* HMParentalControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0833346B1A80D659008AC771 /* HMParentalControlViewController.m */; };
+		0833346D1A80D659008AC771 /* HMParentalControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0833346B1A80D659008AC771 /* HMParentalControlViewController.m */; };
 		08333CD41A371AE000C27B56 /* AmazonInsightsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08333CD31A371AE000C27B56 /* AmazonInsightsSDK.framework */; };
 		0838E8DA18D04E1700222997 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8D918D04E1700222997 /* CoreMedia.framework */; };
 		0838E8DC18D04E2400222997 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DB18D04E2400222997 /* CoreVideo.framework */; };
@@ -214,7 +216,6 @@
 		086F30641A529B7100430D81 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF9318854F6C00A6EF5E /* NSNotificationCenter+Utils.m */; };
 		086F30651A529B7100430D81 /* AWPieSliceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF63188518ED00A6EF5E /* AWPieSliceView.m */; };
 		086F30661A529B7100430D81 /* HMBoldFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMBoldFontLabel.m */; };
-		086F30671A529B7100430D81 /* HMParentalControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97261A45E4F2009B998C /* HMParentalControlViewController.m */; };
 		086F30681A529B7100430D81 /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
 		086F306A1A529B7100430D81 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
 		086F306B1A529B7100430D81 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
@@ -368,7 +369,6 @@
 		08F9EBB61A5457A6000CFCAD /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
 		08FA971F1A45B8C6009B998C /* InAppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FA971E1A45B8C6009B998C /* InAppStore.storyboard */; };
 		08FA97231A45D44B009B998C /* HMInAppStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */; };
-		08FA97271A45E4F2009B998C /* HMParentalControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97261A45E4F2009B998C /* HMParentalControlViewController.m */; };
 		08FA972B1A460367009B998C /* HMStoreProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA972A1A460367009B998C /* HMStoreProductsViewController.m */; };
 		08FA972F1A46120E009B998C /* HMStoreProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA972E1A46120E009B998C /* HMStoreProductCollectionViewCell.m */; };
 		08FA97331A4631DC009B998C /* HMStoreSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97321A4631DC009B998C /* HMStoreSectionView.m */; };
@@ -487,6 +487,9 @@
 		082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSaveToDeviceActivity.m; sourceTree = "<group>"; };
 		0831C7E21885ECD30024406B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		083334691A80D659008AC771 /* HMParentalControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParentalControlDelegate.h; sourceTree = "<group>"; };
+		0833346A1A80D659008AC771 /* HMParentalControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParentalControlViewController.h; sourceTree = "<group>"; };
+		0833346B1A80D659008AC771 /* HMParentalControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParentalControlViewController.m; sourceTree = "<group>"; };
 		08333CD31A371AE000C27B56 /* AmazonInsightsSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonInsightsSDK.framework; path = Homage/Frameworks/AmazonInsightsSDK.framework; sourceTree = "<group>"; };
 		0838E8D918D04E1700222997 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0838E8DB18D04E2400222997 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -591,7 +594,6 @@
 		086A343119DD6EE400B60BB5 /* AWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWAlertView.m; sourceTree = "<group>"; };
 		086F30B61A529B7100430D81 /* Monkey Dance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Monkey Dance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		086F30B81A529CA500430D81 /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Homage-Info.plist"; sourceTree = "<group>"; };
-		087052881A5CFFD800E22066 /* HMStoreManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreManagerDelegate.h; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		08793D281A75474100B2F91C /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
@@ -741,8 +743,6 @@
 		08FA971E1A45B8C6009B998C /* InAppStore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InAppStore.storyboard; sourceTree = "<group>"; };
 		08FA97211A45D44B009B998C /* HMInAppStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMInAppStoreViewController.h; sourceTree = "<group>"; };
 		08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMInAppStoreViewController.m; sourceTree = "<group>"; };
-		08FA97251A45E4F2009B998C /* HMParentalControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParentalControlViewController.h; sourceTree = "<group>"; };
-		08FA97261A45E4F2009B998C /* HMParentalControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParentalControlViewController.m; sourceTree = "<group>"; };
 		08FA97291A460367009B998C /* HMStoreProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreProductsViewController.h; sourceTree = "<group>"; };
 		08FA972A1A460367009B998C /* HMStoreProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoreProductsViewController.m; sourceTree = "<group>"; };
 		08FA972D1A46120E009B998C /* HMStoreProductCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoreProductCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1047,6 +1047,7 @@
 				0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */,
 				0864E04F1A4F3B5600F7AEB7 /* Styles */,
 				08DF23051892704300912657 /* Main */,
+				083334681A80D659008AC771 /* ParentalControl */,
 				08FA971D1A45B853009B998C /* InAppStore */,
 				08455FDE1890458E0040504D /* Recorder */,
 				0884566418848D3300B94267 /* Custom Views & Controls */,
@@ -1118,6 +1119,16 @@
 				0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */,
 			);
 			path = "UIImage Effects";
+			sourceTree = "<group>";
+		};
+		083334681A80D659008AC771 /* ParentalControl */ = {
+			isa = PBXGroup;
+			children = (
+				083334691A80D659008AC771 /* HMParentalControlDelegate.h */,
+				0833346A1A80D659008AC771 /* HMParentalControlViewController.h */,
+				0833346B1A80D659008AC771 /* HMParentalControlViewController.m */,
+			);
+			path = ParentalControl;
 			sourceTree = "<group>";
 		};
 		083E74991A70369900B4164D /* Parsers */ = {
@@ -1849,11 +1860,8 @@
 			children = (
 				08FA971E1A45B8C6009B998C /* InAppStore.storyboard */,
 				08FA97391A46C01E009B998C /* HMStoreDelegate.h */,
-				087052881A5CFFD800E22066 /* HMStoreManagerDelegate.h */,
 				08FA97211A45D44B009B998C /* HMInAppStoreViewController.h */,
 				08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */,
-				08FA97251A45E4F2009B998C /* HMParentalControlViewController.h */,
-				08FA97261A45E4F2009B998C /* HMParentalControlViewController.m */,
 				08FA97291A460367009B998C /* HMStoreProductsViewController.h */,
 				08FA972A1A460367009B998C /* HMStoreProductsViewController.m */,
 				08FA972D1A46120E009B998C /* HMStoreProductCollectionViewCell.h */,
@@ -2354,6 +2362,7 @@
 				65C10D9318A265DC00A65917 /* HMBoldFontButton.m in Sources */,
 				08B9588E1891678600BCCF8C /* Story+Factory.m in Sources */,
 				083E74BC1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */,
+				0833346C1A80D659008AC771 /* HMParentalControlViewController.m in Sources */,
 				08DA744A1A5EA9AD007EFE69 /* HMServer+analytics.m in Sources */,
 				267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */,
 				08DA74581A5EA9AD007EFE69 /* HMServer+Texts.m in Sources */,
@@ -2453,7 +2462,6 @@
 				0840FF9518854F6C00A6EF5E /* NSNotificationCenter+Utils.m in Sources */,
 				0840FF66188518ED00A6EF5E /* AWPieSliceView.m in Sources */,
 				65C10D9218A265DC00A65917 /* HMBoldFontLabel.m in Sources */,
-				08FA97271A45E4F2009B998C /* HMParentalControlViewController.m in Sources */,
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
@@ -2498,6 +2506,7 @@
 				086F2FFF1A529B7100430D81 /* HMBoldFontButton.m in Sources */,
 				086F30001A529B7100430D81 /* Story+Factory.m in Sources */,
 				083E74BD1A70369900B4164D /* NSDictionary+TypeSafeValues.m in Sources */,
+				0833346D1A80D659008AC771 /* HMParentalControlViewController.m in Sources */,
 				08DA744B1A5EA9AD007EFE69 /* HMServer+analytics.m in Sources */,
 				086F30011A529B7100430D81 /* JBWhatsAppActivity.m in Sources */,
 				08DA74591A5EA9AD007EFE69 /* HMServer+Texts.m in Sources */,
@@ -2597,7 +2606,6 @@
 				086F30641A529B7100430D81 /* NSNotificationCenter+Utils.m in Sources */,
 				086F30651A529B7100430D81 /* AWPieSliceView.m in Sources */,
 				086F30661A529B7100430D81 /* HMBoldFontLabel.m in Sources */,
-				086F30671A529B7100430D81 /* HMParentalControlViewController.m in Sources */,
 				086F30681A529B7100430D81 /* Story+Logic.m in Sources */,
 				086F306A1A529B7100430D81 /* IASKAppSettingsViewController.m in Sources */,
 				086F306B1A529B7100430D81 /* UIImage+ImageEffects.m in Sources */,
@@ -2762,10 +2770,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(inherited)",
 					"$(SRCROOT)/Homage/Frameworks",
 					"$(PROJECT_DIR)",
@@ -2783,12 +2791,14 @@
 					"../homage-cv-app/Core/ImageLib/**",
 					"../homage-cv-app/Core/Util/**",
 					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Tracking/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/WhiteLabels/Homage/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Core/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Debug$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -2797,6 +2807,7 @@
 					"-lGpw",
 					"-lUtil",
 					"-lImage",
+					"-lPlnTracker",
 					"-lMattingLib",
 					"-ObjC",
 					"-framework",
@@ -2858,12 +2869,14 @@
 					"../homage-cv-app/Core/ImageLib/**",
 					"../homage-cv-app/Core/Util/**",
 					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Tracking/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/WhiteLabels/Homage/Homage-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -2872,6 +2885,7 @@
 					"-lGpw",
 					"-lUtil",
 					"-lImage",
+					"-lPlnTracker",
 					"-lMattingLib",
 					"-ObjC",
 					"-framework",

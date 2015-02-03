@@ -178,17 +178,18 @@
                        forRemake:shareBundle[K_REMAKE_ID]
                      shareMethod:shareMethod
                     shareSuccess:completed
-                     application:activityType
+                     application:activityType?activityType:@"unknown"
                             info:shareBundle];
 
         // Report to mixpanel
         if (activityType) {
             NSDictionary *trackProperties = @{
                                               @"story" : shareBundle[K_STORY_NAME] ,
-                                              @"share_method" : activityType,
+                                              @"share_method" : shareMethod?shareMethod:@"unknown",
                                               @"remake_id" : shareBundle[K_REMAKE_ID],
                                               @"user_id" : shareBundle[K_USER_ID],
                                               @"remake_owner_id": shareBundle[K_REMAKE_OWNER_ID],
+                                              @"application":activityType?activityType:@"unknown",
                                               @"originating_screen": shareBundle[K_ORIGINATING_SCREEN]
                                               };
             [[Mixpanel sharedInstance] track:trackEventName properties:trackProperties];
@@ -302,6 +303,7 @@
                                       @"remake_id" : shareBundle[K_REMAKE_ID],
                                       @"user_id" : shareBundle[K_USER_ID],
                                       @"remake_owner_id": shareBundle[K_REMAKE_OWNER_ID],
+                                      @"application": self.application?self.application:@"unknown",
                                       @"originating_screen": shareBundle[K_ORIGINATING_SCREEN]
                                       };
     

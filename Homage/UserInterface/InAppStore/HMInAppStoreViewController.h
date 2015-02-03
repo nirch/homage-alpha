@@ -7,7 +7,7 @@
 //
 
 #import "HMStoreDelegate.h"
-#import "HMStoreManagerDelegate.h"
+#import "HMParentalControlDelegate.h"
 
 @class Story;
 @class Remake;
@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, HMStoreOpenedFor) {
 };
 
 @interface HMInAppStoreViewController : UIViewController<
-    HMStoreManagerDelegate
+    HMParentalControlDelegate
 >
 
 @property (nonatomic, weak) id<HMStoreDelegate>delegate;

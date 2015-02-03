@@ -75,6 +75,7 @@
 // Paging
 @property (nonatomic) NSInteger shownRemakesPages;
 @property (nonatomic) NSInteger previousRemakesCount;
+@property (nonatomic) NSInteger numberOfRemakesPerPage;
 
 // Fetched from server
 @property (nonatomic) BOOL fetchedFirstPageFromServer;
@@ -248,6 +249,7 @@
 
 -(void)initContent
 {
+    self.numberOfRemakesPerPage = [HMServer.sh.configurationInfo[@"remakes_per_page"] integerValue];
     self.previousRemakesCount = -1;
     self.shownRemakesPages = 1;
     self.noRemakesLabel.alpha = 0;
@@ -444,7 +446,7 @@
     fetchRequest.predicate = compoundPredicate;
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"grade" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"sID" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
-    fetchRequest.fetchLimit = self.shownRemakesPages * NUMBER_OF_REMAKES_PER_PAGE;
+    fetchRequest.fetchLimit = self.shownRemakesPages * self.numberOfRemakesPerPage;
     
     // Create the fetched results controller and return it.
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:DB.sh.context sectionNameKeyPath:nil cacheName:nil];
@@ -459,7 +461,7 @@
      numberOfItemsInSection:(NSInteger)section
 {
     HMGLogDebug(@"number of items in fetchedObjects: %d" , self.fetchedResultsController.fetchedObjects.count);
-    if (self.fetchedResultsController.fetchedObjects.count >= NUMBER_OF_REMAKES_PER_PAGE ) {
+    if (self.fetchedResultsController.fetchedObjects.count >= self.numberOfRemakesPerPage ) {
         return self.fetchedResultsController.fetchedObjects.count+1;
     } else {
         return self.fetchedResultsController.fetchedObjects.count;

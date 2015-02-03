@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiSettingsButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiHowToButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiShareAppButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiShareAppIcon;
+
 @property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *guiNavButtonsCollection;
 
 @property (weak,nonatomic)  UIButton *selectedButton;
@@ -54,6 +56,7 @@
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiLogoutButton;
 
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiStoreButton;
+
 
 
 @property (weak, nonatomic) HMABTester *abTester;
@@ -115,6 +118,10 @@
 {
     // In app purchases button. Shown only if supported.
     self.guiStoreButton.hidden = ![HMServer.sh supportsInAppPurchases];
+    
+    // Share app button, shown only if allowed.
+    self.guiShareAppButton.hidden = ![HMServer.sh.configurationInfo[@"share_app_button"] boolValue];
+    self.guiShareAppIcon.hidden = ![HMServer.sh.configurationInfo[@"share_app_button"] boolValue];
     
     // ************
     // *  STYLES  *
@@ -256,7 +263,18 @@
     self.guiHelloUserLabel.text = [NSString stringWithFormat:LS(@"HELLO_USER") , userName];
 
     self.guiJoinButton.hidden = !user.isGuestUser;
-    self.guiLogoutButton.hidden = user.isGuestUser;    
+    self.guiLogoutButton.hidden = user.isGuestUser;
+    [self updateSignupFlow];
+}
+
+-(void)updateSignupFlow
+{
+    NSInteger signupCFG = [HMServer.sh.configurationInfo[@"signup"] integerValue];
+    if (signupCFG == HMSignupTypeDisabled) {
+        self.guiJoinButton.hidden = YES;
+        self.guiLogoutButton.hidden = YES;
+        self.guiHelloUserLabel.frame = self.guiLogoutButton.frame;
+    }
 }
 
 -(void)shareApp

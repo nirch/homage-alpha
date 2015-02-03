@@ -8,8 +8,6 @@
 
 #import "HMServer.h"
 
-#define NUMBER_OF_REMAKES_PER_PAGE 16
-
 @interface HMServer (Remakes)
 
 ///

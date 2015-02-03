@@ -17,7 +17,13 @@
 #import "HMTOSViewController.h"
 #import "HMPrivacyPolicyViewController.h"
 
-@interface HMRecorderTutorialViewController ()
+#import <PSTAlertController/PSTAlertController.h>
+#import "HMParentalControlViewController.h"
+#import "HMParentalControlDelegate.h"
+
+@interface HMRecorderTutorialViewController () <
+    HMParentalControlDelegate
+>
 
 @property (nonatomic) NSInteger index;
 
@@ -162,6 +168,15 @@
     user.skipRecorderTutorial = @YES;
 }
 
+#pragma mark - segues
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"parental control segue"]) {
+        HMParentalControlViewController *vc = segue.destinationViewController;
+        vc.delegate = self;
+    }
+}
+
 #pragma mark - Showing tutorial messages
 -(void)handleState
 {
@@ -180,7 +195,6 @@
     self.guiDarkOverlay.layer.mask = nil;
     
     [self fadeInView:self.guiDarkOverlay delay:0.0];
-    [self fadeInView:self.guiContinueButton delay:0.3];
     [self fadeInView:self.guiNextCoverAllButton delay:0.3];
 
     if (self.index==0) {
@@ -188,9 +202,12 @@
         [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_NEXT") forState:UIControlStateNormal];
         [self revealView:self.guiSolidBGIndicatorContainer delay:0.0];
         [self fadeInView:self.guiSilIndicatorContainer delay:0.8];
+        [self fadeInView:self.guiContinueButton delay:0.3];
     
     } else if (self.index==1) {
+        
         [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_NEXT") forState:UIControlStateNormal];
+        [self fadeInView:self.guiContinueButton delay:0.3];
         
         // Punch holes in the dark overlay
         [self punchHoles];
@@ -198,9 +215,12 @@
         // Reveal indicators
         [self revealView:self.guiSceneIndicatorContainer delay:0.4];
         [self revealView:self.guiInspiredIndicatorContainer delay:0.8];
+        
     } else if (self.index == 2) {
+
         [self.guiContinueButton setTitle:LS(@"HELP_BUTTON_FINISH") forState:UIControlStateNormal];
         [self fadeInView:self.guiDisclaimerContainer delay:0.2];
+        
     }
 }
 
@@ -281,16 +301,57 @@
     [self.legalNavVC dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)showTOS:(UIBarButtonItem *)sender
+-(void)pushTOSVC:(UIBarButtonItem *)sender
 {
     [self.legalNavVC pushViewController:self.tosVC animated:YES];
 }
 
--(void)showPrivacy:(UIBarButtonItem *)sender
+-(void)pushPrivacyVC:(UIBarButtonItem *)sender
 {
     
     [self.legalNavVC pushViewController:self.privacyVC animated:YES];
 }
+
+- (void)showTermsOfService
+{
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
+    self.tosVC.navigationItem.hidesBackButton = YES;
+    self.tosVC.navigationItem.leftBarButtonItem = doneButton;
+    UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(pushPrivacyVC:)];
+    self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
+    self.tosVC.navigationItem.hidesBackButton = YES;
+    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+}
+
+
+- (void)showPrivacyPolicy
+{
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+    [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
+    self.privacyVC.navigationItem.hidesBackButton = YES;
+    self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
+    UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(pushTOSVC:)];
+    self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
+    self.privacyVC.navigationItem.hidesBackButton = YES;
+    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+}
+
+#pragma mark - Parental control delegate
+-(void)parentalControlValidatedSuccessfully
+{
+    [self done];
+}
+
+-(void)parentalControlActionWithInfo:(NSDictionary *)info
+{
+    if ([info[@"action"] isEqualToString:@"privacy"]) {
+        [self showPrivacyPolicy];
+    } else if ([info[@"action"] isEqualToString:@"tos"]) {
+        [self showTermsOfService];
+    }
+}
+
 
 #pragma mark - IB Actions
 // ===========
@@ -312,27 +373,27 @@
 
 - (IBAction)onTermsOfServicePushed:(id)sender
 {
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
-    [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
-    self.tosVC.navigationItem.hidesBackButton = YES;
-    self.tosVC.navigationItem.leftBarButtonItem = doneButton;
-    UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
-    self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
-    self.tosVC.navigationItem.hidesBackButton = YES;
-    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+//    [self.legalNavVC setViewControllers:@[self.tosVC] animated:YES];
+//    self.tosVC.navigationItem.hidesBackButton = YES;
+//    self.tosVC.navigationItem.leftBarButtonItem = doneButton;
+//    UIBarButtonItem *privacyButton = [[UIBarButtonItem alloc] initWithTitle:@"Privacy Policy" style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacy:)];
+//    self.tosVC.navigationItem.rightBarButtonItem = privacyButton;
+//    self.tosVC.navigationItem.hidesBackButton = YES;
+//    [self presentViewController:self.legalNavVC animated:YES completion:nil];
 }
 
 
 - (IBAction)onPrivacyPolicyPushed:(id)sender
 {
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
-    [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
-    self.privacyVC.navigationItem.hidesBackButton = YES;
-    self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
-    UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
-    self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
-    self.privacyVC.navigationItem.hidesBackButton = YES;
-    [self presentViewController:self.legalNavVC animated:YES completion:nil];
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(dismissLegalNavcontroller:)];
+//    [self.legalNavVC setViewControllers:@[self.privacyVC] animated:YES];
+//    self.privacyVC.navigationItem.hidesBackButton = YES;
+//    self.privacyVC.navigationItem.leftBarButtonItem = doneButton;
+//    UIBarButtonItem *tosButton = [[UIBarButtonItem alloc] initWithTitle:@"Terms Of Service" style:UIBarButtonItemStylePlain target:self action:@selector(showTOS:)];
+//    self.privacyVC.navigationItem.rightBarButtonItem = tosButton;
+//    self.privacyVC.navigationItem.hidesBackButton = YES;
+//    [self presentViewController:self.legalNavVC animated:YES completion:nil];
 }
 
 @end

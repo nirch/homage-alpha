@@ -148,7 +148,7 @@
 			<key>colorRecorderMessageActionButton</key>
 			<string>@impact</string>
 			<key>colorRecorderRecordingProgressBar</key>
-			<string>@brightSeeThrough</string>
+			<string>@impactSeeThrough</string>
 			<key>colorRecorderVideoTitles</key>
 			<string>@impact</string>
 			<key>colorRecorderDrawerBG</key>

@@ -4,6 +4,10 @@
 <dict>
 	<key>share_link_prefix</key>
 	<string>http://play.homage.it</string>
+	<key>share_app_button</key>
+	<true/>
+	<key>signup</key>
+	<integer>1</integer>
 	<key>ios_mixpanel_token</key>
 	<string>7d575048f24cb2424cd5c9799bbb49b1</string>
 	<key>ios_crashlytics_token</key>
@@ -45,9 +49,9 @@
 	<key>guest_allow_public</key>
 	<false/>
 	<key>guest_allow_share</key>
-	<false/>
+	<true/>
 	<key>recorder_skip_are_you_sure_in_good_job_message</key>
-	<false/>
+	<true/>
 	<key>recorder_disclaimer</key>
 	<false/>
 	<key>user_save_remakes_policy</key>

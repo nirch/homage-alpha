@@ -175,7 +175,7 @@
     [self.delegate storeDidFinishWithInfo:info];
 }
 
-#pragma mark - HMStoreManagerDelegate
+#pragma mark - HMParentalControlDelegate
 -(void)parentalControlValidatedSuccessfully
 {    
     [UIView animateWithDuration:0.2 animations:^{
