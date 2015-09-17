@@ -36,6 +36,8 @@
     gpTime_type m_gTimeImage2Buffrt;
     gpTime_type m_gTimeProcess;
     gpTime_type m_gTimeAppend;
+    
+    CVtool *_cvTool;
 }
 
 @property (nonatomic, readonly, weak) AVCaptureSession *session;
@@ -89,7 +91,7 @@
     if (self) {
         // Recording duration.
         _recordingDuration = 0;
-        
+        _cvTool = new CVtool();
         // Is slow device?
         HMAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         self.isSlowDevice = [appDelegate isSlowDevice];
@@ -395,7 +397,7 @@
                 if (!self.isSlowDevice && [self shouldFlipVideo]) {
                     // Process and rotate the video 180Deg if required before saving.
                     CVPixelBufferRef bufferRef = CMSampleBufferGetImageBuffer(sampleBuffer);
-                    CVtool::CVPixelBufferRef_rotate180(bufferRef);
+                    _cvTool->CVPixelBufferRef_rotate180(bufferRef);
                 }
                 
                 // Write the sample buffer.
@@ -450,7 +452,8 @@
     }
     
     // Process the background.
-    int bgMark = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+//    int bgMark = m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+    int bgMark = 1;
 
     // If result is lower than allowed threshold,
     // then we got a bad background on our hands!
@@ -497,7 +500,7 @@
     NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
 
     //CVPixelBufferRef pixelBufferToSave = CVtool::CVPixelBufferRef_from_image(m_original_image);
-    image_type *fixRGB = image3_to_BGR(m_original_image, NULL);
+    image_type *fixRGB = image3_bgr2rgb(m_original_image, NULL);
     image_type *background_image = image4_from(fixRGB, NULL);
     UIImage *bgImage = CVtool::CreateUIImage(background_image);
     [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];

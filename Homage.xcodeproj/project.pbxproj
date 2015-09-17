@@ -267,6 +267,201 @@
 		086F30AE1A529B7100430D81 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0855D36F1A0A68BA004830AE /* Settings.bundle */; };
 		086F30AF1A529B7100430D81 /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 267A640319532030003DFFEA /* whatsapp@2x.png */; };
 		086F30B01A529B7100430D81 /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
+		087498AF1B9444B000BD331C /* HMServer+ReachabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74031A5EA9AD007EFE69 /* HMServer+ReachabilityMonitor.m */; };
+		087498B01B9444B000BD331C /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ED218869ADD001A8B75 /* AMBlurView.m */; };
+		087498B11B9444B000BD331C /* HMNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF98188553BF00A6EF5E /* HMNotificationCenter.m */; };
+		087498B21B9444B000BD331C /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EF18FFFD40002E8CB7 /* IASKSlider.m */; };
+		087498B31B9444B000BD331C /* HMSimpleVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22FB18926E3900912657 /* HMSimpleVideoViewController.m */; };
+		087498B41B9444B000BD331C /* HMStoryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A51A70369900B4164D /* HMStoryParser.m */; };
+		087498B51B9444B000BD331C /* HMRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECE1886994A001A8B75 /* HMRoundButton.m */; };
+		087498B61B9444B000BD331C /* HMAWS3Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74121A5EA9AD007EFE69 /* HMAWS3Client.m */; };
+		087498B71B9444B000BD331C /* HMUploadS3Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74141A5EA9AD007EFE69 /* HMUploadS3Worker.m */; };
+		087498B81B9444B000BD331C /* User+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A1189167D800BCCF8C /* User+Logic.m */; };
+		087498B91B9444B000BD331C /* AWTimeProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB848188EEC8100C0EE27 /* AWTimeProgressView.m */; };
+		087498BA1B9444B000BD331C /* HMJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA740A1A5EA9AD007EFE69 /* HMJSONResponseSerializerWithData.m */; };
+		087498BB1B9444B000BD331C /* HMRecorderTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BF6EE18C36AC2009D79C5 /* HMRecorderTutorialViewController.m */; };
+		087498BC1B9444B000BD331C /* HMBoldFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8F18A265DC00A65917 /* HMBoldFontButton.m */; };
+		087498BD1B9444B000BD331C /* Story+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958831891678600BCCF8C /* Story+Factory.m */; };
+		087498BE1B9444B000BD331C /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74AB1A70369900B4164D /* NSDictionary+TypeSafeValues.m */; };
+		087498BF1B9444B000BD331C /* HMParentalControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0833346B1A80D659008AC771 /* HMParentalControlViewController.m */; };
+		087498C01B9444B000BD331C /* HMServer+analytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA741B1A5EA9AD007EFE69 /* HMServer+analytics.m */; };
+		087498C11B9444B000BD331C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A640219532030003DFFEA /* JBWhatsAppActivity.m */; };
+		087498C21B9444B000BD331C /* HMServer+Texts.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74291A5EA9AD007EFE69 /* HMServer+Texts.m */; };
+		087498C31B9444B000BD331C /* HMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */; };
+		087498C41B9444B000BD331C /* Scene+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958811891678600BCCF8C /* Scene+Factory.m */; };
+		087498C51B9444B000BD331C /* HMStoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231B1892704300912657 /* HMStoryCell.m */; };
+		087498C61B9444B000BD331C /* HMSaveToDeviceActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E191A67BC410020D12E /* HMSaveToDeviceActivity.m */; };
+		087498C71B9444B000BD331C /* HMServer+Stories.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74271A5EA9AD007EFE69 /* HMServer+Stories.m */; };
+		087498C81B9444B000BD331C /* HMServer+Remakes.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74231A5EA9AD007EFE69 /* HMServer+Remakes.m */; };
+		087498C91B9444B000BD331C /* IASKSettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DE18FFFD40002E8CB7 /* IASKSettingsReader.m */; };
+		087498CA1B9444B000BD331C /* HMWhileRecordingOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FF31890458E0040504D /* HMWhileRecordingOverlayViewController.m */; };
+		087498CB1B9444B000BD331C /* HMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23091892704300912657 /* HMTabBarController.m */; };
+		087498CC1B9444B000BD331C /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CDF8391897F6B100A9D235 /* Text.m */; };
+		087498CD1B9444B000BD331C /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E418FFFD40002E8CB7 /* IASKSettingsStoreUserDefaults.m */; };
+		087498CE1B9444B000BD331C /* HMStoreBuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97361A4634E2009B998C /* HMStoreBuyButton.m */; };
+		087498CF1B9444B000BD331C /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
+		087498D01B9444B000BD331C /* HMMotionDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B498A918B5FD7100026401 /* HMMotionDetector.m */; };
+		087498D11B9444B000BD331C /* HMSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C1CD3919F917E300FF0770 /* HMSplashViewController.m */; };
+		087498D21B9444B000BD331C /* HMGUserRemakeCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230E1892704300912657 /* HMGUserRemakeCVCell.m */; };
+		087498D31B9444B000BD331C /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E618FFFD40002E8CB7 /* IASKSpecifier.m */; };
+		087498D41B9444B000BD331C /* HMRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */; };
+		087498D51B9444B000BD331C /* HMRemakeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749F1A70369900B4164D /* HMRemakeParser.m */; };
+		087498D61B9444B000BD331C /* HMConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749B1A70369900B4164D /* HMConfigurationParser.m */; };
+		087498D71B9444B000BD331C /* HMABTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73F71A5EA9AD007EFE69 /* HMABTester.m */; };
+		087498D81B9444B000BD331C /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
+		087498D91B9444B000BD331C /* IASKSettingsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E018FFFD40002E8CB7 /* IASKSettingsStore.m */; };
+		087498DA1B9444B000BD331C /* HMRecorderEditingTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53341891E6C100D96258 /* HMRecorderEditingTextCell.m */; };
+		087498DB1B9444B000BD331C /* HMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E121A66CC760020D12E /* HMLabel.m */; };
+		087498DC1B9444B000BD331C /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF811885356A00A6EF5E /* DB.m */; };
+		087498DD1B9444B000BD331C /* IASKPSSliderSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E918FFFD40002E8CB7 /* IASKPSSliderSpecifierViewCell.m */; };
+		087498DE1B9444B000BD331C /* HMServer+LazyLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA740D1A5EA9AD007EFE69 /* HMServer+LazyLoading.m */; };
+		087498DF1B9444B000BD331C /* HMServer+Render.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74251A5EA9AD007EFE69 /* HMServer+Render.m */; };
+		087498E01B9444B000BD331C /* HMRoundCountdownLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7D2188D293E00C0EE27 /* HMRoundCountdownLabel.m */; };
+		087498E11B9444B000BD331C /* UIView+MotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF6C188527C600A6EF5E /* UIView+MotionEffect.m */; };
+		087498E21B9444B000BD331C /* HMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A91A70369900B4164D /* HMUserParser.m */; };
+		087498E31B9444B000BD331C /* Footage+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9587D1891678600BCCF8C /* Footage+Factory.m */; };
+		087498E41B9444B000BD331C /* HMRemakeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23171892704300912657 /* HMRemakeCell.m */; };
+		087498E51B9444B000BD331C /* Footage+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B95899189167B500BCCF8C /* Footage+Logic.m */; };
+		087498E61B9444B000BD331C /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE11890458E0040504D /* AVCamPreviewView.m */; };
+		087498E71B9444B000BD331C /* MyManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF791885351800A6EF5E /* MyManagedDocument.m */; };
+		087498E81B9444B000BD331C /* HMStoreSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97321A4631DC009B998C /* HMStoreSectionView.m */; };
+		087498E91B9444B000BD331C /* HMVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE31890458E0040504D /* HMVideoCameraViewController.m */; };
+		087498EA1B9444B000BD331C /* HMRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FE51890458E0040504D /* HMRecorderViewController.m */; };
+		087498EB1B9444B000BD331C /* HMToonBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0842A63A19F7EF43002F0D8B /* HMToonBGView.m */; };
+		087498EC1B9444B000BD331C /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F318FFFD40002E8CB7 /* IASKTextField.m */; };
+		087498ED1B9444B000BD331C /* HMSimpleVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF22F918926E3900912657 /* HMSimpleVideoView.m */; };
+		087498EE1B9444B000BD331C /* HMRecorderEditTextsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E532D1891D84800D96258 /* HMRecorderEditTextsViewController.m */; };
+		087498EF1B9444B000BD331C /* HMGMeTabVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF230C1892704300912657 /* HMGMeTabVC.m */; };
+		087498F01B9444B000BD331C /* HMCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73FE1A5EA9AD007EFE69 /* HMCacheManager.m */; };
+		087498F11B9444B000BD331C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF3418EDA37100CA362F /* main.m */; };
+		087498F21B9444B000BD331C /* User+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958871891678600BCCF8C /* User+Factory.m */; };
+		087498F31B9444B000BD331C /* Remake+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B95895189167A000BCCF8C /* Remake+Logic.m */; };
+		087498F41B9444B000BD331C /* HMIntroMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5918EDA50600CA362F /* HMIntroMovieViewController.m */; };
+		087498F51B9444B000BD331C /* HMSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E53301891E3D100D96258 /* HMSceneCell.m */; };
+		087498F61B9444B000BD331C /* HMPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF4E18EDA4D200CA362F /* HMPrivacyPolicyViewController.m */; };
+		087498F71B9444B000BD331C /* HMSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 084E90D31A00E12800779030 /* HMSharing.m */; };
+		087498F81B9444B000BD331C /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74081A5EA9AD007EFE69 /* BSONIdGenerator.m */; };
+		087498F91B9444B000BD331C /* Text+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A5189167EE00BCCF8C /* Text+Logic.m */; };
+		087498FA1B9444B000BD331C /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0842A63019F74A17002F0D8B /* UIView+Hierarchy.m */; };
+		087498FB1B9444B000BD331C /* HMServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74051A5EA9AD007EFE69 /* HMServer.m */; };
+		087498FC1B9444B000BD331C /* HMRecorderPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D03F87189450B800DEBDBC /* HMRecorderPreviewViewController.m */; };
+		087498FD1B9444B000BD331C /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
+		087498FE1B9444B000BD331C /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E749D1A70369900B4164D /* HMParser.m */; };
+		087498FF1B9444B000BD331C /* Contour+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C4483192E6BA400AD82EC /* Contour+Factory.m */; };
+		087499001B9444B000BD331C /* HMRoundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E50ECA188697CE001A8B75 /* HMRoundView.m */; };
+		087499011B9444B000BD331C /* HMLoginMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5C18EDA50600CA362F /* HMLoginMainViewController.m */; };
+		087499021B9444B000BD331C /* HMStoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF231D1892704300912657 /* HMStoryDetailsViewController.m */; };
+		087499031B9444B000BD331C /* HMStoreProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA972A1A460367009B998C /* HMStoreProductsViewController.m */; };
+		087499041B9444B000BD331C /* HMRemakesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A11A70369900B4164D /* HMRemakesParser.m */; };
+		087499051B9444B000BD331C /* HMAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA73FA1A5EA9AD007EFE69 /* HMAppStore.m */; };
+		087499061B9444B000BD331C /* HMSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CA48F71A50305C00E99258 /* HMSideBarViewController.m */; };
+		087499071B9444B000BD331C /* HMStoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23191892704300912657 /* HMStoriesViewController.m */; };
+		087499081B9444B000BD331C /* Remake+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9587F1891678600BCCF8C /* Remake+Factory.m */; };
+		087499091B9444B000BD331C /* IASKPSTitleValueSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341ED18FFFD40002E8CB7 /* IASKPSTitleValueSpecifierViewCell.m */; };
+		0874990A1B9444B000BD331C /* AWAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 086A343119DD6EE400B60BB5 /* AWAlertView.m */; };
+		0874990B1B9444B000BD331C /* HMTextUpdateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A71A70369900B4164D /* HMTextUpdateParser.m */; };
+		0874990C1B9444B000BD331C /* HMRecorderDetailedOptionsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FF11890458E0040504D /* HMRecorderDetailedOptionsBarViewController.m */; };
+		0874990D1B9444B000BD331C /* HMRegularFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 081CDB1A19D97E8D00723609 /* HMRegularFontLabel.m */; };
+		0874990E1B9444B000BD331C /* AWPieSliceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF61188518ED00A6EF5E /* AWPieSliceLayer.m */; };
+		0874990F1B9444B000BD331C /* IASKSettingsStoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341E218FFFD40002E8CB7 /* IASKSettingsStoreFile.m */; };
+		087499101B9444B000BD331C /* Scene+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9589D189167C700BCCF8C /* Scene+Logic.m */; };
+		087499111B9444B000BD331C /* HMServer+Footages.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA741F1A5EA9AD007EFE69 /* HMServer+Footages.m */; };
+		087499121B9444B000BD331C /* HMServer+AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA741D1A5EA9AD007EFE69 /* HMServer+AppConfig.m */; };
+		087499131B9444B000BD331C /* HMStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DF23071892704300912657 /* HMStartViewController.m */; };
+		087499141B9444B000BD331C /* HMDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */; };
+		087499151B9444B000BD331C /* HMInAppStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */; };
+		087499161B9444B000BD331C /* HMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB2A1882944D00F0EF50 /* HMAppDelegate.m */; };
+		087499171B9444B000BD331C /* Text+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958851891678600BCCF8C /* Text+Factory.m */; };
+		087499181B9444B000BD331C /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958691891377400BCCF8C /* NSString+Utilities.m */; };
+		087499191B9444B000BD331C /* HMAnimationsFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ACB7AD188C631C00C0EE27 /* HMAnimationsFX.m */; };
+		0874991A1B9444B000BD331C /* HMToonBGStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0842A64019F80B61002F0D8B /* HMToonBGStyleKit.m */; };
+		0874991B1B9444B000BD331C /* HMTOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF5118EDA4D200CA362F /* HMTOSViewController.m */; };
+		0874991C1B9444B000BD331C /* Contour.m in Sources */ = {isa = PBXBuildFile; fileRef = 263C448C192F4E5E00AD82EC /* Contour.m */; };
+		0874991D1B9444B000BD331C /* HMUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74161A5EA9AD007EFE69 /* HMUploadManager.m */; };
+		0874991E1B9444B000BD331C /* Footage.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D3E0C1A668D930020D12E /* Footage.m */; };
+		0874991F1B9444B000BD331C /* HMRecorderMessagesOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08455FF61890458E0040504D /* HMRecorderMessagesOverlayViewController.m */; };
+		087499201B9444B000BD331C /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF9318854F6C00A6EF5E /* NSNotificationCenter+Utils.m */; };
+		087499211B9444B000BD331C /* AWPieSliceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF63188518ED00A6EF5E /* AWPieSliceView.m */; };
+		087499221B9444B000BD331C /* HMBoldFontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C10D8E18A265DC00A65917 /* HMBoldFontLabel.m */; };
+		087499231B9444B000BD331C /* Story+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B958A91891685300BCCF8C /* Story+Logic.m */; };
+		087499241B9444B000BD331C /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
+		087499251B9444B000BD331C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
+		087499261B9444B000BD331C /* HMStoriesTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA81391A213EB400742251 /* HMStoriesTutorial.m */; };
+		087499271B9444B000BD331C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
+		087499281B9444B000BD331C /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */; };
+		087499291B9444B000BD331C /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA742B1A5EA9AD007EFE69 /* HMServer+Users.m */; };
+		0874992A1B9444B000BD331C /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120111A068F11002F10B2 /* HMRefreshControl.m */; };
+		0874992B1B9444B000BD331C /* HMStoreProductCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA972E1A46120E009B998C /* HMStoreProductCollectionViewCell.m */; };
+		0874992C1B9444B000BD331C /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D818FFFD40002E8CB7 /* IASKAppSettingsWebViewController.m */; };
+		0874992D1B9444B000BD331C /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341F118FFFD40002E8CB7 /* IASKSwitch.m */; };
+		0874992E1B9444B000BD331C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */; };
+		0874992F1B9444B000BD331C /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A31A70369900B4164D /* HMStoriesParser.m */; };
+		087499301B9444B000BD331C /* HMRemakeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 081E397F19FD6CDC00990F50 /* HMRemakeScreenViewController.m */; };
+		087499311B9444B000BD331C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A380E1974AE650016C59C /* User.m */; };
+		087499321B9444B000BD331C /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
+		087499331B9444B000BD331C /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
+		087499341B9444B000BD331C /* HMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120161A08C045002F10B2 /* HMNavigationController.m */; };
+		087499351B9444B000BD331C /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EB18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m */; };
+		087499361B9444B000BD331C /* HMServer+Likes.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA74211A5EA9AD007EFE69 /* HMServer+Likes.m */; };
+		087499371B9444B000BD331C /* HMRenderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2655DF6618EDA9F600CA362F /* HMRenderingViewController.m */; };
+		087499391B9444B000BD331C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
+		0874993A1B9444B000BD331C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267A64D419532275003DFFEA /* Security.framework */; };
+		0874993B1B9444B000BD331C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B448F41947E28800BC6317 /* SystemConfiguration.framework */; };
+		0874993C1B9444B000BD331C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E9D8A118DDDB7200B9D8CF /* QuartzCore.framework */; };
+		0874993D1B9444B000BD331C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DD18D04E4600222997 /* AVFoundation.framework */; };
+		0874993E1B9444B000BD331C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8DB18D04E2400222997 /* CoreVideo.framework */; };
+		0874993F1B9444B000BD331C /* AmazonInsightsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08333CD31A371AE000C27B56 /* AmazonInsightsSDK.framework */; };
+		087499401B9444B000BD331C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0838E8D918D04E1700222997 /* CoreMedia.framework */; };
+		087499411B9444B000BD331C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AE18BA4A8D00026401 /* AudioToolbox.framework */; };
+		087499421B9444B000BD331C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B498AB18B6011E00026401 /* CoreMotion.framework */; };
+		087499431B9444B000BD331C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1118828AEB007514BE /* CoreGraphics.framework */; };
+		087499441B9444B000BD331C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA1318828AEB007514BE /* UIKit.framework */; };
+		087499451B9444B000BD331C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809E6911A5580C700E7DAEE /* StoreKit.framework */; };
+		087499461B9444B000BD331C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0806FA0F18828AEB007514BE /* Foundation.framework */; };
+		087499471B9444B000BD331C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD11164F7B54A6387FC390E /* libPods.a */; };
+		0874994B1B9444B000BD331C /* close up.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08081FB718D0A9EA00999068 /* close up.ctr */; };
+		0874994D1B9444B000BD331C /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
+		087499521B9444B000BD331C /* HMRecorderMessageBigImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269DEA2A1944A45A00C9397F /* HMRecorderMessageBigImageView.xib */; };
+		087499541B9444B000BD331C /* InAppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FA971E1A45B8C6009B998C /* InAppStore.storyboard */; };
+		087499551B9444B000BD331C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF3718EDA46400CA362F /* Storyboard.storyboard */; };
+		087499581B9444B000BD331C /* HMRecorderMessageGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CDF8441898124000A9D235 /* HMRecorderMessageGeneralView.xib */; };
+		087499591B9444B000BD331C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26385936189550DC003A7B3D /* InfoPlist.strings */; };
+		0874995A1B9444B000BD331C /* HMRefreshControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080120131A069043002F10B2 /* HMRefreshControl.xib */; };
+		0874995B1B9444B000BD331C /* Monkey+-+Warm+Up.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083E74BF1A70444300B4164D /* Monkey+-+Warm+Up.mp4 */; };
+		0874995D1B9444B000BD331C /* HMTOSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF5218EDA4D200CA362F /* HMTOSViewController.xib */; };
+		0874995E1B9444B000BD331C /* RecorderStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08455FE91890458E0040504D /* RecorderStoryboard.storyboard */; };
+		0874995F1B9444B000BD331C /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0571A4F42E900F7AEB7 /* DINOT-CondBold.otf */; };
+		087499601B9444B000BD331C /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
+		087499611B9444B000BD331C /* HMMeVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22F618926E3900912657 /* HMMeVideoPlayer.xib */; };
+		087499621B9444B000BD331C /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
+		087499631B9444B000BD331C /* HMPrivacyPolicyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF4F18EDA4D200CA362F /* HMPrivacyPolicyViewController.xib */; };
+		087499641B9444B000BD331C /* HMRecorderBigVideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2655DF6D18EDABA000CA362F /* HMRecorderBigVideoPlayerView.xib */; };
+		087499651B9444B000BD331C /* HMSimpleVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08DF22FC18926E3900912657 /* HMSimpleVideoViewController.xib */; };
+		087499671B9444B000BD331C /* close up 480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = F182B6DE18F407FB00A89B79 /* close up 480.ctr */; };
+		087499681B9444B000BD331C /* DefaultsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085AFF451A52A8B90066493F /* DefaultsCFG.plist */; };
+		087499691B9444B000BD331C /* DefaultsCFGTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085AFF461A52A8B90066493F /* DefaultsCFGTest.plist */; };
+		0874996A1B9444B000BD331C /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
+		0874996B1B9444B000BD331C /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08DA740E1A5EA9AD007EFE69 /* ServerCFG.plist */; };
+		0874996C1B9444B000BD331C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0855D36F1A0A68BA004830AE /* Settings.bundle */; };
+		0874996D1B9444B000BD331C /* LabelPrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 082D3E0F1A66CC0C0020D12E /* LabelPrivacyPolicy.txt */; };
+		0874996E1B9444B000BD331C /* LabelTOS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 082D3E151A66CFC60020D12E /* LabelTOS.txt */; };
+		0874996F1B9444B000BD331C /* whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 267A640319532030003DFFEA /* whatsapp@2x.png */; };
+		087499711B9444B000BD331C /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
+		0874997F1B944D2300BD331C /* Style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0874997D1B944D2300BD331C /* Style.plist */; };
+		087499851B94A21A00BD331C /* LabelPrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 087499821B94A21A00BD331C /* LabelPrivacyPolicy.txt */; };
+		087499861B94A21A00BD331C /* LabelTOS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 087499831B94A21A00BD331C /* LabelTOS.txt */; };
+		087499871B94A21A00BD331C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 087499841B94A21A00BD331C /* Localizable.strings */; };
+		087499891B94A35600BD331C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 087499881B94A35600BD331C /* Images.xcassets */; };
+		087499901B94A3D800BD331C /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0874998B1B94A3D800BD331C /* cinemaCountdown_oneLast.wav */; };
+		087499911B94A3D800BD331C /* howtoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0874998C1B94A3D800BD331C /* howtoVideo.mp4 */; };
+		087499921B94A3D800BD331C /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0874998D1B94A3D800BD331C /* introVideo.mp4 */; };
+		087499931B94A3D800BD331C /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0874998E1B94A3D800BD331C /* recordingEnd.wav */; };
+		087499941B94A3D800BD331C /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0874998F1B94A3D800BD331C /* songLoop.m4a */; };
+		087499971B94A4C700BD331C /* LabelDefaultsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087499951B94A4C700BD331C /* LabelDefaultsCFG.plist */; };
+		087499981B94A4C700BD331C /* LabelDefaultsCFGTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087499961B94A4C700BD331C /* LabelDefaultsCFGTest.plist */; };
+		087499991B94A71800BD331C /* ABTestsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 082092741A61360F00603008 /* ABTestsCFG.plist */; };
+		0874999D1B94C0E800BD331C /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0874999B1B94C0E800BD331C /* SF-UI-Display-Light.otf */; };
+		0874999F1B94DA0A00BD331C /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0874999E1B94DA0A00BD331C /* SF-UI-Text-Regular.otf */; };
 		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
 		08793D2A1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
@@ -594,6 +789,22 @@
 		086A343119DD6EE400B60BB5 /* AWAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWAlertView.m; sourceTree = "<group>"; };
 		086F30B61A529B7100430D81 /* Monkey Dance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Monkey Dance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		086F30B81A529CA500430D81 /* Homage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Homage-Info.plist"; sourceTree = "<group>"; };
+		087499761B9444B000BD331C /* Recast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		087499791B944C9700BD331C /* Recast-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Recast-Info.plist"; sourceTree = "<group>"; };
+		0874997D1B944D2300BD331C /* Style.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Style.plist; sourceTree = "<group>"; };
+		087499821B94A21A00BD331C /* LabelPrivacyPolicy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LabelPrivacyPolicy.txt; sourceTree = "<group>"; };
+		087499831B94A21A00BD331C /* LabelTOS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LabelTOS.txt; sourceTree = "<group>"; };
+		087499841B94A21A00BD331C /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		087499881B94A35600BD331C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0874998B1B94A3D800BD331C /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
+		0874998C1B94A3D800BD331C /* howtoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = howtoVideo.mp4; sourceTree = "<group>"; };
+		0874998D1B94A3D800BD331C /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
+		0874998E1B94A3D800BD331C /* recordingEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = recordingEnd.wav; sourceTree = "<group>"; };
+		0874998F1B94A3D800BD331C /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
+		087499951B94A4C700BD331C /* LabelDefaultsCFG.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LabelDefaultsCFG.plist; sourceTree = "<group>"; };
+		087499961B94A4C700BD331C /* LabelDefaultsCFGTest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LabelDefaultsCFGTest.plist; sourceTree = "<group>"; };
+		0874999B1B94C0E800BD331C /* SF-UI-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Light.otf"; sourceTree = "<group>"; };
+		0874999E1B94DA0A00BD331C /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		08793D281A75474100B2F91C /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
@@ -879,6 +1090,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		087499381B9444B000BD331C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				087499391B9444B000BD331C /* libicucore.dylib in Frameworks */,
+				0874993A1B9444B000BD331C /* Security.framework in Frameworks */,
+				0874993B1B9444B000BD331C /* SystemConfiguration.framework in Frameworks */,
+				0874993C1B9444B000BD331C /* QuartzCore.framework in Frameworks */,
+				0874993D1B9444B000BD331C /* AVFoundation.framework in Frameworks */,
+				0874993E1B9444B000BD331C /* CoreVideo.framework in Frameworks */,
+				0874993F1B9444B000BD331C /* AmazonInsightsSDK.framework in Frameworks */,
+				087499401B9444B000BD331C /* CoreMedia.framework in Frameworks */,
+				087499411B9444B000BD331C /* AudioToolbox.framework in Frameworks */,
+				087499421B9444B000BD331C /* CoreMotion.framework in Frameworks */,
+				087499431B9444B000BD331C /* CoreGraphics.framework in Frameworks */,
+				087499441B9444B000BD331C /* UIKit.framework in Frameworks */,
+				087499451B9444B000BD331C /* StoreKit.framework in Frameworks */,
+				087499461B9444B000BD331C /* Foundation.framework in Frameworks */,
+				087499471B9444B000BD331C /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		088D5FB319EC015A00075C4A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -947,6 +1180,7 @@
 				0806FA0C18828AEB007514BE /* Homage.app */,
 				088D5FB619EC015A00075C4A /* Homage App Tests.xctest */,
 				086F30B61A529B7100430D81 /* Monkey Dance.app */,
+				087499761B9444B000BD331C /* Recast.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1327,6 +1561,7 @@
 			children = (
 				0856C1AF1A14BC4200735632 /* Homage */,
 				085AFF361A529E1F0066493F /* Monkey Dance */,
+				087499781B944C6700BD331C /* Recast */,
 			);
 			path = WhiteLabels;
 			sourceTree = "<group>";
@@ -1488,6 +1723,69 @@
 				08CDF8391897F6B100A9D235 /* Text.m */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		087499781B944C6700BD331C /* Recast */ = {
+			isa = PBXGroup;
+			children = (
+				087499791B944C9700BD331C /* Recast-Info.plist */,
+				087499951B94A4C700BD331C /* LabelDefaultsCFG.plist */,
+				087499961B94A4C700BD331C /* LabelDefaultsCFGTest.plist */,
+				0874998A1B94A3D800BD331C /* media resources */,
+				087499801B94A21A00BD331C /* App */,
+				0874997A1B944D2300BD331C /* User Interface */,
+			);
+			name = Recast;
+			path = WhiteLabels/Recast;
+			sourceTree = SOURCE_ROOT;
+		};
+		0874997A1B944D2300BD331C /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				087499881B94A35600BD331C /* Images.xcassets */,
+				0874997C1B944D2300BD331C /* Styles */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		0874997C1B944D2300BD331C /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				0874997D1B944D2300BD331C /* Style.plist */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		087499801B94A21A00BD331C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				087499811B94A21A00BD331C /* supporting files */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		087499811B94A21A00BD331C /* supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				087499821B94A21A00BD331C /* LabelPrivacyPolicy.txt */,
+				087499831B94A21A00BD331C /* LabelTOS.txt */,
+				087499841B94A21A00BD331C /* Localizable.strings */,
+			);
+			path = "supporting files";
+			sourceTree = "<group>";
+		};
+		0874998A1B94A3D800BD331C /* media resources */ = {
+			isa = PBXGroup;
+			children = (
+				0874999B1B94C0E800BD331C /* SF-UI-Display-Light.otf */,
+				0874999E1B94DA0A00BD331C /* SF-UI-Text-Regular.otf */,
+				0874998B1B94A3D800BD331C /* cinemaCountdown_oneLast.wav */,
+				0874998C1B94A3D800BD331C /* howtoVideo.mp4 */,
+				0874998D1B94A3D800BD331C /* introVideo.mp4 */,
+				0874998E1B94A3D800BD331C /* recordingEnd.wav */,
+				0874998F1B94A3D800BD331C /* songLoop.m4a */,
+			);
+			path = "media resources";
 			sourceTree = "<group>";
 		};
 		0884566418848D3300B94267 /* Custom Views & Controls */ = {
@@ -2049,6 +2347,26 @@
 			productReference = 086F30B61A529B7100430D81 /* Monkey Dance.app */;
 			productType = "com.apple.product-type.application";
 		};
+		087498AC1B9444B000BD331C /* Recast */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 087499731B9444B000BD331C /* Build configuration list for PBXNativeTarget "Recast" */;
+			buildPhases = (
+				087498AD1B9444B000BD331C /* Homage pre build scripts: runs prebuild.py */,
+				087498AE1B9444B000BD331C /* Sources */,
+				087499381B9444B000BD331C /* Frameworks */,
+				087499481B9444B000BD331C /* Copy Pods Resources */,
+				087499491B9444B000BD331C /* Resources */,
+				087499721B9444B000BD331C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Recast;
+			productName = Homage;
+			productReference = 087499761B9444B000BD331C /* Recast.app */;
+			productType = "com.apple.product-type.application";
+		};
 		088D5FB519EC015A00075C4A /* Homage App Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 088D5FBE19EC015A00075C4A /* Build configuration list for PBXNativeTarget "Homage App Tests" */;
@@ -2101,6 +2419,9 @@
 							};
 						};
 					};
+					087498AC1B9444B000BD331C = {
+						DevelopmentTeam = 56F7YSPHC5;
+					};
 					088D5FB519EC015A00075C4A = {
 						CreatedOnToolsVersion = 6.0.1;
 					};
@@ -2120,6 +2441,7 @@
 			targets = (
 				0806FA0B18828AEB007514BE /* Homage */,
 				086F2FF31A529B7100430D81 /* Monkey Dance */,
+				087498AC1B9444B000BD331C /* Recast */,
 				088D5FB519EC015A00075C4A /* Homage App Tests */,
 			);
 		};
@@ -2213,6 +2535,56 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		087499491B9444B000BD331C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0874997F1B944D2300BD331C /* Style.plist in Resources */,
+				087499891B94A35600BD331C /* Images.xcassets in Resources */,
+				0874994B1B9444B000BD331C /* close up.ctr in Resources */,
+				087499861B94A21A00BD331C /* LabelTOS.txt in Resources */,
+				087499981B94A4C700BD331C /* LabelDefaultsCFGTest.plist in Resources */,
+				0874999D1B94C0E800BD331C /* SF-UI-Display-Light.otf in Resources */,
+				087499871B94A21A00BD331C /* Localizable.strings in Resources */,
+				0874994D1B9444B000BD331C /* HMDownloadViewController.xib in Resources */,
+				087499521B9444B000BD331C /* HMRecorderMessageBigImageView.xib in Resources */,
+				087499541B9444B000BD331C /* InAppStore.storyboard in Resources */,
+				087499551B9444B000BD331C /* Storyboard.storyboard in Resources */,
+				087499901B94A3D800BD331C /* cinemaCountdown_oneLast.wav in Resources */,
+				087499581B9444B000BD331C /* HMRecorderMessageGeneralView.xib in Resources */,
+				087499931B94A3D800BD331C /* recordingEnd.wav in Resources */,
+				0874999F1B94DA0A00BD331C /* SF-UI-Text-Regular.otf in Resources */,
+				087499941B94A3D800BD331C /* songLoop.m4a in Resources */,
+				087499591B9444B000BD331C /* InfoPlist.strings in Resources */,
+				0874995A1B9444B000BD331C /* HMRefreshControl.xib in Resources */,
+				087499921B94A3D800BD331C /* introVideo.mp4 in Resources */,
+				0874995B1B9444B000BD331C /* Monkey+-+Warm+Up.mp4 in Resources */,
+				0874995D1B9444B000BD331C /* HMTOSViewController.xib in Resources */,
+				0874995E1B9444B000BD331C /* RecorderStoryboard.storyboard in Resources */,
+				0874995F1B9444B000BD331C /* DINOT-CondBold.otf in Resources */,
+				087499601B9444B000BD331C /* HMRecorderMessageCommonView.xib in Resources */,
+				087499611B9444B000BD331C /* HMMeVideoPlayer.xib in Resources */,
+				087499621B9444B000BD331C /* Storyboard_iPad.storyboard in Resources */,
+				087499631B9444B000BD331C /* HMPrivacyPolicyViewController.xib in Resources */,
+				087499641B9444B000BD331C /* HMRecorderBigVideoPlayerView.xib in Resources */,
+				087499651B9444B000BD331C /* HMSimpleVideoViewController.xib in Resources */,
+				087499971B94A4C700BD331C /* LabelDefaultsCFG.plist in Resources */,
+				087499671B9444B000BD331C /* close up 480.ctr in Resources */,
+				087499991B94A71800BD331C /* ABTestsCFG.plist in Resources */,
+				087499911B94A3D800BD331C /* howtoVideo.mp4 in Resources */,
+				087499681B9444B000BD331C /* DefaultsCFG.plist in Resources */,
+				087499691B9444B000BD331C /* DefaultsCFGTest.plist in Resources */,
+				0874996A1B9444B000BD331C /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */,
+				0874996B1B9444B000BD331C /* ServerCFG.plist in Resources */,
+				0874996C1B9444B000BD331C /* Settings.bundle in Resources */,
+				087499851B94A21A00BD331C /* LabelPrivacyPolicy.txt in Resources */,
+				0874996D1B9444B000BD331C /* LabelPrivacyPolicy.txt in Resources */,
+				0874996E1B9444B000BD331C /* LabelTOS.txt in Resources */,
+				0874996F1B9444B000BD331C /* whatsapp@2x.png in Resources */,
+				087499711B9444B000BD331C /* HMStoriesTutorial.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		088D5FB419EC015A00075C4A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2280,6 +2652,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "python ${SRCROOT}/tools/build/prebuild.py \\\n    \"${SRCROOT}\"\\\n    \"${TARGET_NAME}\"\\\n    \"${EFFECTIVE_PLATFORM_NAME}\"\\\n    \"${INFOPLIST_FILE}\"\\\n    \"${CONFIGURATION}\"\\";
+		};
+		087498AD1B9444B000BD331C /* Homage pre build scripts: runs prebuild.py */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Homage pre build scripts: runs prebuild.py";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "python ${SRCROOT}/tools/build/prebuild.py \\\n    \"${SRCROOT}\"\\\n    \"${TARGET_NAME}\"\\\n    \"${EFFECTIVE_PLATFORM_NAME}\"\\\n    \"${INFOPLIST_FILE}\"\\\n    \"${CONFIGURATION}\"\\";
+		};
+		087499481B9444B000BD331C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		087499721B9444B000BD331C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
 		};
 		08FAAB8E19E4515400E923EA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2627,6 +3041,150 @@
 				086F30791A529B7100430D81 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				08DA74511A5EA9AD007EFE69 /* HMServer+Likes.m in Sources */,
 				086F307A1A529B7100430D81 /* HMRenderingViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		087498AE1B9444B000BD331C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				087498AF1B9444B000BD331C /* HMServer+ReachabilityMonitor.m in Sources */,
+				087498B01B9444B000BD331C /* AMBlurView.m in Sources */,
+				087498B11B9444B000BD331C /* HMNotificationCenter.m in Sources */,
+				087498B21B9444B000BD331C /* IASKSlider.m in Sources */,
+				087498B31B9444B000BD331C /* HMSimpleVideoViewController.m in Sources */,
+				087498B41B9444B000BD331C /* HMStoryParser.m in Sources */,
+				087498B51B9444B000BD331C /* HMRoundButton.m in Sources */,
+				087498B61B9444B000BD331C /* HMAWS3Client.m in Sources */,
+				087498B71B9444B000BD331C /* HMUploadS3Worker.m in Sources */,
+				087498B81B9444B000BD331C /* User+Logic.m in Sources */,
+				087498B91B9444B000BD331C /* AWTimeProgressView.m in Sources */,
+				087498BA1B9444B000BD331C /* HMJSONResponseSerializerWithData.m in Sources */,
+				087498BB1B9444B000BD331C /* HMRecorderTutorialViewController.m in Sources */,
+				087498BC1B9444B000BD331C /* HMBoldFontButton.m in Sources */,
+				087498BD1B9444B000BD331C /* Story+Factory.m in Sources */,
+				087498BE1B9444B000BD331C /* NSDictionary+TypeSafeValues.m in Sources */,
+				087498BF1B9444B000BD331C /* HMParentalControlViewController.m in Sources */,
+				087498C01B9444B000BD331C /* HMServer+analytics.m in Sources */,
+				087498C11B9444B000BD331C /* JBWhatsAppActivity.m in Sources */,
+				087498C21B9444B000BD331C /* HMServer+Texts.m in Sources */,
+				087498C31B9444B000BD331C /* HMStyle.m in Sources */,
+				087498C41B9444B000BD331C /* Scene+Factory.m in Sources */,
+				087498C51B9444B000BD331C /* HMStoryCell.m in Sources */,
+				087498C61B9444B000BD331C /* HMSaveToDeviceActivity.m in Sources */,
+				087498C71B9444B000BD331C /* HMServer+Stories.m in Sources */,
+				087498C81B9444B000BD331C /* HMServer+Remakes.m in Sources */,
+				087498C91B9444B000BD331C /* IASKSettingsReader.m in Sources */,
+				087498CA1B9444B000BD331C /* HMWhileRecordingOverlayViewController.m in Sources */,
+				087498CB1B9444B000BD331C /* HMTabBarController.m in Sources */,
+				087498CC1B9444B000BD331C /* Text.m in Sources */,
+				087498CD1B9444B000BD331C /* IASKSettingsStoreUserDefaults.m in Sources */,
+				087498CE1B9444B000BD331C /* HMStoreBuyButton.m in Sources */,
+				087498CF1B9444B000BD331C /* Remake.m in Sources */,
+				087498D01B9444B000BD331C /* HMMotionDetector.m in Sources */,
+				087498D11B9444B000BD331C /* HMSplashViewController.m in Sources */,
+				087498D21B9444B000BD331C /* HMGUserRemakeCVCell.m in Sources */,
+				087498D31B9444B000BD331C /* IASKSpecifier.m in Sources */,
+				087498D41B9444B000BD331C /* HMRegularFontButton.m in Sources */,
+				087498D51B9444B000BD331C /* HMRemakeParser.m in Sources */,
+				087498D61B9444B000BD331C /* HMConfigurationParser.m in Sources */,
+				087498D71B9444B000BD331C /* HMABTester.m in Sources */,
+				087498D81B9444B000BD331C /* NSNotification+Utils.m in Sources */,
+				087498D91B9444B000BD331C /* IASKSettingsStore.m in Sources */,
+				087498DA1B9444B000BD331C /* HMRecorderEditingTextCell.m in Sources */,
+				087498DB1B9444B000BD331C /* HMLabel.m in Sources */,
+				087498DC1B9444B000BD331C /* DB.m in Sources */,
+				087498DD1B9444B000BD331C /* IASKPSSliderSpecifierViewCell.m in Sources */,
+				087498DE1B9444B000BD331C /* HMServer+LazyLoading.m in Sources */,
+				087498DF1B9444B000BD331C /* HMServer+Render.m in Sources */,
+				087498E01B9444B000BD331C /* HMRoundCountdownLabel.m in Sources */,
+				087498E11B9444B000BD331C /* UIView+MotionEffect.m in Sources */,
+				087498E21B9444B000BD331C /* HMUserParser.m in Sources */,
+				087498E31B9444B000BD331C /* Footage+Factory.m in Sources */,
+				087498E41B9444B000BD331C /* HMRemakeCell.m in Sources */,
+				087498E51B9444B000BD331C /* Footage+Logic.m in Sources */,
+				087498E61B9444B000BD331C /* AVCamPreviewView.m in Sources */,
+				087498E71B9444B000BD331C /* MyManagedDocument.m in Sources */,
+				087498E81B9444B000BD331C /* HMStoreSectionView.m in Sources */,
+				087498E91B9444B000BD331C /* HMVideoCameraViewController.m in Sources */,
+				087498EA1B9444B000BD331C /* HMRecorderViewController.m in Sources */,
+				087498EB1B9444B000BD331C /* HMToonBGView.m in Sources */,
+				087498EC1B9444B000BD331C /* IASKTextField.m in Sources */,
+				087498ED1B9444B000BD331C /* HMSimpleVideoView.m in Sources */,
+				087498EE1B9444B000BD331C /* HMRecorderEditTextsViewController.m in Sources */,
+				087498EF1B9444B000BD331C /* HMGMeTabVC.m in Sources */,
+				087498F01B9444B000BD331C /* HMCacheManager.m in Sources */,
+				087498F11B9444B000BD331C /* main.m in Sources */,
+				087498F21B9444B000BD331C /* User+Factory.m in Sources */,
+				087498F31B9444B000BD331C /* Remake+Logic.m in Sources */,
+				087498F41B9444B000BD331C /* HMIntroMovieViewController.m in Sources */,
+				087498F51B9444B000BD331C /* HMSceneCell.m in Sources */,
+				087498F61B9444B000BD331C /* HMPrivacyPolicyViewController.m in Sources */,
+				087498F71B9444B000BD331C /* HMSharing.m in Sources */,
+				087498F81B9444B000BD331C /* BSONIdGenerator.m in Sources */,
+				087498F91B9444B000BD331C /* Text+Logic.m in Sources */,
+				087498FA1B9444B000BD331C /* UIView+Hierarchy.m in Sources */,
+				087498FB1B9444B000BD331C /* HMServer.m in Sources */,
+				087498FC1B9444B000BD331C /* HMRecorderPreviewViewController.m in Sources */,
+				087498FD1B9444B000BD331C /* HMGLog.m in Sources */,
+				087498FE1B9444B000BD331C /* HMParser.m in Sources */,
+				087498FF1B9444B000BD331C /* Contour+Factory.m in Sources */,
+				087499001B9444B000BD331C /* HMRoundView.m in Sources */,
+				087499011B9444B000BD331C /* HMLoginMainViewController.m in Sources */,
+				087499021B9444B000BD331C /* HMStoryDetailsViewController.m in Sources */,
+				087499031B9444B000BD331C /* HMStoreProductsViewController.m in Sources */,
+				087499041B9444B000BD331C /* HMRemakesParser.m in Sources */,
+				087499051B9444B000BD331C /* HMAppStore.m in Sources */,
+				087499061B9444B000BD331C /* HMSideBarViewController.m in Sources */,
+				087499071B9444B000BD331C /* HMStoriesViewController.m in Sources */,
+				087499081B9444B000BD331C /* Remake+Factory.m in Sources */,
+				087499091B9444B000BD331C /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
+				0874990A1B9444B000BD331C /* AWAlertView.m in Sources */,
+				0874990B1B9444B000BD331C /* HMTextUpdateParser.m in Sources */,
+				0874990C1B9444B000BD331C /* HMRecorderDetailedOptionsBarViewController.m in Sources */,
+				0874990D1B9444B000BD331C /* HMRegularFontLabel.m in Sources */,
+				0874990E1B9444B000BD331C /* AWPieSliceLayer.m in Sources */,
+				0874990F1B9444B000BD331C /* IASKSettingsStoreFile.m in Sources */,
+				087499101B9444B000BD331C /* Scene+Logic.m in Sources */,
+				087499111B9444B000BD331C /* HMServer+Footages.m in Sources */,
+				087499121B9444B000BD331C /* HMServer+AppConfig.m in Sources */,
+				087499131B9444B000BD331C /* HMStartViewController.m in Sources */,
+				087499141B9444B000BD331C /* HMDownloadViewController.m in Sources */,
+				087499151B9444B000BD331C /* HMInAppStoreViewController.m in Sources */,
+				087499161B9444B000BD331C /* HMAppDelegate.m in Sources */,
+				087499171B9444B000BD331C /* Text+Factory.m in Sources */,
+				087499181B9444B000BD331C /* NSString+Utilities.m in Sources */,
+				087499191B9444B000BD331C /* HMAnimationsFX.m in Sources */,
+				0874991A1B9444B000BD331C /* HMToonBGStyleKit.m in Sources */,
+				0874991B1B9444B000BD331C /* HMTOSViewController.m in Sources */,
+				0874991C1B9444B000BD331C /* Contour.m in Sources */,
+				0874991D1B9444B000BD331C /* HMUploadManager.m in Sources */,
+				0874991E1B9444B000BD331C /* Footage.m in Sources */,
+				0874991F1B9444B000BD331C /* HMRecorderMessagesOverlayViewController.m in Sources */,
+				087499201B9444B000BD331C /* NSNotificationCenter+Utils.m in Sources */,
+				087499211B9444B000BD331C /* AWPieSliceView.m in Sources */,
+				087499221B9444B000BD331C /* HMBoldFontLabel.m in Sources */,
+				087499231B9444B000BD331C /* Story+Logic.m in Sources */,
+				087499241B9444B000BD331C /* IASKAppSettingsViewController.m in Sources */,
+				087499251B9444B000BD331C /* UIImage+ImageEffects.m in Sources */,
+				087499261B9444B000BD331C /* HMStoriesTutorial.m in Sources */,
+				087499271B9444B000BD331C /* Story.m in Sources */,
+				087499281B9444B000BD331C /* IASKSpecifierValuesViewController.m in Sources */,
+				087499291B9444B000BD331C /* HMServer+Users.m in Sources */,
+				0874992A1B9444B000BD331C /* HMRefreshControl.m in Sources */,
+				0874992B1B9444B000BD331C /* HMStoreProductCollectionViewCell.m in Sources */,
+				0874992C1B9444B000BD331C /* IASKAppSettingsWebViewController.m in Sources */,
+				0874992D1B9444B000BD331C /* IASKSwitch.m in Sources */,
+				0874992E1B9444B000BD331C /* Model.xcdatamodeld in Sources */,
+				0874992F1B9444B000BD331C /* HMStoriesParser.m in Sources */,
+				087499301B9444B000BD331C /* HMRemakeScreenViewController.m in Sources */,
+				087499311B9444B000BD331C /* User.m in Sources */,
+				087499321B9444B000BD331C /* Scene.m in Sources */,
+				087499331B9444B000BD331C /* HMExtractController.mm in Sources */,
+				087499341B9444B000BD331C /* HMNavigationController.m in Sources */,
+				087499351B9444B000BD331C /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
+				087499361B9444B000BD331C /* HMServer+Likes.m in Sources */,
+				087499371B9444B000BD331C /* HMRenderingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3067,6 +3625,156 @@
 			};
 			name = Release;
 		};
+		087499741B9444B000BD331C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1ED3A430529290A1F8D55577 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(inherited)",
+					"$(SRCROOT)/Homage/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Homage/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/InAppSettingsKit\"",
+					"\"${PODS_ROOT}/Headers/Mixpanel\"",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Homage/**",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/WhiteLabels/Recast/Recast-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"$(inherited)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lMattingLib",
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreTelephony,
+					"-framework",
+					Foundation,
+					"-framework",
+					MessageUI,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+				);
+				PRODUCT_NAME = Recast;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		087499751B9444B000BD331C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6B4A0D3661F7086E1C965A9 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(inherited)",
+					"$(SRCROOT)/Homage/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Homage/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Homage/App/supporting files/Homage-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/InAppSettingsKit\"",
+					"\"${PODS_ROOT}/Headers/Mixpanel\"",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Homage/**",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/WhiteLabels/Recast/Recast-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"$(inherited)",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lMattingLib",
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreTelephony,
+					"-framework",
+					Foundation,
+					"-framework",
+					MessageUI,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+				);
+				PRODUCT_NAME = Recast;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		088D5FBF19EC015A00075C4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1ED3A430529290A1F8D55577 /* Pods.debug.xcconfig */;
@@ -3181,6 +3889,15 @@
 			buildConfigurations = (
 				086F30B41A529B7100430D81 /* Debug */,
 				086F30B51A529B7100430D81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		087499731B9444B000BD331C /* Build configuration list for PBXNativeTarget "Recast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				087499741B9444B000BD331C /* Debug */,
+				087499751B9444B000BD331C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

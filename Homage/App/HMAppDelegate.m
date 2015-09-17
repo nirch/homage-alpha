@@ -17,7 +17,10 @@
 #import "DB.h"
 #import "HMNotificationCenter.h"
 #import <FacebookSDK/FacebookSDK.h>
+
+#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+
 #import <Appirater/Appirater.h>
 #import "HMABTester.h"
 #import <sys/utsname.h>
@@ -277,7 +280,6 @@
     [FBSettings setDefaultAppID:[HMServer.sh facebookAppID]];
     [FBAppEvents activateApp];
     
-    
     // Facebook
 #define FB_APP_ID @"447743458659084"
 
@@ -394,11 +396,7 @@ NSString* machineName()
             [Mixpanel sharedInstanceWithToken:mixpanelToken];
         } else {
             HMGLogDebug(@"Mixpanel already initialized.");
-        }
-    
-        //crashlytics crash reporting
-        NSString *crashlyticsToken = HMServer.sh.configurationInfo[@"ios_crashlytics_token"];
-        [Crashlytics startWithAPIKey:crashlyticsToken];
+        }    
     #else
     // ----------------------------------------------------------
     // Debug Build
@@ -411,6 +409,8 @@ NSString* machineName()
         HMGLogDebug(@"Mixpanel already initialized.");
     }
     #endif
+
+    [Fabric with:@[[Crashlytics class]]];
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel registerSuperProperties:@{

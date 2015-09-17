@@ -5,7 +5,10 @@ pod 'AFNetworking',     '~> 2.4.0'
 pod 'Mixpanel', '~> 2.5.0'
 pod 'Facebook-iOS-SDK', '~> 3.19.0'
 pod 'Appirater'
-pod 'CrashlyticsFramework'
+
+pod 'Fabric'
+pod 'Crashlytics'
+
 pod 'AWSiOSSDKv2', '~> 2.0'
 pod 'SDWebImage', '~> 3.7'
 pod 'THLabel', '~> 1.4'
