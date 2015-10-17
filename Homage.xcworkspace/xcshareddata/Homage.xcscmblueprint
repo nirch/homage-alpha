@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1C7BE27D1C688A2A614488FB40BE8D0C77FD6023",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "1C7BE27D1C688A2A614488FB40BE8D0C77FD6023" : 0,
+    "30E6A7070FBC59633179A336D91EAB130EF2DBD2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B2B27693-CA07-4737-84E8-9334A3E8A5CA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "1C7BE27D1C688A2A614488FB40BE8D0C77FD6023" : "homage-alpha",
+    "30E6A7070FBC59633179A336D91EAB130EF2DBD2" : "homage-cv-app"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Homage",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Homage.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nirch\/homage-alpha.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1C7BE27D1C688A2A614488FB40BE8D0C77FD6023"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nirch\/homage-cv-app.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "30E6A7070FBC59633179A336D91EAB130EF2DBD2"
+    }
+  ]
+}
