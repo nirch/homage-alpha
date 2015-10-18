@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>share_link_prefix</key>
+	<string>http://play-test.homage.it</string>
+	<key>share_app_button</key>
+	<false/>
+	<key>signup</key>
+	<integer>0</integer>
+	<key>song_loop</key>
+	<string>songLoop.m4a</string>
+	<key>song_loop_volume</key>
+	<real>0.7</real>
+	<key>facebook_app_id</key>
+	<string>474040282727650</string>
+	<key>application</key>
+	<string>monkey_dance_ios</string>
+	<key>product_ids_prefix</key>
+	<string>md</string>
+	<key>campaign_id</key>
+	<string>54919516454c61f4080000e5</string>
+	<key>in_app_purchases</key>
+	<true/>
+	<key>recorder_first_scene_context_message</key>
+	<false/>
+	<key>login_flow_skip_intro_video</key>
+	<true/>
+	<key>login_flow_type</key>
+	<integer>1</integer>
+	<key>guest_public_as_default</key>
+	<true/>
+	<key>guest_allow_public</key>
+	<true/>
+	<key>guest_allow_share</key>
+	<true/>
+	<key>recorder_skip_are_you_sure_in_good_job_message</key>
+	<true/>
+	<key>user_save_remakes_policy</key>
+	<integer>2</integer>
+	<key>_recorder_forced_bbg_policy</key>
+	<integer>0</integer>
+	<key>recorder_disclaimer</key>
+	<true/>
+	<key>download_app_ios_url</key>
+	<string>http://app-test.homage.it/ios?src=ios</string>
+	<key>download_app_android_url</key>
+	<string>http://app-test.homage.it/android?src=ios</string>
+</dict>
+</plist>

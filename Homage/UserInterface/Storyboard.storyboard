@@ -46,12 +46,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBottomLogo" id="Hsu-wz-vYS" userLabel="Bottom Logo">
+                                <rect key="frame" x="0.0" y="440" width="320" height="128"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="guiBGImage" destination="x0z-Hs-o5j" id="6tA-mD-dV3"/>
                         <outlet property="guiBGView" destination="cmV-1U-mSO" id="xUa-Wv-cqu"/>
+                        <outlet property="guiBottomLogo" destination="Hsu-wz-vYS" id="Xg2-Kg-eNd"/>
                         <outlet property="guiFailedToConnectLabel" destination="j5z-5u-dmP" id="gN6-VL-yjQ"/>
                         <outlet property="guiTopLogo" destination="wNq-yE-ztN" id="Rkk-5H-8DF"/>
                         <outlet property="guiTryAgainButton" destination="Tbr-5g-m4t" id="USU-BZ-LrV"/>
@@ -628,7 +633,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMRegularFontLabel">
-                                <rect key="frame" x="10" y="352.00000212237796" width="300" height="158"/>
+                                <rect key="frame" x="10" y="352" width="300" height="158"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1021,7 +1026,7 @@
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ckf-Qr-Dbx" id="Nlg-6q-I3Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </tableViewCellContentView>
@@ -1948,6 +1953,7 @@
         <image name="smallGuestIcon" width="18" height="18"/>
         <image name="smallRemakeIcon" width="18" height="15"/>
         <image name="splashBackground" width="320" height="480"/>
+        <image name="splashBottomLogo" width="249" height="62"/>
         <image name="splashTopLogo" width="249" height="137"/>
         <image name="storeIcon3" width="200" height="102"/>
         <image name="storyLockedIcon" width="48" height="62"/>

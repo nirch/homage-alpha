@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiFailedToConnectLabel;
 @property (weak, nonatomic) IBOutlet HMBoldFontButton *guiTryAgainButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiTopLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *guiBottomLogo;
 
 @property (weak, nonatomic) MONActivityIndicatorView *activityView;
 
@@ -128,6 +129,7 @@
     [self.activityView stopAnimating];
     self.guiFailedToConnectLabel.hidden = NO;
     self.guiTryAgainButton.hidden = NO;
+    self.guiBottomLogo.hidden = YES;
 }
 
 #pragma mark - MONActivityIndicatorViewDelegate
@@ -149,6 +151,7 @@
     self.guiFailedToConnectLabel.hidden = YES;
     //[self.guiActivity startAnimating];
     [self.activityView startAnimating];
+    self.guiBottomLogo.hidden = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:HM_NOTIFICATION_UI_USER_RETRIES_LOGIN_AS_GUEST
                                                         object:nil
                                                       userInfo:nil];

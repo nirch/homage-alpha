@@ -1,0 +1,257 @@
+/* This string is used only for testing the localizable file */
+"TEST_LOCAL" = "Testing localization";
+
+/* Privacy policy and TOS */
+"PRIVACY_POLICY_TITLE" = "Monkey Dance Privacy Policy";
+"TOS_TITLE" = "Terms and Conditions";
+
+/* Login screen */
+"EMAIL_PLACEHOLDER_TEXT" = "Email";
+"PASSWORD_PLACEHOLDER_TEXT" = "Password";
+
+/* Label showing the number of remakes in the templates screen */
+"NUM_OF_REMAKES" = "#remakes: %d";
+
+"ERROR" = "Error";
+"CRITICAL_ERROR" = "CRITICAL ERROR";
+"CANCEL" = "Cancel";
+
+//General alerts and buttons
+"TRY_AGAIN_BUTTON" = "Try again";
+"CANCEL_BUTTON" = "Cancel";
+
+//indicating that the video saving process had failed */
+"VIDEO_SAVING_FAILED" = "Video saving failed";
+
+"OK" = "OK";
+"OK_GOT_IT" = "OK, GOT IT";
+"SORRY" = "Sorry!";
+"STORY_NOT_AVAILABLE" = "This clip is no longer available. if you loved it, do tell us about it in the feedback section (->Settings)";
+"DONT_SHOW_THIS_AGAIN" = "Don't show this again";
+
+"VIDEO_SAVED" = "Video Saved";
+
+/* tell the user that the pictures was saved to the photo album */
+"SAVED_TO_PHOTO_ALBUM" = "Saved To Photo Album";
+
+"DONE" = "done";
+
+"HELLO" = "Hello";
+
+/*this message will appear on the top of a pop up view */
+"ENTER_TEXT" = "Header for your video";
+
+/*this message will appear inside the text field itself as a place holder */
+"ENTER_SEGMENT_TEXT" = "Enter segment text";
+
+/*levels of difficulty */
+"TEMPLATE_EASY"   = "Easy";
+"TEMPLATE_MEDIUM" = "Medium";
+"TEMPLATE_HARD"   = "Hard";
+
+/*this message will show the users what the missing takes that he needs to shoot in order to render the final movie*/
+"MISSING_SEGMENTS_ERROR" = "why you no film segments: %@";
+
+/*these are the strings appearing to the user when he wants to delete a remake from his personal area*/
+"DELETE_REMAKE" = "Delete clip";
+"APPROVE_DELETION" = "Would you like to delete this clip?";
+"YES" = "Yes";
+"NO" = "No";
+
+/*in me screen, when you have no remakes, this label will show*/
+"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST CLIP!";
+"REMAKE_MORE_STORIES" = "CREATE MORE CLIPS!";
+"REMAKE_A_STORY" = "CREATE A CLIP!";
+
+/*me screen buttons for each user's remake*/
+"ME_REMAKE_DELETE" = "Delete clip";
+"ME_REMAKE_RETAKE" = "Retake clip";
+
+/*in the story details screen, when no remakes available, this label will show*/
+"NO_REMAKES_STORY_DETAILS" = "Be the first to make a clip";
+"MORE_REMAKES" = "MORE";
+"MAKE_YOUR_OWN_BUTTON" = "MAKE YOUR OWN";
+
+/*in stories tab ,when you have no stories, this label will show*/
+"NO_STORIES" = "NO CLIPS :-(";
+
+/* 
+    It is possible to define the texts in nav buttons
+    and screen titles, separately
+*/
+
+/*sidebar navigation sections*/
+"NAV_USER_NAME_GUEST" = "Friend";
+
+"NAV_STORIES_BUTTON" = "Clips";
+"NAV_MY_STORIES_BUTTON" = "My Clips";
+"NAV_SETTINGS_BUTTON" = "Settings";
+"NAV_HOWTO_BUTTON" = "Help";
+"NAV_SHARE_APP_BUTTON" = "Share App";
+
+/*app navigation sections*/
+"NAV_STORIES" = "Clips";
+"NAV_MY_STORIES" = "My Clips";
+"NAV_SETTINGS" = "Settings";
+
+/*this is the headline title of "me" and "stories" tab*/
+"ME_TAB_HEADLINE_TITLE" = "My Stories";
+"STORIES_TAB_HEADLINE_TITLE" = "Stories";
+"SETTINGS_TAB_HEADLINE TITLE" = "Settings";
+/*a message to the user, notifing him that the movie is ready*/
+"REMAKE_READY_CLICK" = "Your clip is Ready! Click here";
+
+/*a message to the user, notifing him that the movie creation has failed*/
+"REMAKE_FAILED_CLICK" = "Clip creation Failed.";
+
+/*a message to the user, notifing him that the movie is now rendering*/
+"RENDERING_MOVIE_MESSAGE" = "Preparing your clip!";
+
+/*the title for an alert view that pops when the user chooses of to make a new remake or continue from last sabed point*/
+"CONTINUE_WITH_REMAKE" = "Continue Remake";
+"CONTINUE_OR_START_FROM_SCRATCH" = "Would you like to continue from the last saved point, or start from scratch?";
+"NEW_REMAKE" = "New";
+"OLD_REMAKE" = "continue";
+
+/*recorder*/
+"LEAVE_RECORDER_TITLE"="Leave recorder";
+"LEAVE_RECORDER_MESSAGE" = "This will close the recorder. Are you sure?";
+"WATCH_OUR_SCENE" = "WATCH OUR SCENE";
+"WATCH_OUR_STORY" = "WATCH OUR CLIP";
+"HIDE_SCRIPT" = "HIDE SCRIPT";
+"SHOW_SCRIPT" = "SHOW SCRIPT";
+"GREAT_JOB" = "GREAT JOB!";
+"AT_THE_NEXT_SCENE" = "At the next scene %@";
+"NAILED_ALL_SCENES" = "You nailed all scenes. lets finish the clip!";
+"CREATE_MOVIE" = "CREATE CLIP!";
+"SHOW_YOUR_TAKE" = "SHOW YOUR TAKE";
+"RECORDER_TITLE_SCENE" = "SCENE";
+
+/*recorder tutorial*/
+"HELP_LABEL_SOLID_BG" = "Use solid backgrounds";
+"HELP_LABEL_PLACE_ACTOR" = "Place the actor here";
+"HELP_LABEL_SCENE_DURATION" = "Scene duration";
+"HELP_LABEL_GET_INSPIRED" = "Get inspired";
+"HELP_BUTTON_NEXT" = "CONTINUE";
+"HELP_BUTTON_FINISH" = "CONTINUE";
+
+/*bad background messages*/
+"BAD_BACKGROUND_TITLE"          = "Oops... Bad Background!";
+"RECORDER_BBG_NOISY"            = "Use a solid color wall!";
+"RECORDER_BBG_DARK"             = "Use well lit areas!";
+"RECORDER_BBG_SILHOUETTE"       = "Make sure you're inside the silhouette!";
+"RECORDER_BBG_SHADOW"           = "There is a shadow behind you! step a bit forward!";
+"RECORDER_BBG_CLOTH"            = "Your shirt is too similar to the wall!";
+"RECORDER_BBG_GENERAL_MESSAGE"  = "Make sure you're in front of a solid color wall!";
+
+"BAD_BACKGROUND_HELP_BUTTON_TEXT" = "Help!";
+
+/*recorder*/
+"NEXT_SCENE" = "Shoot Scene!";
+"SCENE_TITLE" = "Scene No. %d";
+
+"CAMERA_NOT_STABLE" = "Camera unstable! Please keep the camera steady while shooting";
+"CAMERA_NOT_STABLE_TITLE" = "Oops... Keep it steady!";
+
+"EPIC_FAIL_MESSAGE" = "Something went wrong. Please try again";
+"EPIC_FAIL_TITLE" = "Epic Fail...";
+
+"UNKNOWN_MAIL_ADDRESS" = "Unknown mail address";
+"INCORRECT_PASSWORD" = "Incorrect mail address or password";
+"INCORRECT_EMAIL_ADDRESS_FORMAT" = "incorrect email format";
+"UNSUFFICIENT_PASSWORD" = "Password must be at least 6 charecters long";
+"EMAIL_TAKEN" = "Email address already used";
+"EXISTING_FACEBOOK_USER" = "Mail address is already associated with facebook account";
+"NO_CONNECTIVITY" = "No Internet connection. Please check your internet status and try again";
+"UNKNOWN_ERROR" = "Error Occurred. Please try again later";
+
+"HELLO_USER" = "Hello %@";
+
+"SIGN_UP_NOW" = "Join us!";
+"ONLY_SIGN_IN_USERS_CAN_SHARE" = "Only signed in users can share remakes. Please sign in to continue";
+"ONLY_SIGN_IN_USERS_CAN_PUBLISH_REMAKES" = "Only signed in users can publish remakes. Please sign in to continue";
+"NOT_NOW" = "Not now";
+"JOIN_NOW" = "Join now!";
+
+"RETAKE_LAST_SCENE" = "RETAKE";
+"CAN_I_SEE_A_PREVIEW" = "PREVIEW";
+"OOPS_NOPE" = "NO";
+"YEAH_START_ROLLING" = "YES";
+
+
+//share activity
+"DEFAULT_SHARE_MSG_SUBJECT" = "Check my awesome clip \"%@\" : \n";
+"SHARE_MSG_BODY" = "%@: \n %@";
+"DEFUALT_SHARE_MSG_BODY" = "Check my clip \"%@\": \n\n %@";
+"SHARE_MSG_BODY_HASHTAGS" = " #Homage #Homage%@ #%@";
+
+"SHARING_APP_SUBJECT" = "Let's Monkey See Monkey Dance!";
+"SHARING_APP_BODY_MESSAGE" = "Let's Monkey Dance!\n\n iPhone: %@\nAndroid: %@";
+
+//share alerts
+"SHARE_REMAKE_FAILED_TITLE" = "Failed sharing clip";
+"SHARE_REMAKE_FAILED_BODY" = "Failed sharing clip. Check connection and try again.";
+
+"SHARE_OPTIONS_TITLE" = "Choose";
+"SHARE_OPTIONS_MESSAGE" = "How do you want to share?";
+"SHARE_ITEM_OPTION_FILE" = "Share video file";
+"SHARE_ITEM_OPTION_LINK" = "Share a link";
+"SHARE_ITEM_OPTION_SAVE_TO_CR" = "Save to camera roll";
+
+/*remake options menu*/
+"OPTIONS" = "Options";
+"MARK_AS_INAPPROPRIATE" = "Mark as inappropriate";
+"MARK_AS_INAPPROPRIATE_QUESTION" = "Are you sure you to flag this clip as inappropriate";
+
+/*Social*/
+"LIKE_BUTTON_LABEL" = "Like";
+"UNLIKE_BUTTON_LABEL" = "Liked";
+
+/*In app store*/
+"STORE_RESTORE_PURCHASES_BUTTON" = "Restore purchases";
+"STORE_BUY_BUTTON" = "BUY";
+"STORE_UNAVAILABLE_BUTTON" = "Disabled";
+"STORE_PROCESSING_BUTTON" = "...";
+"STORE_MISSING_PRODUCT_TITLE" = "Missing product";
+"STORE_ITEM_UNLOCKED" = "Unlocked";
+"STORE_MISSING_PRODUCT_TEXT" = "The product is temporarily unavailable. Try again later.";
+"STORE_TITLE" = "MONKEY STORE";
+"STORE_STORIES_TITLE" = "STORIES";
+"STORE_PLEASE_WAIT" = "Monkey Store...";
+
+"STORE_ALREADY_HAVE_DOWNLOAD_TOKENS_TITLE" = "Are you sure?";
+"STORE_ALREADY_HAVE_DOWNLOAD_TOKEN" = "You already have an unused download token. You can use it in the 'My Clips' screen. Are you sure you want to purchase another one?";
+"STORE_ALREADY_HAVE_DOWNLOAD_TOKENS" = "You already have %@ unused download tokens. You can use them in the 'My Clips' screen. Are you sure you want to purchase another one?";
+
+
+/*Parental Control*/
+"STORE_PARENTAL_CTRL_TITLE" = "Grown-Ups Only!";
+"STORE_PARENTAL_CTRL_ACCESS_TITLE" = "To access, please enter the numbers:";
+
+"RECORDER_PARENTAL_CTRL_ACCESS_TITLE" = "To continue, enter the following numbers:";
+"RECORDER_PARENTAL_CTRL_DISCLAIMER" = "By continuing to use the app you agree to our";
+
+/*Download*/
+"DOWNLOAD_SAVING_REMAKE" = "Saving clip...";
+"DOWNLOAD_CANCELED" = "Canceled...";
+"DOWNLOAD_MY_VIDEO_TITLE" = "Download My Clip!";
+"DOWNLOADING" = "Downloading clip...";
+"DOWNLOAD_REMAKES_SAVED_TITLE" = "Clip saved!";
+"DOWNLOAD_REMAKES_SAVED_MESSAGE" = "Your clip was saved successfully to camera roll.";
+
+"DOWNLOAD_FAILED_TITLE" = "Download failed";
+"DOWNLOAD_FAILED_PREMIUM_MESSAGE" = "Failed to download clip. Check connectivity and retry downloading (You will not be charged again for retrying).";
+"DOWNLOAD_FAILED_MESSAGE" = "Failed to download clip. Check connectivity and retry downloading.";
+
+"DOWNLOAD_NOT_ALLOWED_TITLE" = "Not allowed";
+"DOWNLOAD_NOT_ALLOWED_PREMIUM_MESSAGE" = "You are not allowed save to camera roll. Please purchase the full bundle or a download token from the monkey store.";
+
+"DOWNLOAD_SAVE_PREMIUM_TITLE" = "Save to camera roll";
+"DOWNLOAD_SAVE_PREMIUM_MESSAGE" = "Pay for a single download or buy the full bundle for unrestricted access.";
+
+"DOWNLOAD_STORE" = "Open Monkey Store";
+"DOWNLOAD_CANCEL" = "Cancel";
+
+"DOWNLOAD_FAILED_TO_SAVE_TO_CR_TITLE" = "Failed to save";
+"DOWNLOAD_FAILED_TO_SAVE_TO_CR_MESSAGE" = "Failed to save to camera roll. Please ensure you allowed app to save to camera roll. (You will not be charged again for retrying to save clip).";
+
