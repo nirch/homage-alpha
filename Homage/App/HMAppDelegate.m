@@ -411,7 +411,7 @@ NSString* machineName()
     #endif
 
     //TODO: fix crashlytics
-    //[Fabric with:@[[Crashlytics class]]];
+    [Fabric with:@[[Crashlytics class]]];
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel registerSuperProperties:@{

@@ -2653,6 +2653,7 @@
 				08715F121BD2B4BD00CD50A0 /* Frameworks */,
 				08715F221BD2B4BD00CD50A0 /* Copy Pods Resources */,
 				08715F231BD2B4BD00CD50A0 /* Resources */,
+				08651BDD1BD67DC600CE9E18 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2766,8 +2767,8 @@
 				0806FA0B18828AEB007514BE /* Homage */,
 				086F2FF31A529B7100430D81 /* Monkey Dance */,
 				087498AC1B9444B000BD331C /* Recast */,
-				088D5FB519EC015A00075C4A /* Homage App Tests */,
 				08715E861BD2B4BD00CD50A0 /* World of Coke Experience */,
+				088D5FB519EC015A00075C4A /* Homage App Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -2979,6 +2980,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "python ${SRCROOT}/tools/build/prebuild.py \\\n    \"${SRCROOT}\"\\\n    \"${TARGET_NAME}\"\\\n    \"${EFFECTIVE_PLATFORM_NAME}\"\\\n    \"${INFOPLIST_FILE}\"\\\n    \"${CONFIGURATION}\"\\";
+		};
+		08651BDD1BD67DC600CE9E18 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
 		};
 		086F30B11A529B7100430D81 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

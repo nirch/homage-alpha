@@ -114,17 +114,17 @@
 		<key>downloading</key>
 		<dict>
 			<key>colorDownloadContainer</key>
-			<string>@darker</string>
+			<string>@impactBackground</string>
 			<key>colorDownloadActivity</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorDownloadCancelButtonBG</key>
-			<string>@darker</string>
-			<key>colorDownloadCancelButtonX</key>
-			<string>@bright</string>
-			<key>colorDownloadCancelButtonBorder</key>
-			<string>@bright</string>
-			<key>colorDownloadTitle</key>
 			<string>@impact</string>
+			<key>colorDownloadCancelButtonX</key>
+			<string>@impactText</string>
+			<key>colorDownloadCancelButtonBorder</key>
+			<string>@impactText</string>
+			<key>colorDownloadTitle</key>
+			<string>@impactText</string>
 		</dict>
 		<key>misc</key>
 		<dict>
