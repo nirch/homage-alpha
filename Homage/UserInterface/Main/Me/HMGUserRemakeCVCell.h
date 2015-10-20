@@ -27,11 +27,20 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *remakeButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiDownloadButton;
+@property (weak, nonatomic) IBOutlet UILabel *guiRetakeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *guiDeleteLabel;
+
+
 
 // Activity
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *shareActivity;
 @property (weak, nonatomic) IBOutlet UIView *guiActivityOverlay;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+
+// Borders
+@property (weak, nonatomic) IBOutlet UIView *guiSepTop;
+@property (weak, nonatomic) IBOutlet UIView *guiSepBottom;
+
 
 -(void)closeAnimated:(BOOL)animated;
 -(void)disableInteractionForAShortWhile;

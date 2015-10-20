@@ -77,7 +77,7 @@
                             <containerView contentMode="scaleToFill" id="CVV-sU-tHe" userLabel="side bar container view">
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="2Bz-2S-I1k" kind="embed" identifier="sideBarSegue" id="Nzu-KS-bh7"/>
                                 </connections>
@@ -213,7 +213,7 @@
                                         </subviews>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="0.1450980392" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="sqr-LT-Nw6" appends="YES" id="xsd-3i-y8U"/>
@@ -245,7 +245,6 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -320,6 +319,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vcBG" id="mWW-MJ-ofW">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                             <imageView hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bcn-GE-WHv" userLabel="preloading images">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -343,10 +346,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Story Cell" reuseIdentifier="Story Cell" id="htw-ZY-nmQ" customClass="HMStoryCell">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="180"/>
+                                        <rect key="frame" x="0.0" y="64" width="320" height="192"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="192"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="GlF-uI-5Th">
@@ -359,50 +362,44 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellGradient" id="Xo8-Df-Z1U">
-                                                    <rect key="frame" x="0.0" y="85" width="320" height="95"/>
+                                                    <rect key="frame" x="0.0" y="97" width="320" height="95"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thumbContainerBottomInfoBGImage" id="cxW-Me-xfz" userLabel="bottom container bg image">
+                                                    <rect key="frame" x="0.0" y="112" width="320" height="80"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                </imageView>
                                                 <view contentMode="scaleToFill" id="ltR-RC-vnp" userLabel="Bottom Container">
-                                                    <rect key="frame" x="0.0" y="145" width="320" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="0.0" y="169" width="320" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <subviews>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yre-Et-9j7">
-                                                            <rect key="frame" x="211" y="6" width="22" height="22"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smallRemakeIcon" id="59R-Ee-329" userLabel="Remakes Icon">
-                                                            <rect key="frame" x="284" y="6" width="28" height="23"/>
+                                                            <rect key="frame" x="263" y="0.0" width="28" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" id="mTY-Gz-YqK" userLabel="Font Label - story name" customClass="HMRegularFontLabel">
-                                                            <rect key="frame" x="8" y="0.0" width="200" height="35"/>
+                                                            <rect key="frame" x="8" y="0.0" width="200" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="153" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zCL-L2-HEd" customClass="HMRegularFontLabel">
-                                                            <rect key="frame" x="256" y="7" width="29" height="23"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="153" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zCL-L2-HEd" customClass="HMRegularFontLabel">
+                                                            <rect key="frame" x="287" y="0.0" width="29" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9KD-jG-LUX">
-                                                            <rect key="frame" x="211" y="6" width="22" height="22"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        </imageView>
                                                     </subviews>
                                                 </view>
                                                 <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="X0U-tW-cyL" userLabel="storyLockedContainer">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="192"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storyLockedIcon" id="dqm-pu-UUr" userLabel="Story Locked Icon">
-                                                            <rect key="frame" x="115" y="45" width="90" height="90"/>
+                                                            <rect key="frame" x="115" y="51" width="90" height="90"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
@@ -411,7 +408,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <size key="customSize" width="320" height="180"/>
+                                        <size key="customSize" width="320" height="192"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                                 <real key="value" value="0.20000000000000001"/>
@@ -419,9 +416,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="guiBottomContainer" destination="ltR-RC-vnp" id="1do-3r-gNY"/>
-                                            <outlet property="guiLevelOfDifficulty" destination="9KD-jG-LUX" id="dRC-Pp-pPy"/>
                                             <outlet property="guiNumOfRemakes" destination="zCL-L2-HEd" id="2hx-K8-Yy1"/>
-                                            <outlet property="guiShotMode" destination="yre-Et-9j7" id="E3i-Ic-Ves"/>
                                             <outlet property="guiStoryLockedContainer" destination="X0U-tW-cyL" id="nto-Jr-eqH"/>
                                             <outlet property="guiStoryNameLabel" destination="mTY-Gz-YqK" id="pwe-t6-oew"/>
                                             <outlet property="guiThumbImage" destination="JWM-Cs-k2w" id="eus-q1-f5k"/>
@@ -461,11 +456,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vcBG" id="F2J-ib-dFT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="n4c-ID-VSQ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <inset key="contentInset" minX="0.0" minY="344" maxX="0.0" maxY="50"/>
+                                <inset key="contentInset" minX="0.0" minY="324" maxX="0.0" maxY="50"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="hqq-tY-Hk9">
                                     <size key="itemSize" width="159" height="90"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -554,26 +553,26 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" id="ZjV-7o-L6U" userLabel="storyMovieContainer">
-                                <rect key="frame" x="0.0" y="114" width="320" height="180"/>
+                                <rect key="frame" x="0.0" y="94" width="320" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="wnB-dz-wjk" userLabel="Description Haedline">
-                                <rect key="frame" x="0.0" y="64" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="mlY-Qs-wJu" userLabel="Description blurry bg">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="lZu-IA-usC" userLabel="Description Dark bg">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story description text" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="znf-eH-Mpo" userLabel="Story Description Text" customClass="HMRegularFontLabel">
-                                        <rect key="frame" x="23" y="0.0" width="275" height="50"/>
+                                        <rect key="frame" x="23" y="0.0" width="275" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -583,7 +582,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <view contentMode="scaleToFill" id="sir-52-YBy" userLabel="Sep">
-                                        <rect key="frame" x="0.0" y="49" width="320" height="1"/>
+                                        <rect key="frame" x="0.0" y="29" width="320" height="1"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
@@ -591,15 +590,10 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" id="agS-wG-7fb" userLabel="More remakes Haedline">
-                                <rect key="frame" x="0.0" y="294" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="274" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="5ve-md-RKT" userLabel="Description blurry bg">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" id="MZr-Vm-Cn1" userLabel="Description Dark bg">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -614,6 +608,10 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MORE_REMAKES"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreImage" id="G2B-EG-vTI">
+                                        <rect key="frame" x="100" y="12" width="121" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <view contentMode="scaleToFill" id="ZlV-Sa-wcb" userLabel="Sep">
                                         <rect key="frame" x="0.0" y="49" width="320" height="1"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -633,13 +631,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be the first to make a video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xrO-tV-a3k" userLabel="No remakes label" customClass="HMRegularFontLabel">
-                                <rect key="frame" x="10" y="352" width="300" height="158"/>
+                                <rect key="frame" x="10" y="352.00000212237796" width="300" height="158"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="xOH-ge-tPC" customClass="HMRegularFontButton">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="xOH-ge-tPC" customClass="HMRegularFontButton">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -672,6 +670,33 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomBarImage" id="GIq-cQ-fjs">
+                                <rect key="frame" x="0.0" y="440" width="320" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="5Ax-ye-4am" customClass="HMRegularFontButton">
+                                <rect key="frame" x="45" y="493" width="231" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="4"/>
+                                <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="MAKE YOUR OWN" backgroundImage="remakeButtonImageBG">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MAKE_YOUR_OWN_BUTTON"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassBigButtons"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onPressedRemakeButton:" destination="ZiT-ur-2sF" eventType="touchUpInside" id="9CX-ar-iKV"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="Rpn-VE-3lO">
+                                <rect key="frame" x="245" y="512" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -682,8 +707,9 @@
                         <outlet property="guiMoreRemakesHeadlineBG" destination="5ve-md-RKT" id="heV-vK-pqf"/>
                         <outlet property="guiMoreRemakesHeadlineContainer" destination="agS-wG-7fb" id="HS7-8i-ePe"/>
                         <outlet property="guiMoreRemakesHeadlineLabel" destination="86L-1d-fyN" id="hj0-em-7Ki"/>
-                        <outlet property="guiRemakeActivity" destination="baQ-JD-y4r" id="HAW-YM-8Xh"/>
+                        <outlet property="guiRemakeActivity" destination="Rpn-VE-3lO" id="UVd-2g-ZUQ"/>
                         <outlet property="guiRemakeButton" destination="xOH-ge-tPC" id="zmm-Ke-A1B"/>
+                        <outlet property="guiRemakeButton2" destination="5Ax-ye-4am" id="eR4-xX-zNc"/>
                         <outlet property="guiRemakeScreenContainer" destination="hQQ-Qc-PZX" id="XXb-qF-jR8"/>
                         <outlet property="guiStoryDescriptionBG" destination="lZu-IA-usC" id="sPW-AO-El5"/>
                         <outlet property="guiStoryDescriptionBluryBG" destination="mlY-Qs-wJu" id="I0F-in-8Oz"/>
@@ -705,7 +731,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="subtleBackground" id="f2n-WM-4HK">
+                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="subtleBackground" id="f2n-WM-4HK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -735,16 +761,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" id="aYY-8Y-mea" userLabel="Separator Top">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </view>
-                                                <view contentMode="scaleToFill" id="I2x-Vb-Utn" userLabel="Separator Bottom">
-                                                    <rect key="frame" x="0.0" y="94" width="320" height="1"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </view>
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="9lC-38-A51">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -894,6 +910,7 @@
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
                                                     </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="k3P-hU-fx4" id="ITm-as-Dvs"/>
                                                     </connections>
@@ -936,7 +953,17 @@
                                                             <color key="color" red="1" green="0.37254902719999999" blue="0.270588249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </activityIndicatorView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" id="aYY-8Y-mea" userLabel="Separator Top">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" id="I2x-Vb-Utn" userLabel="Separator Bottom">
+                                                    <rect key="frame" x="0.0" y="94" width="320" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -953,9 +980,13 @@
                                             <outlet property="buttonsView" destination="LUz-op-R46" id="Fm6-xe-pTj"/>
                                             <outlet property="guiActivity" destination="MTf-qW-a6Y" id="PqA-QK-EbZ"/>
                                             <outlet property="guiActivityOverlay" destination="Yqc-kA-eYK" id="2S4-fl-ICF"/>
+                                            <outlet property="guiDeleteLabel" destination="zch-v5-dBZ" id="5Ed-V1-M4u"/>
                                             <outlet property="guiDownloadButton" destination="fld-A2-GaN" id="tYX-kP-BM8"/>
                                             <outlet property="guiHighlightOverlay" destination="nUh-vj-K1h" id="hdd-ar-IDY"/>
+                                            <outlet property="guiRetakeLabel" destination="Qqh-zw-L3A" id="xAi-lH-hv9"/>
                                             <outlet property="guiScrollView" destination="9lC-38-A51" id="Aa3-jY-Rvk"/>
+                                            <outlet property="guiSepBottom" destination="I2x-Vb-Utn" id="Hrw-Wi-LUw"/>
+                                            <outlet property="guiSepTop" destination="aYY-8Y-mea" id="vma-nw-Nin"/>
                                             <outlet property="guiThumbContainer" destination="E2A-Jk-ZZI" id="40Z-ya-B0L"/>
                                             <outlet property="guiThumbImage" destination="VI8-bD-3VH" id="2rZ-sH-TeS"/>
                                             <outlet property="remakeButton" destination="zVP-Pe-Sxq" id="3EJ-ei-Kxt"/>
@@ -974,7 +1005,7 @@
                                     <outlet property="delegate" destination="k3P-hU-fx4" id="EbF-Jc-Fa1"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="KPb-Nr-Fc0" customClass="HMRegularFontButton">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="KPb-Nr-Fc0" customClass="HMRegularFontButton">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -994,6 +1025,29 @@
                                     <action selector="onRemakeMoreStoriesButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="rGE-TH-fdO"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomBarImage" id="HpP-YZ-mPj">
+                                <rect key="frame" x="0.0" y="440" width="320" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Fbx-1x-scR" customClass="HMRegularFontButton">
+                                <rect key="frame" x="45" y="493" width="231" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="4"/>
+                                <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="MAKE YOUR OWN" backgroundImage="remakeButtonImageBG">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="MAKE_YOUR_OWN_BUTTON"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleClass" value="styleClassBigButtons"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onRemakeMoreStoriesButtonPushed:" destination="k3P-hU-fx4" eventType="touchUpInside" id="tml-RN-cpl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -1003,6 +1057,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="guiRemakeMoreStoriesButton" destination="KPb-Nr-Fc0" id="y6m-6p-hwv"/>
+                        <outlet property="guiRemakeMoreStoriesButton2" destination="Fbx-1x-scR" id="eYy-br-2aV"/>
                         <outlet property="noRemakesLabel" destination="nBO-G7-mhb" id="anI-pC-TjJ"/>
                         <outlet property="userRemakesCV" destination="zSo-Xw-45U" id="OGs-Ur-uwW"/>
                     </connections>
@@ -1247,7 +1302,7 @@
                                 <rect key="frame" x="0.0" y="64" width="220" height="508"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navSidebarBG" id="MTN-IE-JpA" userLabel="BG image">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navSidebarBG" id="MTN-IE-JpA" userLabel="BG image">
                                         <rect key="frame" x="0.0" y="0.0" width="220" height="508"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -1367,6 +1422,10 @@
                                             <action selector="onPressedMonkeyShop:" destination="2Bz-2S-I1k" eventType="touchUpInside" id="YN8-BL-26U"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sideBarBottomLogo" id="96z-LL-DXt">
+                                        <rect key="frame" x="0.0" y="403" width="220" height="105"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -1377,6 +1436,7 @@
                         <outlet property="guiBGImageView" destination="MTN-IE-JpA" id="WSA-fa-FFF"/>
                         <outlet property="guiHelloUserLabel" destination="Yhk-LX-8UH" id="ohO-u7-WOG"/>
                         <outlet property="guiHowToButton" destination="36P-bm-q0f" id="DUS-Wf-ZIc"/>
+                        <outlet property="guiHowToIcon" destination="Lsg-jO-iQF" id="1Xo-Wr-rMd"/>
                         <outlet property="guiJoinButton" destination="hfQ-pw-J8P" id="Cuh-DR-9Xu"/>
                         <outlet property="guiLogoutButton" destination="o3r-9s-FMS" id="JOe-JM-GWF"/>
                         <outlet property="guiMeButton" destination="os6-0F-yVc" id="4uQ-x1-eh7"/>
@@ -1671,7 +1731,7 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" id="ffs-5Z-LWA" userLabel="More remakes Haedline">
-                                <rect key="frame" x="0.0" y="114" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="94" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="spq-aY-ruv" userLabel="Description blurry bg">
@@ -1699,11 +1759,15 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.13333334029999999" green="0.13333334029999999" blue="0.13333334029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreImage" id="j6w-Va-6cV">
+                                        <rect key="frame" x="100" y="12" width="121" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" id="GL9-IJ-X5A">
-                                <rect key="frame" x="0.0" y="164" width="320" height="180"/>
+                                <rect key="frame" x="0.0" y="144" width="320" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="Pcl-dC-mzU" userLabel="Remake container">
@@ -1919,10 +1983,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8IV-Q2-mYW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3019" y="-93"/>
+            <point key="canvasLocation" x="3071" y="261"/>
         </scene>
     </scenes>
     <resources>
+        <image name="bottomBarImage" width="320" height="59"/>
         <image name="cellGradient" width="1" height="95"/>
         <image name="cellGradientTop" width="1" height="95"/>
         <image name="flagIcon" width="23" height="27"/>
@@ -1933,6 +1998,7 @@
         <image name="iconRoundEmpty" width="46" height="46"/>
         <image name="likesIcon" width="12" height="11"/>
         <image name="more" width="20" height="15"/>
+        <image name="moreImage" width="102" height="18"/>
         <image name="moreOptionsIcon" width="12" height="2"/>
         <image name="myStoriesDeleteButton" width="44" height="44"/>
         <image name="myStoriesDownloadButton" width="44" height="44"/>
@@ -1947,8 +2013,10 @@
         <image name="navSidebarBG" width="273" height="568"/>
         <image name="playMusicIcon" width="33" height="33"/>
         <image name="progressCloseIcon" width="22" height="22"/>
+        <image name="remakeButtonImageBG" width="231" height="60"/>
         <image name="remakeInverseBGButton" width="33" height="33"/>
         <image name="shareButton" width="44" height="44"/>
+        <image name="sideBarBottomLogo" width="220" height="76"/>
         <image name="smallCloseIcon" width="17" height="17"/>
         <image name="smallGuestIcon" width="18" height="18"/>
         <image name="smallRemakeIcon" width="18" height="15"/>
@@ -1958,7 +2026,9 @@
         <image name="storeIcon3" width="200" height="102"/>
         <image name="storyLockedIcon" width="48" height="62"/>
         <image name="subtleBackground" width="320" height="568"/>
+        <image name="thumbContainerBottomInfoBGImage" width="320" height="42"/>
         <image name="tp_pause_button.png" width="72" height="72"/>
+        <image name="vcBG" width="320" height="286"/>
         <image name="viewsIcon" width="17" height="11"/>
         <image name="wifi" width="64" height="50"/>
     </resources>

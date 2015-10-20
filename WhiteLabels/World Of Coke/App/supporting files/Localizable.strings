@@ -59,9 +59,9 @@
 "NO" = "No";
 
 /*in me screen, when you have no remakes, this label will show*/
-"NO_REMAKES_ME_SCREEN" = "CREATE YOUR FIRST CLIP!";
-"REMAKE_MORE_STORIES" = "CREATE MORE CLIPS!";
-"REMAKE_A_STORY" = "CREATE A CLIP!";
+"NO_REMAKES_ME_SCREEN" = "Create your first clip!";
+"REMAKE_MORE_STORIES" = "Create more clips!";
+"REMAKE_A_STORY" = "Create a clip!";
 
 /*me screen buttons for each user's remake*/
 "ME_REMAKE_DELETE" = "Delete clip";
@@ -70,10 +70,10 @@
 /*in the story details screen, when no remakes available, this label will show*/
 "NO_REMAKES_STORY_DETAILS" = "Be the first to make a clip";
 "MORE_REMAKES" = "MORE";
-"MAKE_YOUR_OWN_BUTTON" = "MAKE YOUR OWN";
+"MAKE_YOUR_OWN_BUTTON" = "Make Your Own";
 
 /*in stories tab ,when you have no stories, this label will show*/
-"NO_STORIES" = "NO CLIPS :-(";
+"NO_STORIES" = "No clips :-(";
 
 /* 
     It is possible to define the texts in nav buttons

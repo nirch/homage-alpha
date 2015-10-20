@@ -6,22 +6,20 @@
 	<string>http://play-test.homage.it</string>
 	<key>share_app_button</key>
 	<false/>
+	<key>howto_button</key>
+	<false/>
 	<key>signup</key>
 	<integer>0</integer>
-	<key>song_loop</key>
-	<string>songLoop.m4a</string>
-	<key>song_loop_volume</key>
-	<real>0.7</real>
 	<key>facebook_app_id</key>
 	<string>474040282727650</string>
 	<key>application</key>
-	<string>monkey_dance_ios</string>
+	<string>world_of_coke_ios</string>
 	<key>product_ids_prefix</key>
-	<string>md</string>
+	<string>woc</string>
 	<key>campaign_id</key>
 	<string>54919516454c61f4080000e5</string>
 	<key>in_app_purchases</key>
-	<true/>
+	<false/>
 	<key>recorder_first_scene_context_message</key>
 	<false/>
 	<key>login_flow_skip_intro_video</key>
@@ -41,7 +39,7 @@
 	<key>_recorder_forced_bbg_policy</key>
 	<integer>0</integer>
 	<key>recorder_disclaimer</key>
-	<true/>
+	<false/>
 	<key>download_app_ios_url</key>
 	<string>http://app-test.homage.it/ios?src=ios</string>
 	<key>download_app_android_url</key>

@@ -7,7 +7,7 @@
 		<key>styleClassSideBarNavigationButton</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>7</integer>
+			<integer>3</integer>
 		</dict>
 		<key>styleClassRecorderRecordCountDown</key>
 		<dict>
@@ -19,7 +19,7 @@
 		<key>styleClassNavigationTitle</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>5</integer>
+			<integer>0</integer>
 		</dict>
 		<key>styleClassBigTitle</key>
 		<dict>
@@ -36,7 +36,7 @@
 		<key>styleClassBigButtons</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>8</integer>
+			<integer>0</integer>
 		</dict>
 		<key>styleClassTextBanner</key>
 		<dict>
@@ -51,9 +51,9 @@
 		<key>styleClassSDDescriptionText</key>
 		<dict>
 			<key>fontResize</key>
-			<integer>5</integer>
+			<integer>1</integer>
 			<key>strokeSize</key>
-			<integer>2</integer>
+			<integer>0</integer>
 		</dict>
 		<key>styleClassSideBarUserTitle</key>
 		<dict>
@@ -69,6 +69,8 @@
 		</dict>
 		<key>valueSplashActivityPosition</key>
 		<integer>320</integer>
+		<key>valueStoriesCellsBottomSpacing</key>
+		<integer>3</integer>
 		<key>valueSplashActivityCirclesCount</key>
 		<string>7</string>
 		<key>valueSplashActivityCirclesRadius</key>
@@ -77,6 +79,8 @@
 		<integer>6</integer>
 		<key>valueRecorderButtonOutline</key>
 		<integer>7</integer>
+		<key>styleStatusBarLightText</key>
+		<false/>
 	</dict>
 	<key>fonts</key>
 	<dict>
@@ -95,6 +99,18 @@
 	</dict>
 	<key>colors</key>
 	<dict>
+		<key>basic</key>
+		<dict>
+			<key>colorCommonScreenVCBG</key>
+			<string>@normalBackground</string>
+			<key>colorRootVCBG</key>
+			<string>@impactBackground</string>
+		</dict>
+		<key>stories</key>
+		<dict>
+			<key>colorStoriesText</key>
+			<string>@impactText</string>
+		</dict>
 		<key>downloading</key>
 		<dict>
 			<key>colorDownloadContainer</key>
@@ -119,7 +135,7 @@
 			<key>colorRefreshControlTint</key>
 			<string>@impact</string>
 			<key>colorHideAppViewBG</key>
-			<string>@theVoid</string>
+			<string>@fogOfWar</string>
 		</dict>
 		<key>recorder</key>
 		<dict>
@@ -179,25 +195,29 @@
 		<key>navigation and status bar</key>
 		<dict>
 			<key>colorStatusBarBG</key>
-			<string>@darkest</string>
+			<string>@normalBackground</string>
+			<key>colorSideNavBarStatusBarBG</key>
+			<string>@impactBackground</string>
+			<key>colorNavBarCover</key>
+			<string>@clear</string>
 			<key>colorSideNavBarSeparator</key>
-			<string>@bright</string>
+			<string>@clear</string>
 			<key>colorSideNavBarOptionText</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorSideNavBarBG</key>
-			<string>@veryDark</string>
+			<string>@impactBackground</string>
 			<key>colorSideNavBarLoginButton</key>
-			<string>@normalText</string>
+			<string>@impactText</string>
 			<key>colorSideNavBarTopContainer</key>
-			<string>@darker</string>
+			<string>@impactBackground</string>
 			<key>colorSideNavBarUser</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorNavBarTitle</key>
-			<string>@impact</string>
+			<string>@normalText</string>
 			<key>colorNavBarSeparator</key>
-			<string>@darker</string>
+			<string>@normalBorder</string>
 			<key>colorNavBarBackground</key>
-			<string>@darker</string>
+			<string>@normalBackground</string>
 		</dict>
 		<key>login</key>
 		<dict>
@@ -239,11 +259,6 @@
 			<key>colorSettingsSectionTitleText</key>
 			<string>@darkest</string>
 		</dict>
-		<key>stories</key>
-		<dict>
-			<key>colorStoriesText</key>
-			<string>@impact</string>
-		</dict>
 		<key>me screen</key>
 		<dict>
 			<key>colorMeText</key>
@@ -254,27 +269,31 @@
 			<string>@impact</string>
 			<key>colorMeCreateFirstVideoText</key>
 			<string>@impact</string>
+			<key>colorMeCellTopBorder</key>
+			<string>@normalBackground</string>
+			<key>colorMeCellBottomBorder</key>
+			<string>@normalBackground</string>
 		</dict>
 		<key>story details</key>
 		<dict>
 			<key>colorSDText</key>
 			<string>@impact</string>
 			<key>colorSDDescriptionText</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorSDDescriptionBG</key>
-			<string>@bright</string>
+			<string>@impactSlightlySeeThrough</string>
 			<key>colorSDMoreRemakesTitleText</key>
-			<string>@impact</string>
+			<string>@clear</string>
 			<key>colorSDMoreRemakesTitleBG</key>
-			<string>@darker</string>
+			<string>@normalBackground</string>
 			<key>colorSDRemakeButtonBG</key>
-			<string>@darker</string>
+			<string>@clear</string>
 			<key>colorSDRemakeButtonText</key>
 			<string>@impact</string>
 			<key>colorSDNoRemakesLabel</key>
 			<string>@impactSeeThrough</string>
 			<key>colorSDRemakeInfoText</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorsArraySDMoreRemakesActivityIndicator</key>
 			<array>
 				<string>#552C17</string>
@@ -315,22 +334,36 @@
 	</dict>
 	<key>palette</key>
 	<dict>
-		<key>@theVoid</key>
-		<string>#00000077</string>
+		<key>@impact</key>
+		<string>#D1232F</string>
+		<key>@impactSlightlySeeThrough</key>
+		<string>#D1232FDF</string>
+		<key>@impactSeeThrough</key>
+		<string>#D1232F88</string>
+		<key>@normalBackground</key>
+		<string>#FFFFFFFF</string>
+		<key>@normalText</key>
+		<string>#000000FF</string>
+		<key>@normalBorder</key>
+		<string>#0000000E</string>
+		<key>@impactBackground</key>
+		<string>#D1232F</string>
+		<key>@impactText</key>
+		<string>#FFFFFFFF</string>
+		<key>@fogOfWar</key>
+		<string>#FFFFFFAA</string>
 		<key>@clear</key>
 		<string>#00000000</string>
+		<key>--------------------------</key>
+		<string></string>
+		<key>@theVoid</key>
+		<string>#00000077</string>
 		<key>@record</key>
 		<string>#AB1723</string>
 		<key>@bright</key>
 		<string>#C76C2C</string>
 		<key>@brightSeeThrough</key>
 		<string>#C76C2C88</string>
-		<key>@normalText</key>
-		<string>#FFFFFF</string>
-		<key>@impact</key>
-		<string>#FDAE2B</string>
-		<key>@impactSeeThrough</key>
-		<string>#FDAE2B88</string>
 		<key>@darkSeeThrough</key>
 		<string>#36191588</string>
 		<key>@dark</key>

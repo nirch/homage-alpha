@@ -37,7 +37,7 @@
 	<key>_recorder_forced_bbg_policy</key>
 	<integer>0</integer>
 	<key>recorder_disclaimer</key>
-	<true/>
+	<false/>
 	<key>download_app_ios_url</key>
 	<string>http://bit.ly/1rONZLw</string>
 	<key>download_app_android_url</key>

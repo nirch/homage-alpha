@@ -146,6 +146,14 @@
     return integerValue;
 }
 
+-(BOOL)boolValueForKey:(NSString *)key defaultValue:(BOOL)defaultValue
+{
+    id value = self.values[key];
+    if (value == nil) return defaultValue;
+    BOOL boolValue = [value boolValue];
+    return boolValue;
+}
+
 -(NSDictionary *)styleClassForKey:(NSString *)key
 {
     id value = self.values[key];

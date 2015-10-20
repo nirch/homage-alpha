@@ -42,6 +42,7 @@
 //
 -(CGFloat)floatValueForKey:(NSString *)key;
 -(NSInteger)integerValueForKey:(NSString *)key;
+-(BOOL)boolValueForKey:(NSString *)key defaultValue:(BOOL)defaultValue;
 -(NSDictionary *)styleClassForKey:(NSString *)key;
 
 // Splash screen
@@ -51,10 +52,17 @@
 #define V_STORE_THUMBS_CORNER_RADIUS @"valueStoreThumbsCornerRadius"
 #define V_RECORDER_RECORD_BUTTON_OUTLINE @"valueRecorderButtonOutline"
 
+// Stories
+#define V_STORIES_CELLS_BOTTOM_SPACING @"valueStoriesCellsBottomSpacing"
+
 #pragma mark - Colors
 //
 // Colors
 //
+
+// Most common/basic
+#define C_ROOT_VC_BG @"colorRootVCBG"
+#define C_COMMON_SCREEN_VC_BG @"colorCommonScreenVCBG"
 
 // Misc
 #define C_HIDE_APP_VIEW_BG @"colorHideAppViewBG"
@@ -90,14 +98,18 @@
 
 #define C_NAV_BAR_TITLE @"colorNavBarTitle"
 #define C_NAV_BAR_BACKGROUND @"colorNavBarBackground"
+#define C_NAV_BAR_COVER @"colorNavBarCover"
 #define C_NAV_BAR_SEPARATOR @"colorNavBarSeparator"
 
+#define C_SIDE_NAV_STATUS_BAR_BG @"colorSideNavBarStatusBarBG"
 #define C_SIDE_NAV_BAR_TOP_CONTAINER @"colorSideNavBarTopContainer"
 #define C_SIDE_NAV_BAR_USER @"colorSideNavBarUser"
 #define C_SIDE_NAV_BAR_LOGIN_BUTTON @"colorSideNavBarLoginButton"
 #define C_SIDE_NAV_BAR_BG @"colorSideNavBarBG"
 #define C_SIDE_NAV_BAR_OPTION_TEXT @"colorSideNavBarOptionText"
 #define C_SIDE_NAV_BAR_SEPARATOR @"colorSideNavBarSeparator"
+
+#define C_STATUS_BAR_LIGHT_TEXT @"styleStatusBarLightText"
 
 // Stories
 #define C_STORIES_TEXT @"colorStoriesText"
@@ -119,6 +131,9 @@
 #define C_ME_CREATE_FIRST_VIDEO_TEXT @"colorMeCreateFirstVideoText"
 #define C_ME_REMAKE_BUTTON_BG @"colorMeRemakeButtonBG"
 #define C_ME_REMAKE_BUTTON_TEXT @"colorMeRemakeButtonText"
+#define C_ME_CELL_TOP_BORDER @"colorMeCellTopBorder"
+#define C_ME_CELL_BOTTOM_BORDER @"colorMeCellBottomBorder"
+
 
 // Settings screen
 #define C_SETTINGS_BG @"colorSettingsBG"

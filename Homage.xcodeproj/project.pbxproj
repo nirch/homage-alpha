@@ -641,13 +641,13 @@
 		087499941B94A3D800BD331C /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0874998F1B94A3D800BD331C /* songLoop.m4a */; };
 		087499971B94A4C700BD331C /* LabelDefaultsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087499951B94A4C700BD331C /* LabelDefaultsCFG.plist */; };
 		087499981B94A4C700BD331C /* LabelDefaultsCFGTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 087499961B94A4C700BD331C /* LabelDefaultsCFGTest.plist */; };
-		087499991B94A71800BD331C /* ABTestsCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 082092741A61360F00603008 /* ABTestsCFG.plist */; };
 		0874999D1B94C0E800BD331C /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0874999B1B94C0E800BD331C /* SF-UI-Display-Light.otf */; };
 		0874999F1B94DA0A00BD331C /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0874999E1B94DA0A00BD331C /* SF-UI-Text-Regular.otf */; };
 		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
 		08793D2A1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
 		08793D2B1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
+		087E464E1BD654A900C732E2 /* HMMELabelSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = 087E464D1BD654A900C732E2 /* HMMELabelSpecific.m */; };
 		08832E9F1A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
 		08832EA01A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
 		0888CE8E19EC3645003D7249 /* HMGLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840FF8618853FB400A6EF5E /* HMGLog.m */; };
@@ -740,6 +740,12 @@
 		08EA3B3319D9DD8A00B074DA /* HMRegularFontButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA3B3219D9DD8A00B074DA /* HMRegularFontButton.m */; };
 		08EA813A1A213EB400742251 /* HMStoriesTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA81391A213EB400742251 /* HMStoriesTutorial.m */; };
 		08EA813C1A213ED400742251 /* HMStoriesTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */; };
+		08EE1DE81BD60F0D000292C5 /* HMSDLabelSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EE1DE71BD60F0D000292C5 /* HMSDLabelSpecific.m */; };
+		08EE1DF21BD63DDD000292C5 /* cinemaCountdown_oneLast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08EE1DEC1BD63DDD000292C5 /* cinemaCountdown_oneLast.wav */; };
+		08EE1DF31BD63DDD000292C5 /* howtoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08EE1DED1BD63DDD000292C5 /* howtoVideo.mp4 */; };
+		08EE1DF41BD63DDD000292C5 /* introVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08EE1DEE1BD63DDD000292C5 /* introVideo.mp4 */; };
+		08EE1DF51BD63DDD000292C5 /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08EE1DEF1BD63DDD000292C5 /* recordingEnd.wav */; };
+		08EE1DF61BD63DDD000292C5 /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 08EE1DF01BD63DDD000292C5 /* songLoop.m4a */; };
 		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
 		08F9EBB51A5457A6000CFCAD /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
@@ -999,6 +1005,8 @@
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		08793D281A75474100B2F91C /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		08793D291A75474100B2F91C /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
+		087E464C1BD654A900C732E2 /* HMMELabelSpecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMELabelSpecific.h; sourceTree = "<group>"; };
+		087E464D1BD654A900C732E2 /* HMMELabelSpecific.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMELabelSpecific.m; sourceTree = "<group>"; };
 		08832E9D1A6E8AC200E7772A /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
 		08832E9E1A6E8AC200E7772A /* Remake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remake.m; sourceTree = "<group>"; };
 		0888CE9019EC3DFA003D7249 /* Homage_LocalStorage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Homage_LocalStorage_Tests.m; sourceTree = "<group>"; };
@@ -1135,6 +1143,13 @@
 		08EA81381A213EB400742251 /* HMStoriesTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStoriesTutorial.h; sourceTree = "<group>"; };
 		08EA81391A213EB400742251 /* HMStoriesTutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMStoriesTutorial.m; sourceTree = "<group>"; };
 		08EA813B1A213ED400742251 /* HMStoriesTutorial.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMStoriesTutorial.xib; sourceTree = "<group>"; };
+		08EE1DE61BD60F0D000292C5 /* HMSDLabelSpecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSDLabelSpecific.h; sourceTree = "<group>"; };
+		08EE1DE71BD60F0D000292C5 /* HMSDLabelSpecific.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSDLabelSpecific.m; sourceTree = "<group>"; };
+		08EE1DEC1BD63DDD000292C5 /* cinemaCountdown_oneLast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cinemaCountdown_oneLast.wav; sourceTree = "<group>"; };
+		08EE1DED1BD63DDD000292C5 /* howtoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = howtoVideo.mp4; sourceTree = "<group>"; };
+		08EE1DEE1BD63DDD000292C5 /* introVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = introVideo.mp4; sourceTree = "<group>"; };
+		08EE1DEF1BD63DDD000292C5 /* recordingEnd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = recordingEnd.wav; sourceTree = "<group>"; };
+		08EE1DF01BD63DDD000292C5 /* songLoop.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = songLoop.m4a; sourceTree = "<group>"; };
 		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
@@ -1959,6 +1974,7 @@
 			isa = PBXGroup;
 			children = (
 				08715F531BD2B65A00CD50A0 /* WorldOfCoke.plist */,
+				08EE1DE91BD63DDD000292C5 /* media resources */,
 				086650DC1BD3B8E700D3DE4B /* App */,
 				08715F551BD2B6A300CD50A0 /* User Interface */,
 			);
@@ -1970,6 +1986,10 @@
 			children = (
 				08715F561BD2B6F300CD50A0 /* Images.xcassets */,
 				08715F571BD2B6F300CD50A0 /* Styles */,
+				08EE1DE61BD60F0D000292C5 /* HMSDLabelSpecific.h */,
+				08EE1DE71BD60F0D000292C5 /* HMSDLabelSpecific.m */,
+				087E464C1BD654A900C732E2 /* HMMELabelSpecific.h */,
+				087E464D1BD654A900C732E2 /* HMMELabelSpecific.m */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -2410,6 +2430,26 @@
 			path = Tutorials;
 			sourceTree = "<group>";
 		};
+		08EE1DE91BD63DDD000292C5 /* media resources */ = {
+			isa = PBXGroup;
+			children = (
+				08EE1DEA1BD63DDD000292C5 /* bundled stories */,
+				08EE1DEC1BD63DDD000292C5 /* cinemaCountdown_oneLast.wav */,
+				08EE1DED1BD63DDD000292C5 /* howtoVideo.mp4 */,
+				08EE1DEE1BD63DDD000292C5 /* introVideo.mp4 */,
+				08EE1DEF1BD63DDD000292C5 /* recordingEnd.wav */,
+				08EE1DF01BD63DDD000292C5 /* songLoop.m4a */,
+			);
+			path = "media resources";
+			sourceTree = "<group>";
+		};
+		08EE1DEA1BD63DDD000292C5 /* bundled stories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "bundled stories";
+			sourceTree = "<group>";
+		};
 		08FA971D1A45B853009B998C /* InAppStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -2824,6 +2864,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08EE1DF51BD63DDD000292C5 /* recordingEnd.wav in Resources */,
 				08715F251BD2B4BD00CD50A0 /* close up.ctr in Resources */,
 				08715F591BD2B6F300CD50A0 /* Images.xcassets in Resources */,
 				08715F271BD2B4BD00CD50A0 /* HMDownloadViewController.xib in Resources */,
@@ -2834,20 +2875,24 @@
 				08715F5A1BD2B6F300CD50A0 /* Style.plist in Resources */,
 				08715F331BD2B4BD00CD50A0 /* InfoPlist.strings in Resources */,
 				08715F341BD2B4BD00CD50A0 /* HMRefreshControl.xib in Resources */,
+				08EE1DF61BD63DDD000292C5 /* songLoop.m4a in Resources */,
 				08715F351BD2B4BD00CD50A0 /* Monkey+-+Warm+Up.mp4 in Resources */,
 				086650DF1BD3B8E700D3DE4B /* LabelDefaultsCFG.plist in Resources */,
 				08715F371BD2B4BD00CD50A0 /* HMTOSViewController.xib in Resources */,
 				086650E71BD3BBFC00D3DE4B /* Localizable.strings in Resources */,
 				08715F381BD2B4BD00CD50A0 /* RecorderStoryboard.storyboard in Resources */,
 				08715F391BD2B4BD00CD50A0 /* DINOT-CondBold.otf in Resources */,
+				08EE1DF21BD63DDD000292C5 /* cinemaCountdown_oneLast.wav in Resources */,
 				08715F3A1BD2B4BD00CD50A0 /* HMRecorderMessageCommonView.xib in Resources */,
 				086650E61BD3BBFC00D3DE4B /* LabelTOS.txt in Resources */,
 				08715F3B1BD2B4BD00CD50A0 /* HMMeVideoPlayer.xib in Resources */,
 				08715F3C1BD2B4BD00CD50A0 /* Storyboard_iPad.storyboard in Resources */,
 				08715F3D1BD2B4BD00CD50A0 /* HMPrivacyPolicyViewController.xib in Resources */,
 				08715F3E1BD2B4BD00CD50A0 /* HMRecorderBigVideoPlayerView.xib in Resources */,
+				08EE1DF41BD63DDD000292C5 /* introVideo.mp4 in Resources */,
 				08715F3F1BD2B4BD00CD50A0 /* HMSimpleVideoViewController.xib in Resources */,
 				08715F411BD2B4BD00CD50A0 /* close up 480.ctr in Resources */,
+				08EE1DF31BD63DDD000292C5 /* howtoVideo.mp4 in Resources */,
 				086650E01BD3B8E700D3DE4B /* LabelDefaultsCFGTest.plist in Resources */,
 				086650E51BD3BBFC00D3DE4B /* LabelPrivacyPolicy.txt in Resources */,
 				08715F421BD2B4BD00CD50A0 /* DefaultsCFG.plist in Resources */,
@@ -2895,7 +2940,6 @@
 				087499651B9444B000BD331C /* HMSimpleVideoViewController.xib in Resources */,
 				087499971B94A4C700BD331C /* LabelDefaultsCFG.plist in Resources */,
 				087499671B9444B000BD331C /* close up 480.ctr in Resources */,
-				087499991B94A71800BD331C /* ABTestsCFG.plist in Resources */,
 				087499911B94A3D800BD331C /* howtoVideo.mp4 in Resources */,
 				087499681B9444B000BD331C /* DefaultsCFG.plist in Resources */,
 				087499691B9444B000BD331C /* DefaultsCFGTest.plist in Resources */,
@@ -3429,6 +3473,7 @@
 				08715EA11BD2B4BD00CD50A0 /* HMServer+Stories.m in Sources */,
 				08715EA21BD2B4BD00CD50A0 /* HMServer+Remakes.m in Sources */,
 				08715EA31BD2B4BD00CD50A0 /* IASKSettingsReader.m in Sources */,
+				087E464E1BD654A900C732E2 /* HMMELabelSpecific.m in Sources */,
 				08715EA41BD2B4BD00CD50A0 /* HMWhileRecordingOverlayViewController.m in Sources */,
 				08715EA51BD2B4BD00CD50A0 /* HMTabBarController.m in Sources */,
 				08715EA61BD2B4BD00CD50A0 /* Text.m in Sources */,
@@ -3516,6 +3561,7 @@
 				08715EF81BD2B4BD00CD50A0 /* Footage.m in Sources */,
 				08715EF91BD2B4BD00CD50A0 /* HMRecorderMessagesOverlayViewController.m in Sources */,
 				08715EFA1BD2B4BD00CD50A0 /* NSNotificationCenter+Utils.m in Sources */,
+				08EE1DE81BD60F0D000292C5 /* HMSDLabelSpecific.m in Sources */,
 				08715EFB1BD2B4BD00CD50A0 /* AWPieSliceView.m in Sources */,
 				08715EFC1BD2B4BD00CD50A0 /* HMBoldFontLabel.m in Sources */,
 				08715EFD1BD2B4BD00CD50A0 /* Story+Logic.m in Sources */,

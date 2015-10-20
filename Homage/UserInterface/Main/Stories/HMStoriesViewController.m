@@ -23,7 +23,11 @@
 #import "IASKSettingsReader.h"
 #import "HMServer+AppConfig.h"
 
-@interface HMStoriesViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface HMStoriesViewController () <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout
+>
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiPreloadingImagesView;
@@ -120,6 +124,7 @@
     // ************
     // *  STYLES  *
     // ************
+    self.view.backgroundColor = [HMStyle.sh colorNamed:C_COMMON_SCREEN_VC_BG];
     self.textColor = [HMStyle.sh colorNamed:C_STORIES_TEXT];
     self.refreshControl.tintColor = [HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT];
 }
@@ -413,6 +418,12 @@
 -(void)resetFetchedResultsController
 {
     _fetchedResultsController = nil;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 2.0f;
 }
 
 #pragma mark - UICollectionViewDelegate

@@ -34,7 +34,9 @@
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiSettingsButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiHowToButton;
 @property (weak, nonatomic) IBOutlet HMRegularFontButton *guiShareAppButton;
+
 @property (weak, nonatomic) IBOutlet UIImageView *guiShareAppIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *guiHowToIcon;
 
 @property (strong, nonatomic) IBOutletCollection(HMRegularFontButton) NSArray *guiNavButtonsCollection;
 
@@ -123,6 +125,13 @@
     self.guiShareAppButton.hidden = ![HMServer.sh.configurationInfo[@"share_app_button"] boolValue];
     self.guiShareAppIcon.hidden = ![HMServer.sh.configurationInfo[@"share_app_button"] boolValue];
     
+    self.guiHowToButton.hidden = ![HMServer.sh.configurationInfo[@"howto_button"] boolValue];
+    self.guiHowToIcon.hidden = ![HMServer.sh.configurationInfo[@"howto_button"] boolValue];
+    
+    
+    // Add motion effects
+    [self.guiBGImageView addMotionEffectWithAmount:-15];
+    
     // ************
     // *  STYLES  *
     // ************
@@ -133,7 +142,7 @@
     self.guiSideNavBarContainer.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_BG];
     
     // Status bar background color
-    self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
+    self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_SIDE_NAV_STATUS_BAR_BG];
     
     // Nav Buttons
     UIColor *bottomBorderColor = [HMStyle.sh colorNamed:C_SIDE_NAV_BAR_SEPARATOR];

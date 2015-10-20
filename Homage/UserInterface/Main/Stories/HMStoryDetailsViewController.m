@@ -30,6 +30,7 @@
 #import "HMServer+AppConfig.h"
 #import "HMAppStore.h"
 #import <MONActivityIndicatorView/MONActivityIndicatorView.h>
+#import "HMSDLabelSpecific.h"
 
 @interface HMStoryDetailsViewController () <UICollectionViewDataSource,UICollectionViewDelegate,HMRecorderDelegate,UIScrollViewDelegate,HMSimpleVideoPlayerDelegate,UIActionSheetDelegate>
 
@@ -46,6 +47,9 @@
 @property (weak, nonatomic) IBOutlet UIView *guiMoreRemakesHeadlineBG;
 @property (weak, nonatomic) IBOutlet HMRegularFontLabel *guiMoreRemakesHeadlineLabel;
 
+// Extra effects specific to a label
+@property (nonatomic) HMSDLabelSpecific *labelSpecific;
+
 @property (nonatomic) BOOL fetchingMoreRemakes;
 
 @property (weak, nonatomic) MONActivityIndicatorView *activityView;
@@ -60,6 +64,7 @@
 @property (nonatomic) BOOL shouldShowStoryMiniPlayer;
 @property (nonatomic) BOOL isShowingStoryMiniPlayer;
 @property (weak, nonatomic) IBOutlet UIButton *guiBackToTopButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiPlayerBottomOverlayImage;
 
 // Remake screen overlay
 @property (weak, nonatomic) IBOutlet UIView *guiRemakeScreenContainer;
@@ -128,6 +133,12 @@
     [super viewDidAppear:animated];
     self.guiRemakeButton.enabled = YES;
     [self fixLayout];
+    
+    if (self.labelSpecific == nil) {
+        self.labelSpecific = [HMSDLabelSpecific new];
+        self.labelSpecific.superView = self.view;
+        [self.labelSpecific prepare];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -163,14 +174,11 @@
     self.noRemakesLabel.text = @"";
     self.guiStoryDescriptionLabel.text = self.story.descriptionText;
     [self initStoryMoviePlayer];
-    
+    self.guiMoreRemakesHeadlineBG.backgroundColor = [UIColor clearColor];
+
     // Story description.
     self.guiStoryMovieContainer.layer.zPosition = -1;
-    [[AMBlurView new] insertIntoView:self.guiStoryDescriptionBluryBG];
-    
-    // More remakes headline
-    [[AMBlurView new] insertIntoView:self.guiMoreRemakesHeadlineBG];
-    self.guiMoreRemakesHeadlineBG.alpha = 0.3;
+    self.guiStoryDescriptionBluryBG.hidden = YES; // deprecated
     
     // Premium content
     [self updateMakeYourOwnButton];
@@ -185,7 +193,8 @@
     // ************
     // *  STYLES  *
     // ************
-    
+    self.view.backgroundColor = [HMStyle.sh colorNamed:C_COMMON_SCREEN_VC_BG];
+
     // Story description
     self.guiStoryDescriptionLabel.textColor = [HMStyle.sh colorNamed:C_SD_DESCRIPTION_TEXT];
     self.guiStoryDescriptionBG.backgroundColor = [HMStyle.sh colorNamed:C_SD_DESCRIPTION_BG];
@@ -193,11 +202,14 @@
     // More remakes label
     self.guiMoreRemakesHeadlineContainer.backgroundColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_BG];
     self.guiMoreRemakesHeadlineLabel.textColor = [HMStyle.sh colorNamed:C_SD_MORE_REMAKES_TITLE_TEXT];
-   
+
     // Make your own button
     self.guiRemakeButton.backgroundColor = [HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_BG];
     [self.guiRemakeButton setTitleColor:[HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
     [self.guiRemakeActivity setColor:[HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT]];
+    
+    // Alternative make your own button
+    [self.guiRemakeButton2 setTitleColor:[HMStyle.sh colorNamed:C_SD_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
     
     // No remakes
     self.noRemakesLabel.textColor = [HMStyle.sh colorNamed:C_SD_NO_REMAKES_LABEL];
@@ -331,7 +343,7 @@
     self.fetchingMoreRemakes = NO;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.activityView stopAnimating];        
+        [self.activityView stopAnimating];
     });
     
     //
@@ -511,7 +523,7 @@
 {
     NSInteger index = indexPath.item;
     if (index == self.fetchedResultsController.fetchedObjects.count) {
-        return CGSizeMake(320, 45);
+        return CGSizeMake(320, 30);
     } else {
         return CGSizeMake(156, 90);
     }
@@ -844,7 +856,9 @@
 
     // More remakes headline position
     CGFloat moreRamakesHeadlinePosition = MAX(-currentOffset, -self.offsetPoint);
-    self.guiMoreRemakesHeadlineContainer.transform = CGAffineTransformMakeTranslation(0, moreRamakesHeadlinePosition);
+    CGAffineTransform t = CGAffineTransformMakeTranslation(0, moreRamakesHeadlinePosition);
+    self.guiMoreRemakesHeadlineContainer.transform = t;
+    self.guiPlayerBottomOverlayImage.transform = t;
     self.guiMoreRemakesHeadlineContainer.userInteractionEnabled = currentOffset >= self.offsetPoint;
 }
 

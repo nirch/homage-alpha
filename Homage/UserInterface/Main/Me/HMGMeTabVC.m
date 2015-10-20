@@ -34,6 +34,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <PSTAlertController/PSTAlertController.h>
 #import "HMSharingDelegate.h"
+#import "HMMELabelSpecific.h"
 
 #define SCROLL_VIEW_CELL 1
 #define SCROLL_VIEW_CV 70
@@ -49,6 +50,8 @@
 >
 
 @property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiRemakeMoreStoriesButton2;
+
 @property (weak, nonatomic) IBOutlet UICollectionView *userRemakesCV;
 
 @property (nonatomic) UIDocumentInteractionController *documentInteractionController;
@@ -77,6 +80,9 @@
 @property (nonatomic) CGFloat bottomButtonAppearanceThresholdThatIsUsedToDetermineWhenToShowOrHideIt;
 
 @property (nonatomic) BOOL userAllowedToSaveRemakeVideosToDevice;
+
+// Extra effects specific to a label
+@property (nonatomic) HMMELabelSpecific *labelSpecific;
 
 @end
 
@@ -125,6 +131,12 @@
     self.userRemakesCV.contentInset = e;
     [self handleVisibilityOfMoreStoriesButton];
     [self updateRenderingBarState];
+    
+    if (self.labelSpecific == nil) {
+        self.labelSpecific = [HMMELabelSpecific new];
+        self.labelSpecific.superView = self.view;
+        [self.labelSpecific prepare];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -188,6 +200,7 @@
     self.refreshControl.tintColor = [HMStyle.sh colorNamed:C_REFRESH_CONTROL_TINT];
     self.guiRemakeMoreStoriesButton.backgroundColor = [HMStyle.sh colorNamed:C_ME_REMAKE_BUTTON_BG];
     [self.guiRemakeMoreStoriesButton setTitleColor:[HMStyle.sh colorNamed:C_ME_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
+    [self.guiRemakeMoreStoriesButton2 setTitleColor:[HMStyle.sh colorNamed:C_ME_REMAKE_BUTTON_TEXT] forState:UIControlStateNormal];
     [self.noRemakesLabel setTextColor:[HMStyle.sh colorNamed:C_ME_CREATE_FIRST_VIDEO_TEXT]];
     
 }
@@ -576,6 +589,13 @@
     // ************
     [cell.shareActivity setColor:[HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT]];
     [cell.guiActivity setColor:[HMStyle.sh colorNamed:C_ACTIVITY_CONTROL_TINT]];
+    
+    cell.storyNameLabel.textColor = [HMStyle.sh colorNamed:C_ME_TEXT];
+    cell.guiRetakeLabel.textColor = [HMStyle.sh colorNamed:C_ME_TEXT];
+    cell.guiDeleteLabel.textColor = [HMStyle.sh colorNamed:C_ME_TEXT];
+    
+    cell.guiSepTop.backgroundColor = [HMStyle.sh colorNamed:C_ME_CELL_TOP_BORDER];
+    cell.guiSepBottom.backgroundColor = [HMStyle.sh colorNamed:C_ME_CELL_BOTTOM_BORDER];
 }
 
 -(void)updateOptionToDownloadVideoInCell:(HMGUserRemakeCVCell *)cell
@@ -687,9 +707,11 @@
     if ([self.userRemakesCV numberOfItemsInSection:0] == 0) {
         [self.noRemakesLabel setHidden:NO];
         [self.guiRemakeMoreStoriesButton setTitle:LS(@"REMAKE_A_STORY") forState:UIControlStateNormal];
+        [self.guiRemakeMoreStoriesButton2 setTitle:LS(@"REMAKE_A_STORY") forState:UIControlStateNormal];
     } else {
         [self.noRemakesLabel setHidden:YES];
         [self.guiRemakeMoreStoriesButton setTitle:LS(@"REMAKE_MORE_STORIES") forState:UIControlStateNormal];
+        [self.guiRemakeMoreStoriesButton2 setTitle:LS(@"REMAKE_A_STORY") forState:UIControlStateNormal];
     }
 }
 

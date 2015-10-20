@@ -46,6 +46,7 @@
     
     // Read AB testing configuration.
     NSString * plistPath = [[NSBundle mainBundle] pathForResource:@"ABTestsCFG" ofType:@"plist"];
+    if (plistPath == nil) return;
     self.cfg = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
     self.amazonInsightsPrivateKey = self.cfg[K_CFG_PRIVATE_KEY];
     self.amazonInsightsPublicKey = self.cfg[K_CFG_PUBLIC_KEY];
@@ -61,7 +62,7 @@
     id<AIInsightsOptions>options = [AIAmazonInsights optionsWithAllowEventCollection:YES withAllowWANDelivery:YES];
     
     // Initialize a new instance of AmazonInsights specifically for your application.
-    self.insights = [AIAmazonInsights insightsWithCredentials: credentials withOptions:options];
+    self.insights = [AIAmazonInsights insightsWithCredentials:credentials withOptions:options];
     [AIAmazonInsights insightsWithCredentials:credentials
                                   withOptions:options];
     

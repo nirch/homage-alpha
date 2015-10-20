@@ -41,10 +41,12 @@
 #import "HMServer+Stories.h"
 #import "HMServer+analytics.h"
 #import <SDWebImage/SDWebImageDownloader.h>
+#import "HMStyle.h"
 
 @import MediaPlayer;
 
-#define HIDDEN_SIDE_BAR_TRANSFORM CGAffineTransformMakeScale(0.95, 0.95)
+#define HIDDEN_SIDE_BAR_TRANSFORM CGAffineTransformMakeScale(0.95,0.95)
+
 
 
 @interface HMStartViewController () <
@@ -200,6 +202,11 @@
     self.guiAppHideView.alpha = 0;
     self.guiNavCover.alpha = 0;
 
+    // If no loop to play, hide the button.
+    NSString *songLoop = HMServer.sh.configurationInfo[@"song_loop"];
+    if (songLoop == nil) {
+        self.guiPlayMuteSongLoopButton.hidden = YES;
+    }
     
     UIPanGestureRecognizer *panRecognizer = self.guiAppMainPanGestureRecognizer;
     [panRecognizer setMinimumNumberOfTouches:1];
@@ -224,6 +231,9 @@
     self.guiNavTitleLabel.textColor = [HMStyle.sh colorNamed:C_NAV_BAR_TITLE];
     self.guiStatusBarBG.backgroundColor = [HMStyle.sh colorNamed:C_STATUS_BAR_BG];
     self.guiAppHideView.backgroundColor = [HMStyle.sh colorNamed:C_HIDE_APP_VIEW_BG];
+    self.guiNavCover.backgroundColor = [HMStyle.sh colorNamed:C_NAV_BAR_COVER];
+
+    self.view.backgroundColor = [HMStyle.sh colorNamed:C_ROOT_VC_BG];
 }
 
 #pragma mark - Observers
@@ -1328,8 +1338,9 @@
     return shouldHide;
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
+-(UIStatusBarStyle)preferredStatusBarStyle {
+    BOOL lightText = [HMStyle.sh boolValueForKey:C_STATUS_BAR_LIGHT_TEXT defaultValue:YES];
+    return lightText?UIStatusBarStyleLightContent:UIStatusBarStyleDefault;
 }
 
 #pragma mark - IB Actions
