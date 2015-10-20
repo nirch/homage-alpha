@@ -129,7 +129,7 @@
 		<key>misc</key>
 		<dict>
 			<key>colorVideoTitles</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorActivityControlTint</key>
 			<string>@impact</string>
 			<key>colorRefreshControlTint</key>
@@ -142,46 +142,46 @@
 			<key>colorRecorderCloseButtonX</key>
 			<string>@impact</string>
 			<key>colorRecorderTutorialText</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorRecorderTutorialButton</key>
 			<string>@impact</string>
 			<key>colorRecorderRecordButton</key>
-			<string>@record</string>
+			<string>@impact</string>
 			<key>colorRecorderRecordButtonOutline</key>
-			<string>@darker</string>
+			<string>@impactText</string>
 			<key>colorRecorderRecordButtonCountDownBG1</key>
-			<string>@record</string>
+			<string>@impactBackground</string>
 			<key>colorRecorderRecordButtonCountDownBG2</key>
-			<string>@veryDark</string>
+			<string>@impactText</string>
 			<key>colorRecorderImpactButtonBG</key>
-			<string>@darker</string>
+			<string>@impactBackground</string>
 			<key>colorRecorderImpactButtonText</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorRecorderMessageTitle</key>
-			<string>@bright</string>
+			<string>@impactText</string>
 			<key>colorRecorderMessageText</key>
-			<string>@normalText</string>
+			<string>@impactText</string>
 			<key>colorRecorderMessageActionButton</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorRecorderRecordingProgressBar</key>
 			<string>@impactSeeThrough</string>
 			<key>colorRecorderVideoTitles</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 			<key>colorRecorderDrawerBG</key>
 			<string>#ff000055</string>
 			<key>colorRecorderDrawerSepLine</key>
 			<string>@darkOverlay</string>
 			<key>colorRecorderSceneInfoTitle</key>
-			<string>@bright</string>
+			<string>@impactText</string>
 			<key>colorRecorderSceneInfoData</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 		</dict>
 		<key>rendering bar</key>
 		<dict>
 			<key>colorRenderingBarBG</key>
-			<string>@bright</string>
+			<string>@impactSeeThrough</string>
 			<key>colorRenderingBarText</key>
-			<string>@impact</string>
+			<string>@impactText</string>
 		</dict>
 		<key>splash</key>
 		<dict>
@@ -354,6 +354,8 @@
 		<string>#FFFFFFAA</string>
 		<key>@clear</key>
 		<string>#00000000</string>
+		<key>@darkOverlay</key>
+		<string>#00000022</string>
 		<key>--------------------------</key>
 		<string></string>
 		<key>@theVoid</key>
@@ -374,8 +376,6 @@
 		<string>#1E0E0D</string>
 		<key>@darkest</key>
 		<string>#000000</string>
-		<key>@darkOverlay</key>
-		<string>#00000022</string>
 		<key>@error</key>
 		<string>#FF2523</string>
 		<key>@faded1</key>

@@ -42,6 +42,10 @@
     CGPoint position = CGPointMake([self.bPositions[i][0] doubleValue], [self.bPositions[i][1] doubleValue]);
     CGRect frame = CGRectMake(position.x, position.y, size.width, size.height);
     
+    if (!IS_IPHONE_5) {
+        position = CGPointMake(position.x, position.y - 176);
+    }
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
     imageView.image = image;
     [self.superView addSubview:imageView];
