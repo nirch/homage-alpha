@@ -82,8 +82,14 @@
 #define EXTRACT_EXCEPTION 9
 #define EXTRACT_TIMER_INTERVAL 13 //25 is 1 sec interval, 13~0.5 sec
 
-#define OUTPUT_WIDTH 640
-#define OUTPUT_HEIGHT 360
+#define OUTPUT_DEFAULT_WIDTH 640
+#define OUTPUT_DEFAULT_HEIGHT 360
+
+#define OUTPUT_720_WIDTH 1280
+#define OUTPUT_720_HEIGHT 720
+
+#define OUTPUT_1080_WIDTH 1920
+#define OUTPUT_1080_HEIGHT 1080
 
 -(id)init
 {
@@ -129,7 +135,7 @@
         if (_contourFile)
         {
             NSLog(@"contour file is: %@" , _contourFile);
-            int result = m_foregroundExtraction->ReadMask((char*)_contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+            int result = m_foregroundExtraction->ReadMask((char*)_contourFile.UTF8String, OUTPUT_DEFAULT_WIDTH, OUTPUT_DEFAULT_HEIGHT);
             if (result == -1)
             {
                 NSLog(@"unable to read contour file! debug this");
@@ -165,7 +171,7 @@
 {
     _contourFile = contourFile;
     NSLog(@"contour file is: %@" , _contourFile);
-    int result = m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_WIDTH, OUTPUT_HEIGHT);
+    int result = m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, OUTPUT_DEFAULT_WIDTH, OUTPUT_DEFAULT_HEIGHT);
     if (result == -1)
     {
         NSLog(@"unable to read contour file! debug this");
@@ -234,23 +240,23 @@
     BOOL shouldFlip = self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft;
     if (self.frontCamera) shouldFlip = !shouldFlip;
     return shouldFlip;
-    
-    /*
-    if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return NO;
-    
-     if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeRight) return YES;
-    if (self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
-        return NO;
-    
-     if (!self.frontCamera && self.interfaceOrientaion == UIInterfaceOrientationLandscapeLeft)
-        return YES;
-    return NO;
-    */
+}
+
+
+-(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL
+                   recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
+                   shouldRecordAudio:(BOOL)shouldRecordAudio
+{
+    [self startRecordingToOutputFileURL:outputFileURL
+                      recordingDelegate:delegate
+                      shouldRecordAudio:shouldRecordAudio
+                       outputResolution:HMOutputResolution360];
 }
 
 -(void)startRecordingToOutputFileURL:(NSURL *)outputFileURL
                    recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate>)delegate
                    shouldRecordAudio:(BOOL)shouldRecordAudio
+                    outputResolution:(HMOutputResolution)outputResolution
 {
     if (_isCurrentlyRecording) return;
     self.shouldWriteAudio = shouldRecordAudio;
@@ -281,8 +287,8 @@
         // Specifing settings for the new video (codec, width, hieght)
         NSDictionary *videoSettings = @{
                                         AVVideoCodecKey:AVVideoCodecH264,
-                                        AVVideoWidthKey:@OUTPUT_WIDTH,
-                                        AVVideoHeightKey:@OUTPUT_HEIGHT,
+                                        AVVideoWidthKey:@([self outputWidthForResolution:outputResolution]),
+                                        AVVideoHeightKey:@([self outputHeightForResolution:outputResolution]),
                                         AVVideoCompressionPropertiesKey:codecSettings,
                                         AVVideoScalingModeKey:scalingMode
                                         };
@@ -308,6 +314,31 @@
         [self.assetWriter addInput:self.writerVideoInput];
     });
 }
+
+-(NSInteger)outputWidthForResolution:(HMOutputResolution)outputResolution
+{
+    switch (outputResolution) {
+        case HMOutputResolution360:
+            return OUTPUT_DEFAULT_WIDTH;
+        case HMOutputResolution720:
+            return OUTPUT_720_WIDTH;
+        case HMOutputResolution1080:
+            return OUTPUT_1080_WIDTH;
+    }
+}
+
+-(NSInteger)outputHeightForResolution:(HMOutputResolution)outputResolution
+{
+    switch (outputResolution) {
+        case HMOutputResolution360:
+            return OUTPUT_DEFAULT_HEIGHT;
+        case HMOutputResolution720:
+            return OUTPUT_720_HEIGHT;
+        case HMOutputResolution1080:
+            return OUTPUT_1080_HEIGHT;
+    }
+}
+
 
 -(void)stopRecording
 {
@@ -444,8 +475,8 @@
     if (self.session.sessionPreset == AVCaptureSessionPreset640x480) {
         // 640x480 - needs to be cropped to 16/9 360p image.
         int x = 0;
-        int y = (480 - OUTPUT_HEIGHT) / 2;
-        m_original_image = CVtool::CVPixelBufferRef_to_image_crop(originalPixelBuffer, x, y, OUTPUT_WIDTH, OUTPUT_HEIGHT, m_original_image);
+        int y = (480 - OUTPUT_DEFAULT_HEIGHT) / 2;
+        m_original_image = CVtool::CVPixelBufferRef_to_image_crop(originalPixelBuffer, x, y, OUTPUT_DEFAULT_WIDTH, OUTPUT_DEFAULT_HEIGHT, m_original_image);
     } else {
         // assuming this is 720X1280
         m_original_image = CVtool::CVPixelBufferRef_to_image_sample2(originalPixelBuffer, m_original_image);
@@ -647,90 +678,5 @@
 {
     self.backgroundDetectionEnabled = NO;
 }
-
-//#pragma mark - Tools
-//- (void)saveImageType3:(image_type *)image3 withName:(NSString *)name
-//{
-//    image_type* image4 = image4_from(image3, NULL);
-//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
-//    [self saveImage:imageToSave withName:name];
-//    image_destroy(image4, 1);
-//}
-//
-//- (void)savePixelBuffer:(CVPixelBufferRef)pixelBuffer withName:(NSString *)name
-//{
-//    UIImage *image = [self imageFromPixelBuffer:pixelBuffer];
-//    //UIImage *image = [self UIImageFromPixelBuffer:pixelBuffer];
-//    [self saveImage:image withName:name];
-//}
-//
-//- (void)saveSampleBuffer:(CMSampleBufferRef)samlpleBuffer withName:(NSString *)name
-//{
-//    UIImage *bgImage = [self imageFromSampleBuffer:samlpleBuffer];
-//    [self saveImage:bgImage withName:name];
-//}
-//
-//- (void)saveImage:(UIImage *) image withName:(NSString *)name
-//{
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-//    
-//    static int counter = 0;
-//    ++counter;
-//    
-//    NSString *path = [NSString stringWithFormat:@"%@-%d.jpg" , name, counter];
-//    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-//    
-//    [UIImageJPEGRepresentation(image, 1.0) writeToFile:dataPath atomically:YES];
-//}
-//
-//// Create a UIImage from sample buffer data
-//- (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
-//{
-//    // Get a CMSampleBuffer's Core Video image buffer for the media data
-//    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-//    
-//    return [self imageFromPixelBuffer:imageBuffer];
-//}
-//
-//// Create a UIImage from sample buffer data
-//- (UIImage *) imageFromPixelBuffer:(CVImageBufferRef) imageBuffer
-//{
-//    // Lock the base address of the pixel buffer
-//    CVPixelBufferLockBaseAddress(imageBuffer, 0);
-//    
-//    // Get the number of bytes per row for the pixel buffer
-//    void *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
-//    
-//    // Get the number of bytes per row for the pixel buffer
-//    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-//    // Get the pixel buffer width and height
-//    size_t width = CVPixelBufferGetWidth(imageBuffer);
-//    size_t height = CVPixelBufferGetHeight(imageBuffer);
-//    
-//    // Create a device-dependent RGB color space
-//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-//    
-//    // Create a bitmap graphics context with the sample buffer data
-//    CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8,
-//                                                 bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-//    // Create a Quartz image from the pixel data in the bitmap graphics context
-//    CGImageRef quartzImage = CGBitmapContextCreateImage(context);
-//    // Unlock the pixel buffer
-//    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-//    
-//    // Free up the context and color space
-//    CGContextRelease(context);
-//    CGColorSpaceRelease(colorSpace);
-//    
-//    // Create an image object from the Quartz image
-//    UIImage *image = [UIImage imageWithCGImage:quartzImage];
-//    
-//    // Release the Quartz image
-//    CGImageRelease(quartzImage);
-//    
-//    return (image);
-//}
-//
 
 @end

@@ -17,6 +17,7 @@
                                   takeID:(NSString *)takeID
                             attemptCount:(NSInteger)attemptCount
                                 isSelfie:(BOOL)isSelfie
+                              resolution:(NSInteger)resolution
 
 {
     // A simple POST request to the server
@@ -27,10 +28,11 @@
                                  @"remake_id":remakeID,
                                  @"scene_id":sceneID.stringValue ,
                                  @"take_id" : takeID,
-                                 @"is_selfie":isSelfie ? @1 : @0
+                                 @"is_selfie":isSelfie ? @1 : @0,
+                                 @"resolution":@(resolution)
                                  }
               notificationName:HM_NOTIFICATION_SERVER_FOOTAGE_UPLOAD_SUCCESS
-                          info:@{@"remakeID":remakeID,@"sceneID":sceneID,@"takeID":takeID,@"attemptCount":@(attemptCount)}
+                          info:@{@"remakeID":remakeID,@"sceneID":sceneID,@"takeID":takeID,@"attemptCount":@(attemptCount), @"resolution":@(resolution)}
                         parser:[HMRemakeParser new]];
 }
 

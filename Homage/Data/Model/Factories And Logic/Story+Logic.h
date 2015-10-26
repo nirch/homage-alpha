@@ -89,4 +89,7 @@ typedef NS_ENUM(NSInteger, HMStoryLevel) {
  */
 -(BOOL)usesAudioFilesInRecorder;
 
+
+-(NSTimeInterval)expectedRenderingTime;
+
 @end

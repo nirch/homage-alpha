@@ -36,16 +36,18 @@
                                          lastVersionActive:lastVersionActive];
     }
 
-    story.remakesNumber =       [info numberForKey:@"remakes_num"];
-    story.orderID =             [info numberForKey:@"order_id"];
-    story.name =                [info stringForKey:@"name"];
-    story.descriptionText =     [info stringForKey:@"description"];
-    story.level =               [info numberForKey:@"level"];
-    story.videoURL =            [info stringForKey:@"video"];
-    story.thumbnailURL =        [info stringForKey:@"thumbnail"];
-    story.shareMessage =        [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
-    story.isPremium =           [info boolNumberForKey:@"is_premium"];
-    story.sharingVideoAllowed = [info boolNumberForKey:@"sharing_video_allowed"];
+    story.remakesNumber =           [info numberForKey:@"remakes_num"];
+    story.orderID =                 [info numberForKey:@"order_id"];
+    story.name =                    [info stringForKey:@"name"];
+    story.descriptionText =         [info stringForKey:@"description"];
+    story.level =                   [info numberForKey:@"level"];
+    story.videoURL =                [info stringForKey:@"video"];
+    story.thumbnailURL =            [info stringForKey:@"thumbnail"];
+    story.shareMessage =            [info stringForKey:@"share_message"] ? [info stringForKey:@"share_message"] : nil;
+    story.isPremium =               [info boolNumberForKey:@"is_premium"];
+    story.sharingVideoAllowed =     [info boolNumberForKey:@"sharing_video_allowed"];
+    story.estimatedProcessTime =    [info decimalNumberForKey:@"estimated_process_time"];
+    story.estimatedRenderTime =     [info decimalNumberForKey:@"estimated_render_time"];
     
     // Parse the scenes of this story.
     BOOL allScenesAreSelfie = YES;
@@ -89,6 +91,7 @@
     scene.script =                  [info stringForKey:@"script"];
     scene.duration =                [info decimalNumberForKey:@"duration"];
     scene.videoURL =                [info stringForKey:@"video"];
+    scene.uploadedResolution =      [info decimalNumberForKey:@"uploaded_resolution"];
     
     // Audio files (optional)
     scene.sceneAudioURL =           [info stringForKey:@"scene_audio"];

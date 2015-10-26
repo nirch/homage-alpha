@@ -2,7 +2,7 @@
 //  Story.m
 //  Homage
 //
-//  Created by Aviv Wolf on 1/25/15.
+//  Created by Aviv Wolf on 10/21/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -23,12 +23,14 @@
 @dynamic orderID;
 @dynamic remakesNumber;
 @dynamic shareMessage;
+@dynamic sharingVideoAllowed;
 @dynamic sID;
 @dynamic thumbnailURL;
 @dynamic version;
 @dynamic videoURL;
 @dynamic wasPurchased;
-@dynamic sharingVideoAllowed;
+@dynamic estimatedProcessTime;
+@dynamic estimatedRenderTime;
 @dynamic remakes;
 @dynamic scenes;
 @dynamic texts;

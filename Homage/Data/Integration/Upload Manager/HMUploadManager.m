@@ -207,13 +207,17 @@
 {
     // POST FOOTAGE (on successful put, the upload will begin.
     // If failed to update the server about the successful upload, will attempt again after a delay.
+    Scene *scene = [footage.remake.story findSceneWithID:footage.sceneID];
+    NSInteger resolution = scene.uploadedResolution?scene.uploadedResolution.integerValue:360;    
     if ([HMServer.sh shouldUploaderReportUploads]) {
         HMGLogDebug(@"Will inform server about upload success: %@", footage.takeID);
         [HMServer.sh updateOnSuccessFootageForRemakeID:footage.remake.sID
                                                    sceneID:footage.sceneID
                                                     takeID:[footage takeID]
                                               attemptCount:attemptCount
-                                                  isSelfie:footage.rawIsSelfie.boolValue];
+                                                  isSelfie:footage.rawIsSelfie.boolValue
+                                            resolution:resolution
+         ];
     }
 }
 

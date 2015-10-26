@@ -2,8 +2,8 @@
 //  Scene.m
 //  Homage
 //
-//  Created by Aviv Wolf on 12/31/14.
-//  Copyright (c) 2014 Homage. All rights reserved.
+//  Created by Aviv Wolf on 10/21/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
 //
 
 #import "Scene.h"
@@ -20,13 +20,14 @@
 @dynamic focusPointX;
 @dynamic focusPointY;
 @dynamic isSelfie;
+@dynamic postSceneAudio;
 @dynamic sceneAudioURL;
 @dynamic script;
 @dynamic sID;
 @dynamic silhouetteURL;
 @dynamic thumbnailURL;
 @dynamic videoURL;
-@dynamic postSceneAudio;
+@dynamic uploadedResolution;
 @dynamic story;
 
 @end

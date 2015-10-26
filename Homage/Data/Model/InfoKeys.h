@@ -16,3 +16,4 @@
 #define HM_INFO_PROGRESS                            @"progress"
 #define HM_INFO_FOCUS_POINT                         @"focusPoint"           // passed around as @[NSNumber,NSNumber]
 #define HM_INFO_SHOULD_RECORD_AUDIO                 @"shouldRecordAudio"    // boolean value indicating if needs to record video or not.
+#define HM_INFO_OUTPUT_RESOLUTION                   @"outputResolution"     // A NSNumber of output video height. Supported values: 360, 720, 1080

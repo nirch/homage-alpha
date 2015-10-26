@@ -111,5 +111,11 @@
     return NO;
 }
 
+-(NSTimeInterval)expectedRenderingTime
+{
+    if (self.estimatedRenderTime) return self.estimatedRenderTime.doubleValue;
+    return 20.0f * self.scenes.count;
+}
+
 
 @end

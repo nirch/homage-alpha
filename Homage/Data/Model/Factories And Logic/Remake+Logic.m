@@ -62,6 +62,26 @@
     return states;
 }
 
+-(NSInteger)footagesUploadedCount
+{
+    NSInteger count = 0;
+    for (Footage *footage in self.footages) {
+        NSInteger status = footage.status.integerValue;
+        if (status != 0 && status != 4) count ++;
+    }
+    return count;
+}
+
+-(NSInteger)footagesReadyCount
+{
+    NSInteger count = 0;
+    for (Footage *footage in self.footages) {
+        NSInteger status = footage.status.integerValue;
+        if (status==3) count ++;
+    }
+    return count;
+}
+
 -(NSNumber *)nextReadyForFirstRetakeSceneID
 {
     NSArray *readyStates = self.footagesReadyStates;

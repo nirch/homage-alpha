@@ -117,6 +117,10 @@
 		085E2AAB1A6AD3AA00058272 /* HMDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */; };
 		085E2AAD1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
 		085E2AAE1A6AD3CD00058272 /* HMDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */; };
+		0862C06E1BD7834F00DCE2FB /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0862C06D1BD7834F00DCE2FB /* Scene.m */; };
+		0862C06F1BD7834F00DCE2FB /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0862C06D1BD7834F00DCE2FB /* Scene.m */; };
+		0862C0701BD7834F00DCE2FB /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0862C06D1BD7834F00DCE2FB /* Scene.m */; };
+		0862C0711BD7834F00DCE2FB /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0862C06D1BD7834F00DCE2FB /* Scene.m */; };
 		0863D0A81889CD6F00B551FC /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */; };
 		0864E0521A4F3B6E00F7AEB7 /* HMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864E0511A4F3B6E00F7AEB7 /* HMStyle.m */; };
 		0864E0581A4F42E900F7AEB7 /* DINOT-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0864E0571A4F42E900F7AEB7 /* DINOT-CondBold.otf */; };
@@ -391,7 +395,6 @@
 		08715EFE1BD2B4BD00CD50A0 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
 		08715EFF1BD2B4BD00CD50A0 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
 		08715F001BD2B4BD00CD50A0 /* HMStoriesTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA81391A213EB400742251 /* HMStoriesTutorial.m */; };
-		08715F011BD2B4BD00CD50A0 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
 		08715F021BD2B4BD00CD50A0 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */; };
 		08715F031BD2B4BD00CD50A0 /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA742B1A5EA9AD007EFE69 /* HMServer+Users.m */; };
 		08715F041BD2B4BD00CD50A0 /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120111A068F11002F10B2 /* HMRefreshControl.m */; };
@@ -402,7 +405,6 @@
 		08715F091BD2B4BD00CD50A0 /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A31A70369900B4164D /* HMStoriesParser.m */; };
 		08715F0A1BD2B4BD00CD50A0 /* HMRemakeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 081E397F19FD6CDC00990F50 /* HMRemakeScreenViewController.m */; };
 		08715F0B1BD2B4BD00CD50A0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A380E1974AE650016C59C /* User.m */; };
-		08715F0C1BD2B4BD00CD50A0 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
 		08715F0D1BD2B4BD00CD50A0 /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
 		08715F0E1BD2B4BD00CD50A0 /* HMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120161A08C045002F10B2 /* HMNavigationController.m */; };
 		08715F0F1BD2B4BD00CD50A0 /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EB18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m */; };
@@ -570,7 +572,6 @@
 		087499241B9444B000BD331C /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341D618FFFD40002E8CB7 /* IASKAppSettingsViewController.m */; };
 		087499251B9444B000BD331C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0831C7E31885ECD30024406B /* UIImage+ImageEffects.m */; };
 		087499261B9444B000BD331C /* HMStoriesTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EA81391A213EB400742251 /* HMStoriesTutorial.m */; };
-		087499271B9444B000BD331C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
 		087499281B9444B000BD331C /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341DA18FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m */; };
 		087499291B9444B000BD331C /* HMServer+Users.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA742B1A5EA9AD007EFE69 /* HMServer+Users.m */; };
 		0874992A1B9444B000BD331C /* HMRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120111A068F11002F10B2 /* HMRefreshControl.m */; };
@@ -581,7 +582,6 @@
 		0874992F1B9444B000BD331C /* HMStoriesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E74A31A70369900B4164D /* HMStoriesParser.m */; };
 		087499301B9444B000BD331C /* HMRemakeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 081E397F19FD6CDC00990F50 /* HMRemakeScreenViewController.m */; };
 		087499311B9444B000BD331C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 268A380E1974AE650016C59C /* User.m */; };
-		087499321B9444B000BD331C /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
 		087499331B9444B000BD331C /* HMExtractController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08081FB418D083DA00999068 /* HMExtractController.mm */; };
 		087499341B9444B000BD331C /* HMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080120161A08C045002F10B2 /* HMNavigationController.m */; };
 		087499351B9444B000BD331C /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268341EB18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m */; };
@@ -645,8 +645,6 @@
 		0874999F1B94DA0A00BD331C /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0874999E1B94DA0A00BD331C /* SF-UI-Text-Regular.otf */; };
 		087500601A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */; };
 		0875E5E319CF1DAE001E1F2D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0875E5E219CF1DAE001E1F2D /* libicucore.dylib */; };
-		08793D2A1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
-		08793D2B1A75474100B2F91C /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08793D291A75474100B2F91C /* Story.m */; };
 		087E464E1BD654A900C732E2 /* HMMELabelSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = 087E464D1BD654A900C732E2 /* HMMELabelSpecific.m */; };
 		08832E9F1A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
 		08832EA01A6E8AC200E7772A /* Remake.m in Sources */ = {isa = PBXBuildFile; fileRef = 08832E9E1A6E8AC200E7772A /* Remake.m */; };
@@ -748,8 +746,10 @@
 		08EE1DF61BD63DDD000292C5 /* songLoop.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 08EE1DF01BD63DDD000292C5 /* songLoop.m4a */; };
 		08EF170B1898D7BD0093000B /* HMRecorderMessageCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */; };
 		08EF1716189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */; };
-		08F9EBB51A5457A6000CFCAD /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
-		08F9EBB61A5457A6000CFCAD /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F9EBB41A5457A6000CFCAD /* Scene.m */; };
+		08F334FB1BD7A72B00ADF6EE /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F334FA1BD7A72B00ADF6EE /* Story.m */; };
+		08F334FC1BD7A72B00ADF6EE /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F334FA1BD7A72B00ADF6EE /* Story.m */; };
+		08F334FD1BD7A72B00ADF6EE /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F334FA1BD7A72B00ADF6EE /* Story.m */; };
+		08F334FE1BD7A72B00ADF6EE /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F334FA1BD7A72B00ADF6EE /* Story.m */; };
 		08FA971F1A45B8C6009B998C /* InAppStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FA971E1A45B8C6009B998C /* InAppStore.storyboard */; };
 		08FA97231A45D44B009B998C /* HMInAppStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */; };
 		08FA972B1A460367009B998C /* HMStoreProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA972A1A460367009B998C /* HMStoreProductsViewController.m */; };
@@ -966,6 +966,9 @@
 		085E2AA91A6AD3AA00058272 /* HMDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMDownloadViewController.m; sourceTree = "<group>"; };
 		085E2AAC1A6AD3CD00058272 /* HMDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMDownloadViewController.xib; sourceTree = "<group>"; };
 		085E2AAF1A6AF7AB00058272 /* HMDownloadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMDownloadDelegate.h; sourceTree = "<group>"; };
+		0862C06B1BD7801000DCE2FB /* 1_10_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = 1_10_1.xcdatamodel; sourceTree = "<group>"; };
+		0862C06C1BD7834F00DCE2FB /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		0862C06D1BD7834F00DCE2FB /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		0863D0A61889CD6F00B551FC /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
 		0863D0A71889CD6F00B551FC /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		0864E0501A4F3B6E00F7AEB7 /* HMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMStyle.h; sourceTree = "<group>"; };
@@ -1003,8 +1006,6 @@
 		0874999E1B94DA0A00BD331C /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
 		0875005F1A2F2F8F00F25FD2 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		0875E5E219CF1DAE001E1F2D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		08793D281A75474100B2F91C /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
-		08793D291A75474100B2F91C /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		087E464C1BD654A900C732E2 /* HMMELabelSpecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMMELabelSpecific.h; sourceTree = "<group>"; };
 		087E464D1BD654A900C732E2 /* HMMELabelSpecific.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMMELabelSpecific.m; sourceTree = "<group>"; };
 		08832E9D1A6E8AC200E7772A /* Remake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remake.h; sourceTree = "<group>"; };
@@ -1153,9 +1154,9 @@
 		08EF170A1898D7BD0093000B /* HMRecorderMessageCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageCommonView.xib; sourceTree = "<group>"; };
 		08EF1714189A717D0093000B /* InfoKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoKeys.h; sourceTree = "<group>"; };
 		08EF1715189A7D610093000B /* HMRecorderMessageRetakeAreYouSureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HMRecorderMessageRetakeAreYouSureView.xib; sourceTree = "<group>"; };
+		08F334F91BD7A72B00ADF6EE /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
+		08F334FA1BD7A72B00ADF6EE /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		08F9EBAE1A545680000CFCAD /* Model181.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model181.xcdatamodel; sourceTree = "<group>"; };
-		08F9EBB31A5457A6000CFCAD /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
-		08F9EBB41A5457A6000CFCAD /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
 		08FA971E1A45B8C6009B998C /* InAppStore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InAppStore.storyboard; sourceTree = "<group>"; };
 		08FA97211A45D44B009B998C /* HMInAppStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMInAppStoreViewController.h; sourceTree = "<group>"; };
 		08FA97221A45D44B009B998C /* HMInAppStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMInAppStoreViewController.m; sourceTree = "<group>"; };
@@ -1952,14 +1953,14 @@
 		086D94971886FF5E0086C565 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				08793D281A75474100B2F91C /* Story.h */,
-				08793D291A75474100B2F91C /* Story.m */,
+				08F334F91BD7A72B00ADF6EE /* Story.h */,
+				08F334FA1BD7A72B00ADF6EE /* Story.m */,
+				0862C06C1BD7834F00DCE2FB /* Scene.h */,
+				0862C06D1BD7834F00DCE2FB /* Scene.m */,
 				08832E9D1A6E8AC200E7772A /* Remake.h */,
 				08832E9E1A6E8AC200E7772A /* Remake.m */,
 				082D3E0B1A668D930020D12E /* Footage.h */,
 				082D3E0C1A668D930020D12E /* Footage.m */,
-				08F9EBB31A5457A6000CFCAD /* Scene.h */,
-				08F9EBB41A5457A6000CFCAD /* Scene.m */,
 				268A380D1974AE650016C59C /* User.h */,
 				268A380E1974AE650016C59C /* User.m */,
 				263C448B192F4E5E00AD82EC /* Contour.h */,
@@ -3191,6 +3192,7 @@
 				0833346C1A80D659008AC771 /* HMParentalControlViewController.m in Sources */,
 				08DA744A1A5EA9AD007EFE69 /* HMServer+analytics.m in Sources */,
 				267A640419532030003DFFEA /* JBWhatsAppActivity.m in Sources */,
+				0862C06E1BD7834F00DCE2FB /* Scene.m in Sources */,
 				08DA74581A5EA9AD007EFE69 /* HMServer+Texts.m in Sources */,
 				0864E0521A4F3B6E00F7AEB7 /* HMStyle.m in Sources */,
 				08B9588C1891678600BCCF8C /* Scene+Factory.m in Sources */,
@@ -3291,8 +3293,8 @@
 				08B958AA1891685300BCCF8C /* Story+Logic.m in Sources */,
 				268341F418FFFD40002E8CB7 /* IASKAppSettingsViewController.m in Sources */,
 				0831C7E41885ECD30024406B /* UIImage+ImageEffects.m in Sources */,
+				08F334FB1BD7A72B00ADF6EE /* Story.m in Sources */,
 				08EA813A1A213EB400742251 /* HMStoriesTutorial.m in Sources */,
-				08793D2A1A75474100B2F91C /* Story.m in Sources */,
 				268341F618FFFD40002E8CB7 /* IASKSpecifierValuesViewController.m in Sources */,
 				08DA745A1A5EA9AD007EFE69 /* HMServer+Users.m in Sources */,
 				080120121A068F11002F10B2 /* HMRefreshControl.m in Sources */,
@@ -3303,7 +3305,6 @@
 				083E74B41A70369900B4164D /* HMStoriesParser.m in Sources */,
 				081E398019FD6CDC00990F50 /* HMRemakeScreenViewController.m in Sources */,
 				268A380F1974AE650016C59C /* User.m in Sources */,
-				08F9EBB51A5457A6000CFCAD /* Scene.m in Sources */,
 				08081FB518D083DA00999068 /* HMExtractController.mm in Sources */,
 				080120171A08C045002F10B2 /* HMNavigationController.m in Sources */,
 				268341FD18FFFD40002E8CB7 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -3335,6 +3336,7 @@
 				0833346D1A80D659008AC771 /* HMParentalControlViewController.m in Sources */,
 				08DA744B1A5EA9AD007EFE69 /* HMServer+analytics.m in Sources */,
 				086F30011A529B7100430D81 /* JBWhatsAppActivity.m in Sources */,
+				0862C06F1BD7834F00DCE2FB /* Scene.m in Sources */,
 				08DA74591A5EA9AD007EFE69 /* HMServer+Texts.m in Sources */,
 				086F30031A529B7100430D81 /* HMStyle.m in Sources */,
 				086F30051A529B7100430D81 /* Scene+Factory.m in Sources */,
@@ -3435,8 +3437,8 @@
 				086F30681A529B7100430D81 /* Story+Logic.m in Sources */,
 				086F306A1A529B7100430D81 /* IASKAppSettingsViewController.m in Sources */,
 				086F306B1A529B7100430D81 /* UIImage+ImageEffects.m in Sources */,
+				08F334FC1BD7A72B00ADF6EE /* Story.m in Sources */,
 				086F306C1A529B7100430D81 /* HMStoriesTutorial.m in Sources */,
-				08793D2B1A75474100B2F91C /* Story.m in Sources */,
 				086F306D1A529B7100430D81 /* IASKSpecifierValuesViewController.m in Sources */,
 				08DA745B1A5EA9AD007EFE69 /* HMServer+Users.m in Sources */,
 				086F306E1A529B7100430D81 /* HMRefreshControl.m in Sources */,
@@ -3447,7 +3449,6 @@
 				083E74B51A70369900B4164D /* HMStoriesParser.m in Sources */,
 				086F30751A529B7100430D81 /* HMRemakeScreenViewController.m in Sources */,
 				086F30761A529B7100430D81 /* User.m in Sources */,
-				08F9EBB61A5457A6000CFCAD /* Scene.m in Sources */,
 				086F30771A529B7100430D81 /* HMExtractController.mm in Sources */,
 				086F30781A529B7100430D81 /* HMNavigationController.m in Sources */,
 				086F30791A529B7100430D81 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -3505,6 +3506,7 @@
 				08715EB21BD2B4BD00CD50A0 /* NSNotification+Utils.m in Sources */,
 				08715EB31BD2B4BD00CD50A0 /* IASKSettingsStore.m in Sources */,
 				08715EB41BD2B4BD00CD50A0 /* HMRecorderEditingTextCell.m in Sources */,
+				08F334FE1BD7A72B00ADF6EE /* Story.m in Sources */,
 				08715EB51BD2B4BD00CD50A0 /* HMLabel.m in Sources */,
 				08715EB61BD2B4BD00CD50A0 /* DB.m in Sources */,
 				08715EB71BD2B4BD00CD50A0 /* IASKPSSliderSpecifierViewCell.m in Sources */,
@@ -3535,6 +3537,7 @@
 				08715ED01BD2B4BD00CD50A0 /* HMPrivacyPolicyViewController.m in Sources */,
 				08715ED11BD2B4BD00CD50A0 /* HMSharing.m in Sources */,
 				08715ED21BD2B4BD00CD50A0 /* BSONIdGenerator.m in Sources */,
+				0862C0711BD7834F00DCE2FB /* Scene.m in Sources */,
 				08715ED31BD2B4BD00CD50A0 /* Text+Logic.m in Sources */,
 				08715ED41BD2B4BD00CD50A0 /* UIView+Hierarchy.m in Sources */,
 				08715ED51BD2B4BD00CD50A0 /* HMServer.m in Sources */,
@@ -3582,7 +3585,6 @@
 				08715EFE1BD2B4BD00CD50A0 /* IASKAppSettingsViewController.m in Sources */,
 				08715EFF1BD2B4BD00CD50A0 /* UIImage+ImageEffects.m in Sources */,
 				08715F001BD2B4BD00CD50A0 /* HMStoriesTutorial.m in Sources */,
-				08715F011BD2B4BD00CD50A0 /* Story.m in Sources */,
 				08715F021BD2B4BD00CD50A0 /* IASKSpecifierValuesViewController.m in Sources */,
 				08715F031BD2B4BD00CD50A0 /* HMServer+Users.m in Sources */,
 				08715F041BD2B4BD00CD50A0 /* HMRefreshControl.m in Sources */,
@@ -3593,7 +3595,6 @@
 				08715F091BD2B4BD00CD50A0 /* HMStoriesParser.m in Sources */,
 				08715F0A1BD2B4BD00CD50A0 /* HMRemakeScreenViewController.m in Sources */,
 				08715F0B1BD2B4BD00CD50A0 /* User.m in Sources */,
-				08715F0C1BD2B4BD00CD50A0 /* Scene.m in Sources */,
 				08715F0D1BD2B4BD00CD50A0 /* HMExtractController.mm in Sources */,
 				08715F0E1BD2B4BD00CD50A0 /* HMNavigationController.m in Sources */,
 				08715F0F1BD2B4BD00CD50A0 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -3625,6 +3626,7 @@
 				087498BF1B9444B000BD331C /* HMParentalControlViewController.m in Sources */,
 				087498C01B9444B000BD331C /* HMServer+analytics.m in Sources */,
 				087498C11B9444B000BD331C /* JBWhatsAppActivity.m in Sources */,
+				0862C0701BD7834F00DCE2FB /* Scene.m in Sources */,
 				087498C21B9444B000BD331C /* HMServer+Texts.m in Sources */,
 				087498C31B9444B000BD331C /* HMStyle.m in Sources */,
 				087498C41B9444B000BD331C /* Scene+Factory.m in Sources */,
@@ -3725,8 +3727,8 @@
 				087499231B9444B000BD331C /* Story+Logic.m in Sources */,
 				087499241B9444B000BD331C /* IASKAppSettingsViewController.m in Sources */,
 				087499251B9444B000BD331C /* UIImage+ImageEffects.m in Sources */,
+				08F334FD1BD7A72B00ADF6EE /* Story.m in Sources */,
 				087499261B9444B000BD331C /* HMStoriesTutorial.m in Sources */,
-				087499271B9444B000BD331C /* Story.m in Sources */,
 				087499281B9444B000BD331C /* IASKSpecifierValuesViewController.m in Sources */,
 				087499291B9444B000BD331C /* HMServer+Users.m in Sources */,
 				0874992A1B9444B000BD331C /* HMRefreshControl.m in Sources */,
@@ -3737,7 +3739,6 @@
 				0874992F1B9444B000BD331C /* HMStoriesParser.m in Sources */,
 				087499301B9444B000BD331C /* HMRemakeScreenViewController.m in Sources */,
 				087499311B9444B000BD331C /* User.m in Sources */,
-				087499321B9444B000BD331C /* Scene.m in Sources */,
 				087499331B9444B000BD331C /* HMExtractController.mm in Sources */,
 				087499341B9444B000BD331C /* HMNavigationController.m in Sources */,
 				087499351B9444B000BD331C /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -4634,6 +4635,7 @@
 		0806FB32188295CD00F0EF50 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0862C06B1BD7801000DCE2FB /* 1_10_1.xcdatamodel */,
 				08E440A61A7542E00076DB35 /* Model191.xcdatamodel */,
 				082D3E0A1A668CC40020D12E /* Model190.xcdatamodel */,
 				08F9EBAE1A545680000CFCAD /* Model181.xcdatamodel */,
@@ -4646,7 +4648,7 @@
 				F1D96B2F18FADD8E00AFD3F0 /* Model102.xcdatamodel */,
 				0806FB33188295CD00F0EF50 /* Model.xcdatamodel */,
 			);
-			currentVersion = 08E440A61A7542E00076DB35 /* Model191.xcdatamodel */;
+			currentVersion = 0862C06B1BD7801000DCE2FB /* 1_10_1.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

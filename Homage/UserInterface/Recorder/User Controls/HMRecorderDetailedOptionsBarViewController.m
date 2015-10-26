@@ -638,7 +638,8 @@
                                                                  HM_INFO_REMAKE_ID:self.remake.sID,
                                                                  HM_INFO_SCENE_ID:footage.sceneID,
                                                                  HM_INFO_DURATION_IN_SECONDS:@(footage.relatedScene.durationInSeconds),
-                                                                 HM_INFO_SHOULD_RECORD_AUDIO:@(shouldRecordAudio)
+                                                                 HM_INFO_SHOULD_RECORD_AUDIO:@(shouldRecordAudio),
+                                                                 HM_INFO_OUTPUT_RESOLUTION:scene.uploadedResolution?scene.uploadedResolution:@360
                                                                  }
      ];
     dispatch_async(dispatch_get_main_queue(), ^{

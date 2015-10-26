@@ -19,6 +19,8 @@
 @property (strong, nonatomic) NSTimer* timer;
 @property (nonatomic) NSTimeInterval timePassedSinceTimerBegan;
 @property (nonatomic) BOOL renderingEnded;
+@property (weak, nonatomic) IBOutlet UIProgressView *guiProgressBar;
+@property (nonatomic) NSDate *renderingStartedTime;
 
 @end
 
@@ -73,6 +75,38 @@
                                                      object:nil];
 }
 
+-(void)updateProgressLabelForRemake:(Remake *)remake
+{
+    NSString *label = nil;
+    NSInteger footagesCount = remake.footages.count;
+    NSInteger alreadyUploadedFootages = [remake footagesUploadedCount];
+    NSInteger readyFootagesCount = [remake footagesReadyCount];
+    NSTimeInterval rendereingExpectedTime = [remake.story expectedRenderingTime];
+    
+    if (remake.status.integerValue == HMGRemakeStatusRendering || readyFootagesCount == footagesCount) {
+        label = LS(@"RENDERING_MOVIE_MESSAGE");
+        if (self.renderingStartedTime == nil) {
+            self.renderingStartedTime = [NSDate date];
+        }
+        NSTimeInterval timePassedSinceStartedRendering = [[NSDate date] timeIntervalSinceDate:self.renderingStartedTime];
+        CGFloat t = timePassedSinceStartedRendering / rendereingExpectedTime;
+        t = MIN(1, t);
+        CGFloat progress = 0.30f + 0.70f * t;
+        [self.guiProgressBar setProgress:progress animated:YES];
+        
+    } else if (alreadyUploadedFootages < footagesCount) {
+        // Uploading
+        self.guiProgressBar.progress = 0.15f * (float)alreadyUploadedFootages / (float)footagesCount;
+        label = LS(@"UPLOADING_MESSAGE");
+    } else if (readyFootagesCount < footagesCount) {
+        CGFloat progress = 0.15f + 0.15f * (float)alreadyUploadedFootages / (float)footagesCount;
+        [self.guiProgressBar setProgress:progress animated:YES];
+        label = LS(@"PROCESSING_MESSAGE");
+    }
+    if (label != nil) self.guiInProgressLabel.text = label;
+}
+
+
 #pragma mark - Observers handlers
 -(void)onRemakeStatusNotification:(NSNotification *)notification
 {
@@ -87,12 +121,15 @@
     switch (remake.status.integerValue) {
         case HMGRemakeStatusNew:
             HMGLogWarning(@"Remake <%@> has status <New> while sent for rendering", remakeID);
+            [self updateProgressLabelForRemake:remake];
             break;
         case HMGRemakeStatusInProgress:
             HMGLogDebug(@"Remake <%@> has status <InProgress> while sent for rendering", remakeID);
+            [self updateProgressLabelForRemake:remake];
             break;
         case HMGRemakeStatusRendering:
             HMGLogDebug(@"Remake <%@> has status <Rendering> while sent for rendering", remakeID);
+            [self updateProgressLabelForRemake:remake];
             break;
         case HMGRemakeStatusDone:
             HMGLogInfo(@"Remake <%@> video is ready", remakeID);
@@ -109,8 +146,14 @@
             self.guiDoneLabel.text = [NSString stringWithFormat:LS(@"REMAKE_FAILED_CLICK"), remake.story.name];
             self.renderingEnded = YES;
             break;
+        case HMGRemakeStatusFailed:
+            HMGLogError(@"Remake <%@> has status <Deleted> while sent for rendering", remakeID);
+            self.guiDoneLabel.text = [NSString stringWithFormat:LS(@"REMAKE_FAILED_CLICK"), remake.story.name];
+            self.renderingEnded = YES;
+            break;
         default:
             HMGLogWarning(@"Remake <%@> has unknown status <%d>", remakeID, remake.status.integerValue);
+            [self updateProgressLabelForRemake:remake];
             break;
     }
     
@@ -136,6 +179,7 @@
 
 -(void)showDoneViewAnimated:(BOOL)animated
 {
+    [self.guiProgressBar setProgress:0 animated:NO];
     if (!self.guiDoneRenderingView.hidden) return;
     self.guiDoneRenderingView.hidden = NO;
     if (animated)
@@ -161,6 +205,8 @@
     if (!self.guiInProgressView.hidden) return;
     
     self.guiInProgressView.hidden = NO;
+    [self.guiProgressBar setProgress:0 animated:NO];
+    self.renderingStartedTime = nil;
     
     if (animated)
     {
@@ -199,7 +245,7 @@
     self.timer.tolerance = TIMER_TOLERANCE;
     self.timePassedSinceTimerBegan = 0;
     Remake *remake = [Remake findWithID:remakeID inContext:[[DB sh] context]];
-    self.guiInProgressLabel.text = [NSString stringWithFormat: LS(@"RENDERING_MOVIE_MESSAGE") ,remake.story.name];
+    [self updateProgressLabelForRemake:remake];
     [self showInProgressViewAnimated:YES];
     [self.guiActivityWheel startAnimating];
 }

@@ -677,10 +677,16 @@ static void *SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevice
         shouldRecordAudio = YES;
     }
     
+    HMOutputResolution outputResolution = HMOutputResolution360;
+    if ([info[HM_INFO_OUTPUT_RESOLUTION] isEqualToNumber:@(720)]) outputResolution = HMOutputResolution720;
+    if ([info[HM_INFO_OUTPUT_RESOLUTION] isEqualToNumber:@(1080)]) outputResolution = HMOutputResolution1080;
+    
     // The the output controller to start recording to the temp file.
     [outputController startRecordingToOutputFileURL:[NSURL fileURLWithPath:tmpPath]
                                   recordingDelegate:self
-                                  shouldRecordAudio:shouldRecordAudio];
+                                  shouldRecordAudio:shouldRecordAudio
+                                   outputResolution:outputResolution
+     ];
 }
 
 -(void)stopVideoRecording:(NSDictionary *)info

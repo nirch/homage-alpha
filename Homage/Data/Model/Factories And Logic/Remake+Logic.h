@@ -44,6 +44,9 @@ typedef NS_ENUM(NSInteger, HMGRemakeBGQuality) {
  */
 @property (nonatomic, readonly) NSArray *footagesReadyStates;
 
+-(NSInteger)footagesUploadedCount;
+-(NSInteger)footagesReadyCount;
+
 ///
 /**
  *  Returns a footage related to the instance of this remake, related to the given scene ID.

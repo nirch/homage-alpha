@@ -105,7 +105,9 @@
 "REMAKE_FAILED_CLICK" = "Clip creation Failed.";
 
 /*a message to the user, notifing him that the movie is now rendering*/
-"RENDERING_MOVIE_MESSAGE" = "Preparing your clip!";
+"UPLOADING_MESSAGE" = "Uploading...";
+"PROCESSING_MESSAGE" = "Processing...";
+"RENDERING_MOVIE_MESSAGE" = "Preparing your clip! ";
 
 /*the title for an alert view that pops when the user chooses of to make a new remake or continue from last sabed point*/
 "CONTINUE_WITH_REMAKE" = "Continue Remake";
