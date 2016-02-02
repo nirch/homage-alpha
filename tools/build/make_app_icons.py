@@ -10,7 +10,11 @@ ICONS_SET_DEST_PATH = "output/AppIcon.appiconset"
 #SRC_ICON_IMAGE = "resources/emo app icon 1024.png"
 #SRC_ICON_IMAGE = "resources/emu app icon 1024.png"
 # SRC_ICON_IMAGE = "resources/recast_icon.png"
-SRC_ICON_IMAGE = "resources/hom_coc_icon.png"
+#SRC_ICON_IMAGE = "resources/hom_coc_icon.png"
+#SRC_ICON_IMAGE = "resources/HomageSDKIcon.png"
+SRC_ICON_IMAGE = "resources/wishItIcon1024.png"
+
+
 
 IGNORE_PATTERNS = shutil.ignore_patterns(('*.DS_*'))
 
